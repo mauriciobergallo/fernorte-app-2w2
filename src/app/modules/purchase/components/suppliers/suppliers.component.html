@@ -1,0 +1,33 @@
+<div class="contenedor">
+  <div class="d-flex align-items-center justify-content-center text-white">
+    <button class="btn btn-primary ">Alta Proveedor</button>
+    <h1>Listado Proveedores</h1>
+  </div>
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Razon Social</th>
+          <th scope="col">Nombre Fantasia</th>
+          <th scope="col">CUIT</th>
+          <th scope="col">Domicilio</th>
+          <th scope="col">Contacto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let supplier of suppliers">
+          <td>{{ supplier.socialReason }}</td>
+          <td>{{ supplier.fantasyName }}</td>
+          <td>{{ supplier.cuit }}</td>
+          <td>{{ supplier.adress }}</td>
+          <td><button class="btn btn-primary">Contacto</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="child" *ngIf="isOpen">
+  
+</div>

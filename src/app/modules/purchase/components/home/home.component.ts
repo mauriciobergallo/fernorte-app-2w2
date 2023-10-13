@@ -3,8 +3,12 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'fn-home-purchase',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+  showSubmenu: boolean = false;
 
+  toggleSubmenu() {
+    this.showSubmenu = !this.showSubmenu;
+  }
 }

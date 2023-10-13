@@ -1,1 +1,20 @@
-<p>home purchase works!</p>
+<div class="contenedor d-flex w-100">
+  <aside class="contenedor">
+    <div class="contenedor bg-dark">
+      <div class="text-white fs-5 border-bottom text-center p-2">
+        Area de Compras
+      </div>
+      <div
+        class="nav flex-column nav-pills p-2 cursor-pointer"
+        aria-orientation="vertical"
+      >
+        <a class="nav-link">Inicio</a>
+        <a class="nav-link" (click)="toggleSubmenu()">Proveedores</a>
+        <a class="nav-link">Compras</a>
+      </div>
+    </div>
+  </aside>
+  <main class="w-100">
+    <fn-suppliers></fn-suppliers>
+  </main>
+</div>
