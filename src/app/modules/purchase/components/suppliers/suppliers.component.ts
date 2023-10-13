@@ -20,9 +20,7 @@ export class SuppliersComponent {
 
   isOpen: boolean = false;
 
-  setChildToTrue() {
-    this.child = true;
-  }
+
 
   ngOnInit(): void {
     fetch(this.url)
