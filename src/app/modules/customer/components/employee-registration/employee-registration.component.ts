@@ -10,14 +10,15 @@ import { NgForm, FormsModule } from '@angular/forms';
 })
 export class EmployeeRegistrationComponent {
 
-	@ViewChild('employeeForm') employeeForm!: NgForm;
+//	@ViewChild('employeeForm') employeeForm!: NgForm;
+employeeForm!: NgForm;
 
-
-employee: Employee = {firstName:"",
+employee: Employee = {
+firstName:"",
 lastName:"",
 birthDate: new Date(),
-documentType: 0,
-documentNumber:"0",
+documentType: 1,
+documentNumber:"",
 address:"",
 phoneNumber:"",
 personalEmail:""
@@ -39,13 +40,6 @@ personalEmail:""
 				console.log("EMPLOYEE FORM",this.employeeForm);
 
 
-				// const formData = this.employeeForm.value;
-
-
-				// this.employee.name = formData.name;
-				// this.employee.lastName = formData.lastName
-
-
 				this.employeeService.createEmployee(this.employee);
 				this.employeeService.clearFields(this.employee);
 				this.closeResult = `Closed with: ${result}`;
@@ -53,19 +47,16 @@ personalEmail:""
 
 			},
 			(reason) => {
-				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+				
 			},
 		);
 	}
 
-	private getDismissReason(reason: any): string {
-		if (reason === ModalDismissReasons.ESC) {
-			return 'by pressing ESC';
-		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-			return 'by clicking on a backdrop';
-		} else {
-			return `with: ${reason}`;
-		}
+
+
+
+	onSubmitForm(employeeForm: NgForm){
+		console.log("EMPLOYEEEE", employeeForm);
 	}
 
   

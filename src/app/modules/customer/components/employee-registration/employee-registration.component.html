@@ -4,16 +4,16 @@
 		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
 	</div>
 	<div class="modal-body">
-		<form #employeeForm="ngForm">
+		<form #employeeForm="ngForm"  (ngSubmit)="onSubmitForm(employeeForm)">
 			
 			<div class="mb-3 d-flex">
 				<div class="flex-grow-1 me-2">
 					<label for="name">Nombre</label>
-					<input [(ngModel)]="employee.firstName" type="text" name="name" id="name" class="form-control" />
+					<input required [(ngModel)]="employee.firstName" type="text" name="name" id="name" class="form-control" />
 				</div>
 				<div class="flex-grow-1">
 					<label for="lastName">Apellido</label>
-					<input [(ngModel)]="employee.lastName" type="text" name="lastName" id="lastName" class="form-control" />
+					<input required [(ngModel)]="employee.lastName" type="text" name="lastName" id="lastName" class="form-control" />
 				</div>
 			</div>
 			<div class="mb-3 d-flex">
@@ -26,7 +26,7 @@
 				</div>
 				<div class="flex-grow-1">
 					<label for="documentNumber">Documento</label>
-					<input type="text" name="documentNumber" id="documentNumber" class="form-control" />
+					<input required [(ngModel)]="employee.documentNumber"  type="text" name="documentNumber" id="documentNumber" class="form-control" />
 				</div>
 			</div>
 
@@ -34,6 +34,8 @@
 				<label for="dateOfBirth">Fecha de nacimiento</label>
 				<div class="input-group">
 					<input
+					required
+					[(ngModel)]="employee.birthDate" 
 						id="dateOfBirth"
 						class="form-control"
 						placeholder="yyyy-mm-dd"
@@ -46,10 +48,33 @@
 
                 
 			</div>
+
+			<div class="flex-grow-1">
+				<label for="personalEmail">Email Personal</label>
+				<input [(ngModel)]="employee.personalEmail" 
+					   type="email" 
+					   name="personalEmail" 
+					   id="personalEmail" 
+					   class="form-control" 
+					
+				/>
+			  </div>
+
+			<div class="mb-3 d-flex">
+				<div class="flex-grow-1 me-2">
+				  <label for="address">Domicilio</label>
+				  <input [(ngModel)]="employee.address" type="text" name="address" id="address" class="form-control" />
+				</div>
+				<div class="flex-grow-1">
+				  <label for="phoneNumber">Número de teléfono</label>
+				  <input [(ngModel)]="employee.phoneNumber" type="text" name="phoneNumber" id="phoneNumber" class="form-control" />
+				</div>
+			  </div>
+
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-dark" (click)="modal.close($event)">Save</button>
+		<button type="submit" class="btn btn-outline-dark" [disabled]="!employeeForm.valid" (click)="modal.close(employeeForm)">Registrar</button>
 	</div>
 </ng-template>
 
@@ -57,4 +82,3 @@
 
 <hr />
 
-<pre>{{ closeResult }}</pre>
