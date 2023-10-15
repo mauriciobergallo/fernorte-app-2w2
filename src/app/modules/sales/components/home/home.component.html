@@ -1,1 +1,131 @@
-<p>home sales works!</p>
+<!-- <html lang="es"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Venta de Productos</title>
+    Agregar enlaces a los archivos CSS y JavaScript de Bootstrap -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
+<!-- </head> --> 
+<!-- Orden de venta
+
+En esta pantalla podemos visualizar el turno en el que estamos, si ya lo atendimos le damos al botón 
+"Atender Turno". Le pedimos el nombre al cliente para buscarlo y/o cargarlo. 
+Usamos el botón "Consultar Productos" el cual abrirá un popup donde buscaremos un producto, elegimos los que 
+queremos agregando también la cantidad solicitada por el cliente. A medida que vamos seleccionando productos se 
+va a ir modificando el subtotal en relación a los precios. Si se decide no seguir con la compra podemos eliminar 
+la selección de productos. Así como también al pulsar el botón "Cargar Productos", dichos productos seleccionados 
+se agregarán a la grilla de productos de la pantalla de Orden de Venta.
+Al tener en la grilla todos los productos requeridos por el cliente podemos ver el subtotal, los impuestos 
+y el total. A partir de esto podemos generar el presupuesto o la orden de venta para proceder al momento de 
+facturación.
+Por otro lado, al usar el botón "Cargar Presupuesto" podemos visualizar todos los datos cargados anteriormente 
+y guardados en el sistema al momento de generar el presupuesto para poder continuar con el proceso de venta.  -->
+
+
+    <div class="container">
+        <div class="row mt-4">
+
+            <div class="col-md-6 justify-content-around d-flex">
+
+                <h5 class="align-content-center d-flex flex-wrap">Turno actual: 5</h5>
+                <button class="btn btn-warning">Atender Turno</button>
+            </div>
+                <div class="col-md-6 justify-content-around d-flex">
+                    <h5 class="align-content-center d-flex flex-wrap">Cliente actual: A A</h5>
+                    <button class="btn btn-primary" type="button">Buscar cliente</button>
+                    <button class="btn btn-success" type="button">Cargar cliente</button>
+                </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <!-- Selector y buscador de productos -->
+                <div class="input-group">
+                    <select id="productoSelect" class="form-control">
+                        <option disabled="" value="" selected="">Seleccionar un producto</option>
+                        <option *ngFor="let item of listProduct" value={{item.codigo}}>{{item.nombre}}</option>
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-info" onclick="openPopup()">Consultar Productos</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <!-- Selector de clientes y botón para cargar presupuesto -->
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Ingresar numero de presupuesto...">
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="button">Cargar Presupuesto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <!-- Tabla de productos -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Precio Unitario</th>
+                            <th>Cantidad</th>
+                            <th>Precio Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aquí se agregarán las filas de la tabla dinámicamente -->  <tr>
+                        </tr><tr>
+                            <td>001</td>
+                            <td>Producto 1</td>
+                            <td>$30.00</td>
+                            <td>2</td>
+                            <td>$60.00</td>
+                        </tr>
+                        <tr>
+                            <td>002</td>
+                            <td>Producto 2</td>
+                            <td>$40.00</td>
+                            <td>2</td>
+                            <td>$80.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-3 offset-7">
+                <!-- Resumen de la venta -->
+                    <div class="text-end">
+                        <p>Subtotal: $0.00</p>
+                        <p>Impuestos: $0.00</p>
+                        <p>Total: $0.00</p>
+                </div>
+            </div>
+        </div>
+            <div class="row mt-4">
+                <div class="col-12 justify-content-around d-flex">
+                    <!-- Botones de acción -->
+                    <button class="btn btn-primary" >Generar Presupuesto</button>
+                    <button class="btn btn-danger" (click)="generateSaleOrder()">Generar Orden</button>
+                </div>
+        </div>
+    </div>
+
+    <!-- Agregar enlaces a los archivos JavaScript de Bootstrap y otros scripts personalizados -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+
+    <!-- Función onClick del botón Consultar Productos, abre un popup para buscar y elegir productos 
+    <script>
+        function openPopup() {
+          // Abre el archivo "consultarProductos.html" en un popup
+          window.open("consultarProducto.html", "popup", "width=500,height=600");
+        }
+    </script> -->
+
+    <div class="spinner-overlay" *ngIf="loader">
+        <div class="spinner">
+          <!-- Aquí puedes personalizar tu spinner, por ejemplo, usando una animación CSS o una biblioteca de iconos -->
+          <div class="spinner-icon"></div>
+        </div>
+      </div>
