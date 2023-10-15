@@ -6,8 +6,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeRegistrationComponent } from './components/employee-registration/employee-registration.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './components/login/login.component';
 @NgModule({
-  declarations: [HomeComponent, EmployeeRegistrationComponent],
+  declarations: [HomeComponent, EmployeeRegistrationComponent, LoginComponent],
   providers: [],
   imports: [CommonModule, NgbModule, FormsModule, HttpClientModule],
   exports: [HomeComponent],
