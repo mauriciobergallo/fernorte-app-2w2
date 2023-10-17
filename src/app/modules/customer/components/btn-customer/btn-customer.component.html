@@ -1,0 +1,29 @@
+<div class="container text-center">
+    <div *ngIf="Main">
+        <h2>Soy Cliente Registrado</h2>
+        <form [formGroup]="clientform" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="document">Document Number:</label>
+                <input type="text" id="document" formControlName="document" class="form-control">
+                <div *ngIf="clientform.get('document')?.invalid && clientform.get('document')?.touched"
+                    class="text-danger">
+                    El documento es requerido.
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">OK</button>
+            <button class="btn btn-secondary" (click)="returnToMainPage()">Cancelar</button>
+        </form>
+
+        <div *ngIf="clientNotRegistered" class="text-danger">
+            El cliente no existe. Verifique el número de documento o solicite un turno sin ser cliente registrado.
+        </div>
+    </div>
+</div>
+
+<div>
+    <div *ngIf="numberTurn != 0">
+        <h3>Tu número de turno es: {{ numberTurn }}</h3>
+        <p>Aguarde unos minutos y será llamado por un vendedor.</p>
+    </div>
+</div>
