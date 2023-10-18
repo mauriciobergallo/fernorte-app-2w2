@@ -118,30 +118,45 @@
     </svg>
 
     <main class="form-signin w-100 m-auto">
-        <form>
+        <form #miFormulario="ngForm" (ngSubmit)="onAdd(miFormulario)">
 
             <div style="text-align: center;">
                 <img class="mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt=""
                     width="72" height="57">
-                <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+                <h1 class="h3 mb-3 fw-normal">Iniciar sesión en FerNorte</h1>
             </div>
 
             <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Email address</label>
+                <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
+                name="username" #username = "ngModel" [(ngModel)]="login.identity"
+                [ngClass]="{ 'is-invalid': username.invalid && miFormulario.submitted}" required>
+                <label for="floatingInput">Username</label>
+                <div class="invalid-feedback">
+                    Ingrese un username
+                </div>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                name="password" #password = "ngModel" [(ngModel)]="login.password"
+                [ngClass]="{ 'is-invalid': password.invalid && miFormulario.submitted}" required>
                 <label for="floatingPassword">Password</label>
+                <div class="invalid-feedback">
+                    Ingrese un password
+                </div>
             </div>
 
-            <div class="form-check text-start my-3">
+            <!-- <div class="form-check text-start my-3">
                 <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
                 <label class="form-check-label" for="flexCheckDefault">
                     Remember me
                 </label>
-            </div>
-            <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+            </div> -->
+            <!-- <div class="form-check text-start my-3">
+                <a class="form-check-label" href="login.component.html">
+                    I forgot my password
+                </a>
+            </div> -->
+            <button class="btn btn-primary w-100 py-2" type="submit">Iniciar Sesión</button>
 
         </form>
     </main>
