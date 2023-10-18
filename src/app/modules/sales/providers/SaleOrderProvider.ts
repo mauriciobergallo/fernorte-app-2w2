@@ -13,7 +13,7 @@ export class SaleOrderProvider {
   }
 
   createSaleOrder(saleOrder: ISaleOrder): Observable<IResponse> {
-    const url = this.urlBase + "/salesOrder/createSaleOrder";
+    const url = this.urlBase + "/sales-order/create-sale-order";
     const header = { "content-type": "application/json" };
     const body = saleOrder;
     return this.http.post<IResponse>(url, body, { headers: header });
