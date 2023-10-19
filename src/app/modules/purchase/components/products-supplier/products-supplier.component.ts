@@ -1,18 +1,25 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { IProduct } from '../../models/ISuppliers';
 import { ProductsService } from '../../services/products.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'fn-products-supplier',
   templateUrl: './products-supplier.component.html',
   styleUrls: ['./products-supplier.component.css'],
 })
-export class ProductsSupplierComponent {
+export class ProductsSupplierComponent implements OnDestroy {
   @Input() supplierId: number = 0;
   allProducts: IProduct[] = [];
   products: IProduct[] = [];
 
+  suscription = new Subscription();
+  
   constructor(private _productsService: ProductsService) {}
+
+  ngOnDestroy(): void {
+    this.suscription.unsubscribe();
+  }
 
   ngOnInit(): void {
     this._productsService.getProducts().subscribe({

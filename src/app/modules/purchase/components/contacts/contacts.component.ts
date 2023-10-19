@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { SupliersService } from '../../services/supliers.service';
 import { Contact, IContacts } from '../../models/ISuppliers';
 import { Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css'],
 })
-export class ContactsComponent {
+export class ContactsComponent implements OnDestroy {
   @Input() contacts: IContacts = {} as IContacts;
   @Output() closeContacts = new EventEmitter<string>();
   @Output() refreshService = new EventEmitter<number>();
@@ -19,6 +19,11 @@ export class ContactsComponent {
   contact: Contact = {} as Contact;
 
   constructor(private _serviceSuplier: SupliersService) {}
+  
+  
+  ngOnDestroy(): void {
+    this.suscription.unsubscribe();
+  }
 
   suscription = new Subscription();
 

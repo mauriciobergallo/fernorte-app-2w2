@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { ISupliers } from '../../models/ISuppliers';
 import { SupliersService } from '../../services/supliers.service';
 import { Subscription } from 'rxjs';
@@ -9,7 +9,7 @@ import { ListSuplierComponent } from '../list-suplier/list-suplier.component';
   templateUrl: './add-supplier.component.html',
   styleUrls: ['./add-supplier.component.css'],
 })
-export class AddSupplierComponent {
+export class AddSupplierComponent implements OnDestroy {
   @Output() closeAddSupplier = new EventEmitter<string>();
   @Output() refrescarService = new EventEmitter<string>();
 
@@ -17,6 +17,10 @@ export class AddSupplierComponent {
   supliers: ISupliers[] = [];
 
   constructor(private _serviceSuplier: SupliersService) {}
+  
+  ngOnDestroy(): void {
+    this.suscription.unsubscribe();
+  }
 
   suscription = new Subscription();
 
