@@ -17,25 +17,25 @@ export class ProductProvider {
     const productos: IProduct[] =  [
       {
         codigo: '001',
-        nombre: 'Producto 1',
+        nombre: 'martillo',
         precioUnitario: 30.00,
         cantidad: 2
       },
       {
         codigo: '002',
-        nombre: 'Producto 2',
+        nombre: 'pala',
         precioUnitario: 40.00,
         cantidad: 2
       },
       {
         codigo: '003',
-        nombre: 'Producto 3',
+        nombre: 'destornillador',
         precioUnitario: 50.00,
         cantidad: 3
       },
       {
         codigo: '004',
-        nombre: 'Producto 4',
+        nombre: 'pegamento',
         precioUnitario: 20.00,
         cantidad: 5
       }
