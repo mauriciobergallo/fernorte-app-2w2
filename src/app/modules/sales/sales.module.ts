@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { HomeComponent } from './components/home/home.component';
 import { SaleOrderSearchHandlerComponent } from './components/sale-order-search-handler/sale-order-search-handler.component';
@@ -9,7 +10,7 @@ import { SaleOrderSearchListComponent } from './components/sale-order-search-lis
 @NgModule({
   declarations: [HomeComponent, SaleOrderSearchHandlerComponent, SaleOrderSearchFilterComponent, SaleOrderSearchListComponent],
   providers: [],
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   exports: [HomeComponent],
 })
 export class SalesModule {}

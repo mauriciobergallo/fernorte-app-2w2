@@ -1,1 +1,59 @@
-<p>sale-order-search-filter works!</p>
+<div class="container px-4">
+    <p>Filtros de búsqueda</p>
+    <form #nOrderForm="ngForm" (ngSubmit)="onSendNOrder(nOrderForm)">
+        <div class="row gx-5">
+            <p class="row">Por n° de presupuesto</p>
+            <div class="col-6">
+                <input 
+                type="text"
+                placeholder="n° presupuesto"
+                name="nOrder"
+                #nOrderControl="ngModel"
+                [(ngModel)]="nOrder"
+                required>
+            </div>
+            <button class="btn col-2">Buscar</button>
+        </div>
+    </form>
+    <form #dateForm="ngForm" (ngSubmit)="onSendDates(dateForm)">
+        <div class="row gx-5">
+            <p class="row">Por fecha</p>
+            <div class="col-5">
+                <p>Desde</p>
+                <input 
+                type="date"
+                placeholder=""
+                name="fromDate"
+                #fromDateControl="ngModel"
+                [(ngModel)]="fromDate"
+                required>
+            </div>
+            <div class="col-5">
+                <p>Hasta</p>
+                <input
+                type="date"
+                placeholder=""
+                name="toDate"
+                #toDateControl="ngModel"
+                [(ngModel)]="toDate"
+                required>
+            </div>
+            <button class="btn col-2">Buscar</button>
+        </div>
+    </form>
+    <form #docForm="ngForm" (ngSubmit)="onSendDoc(docForm)">
+        <div class="row gx-5">
+            <p class="row">Por dni del cliente</p>
+            <div class="col-6">
+                <input 
+                type="text"
+                placeholder="dni"
+                name="doc"
+                #docControl="ngModel"
+                [(ngModel)]="doc"
+                required>
+            </div>
+            <button class="btn col-2">Buscar</button>
+        </div>
+    </form>
+</div>
