@@ -13,9 +13,9 @@ export class SaleOrderServiceService {
     
     this.saleOrderProvider.createSaleOrder(saleOrder).subscribe((res) => {
       if (res.ok) {
-        return alert(res.data);
+        return res.data
       }
-      return alert(res.error.message)
+      return null;
     });
   }
 }

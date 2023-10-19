@@ -5,11 +5,13 @@ import { HomeComponent } from './components/home/home.component';
 import { SaleOrderProvider } from './providers/SaleOrderProvider';
 import { ProductProvider } from './providers/productProvider';
 import { SaleOrderComponent } from './components/sale_order/sale-order.component';
+import { FormsModule } from '@angular/forms';
+import { CalcularTotalPipe } from './pipes/calcular-total.pipe';
 
 @NgModule({
-  declarations: [HomeComponent,SaleOrderComponent],
+  declarations: [HomeComponent,SaleOrderComponent, CalcularTotalPipe],
   providers: [SaleOrderProvider,ProductProvider],
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   exports: [HomeComponent,SaleOrderComponent],
 })
 export class SalesModule {}
