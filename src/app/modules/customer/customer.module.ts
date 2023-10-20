@@ -12,9 +12,10 @@ import { TurnsComponentComponent } from './components/turns-component/turns-comp
 import { BtnNoCustomerComponent } from './components/btn-no-customer/btn-no-customer.component';
 import { BtnCustomerComponent } from './components/btn-customer/btn-customer.component';
 import { LoginComponent } from './components/login/login.component';
+import { CreateCustomerComponent } from './components/create-customer/create-customer.component';
 
 @NgModule({
-  declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent, LoginComponent],
+  declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent, LoginComponent, CreateCustomerComponent],
   providers: [],
   imports: [CommonModule, BrowserModule, ReactiveFormsModule, NgbModule, FormsModule, HttpClientModule],
   exports: [HomeComponent],
