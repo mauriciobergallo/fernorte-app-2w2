@@ -1,5 +1,5 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { NgForm, NgModel } from '@angular/forms';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'fn-sale-order-search-filter',
@@ -26,7 +26,7 @@ export class SaleOrderSearchFilterComponent {
   }
 
   onSendDates(form: NgForm){
-    this.dates=this.fromDate+"-"+this.toDate
+    this.dates=this.fromDate+"_"+this.toDate
     this.onSendFilter(form, this.dates)
   }
 
