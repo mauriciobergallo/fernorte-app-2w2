@@ -11,6 +11,8 @@
       <button type="submit" class="btn btn-primary  w-100" (click)="searchProduct(searchForm)">BUSCAR</button>
     </form>
   </div>
+  <span>{{searchForm.value | json}}
+  </span>
   <div class="info-container">
     <div class="row">
       <p>Cantidad disponible</p>
@@ -18,15 +20,18 @@
     </div>
     <div class="row">
       <p>Unidad de medida</p>
-      <input class="form-control" type="text" [value]="measureUnit" aria-label="Disabled input example" readonly>
+      <input class="form-control" type="text" [value]="productInfo.measureUnit" aria-label="Disabled input example"
+        readonly>
     </div>
     <div class="row">
       <p>Cantidad almacenada</p>
-      <input class="form-control" type="text" [value]="storageQuantity" aria-label="Disabled input example" readonly>
+      <input class="form-control" type="text" [value]="productInfo.quantity" aria-label="Disabled input example"
+        readonly>
     </div>
     <div class="row">
       <p>Categoria</p>
-      <input class="form-control" type="text" [value]="category" aria-label="Disabled input example" readonly>
+      <input class="form-control" type="text" [value]="productInfo.categoryName" aria-label="Disabled input example"
+        readonly>
     </div>
   </div>
 </div>

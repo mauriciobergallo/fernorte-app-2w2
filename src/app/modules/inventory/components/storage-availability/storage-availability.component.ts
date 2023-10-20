@@ -1,16 +1,48 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { ProductService } from '../../services/product.service';
+import { IProduct } from '../../models/product.interface';
 
 @Component({
   selector: 'fn-storage-availability',
   templateUrl: './storage-availability.component.html',
   styleUrls: ['./storage-availability.component.css'],
 })
-export class StorageAvailabilityComponent {
-  product: String = '';
-  availableQuantity: String = '';
-  measureUnit: String = '';
-  storageQuantity: String = '';
-  category: String = '';
-  searchProduct(form: NgForm) {}
+export class StorageAvailabilityComponent implements OnDestroy {
+  product: string = '';
+  productInfo: IProduct = {
+    location: {
+      zone: '',
+      section: '',
+      space: '',
+    },
+    categoryName: '',
+    productName: '',
+    quantity: 0,
+    measureUnit: '',
+    maxCapacity: 0,
+  };
+  availableQuantity: number =
+    this.productInfo.maxCapacity - this.productInfo.quantity;
+  private suscriptions: Subscription = new Subscription();
+  constructor(private productService: ProductService) {}
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
+  searchProduct(form: NgForm) {
+    if (form.invalid) {
+      alert('Formulario invalido');
+    }
+    this.suscriptions.add(
+      this.productService.getProduct(form.value.product).subscribe({
+        next: (response: IProduct) => {
+          this.productInfo = response;
+        },
+        error: (error: Error) => {
+          alert(error);
+        },
+      })
+    );
+  }
 }
