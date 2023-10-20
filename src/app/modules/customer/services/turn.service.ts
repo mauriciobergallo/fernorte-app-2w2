@@ -12,16 +12,17 @@ export class TurnService {
   Main: boolean = true;
 
   private apiUrl = 'http://localhost:8080/turns';
-  private newTurn = '/newTurn';
+  private newTurn = '/new-turn';
 
   constructor(private http: HttpClient) {}
   
-  postData(documentNumber?: string): Observable<any> {
+  postData(documentNumber?: string): Observable<TurnResponse> {
+    debugger;
     const body = new FormData();
     if (documentNumber) {
-      body.append('documentNumber', documentNumber);
+      body.append('documentNumber', documentNumber);      
     }
 
-    return this.http.post<TurnResponse>(`${this.apiUrl}/newTurn`, body);
+    return this.http.post<TurnResponse>(`${this.apiUrl}${this.newTurn}`, body);
   }
 }

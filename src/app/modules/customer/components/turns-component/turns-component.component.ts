@@ -10,6 +10,8 @@ export class TurnsComponentComponent {
   ToCustomer: boolean = false;
   ToNoCustomer: boolean = false;
   Main: boolean = true;
+  inputText:string='';
+  documentNumber:string='';
 
   constructor(public turnService: TurnService){}
 
@@ -27,5 +29,34 @@ export class TurnsComponentComponent {
     this.Main = true;
     this.ToCustomer = false;
     this.ToNoCustomer = false;
+  }
+
+  addToInput(value:string){
+    this.inputText += value;
+    this.documentNumber=this.inputText;
+  }
+
+  deleteLastCharInput(){
+    this.inputText = this.inputText.slice(0, -1);
+  }
+
+  sendDocumentNumber() {
+    if (this.documentNumber) {
+      this.turnService.postData(this.documentNumber).subscribe(
+        response => 
+            this.showCustomerInfo(response));  
+      }
+      //aca debo limpiar el input para limpiar valor.
+    }
+  
+  showCustomerInfo(customerData: any) {
+    // Muestra la información del cliente en la interfaz de usuario
+    console.log("Número: " + customerData.number);
+    console.log("Nombre: " + customerData.firstName);
+    console.log("Apellido: " + customerData.lastName);
+    console.log("Fecha de creación: " + customerData.createdAt);
+    if (customerData.companyName) {
+      console.log("Nombre de la empresa: " + customerData.companyName);
+    }
   }
 }

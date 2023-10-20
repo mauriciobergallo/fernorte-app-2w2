@@ -11,8 +11,39 @@
 </div>
 
 <div *ngIf="ToCustomer">
-    <fn-btn-customer (back)="eventBack()"></fn-btn-customer>
+    <div class="text-center">
+        <fn-btn-customer (back)="eventBack()">
+        </fn-btn-customer>
+        <form name="calculator">
+            
+            <p>Ingrese su número de documento</p>
+            <input type="text" name="ans" [(ngModel)]="inputText" value="">
+            <br>
+            <div class="btn-group">
+                <input type="button" value="1" class="btn btn-secondary custom-button" (click)="addToInput('1')">
+                <input type="button" value="2" class="btn btn-secondary custom-button" (click)="addToInput('2')">
+                <input type="button" value="3" class="btn btn-secondary custom-button" (click)="addToInput('3')">
+                <input type="button" value="⇐" class="btn btn-secondary custom-button" (click)="deleteLastCharInput()">
+            </div>
+            <br>
+            <div class="btn-group">
+                <input type="button" value="4" class="btn btn-secondary custom-button" (click)="addToInput('4')">
+                <input type="button" value="5" class="btn btn-secondary custom-button" (click)="addToInput('5')">
+                <input type="button" value="6" class="btn btn-secondary custom-button" (click)="addToInput('6')">
+                <input type="button" value="Enter" class="btn btn-primary custom-button" (click)="sendDocumentNumber()">
+            </div>
+            <br>
+            <div class="btn-group">
+                <input type="button" value="7" class="btn btn-secondary custom-button" (click)="addToInput('7')">
+                <input type="button" value="8" class="btn btn-secondary custom-button" (click)="addToInput('8')">
+                <input type="button" value="9" class="btn btn-secondary custom-button" (click)="addToInput('9')">
+                <input type="button" value="0" class="btn btn-secondary custom-button" (click)="addToInput('0')">
+            </div>
+        </form>
+    </div>
 </div>
+
+
 
 <div *ngIf="ToNoCustomer">
     <fn-btn-no-customer (back)="eventBack()"></fn-btn-no-customer>
