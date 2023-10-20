@@ -11,14 +11,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let product of pagedProducts">
+      <tr *ngFor="let product of listProducts">
         <td>{{ product.name }}</td>
         <td>
           <img [src]="product.urlImage" alt="Imagen del producto" height="50" />
         </td>
         <td>{{ product.stockQuantity }}</td>
         <td>{{ product.unitPrice | currency:'USD':'symbol-narrow' }}</td>
-        <td>{{ product.category.name }}</td>
+        <td>{{ product.categoryModel.name }}</td>
         <td>
           <button type="submit" class="btn btn-primary mx-2">Editar</button>
           <button type="submit" class="btn btn-danger mx-2">Eliminar</button>
@@ -32,7 +32,7 @@
   <ngb-pagination
     [(page)]="currentPage"
     [pageSize]="itemsPerPage"
-    [collectionSize]="products.length"
+    [collectionSize]="listProducts.length"
     [maxSize]="5"
     [rotate]="true">
   </ngb-pagination>
