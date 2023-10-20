@@ -5,3 +5,26 @@
     <fn-sale-order></fn-sale-order>
 </div>
 
+
+<div class="container" id="navVentas">
+    
+    <div class="row">
+        <div class="col-md-2">
+            <h1>Ventas</h1>
+        </div>
+        <div class="col-md-3">
+            <a href="#" class="btn btn-primary btn-block"(click)="onShowPaymentMethod()">Payment Method</a>
+        </div>
+        <div class="col-md-3">
+            <a href="#" class="btn btn-primary btn-block" (click)="onShowBilling()">Billing</a>
+        </div>
+        <div class="col-md-3">
+            <a href="#" class="btn btn-primary btn-block" (click)="onShowSalesOrder()" >Sales Order</a>
+        </div>
+
+    </div>
+</div>
+<fn-billing *ngIf="showBilling"></fn-billing>
+<fn-sale-order *ngIf="showSalesOrder"></fn-sale-order>
+<fn-payment-method *ngIf="showPaymentMethod"></fn-payment-method>
+

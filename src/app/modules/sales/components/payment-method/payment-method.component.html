@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form #formDatos="ngForm" (ngSubmit)="saveNewPaymentMethod(formDatos)">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="mb-2">
+                            <label for="paymentMethod" class="form-label">Método de Pago</label>
+                            <input #controlPaymentMethod="ngModel" type="text" class="form-control" id="paymentMethod"
+                                name="paymentMethod" [(ngModel)]="payment.paymentMethod" required>
+                            <!-- <div *ngIf="controlPaymentMethod.touched && controlPaymentMethod.hasError('required')">El método de pago
+                    es obligatorio.</div> -->
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-2">
+                            <label for="surcharge" class="form-label">Recargo</label>
+                            <input #controlSurcharge="ngModel" type="number" class="form-control" id="surcharge"
+                                name="surcharge" [(ngModel)]="payment.surcharge" required>
+                            <!-- <div *ngIf="controlSurcharge.touched && controlSurcharge.hasError('required')">El recargo es obligatorio.</div> -->
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+        <div class="col-md-8">
+            <div class="col-md-8">
+                <h2>Lista de Métodos de Pago</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Método de Pago</th>
+                            <th>Recargo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let method of paymentMethods">
+                            <td>{{ method.paymentMethod }}</td>
+                            <td>{{ method.surcharge }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
