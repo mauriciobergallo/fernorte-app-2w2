@@ -1,0 +1,9 @@
+label {
+    color: #555;
+}
+
+.links-add-category {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+}

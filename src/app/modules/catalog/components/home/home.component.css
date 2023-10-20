@@ -1,0 +1,34 @@
+
+.nav-item {
+    position: relative;
+    margin-right: 8px; 
+}
+
+.nav-link {
+    color: #333;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: #007BFF; 
+    text-decoration: none;
+    font-weight: bold; 
+}
+
+.nav-item.active .nav-link {
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-item.active .nav-link::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #7749f8;
+}
