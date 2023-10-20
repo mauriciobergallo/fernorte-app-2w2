@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Role } from '../models/role';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleService {
 
-  constructor() { }
+  private apiUrl = "http://localhost:8095/role";
+
+  constructor(private http:HttpClient) { }
 
   //Post
-  createRole(role : Role){
+  createRole(role : Role): Observable<any>{
     console.log("Role", role);
-                                    //aca va el post de rol
+    return this.http.post<Role>(`${this.apiUrl}/new`,role );
   }
   
   clearFields(role: any){
