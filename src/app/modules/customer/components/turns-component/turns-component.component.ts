@@ -42,14 +42,25 @@ export class TurnsComponentComponent {
 
   sendDocumentNumber() {
     if (this.documentNumber) {
-      this.turnService.postData(this.documentNumber).subscribe(response => {
-        this.showCustomerInfo(response);
-        const welcomeMessage = `Bienvenido ${response.firstName}, tu número de turno es ${response.number}, y fue creado el ${response.createdAt}`;
-        alert(welcomeMessage);
-        this.clearFields();
-      });
+      this.turnService.postData(this.documentNumber).subscribe(
+        (response) => {
+          if (response) {
+            this.showCustomerInfo(response);
+            const welcomeMessage = `Bienvenido ${response.firstName}, tu número de turno es ${response.number}, y fue creado el ${response.createdAt}`;
+            alert(welcomeMessage);
+            this.clearFields();
+          } 
+        },
+        (error) => {          
+          alert("El numero de documento es incorrecto");
+          this.clearFields();
+        }
+      );
+    } else {
+      alert('El número de documento está vacío, por favor ingrese un número válido.');
     }
-  }  
+  }
+  
   
   clearFields() {
     this.inputText = ''; 

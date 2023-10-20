@@ -11,10 +11,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { TurnsComponentComponent } from './components/turns-component/turns-component.component';
 import { BtnNoCustomerComponent } from './components/btn-no-customer/btn-no-customer.component';
 import { BtnCustomerComponent } from './components/btn-customer/btn-customer.component';
+import { EmployeeService } from './services/employee.service';
+import { RoleService } from './services/role.service';
+import { TurnService } from './services/turn.service';
 
 @NgModule({
   declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent],
-  providers: [],
+  providers: [EmployeeService,RoleService,TurnService],
   imports: [CommonModule, BrowserModule, ReactiveFormsModule, NgbModule, FormsModule, HttpClientModule],
   exports: [HomeComponent],
 })

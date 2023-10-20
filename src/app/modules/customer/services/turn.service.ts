@@ -3,9 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TurnResponse } from '../models/turn-response';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class TurnService {
   ToCustomer: boolean = false;
   ToNoCustomer: boolean = false;
