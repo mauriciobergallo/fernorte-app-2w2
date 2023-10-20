@@ -1,23 +1,16 @@
-
-.nav-item {
-    position: relative;
-    margin-right: 8px; 
-}
-
 .nav-link {
     color: #333;
     text-decoration: none;
 }
 
 .nav-link:hover {
-    color: #007BFF; 
+    color: #007BFF;
     text-decoration: none;
-    font-weight: bold; 
+    font-weight: bold;
 }
 
 .nav-item.active .nav-link {
-    background-color: #007BFF;
-    color: #fff;
+    border-bottom: 2px solid var(--primary-color-dark, #5227CC);
     text-decoration: none;
     font-weight: bold;
 }
@@ -30,5 +23,4 @@
     bottom: 0;
     width: 100%;
     height: 2px;
-    background-color: #7749f8;
 }

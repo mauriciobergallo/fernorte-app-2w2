@@ -35,6 +35,7 @@ label {
     border-color: #0056b3;
 }
 
-a add-category-link {
+.add-category{
+    color: #7749F8;
     text-decoration: underline;
 }

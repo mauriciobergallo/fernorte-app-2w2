@@ -1,3 +1,9 @@
+.container {
+    border: 1px solid #dcdcdc; /* Agrega un borde alrededor del componente */
+    border-radius: 8px;
+    padding: 24px;
+}
+
 label {
     color: #555;
 }
@@ -6,4 +12,21 @@ label {
     display: flex;
     align-items: flex-end;
     gap: 16px;
+}
+
+.category-label {
+    font-weight: bold;
+}
+
+/* Estilos para los enlaces "Agregar" y "Cancelar" */
+.add-link {
+    color: #7749F8;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.cancel-link {
+    color: #444;
+    text-decoration: underline;
+    cursor: pointer;
 }
