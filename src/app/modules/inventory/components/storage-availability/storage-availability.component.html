@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-center">
+  <div class="search-form-container">
+    <form #searchForm="ngForm">
+      <div class="mb-3">
+        <label for="product" class="form-label">Nombre o ID de producto</label>
+        <input type="text" class="form-control " id="product" name="product" [(ngModel)]="product" required
+          minlength="1" [ngClass]="{'is-invalid': productField.invalid && productField.touched}"
+          #productField="ngModel">
+      </div>
+
+      <button type="submit" class="btn btn-primary  w-100" (click)="searchProduct(searchForm)">BUSCAR</button>
+    </form>
+  </div>
+  <div class="info-container">
+    <div class="row">
+      <p>Cantidad disponible</p>
+      <input class="form-control" type="text" [value]="availableQuantity" aria-label="Disabled input example" readonly>
+    </div>
+    <div class="row">
+      <p>Unidad de medida</p>
+      <input class="form-control" type="text" [value]="measureUnit" aria-label="Disabled input example" readonly>
+    </div>
+    <div class="row">
+      <p>Cantidad almacenada</p>
+      <input class="form-control" type="text" [value]="storageQuantity" aria-label="Disabled input example" readonly>
+    </div>
+    <div class="row">
+      <p>Categoria</p>
+      <input class="form-control" type="text" [value]="category" aria-label="Disabled input example" readonly>
+    </div>
+  </div>
+</div>
