@@ -1,17 +1,19 @@
-<div class="mb-3 col-md-3">
-    <label class="form-label">Agregar categoría</label>
-</div>
-<div class="mb-3 col-md-3">
-    <label for="inputCategoryName" class="form-label">Nombre</label>
-    <input type="text" class="form-control" id="inputCategoryName">
-</div>
+<div class="container border p-3">
+    <div class="mb-3 col-md-3">
+        <label class="form-label category-label">Agregar categoría</label>
+    </div>
+    <div class="mb-3 col-md-3">
+        <label for="inputCategoryName" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="inputCategoryName">
+    </div>
 
-<div class="mb-3 col-md-6">
-    <label for="inputDescription" class="form-label">Descripción</label>
-    <textarea class="form-control" id="inputDescription" rows="3"></textarea>
-</div>
+    <div class="mb-3 col-md-6">
+        <label for="inputDescription" class="form-label">Descripción</label>
+        <textarea class="form-control" id="inputDescription" rows="3"></textarea>
+    </div>
 
-<div class="mb-3 col-md-3 links-add-category">
-    <a (click)="hideAddCategory()">Cancelar</a>
-    <a (click)="addCategory()">Agregar</a>
+    <div class="mb-3 col-md-3 links-add-category">
+        <a class="cancel-link" (click)="hideAddCategory()">Cancelar</a>
+        <a class="add-link" (click)="addCategory()">Agregar</a>
+    </div>
 </div>

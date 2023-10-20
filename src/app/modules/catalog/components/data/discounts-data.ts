@@ -1,0 +1,81 @@
+import { IDiscount } from "../../models/IDiscounts";
+
+export const DISCOUNT_LIST: IDiscount[] = [
+    {
+        id: 1,
+        idProduct: 1001,
+        discountRate: 0.1,
+        start_date: new Date("2023-10-19T22:41:42.094Z"),
+        end_date: new Date("2023-09-21T22:41:42.094Z"),
+    },
+    {
+        id: 2,
+        idProduct: 1002,
+        discountRate: 0.15, 
+        start_date: new Date("2023-10-20T22:41:42.094Z"),
+        end_date: new Date("2023-10-22T22:41:42.094Z"),
+    },
+    {
+        id: 3,
+        idProduct: 1003,
+        discountRate: 0.2, 
+        start_date: new Date("2023-10-21T22:41:42.094Z"),
+        end_date: new Date("2023-10-23T22:41:42.094Z"),
+    },
+    {
+        id: 4,
+        idProduct: 1004,
+        discountRate: 0.25,
+        start_date: new Date("2023-10-22T22:41:42.094Z"),
+        end_date: new Date("2023-10-24T22:41:42.094Z"),
+    },
+    {
+        id: 5,
+        idProduct: 1005,
+        discountRate: 0.3, 
+        start_date: new Date("2023-10-23T22:41:42.094Z"),
+        end_date: new Date("2023-10-25T22:41:42.094Z"),
+    },
+    {
+        id: 6,
+        idProduct: 1006,
+        discountRate: 0.35, 
+        start_date: new Date("2023-10-24T22:41:42.094Z"),
+        end_date: new Date("2023-10-26T22:41:42.094Z"),
+    },
+    {
+        id: 7,
+        idProduct: 1007,
+        discountRate: 0.4, 
+        start_date: new Date("2023-10-25T22:41:42.094Z"),
+        end_date: new Date("2023-10-27T22:41:42.094Z"),
+    },
+    {
+        id: 8,
+        idProduct: 1008,
+        discountRate: 0.45, 
+        start_date: new Date("2023-10-26T22:41:42.094Z"),
+        end_date: new Date("2023-10-28T22:41:42.094Z"),
+    },
+    {
+        id: 9,
+        idProduct: 1009,
+        discountRate: 0.5, 
+        start_date: new Date("2023-10-27T22:41:42.094Z"),
+        end_date: new Date("2023-10-29T22:41:42.094Z"),
+    },
+    {
+        id: 10,
+        idProduct: 1010,
+        discountRate: 0.55, 
+        start_date: new Date("2023-10-28T22:41:42.094Z"),
+        end_date: new Date("2023-10-30T22:41:42.094Z"),
+    },
+    {
+        id: 11,
+        idProduct: 1011,
+        discountRate: 0.33, 
+        start_date: new Date("2023-10-28T22:41:42.094Z"),
+        end_date: new Date("2023-10-30T22:41:42.094Z"),
+    },
+];
