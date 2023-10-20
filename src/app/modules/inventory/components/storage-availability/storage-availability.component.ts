@@ -28,7 +28,7 @@ export class StorageAvailabilityComponent implements OnDestroy {
   private suscriptions: Subscription = new Subscription();
   constructor(private productService: ProductService) {}
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    this.suscriptions.unsubscribe();
   }
   searchProduct(form: NgForm) {
     if (form.invalid) {
