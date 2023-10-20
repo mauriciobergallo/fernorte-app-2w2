@@ -1,30 +1,73 @@
-
-<div>
-    <fn-sale-order-search-handler>
-    </fn-sale-order-search-handler>
-    <fn-sale-order></fn-sale-order>
-</div>
-
-
-<div class="container" id="navVentas">
-    
+<div class="container-flex p-3" id="homeSales">
+    <div class="d-flex justify-content-end">
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <label class="btn btn-secondary active"><b>Vendedor : {{userName}}  </b> </label>
+            <button type="button" class="btn btn-secondary">cerrar sesión</button>
+        </div>        
+    </div>
+    <br>
     <div class="row">
-        <div class="col-md-2">
-            <h1>Ventas</h1>
+        <div class="col-md-4">
+            <div class="d-grid gap-2 mx-auto" role="group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+                    Ventas
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" (click)="onShowSalesOrders()">Generar Presupuesto</a></li>
+                    <li><a class="dropdown-item" href="#" (click)="onShowSalesOrders()">Generae Orden de Venta</a></li>
+                    <li><a class="dropdown-item" href="#" (click)="onShowSalesOrdersSearch()">Mostrar Ordenes de Venta</a></li>
+                    <li><a class="dropdown-item" href="#" (click)="onShowSalesOrdersSearch()">Buscar Ordenes de Venta</a></li>
+                    <li><a class="dropdown-item" href="#">Cancelar Orden de Venta</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-3">
-            <a href="#" class="btn btn-primary btn-block"(click)="onShowPaymentMethod()">Payment Method</a>
+        <div class="col-md-4">
+            <div class="d-grid gap-2 mx-auto" role="group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+                    Facturación
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" (click)="onShowBilling()">Generar Factura</a></li>
+                    <li><a class="dropdown-item" href="#" (click)="onShowBilling()">Emitir Factura</a></li>
+                    <li><a class="dropdown-item" href="#" (click)="onShowBilling()">Mostrar Facturas</a></li>
+                    <li><a class="dropdown-item" href="#" (click)="onShowBilling()">Buscar Facturas</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-3">
-            <a href="#" class="btn btn-primary btn-block" (click)="onShowBilling()">Billing</a>
+        <!-- <div class="col-md-3">
+            <div class="d-grid gap-2 mx-auto" role="group">
+                <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+                    Payment
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Generate Payment</a></li>
+                    <li><a class="dropdown-item" href="#">Edit Payment</a></li>
+                    <li><a class="dropdown-item" href="#">Shearch Payment</a></li>
+                </ul>
+            </div>
+        </div> -->
+        <div class="col-md-4">
+            <div class="d-grid gap-2 mx-auto" role="group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+                    Metodos de Pago
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" (click)="onShowPaymentMethod()">Crear Metodo de Pago</a></li>
+                    <li><a class="dropdown-item" href="#" (click)="onShowPaymentMethod()">Modificar Metodo de pago</a></li>
+                    <li><a class="dropdown-item" href="#" (click)="onShowPaymentMethod()">Buscar Metodo de Pago</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-3">
-            <a href="#" class="btn btn-primary btn-block" (click)="onShowSalesOrder()" >Sales Order</a>
-        </div>
-
     </div>
 </div>
-<fn-billing *ngIf="showBilling"></fn-billing>
-<fn-sale-order *ngIf="showSalesOrder"></fn-sale-order>
-<fn-payment-method *ngIf="showPaymentMethod"></fn-payment-method>
+
+<div>
+    <fn-sale-order *ngIf="showSalesOrder"></fn-sale-order>
+    <fn-sale-order-search-handler *ngIf="showSalesOrderSearch"></fn-sale-order-search-handler>
+    <fn-billing *ngIf="showBilling"></fn-billing>
+    <fn-payment-method *ngIf="showPaymentMethod"></fn-payment-method>   
+    
+</div>
+
+
 

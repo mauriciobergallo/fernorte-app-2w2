@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 
 export class HomeComponent implements OnInit  {
 
+  userName: string = "Pepito"
+
   constructor(){} 
   ngOnInit(): void {    
   }
@@ -15,7 +17,8 @@ export class HomeComponent implements OnInit  {
 
   private readonly modules = {
     Billing: 'Billing',
-    SalesOrder: 'SalesOrder',
+    SalesOrders: 'SalesOrder',
+    SalesOrderSearch : 'SalesOrderSearch',
     PaymentMethod: 'PaymentMethod',
 
   };
@@ -23,14 +26,20 @@ export class HomeComponent implements OnInit  {
   showBilling: boolean = false;
   showSalesOrder: boolean = false;
   showPaymentMethod: boolean = false;
+  showSalesOrderSearch: boolean = false;
+
+  onShowSalesOrders() {
+    this.onShowModule(this.modules.SalesOrders);
+  }
+  onShowSalesOrdersSearch() {
+    this.onShowModule(this.modules.SalesOrderSearch);
+  }
 
   onShowBilling() {
     this.onShowModule(this.modules.Billing);
   }
 
-  onShowSalesOrder() {
-    this.onShowModule(this.modules.SalesOrder);
-  }
+ 
 
   onShowPaymentMethod() {
     this.onShowModule(this.modules.PaymentMethod);
@@ -40,7 +49,7 @@ export class HomeComponent implements OnInit  {
 
   private onShowModule(moduleName: string) {
     this.showBilling = moduleName === this.modules.Billing;
-    this.showSalesOrder = moduleName === this.modules.SalesOrder;
+    this.showSalesOrder = moduleName === this.modules.SalesOrders;
     this.showPaymentMethod= moduleName === this.modules.PaymentMethod;
   
   }
