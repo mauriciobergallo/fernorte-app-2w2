@@ -17,22 +17,18 @@ export class LoginComponent {
 
   constructor(private loginService: LoginService){}
 
-  public onAdd(form: NgForm){
-    // this.loginService.get().subscribe( response => {
-    //   console.log(response.toString)
-    // });
-
-    if(form.valid){
-      this.loginService.onLogin(this.login).subscribe(response =>{
-        console.log(response);
-        alert("Bienvenido " + response.userName)
-      },
-      (error) => {
-        console.error('Error en la solicitud:', error);
-        alert("Username o Password incorrecta");
-        // Puedes mostrar un mensaje de error o realizar otra acción aquí
-      })
+  public onAdd(form: NgForm) {
+    if (form.valid) {
+      this.loginService.onLogin(this.login).subscribe(
+        (respuesta: any) => {
+          alert("Bienvenido " + respuesta.userName);
+        },
+        (error: any) => {
+          alert("Servicio no disponible");
+        }
+      );
     }
   }
+  
 
 }
