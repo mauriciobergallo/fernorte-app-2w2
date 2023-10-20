@@ -16,13 +16,11 @@ export class TurnService {
 
   constructor(private http: HttpClient) {}
   
-  postData(documentNumber?: string): Observable<TurnResponse> {
-    debugger;
+  postData(documentNumber?: string): Observable<TurnResponse> {    
     const body = new FormData();
     if (documentNumber) {
       body.append('documentNumber', documentNumber);      
     }
-
     return this.http.post<TurnResponse>(`${this.apiUrl}${this.newTurn}`, body);
   }
 }

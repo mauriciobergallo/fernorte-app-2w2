@@ -42,12 +42,22 @@ export class TurnsComponentComponent {
 
   sendDocumentNumber() {
     if (this.documentNumber) {
-      this.turnService.postData(this.documentNumber).subscribe(
-        response => 
-            this.showCustomerInfo(response));  
-      }
-      //aca debo limpiar el input para limpiar valor.
+      this.turnService.postData(this.documentNumber).subscribe(response => {
+        this.showCustomerInfo(response);
+        const welcomeMessage = `Bienvenido ${response.firstName}, tu número de turno es ${response.number}, y fue creado el ${response.createdAt}`;
+        alert(welcomeMessage);
+        this.clearFields();
+      });
     }
+  }  
+  
+  clearFields() {
+    this.inputText = ''; 
+    this.documentNumber = ''; 
+    this.ToCustomer = false; 
+    this.ToNoCustomer = false; 
+    this.Main = true; 
+  }
   
   showCustomerInfo(customerData: any) {
     // Muestra la información del cliente en la interfaz de usuario
