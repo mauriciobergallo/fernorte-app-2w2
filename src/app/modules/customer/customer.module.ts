@@ -16,10 +16,12 @@ import { EmployeeService } from './services/employee.service';
 import { RoleService } from './services/role.service';
 import { TurnService } from './services/turn.service';
 import { LoginService } from './services/login.service';
+import { CreateCustomerComponent } from './components/create-customer/create-customer.component';
+import { CustomerService } from './services/customer.service';
 
 @NgModule({
-  declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent, LoginComponent],
-  providers: [EmployeeService,RoleService,TurnService,LoginService],
+  declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent, LoginComponent, CreateCustomerComponent],
+  providers: [EmployeeService, RoleService, TurnService, LoginService, CustomerService],
   imports: [CommonModule, BrowserModule, ReactiveFormsModule, NgbModule, FormsModule, HttpClientModule],
   exports: [HomeComponent],
 })
