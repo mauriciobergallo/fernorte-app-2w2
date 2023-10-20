@@ -1,16 +1,26 @@
-<div class="container">
-    <h1>Buscar ubicación de producto</h1>
-    <div class="form-group">
-        <label for="productCodeOrName">Nombre o código del producto</label>
-        <input type="text" class="form-control" id="productCodeOrName" [(ngModel)]="productCodeOrName">
+<section class="container">
+    <form #searchForm="ngForm">
+
+        <h1>Buscar ubicación de producto</h1>
+        <div class="form-group">
+            <label for="productCodeOrName">Nombre o código del producto</label>
+            <input  type="text" class="form-control" id="productCodeOrName" [(ngModel)]="productCodeOrName" required
+            name="productCodeOrName"   #controlCodeOrName="ngModel" (input)="onInput($event)">
+        </div>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert"
+            *ngIf="(controlCodeOrName.getError('required') && !controlCodeOrName.pristine)">
+            <strong class="text-danger">Codigo o nombre del producto es requerido</strong>
+        </div>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert"
+        *ngIf="(!controlCodeOrName.pristine && !findProduct)">
+        <strong class="text-danger">Producto no localizado</strong>
     </div>
-    <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="!findProduct">
-        <strong class="text-danger  ">Producto no localizado</strong>
-      </div>
-    <div class="form-group mt-2 ">
-        <button type="button" class="btn btn-primary" (click)="onSearch()">Buscar</button>
-    </div>
-    
+        <div class="form-group mt-2 ">
+            <button type="button" class="btn btn-primary"
+            [disabled]="searchForm.invalid" (click)="onSearch(searchForm)">Buscar</button>
+        </div>
+    </form>
+
     <div class="row mt-2">
         <div class="col-4">
             <label for="productName">{{productName}}</label>
@@ -46,7 +56,8 @@
         <div class="col-4">
             <div class="form-group">
                 <label for="capacityRemaining">Capacidad restante</label>
-                <input type="float" class="form-control" id="capacityRemaining" readonly [(ngModel)]="capacityRemaining">
+                <input type="float" class="form-control" id="capacityRemaining" readonly
+                    [(ngModel)]="capacityRemaining">
             </div>
         </div>
         <div class="col-4">
@@ -56,4 +67,4 @@
             </div>
         </div>
     </div>
-</div>
+</section>

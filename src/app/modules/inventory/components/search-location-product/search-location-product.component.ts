@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { WarehouseService } from '../../services/warehouse.service';
 import { ILocationInfoProduct } from '../../models/ILocationInfoProduct';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'fn-search-location-product',
@@ -29,42 +30,39 @@ export class SearchLocationProductComponent implements OnInit, OnDestroy {
   capacityRemaining?: number;
   measureUnit: string = '';
 
-  findProduct: boolean=true;
+  findProduct: boolean = true;
 
-  onSearch() {
+  onSearch(form: NgForm) {
     this.resetFields()
-    if(this.productCodeOrName == "" || this.productCodeOrName.length==0){
-      this.findProduct=false;
-      return;
-    }
     this.subscripciones.add(
       this.warehouseService.getProductLocation(this.productCodeOrName).subscribe(
         (locationInfo: ILocationInfoProduct) => {
-          if(locationInfo != null){
+          if (locationInfo != null) {
             this.findProduct = true;
             this.productName = locationInfo.productName;
-            this.zone = locationInfo.location.zone; 
+            this.zone = locationInfo.location.zone;
             this.section = locationInfo.location.section;
             this.space = locationInfo.location.space;
             this.capacityTotal = locationInfo.maxCapacity;
             this.capacityRemaining = locationInfo.maxCapacity - locationInfo.quantity;
             this.measureUnit = locationInfo.measureUnit;
 
-          }else
-          {
-            this.findProduct=false;
+          } else {
+            this.findProduct = false;
           }
-
-
         },
         (error: any) => {
           console.error(error);
-          this.findProduct=false;
+          this.findProduct = false;
         }
       )
     );
 
   }
+  onInput(event: Event) {
+    this.findProduct = true;
+  }
+
   resetFields() {
     this.productName = '';
     this.zone = '';
