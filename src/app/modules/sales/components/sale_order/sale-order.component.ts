@@ -14,6 +14,9 @@ import { IDetailsSaleOrder } from '../../interfaces/idetails-sale-order';
   styleUrls: ['./sale-order.component.css']
 })
 export class SaleOrderComponent implements OnInit {
+test() {
+throw new Error('Method not implemented.');
+}
 
   constructor(private saleOrderServiceService: SaleOrderServiceService,
     private loadingService: LoadingService,
@@ -34,6 +37,8 @@ export class SaleOrderComponent implements OnInit {
   }
 
   agregarProducto() {
+    if(this.productoSeleccionado.codigo == "")
+    return;
     this.carrito.push(this.productoSeleccionado);
     this.productoSeleccionado = this.cleanProduct();
   }
@@ -48,7 +53,8 @@ export class SaleOrderComponent implements OnInit {
       codigo: '',
       nombre: '',
       precioUnitario: 0,
-      cantidad: 0
+      cantidad: 0,
+      cantidadSeleccionado:1
     }
 
     return productoSeleccionado;
@@ -84,5 +90,12 @@ export class SaleOrderComponent implements OnInit {
 
     this.salesOrderLoad = await this.saleOrderServiceService.createSaleOrder(saleOrder!)!
     this.loader = this.loadingService.loading();
+  }
+
+  validacionStock(event: any, cantidadStock:number){
+    if(parseInt(event.target.value) > cantidadStock){
+      alert("sumera el stock")
+      event.target.value = 0;
+    }
   }
 }

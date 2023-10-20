@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ISaleOrder } from '../interfaces/isale-order';
-import { SaleOrderProvider } from '../providers/SaleOrderProvider';
+import { SaleOrderProvider } from './SaleOrderProvider';
 @Injectable({
   providedIn: 'root'
 })
