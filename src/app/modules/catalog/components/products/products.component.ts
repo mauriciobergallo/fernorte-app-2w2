@@ -24,7 +24,6 @@ export class ProductsComponent {
         this.productService.get().subscribe({
           next: (products: IProduct[]) => {
             this.listProducts = products;
-            console.log(this.listProducts)
           },
           error: () => {
             alert('error en la API')
