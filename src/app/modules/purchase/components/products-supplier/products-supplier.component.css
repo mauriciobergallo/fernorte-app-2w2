@@ -1,0 +1,29 @@
+.model-container {
+  width: 450px;
+  height: 200px;
+  background-color: rgb(236, 236, 236);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  border-radius: 5px;
+  z-index: 10;
+}
+
+.background-config {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100vw;
+  height: 100vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.toast {
+  position: fixed;
+  top: 75px;
+  right: 10px;
+  z-index: 999;
+}

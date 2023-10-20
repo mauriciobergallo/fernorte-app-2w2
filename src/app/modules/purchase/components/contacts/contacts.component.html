@@ -1,0 +1,88 @@
+<div class="model-container">
+  <div class="cross-container">
+    <button class="cross" (click)="closeModal()">X</button>
+  </div>
+  <div class="container">
+    <div class="d-flex justify-content-end m-2">
+      <button class="btn btn-primary" (click)="switchShowing()">
+        {{ buttonText }}
+      </button>
+    </div>
+    <table class="table" *ngIf="showingList">
+      <thead>
+        <tr>
+          <th scope="col">Tipo de Contacto</th>
+          <th scope="col">Contacto</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of contacts.contacts">
+          <td>
+            <span *ngIf="item.contactType == 'CELLPHONE'">Teléfono</span>
+            <span *ngIf="item.contactType == 'EMAIL'">Mail</span>
+          </td>
+          <td>{{ item.contactValue }}</td>
+          <td>
+            <button class="btn btn-danger mx-1" (click)="deleteContact(item)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <form
+      #miForm="ngForm"
+      class="container h-100 d-flex flex-column justify-content-between"
+      *ngIf="!showingList"
+      (ngSubmit)="onSubmit()"
+    >
+      <h2 class="d-flex justify-content-center">Agregar Contacto</h2>
+      <div class="row">
+        <div class="col-lg-6 col-md-12 col-sm-12">
+          <label for="razon_social" class="form-label">Forma de Contacto</label>
+          <select
+            class="d-block w-100 form-select"
+            name="contact_type"
+            [(ngModel)]="contact.contactType"
+            #contactTypeSelect="ngModel"
+            [ngClass]="{
+              'border-red':
+                !contactTypeSelect.valid && contactTypeSelect.touched
+            }"
+          >
+            <option value=""></option>
+            <option value="CELLPHONE">Telefono</option>
+            <option value="EMAIL">Email</option>
+          </select>
+        </div>
+
+        <div class="col-lg-6 col-md-12 col-sm-12">
+          <label for="nombre_fantasia" class="form-label">Contacto</label>
+          <input
+            type="text"
+            class="form-control"
+            name="contact_value"
+            [(ngModel)]="contact.contactValue"
+            #contactValueInput="ngModel"
+            [ngClass]="{
+              'border-red':
+                !contactValueInput.valid && contactValueInput.touched
+            }"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="d-grid gap-2 col-4 mx-auto">
+        <button
+          type="submit"
+          class="btn btn-primary my-4"
+          [disabled]="miForm.invalid"
+        >
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
