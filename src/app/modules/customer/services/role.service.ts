@@ -3,9 +3,7 @@ import { Role } from '../models/role';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class RoleService {
 
   private apiUrl = "http://localhost:8095/role";

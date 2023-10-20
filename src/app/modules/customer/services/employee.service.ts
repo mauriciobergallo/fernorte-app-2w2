@@ -3,9 +3,8 @@ import { Employee } from '../models/employee';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EmployeeResponseDTO } from '../models/employeeResponseDTO';
-@Injectable({
-  providedIn: 'root'
-})
+
+@Injectable()
 export class EmployeeService {
 
   constructor(private http: HttpClient) { }

@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { Login } from '../models/login';
 import { Observable, catchError, throwError } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class LoginService {
 
   constructor(private http:HttpClient) { }
