@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  searchProductVisible : boolean = true;
+
+
+  showSearchLocationProduct() : void {
+    this.searchProductVisible = true;
+  }
+
+
+
 }

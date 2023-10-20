@@ -1,1 +1,26 @@
-<p>home inventory works!</p>
+<div class="container">
+
+    <div class="containter">
+        <nav class="navbar navbar-expand-lg bg-transparent">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" aria-current="page" (click)="showSearchLocationProduct()"
+                            href="#">Ubicar Producto</a>
+                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="#">Features</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+
+        <fn-search-location-product *ngIf="searchProductVisible"></fn-search-location-product>
+    </div>
+</div>
