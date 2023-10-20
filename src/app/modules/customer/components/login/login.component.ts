@@ -15,6 +15,8 @@ export class LoginComponent {
     password: ''
   }
 
+  show: boolean = false;
+
   constructor(private loginService: LoginService){}
 
   public onAdd(form: NgForm) {

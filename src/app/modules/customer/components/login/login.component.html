@@ -1,4 +1,8 @@
-<div class="container my-5 mx-auto col-4">
+<button class="btn btn-lg btn-outline-primary" (click)="show = show == true ? false : true">Mostrar Login</button>
+
+<hr />
+
+<div class="container my-5 mx-auto col-4" *ngIf="show">
 <form #miFormulario="ngForm" (ngSubmit)="onAdd(miFormulario)">
 
     <div style="text-align: center;">
@@ -10,21 +14,21 @@
     </div>
 
     <div class="form-floating">
-        <input type="text" class="form-control my-2" id="floatingInput" placeholder="name@example.com"
+        <input type="text" class="form-control my-2" id="floatingInput" placeholder=""
         name="username" #username = "ngModel" [(ngModel)]="login.identity"
         [ngClass]="{ 'is-invalid': username.invalid && miFormulario.submitted}" required>
-        <label for="floatingInput">Username</label>
+        <label for="floatingInput">Usuario</label>
         <div class="invalid-feedback">
-            Ingrese un userName
+            Ingrese un usuario
         </div>
     </div>
     <div class="form-floating">
         <input type="password" class="form-control my-2" id="floatingPassword" placeholder="Password"
         name="password" #password = "ngModel" [(ngModel)]="login.password"
         [ngClass]="{ 'is-invalid': password.invalid && miFormulario.submitted}" required>
-        <label for="floatingPassword">Password</label>
+        <label for="floatingPassword">Contraseña</label>
         <div class="invalid-feedback">
-            Ingrese un password
+            Ingrese una contraseña
         </div>
     </div>
 
