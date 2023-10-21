@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let product of pagedProducts">
+      <tr *ngFor="let product of listProducts  | slice: (currentPage-1) * itemsPerPage : currentPage * itemsPerPage">
         <td>{{ product.name }}</td>
         <td>
           <img [src]="product.urlImage" alt="Imagen del producto" height="50" />
@@ -32,7 +32,7 @@
   <ngb-pagination
     [(page)]="currentPage"
     [pageSize]="itemsPerPage"
-    [collectionSize]="products.length"
+    [collectionSize]="listProducts.length"
     [maxSize]="5"
     [rotate]="true">
   </ngb-pagination>
