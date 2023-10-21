@@ -8,6 +8,8 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
+  private apiUrl = "http://localhost:8085/customers"
+
 //Post
 createCustomer(customer: CustomerRequest){
   console.log("CUSTOMER", customer)
@@ -16,9 +18,9 @@ createCustomer(customer: CustomerRequest){
 }
 
 postCustomer(customer: CustomerRequest): Observable<any>{
-  return this.http.post("URL", customer) //Petición HTTP Post para crear empleado
-
-}
+    return this.http.post<CustomerRequest>(this.apiUrl, customer );
+  
+  }
 
 
 

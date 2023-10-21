@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { HomeComponent } from './components/home/home.component';
@@ -22,7 +22,7 @@ import { CreateRolComponent } from './components/create-rol/create-rol.component
 
 @NgModule({
   declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent, LoginComponent, CreateCustomerComponent, CreateRolComponent],
-  providers: [EmployeeService, RoleService, TurnService, LoginService, CustomerService],
+  providers: [EmployeeService, RoleService, TurnService, LoginService, CustomerService, DatePipe],
   imports: [CommonModule, BrowserModule, ReactiveFormsModule, NgbModule, FormsModule, HttpClientModule],
   exports: [HomeComponent],
 })

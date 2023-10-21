@@ -1,3 +1,5 @@
+import { DocumentType } from "./documentType";
+
 export interface CustomerRequest {
     firstName: string;
     lastName: string;
@@ -5,7 +7,7 @@ export interface CustomerRequest {
     ivaCondition: string;
     email: string;
     birthDate: Date;
-    documentType: number; //Cambiar a tipo de dato acorde dependiendo si usamos Enum o tabla aparte
+    documentType: number; 
     documentNumber: string; 
     address: string;
     phoneNumber: string;
