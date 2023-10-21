@@ -3,6 +3,7 @@ import { CustomerRequest } from '../../models/customer-request';
 import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from '../../services/customer.service';
+import { DatePipe } from '@angular/common';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -24,10 +25,7 @@ lastName:"",
 companyName: "",
 ivaCondition: "Monotributo",
 birthDate: new Date(),
-documentType:{
-	idDocumentType: 1,
-	description: "CUIT"
-},
+documentType:1,
 documentNumber:"",
 address:"",
 phoneNumber:"",
@@ -57,8 +55,8 @@ customerType: ""
 					ivaCondition: this.customer.ivaCondition,
 					birthDate: this.formattedBirthDate,
 					documentType:{
-						idDocumentType: this.customer.documentType.idDocumentType,
-						description: this.setDocumentTypeDescription(this.customer.documentType.idDocumentType)
+						idDocumentType: this.customer.documentType,
+						description: this.setDocumentTypeDescription(this.customer.documentType)
 					},
 					documentNumber: this.customer.documentNumber,
 					address: this.customer.address,

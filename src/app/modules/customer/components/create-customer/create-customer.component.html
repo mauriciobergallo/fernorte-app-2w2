@@ -46,7 +46,7 @@
 			<div class="mb-3 d-flex">
 				<div class="flex-grow-1 me-2">
 					<label for="documentType">Tipo de documento</label>
-					<select [(ngModel)]="customer.documentType.idDocumentType" name="documentType" id="documentType" class="form-select">
+					<select [(ngModel)]="customer.documentType" name="documentType" id="documentType" class="form-select">
 						<option value=1 *ngIf="customer.customerType == 'Fisica'">DNI</option>
 						<option value=2 *ngIf="customer.customerType == 'Fisica'">Pasaporte</option>
 						<option value=3 *ngIf="customer.customerType == 'Juridica'">CUIT</option>
