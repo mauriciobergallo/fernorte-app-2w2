@@ -7,5 +7,4 @@ export interface Employee{
     address: string;
     phoneNumber:string;
     personalEmail: string; //Test
-
 }
