@@ -16,9 +16,9 @@ createCustomer(customer: CustomerRequest){
 }
 
 postCustomer(customer: CustomerRequest): Observable<any>{
-  return this.http.post("URL", customer) //Petición HTTP Post para crear empleado
-
-}
+    return this.http.post<CustomerRequest>(this.apiUrl, customer );
+  
+  }
 
 
 
