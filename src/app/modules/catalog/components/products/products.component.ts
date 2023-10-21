@@ -14,11 +14,11 @@ export class ProductsComponent {
   private subscription = new Subscription();
 
   currentPage = 1;
-  itemsPerPage = 10;
+  itemsPerPage = 7;
 
   constructor(private productService: ProductService) { }
 
-  get pagedProducts() {
+  private pagedProducts() {
 
       this.subscription.add(
         this.productService.get().subscribe({
@@ -29,9 +29,6 @@ export class ProductsComponent {
             alert('error en la API')
           }
         }));
-
-      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      return this.listProducts.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
   ngOnDestroy(): void {
@@ -39,6 +36,6 @@ export class ProductsComponent {
   }
 
   ngOnInit() {
-    this.pagedProducts;
+    this.pagedProducts();
   }
 }

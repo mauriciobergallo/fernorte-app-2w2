@@ -7,6 +7,6 @@ export interface IProduct {
     unitPrice: number;
     stockQuantity: number;
     unitOfMeasure: string;
-    categoryModel: ICategory;
+    category: ICategory;
     urlImage: string;
 }
