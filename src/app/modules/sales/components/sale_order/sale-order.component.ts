@@ -27,7 +27,7 @@ throw new Error('Method not implemented.');
   listProductfiltrada: IProduct[] = [];
   carrito: IProduct[] = [];
   listDetailSaleOrder: IDetailsSaleOrder[]=[];
-
+  permiteGenerar: boolean = true;
   productoSeleccionado = this.cleanProduct();
   readonly typeSalesOrder = TypeSalesOrder.ORDEN_VENTA;
   readonly typePresupuesto = TypeSalesOrder.PRESUPUESTO;
@@ -59,7 +59,7 @@ throw new Error('Method not implemented.');
 
     return productoSeleccionado;
   }
-  buildSaleOrder(state: SaleOrderStates, type: TypeSalesOrder) {
+  buildSaleOrder(state: SaleOrderStates, type: TypeSalesOrder, carrito: IProduct[]) {
     let saleOrder: ISaleOrder = ({
       id_seller: 1,
       id_client: 1,
@@ -68,24 +68,35 @@ throw new Error('Method not implemented.');
       state_sale_order: state,
       detail_sales_order: [
         {
-          id_product: 1,
+          id_product: 0o1,
           quantity: 1,
           price: 100,
           state_sale_order_detail: state
         }
       ]
+      
     });
+    
 
     return saleOrder;
   }
 
   async generateSaleOrder(type: TypeSalesOrder) {
+
+   
+
     this.loader = this.loadingService.loading();
     let saleOrder = null;
     if (type == this.typeSalesOrder) {
-      saleOrder = this.buildSaleOrder(SaleOrderStates.UNBILLED, type);
+      saleOrder = this.buildSaleOrder(SaleOrderStates.UNBILLED, type, this.carrito);
     } else if (type == this.typePresupuesto) {
-      saleOrder = this.buildSaleOrder(SaleOrderStates.CREATE, type);
+      saleOrder = this.buildSaleOrder(SaleOrderStates.CREATE, type, this.carrito);
+    }
+    let validateCantidad = this.saleOrderServiceService.ValidarPresupuestoOOrdenVenta(saleOrder!, this.carrito)
+    if(validateCantidad) {
+      alert("existen productos que la cantidad superan el stock")
+      this.loader = this.loadingService.loading();
+      return;
     }
 
     this.salesOrderLoad = await this.saleOrderServiceService.createSaleOrder(saleOrder!)!

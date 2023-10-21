@@ -267,7 +267,7 @@ y guardados en el sistema al momento de generar el presupuesto para poder contin
                                             class="form-control" id="cantidad" placeholder="cantidad" required
                                             [maxlength]="item.cantidad"
                                             max-length-message="La cantidad no puede exceder el valor máximo" >
-                                        <div *ngIf="controlCantidad.value > item.cantidad" style="color: red">
+                                        <div  *ngIf="controlCantidad.value > item.cantidad" style="color: red" >
                                             no puede superar al stock
                                         </div>
                                     </td>
