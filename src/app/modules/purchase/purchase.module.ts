@@ -1,4 +1,3 @@
-import { PurchaseClaimComponent } from './components/purchase/claim/purchase-claim/purchase-claim.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -13,8 +12,7 @@ import { AddSupplierComponent } from './components/supplier/add-supplier/add-sup
 import { ContactsComponent } from './components/supplier/contacts/contacts.component';
 import { ProductsSupplierComponent } from './components/supplier/products-supplier/products-supplier.component';
 import { SidenavComponent } from './components/shared/sidenav/sidenav.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { PurchaseOrderComponent } from './components/purchase/order/purchase-order/purchase-order.component';
+
 import { PurchaseOrderContainerComponent } from './components/purchase-order-container/purchase-order-container.component';
 import { PaymentOrderContainerComponent } from './components/payment-order-container/payment-order-container.component';
 import { ClaimOrderContainerComponent } from './components/claim-order-container/claim-order-container.component';
@@ -31,7 +29,7 @@ import { OrderButtonsComponent } from './components/shared/order-buttons/order-b
 
 
 @NgModule({
-  declarations: [HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, DashboardComponent, PurchaseOrderComponent, PurchaseClaimComponent, PurchaseClaimComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, TotalSidebarComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent],
+  declarations: [HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, TotalSidebarComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent],
   providers: [],
   imports: [CommonModule, FormsModule,NgbModule, NgbPaginationModule, NgbDropdownModule, NgbToastModule],
   exports: [HomeComponent],
