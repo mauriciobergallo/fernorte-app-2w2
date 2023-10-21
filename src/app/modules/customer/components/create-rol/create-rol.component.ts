@@ -30,8 +30,8 @@ export class CreateRolComponent {
 				this.roleService.createRole(this.role).subscribe({
 					next:(newRole: Role) =>{
 						alert("Rol: "+ newRole.name + " Creado correctamente")//Esto despues hay que hacerlo con sweet alert
-					},error:() => {
-						alert('Error al comunicarse con la API');//Esto despues hay que hacerlo con sweet alert
+					},error:(error) => {
+						alert('Error al comunicarse con la API');//Esto despues hay que hacerlo con sweet alert y aca hay que poner que tiene que avisar cuando el rol ya existe en la DB
 					  }
 				})
 				this.roleService.clearFields(this.role);
