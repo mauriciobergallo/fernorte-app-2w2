@@ -3,7 +3,6 @@ import { CustomerRequest } from '../../models/customer-request';
 import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from '../../services/customer.service';
-import { DatePipe } from '@angular/common';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -33,7 +32,7 @@ documentNumber:"",
 address:"",
 phoneNumber:"",
 email: "",
-customerType: "Fisica"
+customerType: ""
 };
 
 	isCompany: boolean = false; 
@@ -58,8 +57,8 @@ customerType: "Fisica"
 					ivaCondition: this.customer.ivaCondition,
 					birthDate: this.formattedBirthDate,
 					documentType:{
-						idDocumentType: 1,
-						description: "CUIT"
+						idDocumentType: this.customer.documentType.idDocumentType,
+						description: this.setDocumentTypeDescription(this.customer.documentType.idDocumentType)
 					},
 					documentNumber: this.customer.documentNumber,
 					address: this.customer.address,
@@ -106,14 +105,29 @@ customerType: "Fisica"
 	  const month = event.month || 1;
 	  const day = event.day || 1;
   
-	  // Crea una instancia de Date con la fecha seleccionada
 	  const selectedDate = new Date(year, month - 1, day);
-  
-	  // Formatea la fecha en el formato deseado
 	  this.formattedBirthDate = selectedDate.toISOString();
 	} else {
-	  // Si no se ha seleccionado una fecha, puedes manejarlo como prefieras
 	  this.formattedBirthDate = '';
+	}
+  }
+
+  setDocumentTypeDescription(id: number): string{
+	switch(id){
+		case 1:
+			return "DNI"
+		case 2:
+			return "Pasaporte"
+		case 3:
+			return "CUIT"
+		case 4:
+			return "CUIL"
+		case 5:
+			return "LC"
+		case 6:
+			return "LE"
+		default:
+			return ""
 	}
   }
 

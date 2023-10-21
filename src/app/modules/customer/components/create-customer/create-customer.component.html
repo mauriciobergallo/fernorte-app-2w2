@@ -46,9 +46,13 @@
 			<div class="mb-3 d-flex">
 				<div class="flex-grow-1 me-2">
 					<label for="documentType">Tipo de documento</label>
-					<select [(ngModel)]="customer.documentType" name="documentType" id="documentType" class="form-select">
-						<option value=1>DNI</option>
-						<option value=2>Pasaporte</option>
+					<select [(ngModel)]="customer.documentType.idDocumentType" name="documentType" id="documentType" class="form-select">
+						<option value=1 *ngIf="customer.customerType == 'Fisica'">DNI</option>
+						<option value=2 *ngIf="customer.customerType == 'Fisica'">Pasaporte</option>
+						<option value=3 *ngIf="customer.customerType == 'Juridica'">CUIT</option>
+						<option value=4 *ngIf="customer.customerType == 'Fisica'">CUIL</option>
+						<option value=5 *ngIf="customer.customerType == 'Fisica'">LC</option>
+						<option value=6 *ngIf="customer.customerType == 'Fisica'">LE</option>
 					</select>
 				</div>
 				<div class="flex-grow-1">
