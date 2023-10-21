@@ -3,6 +3,8 @@ import { CustomerRequest } from '../../models/customer-request';
 import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from '../../services/customer.service';
+import { EnumDocumentType } from '../../models/customer-request';
+import { documentType } from '../../models/customer-request';
 
 @Component({
   selector: 'fn-create-customer',
@@ -11,6 +13,8 @@ import { CustomerService } from '../../services/customer.service';
 })
 export class CreateCustomerComponent {
 //	@ViewChild('customerForm') customerForm!: NgForm;
+fuentedeDatos: EnumDocumentType[] = [EnumDocumentType.DNI, EnumDocumentType.CUIT, EnumDocumentType.CUIL, EnumDocumentType.PASSAPORTE, EnumDocumentType.LC, EnumDocumentType.LE];
+
 customerForm!: NgForm;
 
 customer: CustomerRequest = {
@@ -18,8 +22,11 @@ firstName:"",
 lastName:"",
 companyName: "",
 ivaCondition: "Monotributo",
-birthDate: new Date(),
-documentType: 1,
+birthDate: new Date().toISOString(), // Convierte la fecha en cadena
+documentType: {
+		idDocumentType: 1,
+		description: "DNI"
+		},
 documentNumber:"",
 address:"",
 phoneNumber:"",
@@ -34,6 +41,7 @@ customerType: "Fisica"
 	constructor(private modalService: NgbModal, private customerService: CustomerService) {}
 
 	open(content: any) {
+		this.customer.birthDate = new Date(this.customer.birthDate).toISOString();
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
 			(result) => {
 
@@ -41,8 +49,21 @@ customerType: "Fisica"
 				console.log("RESULT", result);
 				console.log("customer FORM",this.customerForm);
 
+debugger
+				this.customerService.postCustomer(this.customer).subscribe(
 
-				this.customerService.createCustomer(this.customer);
+					(data) => {
+						console.log("DATA", data);
+					},
+					(error) => {
+						console.log("ERROR", error);
+					},
+					() => {
+						alert("Comp´letado");
+					}
+				)
+				
+				
 				this.customerService.clearFields(this.customer);
 				this.closeResult = `Closed with: ${result}`;
 				
@@ -62,7 +83,9 @@ customerType: "Fisica"
 
 
 	onSubmitForm(customerForm: NgForm){
-		console.log("customerEE", customerForm);
+	//	console.log("customerEE", customerForm);
+
+		
 	}
 
   

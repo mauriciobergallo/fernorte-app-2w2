@@ -10,15 +10,21 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
+  private apiUrl = "http://localhost:8085/customers"
+                   
+
+
 //Post
 createCustomer(customer: CustomerRequest){
+
   console.log("CUSTOMER", customer)
   alert(JSON.stringify(customer))
                                  
 }
 
 postCustomer(customer: CustomerRequest): Observable<any>{
-  return this.http.post("URL", customer) //Petición HTTP Post para crear empleado
+debugger
+  return this.http.post<CustomerRequest>(this.apiUrl, customer );
 
 }
 
