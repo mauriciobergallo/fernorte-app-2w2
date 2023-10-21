@@ -12,13 +12,26 @@ import { BuscarPipe } from './components/supplier/pipes/buscar.pipe';
 import { AddSupplierComponent } from './components/supplier/add-supplier/add-supplier.component';
 import { ContactsComponent } from './components/supplier/contacts/contacts.component';
 import { ProductsSupplierComponent } from './components/supplier/products-supplier/products-supplier.component';
-import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { SidenavComponent } from './components/shared/sidenav/sidenav.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PurchaseOrderComponent } from './components/purchase/order/purchase-order/purchase-order.component';
+import { PurchaseOrderContainerComponent } from './components/purchase-order-container/purchase-order-container.component';
+import { PaymentOrderContainerComponent } from './components/payment-order-container/payment-order-container.component';
+import { ClaimOrderContainerComponent } from './components/claim-order-container/claim-order-container.component';
+import { ReportContainerComponent } from './components/report-container/report-container.component';
+import { CartComponent } from './components/purchase-order-container/components/cart/cart.component';
+import { ProductCardComponent } from './components/purchase-order-container/components/product-card/product-card.component';
+import { PreviewComponent } from './components/purchase-order-container/components/preview/preview.component';
+import { PaymentOrderGridComponent } from './components/payment-order-container/components/payment-order-grid/payment-order-grid.component';
+import { TotalSidebarComponent } from './components/payment-order-container/components/total-sidebar/total-sidebar.component';
+import { PaymentMethodComponent } from './components/payment-order-container/components/payment-method/payment-method.component';
+import { TotalResumeComponent } from './components/payment-order-container/components/total-resume/total-resume.component';
+import { HedearSupplierComponent } from './components/shared/hedear-supplier/hedear-supplier.component';
+import { OrderButtonsComponent } from './components/shared/order-buttons/order-buttons.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, DashboardComponent, PurchaseOrderComponent, PurchaseClaimComponent, PurchaseClaimComponent],
+  declarations: [HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, DashboardComponent, PurchaseOrderComponent, PurchaseClaimComponent, PurchaseClaimComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, TotalSidebarComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent],
   providers: [],
   imports: [CommonModule, FormsModule,NgbModule, NgbPaginationModule, NgbDropdownModule, NgbToastModule],
   exports: [HomeComponent],
