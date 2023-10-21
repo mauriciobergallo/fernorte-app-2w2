@@ -1,0 +1,24 @@
+.cross-container {
+  position: relative;
+}
+
+.cross {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 5px;
+  border: none;
+  font-weight: bold;
+}
+.model-container {
+  width: 650px;
+  height: 300px;
+  background-color: rgb(236, 236, 236);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  border-radius: 5px;
+  z-index: 10;
+}

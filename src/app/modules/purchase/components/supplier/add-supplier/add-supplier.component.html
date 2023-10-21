@@ -1,0 +1,81 @@
+<div class="model-container">
+  <div class="cross-container">
+    <button class="cross" (click)="closeModal()">X</button>
+  </div>
+  <form
+    #miForm="ngForm"
+    class="container h-100 d-flex flex-column justify-content-between"
+  >
+    <h2 class="d-flex justify-content-center">Agregar Proveedor</h2>
+    <div class="row">
+      <div class="col-lg-6 col-md-12 col-sm-12">
+        <label for="razon_social" class="form-label">Razon social</label>
+        <input
+          type="text"
+          class="form-control"
+          name="razonSocial"
+          [(ngModel)]="suplier.socialReason"
+          #razonInput="ngModel"
+          [ngClass]="{ 'border-red': !razonInput.valid && razonInput.touched }"
+          required
+        />
+      </div>
+
+      <div class="col-lg-6 col-md-12 col-sm-12">
+        <label for="nombre_fantasia" class="form-label">Nombre Fantasia</label>
+        <input
+          type="text"
+          class="form-control"
+          name="nombre_fantasia"
+          [(ngModel)]="suplier.fantasyName"
+          #fantasiaInput="ngModel"
+          [ngClass]="{
+            'border-red': !fantasiaInput.valid && fantasiaInput.touched
+          }"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 col-md-12 col-sm-12">
+        <label for="cuit" class="form-label">Cuit</label>
+        <input
+          type="number"
+          class="form-control"
+          name="cuit"
+          [(ngModel)]="suplier.cuit"
+          #cuitInput="ngModel"
+          [ngClass]="{ 'border-red': !cuitInput.valid && cuitInput.touched }"
+          required
+        />
+      </div>
+
+      <div class="col-lg-6 col-md-12 col-sm-12">
+        <label for="domicilio" class="form-label">Domicilio</label>
+        <input
+          type="text"
+          class="form-control"
+          name="domicilio"
+          [(ngModel)]="suplier.adress"
+          #domicilioInput="ngModel"
+          [ngClass]="{
+            'border-red': !domicilioInput.valid && domicilioInput.touched
+          }"
+          required
+        />
+      </div>
+    </div>
+    <div class="d-grid gap-2 col-4 mx-auto">
+      <button
+        type="submit"
+        class="btn btn-primary my-4"
+        [disabled]="miForm.invalid"
+        (click)="addSupplier()"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</div>
+

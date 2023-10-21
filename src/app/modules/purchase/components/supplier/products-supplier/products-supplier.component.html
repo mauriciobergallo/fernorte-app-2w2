@@ -1,0 +1,111 @@
+<div class="d-flex justify-content-center align-items-center">
+  <h1>Agregar products a {{ supplier.socialReason }}</h1>
+</div>
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let item of allProducts; let i = index"
+        [ngClass]="{ 'red-text': isProductInBothLists(item) }"
+      >
+        <th scope="row">{{ item.id }}</th>
+        <td>{{ item.name }}</td>
+        <td *ngIf="isProductInBothLists(item)">
+          $ {{ getProductPrice(item.id).toFixed(2) }}
+        </td>
+        <td *ngIf="!isProductInBothLists(item)">-</td>
+        <td>
+          <button
+            class="btn btn-primary"
+            *ngIf="!isProductInBothLists(item)"
+            (click)="openAddProduct(item.id)"
+          >
+            Agregar
+          </button>
+          <button
+            class="btn btn-danger"
+            *ngIf="isProductInBothLists(item)"
+            (click)="deleteProductBtn(item.id)"
+          >
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<form *ngIf="isOpenAddProduct" class="model-container" #miForm="ngForm">
+  <div class="d-flex justify-content-center align-items-center fs-4 fw-bold">
+    Agregar Producto a Proveedor
+  </div>
+  <div class="d-flex justify-content-between align-items-center m-2">
+    <span>Precio</span>
+    <input
+      type="number"
+      name="price"
+      [(ngModel)]="product.precio"
+      #priceInput="ngModel"
+      [ngClass]="{
+        'border-red': !priceInput.valid && priceInput.touched
+      }"
+      required
+    />
+  </div>
+  <div class="d-flex justify-content-between align-items-center m-2">
+    <span>Observaciones</span>
+    <input
+      type="text"
+      name="observations"
+      [(ngModel)]="product.observations"
+      #observationsInput="ngModel"
+      [ngClass]="{
+        'border-red': !observationsInput.valid && observationsInput.touched
+      }"
+      
+    />
+  </div>
+  <div class="d-flex justify-content-center align-items-center mt-4">
+    <button
+      class="btn btn-primary"
+      (click)="addSupplier()"
+      type="submit"
+      [disabled]="miForm.invalid"
+    >
+      Confirmar
+    </button>
+    <button class="btn btn-danger mx-2" (click)="closeAddProducts()">
+      Cancelar
+    </button>
+  </div>
+</form>
+
+<div class="background-config" *ngIf="isOpenAddProduct"></div>
+
+<ngb-toast
+  *ngIf="toastAddedProduct"
+  class="toast bg-success text-light"
+  [autohide]="true"
+  (hidden)="toastAddedProduct = false"
+  [delay]="1500"
+>
+  Producto Cargado Con Exito!
+</ngb-toast>
+
+<ngb-toast
+  *ngIf="toastRemovedProduct"
+  class="toast bg-danger text-light"
+  [autohide]="true"
+  (hidden)="toastRemovedProduct = false"
+  [delay]="1500"
+>
+  Producto Eliminado Con Exito!
+</ngb-toast>
