@@ -8,7 +8,7 @@
 
             <div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" (click)="onChangeCompany(false)" checked>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" (click)="onChangeCompany(false)">
                     <label class="form-check-label" for="flexRadioDefault1">
                       Persona
                     </label>
@@ -70,18 +70,17 @@
 				<div class="input-group">
 					<input
 					required
-					[(ngModel)]="customer.birthDate" 
-						id="dateOfBirth"
-						class="form-control"
-						placeholder="yyyy-mm-dd"
-						name="dp"
-						ngbDatepicker
-						#dp="ngbDatepicker"
-					/>
+					[(ngModel)]="customer.birthDate"
+					(ngModelChange)="onBirthDateChange($event)"
+					id="dateOfBirth"
+					class="form-control"
+					placeholder="yyyy-mm-dd"
+					name="dp"
+					ngbDatepicker
+					#dp="ngbDatepicker"
+				  />
 					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button><br>
                 </div>
-
-                
 			</div>
 
 			<div class="flex-grow-1">
