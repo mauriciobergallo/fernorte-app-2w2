@@ -12,6 +12,7 @@ import { EditProductComponent } from '../edit-product/edit-product.component';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent {
+  isLoading = true;
 
   listProducts: IProduct[] = [];
   private subscription = new Subscription();
@@ -31,15 +32,20 @@ export class ProductsComponent {
   }
 
   private pagedProducts() {
-      this.subscription.add(
-        this.productService.get().subscribe({
-          next: (products: IProduct[]) => {
-            this.listProducts = products;
-          },
-          error: () => {
-            alert('error en la API')
-          }
-        }));
+    this.isLoading = true; // Mostrar el spinner
+  
+    this.subscription.add(
+      this.productService.get().subscribe({
+        next: (products: IProduct[]) => {
+          this.listProducts = products;
+          this.isLoading = false; // Ocultar el spinner después de que los datos se carguen
+        },
+        error: () => {
+          alert('Error en la API');
+          this.isLoading = false; // Ocultar el spinner en caso de error
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {

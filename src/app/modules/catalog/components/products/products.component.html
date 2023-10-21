@@ -1,3 +1,5 @@
+<spinner *ngIf="isLoading"></spinner>
+
 <div class="container mt-4">
   <table class="table">
     <thead>
@@ -28,12 +30,4 @@
   </table>
 </div>
 
-<div class="container mt-4">
-  <ngb-pagination
-    [(page)]="currentPage"
-    [pageSize]="itemsPerPage"
-    [collectionSize]="listProducts.length"
-    [maxSize]="5"
-    [rotate]="true">
-  </ngb-pagination>
-</div>
+

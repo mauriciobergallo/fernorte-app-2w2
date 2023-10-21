@@ -1,21 +1,18 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { IProduct } from "../models/IProduct";
 import { Observable } from "rxjs";
+import { environment } from "../environments/environment";
+import { RequestResponseService } from "./requestResponse.service";
 
 @Injectable({
    providedIn: 'root'
 })
 export class ProductService {
+   private getProducts: string = `${environment.production}products/all`;
 
-   url = "http://localhost:8080/products" 
-
-   constructor(private http: HttpClient) { }
+   constructor(private requestResponseService: RequestResponseService) { }
 
    get(): Observable<IProduct[]> {
-      const result = this.http.get<IProduct[]>(
-         this.url+'/all'
-      );
-      return result;
+      return this.requestResponseService.makeGetRequest<IProduct[]>(this.getProducts);
    }
 }

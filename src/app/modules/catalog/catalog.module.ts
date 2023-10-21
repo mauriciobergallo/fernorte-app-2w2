@@ -9,11 +9,13 @@ import { AddCategoryComponent } from './components/add-category/add-category.com
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
 import { FormsModule } from '@angular/forms';
+import { SpinnerComponent } from './components/spinner/viewspinner/spinner.component';
 
 @NgModule({
-  declarations: [HomeComponent, AddProductComponent, ProductsComponent, AddDiscountComponent, DiscountsComponent, AddCategoryComponent, EditProductComponent],
+  declarations: [HomeComponent, AddProductComponent, ProductsComponent, AddDiscountComponent, DiscountsComponent, AddCategoryComponent, EditProductComponent,SpinnerComponent],
   providers: [],
   imports: [CommonModule, NgbModule, FormsModule],
   exports: [HomeComponent],
 })
+
 export class CatalogModule { }
