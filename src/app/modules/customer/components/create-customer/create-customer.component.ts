@@ -40,7 +40,7 @@ customerType: "Fisica"
 
 	closeResult = '';
 
-	constructor(private modalService: NgbModal, private customerService: CustomerService, private datePipe: DatePipe) {}
+	constructor(private modalService: NgbModal, private customerService: CustomerService) {}
 
 	open(content: any) {
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
