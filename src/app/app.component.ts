@@ -18,7 +18,7 @@ export class AppComponent {
   showClients: boolean = false;
   showInventory: boolean = false;
   showPurchase: boolean = false;
-  showSales: boolean = false;
+  showSales: boolean = true;
 
   onShowCatalog() {
     this.onShowModule(this.modules.CATALOG);

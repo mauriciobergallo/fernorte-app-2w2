@@ -2,11 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HomeComponent } from './components/home/home.component';
+import { SaleOrderProvider } from './services/SaleOrderProvider';
+import { ProductProvider } from './services/productProvider';
+import { SaleOrderComponent } from './components/sale_order/sale-order.component';
+import { FormsModule } from '@angular/forms';
+import { CalcularTotalPipe } from './pipes/calcular-total.pipe';
 
 @NgModule({
-  declarations: [HomeComponent],
-  providers: [],
-  imports: [CommonModule],
-  exports: [HomeComponent],
+  declarations: [HomeComponent,SaleOrderComponent, CalcularTotalPipe],
+  providers: [SaleOrderProvider,ProductProvider],
+  imports: [CommonModule,FormsModule],
+  exports: [HomeComponent,SaleOrderComponent],
 })
 export class SalesModule {}
