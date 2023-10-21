@@ -8,6 +8,8 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
+  private apiUrl = "http://localhost:8085/customers"
+
 //Post
 createCustomer(customer: CustomerRequest){
   console.log("CUSTOMER", customer)
