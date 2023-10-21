@@ -13,6 +13,8 @@ export class TurnsComponentComponent {
   inputText:string='';
   documentNumber:string='';
 
+  show: boolean = false;
+
   constructor(public turnService: TurnService){}
 
   redirectToCustomer() {
