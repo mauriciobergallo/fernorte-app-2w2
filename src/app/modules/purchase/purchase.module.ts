@@ -1,4 +1,4 @@
-import { PurchaseClaimComponent } from './components/purchase/purchase-claim/purchase-claim.component';
+import { PurchaseClaimComponent } from './components/purchase/claim/purchase-claim/purchase-claim.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -14,7 +14,7 @@ import { ContactsComponent } from './components/supplier/contacts/contacts.compo
 import { ProductsSupplierComponent } from './components/supplier/products-supplier/products-supplier.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { PurchaseOrderComponent } from './components/purchase/purchase-order/purchase-order.component';
+import { PurchaseOrderComponent } from './components/purchase/order/purchase-order/purchase-order.component';
 
 
 @NgModule({
