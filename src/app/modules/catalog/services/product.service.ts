@@ -9,10 +9,16 @@ import { RequestResponseService } from "./requestResponse.service";
 })
 export class ProductService {
    private getProducts: string = `${environment.production}products/all`;
+   private putProducts: string = `${environment.production}products/create-update`;
 
    constructor(private requestResponseService: RequestResponseService) { }
 
    get(): Observable<IProduct[]> {
       return this.requestResponseService.makeGetRequest<IProduct[]>(this.getProducts);
+   }
+
+   updateProduct(product: any): Observable<IProduct> {
+      console.log(`${this.putProducts}`, product)
+      return this.requestResponseService.makePutRequest<IProduct>(`${this.putProducts}`, product);
    }
 }

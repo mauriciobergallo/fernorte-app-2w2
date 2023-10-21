@@ -7,12 +7,12 @@
     <form>
       <div class="mb-3">
         <label for="inputName" class="form-label">Nombre</label>
-        <input type="text" class="form-control" id="inputName" [(ngModel)]="product.name" name="name">
+        <input type="text" class="form-control" id="inputName" [(ngModel)]="productModified.name" name="name">
       </div>
   
       <div class="mb-3">
         <label for="selectCategory" class="form-label">Categoría</label>
-        <select class="form-select" id="selectCategory" [(ngModel)]="product.category" name="category">
+        <select class="form-select" id="selectCategory" [(ngModel)]="productModified.category" name="category">
           <option value="opcion1">Opción 1</option>
           <option value="opcion2">Opción 2</option>
           <option value="opcion3">Opción 3</option>
@@ -21,28 +21,28 @@
   
       <div class="mb-3">
         <label for="inputPrice" class="form-label">Precio</label>
-        <input type="number" class="form-control" id="inputPrice" [(ngModel)]="product.unitPrice" name="unitPrice">
+        <input type="number" class="form-control" id="inputPrice" [(ngModel)]="productModified.unitPrice" name="unitPrice">
       </div>
   
       <div class="mb-3">
         <label for="inputUnitOfMeasurement" class="form-label">Unidad de medida</label>
-        <input type="text" class="form-control" id="inputUnitOfMeasurement" [(ngModel)]="product.unitOfMeasure" name="unitOfMeasurement">
+        <input type="text" class="form-control" id="inputUnitOfMeasurement" [(ngModel)]="productModified.unitOfMeasure" name="unitOfMeasurement">
       </div>
   
       <div class="mb-3">
         <label for="inputStock" class="form-label">Stock</label>
-        <input type="number" class="form-control" id="inputStock" [(ngModel)]="product.stockQuantity" name="stockQuantity">
+        <input type="number" class="form-control" id="inputStock" [(ngModel)]="productModified.stockQuantity" name="stockQuantity">
       </div>
   
       <div class="mb-3">
         <label for="inputDescription" class="form-label">Descripción</label>
-        <textarea class="form-control" id="inputDescription" rows="3" [(ngModel)]="product.description" name="description"></textarea>
+        <textarea class="form-control" id="inputDescription" rows="3" [(ngModel)]="productModified.description" name="description"></textarea>
       </div>
     </form>
   </div>
   
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
-    <button type="button" class="btn btn-primary">Guardar</button>
+    <button type="button" class="btn btn-primary" (click)="updateProduct()">Guardar</button>
   </div>
   
