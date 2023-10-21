@@ -28,7 +28,7 @@ customerType: "Fisica"
 };
 
   isCompany: boolean = false; 
-
+  isTypeChecked: boolean = false;
 	closeResult = '';
 
 	constructor(private modalService: NgbModal, private customerService: CustomerService) {}
@@ -58,9 +58,11 @@ customerType: "Fisica"
   onChangeCompany(value: boolean){
     this.customer.customerType = value ? "Juridica" : "Fisica"
     this.isCompany = value;
+	this.isTypeChecked = true;
   }
 
 
+ 
 	onSubmitForm(customerForm: NgForm){
 		console.log("customerEE", customerForm);
 	}

@@ -8,7 +8,7 @@
 
             <div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" (click)="onChangeCompany(false)" checked>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" (click)="onChangeCompany(false)" >
                     <label class="form-check-label" for="flexRadioDefault1">
                       Persona
                     </label>
@@ -19,6 +19,7 @@
                       Empresa
                     </label>
                   </div>
+				  <div class="text-danger" *ngIf="!isTypeChecked"> Seleccione el tipo del cliente</div>
             </div>
 			
             <div *ngIf="!isCompany">
