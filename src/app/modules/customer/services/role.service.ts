@@ -11,7 +11,7 @@ export class RoleService {
   constructor(private http:HttpClient) { }
 
   //Post
-  createRole(role : Role): Observable<any>{
+  createRole(role : Role): Observable<Role>{
     console.log("Role", role);
     return this.http.post<Role>(`${this.apiUrl}/new`,role );
   }
