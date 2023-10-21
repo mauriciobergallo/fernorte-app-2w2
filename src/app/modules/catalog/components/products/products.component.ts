@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IProduct } from '../../models/IProduct';
 import { ProductService } from '../../services/product.service';
 import { Subscription } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EditProductComponent } from '../edit-product/edit-product.component';
+
 
 @Component({
   selector: 'fn-products',
@@ -14,12 +17,20 @@ export class ProductsComponent {
   private subscription = new Subscription();
 
   currentPage = 1;
-  itemsPerPage = 7;
+  itemsPerPage = 10;
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private modalService: NgbModal) { }
+
+  ngOnInit() {
+    this.pagedProducts();
+  }
+
+  openEditModal(product: IProduct) {
+    const modalRef = this.modalService.open(EditProductComponent, { size: 'lg' });
+    modalRef.componentInstance.product = product;
+  }
 
   private pagedProducts() {
-
       this.subscription.add(
         this.productService.get().subscribe({
           next: (products: IProduct[]) => {
@@ -33,9 +44,5 @@ export class ProductsComponent {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  ngOnInit() {
-    this.pagedProducts();
   }
 }

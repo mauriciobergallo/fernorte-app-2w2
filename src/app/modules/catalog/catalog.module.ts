@@ -7,11 +7,13 @@ import { AddDiscountComponent } from './components/add-discount/add-discount.com
 import { DiscountsComponent } from './components/discounts/discounts.component';
 import { AddCategoryComponent } from './components/add-category/add-category.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditProductComponent } from './components/edit-product/edit-product.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [HomeComponent, AddProductComponent, ProductsComponent, AddDiscountComponent, DiscountsComponent, AddCategoryComponent],
+  declarations: [HomeComponent, AddProductComponent, ProductsComponent, AddDiscountComponent, DiscountsComponent, AddCategoryComponent, EditProductComponent],
   providers: [],
-  imports: [CommonModule, NgbModule],
+  imports: [CommonModule, NgbModule, FormsModule],
   exports: [HomeComponent],
 })
 export class CatalogModule { }

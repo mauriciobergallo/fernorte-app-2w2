@@ -20,9 +20,9 @@
         <td>{{ product.unitPrice | currency:'USD':'symbol-narrow' }}</td>
         <td>{{ product.category.name }}</td>
         <td>
-          <button type="submit" class="btn btn-primary mx-2">Editar</button>
-          <button type="submit" class="btn btn-danger mx-2">Eliminar</button>
-        </td>
+          <button type="button" class="btn btn-primary mx-2" (click)="openEditModal(product)">Editar</button>
+          <button type="button" class="btn btn-danger mx-2">Eliminar</button>
+        </td>        
       </tr>
     </tbody>
   </table>
