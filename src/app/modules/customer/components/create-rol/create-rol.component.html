@@ -16,13 +16,13 @@
 				</div>
 				<div class="flex-grow-1">
 					<label for="name">Area del rol</label>
-					<select class="form-select" [(ngModel)]="role.area" #controlRolArea="ngModel" required="" name="area" aria-label="Default select example">
+					<select class="form-select" [(ngModel)]="role.area" #controlRolArea="ngModel" required name="area" aria-label="Default select example">
 						<option value=1>Compra</option>
 						<option value=2>Venta</option>
 						<option value=3>Inventario</option>
 						<option value=4>Stock</option>
 					</select>
-					<div *ngIf="controlRolArea.invalid && controlRolArea.touched" class="text-danger">Por favor Seleccione un area</div>
+					<div *ngIf="controlRolArea.invalid" class="text-danger">Por favor Seleccione un area</div>
 				</div>
 			</div>
 			<div class="mb-3 d-flex">

@@ -25,7 +25,7 @@
                 <div class="mb-3 d-flex">
                     <div class="flex-grow-1 me-2">
                         <label for="name">Nombre</label>
-                        <input required [(ngModel)]="customer.firstName" type="text" name="name" id="name" class="form-control"/>
+                        <input required [(ngModel)]="customer.firstName" type="text" name="name" id="name" class="form-control" />
                     </div>
                     <div class="flex-grow-1">
                         <label for="lastName">Apellido</label>
@@ -46,23 +46,27 @@
 			<div class="mb-3 d-flex">
 				<div class="flex-grow-1 me-2">
 					<label for="documentType">Tipo de documento</label>
-					<select [(ngModel)]="customer.documentType" name="documentType" id="documentType" class="form-select">
+					<select [(ngModel)]="customer.documentType" name="documentType" id="documentType" class="form-select" required #controlDocumentType="ngModel">
 						<option value=1>DNI</option>
 						<option value=2>Pasaporte</option>
 					</select>
+					<div class="text-danger" *ngIf="controlDocumentType.invalid">Seleccione un tipo de documento</div>
 				</div>
 				<div class="flex-grow-1">
 					<label for="documentNumber">Documento</label>
-					<input required [(ngModel)]="customer.documentNumber"  type="text" name="documentNumber" id="documentNumber" class="form-control" />
+					<input required [(ngModel)]="customer.documentNumber"  type="text" name="documentNumber" id="documentNumber" class="form-control" #controlDocumentNumber = "ngModel"/>
+					<div class="text-danger" *ngIf="controlDocumentNumber.invalid && controlDocumentNumber.touched">Ingrese numero de documento de cliente</div>
+
 				</div>
 			</div>
 
             <div class="flex-grow-1 me-2">
                 <label for="ivaCondition">Condición de IVA</label>
-                <select [(ngModel)]="customer.ivaCondition" name="ivaCondition" id="ivaCondition" class="form-select">
+                <select [(ngModel)]="customer.ivaCondition" name="ivaCondition" id="ivaCondition" class="form-select" required #controlIvaCondition="ngModel">
                     <option value="Monotributo">Monotributo</option>
                     <option value="Responsable Inscripto">Responsable Inscripto</option>
                 </select>
+				<div class="text-danger" *ngIf="controlIvaCondition.invalid">Seleccione condicion de IVA</div>
             </div>
 
 			<div class="mb-3">
@@ -77,8 +81,11 @@
 						name="dp"
 						ngbDatepicker
 						#dp="ngbDatepicker"
+						required
+						#controlBirthDate = "ngModel"
 					/>
 					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button><br>
+					<div class="text-danger" *ngIf="controlBirthDate.invalid && controlBirthDate.touched">Ingrese una fecha de nacimiento</div>
                 </div>
 
                 
@@ -91,17 +98,22 @@
 					   name="email" 
 					   id="email" 
 					   class="form-control" 
+					   required
+					   #controlCustomerMail="ngModel"
 				/>
+				<div class="text-danger" *ngIf="controlCustomerMail.invalid && controlCustomerMail.touched">Ingrese el mail del cliente</div>
 			  </div>
 
 			<div class="mb-3 d-flex">
 				<div class="flex-grow-1 me-2">
 				  <label for="address">Domicilio</label>
-				  <input [(ngModel)]="customer.address" type="text" name="address" id="address" class="form-control" />
+				  <input [(ngModel)]="customer.address" type="text" name="address" id="address" class="form-control" required #controlCustomerAdress="ngModel"/>
+				  <div class="text-danger" *ngIf="controlCustomerAdress.invalid && controlCustomerAdress.touched">Ingrese la direccion del cliente</div>
 				</div>
 				<div class="flex-grow-1">
 				  <label for="phoneNumber">Número de teléfono</label>
-				  <input [(ngModel)]="customer.phoneNumber" type="text" name="phoneNumber" id="phoneNumber" class="form-control" />
+				  <input [(ngModel)]="customer.phoneNumber" type="number" name="phoneNumber" id="phoneNumber" class="form-control" required #controlPhoneNumber ="ngModel"/>
+				  <div class="text-danger" *ngIf="controlPhoneNumber.invalid && controlPhoneNumber.touched">Ingrese el numero de telefono del cliente </div>
 				</div>
 			  </div>
 
