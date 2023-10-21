@@ -5,9 +5,9 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { IContacts, IProduct, ISupliers } from '../../models/ISuppliers';
-import { PurchaseModule } from '../../purchase.module';
-import { SupliersService } from '../../services/supliers.service';
+import { IContacts, IProduct, ISupliers } from '../../../models/ISuppliers';
+import { PurchaseModule } from '../../../purchase.module';
+import { SupliersService } from '../../../services/supliers.service';
 import { Subscription } from 'rxjs';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ISupliers } from '../../models/ISuppliers';
-import { SupliersService } from '../../services/supliers.service';
+import { ISupliers } from '../../../models/ISuppliers';
+import { SupliersService } from '../../../services/supliers.service';
 import { Subscription } from 'rxjs';
 import { ListSuplierComponent } from '../list-suplier/list-suplier.component';
 

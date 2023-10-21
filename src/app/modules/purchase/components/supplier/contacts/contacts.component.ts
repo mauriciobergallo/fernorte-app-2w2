@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SupliersService } from '../../services/supliers.service';
-import { Contact, IContacts } from '../../models/ISuppliers';
+import { SupliersService } from '../../../services/supliers.service';
+import { Contact, IContacts } from '../../../models/ISuppliers';
 import { Subscription } from 'rxjs';
 
 @Component({

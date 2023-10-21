@@ -15,6 +15,7 @@ import { PurchaseModule } from './modules/purchase/purchase.module';
 import { InventaryModule } from './modules/inventory/inventory.module';
 import { SalesModule } from './modules/sales/sales.module';
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [

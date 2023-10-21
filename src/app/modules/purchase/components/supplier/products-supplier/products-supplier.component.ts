@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { IProduct, IProduct2, ISupliers } from '../../models/ISuppliers';
-import { ProductsService } from '../../services/products.service';
+import { IProduct, IProduct2, ISupliers } from '../../../models/ISuppliers';
+import { ProductsService } from '../../../services/products.service';
 import { Subscription } from 'rxjs';
 
 @Component({
