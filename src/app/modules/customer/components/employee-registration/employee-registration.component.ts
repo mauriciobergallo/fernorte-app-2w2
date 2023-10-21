@@ -46,7 +46,6 @@ export class EmployeeRegistrationComponent {
 					documentNumber: this.employee.documentNumber,
 					personalEmail: this.employee.personalEmail
 				}
-				debugger
 				this.employeeService.postEmployee(newemployee).subscribe(
 
 
@@ -68,18 +67,14 @@ export class EmployeeRegistrationComponent {
 
 	onBirthDateChange(event: NgbDateStruct) {
 		if (event) {
-			// Obtén el año, mes y día de ngbDatepicker
 			const year = event.year || 0;
 			const month = event.month || 1;
 			const day = event.day || 1;
 
-			// Crea una instancia de Date con la fecha seleccionada
 			const selectedDate = new Date(year, month - 1, day);
 
-			// Formatea la fecha en el formato deseado
 			this.formattedBirthDate = selectedDate.toISOString();
 		} else {
-			// Si no se ha seleccionado una fecha, puedes manejarlo como prefieras
 			this.formattedBirthDate = '';
 		}
 	}
