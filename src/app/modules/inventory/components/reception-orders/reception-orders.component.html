@@ -1,5 +1,5 @@
-<div>
-  <h2 class="title">Registrar ordenes de recepción</h2>
+<div class="container">
+  <h2 class="title  text-center  my-4">Registrar ordenes de recepción</h2>
   <div class="add-product">
     <div class="add-product-form-container">
       <form #addProduct="ngForm">
@@ -26,13 +26,13 @@
             [(ngModel)]="actualDetail.deliveryTime" #delivreyTimeField="ngModel" required
             [ngClass]="{'is-invalid':delivreyTimeField.invalid && delivreyTimeField.touched}">
         </div>
-        <button class="btn btn-primary">AGREGAR</button>
+        <button class="btn btn-primary  w-100">AGREGAR</button>
       </form>
     </div>
     <div class="add-product-list"></div>
   </div>
 
-  <div>
+  <div class="products-list">
     <table class="table">
       <thead>
         <tr>
@@ -44,6 +44,16 @@
         </tr>
       </thead>
       <tbody>
+        <tr class="list-item">
+          <td>22/10/2023</td>
+          <td>10:30 am</td>
+          <td>Destornillador</td>
+          <td>10</td>
+          <td>
+            <button class="btn btn-primary  mx-1">Modificar</button>
+            <button class="btn btn-danger">Eliminar</button>
+          </td>
+        </tr>
         <tr class="list-item">
           <td>22/10/2023</td>
           <td>10:30 am</td>
