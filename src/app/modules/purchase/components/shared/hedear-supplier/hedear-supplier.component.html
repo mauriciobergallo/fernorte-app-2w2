@@ -1,1 +1,21 @@
-<p>hedear-supplier works!</p>
+<div class="container test">
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+            <h1 class="text-center">Proveedores</h1>
+            </div>
+        </div>    
+    </div>
+    
+    <div class="container">
+        <select class="form-select" name="opcion" [(ngModel)]="idSelected" (ngModelChange)="onSelectChange($event)">
+            <option selected >Seleccione proveedor</option>
+            <option *ngFor="let item of supplierList" [value]="item.id" >{{item.socialReason}}</option>        
+          </select>   
+    </div>
+    
+{{idSelected}}
+    
+</div>

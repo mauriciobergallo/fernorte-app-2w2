@@ -3,6 +3,7 @@ import { PurchaseOrderServiceService } from '../../purchase-order-container/serv
 import { ISupliers } from '../../../models/ISuppliers';
 import { SupliersService } from '../../../services/supliers.service';
 import { ProductsService } from '../../../services/products.service';
+import { Isupplier } from '../interfaces/isupplier';
 
 @Component({
   selector: 'fn-hedear-supplier',
@@ -11,21 +12,33 @@ import { ProductsService } from '../../../services/products.service';
 })
 export class HedearSupplierComponent implements OnInit {
 
-  constructor(private _productService: ProductsService) { }
-
-  supplierList: ISupliers[] = []
+  constructor(private _purchaseOrderService: PurchaseOrderServiceService) { }
 
   idSelected: number = 0
+  supplierList: ISupliers[] = []
+  supplier: ISupliers = {id: 0, socialReason:"", cuit:"",adress:"", fantasyName:""} 
+  
+  
 
   ngOnInit(): void {
-   this._productService.getProductsBySupplier(this.idSelected).subscribe(
-    {
-     next: (data) => {      console.log(data)    },
-     error: (error) => {      console.log(error)    },
-    }
-   )
+    this.getIdSelected()
+   
   }
 
+  onSelectChange(event: any){
+    this.idSelected = event.target.value
+    this.supplier = this.supplierList.find(x => x.id == this.idSelected)!
+    console.log(this.supplier)
+  }
+
+
+  getIdSelected(){
+    this._purchaseOrderService.getIdSupplier().subscribe(
+      {
+        next: data  =>{console.log(data)},
+        error: error => {console.log(error)},
+      })
+    }
 
 
 }
