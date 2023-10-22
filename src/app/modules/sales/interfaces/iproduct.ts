@@ -3,4 +3,7 @@ export interface IProduct {
     nombre: string;
     precioUnitario: number;
     cantidad: number;
+
+    cantidadSeleccionado?: number
+
 }
