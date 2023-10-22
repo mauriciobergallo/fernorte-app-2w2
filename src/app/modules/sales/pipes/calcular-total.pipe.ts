@@ -8,5 +8,6 @@ export class CalcularTotalPipe implements PipeTransform {
   transform(quantity: number, price: number): number {
     return quantity * price;
   }
-
+  
 }
+

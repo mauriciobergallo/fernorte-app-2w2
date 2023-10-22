@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { SaleOrderServiceService } from '../../services/sale-order-service.service';
 import { ISaleOrder } from '../../interfaces/isale-order';
 import { LoadingService } from '../../services/loading.service';
-import { IProduct } from '../../interfaces/iproduct';
+import { ProductModel } from '../../models/ProductModel';
 import { ProductService } from '../../services/product.service';
 import { TypeSalesOrder } from '../../models/TypeSaleOrder';
 import { SaleOrderStates } from '../../models/SalesOrderState';
 import { IDetailsSaleOrder } from '../../interfaces/idetails-sale-order';
+import { CarritoService } from '../../services/carrito.service';
+import { MontoTotalModel } from '../../models/ModelTotalModel';
 
 @Component({
   selector: 'fn-sale-order',
@@ -15,87 +17,58 @@ import { IDetailsSaleOrder } from '../../interfaces/idetails-sale-order';
 })
 export class SaleOrderComponent implements OnInit {
 
-test() {
-throw new Error('Method not implemented.');
-}
-
-
   constructor(private saleOrderServiceService: SaleOrderServiceService,
     private loadingService: LoadingService,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private carritoService: CarritoService) { }
+
   salesOrderLoad: ISaleOrder | undefined
   loader = this.loadingService.viewLoader();
-  listProduct: IProduct[] = [];
-  listProductfiltrada: IProduct[] = [];
-  carrito: IProduct[] = [];
-  listDetailSaleOrder: IDetailsSaleOrder[]=[];
+  listProduct: ProductModel[] = [];
+  listProductfiltrada: ProductModel[] = [];
+  carrito: ProductModel[] = this.carritoService.consultarCarrito();
+  listDetailSaleOrder: IDetailsSaleOrder[] = [];
 
   permiteGenerar: boolean = true;
 
-  productoSeleccionado = this.cleanProduct();
+  productoSeleccionado = this.productService.cleanProduct();
   readonly typeSalesOrder = TypeSalesOrder.ORDEN_VENTA;
   readonly typePresupuesto = TypeSalesOrder.PRESUPUESTO;
-
+  montoTotal: MontoTotalModel = new MontoTotalModel; 
   ngOnInit(): void {
     this.listProduct = this.productService.getlistProduct();
   }
-
+  ActualizarTotal(cantidad: number) {
+    console.log(this.carrito)
+    this.montoTotal = this.saleOrderServiceService.calcularTotal(this.carrito)
+  }
   agregarProducto() {
 
-    if(this.productoSeleccionado.codigo == "")
-    return;
+    if (this.productoSeleccionado.codigo == "")
+      return;
+    if (this.carritoService.validarProductoCargado(this.productoSeleccionado)) {
+      alert("El Producto ya existe en el carrito")
+      this.productoSeleccionado = this.productService.cleanProduct();
+      return;
+    }
 
-    this.carrito.push(this.productoSeleccionado);
-    this.productoSeleccionado = this.cleanProduct();
+
+    this.carrito = this.carritoService.agregarCarrito(this.productoSeleccionado);
+    this.montoTotal = this.saleOrderServiceService.calcularTotal(this.carrito)
+    this.productoSeleccionado = this.productService.cleanProduct();
   }
-  selectProduct(product: IProduct) {
+  selectProduct(product: ProductModel) {
     this.productoSeleccionado = product;
   }
   filtrarProductos(texto: any) {
-    this.listProductfiltrada = this.listProduct.filter(producto => producto.nombre.toLowerCase().includes(texto.target.value.toLowerCase()));
-  }
-  cleanProduct(): IProduct {
-    let productoSeleccionado = {
-      codigo: '',
-      nombre: '',
-      precioUnitario: 0,
-
-      cantidad: 0,
-      cantidadSeleccionado:1
-
-    }
-
-    return productoSeleccionado;
+    this.listProductfiltrada = this.productService.filtrarProductos(texto);
   }
 
-  buildSaleOrder(state: SaleOrderStates, type: TypeSalesOrder, carrito: IProduct[]) {
-
-    let saleOrder: ISaleOrder = ({
-      id_seller: 1,
-      id_client: 1,
-      date_of_issue: new Date().toISOString(),
-      date_of_expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
-      state_sale_order: state,
-      detail_sales_order: [
-        {
-
-          id_product: 0o1,
-
-          quantity: 1,
-          price: 100,
-          state_sale_order_detail: state
-        }
-      ]
-      
-    });
-    
-
-
-    return saleOrder;
+  buildSaleOrder(stateDetail: SaleOrderStates, type: TypeSalesOrder, carrito: ProductModel[]) {
+    return this.saleOrderServiceService.buildSaleOrder(stateDetail, type, carrito);
   }
 
-  async generateSaleOrder(type: TypeSalesOrder) {   
-
+  async generateSaleOrder(type: TypeSalesOrder) {
     this.loader = this.loadingService.loading();
     let saleOrder = null;
     if (type == this.typeSalesOrder) {
@@ -104,7 +77,7 @@ throw new Error('Method not implemented.');
       saleOrder = this.buildSaleOrder(SaleOrderStates.CREATE, type, this.carrito);
     }
     let validateCantidad = this.saleOrderServiceService.ValidarPresupuestoOOrdenVenta(saleOrder!, this.carrito)
-    if(validateCantidad) {
+    if (validateCantidad) {
       alert("existen productos que la cantidad superan el stock")
       this.loader = this.loadingService.loading();
       return;
@@ -112,14 +85,7 @@ throw new Error('Method not implemented.');
     }
 
     this.salesOrderLoad = await this.saleOrderServiceService.createSaleOrder(saleOrder!)!
+    this.listProduct = this.productService.restarCantidad(this.productoSeleccionado)
     this.loader = this.loadingService.loading();
   }
-
-  validacionStock(event: any, cantidadStock:number){
-    if(parseInt(event.target.value) > cantidadStock){
-      alert("sumera el stock")
-      event.target.value = 0;
-    }
-  }
-
 }

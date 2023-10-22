@@ -11,12 +11,14 @@ import { SaleOrderProvider } from './providers/SaleOrderProvider';
 import { ProductProvider } from './providers/productProvider';
 import { SaleOrderComponent } from './components/sale_order/sale-order.component';
 import { CalcularTotalPipe } from './pipes/calcular-total.pipe';
+import { CalcularImpuestosPipe } from './pipes/calcular-impuestos.pipe';
+import { CalcularMontoTotalPipe } from './pipes/calcular-monto-total.pipe';
 import { BillingComponent } from './components/billing/billing.component';
 import { PaymentMethodComponent } from './components/payment-method/payment-method.component';
 import { CreatePaymentComponent } from './components/create-payment/create-payment.component';
 
 @NgModule({
-  declarations: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent, SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent],
+  declarations: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, CalcularImpuestosPipe, CalcularMontoTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent, SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent],
   providers: [SaleOrderProvider,ProductProvider],
   imports: [CommonModule,FormsModule],
   exports: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent, SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent],

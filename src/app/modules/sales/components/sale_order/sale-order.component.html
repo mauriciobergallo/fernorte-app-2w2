@@ -266,7 +266,8 @@ y guardados en el sistema al momento de generar el presupuesto para poder contin
                                         <input #controlCantidad="ngModel" [(ngModel)]="item.cantidadSeleccionado == undefined ? 1 : item.cantidadSeleccionado" [ngModelOptions]="{standalone: true}" type="number"
                                             class="form-control" id="cantidad" placeholder="cantidad" required
                                             [maxlength]="item.cantidad"
-                                            max-length-message="La cantidad no puede exceder el valor máximo" >
+                                            max-length-message="La cantidad no puede exceder el valor máximo" 
+                                            autocomplete="off" (change)="ActualizarTotal(controlCantidad.value)">                                            
                                         <div  *ngIf="controlCantidad.value > item.cantidad" style="color: red" >
                                             no puede superar al stock
                                         </div>
@@ -308,9 +309,9 @@ y guardados en el sistema al momento de generar el presupuesto para poder contin
                 <div class=" card p-2 m-1">
                     <!-- Resumen de la venta -->
                     <div class="text-center">
-                        <p>Subtotal: $0.00</p>
-                        <p>Impuestos: $0.00</p>
-                        <p class="mb-0">Total: $0.00</p>
+                        <p>Subtotal: ${{montoTotal.subTotal}}</p>
+                        <p>Impuestos: ${{montoTotal.impuesto | calcularImpuestos:montoTotal.subTotal}}</p>
+                        <p class="mb-0">Total: ${{montoTotal.subTotal | calcularMontoTotal:montoTotal.impuesto}}</p>
                     </div>
                 </div>
             </div>
