@@ -38,12 +38,11 @@
         <div class="col-md-3">
             <div class="d-grid gap-2 mx-auto" role="group">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
-                    Payment
+                    Pagos
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Generate Payment</a></li>
-                    <li><a class="dropdown-item" href="#">Edit Payment</a></li>
-                    <li><a class="dropdown-item" href="#">Shearch Payment</a></li>
+                    <li><a class="dropdown-item" href="#" (click)="onShowPayment()">Crear Pago</a></li>
+                    <li><a class="dropdown-item" href="#">Buscar Pago</a></li>
                 </ul>
             </div>
         </div>
@@ -67,7 +66,7 @@
     <fn-sale-order-search-handler *ngIf="showSalesOrderSearch"></fn-sale-order-search-handler>
     <fn-billing *ngIf="showBilling"></fn-billing>
     <fn-payment-method *ngIf="showPaymentMethod"></fn-payment-method>   
-    <fn-create-payment></fn-create-payment>    
+    <fn-create-payment *ngIf="showPayment"></fn-create-payment>    
 </div>
 
 
