@@ -2,6 +2,6 @@ export interface Isupplier {
     id: number,
     socialReason: string,
     fantasyName: string,
-    cuit: number,
+    cuit: string,
     adress: string
 }

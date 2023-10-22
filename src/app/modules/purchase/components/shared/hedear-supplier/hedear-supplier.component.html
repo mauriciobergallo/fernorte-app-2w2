@@ -3,19 +3,68 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-12">
-            <h1 class="text-center">Proveedores</h1>
+
+            <h5 class="col-sm-4 col-form-label col-form-label">Seleccionar proveedor</h5>
+
+
+            <div class="col-sm-8">
+                <select class="form-select" name="opcion" [(ngModel)]="idSelected"
+                    (ngModelChange)="onSelectChange($event)">
+                    <option *ngFor="let item of supplierList" [value]="item.id">{{item.socialReason}}</option>
+                </select>
             </div>
-        </div>    
+
+        </div>
     </div>
-    
+
+    <hr>
+
     <div class="container">
-        <select class="form-select" name="opcion" [(ngModel)]="idSelected" (ngModelChange)="onSelectChange($event)">
-            <option selected >Seleccione proveedor</option>
-            <option *ngFor="let item of supplierList" [value]="item.id" >{{item.socialReason}}</option>        
-          </select>   
+        <div class="row">
+            <div class="col-12">
+                <h4 class="text-center">Datos del proveedor seleccionado</h4>
+            </div>
+
+            <div class="container">
+                <div class="row my-2 border border-success p-2 border-opacity-10">
+
+                    <div class="col-md-3">
+                        <label for="razon">Razon Social:</label>
+                    </div>
+                    <div class="col-md-3">
+                        {{ supplierSelected.socialReason }}
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="direccion">Nombre Fantasia</label>
+                    </div>
+                    <div class="col-md-3">
+                        {{ supplierSelected.fantasyName }}
+                    </div>
+                </div>
+
+                <div class="row my-4 border border-success p-2 border-opacity-10">
+
+                    <div class="col-md-3">
+                        <label for="cuit">Cuit:</label>
+                    </div>
+                    <div class="col-md-3">
+                        {{ supplierSelected.cuit }}
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="direccion">Dirección:</label>
+                    </div>
+                    <div class="col-md-3">
+                        {{ supplierSelected.adress }}
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
     </div>
-    
-{{idSelected}}
-    
+
+
 </div>

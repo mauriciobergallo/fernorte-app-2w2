@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Isupplier } from '../../shared/interfaces/isupplier';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IProduct } from '../../../models/ISuppliers';
+import { ISupliers } from '../../../models/ISuppliers'; 
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class PurchaseOrderServiceService {
   * must be suscribed to get the changes of the value from the components
   */
   idSupplier = new BehaviorSubject<number>(0)
-  suplierSelected = new BehaviorSubject<Isupplier>({ id: 0, socialReason: "", cuit: 0, adress: "", fantasyName: "" })
+  suplierSelected = new BehaviorSubject<ISupliers>({ id: 0, socialReason: "", adress: "", fantasyName: "", cuit: "" })
   listProductSelected = new BehaviorSubject<IProduct[]>([])
 
 
@@ -27,6 +27,7 @@ export class PurchaseOrderServiceService {
    */
   setIdSupplier(id: number) {
     this.idSupplier.next(id)
+    // alert("desde el servicio se cambio el id supplier: " + id)
   }
 
   /*
@@ -42,8 +43,10 @@ export class PurchaseOrderServiceService {
   /*
   * method to set and get the supplier selected
   */
-  setSupplierSelected(supplier: Isupplier) {
+  setSupplierSelected(supplier: ISupliers) {
+
     this.suplierSelected.next(supplier)
+    // alert("desde el servicio se cambio el supplier selected: " + supplier.socialReason)
   }
 
 
