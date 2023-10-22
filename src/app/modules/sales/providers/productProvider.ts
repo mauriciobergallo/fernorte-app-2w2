@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "../enviroment/environment";
 import { ISaleOrder } from "../interfaces/isale-order";
 import { IResponse } from "../interfaces/IResponse";
-import { IProduct } from "../interfaces/iproduct";
+import { ProductModel } from "../models/ProductModel";
 @Injectable()
 
 export class ProductProvider {
@@ -13,8 +13,8 @@ export class ProductProvider {
   constructor(private http: HttpClient) {
   }
 
-  getlistProduct(): IProduct[] {
-    const productos: IProduct[] =  [
+  getlistProduct(): ProductModel[] {
+    const productos: ProductModel[] =  [
       {
         codigo: '001',
         nombre: 'martillo',
