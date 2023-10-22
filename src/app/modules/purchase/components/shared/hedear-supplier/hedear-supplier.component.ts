@@ -50,6 +50,11 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
     this._purchaseOrderService.setIdSupplier(this.idSelected)
     this._purchaseOrderService.setSupplierSelected(this.supplierSelected)
 
+    //changing the value of the supplier selected and the id of the supplier to 0 to sure that the value
+    // is changed when go to the service
+    this.idSelected= 0
+    this.supplierSelected = {id: 0, socialReason:"", cuit:"" ,adress:"", fantasyName:""}
+
     //getting the value of the supplier selected and the id of the supplier from service
     this.getSupplierSelectedFromService()
     this.getIdFromService()
@@ -72,28 +77,30 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
 
   getIdFromService() {
     //getting the value of the id supplier from service
-    this._purchaseOrderService.getIdSupplier().subscribe(
-      {
-        next: (data: number) => {
-          console.log("id supplier from service: " + data),
-            this.idSelected = data
-        },
-        error: (error: any) => { console.log(error) }
-      }
-    )
+    this.suscription.add(
+      this._purchaseOrderService.getIdSupplier().subscribe(
+        {
+          next: (data: number) => {
+            console.log("id supplier from service: " + data),
+              this.idSelected = data
+          },
+          error: (error: any) => { console.log(error) }
+        }
+      ))
   }
 
   getSupplierSelectedFromService() {
     //getting the value of the supplier selected and the id of the supplier from service
-    this._purchaseOrderService.getSupplierSelected().subscribe(
-      {
-        next: (data: ISupliers) => {
-          console.log("supplier selected from service: " + data.socialReason),
-            this.supplierSelected = data
-        },
-        error: (error: any) => { console.log(error) }
-      }
-    )
+    this.suscription.add(
+      this._purchaseOrderService.getSupplierSelected().subscribe(
+        {
+          next: (data: ISupliers) => {
+            console.log("supplier selected from service: " + data.socialReason),
+              this.supplierSelected = data
+          },
+          error: (error: any) => { console.log(error) }
+        }
+      ))
   }
 
 }
