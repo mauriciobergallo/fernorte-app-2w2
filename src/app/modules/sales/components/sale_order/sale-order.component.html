@@ -259,26 +259,20 @@ y guardados en el sistema al momento de generar el presupuesto para poder contin
                             <!-- Aquí se agregarán las filas de la tabla dinámicamente -->
 
                             <tr *ngFor="let item of carrito">
-                                <!-- <form #form="ngForm"> -->
                                     <td>{{item.codigo}}</td>
                                     <td>{{item.nombre}}</td>
                                     <td>${{item.precioUnitario}}</td>
-                                    <td>
-
-                                        <input #controlCantidad="ngModel" [(ngModel)]="item.cantidad" [ngModelOptions]="{standalone: true}" type="number"
+                                    <td>                                       
+                                        <input #controlCantidad="ngModel" [(ngModel)]="item.cantidadSeleccionado == undefined ? 1 : item.cantidadSeleccionado" [ngModelOptions]="{standalone: true}" type="number"
                                             class="form-control" id="cantidad" placeholder="cantidad" required
-                                            [attr.maxlength]="item.cantidad"
-                                            max-length-message="La cantidad no puede exceder el valor máximo">
-                                        <div
-                                            *ngIf="controlCantidad.invalid && (controlCantidad.dirty || controlCantidad.touched)">
-                                            <div style="color: red" *ngIf="controlCantidad.getError('attr.maxlength')">La
-                                                cantidad no debe superar el total de {{item.cantidad}}</div>
+                                            [maxlength]="item.cantidad"
+                                            max-length-message="La cantidad no puede exceder el valor máximo" >
+                                        <div  *ngIf="controlCantidad.value > item.cantidad" style="color: red" >
+                                            no puede superar al stock
                                         </div>
-
                                     </td>
                                     <td>${{controlCantidad.value | calcularTotal:item.precioUnitario}}
                                     </td>
-                                <!-- </form> -->
                                 <th><i class="fa-solid fa-xmark fa-xl"></i></th>
                             </tr>
 
