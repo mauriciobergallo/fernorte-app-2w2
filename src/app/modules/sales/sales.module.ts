@@ -7,11 +7,12 @@ import { ProductProvider } from './services/productProvider';
 import { SaleOrderComponent } from './components/sale_order/sale-order.component';
 import { FormsModule } from '@angular/forms';
 import { CalcularTotalPipe } from './pipes/calcular-total.pipe';
+import { CreatePaymentComponent } from './components/create-payment/create-payment.component';
 
 @NgModule({
-  declarations: [HomeComponent,SaleOrderComponent, CalcularTotalPipe],
+  declarations: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, CreatePaymentComponent],
   providers: [SaleOrderProvider,ProductProvider],
   imports: [CommonModule,FormsModule],
-  exports: [HomeComponent,SaleOrderComponent],
+  exports: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, CreatePaymentComponent],
 })
 export class SalesModule {}

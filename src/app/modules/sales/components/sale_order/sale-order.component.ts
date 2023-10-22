@@ -14,9 +14,11 @@ import { IDetailsSaleOrder } from '../../interfaces/idetails-sale-order';
   styleUrls: ['./sale-order.component.css']
 })
 export class SaleOrderComponent implements OnInit {
+
 test() {
 throw new Error('Method not implemented.');
 }
+
 
   constructor(private saleOrderServiceService: SaleOrderServiceService,
     private loadingService: LoadingService,
@@ -27,7 +29,9 @@ throw new Error('Method not implemented.');
   listProductfiltrada: IProduct[] = [];
   carrito: IProduct[] = [];
   listDetailSaleOrder: IDetailsSaleOrder[]=[];
+
   permiteGenerar: boolean = true;
+
   productoSeleccionado = this.cleanProduct();
   readonly typeSalesOrder = TypeSalesOrder.ORDEN_VENTA;
   readonly typePresupuesto = TypeSalesOrder.PRESUPUESTO;
@@ -37,8 +41,10 @@ throw new Error('Method not implemented.');
   }
 
   agregarProducto() {
+
     if(this.productoSeleccionado.codigo == "")
     return;
+
     this.carrito.push(this.productoSeleccionado);
     this.productoSeleccionado = this.cleanProduct();
   }
@@ -53,13 +59,17 @@ throw new Error('Method not implemented.');
       codigo: '',
       nombre: '',
       precioUnitario: 0,
+
       cantidad: 0,
       cantidadSeleccionado:1
+
     }
 
     return productoSeleccionado;
   }
+
   buildSaleOrder(state: SaleOrderStates, type: TypeSalesOrder, carrito: IProduct[]) {
+
     let saleOrder: ISaleOrder = ({
       id_seller: 1,
       id_client: 1,
@@ -68,7 +78,9 @@ throw new Error('Method not implemented.');
       state_sale_order: state,
       detail_sales_order: [
         {
+
           id_product: 0o1,
+
           quantity: 1,
           price: 100,
           state_sale_order_detail: state
@@ -78,12 +90,11 @@ throw new Error('Method not implemented.');
     });
     
 
+
     return saleOrder;
   }
 
-  async generateSaleOrder(type: TypeSalesOrder) {
-
-   
+  async generateSaleOrder(type: TypeSalesOrder) {   
 
     this.loader = this.loadingService.loading();
     let saleOrder = null;
@@ -97,6 +108,7 @@ throw new Error('Method not implemented.');
       alert("existen productos que la cantidad superan el stock")
       this.loader = this.loadingService.loading();
       return;
+
     }
 
     this.salesOrderLoad = await this.saleOrderServiceService.createSaleOrder(saleOrder!)!
@@ -109,4 +121,5 @@ throw new Error('Method not implemented.');
       event.target.value = 0;
     }
   }
+
 }
