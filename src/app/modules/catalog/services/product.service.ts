@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { IProduct } from "../models/IProduct";
+import { IProduct, IProductRequest } from "../models/IProduct";
 import { Observable } from "rxjs";
 import { environment } from "../environments/environment";
 import { RequestResponseService } from "./requestResponse.service";
@@ -17,7 +17,7 @@ export class ProductService {
       return this.requestResponseService.makeGetRequest<IProduct[]>(this.getProducts);
    }
 
-   updateProduct(product: any): Observable<IProduct> {
+   updateOrCreateProduct(product: IProductRequest): Observable<IProduct> {
       console.log(`${this.putProducts}`, product)
       return this.requestResponseService.makePutRequest<IProduct>(`${this.putProducts}`, product);
    }

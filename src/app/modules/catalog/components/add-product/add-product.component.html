@@ -1,22 +1,22 @@
 <div class="container">
-    <form>
+    <form #productForm="ngForm">
         <div class="row">
             <div class="col-md-3">
                 <h3>Agregar producto</h3>
             </div>
         </div>
 
-        <div class=" row">
+        <div class="row">
             <div class="mb-3 col-md-3">
                 <label for="inputName" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="inputName">
+                <input type="text" class="form-control" id="inputName" name="name" [(ngModel)]="productRequest.name">
             </div>
             <div class="mb-3 col-md-3">
                 <label for="selectCategory" class="form-label">Categoría</label>
-                <select class="form-select" id="selectCategory">
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
+                <select class="form-select" id="selectCategory" name="idCategory" [(ngModel)]="productRequest.idCategory">
+                    <option value="1">Opción 1</option>
+                    <option value="2">Opción 2</option>
+                    <option value="3">Opción 3</option>
                 </select>
             </div>
 
@@ -32,35 +32,32 @@
         <div class="row">
             <div class="mb-3 col-md-2">
                 <label for="inputPrice" class="form-label">Precio</label>
-                <input type="number" class="form-control" id="inputPrice">
+                <input type="number" class="form-control" id="inputPrice" name="unitPrice" [(ngModel)]="productRequest.unitPrice">
             </div>
 
             <div class="mb-3 col-md-3">
                 <label for="inputUnitOfMeasurement" class="form-label">Unidad de medida</label>
-                <input type="text" class="form-control" id="inputUnitOfMeasurement">
+                <input type="text" class="form-control" id="inputUnitOfMeasurement" name="unitOfMeasure" [(ngModel)]="productRequest.unitOfMeasure">
             </div>
-
 
             <div class="mb-3 col-md-1">
                 <label for="inputStock" class="form-label">Stock</label>
-                <input type="number" class="form-control" id="inputStock">
+                <input type="number" class="form-control" id="inputStock" name="stockQuantity" [(ngModel)]="productRequest.stockQuantity">
             </div>
-
         </div>
 
         <div class="row">
             <div class="mb-3 col-md-6">
                 <label for="inputDescription" class="form-label">Descripción</label>
-                <textarea class="form-control" id="inputDescription" rows="3"></textarea>
+                <textarea class="form-control" id="inputDescription" rows="3" name="description" [(ngModel)]="productRequest.description"></textarea>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-3">
-                <button type="submit" class="btn btn-secondary">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary" (click)="cleanForm()">Cancelar</button>
+                <button type="submit" class="btn btn-primary" (click)="createProduct()">Guardar</button>
             </div>
         </div>
-
     </form>
 </div>

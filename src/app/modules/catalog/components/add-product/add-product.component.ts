@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { IProduct, IProductRequest } from '../../models/IProduct';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'fn-add-product',
@@ -6,6 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent {
+  productRequest:IProductRequest = {} as IProductRequest;
+  @ViewChild('productForm') productForm: any;
+
+  constructor(private productService: ProductService){}
 
   addCategoryVisible = false;
   addCategoryLinkVisible = true;
@@ -19,4 +25,18 @@ export class AddProductComponent {
     this.addCategoryLinkVisible = true;
   }
 
+  createProduct() {
+    this.productService.updateOrCreateProduct(this.productRequest).subscribe(
+      (response) => {
+        console.log('Product created:', response);
+      },
+      (error) => {
+        console.error('Error creating product:', error);
+      }
+    );
+  }
+
+  cleanForm(){
+    this.productForm.resetForm();
+  }
 }

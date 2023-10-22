@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IProduct, IProductRequestEdit } from '../../models/IProduct';
+import { IProduct, IProductRequest } from '../../models/IProduct';
 import { ProductService } from '../../services/product.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -24,15 +24,13 @@ export class EditProductComponent implements OnInit{
 
   updateProduct() {
     const { category, urlImage, ...productModifiedWithoutCategory } = this.productModified;
-    const productResponse: IProductRequestEdit = {
+    const productResponse: IProductRequest = {
       ...productModifiedWithoutCategory,
       idCategory: category.idCategory,
       image: urlImage
     };
 
-    console.log(productResponse)
-
-    this.productService.updateProduct(productResponse).subscribe(
+    this.productService.updateOrCreateProduct(productResponse).subscribe(
       (response) => {
         this.product = { ...this.productModified};
         console.log('Product updated:', response);

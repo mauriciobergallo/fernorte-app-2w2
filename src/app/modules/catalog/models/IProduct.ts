@@ -12,7 +12,7 @@ export interface IProduct {
     userCreated: string
 }
 
-export interface IProductRequestEdit{
+export interface IProductRequest{
     idProduct: number;
     name: string;
     description: string;
