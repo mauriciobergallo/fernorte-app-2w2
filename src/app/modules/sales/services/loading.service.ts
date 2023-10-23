@@ -7,11 +7,11 @@ export class LoadingService {
   private loader: boolean = false;
   constructor() { }
 
-  loading():boolean{
+  loading(): boolean {
     return this.loader = !this.loader;
   }
 
-  viewLoader():boolean{
+  viewLoader(): boolean {
     return this.loader;
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SaleOrderServiceService } from '../../services/sale-order-service.service';
-import { ISaleOrder } from '../../interfaces/isale-order';
+import { SaleOrderModel } from '../../models/SaleOrderModel';
 
 @Component({
   selector: 'fn-sale-order-search-handler',
@@ -8,7 +8,7 @@ import { ISaleOrder } from '../../interfaces/isale-order';
   styleUrls: ['./sale-order-search-handler.component.css']
 })
 export class SaleOrderSearchHandlerComponent implements OnInit {
-  saleOrdersList: ISaleOrder[] = [];
+  saleOrdersList: SaleOrderModel[] = [];
 
   constructor(private saleOrderServiceService: SaleOrderServiceService) {
   }

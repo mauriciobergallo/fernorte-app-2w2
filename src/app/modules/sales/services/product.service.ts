@@ -12,17 +12,17 @@ export class ProductService {
   private listProduct: ProductModel[] = [];
 
   getlistProduct(): ProductModel[] {
-     this.listProduct = this.productProvider.getlistProduct();
-     this.listProduct = this.listProduct.map(x => {
+    this.listProduct = this.productProvider.getlistProduct();
+    this.listProduct = this.listProduct.map(x => {
       x.cantidadSeleccionado = 1;
       return x;
     });
     return this.listProduct;
   }
 
-  restarCantidad(productoSeleccionado: ProductModel){
+  restarCantidad(productoSeleccionado: ProductModel) {
     this.listProduct = this.listProduct.map(x => {
-      if(x.codigo == productoSeleccionado.codigo)
+      if (x.codigo == productoSeleccionado.codigo)
         x.cantidad = x.cantidad - productoSeleccionado.cantidadSeleccionado!
 
       return x;
@@ -38,9 +38,10 @@ export class ProductService {
       nombre: '',
       precioUnitario: 0,
       cantidad: 0,
-      cantidadSeleccionado:1
+      cantidadSeleccionado: 1
     }
 
     return productoSeleccionado;
   }
+  
 }

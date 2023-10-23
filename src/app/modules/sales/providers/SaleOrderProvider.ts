@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../enviroment/environment";
-import { ISaleOrder } from "../interfaces/isale-order";
+import { SaleOrderModel } from "../models/SaleOrderModel";
 import { IResponse } from "../interfaces/IResponse";
 @Injectable()
 
@@ -12,7 +12,7 @@ export class SaleOrderProvider {
   constructor(private http: HttpClient) {
   }
 
-  createSaleOrder(saleOrder: ISaleOrder): Observable<IResponse> {
+  createSaleOrder(saleOrder: SaleOrderModel): Observable<IResponse> {
     const url = this.urlBase + "/sales-order/create-sale-order";
     const header = { "content-type": "application/json" };
     const body = saleOrder;
@@ -24,8 +24,8 @@ export class SaleOrderProvider {
     return this.http.get<IResponse>(url);
   }
 
-  getSaleOrders() : ISaleOrder[] {
-    const saleOrderList: ISaleOrder[] =  [
+  getSaleOrders() : SaleOrderModel[] {
+    const saleOrderList: SaleOrderModel[] =  [
       {
         id_sale_order: 1,
         id_seller: 1,
