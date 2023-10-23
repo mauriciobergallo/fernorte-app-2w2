@@ -1,0 +1,174 @@
+<form #formLocation="ngForm">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Registrar Ubicación</h2>
+            </div>
+            <div class="col-md-4 text-right">
+                <div class="form-group">
+                    <label>Capacidad Total de Almacenamiento</label>
+                    <div class="d-flex">
+                        <select class="form-control with-arrow-icon" name="capacidadTotal">
+                            <option *ngFor="let unidad of unidades" [value]="unidad">{{ unidad }}</option>
+                        </select>
+                        <input type="text" class="form-control capacitiMargin" name="capacidadTotalInput">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Capacidad Disponible de Almacenamiento</label>
+                    <div class="d-flex">
+                        <select class="form-control with-arrow-icon" name="capacidadDisponible">
+                            <option *ngFor="let unidad of unidades" [value]="unidad">{{ unidad }}</option>
+                        </select>
+                        <input type="text" class="form-control capacitiMargin" name="capacidadDisponibleInput">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Sección Superior Izquierda -->
+            <div class="col-md-6 seccion seccion-zonas" [ngClass]="{ 'seccion-inactiva': !seccionesHabilitadas.zona}">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Zonas</h5>
+                        <div class="form-group">
+                            <select class="form-control with-arrow-icon" [(ngModel)]="zonaSeleccionada" name="zona" (change)="seleccionarZona(zonaSeleccionada)">
+                                <option value="" disabled selected>Seleccione...</option>
+                                <option *ngFor="let ubicacion of ubicaciones" [value]="ubicacion.zona">{{ ubicacion.zona }}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div class="marginButtons">
+                                <button class="btn btn-success mt-2 btn-block">Consultar capacidad de almacenamiento</button>
+                            </div>
+                            <div class="marginButtons principalButtomPosition">
+                                <button class="btn btn-primary btn-block marginButtons" (click)="toggleSeccionZona()" [disabled]="!seccionesHabilitadas.zona">Agregar Nueva Zona</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección Superior Derecha -->
+            <div class="col-md-6 seccion seccion-secciones" [ngClass]="{ 'seccion-inactiva': !seccionesHabilitadas.secciones }">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Secciones</h5>
+                        <div class="form-group">
+                            <select class="form-control with-arrow-icon" [(ngModel)]="seccionSeleccionada" name="seccion" (change)="seleccionarSeccion(seccionSeleccionada)">
+                                <option value="" disabled selected>Seleccione...</option>
+                                <option *ngFor="let seccion of seccionesFiltradas">{{ seccion }}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div class="marginButtons">
+                                <button class="btn btn-success mt-2 btn-block">Consultar capacidad de almacenamiento</button>
+                            </div>
+                            <div class="marginButtons principalButtomPosition">
+                                <button class="btn btn-primary marginButtons" (click)="volverAtras('secciones')"> ← </button>
+                                <button class="btn btn-primary btn-block marginButtons" (click)="toggleSeccionSecciones()" [disabled]="!seccionesHabilitadas.secciones">Agregar Sección</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4 ">
+            <!-- Sección Inferior Izquierda -->
+            <div class="col-md-6 seccion seccion-posiciones" [ngClass]="{ 'seccion-inactiva': !seccionesHabilitadas.posiciones }">
+                <div class="card h-100">
+                    <div class="card-body positionPaddingBut">
+                        <h5 class="card-title">Posiciones</h5>
+                        <div class="form-group">
+                            <label>Posiciones</label>
+                            <select class="form-control with-arrow-icon" [(ngModel)]="posicionSeleccionada" name="posicion">
+                                <option value="" disabled selected>Seleccione...</option>
+                                <option *ngFor="let posicion of posicionesFiltradas">{{ posicion }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Producto</label>
+                            <select class="form-control with-arrow-icon">
+                                <option value="" disabled selected>Seleccione...</option>
+                                <option *ngFor="let producto of productos">{{ producto }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Unidad</label>
+                            <input type="text" class="form-control" name="unidad">
+                        </div>
+                        <div class="form-group">
+                            <label>Capacidad Máxima</label>
+                            <input type="number" class="form-control" name="capacidadMaxima">
+                        </div>
+                        <div class="form-group">
+                            <label>Capacidad Disponible</label>
+                            <input type="number" class="form-control" name="capacidadDisponible">
+                        </div>
+                        <div class="marginButtons principalButtomPosition positionButton">
+                            <button class="btn btn-primary marginButtons" (click)="volverAtras('posiciones')"> ← </button>
+                            <button class="btn btn-primary btn-block mt-2 marginButtons" (click)="toggleSeccionPosiciones()" [disabled]="!seccionesHabilitadas.posiciones">Agregar Ubicación</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección Inferior Derecha -->
+            <div class="col-md-6 seccion seccion-codigo" [ngClass]="{ 'seccion-inactiva': !seccionesHabilitadas.codigo }">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Código de Ubicación</h5>
+                        <div class="form-group">
+                            <label>Zona</label>
+                            <select class="form-control with-arrow-icon" [(ngModel)]="zonaSeleccionada" name="zonaCodigo">
+                                <option value="" disabled selected>Seleccione...</option>
+                                <option *ngFor="let ubicacion of ubicaciones" [value]="ubicacion.zona">{{ ubicacion.zona }}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" *ngIf="zonaSeleccionada">
+                            <label>Sección</label>
+                            <select class="form-control with-arrow-icon" [(ngModel)]="seccionSeleccionada" name="seccionCodigo">
+                                <option value="" disabled selected>Seleccione...</option>
+                                <option *ngFor="let seccion of locationService?.getSeccionesPorZona(zonaSeleccionada)" [value]="seccion">{{ seccion }}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" *ngIf="seccionSeleccionada">
+                            <label>Posición</label>
+                            <select class="form-control with-arrow-icon" [(ngModel)]="posicionSeleccionada" name="posicionCodigo">
+                                <option value="" disabled selected>Seleccione...</option>
+                                <option *ngFor="let posicion of locationService?.getPosicionesPorSeccion(seccionSeleccionada)" [value]="posicion">{{ posicion }}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Producto</label>
+                            <select class="form-control with-arrow-icon">
+                                <option value="" disabled selected>Seleccione...</option>
+                                <option *ngFor="let producto of productos">{{ producto }}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Cantidad Máxima</label>
+                            <input type="number" class="form-control" name="cantidadMaxima">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Cantidad Disponible</label>
+                            <input type="number" class="form-control" name="cantidadDisponible">
+                        </div>
+
+                        <div class="marginButtons principalButtomPosition">
+                            <button class="btn btn-primary marginButtons" (click)="volverAtras('codigo')"> ← </button>
+                            <button class="btn btn-primary btn-block float-right marginButtons" (click)="toggleSeccionCodigo()" [disabled]="!seccionesHabilitadas.codigo">Registrar Ubicación</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
