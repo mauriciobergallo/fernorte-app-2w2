@@ -1,3 +1,4 @@
+<h2 class="title text-center  my-4">Disponibilidad de almacenamiento</h2>
 <div class="d-flex justify-content-center">
   <div class="search-form-container">
     <form #searchForm="ngForm">
@@ -11,26 +12,34 @@
       <button type="submit" class="btn btn-primary  w-100" (click)="searchProduct(searchForm)">BUSCAR</button>
     </form>
   </div>
+
   <div class="info-container">
-    <div class="row">
-      <p>Cantidad disponible</p>
-      <input class="form-control" type="text" [value]="availableQuantity" aria-label="Disabled input example" readonly>
+    <span class="text-center">Producto: {{productInfo.productName}}</span>
+    <div class="inputs-container">
+      <div class="row">
+        <p>Cantidad disponible</p>
+        <input class="form-control" type="text" [value]="availableQuantity" aria-label="Disabled input example"
+          readonly>
+      </div>
+      <div class="row">
+        <p>Unidad de medida</p>
+        <input class="form-control" type="text" [value]="productInfo.measureUnit" aria-label="Disabled input example"
+          readonly>
+      </div>
+      <div class="row">
+        <p>Cantidad almacenada</p>
+        <input class="form-control" type="text" [value]="productInfo.quantity" aria-label="Disabled input example"
+          readonly>
+      </div>
+      <div class="row">
+        <p>Categoria</p>
+        <input class="form-control" type="text" [value]="productInfo.categoryName" aria-label="Disabled input example"
+          readonly>
+      </div>
     </div>
-    <div class="row">
-      <p>Unidad de medida</p>
-      <input class="form-control" type="text" [value]="productInfo.measureUnit" aria-label="Disabled input example"
-        readonly>
-    </div>
-    <div class="row">
-      <p>Cantidad almacenada</p>
-      <input class="form-control" type="text" [value]="productInfo.quantity" aria-label="Disabled input example"
-        readonly>
-    </div>
-    <div class="row">
-      <p>Categoria</p>
-      <input class="form-control" type="text" [value]="productInfo.categoryName" aria-label="Disabled input example"
-        readonly>
-    </div>
+
   </div>
 </div>
-<script src="sweetalert2.all.min.js"></script>
+<div *ngIf="loader" class="loader-container">
+  <img src="../../../../../assets/loader.svg" alt="Loader">
+</div>

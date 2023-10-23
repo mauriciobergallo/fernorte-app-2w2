@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./storage-availability.component.css'],
 })
 export class StorageAvailabilityComponent implements OnDestroy {
+  loader: boolean = false;
   product: string = '';
   productInfo: IProduct = {
     location: {
@@ -34,14 +35,27 @@ export class StorageAvailabilityComponent implements OnDestroy {
     if (form.invalid) {
       alert('Formulario invalido');
     }
+    this.loader = true;
     this.suscriptions.add(
       this.productService.getProduct(form.value.product).subscribe({
         next: (response: IProduct) => {
           this.productInfo = response;
-          Swal.fire('SweetAlert2 is working!');
+          this.loader = false;
         },
         error: (error: Error) => {
-          alert(error);
+          this.loader = false;
+          console.log(error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'El producto buscado no existe',
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#0D6EFD',
+          });
+          this.productInfo.categoryName = '';
+          this.productInfo.measureUnit = '';
+          this.productInfo.quantity = 0;
+          this.productInfo.maxCapacity = 0;
         },
       })
     );
