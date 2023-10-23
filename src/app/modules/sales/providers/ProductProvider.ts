@@ -4,7 +4,8 @@ import { Observable } from "rxjs";
 import { environment } from "../enviroment/enviroment";
 import { ISaleOrder } from "../interfaces/ISaleOrder";
 import { IResponse } from "../interfaces/IResponse";
-import { IProduct } from "../interfaces/IProduct";
+import { IProduct } from "../interfaces/iproduct";
+
 @Injectable()
 
 export class ProductProvider {

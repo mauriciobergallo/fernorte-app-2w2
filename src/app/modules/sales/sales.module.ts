@@ -7,7 +7,7 @@ import { SaleOrderSearchHandlerComponent } from './components/sale-order-search-
 import { SaleOrderSearchFilterComponent } from './components/sale-order-search-filter/sale-order-search-filter.component';
 import { SaleOrderSearchListComponent } from './components/sale-order-search-list/sale-order-search-list.component';
 import { SaleOrderProvider } from './providers/SaleOrderProvider';
-import { ProductProvider } from './providers/ProductProvider';
+import { ProductProvider } from './providers/productProvider';
 
 @NgModule({
   declarations: [HomeComponent, SaleOrderSearchHandlerComponent, SaleOrderSearchFilterComponent, SaleOrderSearchListComponent],
