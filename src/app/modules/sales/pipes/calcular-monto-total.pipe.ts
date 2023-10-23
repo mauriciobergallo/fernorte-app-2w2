@@ -6,7 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class CalcularMontoTotalPipe implements PipeTransform {
 
   transform(subTotal:number, impuesto:number): number {
-    return Number((subTotal + impuesto).toFixed(2))
+    if(subTotal == 0)
+      impuesto = 0;
+    return Number((subTotal + (subTotal * (impuesto/100))).toFixed(2))
   }
 
 }

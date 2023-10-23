@@ -12,35 +12,47 @@ export class ProductService {
   private listProduct: ProductModel[] = [];
 
   getlistProduct(): ProductModel[] {
-     this.listProduct = this.productProvider.getlistProduct();
-     this.listProduct = this.listProduct.map(x => {
-      x.cantidadSeleccionado = 1;
-      return x;
+    this.productProvider.getlistProduct().subscribe((res) => {
+      this.listProduct = res.map(x => {
+        x.cantidadSeleccionado = 1;
+        return x;
+      });
+      return this.listProduct;
     });
     return this.listProduct;
   }
 
-  restarCantidad(productoSeleccionado: ProductModel){
+
+  restarCantidad(productoSeleccionado: ProductModel) {
     this.listProduct = this.listProduct.map(x => {
-      if(x.codigo == productoSeleccionado.codigo)
-        x.cantidad = x.cantidad - productoSeleccionado.cantidadSeleccionado!
+      if (x.idProduct == productoSeleccionado.idProduct)
+        x.stockQuantity = x.stockQuantity - productoSeleccionado.cantidadSeleccionado!
 
       return x;
     })
     return this.listProduct;
   }
   filtrarProductos(texto: any) {
-    return this.listProduct.filter(producto => producto.nombre.toLowerCase().includes(texto.target.value.toLowerCase()));
+    return this.listProduct.filter(producto => producto.name.toLowerCase().includes(texto.target.value.toLowerCase()));
   }
   cleanProduct(): ProductModel {
     let productoSeleccionado = {
-      codigo: '',
-      nombre: '',
-      precioUnitario: 0,
-      cantidad: 0,
-      cantidadSeleccionado:1
+      idProduct:0,
+      name: "" ,
+      description:"",
+      unitPrice: 0,
+      stockQuantity: 0,
+      unitOfMeasure:"",
+      category: {
+        idCategory:0,
+        name: "",
+        description: ""
+      },
+      urlImage: "",
+      cantidadSeleccionado: 1
     }
 
     return productoSeleccionado;
   }
+  
 }
