@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  urlBase:"http://localhost:8080",
+  urlBase:"http://localhost:3000",
+  urlProductBase:"http://localhost:8080",
   listSearch: [] as any[],
 };
 

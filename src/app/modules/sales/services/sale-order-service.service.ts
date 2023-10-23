@@ -36,7 +36,7 @@ export class SaleOrderServiceService {
   }
 
   ValidarPresupuestoOOrdenVenta(saleOrder: SaleOrderModel, carrito: ProductModel[]): boolean {
-    return saleOrder.detail_sales_order.some(x => x.quantity > carrito.find(y => parseInt(y.codigo) == x.id_product)!.cantidad)
+    return saleOrder.detail_sales_order.some(x => x.quantity > carrito.find(y => y.idProduct == x.id_product)!.stockQuantity)
   }
   buildSaleOrder(state: SaleOrderStates, type: TypeSalesOrder, carrito: ProductModel[], orderSale?:SaleOrderModel): SaleOrderModel {
     let id = 0;
@@ -63,7 +63,7 @@ export class SaleOrderServiceService {
       let idDetail:number = 0;
 
       if (type == TypeSalesOrder.ORDEN_VENTA) {
-        const matchingDetails = orderSale!.detail_sales_order.filter(x => parseInt(element.codigo) === x.id_product);
+        const matchingDetails = orderSale!.detail_sales_order.filter(x => element.idProduct === x.id_product);
     
         if (matchingDetails.length > 0) {
           idDetail = matchingDetails[0].id_sale_order_details!;
@@ -73,9 +73,9 @@ export class SaleOrderServiceService {
       const detail_sales_order: DetailsSaleOrderModel = {
         id_sale_order: id,
         id_sale_order_details: idDetail,
-        id_product: parseInt(element.codigo),
+        id_product: element.idProduct,
         quantity: element.cantidadSeleccionado!,
-        price: element.cantidadSeleccionado! * element.precioUnitario,
+        price: element.cantidadSeleccionado! * element.unitPrice,
         state_sale_order_detail: detailsState,
       };
       saleOrder.detail_sales_order.push(detail_sales_order);
@@ -89,7 +89,7 @@ export class SaleOrderServiceService {
     let montoTotal: MontoTotalModel = new MontoTotalModel();
     for (let index = 0; index < carrito.length; index++) {
       const element = carrito[index];
-      montoTotal.subTotal += element.cantidadSeleccionado! * element.precioUnitario;
+      montoTotal.subTotal += element.cantidadSeleccionado! * element.unitPrice;
     }
     return montoTotal;
   }
@@ -97,7 +97,7 @@ export class SaleOrderServiceService {
     let montoTotal: MontoTotalModel = new MontoTotalModel();
     for (let index = 0; index < carrito.length; index++) {
       const element = carrito[index];
-      montoTotal.subTotal += element.cantidadSeleccionado! * element.precioUnitario
+      montoTotal.subTotal += element.cantidadSeleccionado! * element.unitPrice
     }
     return montoTotal;
   }

@@ -82,11 +82,11 @@
                             data-bs-toggle="dropdown" aria-expanded="false">ver productos</button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" *ngFor="let item of listProductfiltrada"
-                                    (click)="selectProduct(item)">{{item.nombre}}</a>
+                                    (click)="selectProduct(item)">{{item.name}}</a>
                             </li>
                         </ul>
                         <input type="text" class="form-control" aria-label="Text input with dropdown button"
-                            (change)="filtrarProductos($event)" [(ngModel)]="productoSeleccionado.nombre">
+                            (change)="filtrarProductos($event)" [(ngModel)]="productoSeleccionado.name">
                         <div class="input-group-append">
                             <button class="btn btn-info" (click)="agregarProducto()">
                                 <i class="fa-solid fa-magnifying-glass fa-lg"></i>
@@ -132,22 +132,22 @@
                             <!-- Aquí se agregarán las filas de la tabla dinámicamente -->
 
                             <tr *ngFor="let item of carrito">
-                                    <td>{{item.codigo}}</td>
-                                    <td>{{item.nombre}}</td>
-                                    <td>${{item.precioUnitario}}</td>
+                                    <td>{{item.idProduct}}</td>
+                                    <td>{{item.name}}</td>
+                                    <td>${{item.unitPrice}}</td>
                                     <td>                                       
                                         <input #controlCantidad="ngModel" [(ngModel)]="item.cantidadSeleccionado == undefined ? 1 : item.cantidadSeleccionado" [ngModelOptions]="{standalone: true}" type="number"
                                             class="form-control" id="cantidad" placeholder="cantidad" required
-                                            [maxlength]="item.cantidad"
+                                            [maxlength]="item.stockQuantity"
                                             max-length-message="La cantidad no puede exceder el valor máximo" 
                                             autocomplete="off" (change)="ActualizarTotal()">                                            
-                                        <div  *ngIf="controlCantidad.value > item.cantidad" style="color: red" >
+                                        <div  *ngIf="controlCantidad.value > item.stockQuantity" style="color: red" >
                                             no puede superar al stock
                                         </div>
                                     </td>
-                                    <td>${{controlCantidad.value | calcularTotal:item.precioUnitario}}
+                                    <td>${{controlCantidad.value | calcularTotal:item.unitPrice}}
                                     </td>
-                                    <td><button class="btn btn-outline-danger" type="button" (click)="deleteProduct(item.codigo)">❌</button></td>
+                                    <td><button class="btn btn-outline-danger" type="button" (click)="deleteProduct(item.idProduct)">❌</button></td>
                                 <th><i class="fa-solid fa-xmark fa-xl"></i></th>
                             </tr>
 

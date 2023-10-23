@@ -1,9 +1,19 @@
 export interface IProduct {
-    codigo: string;
-    nombre: string;
-    precioUnitario: number;
-    cantidad: number;
+    
+        idProduct: 0,
+        name: string,
+        description: string,
+        unitPrice: 0,
+        stockQuantity: 0,
+        unitOfMeasure: string,
+        category: {
+          idCategory: 0,
+          name: string,
+          description: string
+        },
+        urlImage: string
+        cantidadSeleccionado?: number
+      
 
-    cantidadSeleccionado?: number
 
 }

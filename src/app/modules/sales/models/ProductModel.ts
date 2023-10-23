@@ -1,7 +1,15 @@
 export class ProductModel {
-    codigo: string  = "";
-    nombre: string = "";
-    precioUnitario: number = 0;
-    cantidad: number = 0;
-    cantidadSeleccionado?: number = 0
+    idProduct:number = 0;
+    name: string ="";
+    description: string="";
+    unitPrice:number = 0;
+    stockQuantity:number = 0;
+    unitOfMeasure: string="";
+    category= {
+      idCategory:0,
+      name: "",
+      description: ""
+    };
+    urlImage: string = ""
+    cantidadSeleccionado?: number
 }

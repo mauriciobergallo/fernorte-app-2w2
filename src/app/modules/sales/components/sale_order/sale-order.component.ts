@@ -45,7 +45,7 @@ export class SaleOrderComponent implements OnInit {
   }
   agregarProducto():void{
 
-    if (this.productoSeleccionado.codigo == "")
+    if (this.productoSeleccionado.idProduct == 0)
       return;
     if (this.carritoService.validarProductoCargado(this.productoSeleccionado)) {
       alert("El Producto ya existe en el carrito")
@@ -94,7 +94,7 @@ export class SaleOrderComponent implements OnInit {
     this.loader = this.loadingService.loading();
   }
 
-  deleteProduct(id:string){
+  deleteProduct(id:number){
    this.carrito = this.carritoService.deleteProduct(id);
    this.ActualizarTotal();
   }
