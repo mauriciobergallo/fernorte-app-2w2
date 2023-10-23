@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { IProduct } from '../../models/product.interface';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'fn-storage-availability',
   templateUrl: './storage-availability.component.html',
@@ -38,6 +38,7 @@ export class StorageAvailabilityComponent implements OnDestroy {
       this.productService.getProduct(form.value.product).subscribe({
         next: (response: IProduct) => {
           this.productInfo = response;
+          Swal.fire('SweetAlert2 is working!');
         },
         error: (error: Error) => {
           alert(error);
