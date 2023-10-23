@@ -15,8 +15,8 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#" (click)="onShowSalesOrders()">Generar Presupuesto</a></li>
-                    <li><a class="dropdown-item" href="#" (click)="onShowSalesOrders()">Generae Orden de Venta</a></li>
-                    <li><a class="dropdown-item" href="#" (click)="onShowSalesOrdersSearch()">Mostrar Ordenes de Venta</a></li>
+                    <li><a class="dropdown-item" href="#" (click)="onShowSalesOrders()">Generar Orden de Venta</a></li>
+                    <li><a class="dropdown-item" href="#" (click)="onShowSalesOrdersList()">Mostrar Ordenes de Venta</a></li>
                     <li><a class="dropdown-item" href="#" (click)="onShowSalesOrdersSearch()">Buscar Ordenes de Venta</a></li>
                     <li><a class="dropdown-item" href="#">Cancelar Orden de Venta</a></li>
                 </ul>
@@ -67,6 +67,7 @@
     <fn-billing *ngIf="showBilling"></fn-billing>
     <fn-payment-method *ngIf="showPaymentMethod"></fn-payment-method>   
     <fn-create-payment *ngIf="showPayment"></fn-create-payment>    
+    <fn-sale-order-search-list *ngIf="showSalesOrdersList"></fn-sale-order-search-list>
 </div>
 
 
