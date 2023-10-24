@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IProduct } from '../../../models/ISuppliers';
 import { ISupliers } from '../../../models/ISuppliers'; 
+import { CardProduct } from '../../../models/CardProduct';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class PurchaseOrderServiceService {
   idSupplier = new BehaviorSubject<number>(0)
   suplierSelected = new BehaviorSubject<ISupliers>({ id: 0, socialReason: "", adress: "", fantasyName: "", cuit: "" })
   listProductSelected = new BehaviorSubject<IProduct[]>([])
+  cardProductList:CardProduct[] = [];
 
 
   constructor() { }
