@@ -9,12 +9,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { CatalogModule } from './modules/catalog/catalog.module';
-import { CustomerModule } from './modules/customer/customer.module';
-import { PurchaseModule } from './modules/purchase/purchase.module';
-import { InventaryModule } from './modules/inventory/inventory.module';
-import { SalesModule } from './modules/sales/sales.module';
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -26,11 +20,7 @@ import { SalesModule } from './modules/sales/sales.module';
     ReactiveFormsModule,
     HttpClientModule,
 
-    CatalogModule,
-    CustomerModule,
-    PurchaseModule,
-    InventaryModule,
-    SalesModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent],
