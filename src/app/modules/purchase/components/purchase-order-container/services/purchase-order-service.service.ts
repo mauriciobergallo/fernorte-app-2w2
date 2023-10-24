@@ -17,12 +17,24 @@ export class PurchaseOrderServiceService {
   idSupplier = new BehaviorSubject<number>(0)
   suplierSelected = new BehaviorSubject<ISupliers>({ id: 0, socialReason: "", adress: "", fantasyName: "", cuit: "" })
   listProductSelected = new BehaviorSubject<IProduct[]>([])
-  cardProductList:CardProduct[] = [];
+  cardProductList: CardProduct[] = [
+  { name: 'Product 1', quantity: 3 ,blocked:true},
+  { name: 'Product 2', quantity: 1 ,blocked:true},];
 
 
   constructor() { }
 
 
+  setCardProductList(products: CardProduct[]) {
+    this.cardProductList = products;
+  }
+
+  /*
+   * method to return the list of card products
+   */
+  getCardProductList(): CardProduct[] {
+    return this.cardProductList;
+  }
 
   /*
    * method to set and get the id of the supplier

@@ -1,1 +1,20 @@
-<p>cart works!</p>
+<div class="right-sidebar">
+    <div class="header">
+      <h2>Carrito</h2>
+      <hr class="separator">
+    </div>
+    <div class="content">
+      <div *ngFor="let product of cardProducts" class="item">
+        <div class="item-content">
+          <div class="info">
+            <p>{{ product.name }} </p>
+            <p> X{{ product.quantity }}</p>
+          </div>
+          <button (click)="removeItem(product)">Remove</button>
+        </div>
+      </div>
+      <hr class="separator">
+      <button class="final-button" (click)="logToConsole()">Click Me</button>
+    </div>
+  </div>
+  

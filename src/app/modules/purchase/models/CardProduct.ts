@@ -1,4 +1,5 @@
 export interface CardProduct {
     name: string,
-    quantity:number
+    quantity:number,
+    blocked:boolean
   }
