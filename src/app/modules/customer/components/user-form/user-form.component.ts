@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Role } from '../../models/role';
+import { NewRole } from '../../models/new-role';
 import { Empleado } from '../../models/empleado';
 import { UserService } from '../../services/user.service';
 
@@ -12,11 +12,11 @@ import { UserService } from '../../services/user.service';
 export class UserFormComponent implements OnInit {
   @Input() empleado: Empleado;
   password: string = '';
-  selectedRole: Role;
+  selectedRole: NewRole;
 
-  availableRoles: Role[] = [];
+  availableRoles: NewRole[] = [];
   roles_name: string[] = [];
-  sendRoles: Role[] = [];
+  sendRoles: NewRole[] = [];
 
   @Output() closeComponent= new EventEmitter<boolean>();
 
@@ -52,7 +52,7 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.GetAllRoles().subscribe((roles: Role[]) => {
+    this.userService.GetAllRoles().subscribe((roles: NewRole[]) => {
       console.log(roles);
       this.availableRoles = roles;
     });
@@ -91,7 +91,7 @@ export class UserFormComponent implements OnInit {
       }
     }
 
-    this.selectedRole = new Role();
+    this.selectedRole = new NewRole();
   }
 
   cancel() {

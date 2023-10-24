@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Role } from '../models/role';
+import { NewRole } from '../models/new-role';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -13,10 +13,10 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  GetAllRoles(): Observable<Role[]> {
+  GetAllRoles(): Observable<NewRole[]> {
     return this.http.get<any[]>(this.apiUrlGetAllRoles).pipe(
       map(data => data.map(item => {
-        const role = new Role();
+        const role = new NewRole();
         role.name = item.name;
         role.id_role = item.id_role;
         role.area = item.area;

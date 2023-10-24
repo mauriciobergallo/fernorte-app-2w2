@@ -1,5 +1,4 @@
-export class Role {
-    id_role: number;
+export interface Role {
     name: string;
-    area: string
+    area: number
 }
