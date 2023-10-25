@@ -6,6 +6,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { CatalogModule } from './modules/catalog/catalog.module';
+import { CustomerModule } from './modules/customer/customer.module';
+import { InventaryModule } from './modules/inventory/inventory.module';
+import { PurchaseModule } from './modules/purchase/purchase.module';
+import { SalesModule } from './modules/sales/sales.module';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -20,7 +26,12 @@ import { AppComponent } from './app.component';
     ReactiveFormsModule,
     HttpClientModule,
 
-    AppRoutingModule
+    AppRoutingModule,
+    CatalogModule,
+    CustomerModule,
+    PurchaseModule,
+    InventaryModule,
+    SalesModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
