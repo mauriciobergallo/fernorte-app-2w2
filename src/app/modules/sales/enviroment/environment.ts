@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   urlBase:"http://localhost:3000",
   urlProductBase:"http://localhost:8080",
+  urlClientsBase:"http://localhost:8081",
+
   listSearch: [] as any[],
 };
 

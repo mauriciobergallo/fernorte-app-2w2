@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { SaleOrderServiceService } from '../../services/sale-order-service.service';
+import { SaleOrderServiceService } from '../../services/salesOrder/sale-order-service.service';
 import { SaleOrderModel } from '../../models/SaleOrderModel';
 import { LoadingService } from '../../services/loading.service';
 import { ProductModel } from '../../models/ProductModel';
-import { ProductService } from '../../services/product.service';
+import { ProductService } from '../../services/products/product.service';
 import { TypeSalesOrder } from '../../models/TypeSaleOrder';
 import { SaleOrderStates } from '../../models/SalesOrderState';
 import { DetailsSaleOrderModel } from '../../models/DetailsSaleOrderModel';
 import { CarritoService } from '../../services/carrito.service';
 import { MontoTotalModel } from '../../models/ModelTotalModel';
-import { SaleOrderProvider } from '../../providers/SaleOrderProvider';
+import { SaleOrderProvider } from '../../services/salesOrder/SaleOrderProvider';
+import { ICustomer } from '../../interfaces/iCustomer';
+import { ClientProvider } from '../../services/clients/clientProvider';
+import { ClientService } from '../../services/clients/client.service';
 
 @Component({
   selector: 'fn-sale-order',
@@ -22,7 +25,8 @@ export class SaleOrderComponent implements OnInit {
     private loadingService: LoadingService,
     private productService: ProductService,
     private carritoService: CarritoService,
-    private saleOrderProvider: SaleOrderProvider) { }
+    private saleOrderProvider: SaleOrderProvider,
+    private clientsService : ClientService) { }
 
   salesOrderLoad: SaleOrderModel | undefined
   loader = this.loadingService.viewLoader();
@@ -32,6 +36,8 @@ export class SaleOrderComponent implements OnInit {
   listDetailSaleOrder: DetailsSaleOrderModel[] = [];
   saleOrder: SaleOrderModel = new SaleOrderModel();
   permiteGenerar: boolean = true;
+  listClients: ICustomer[] = []
+  listClientsfiltrada: ICustomer[] = [];
 
   productoSeleccionado = this.productService.cleanProduct();
   readonly typeSalesOrder = TypeSalesOrder.ORDEN_VENTA;
@@ -39,6 +45,7 @@ export class SaleOrderComponent implements OnInit {
   montoTotal: MontoTotalModel = new MontoTotalModel; 
   ngOnInit(): void {
     this.listProduct = this.productService.getlistProduct();
+    this.listClients = this.clientsService.getListClients();
   }
   ActualizarTotal(){
     this.montoTotal = this.saleOrderServiceService.calcularTotal(this.carrito)
