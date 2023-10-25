@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { SaleOrderModel } from '../models/SaleOrderModel';
-import { SaleOrderProvider } from '../providers/SaleOrderProvider';
-import { ProductModel } from '../models/ProductModel';
-import { DetailsSaleOrderModel } from '../models/DetailsSaleOrderModel';
-import { TypeSalesOrder } from '../models/TypeSaleOrder';
-import { SaleOrderStates } from '../models/SalesOrderState';
-import { MontoTotalModel } from '../models/ModelTotalModel';
-import { DetailsState } from '../models/DetailsState';
+import { SaleOrderModel } from '../../models/SaleOrderModel';
+import { SaleOrderProvider } from './SaleOrderProvider';
+import { ProductModel } from '../../models/ProductModel';
+import { DetailsSaleOrderModel } from '../../models/DetailsSaleOrderModel';
+import { TypeSalesOrder } from '../../models/TypeSaleOrder';
+import { SaleOrderStates } from '../../models/SalesOrderState';
+import { MontoTotalModel } from '../../models/ModelTotalModel';
+import { DetailsState } from '../../models/DetailsState';
 import { Observable } from 'rxjs';
 
 @Injectable({
