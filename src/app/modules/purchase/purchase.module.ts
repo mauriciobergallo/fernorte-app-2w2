@@ -26,12 +26,15 @@ import { PaymentMethodComponent } from './components/payment-order-container/com
 import { TotalResumeComponent } from './components/payment-order-container/components/total-resume/total-resume.component';
 import { HedearSupplierComponent } from './components/shared/hedear-supplier/hedear-supplier.component';
 import { OrderButtonsComponent } from './components/shared/order-buttons/order-buttons.component';
+import { RouterModule } from '@angular/router';
+
+import { RouterChildModule } from './router-child.module';
 
 
 @NgModule({
   declarations: [HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, TotalSidebarComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent],
   providers: [],
-  imports: [CommonModule, FormsModule,NgbModule, NgbPaginationModule, NgbDropdownModule, NgbToastModule],
+  imports: [CommonModule, FormsModule,NgbModule, NgbPaginationModule, NgbDropdownModule, NgbToastModule,RouterModule, RouterChildModule],
   exports: [HomeComponent],
 })
 export class PurchaseModule {}

@@ -1,109 +1,113 @@
-<div class="container test" *ngIf="!isOpenProductSupplier">
-  <h2>Listado Proveedores</h2>
-  <button class="btn btn-primary" (click)="showAddSupplier()">Agregar</button>
-  <hr />
-  <input
-    type="text"
-    placeholder="Buscar..."
-    class="form-control w-25 mt-2 mb-2"
-    #buscar
-  />
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Razon Social</th>
-        <th scope="col">Nombre Fantasia</th>
-        <th scope="col">Cuit</th>
-        <th scope="col">Domicilio</th>
-        <th scope="col">Contacto</th>
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of supliers">
-        <th scope="row">{{ item.id }}</th>
-        <td>{{ item.socialReason }}</td>
-        <td>{{ item.fantasyName }}</td>
-        <td>{{ item.cuit }}</td>
-        <td>{{ item.adress }}</td>
-        <td>
-          <button class="btn btn-primary" (click)="openContacts(item.id)">
-            Contacto
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-primary" (click)="openProducts(item.id)">
-            Productos
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="content">
+  <div class="container test" *ngIf="!isOpenProductSupplier">
+    <h2>Listado Proveedores</h2>
+    <button class="btn btn-primary" (click)="showAddSupplier()">Agregar</button>
+    <hr />
+    <input
+      type="text"
+      placeholder="Buscar..."
+      class="form-control w-25 mt-2 mb-2"
+      #buscar
+    />
 
-  <ngb-pagination
-    [collectionSize]="supliers.length"
-    aria-label="Default pagination"
-  ></ngb-pagination>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Razon Social</th>
+          <th scope="col">Nombre Fantasia</th>
+          <th scope="col">Cuit</th>
+          <th scope="col">Domicilio</th>
+          <th scope="col">Contacto</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of supliers">
+          <th scope="row">{{ item.id }}</th>
+          <td>{{ item.socialReason }}</td>
+          <td>{{ item.fantasyName }}</td>
+          <td>{{ item.cuit }}</td>
+          <td>{{ item.adress }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="openContacts(item.id)">
+              Contacto
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-primary" (click)="openProducts(item.id)">
+              Productos
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ngb-pagination
+      [collectionSize]="supliers.length"
+      aria-label="Default pagination"
+    ></ngb-pagination>
+  </div>
+
+  <fn-add-supplier
+    *ngIf="isOpenAddSupplier"
+    (closeAddSupplier)="closeAddSupplier()"
+    (refrescarService)="addedSupplier()"
+  ></fn-add-supplier>
+
+  <fn-contacts
+    *ngIf="isOpenContacts"
+    [contacts]="contacts"
+    (closeContacts)="closeContacts()"
+    (refreshService)="obtenerContactos($event)"
+    (addedContact)="addedContact()"
+    (removedContact)="removedContact()"
+  ></fn-contacts>
+
+  <fn-products-supplier
+    *ngIf="isOpenProductSupplier"
+    [supplier]="supplier2"
+  ></fn-products-supplier>
+
+  <div
+    class="background-config"
+    *ngIf="isOpenContacts || isOpenAddSupplier"
+  ></div>
+
+  <ngb-toast
+    *ngIf="toastAddSupplier"
+    class="toast bg-success text-light"
+    [autohide]="true"
+    (hidden)="toastAddSupplier = false"
+    [delay]="1500"
+  >
+    Proveedor Cargado Con Exito!
+  </ngb-toast>
+
+
+  <ngb-toast
+    *ngIf="toastAddContact"
+    class="toast bg-success text-light"
+    [autohide]="true"
+    (hidden)="toastAddContact = false"
+    [delay]="1500"
+  >
+    Contacto Cargado Con Exito!
+  </ngb-toast>
+
+
+  <ngb-toast
+    *ngIf="toastRemovedContact"
+    class="toast bg-danger text-light"
+    [autohide]="true"
+    (hidden)="toastRemovedContact = false"
+    [delay]="1500"
+  >
+    Contacto Eliminado Con Exito!
+  </ngb-toast>
+
+
+  <!-- <fn-hedear-supplier></fn-hedear-supplier> -->
+
 </div>
-
-<fn-add-supplier
-  *ngIf="isOpenAddSupplier"
-  (closeAddSupplier)="closeAddSupplier()"
-  (refrescarService)="addedSupplier()"
-></fn-add-supplier>
-
-<fn-contacts
-  *ngIf="isOpenContacts"
-  [contacts]="contacts"
-  (closeContacts)="closeContacts()"
-  (refreshService)="obtenerContactos($event)"
-  (addedContact)="addedContact()"
-  (removedContact)="removedContact()"
-></fn-contacts>
-
-<fn-products-supplier
-  *ngIf="isOpenProductSupplier"
-  [supplier]="supplier2"
-></fn-products-supplier>
-
-<div
-  class="background-config"
-  *ngIf="isOpenContacts || isOpenAddSupplier"
-></div>
-
-<ngb-toast
-  *ngIf="toastAddSupplier"
-  class="toast bg-success text-light"
-  [autohide]="true"
-  (hidden)="toastAddSupplier = false"
-  [delay]="1500"
->
-  Proveedor Cargado Con Exito!
-</ngb-toast>
-
-
-<ngb-toast
-  *ngIf="toastAddContact"
-  class="toast bg-success text-light"
-  [autohide]="true"
-  (hidden)="toastAddContact = false"
-  [delay]="1500"
->
-  Contacto Cargado Con Exito!
-</ngb-toast>
-
-
-<ngb-toast
-  *ngIf="toastRemovedContact"
-  class="toast bg-danger text-light"
-  [autohide]="true"
-  (hidden)="toastRemovedContact = false"
-  [delay]="1500"
->
-  Contacto Eliminado Con Exito!
-</ngb-toast>
-
-
-<!-- <fn-hedear-supplier></fn-hedear-supplier> -->

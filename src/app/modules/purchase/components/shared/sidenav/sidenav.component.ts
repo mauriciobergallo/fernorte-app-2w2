@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'fn-sidenav',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class SidenavComponent {
 
+  constructor(private router:Router){
+
+  }
 }

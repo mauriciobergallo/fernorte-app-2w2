@@ -1,6 +1,9 @@
 .border-red {
   border: 1px solid rgb(255, 73, 73);
 }
+.content{
+  margin-left: 280px;
+}
 
 .background-config {
   position: fixed;
@@ -33,6 +36,3 @@
 }
 
 
-.test {
-  margin-left: 200px;
-}
