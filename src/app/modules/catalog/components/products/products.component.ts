@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { IProduct } from '../../models/IProduct';
 import { ProductService } from '../../services/product.service';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditProductComponent } from '../edit-product/edit-product.component';
+import { IProductCategory } from '../../models/IProductCategory';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { EditProductComponent } from '../edit-product/edit-product.component';
 export class ProductsComponent {
   isLoading = true;
 
-  listProducts: IProduct[] = [];
+  listProducts: IProductCategory[] = [];
   private subscription = new Subscription();
 
   currentPage = 1;
@@ -26,7 +26,7 @@ export class ProductsComponent {
     this.pagedProducts();
   }
 
-  openEditModal(product: IProduct) {
+  openEditModal(product: IProductCategory) {
     const modalRef = this.modalService.open(EditProductComponent, { size: 'lg' });
     modalRef.componentInstance.product = product;
   }
@@ -36,7 +36,7 @@ export class ProductsComponent {
   
     this.subscription.add(
       this.productService.get().subscribe({
-        next: (products: IProduct[]) => {
+        next: (products: IProductCategory[]) => {
           this.listProducts = products;
           this.isLoading = false; // Ocultar el spinner después de que los datos se carguen
         },

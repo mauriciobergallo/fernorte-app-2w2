@@ -1,12 +1,12 @@
-import { ICategory } from "./ICategory";
 
-export interface IProduct {
-    id: number;
+export interface IProduct{
+    id_product: number;
     name: string;
     description: string;
-    unitPrice: number;
-    stockQuantity: number;
-    unitOfMeasure: string;
-    category: ICategory;
-    urlImage: string;
+    unit_Price: number;
+    stock_Quantity: number;
+    unit_Of_Measure: string;
+    id_category: number;
+    image: string;
+    user_created:string;
 }

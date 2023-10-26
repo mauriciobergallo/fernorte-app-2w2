@@ -12,6 +12,11 @@
     justify-content: center; /* Centra horizontalmente */
     align-items: center; /* Centra verticalmente */
     height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background: #ffffff75;
   }
   
   @keyframes spin {
