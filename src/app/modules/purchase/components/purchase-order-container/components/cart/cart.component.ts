@@ -1,21 +1,20 @@
 import { Component } from '@angular/core';
-import { CardProduct } from 'src/app/modules/purchase/models/CardProduct';
+import { CartProduct } from 'src/app/modules/purchase/models/CardProduct';
 import { PurchaseOrderServiceService } from '../../services/purchase-order-service.service';
 
 @Component({
   selector: 'fn-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.css'],
 })
 export class CartComponent {
-  cardProducts: CardProduct[] = [];
+  cardProducts: CartProduct[] = [];
 
   constructor(private purchaseOrderService: PurchaseOrderServiceService) {
-    
     this.cardProducts = this.purchaseOrderService.getCardProductList();
   }
 
-  removeItem(product: CardProduct): void {
+  removeItem(product: CartProduct): void {
     const index = this.cardProducts.indexOf(product);
     if (index !== -1) {
       this.cardProducts.splice(index, 1);
@@ -25,7 +24,6 @@ export class CartComponent {
   }
 
   logToConsole(): void {
-    console.log("Button clicked. Logging to console.");
+    console.log('Button clicked. Logging to console.');
   }
 }
-

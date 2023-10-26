@@ -5,7 +5,7 @@ import { ProductsService } from 'src/app/modules/purchase/services/products.serv
 import { PurchaseOrderServiceService } from '../../../purchase-order-container/services/purchase-order-service.service';
 import { SupliersService } from '../../../supplier/services/supliers.service';
 import { NgModel } from '@angular/forms';
-import { CardProduct } from 'src/app/modules/purchase/models/CardProduct';
+import { CartProduct } from 'src/app/modules/purchase/models/CardProduct';
 
 @Component({
   selector: 'fn-product-card',
@@ -16,12 +16,14 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   constructor(
     private _purchaseOrderSer: PurchaseOrderServiceService,
     private _productService: ProductsService
-  ) {}
+  ) { }
   quantity: number = 0;
   productQuantities: { [productId: number]: number } = {};
   idSupplier: number = 0;
   product_List: IProduct2[] = [];
-  cartProducts: CardProduct[] = [];
+  cartProducts: CartProduct[] = [];
+  isButtonDisabled: { [productId: number]: boolean } = {}; 
+  mostrarToastAddProduct: {[producId: number]: boolean} = {}
 
   suscription = new Subscription();
 
@@ -46,6 +48,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
               this.productQuantities = {};
               this.product_List.forEach((product) => {
                 this.productQuantities[product.id] = 0;
+                this.isButtonDisabled[product.id] = false;
               });
             }
           },
@@ -77,12 +80,14 @@ export class ProductCardComponent implements OnInit, OnDestroy {
         name: product.name,
         quantity: quantity,
         blocked: true,
-        
       };
       this.cartProducts.push(cartProduct);
       this._purchaseOrderSer.setCardProductList(this.cartProducts);
+      this.isButtonDisabled[product.id] = true;
+      console.log(this._purchaseOrderSer.getCardProductList());
+    } else {
+      this.mostrarToastAddProduct[product.id] = true;
     }
-    console.log(this._purchaseOrderSer.getCardProductList());
   }
 
   onKeyPress(event: KeyboardEvent) {
@@ -91,6 +96,13 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       event.preventDefault();
     }
   }
-  
 
+  getProductsCart(product: IProduct2) {
+    const productList = this._purchaseOrderSer.getCardProductList();
+    const isProductInCart = productList.some(item => item.name === product.name);
+    if (isProductInCart) {
+      this.isButtonDisabled[product.id] = true;
+    }
+    this.isButtonDisabled[product.id] = false;  
+  }
 }

@@ -14,15 +14,28 @@
             <p class="card-text" style="height: 30px;">{{item.price| currency }}</p>
             <div class="btn-toolbar justify-content-between">
               <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary" (click)="Rest(item)">-</button>
-                <input #controlInput="ngModel" type="text" style="width: 52px; text-align: center;"
-                  [(ngModel)]="productQuantities[item.id]"  required minlength="1" maxlength="5" pattern="^[0-9]+$" (keypress)="onKeyPress($event)">
-                  <button type="button" class="btn btn-primary" (click)="Summ(item)">+</button>
+                <button type="button" class="btn btn-primary"
+                  (click)="Rest(item)">-</button>
+                <input #controlInput="ngModel" type="text"
+                  style="width: 52px; text-align: center;"
+                  [(ngModel)]="productQuantities[item.id]" required
+                  minlength="1" maxlength="5" pattern="^[0-9]+$"
+                  (keypress)="onKeyPress($event)">
+                <button type="button" class="btn btn-primary"
+                  (click)="Summ(item)">+</button>
               </div>
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="button" class="btn btn-success"
-                  (click)="addToCart(item)">Agregar</button>
+                  (click)="addToCart(item)"
+                  [disabled]="isButtonDisabled[item.id]">Agregar</button>
               </div>
+              <ngb-toast style="margin: 8% 0% 0% 0%;"
+                *ngIf="mostrarToastAddProduct[item.id]"
+                class="toast bg-danger text-light"
+                [autohide]="true"
+                (hidden)="false"
+                [delay]="3000">No se puede agregar un producto con cantidad 0
+              </ngb-toast>
             </div>
 
           </div>

@@ -1,5 +1,5 @@
-export interface CardProduct {
-    name: string,
-    quantity:number,
-    blocked:boolean
-  }
+export interface CartProduct {
+  name: string;
+  quantity: number;
+  blocked: boolean;
+}
