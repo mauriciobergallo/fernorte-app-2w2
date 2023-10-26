@@ -1,11 +1,11 @@
 import { Component, Input, OnInit, Optional } from '@angular/core';
-import { IDiscount } from '../../models/IDiscounts';
+import { IDiscount } from '../../../models/IDiscounts';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ProductService } from '../../services/product.service';
-import { IProduct } from '../../models/IProduct';
-import { DiscountsService } from '../../services/discounts.service';
+import { ProductService } from '../../../services/product.service';
+import { IProduct } from '../../../models/IProduct';
+import { DiscountsService } from '../../../services/discounts.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { IProductCategory } from '../../models/IProductCategory';
+import { IProductCategory } from '../../../models/IProductCategory';
 
 @Component({
   selector: 'fn-add-discount',

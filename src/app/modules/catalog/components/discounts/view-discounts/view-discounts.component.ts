@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DiscountsService } from '../../services/discounts.service';
-import { IDiscount } from '../../models/IDiscounts';
+import { DiscountsService } from '../../../services/discounts.service';
+import { IDiscount } from '../../../models/IDiscounts';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
