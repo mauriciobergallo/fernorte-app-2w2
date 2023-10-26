@@ -1,7 +1,9 @@
+import { IProduct } from "./IProduct";
+
 export interface IDiscount {
-    id: number;
-    idProduct: number;
-    discountRate: number;
+    id_discount: number;
+    product: IProduct;
+    discount_rate: number;
     start_date: Date;
     end_date: Date;
 }
