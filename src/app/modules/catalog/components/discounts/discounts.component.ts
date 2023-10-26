@@ -18,7 +18,7 @@ export class DiscountsComponent implements OnInit{
   constructor(private disService:DiscountsService, private modalService: NgbModal){}
 
   ngOnInit(): void {
-    this.disService.getDescuentos().subscribe((res:IDiscount[])=>{
+    this.disService.getDiscounts().subscribe((res:IDiscount[])=>{
       this.discountsList = res;
     })
   }
@@ -30,13 +30,21 @@ export class DiscountsComponent implements OnInit{
 
   isDiscountActive(discount: IDiscount) {
     const currentDate = new Date();
-    return discount.end_date > currentDate;
+    return new Date(discount.end_date) >= currentDate;
   }
 
   openEditModal(discount: IDiscount) {
     const modalRef = this.modalService.open(AddDiscountComponent, { size: 'lg' });
     modalRef.componentInstance.discount = discount;
     modalRef.componentInstance.isEdit = true;
+
+    modalRef.result.then(res=>{
+      if(res){
+        this.disService.getDiscounts().subscribe((res:IDiscount[])=>{
+          this.discountsList = res;
+        })
+      }
+    })
   }
 
 }

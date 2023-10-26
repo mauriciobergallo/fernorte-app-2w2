@@ -10,11 +10,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './components/spinner/viewspinner/spinner.component';
+import { CatalogRoutingModule } from './catalog-routing.module';
 
 @NgModule({
   declarations: [HomeComponent, AddProductComponent, ProductsComponent, AddDiscountComponent, DiscountsComponent, AddCategoryComponent, EditProductComponent,SpinnerComponent],
   providers: [],
-  imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, CatalogRoutingModule],
   exports: [HomeComponent],
 })
 
