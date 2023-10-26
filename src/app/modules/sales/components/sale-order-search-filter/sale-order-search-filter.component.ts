@@ -7,34 +7,30 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./sale-order-search-filter.component.css']
 })
 export class SaleOrderSearchFilterComponent {
-  @Output() filter:EventEmitter<string> = new EventEmitter();
+  @Output() nOrderToSend:EventEmitter<string>= new EventEmitter();
+  @Output() docToSend:EventEmitter<string>= new EventEmitter();
+  @Output() datesToSend:EventEmitter<string>= new EventEmitter();
   nOrder:string="";
+  doc:string="";
   fromDate:string="";
   toDate:string="";
-  doc:string="";
-  dates:string="";
-
 
   onSendNOrder(form : NgForm){
-    this.nOrder = form.value.nOrder
-    this.onSendFilter(form, this.nOrder)
+    if(form.valid) {
+      this.nOrderToSend.emit(form.value.nOrder);
+    }
   }
 
   onSendDoc(form : NgForm){
-    this.doc = form.value.doc
-    this.onSendFilter(form, this.doc)
+    if(form.valid) {
+      this.docToSend.emit(form.value.doc);
+    }
   }
 
   onSendDates(form: NgForm){
-    this.dates=this.fromDate+"_"+this.toDate
-    this.onSendFilter(form, this.dates)
-  }
-
-  onSendFilter(form : NgForm, filter:string){
-    if(form.valid){
-      console.log(filter)
-      this.filter.emit(filter);
+    if(form.valid) {
+      //console.log(this.fromDate+"/"+this.toDate)
+      this.datesToSend.emit(this.fromDate+"/"+this.toDate)
     }
   }
-  
 }

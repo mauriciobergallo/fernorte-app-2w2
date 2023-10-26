@@ -6,6 +6,7 @@ import { IDetailsSaleOrder } from '../interfaces/idetails-sale-order';
 import { TypeSalesOrder } from '../models/TypeSaleOrder';
 import { SaleOrderStates } from '../models/SalesOrderState';
 import { MontoTotalModel } from '../models/ModelTotalModel';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,17 +30,45 @@ export class SaleOrderServiceService {
     return this.saleOrderProvider.getSaleOrders();
   }
 
-  getSaleOrdersByFilter(filter : string) : ISaleOrder[] {
+  getSaleOrdersByFilter(idOrder?:string, doc?:string, fromDate?:string, toDate?:string) : ISaleOrder[] {
     const saleOrdersList : ISaleOrder[] = [];
-    this.saleOrderProvider.getSaleOrdesByFilter(filter).subscribe((response) => {
-      if(response.ok) {
-        for(let sale of response.data) {
-          saleOrdersList.push(sale)
-          return saleOrdersList;
+    if(idOrder != '' || idOrder != null) {
+      this.saleOrderProvider.getSaleOrdesByFilter(idOrder, '', '', '').subscribe((response) => {
+        if(response.ok) {
+          for(let sale of response.data) {
+            saleOrdersList.push(sale)
+            console.log(saleOrdersList)
+            return saleOrdersList;
+          }
+        } else {
+          alert('No fue posible recuperar los datos')
         }
-      }
-      return null
-    });
+        return null
+      })
+    } else if(doc != '' || doc != null) {
+      this.saleOrderProvider.getSaleOrdesByFilter('', doc, '', '').subscribe((response) => {
+        if(response.ok) {
+          for(let sale of response.data) {
+            saleOrdersList.push(sale)
+            console.log(saleOrdersList.toString())
+            return saleOrdersList;
+          }
+        }
+        return null
+      })
+    } else {
+      this.saleOrderProvider.getSaleOrdesByFilter('', '', fromDate, toDate).subscribe((response) => {
+        if(response.ok) {
+          for(let sale of response.data) {
+            saleOrdersList.push(sale)
+            console.log(saleOrdersList.toString())
+            return saleOrdersList;
+          }
+        }
+        return null
+      })
+    }
+    
     return saleOrdersList;
   }
 

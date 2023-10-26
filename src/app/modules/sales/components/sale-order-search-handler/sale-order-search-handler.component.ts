@@ -13,34 +13,36 @@ export class SaleOrderSearchHandlerComponent implements OnInit {
   constructor(private saleOrderServiceService: SaleOrderServiceService) {
   }
   ngOnInit(): void {
-    this.saleOrdersList = this.saleOrderServiceService.getSaleOrders();
-    console.log(this.saleOrdersList)
+    // this.saleOrdersList = this.saleOrderServiceService.getSaleOrders();
+    // console.log(this.saleOrdersList)
   }
-
+  filterReceived:string="";
   filter:string="";
-  fromDate:string="";
-  toDate:string="";
+  dates:string="";
+  idOrder:string="";
+  doc:string="";
 
-  onReceiveFilter(filterSent:string){
-    console.log(this.filter)
-    this.filter=filterSent;
+  async onReceiveIdOrder(filterSent:any){
+    //console.log(this.filter)
+    //this.filter=filterSent;
+    this.idOrder=filterSent;
+    this.saleOrdersList = await this.saleOrderServiceService.getSaleOrdersByFilter(this.idOrder, '', '', '');
   }
-  
-  onSeparateFilter(filter:string){
-    if(this.filter.includes('-')){
-      const index = this.filter.indexOf('/')
-        this.fromDate = this.filter.slice(0,index)
-        this.toDate = this.filter.slice(index, this.filter.length)
+
+  async onReceiveDoc(filterSent:any){
+    this.doc=filterSent;
+    this.saleOrdersList = await this.saleOrderServiceService.getSaleOrdersByFilter('', this.doc, '', '');
+  }
+
+  async onReceiveDates(filterSent:any){
+    if(filterSent.includes('-')){
+      const index = filterSent.indexOf('/')
+      const fromDate = filterSent.slice(0,index)
+      const toDate = filterSent.slice(index+1, filterSent.length)
+      console.log(fromDate, toDate)
+      debugger
+      this.saleOrdersList = await this.saleOrderServiceService.getSaleOrdersByFilter("", "", fromDate, toDate);
     }
-  }
-
-  // async getSaleOrdersList() {
-  //   const saleOrdersList = await this.saleOrderServiceService.getSaleOrders();
-  //   console.log(saleOrdersList)
-  // }
-
-  async getSaleOrdersByFilter(){
-    this.saleOrdersList = await this.saleOrderServiceService.getSaleOrdersByFilter(this.filter);
   }
   
 }

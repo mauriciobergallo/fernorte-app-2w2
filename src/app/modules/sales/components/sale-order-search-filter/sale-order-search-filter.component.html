@@ -1,6 +1,103 @@
 <div class="container px-4">
     <p>Filtros de búsqueda</p>
-    <form #nOrderForm="ngForm" (ngSubmit)="onSendNOrder(nOrderForm)">
+
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+             data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Por n° de presupuesto
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" 
+          data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <form #nOrderForm="ngForm" (ngSubmit)="onSendNOrder(nOrderForm)">
+                <div class="row gx-5">
+                    <p class="row">Por n° de presupuesto</p>
+                    <div class="col-6">
+                        <input 
+                        type="text"
+                        placeholder="n° presupuesto"
+                        name="nOrder"
+                        #nOrderControl="ngModel"
+                        [(ngModel)]="nOrder"
+                        required>
+                    </div>
+                    <button class="btn col-2">Buscar</button>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Por fecha
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <form #dateForm="ngForm" (ngSubmit)="onSendDates(dateForm)">
+                <div class="row gx-5">
+                    <p class="row">Por fecha</p>
+                    <div class="col-5">
+                        <p>Desde</p>
+                        <input 
+                        type="date"
+                        placeholder=""
+                        name="fromDate"
+                        #fromDateControl="ngModel"
+                        [(ngModel)]="fromDate"
+                        required>
+                    </div>
+                    <div class="col-5">
+                        <p>Hasta</p>
+                        <input
+                        type="date"
+                        placeholder=""
+                        name="toDate"
+                        #toDateControl="ngModel"
+                        [(ngModel)]="toDate"
+                        required>
+                    </div>
+                    <button class="btn col-2">Buscar</button>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Por documento del cliente
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <form #docForm="ngForm" (ngSubmit)="onSendDoc(docForm)">
+                <div class="row gx-5">
+                    <p class="row">Por dni del cliente</p>
+                    <div class="col-6">
+                        <input 
+                        type="text"
+                        placeholder="dni"
+                        name="doc"
+                        #docControl="ngModel"
+                        [(ngModel)]="doc"
+                        required>
+                    </div>
+                    <button class="btn col-2">Buscar</button>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    <!-- <form #nOrderForm="ngForm" (ngSubmit)="onSendNOrder(nOrderForm)">
         <div class="row gx-5">
             <p class="row">Por n° de presupuesto</p>
             <div class="col-6">
@@ -14,8 +111,8 @@
             </div>
             <button class="btn col-2">Buscar</button>
         </div>
-    </form>
-    <form #dateForm="ngForm" (ngSubmit)="onSendDates(dateForm)">
+    </form> -->
+    <!-- <form #dateForm="ngForm" (ngSubmit)="onSendDates(dateForm)">
         <div class="row gx-5">
             <p class="row">Por fecha</p>
             <div class="col-5">
@@ -40,8 +137,8 @@
             </div>
             <button class="btn col-2">Buscar</button>
         </div>
-    </form>
-    <form #docForm="ngForm" (ngSubmit)="onSendDoc(docForm)">
+    </form> -->
+    <!-- <form #docForm="ngForm" (ngSubmit)="onSendDoc(docForm)">
         <div class="row gx-5">
             <p class="row">Por dni del cliente</p>
             <div class="col-6">
@@ -55,5 +152,5 @@
             </div>
             <button class="btn col-2">Buscar</button>
         </div>
-    </form>
+    </form> -->
 </div>

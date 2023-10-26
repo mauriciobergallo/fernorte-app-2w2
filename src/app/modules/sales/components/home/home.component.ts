@@ -50,6 +50,6 @@ export class HomeComponent implements OnInit  {
     this.showSalesOrder = moduleName === this.modules.SalesOrders;
     this.showPaymentMethod= moduleName === this.modules.PaymentMethod;
     this.showPayment= moduleName === this.modules.CreatePayment
-  
+    this.showSalesOrderSearch = moduleName === this.modules.SalesOrderSearch
   }
 }
