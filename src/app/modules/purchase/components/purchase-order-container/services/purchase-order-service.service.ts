@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IProduct } from '../../../models/ISuppliers';
+import { IProduct, IProduct2 } from '../../../models/ISuppliers';
 import { ISupliers } from '../../../models/ISuppliers'; 
 import { CardProduct } from '../../../models/CardProduct';
 
@@ -16,8 +16,10 @@ export class PurchaseOrderServiceService {
   */
   idSupplier = new BehaviorSubject<number>(0)
   suplierSelected = new BehaviorSubject<ISupliers>({ id: 0, socialReason: "", adress: "", fantasyName: "", cuit: "" })
-  listProductSelected = new BehaviorSubject<IProduct[]>([])
-  cardProductList: CardProduct[] = [
+  listProductSelected = new BehaviorSubject<IProduct2[]>([])
+  
+  
+  cartProductList: CardProduct[] = [
   { name: 'Product 1', quantity: 3 ,blocked:true},
   { name: 'Product 2', quantity: 1 ,blocked:true},];
 
@@ -26,14 +28,14 @@ export class PurchaseOrderServiceService {
 
 
   setCardProductList(products: CardProduct[]) {
-    this.cardProductList = products;
+    this.cartProductList= products;
   }
 
   /*
    * method to return the list of card products
    */
   getCardProductList(): CardProduct[] {
-    return this.cardProductList;
+    return this.cartProductList;
   }
 
   /*
@@ -77,7 +79,7 @@ export class PurchaseOrderServiceService {
   /*
   * method to set and get the list of products selected
   */
-  setListProductSelected(list: IProduct[]) {
+  setListProductSelected(list: IProduct2[]) {
     this.listProductSelected.next(list)
   }
 

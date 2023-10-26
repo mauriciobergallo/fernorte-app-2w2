@@ -27,12 +27,14 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
   
 
   ngOnInit(): void {
+    this._purchaseOrderService.setIdSupplier(0)
     this.getListSuplierFromService()
 
   }
 
   ngOnDestroy(): void {
     this.suscription.unsubscribe()
+    this._purchaseOrderService.setIdSupplier(0)
   }
 
   /*
@@ -66,6 +68,7 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
     this.suscription.add(
       this._suplierService.getSupliers().subscribe({
         next: (data: ISupliers[]) => {
+          console.log(data);
           this.supplierList = data;
         },
         error: (error: any) => {
