@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class RoleService {
 
-  private apiUrl = "http://localhost:8095/role";
+  private apiUrl = "http://localhost:8095/roles";
 
   constructor(private http:HttpClient) { }
 
@@ -21,8 +21,11 @@ export class RoleService {
       if (role.hasOwnProperty(prop)) {
         delete role[prop];
       }
-    }
-  
+    }  
+  }
+
+  getAllRoles(): Observable<Role[]> {
+    return this.http.get<Role[]>(`${this.apiUrl}/`);
   }
 
 

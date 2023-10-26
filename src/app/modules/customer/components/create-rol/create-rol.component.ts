@@ -12,7 +12,7 @@ import { RoleService } from '../../services/role.service';
 export class CreateRolComponent {
   role: Role = {
     name: "",
-    area: 1
+    area: ""
   }
 
   roleForm!: NgForm;

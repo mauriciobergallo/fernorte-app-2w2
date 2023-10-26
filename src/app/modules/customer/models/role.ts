@@ -1,4 +1,4 @@
 export interface Role{
     name: string;
-    area: number;
+    area: string;
 }
