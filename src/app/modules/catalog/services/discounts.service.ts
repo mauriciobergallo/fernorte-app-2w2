@@ -15,6 +15,9 @@ export class DiscountsService {
   getDiscounts(): Observable<IDiscount[]> {
     return this.requestResponseService.makeGetRequest<IDiscount[]>(`${environment.production}discounts`);
   }
+  getDiscountById(id:number): Observable<IDiscount> {
+    return this.requestResponseService.makeGetRequest<IDiscount[]>(`${environment.production}discounts/${id}`);
+  }
   updateDiscounts(request:any[]): Observable<IDiscount[]> {
     return this.requestResponseService.makePutRequest<IDiscount[]>(`${environment.production}discounts`, request);
   }
