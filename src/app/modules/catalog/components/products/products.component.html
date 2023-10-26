@@ -16,10 +16,10 @@
       <tr *ngFor="let product of listProducts  | slice: (currentPage-1) * itemsPerPage : currentPage * itemsPerPage">
         <td>{{ product.name }}</td>
         <td>
-          <img [src]="product.urlImage" alt="Imagen del producto" height="50" />
+          <img [src]="product.image" alt="Imagen del producto" height="50" />
         </td>
-        <td>{{ product.stockQuantity }}</td>
-        <td>{{ product.unitPrice | currency:'USD':'symbol-narrow' }}</td>
+        <td>{{ product.stock_quantity }}</td>
+        <td>{{ product.unit_price | currency:'USD':'symbol-narrow' }}</td>
         <td>{{ product.category.name }}</td>
         <td>
           <button type="button" class="btn btn-primary mx-2" (click)="openEditModal(product)">Editar</button>

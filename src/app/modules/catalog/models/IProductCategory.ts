@@ -4,9 +4,9 @@ export interface IProductCategory{
     id_product: number;
     name: string;
     description: string;
-    unit_Price: number;
-    stock_Quantity: number;
-    unit_Of_Measure: string;
+    unit_price: number;
+    stock_quantity: number;
+    unit_of_measure: string;
     category: ICategory;
     image: string;
     user_created:string;

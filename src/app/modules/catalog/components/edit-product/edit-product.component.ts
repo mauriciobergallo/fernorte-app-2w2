@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IProduct } from '../../models/IProductCategory';
+import { IProductCategory } from '../../models/IProductCategory';
 
 @Component({
   selector: 'fn-edit-product',
@@ -7,7 +7,7 @@ import { IProduct } from '../../models/IProductCategory';
   styleUrls: ['./edit-product.component.css']
 })
 export class EditProductComponent {
-  @Input() product: IProduct = {} as IProduct;
+  @Input() product: IProductCategory = {} as IProductCategory;
 
   constructor() {}
 
