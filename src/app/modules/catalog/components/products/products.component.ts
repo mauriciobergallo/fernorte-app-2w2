@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IProduct } from '../../models/IProduct';
+import { IProduct } from '../../models/IProductCategory';
 import { ProductService } from '../../services/product.service';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
