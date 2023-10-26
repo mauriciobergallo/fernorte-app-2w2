@@ -1,4 +1,4 @@
-import { IProduct } from "../../models/IProduct";
+import { IProduct } from "../../models/IProductCategory";
 import { CATEGORY_LIST } from "./category-data";
 
 export const PRODUCT_LIST: IProduct[] = [
