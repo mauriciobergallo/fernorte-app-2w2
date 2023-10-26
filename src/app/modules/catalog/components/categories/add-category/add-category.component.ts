@@ -1,4 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Optional} from '@angular/core';
+import { ICategory } from '../../../models/ICategory';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { CategoryService } from '../../../services/category.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -8,13 +12,20 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class AddCategoryComponent {
 
-  @Output() onHideAddCategory = new EventEmitter();
+  @Input() category?: ICategory | null = null;
+  @Input() isEdit?:boolean = false;
 
-  hideAddCategory() {
-    this.onHideAddCategory.emit();
+  formGroup:FormGroup;
+  isLoading:boolean= false;
+
+  constructor(private fb:FormBuilder,private catService:CategoryService,@Optional() private modalService: NgbActiveModal){
+    this.formGroup = this.fb.group({
+      id_category: [null],
+      name: [null],
+      description: [null],
+      created_by: [null]
+    })
   }
 
-  addCategory() {
-    this.hideAddCategory();
-  }
+  
 }
