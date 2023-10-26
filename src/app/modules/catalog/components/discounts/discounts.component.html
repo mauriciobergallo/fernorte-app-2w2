@@ -1,8 +1,10 @@
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <div class="container mt-4">
     <table class="table">
         <thead>
             <tr>
-                <th>Producto</th>
+                <th>Nombre</th>
                 <th>Descuento</th>
                 <th>Fecha inicio</th>
                 <th>Fecha final</th>
@@ -11,18 +13,23 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let discount of pagedDiscounts">
+            <tr *ngFor="let discount of discountsList">
                 <!-- traer el producto a traves del servicio, momentaneamente dejo el ID -->
-                <td>{{ discount.id }}</td>
+                <td> <a [routerLink]="'../view/' + discount.id_discount">{{ discount.id_discount }}</a></td>
                 <td>
-                    {{discount.discountRate}}
+                    {{discount.discount_rate}}%
                 </td>
-                <td>{{ discount.start_date| date: 'dd/MM/yyyy' }}</td>
+                <td>{{ discount.start_date | date: 'dd/MM/yyyy' }}</td>
                 <td>{{ discount.end_date | date: 'dd/MM/yyyy'}}</td>
-                <td>{{ isDiscountActive(discount) ? 'Sí' : 'No' }}</td>
+                <td *ngIf="isDiscountActive(discount)"><span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">
+                    check_circle
+                    </span></td>
+                <td *ngIf="!isDiscountActive(discount)"><span style="color: rgb(202, 0, 0);" class="material-symbols-outlined">
+                        cancel
+                    </span></td>
                 <td>
-                    <button type="submit" class="btn btn-primary mx-2">Editar</button>
-                    <button type="submit" class="btn btn-danger mx-2">Eliminar</button>
+                    <button type="button" class="btn btn-primary mx-2" (click)="openEditModal(discount)">Editar</button>
+                    <button type="submit" class="btn btn-danger mx-2" (click)="openDeleteModal(discount)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
@@ -30,7 +37,24 @@
 </div>
 
 <div class="container mt-4">
-    <ngb-pagination [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="products.length" [maxSize]="5"
-        [rotate]="true">
+    <ngb-pagination [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="5" [maxSize]="5" [rotate]="true">
     </ngb-pagination>
 </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
