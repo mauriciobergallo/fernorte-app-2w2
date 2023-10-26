@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { IProduct, IProductRequest } from "../models/IProduct";
-import { Observable } from "rxjs";
+import { IProduct } from "../models/IProduct";
+import { BehaviorSubject, Observable } from "rxjs";
 import { environment } from "../environments/environment";
 import { RequestResponseService } from "./requestResponse.service";
 
@@ -8,17 +8,15 @@ import { RequestResponseService } from "./requestResponse.service";
    providedIn: 'root'
 })
 export class ProductService {
-   private getProducts: string = `${environment.production}products/all`;
-   private putProducts: string = `${environment.production}products/create-update`;
+   private products: string = `${environment.production}products`;
 
    constructor(private requestResponseService: RequestResponseService) { }
 
    get(): Observable<IProduct[]> {
-      return this.requestResponseService.makeGetRequest<IProduct[]>(this.getProducts);
+      return this.requestResponseService.makeGetRequest<IProduct[]>(this.products);
    }
 
-   updateOrCreateProduct(product: IProductRequest): Observable<IProduct> {
-      console.log(`${this.putProducts}`, product)
-      return this.requestResponseService.makePutRequest<IProduct>(`${this.putProducts}`, product);
+   updateOrCreateProduct(product: any): Observable<IProduct> {
+      return this.requestResponseService.makePutRequest<IProduct>(`${this.products}`, product);
    }
 }

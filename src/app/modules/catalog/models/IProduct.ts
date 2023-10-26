@@ -6,22 +6,7 @@ export interface IProduct {
     description: string;
     unitPrice: number;
     stockQuantity: number;
-    unitOfMeasure: string;
+    unitOfMeasure: number;
     category: ICategory;
     urlImage: string;
-    userCreated: string
 }
-
-export interface IProductRequest{
-    idProduct: number;
-    name: string;
-    description: string;
-    unitPrice: number;
-    stockQuantity: number;
-    unitOfMeasure: string;
-    idCategory: number;
-    image: string;
-    userCreated: string
-}
-
-

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IProduct, IProductRequest } from '../../models/IProduct';
+import { IProduct } from '../../models/IProduct';
 import { ProductService } from '../../services/product.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { ProductService } from '../../services/product.service';
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent {
-  productRequest:IProductRequest = {} as IProductRequest;
+  productRequest:IProduct = {} as IProduct;
   @ViewChild('productForm') productForm: any;
 
   constructor(private productService: ProductService){}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IProduct } from '../../models/IProduct';
 import { ProductService } from '../../services/product.service';
 import { Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { EditProductComponent } from '../edit-product/edit-product.component';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit{
   isLoading = true;
 
   listProducts: IProduct[] = [];
@@ -32,17 +32,30 @@ export class ProductsComponent {
   }
 
   private pagedProducts() {
-    this.isLoading = true; // Mostrar el spinner
-  
+    this.isLoading = true;
+
     this.subscription.add(
       this.productService.get().subscribe({
-        next: (products: IProduct[]) => {
-          this.listProducts = products;
-          this.isLoading = false; // Ocultar el spinner después de que los datos se carguen
+        next: (data: any[]) => {
+          this.listProducts = data.map(item => ({
+            idProduct: item.id_product,
+            name: item.name,
+            description: item.description,
+            unitPrice: item.unit_price, 
+            stockQuantity: item.stock_quantity, 
+            unitOfMeasure: item.unit_of_measure, 
+            category: {
+              idCategory: item.category.id_category, 
+              name: item.category.name, 
+              description: item.category.description
+            },
+            urlImage: item.url_image, 
+          }));
+          this.isLoading = false;
         },
         error: () => {
-          alert('Error en la API');
-          this.isLoading = false; // Ocultar el spinner en caso de error
+          alert('Error in the API');
+          this.isLoading = false;
         }
       })
     );

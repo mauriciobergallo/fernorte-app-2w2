@@ -21,7 +21,7 @@ export class RequestResponseService {
     }
     makePutRequest<T>(url: string, body:any, options?: any): Observable<any>{
         options = this.getOptions(options);
-        return this.http.post<T>(url, body, options);
+        return this.http.put<T>(url, body, options);
     }
 
     makeDeleteRequest<T>(url: string, options?: any): Observable<any>{
