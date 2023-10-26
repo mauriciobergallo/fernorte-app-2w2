@@ -15,6 +15,9 @@
             <li class="nav-item" [ngClass]="{'active': addDiscountVisible}">
                 <a href="#" (click)="showAddDiscount()" class="nav-link">Agregar descuento</a>
             </li>
+            <li class="nav-item" [ngClass]="{'active': categoryVisible}">
+                <a href="#" (click)="showCategories()" class="nav-link">Categorias</a>
+            </li>
         </ul>
     </nav>
     
@@ -23,4 +26,5 @@
     <fn-add-product *ngIf="addProductVisible"></fn-add-product>
     <fn-discounts *ngIf="discountsVisible"></fn-discounts>
     <fn-add-discount *ngIf="addDiscountVisible"></fn-add-discount>
+    <fn-add-category *ngIf="categoryVisible"></fn-add-category>
 </div>
