@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { IProduct } from '../../models/product.interface';
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
 @Component({
   selector: 'fn-storage-availability',
   templateUrl: './storage-availability.component.html',
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class StorageAvailabilityComponent implements OnDestroy {
   loader: boolean = false;
+  showModal: boolean = false;
   product: string = '';
   productInfo: IProduct = {
     location: {
@@ -34,6 +35,7 @@ export class StorageAvailabilityComponent implements OnDestroy {
   searchProduct(form: NgForm) {
     if (form.invalid) {
       alert('Formulario invalido');
+      return;
     }
     this.loader = true;
     this.suscriptions.add(
@@ -45,13 +47,14 @@ export class StorageAvailabilityComponent implements OnDestroy {
         error: (error: Error) => {
           this.loader = false;
           console.log(error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'El producto buscado no existe',
-            confirmButtonText: 'Ok',
-            confirmButtonColor: '#0D6EFD',
-          });
+          // Swal.fire({
+          //   icon: 'error',
+          //   title: 'Oops...',
+          //   text: 'El producto buscado no existe',
+          //   confirmButtonText: 'Ok',
+          //   confirmButtonColor: '#0D6EFD',
+          // });
+          this.showModal = true;
           this.productInfo.categoryName = '';
           this.productInfo.measureUnit = '';
           this.productInfo.quantity = 0;
@@ -59,5 +62,8 @@ export class StorageAvailabilityComponent implements OnDestroy {
         },
       })
     );
+  }
+  hideModal() {
+    this.showModal = false;
   }
 }
