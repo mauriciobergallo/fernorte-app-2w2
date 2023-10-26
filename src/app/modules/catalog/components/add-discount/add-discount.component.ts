@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Optional } from '@angular/core';
 import { IDiscount } from '../../models/IDiscounts';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
@@ -21,7 +21,7 @@ export class AddDiscountComponent implements OnInit {
   products:IProductCategory[] = [];
   isLoading:boolean = false;
 
-  constructor(private fb:FormBuilder, private prodService:ProductService, private disService:DiscountsService, private modalService: NgbActiveModal){
+  constructor(private fb:FormBuilder, private prodService:ProductService, private disService:DiscountsService, @Optional() private modalService: NgbActiveModal){
     this.formGroup = this.fb.group({
       id_discount: [null],
       id_product: [null],
@@ -48,7 +48,6 @@ export class AddDiscountComponent implements OnInit {
   onSubmit(){
     this.isLoading = true;
     if(this.isEdit){
-
       let request = this.formGroup.value;
       request.id_product = Number(request.id_product)
       request.start_date = new Date(request.start_date)
@@ -59,12 +58,23 @@ export class AddDiscountComponent implements OnInit {
         this.isLoading = false;
         this.modalService.close(res)
       })
-      
+    }else{
+      let request = this.formGroup.value;
+      request.id_discount = 0;
+      request.id_product = Number(request.id_product)
+      request.start_date = new Date(request.start_date)
+      request.end_date = new Date(request.end_date)
+      request.user = 'prueba';
+
+      this.disService.updateDiscounts([request]).subscribe((res)=>{
+        this.isLoading = false;
+        this.modalService.close(res)
+      })
     }
   }
   
   close(){
-    this.modalService.close();
+    this.modalService.close(false);
   }
 
 

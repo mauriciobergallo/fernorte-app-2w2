@@ -31,7 +31,7 @@ export class DiscountsComponent implements OnInit {
 
   isDiscountActive(discount: IDiscount) {
     const currentDate = new Date();
-    return new Date(discount.end_date) >= currentDate;
+    return new Date(discount.end_date) >= currentDate && new Date(discount.start_date) <= currentDate;
   }
 
   openEditModal(discount: IDiscount) {

@@ -15,7 +15,7 @@
         <tbody>
             <tr *ngFor="let discount of discountsList">
                 <!-- traer el producto a traves del servicio, momentaneamente dejo el ID -->
-                <td>{{ discount.id_discount }}</td>
+                <td> <a [routerLink]="'../view/' + discount.id_discount">{{ discount.id_discount }}</a></td>
                 <td>
                     {{discount.discount_rate}}%
                 </td>
