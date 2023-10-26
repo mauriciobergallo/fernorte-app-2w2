@@ -1,12 +1,12 @@
 <div class="container">
-    <form>
+    <form [formGroup]="formGroup!">
         <div class="row">
             <div class="col-md-6 col-lg-6 col-sm-2 col-xs-2">
-                <h3>Agregar descuento </h3>
+                <h3>{{isEdit?'Editar descuento':'Agregar descuento'}} </h3>
             </div>
         </div>
 
-        <div class=" row">
+        <div class="row">
 
             <div class="mb-3 col-md-6">
                 <label for="selectProduct" class="form-label">Producto</label>
@@ -18,8 +18,8 @@
             </div>
 
             <div class="mb-3 col-md-4">
-                <label for="inputDiscountRate" class="form-label">Procentaje de descuento</label>
-                <input type="text" class="form-control" id="inputDiscountRate">
+                <label for="inputDiscountRate" class="form-label">Porcentaje de descuento</label>
+                <input type="text" class="form-control" id="inputDiscountRate" formControlName="percentage">
             </div>
         </div>
 
@@ -27,12 +27,12 @@
         <div class="row">
             <div class="mb-3 col-md-4 col-lg-4">
                 <label for="inputDiscountStartDate" class="form-label">Inicio del descuento</label>
-                <input type="date" class="form-control" id="inputDiscountStartDate">
+                <input type="date" class="form-control" id="inputDiscountStartDate" formControlName="startDate">
             </div>
 
             <div class="mb-3 col-md-4 col-lg-4">
                 <label for="inputDiscountEndDate" class="form-label">Fin del descuento</label>
-                <input type="date" class="form-control" id="inputDiscountEndDate">
+                <input type="date" class="form-control" id="inputDiscountEndDate" formControlName="endDate">
             </div>
 
 
