@@ -11,9 +11,10 @@ import { EditProductComponent } from './components/edit-product/edit-product.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './components/spinner/viewspinner/spinner.component';
 import { CatalogRoutingModule } from './catalog-routing.module';
+import { DeleteModalDiscountComponent } from './components/discounts/delete-modal-discount/delete-modal-discount.component';
 
 @NgModule({
-  declarations: [HomeComponent, AddProductComponent, ProductsComponent, AddDiscountComponent, DiscountsComponent, AddCategoryComponent, EditProductComponent,SpinnerComponent],
+  declarations: [HomeComponent, AddProductComponent, ProductsComponent, AddDiscountComponent, DiscountsComponent, AddCategoryComponent, EditProductComponent,SpinnerComponent, DeleteModalDiscountComponent],
   providers: [],
   imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, CatalogRoutingModule],
   exports: [HomeComponent],

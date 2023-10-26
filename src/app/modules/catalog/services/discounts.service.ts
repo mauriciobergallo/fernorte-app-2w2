@@ -18,5 +18,13 @@ export class DiscountsService {
   updateDiscounts(request:any[]): Observable<IDiscount[]> {
     return this.requestResponseService.makePutRequest<IDiscount[]>(`${environment.production}discounts`, request);
   }
+  deleteDiscounts(id:number, user:string): Observable<IDiscount[]> {
+
+    let params = {
+      user
+    }
+
+    return this.requestResponseService.makeDeleteRequest<IDiscount[]>(`${environment.production}discounts/${id}`, { params });
+  }
 
 }
