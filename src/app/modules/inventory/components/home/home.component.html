@@ -1,2 +1,4 @@
-<p>home inventory works!</p>
-<fn-storage-availability></fn-storage-availability>
+<div class="container  p-4" *ngIf="!showAvailability">
+  <button class="btn btn-primary" (click)="showStorageAvailability()">Consultar disponibilidad de producto</button>
+</div>
+<fn-storage-availability *ngIf="showAvailability" (backToMenuEmitter)="showMenu($event)"></fn-storage-availability>

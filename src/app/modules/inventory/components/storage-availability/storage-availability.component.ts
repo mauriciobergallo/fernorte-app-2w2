@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ProductService } from '../../services/product.service';
@@ -10,6 +10,7 @@ import { IProduct } from '../../models/product.interface';
   styleUrls: ['./storage-availability.component.css'],
 })
 export class StorageAvailabilityComponent implements OnDestroy {
+  @Output() backToMenuEmitter: EventEmitter<boolean> = new EventEmitter();
   loader: boolean = false;
   showModal: boolean = false;
   product: string = '';
@@ -65,5 +66,8 @@ export class StorageAvailabilityComponent implements OnDestroy {
   }
   hideModal() {
     this.showModal = false;
+  }
+  backToMenu() {
+    this.backToMenuEmitter.emit(false);
   }
 }

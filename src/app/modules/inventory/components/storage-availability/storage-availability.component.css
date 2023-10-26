@@ -6,6 +6,11 @@
 #error-window {
   background-color: rgba(0, 0, 0, 0.5);
 }
+.buttons {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
 .search-form-container,
 .info-container {
   background-color: #f2f0f0;
