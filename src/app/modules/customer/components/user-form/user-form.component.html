@@ -1,0 +1,43 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="employee">Empleado</label>
+        <input type="text" id="employee" readonly [value]="empleado.first_name + ', ' + empleado.last_name"
+            class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" formControlName="password" class="form-control">
+        <div
+            *ngIf="userForm.get('password')?.hasError('required') && (userForm.get('password')?.dirty || userForm.get('password')?.touched)">
+            La contraseña es obligatoria.
+        </div>
+        <div *ngIf="userForm.get('password')?.hasError('minlength') && userForm.get('password')?.dirty">
+            La contraseña debe tener al menos 6 caracteres.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="role">Selecciona un rol:</label>
+        <select id="role" formControlName="selectedRole" class="form-control" (change)="enviarRol($event)">
+            <option> </option>
+            <option [value]="role.id_role" *ngFor="let role of availableRoles">{{ role.name }} - {{role.area}}</option>
+        </select>
+        <div
+            *ngIf="userForm.get('selectedRole')?.hasError('required') && (userForm.get('selectedRole')?.dirty || userForm.get('selectedRole')?.touched)">
+            Por favor, selecciona un rol.
+        </div>
+    </div>
+
+    <div>
+        <h2>Roles Asignados:</h2>
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let role of roles_name">
+                {{ role }}
+                <button class="remove-role-button btn btn-danger" (click)="removeRole(role)">X</button>
+            </li>
+        </ul>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Aceptar</button>
+    <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+</form>
