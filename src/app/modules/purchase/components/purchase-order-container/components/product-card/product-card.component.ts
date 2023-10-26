@@ -79,10 +79,9 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       const cartProduct = {
         name: product.name,
         quantity: quantity,
-        blocked: true,
       };
       this.cartProducts.push(cartProduct);
-      this._purchaseOrderSer.setCardProductList(this.cartProducts);
+      this._purchaseOrderSer.setCardProductList(cartProduct);
       this.isButtonDisabled[product.id] = true;
       console.log(this._purchaseOrderSer.getCardProductList());
     } else {

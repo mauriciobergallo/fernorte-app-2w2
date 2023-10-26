@@ -23,15 +23,12 @@ export class PurchaseOrderServiceService {
   });
   listProductSelected = new BehaviorSubject<IProduct2[]>([]);
 
-  cartProductList: CartProduct[] = [
-    { name: 'Product 1', quantity: 3, blocked: true },
-    { name: 'Product 2', quantity: 1, blocked: true },
-  ];
+  cartProductList: CartProduct[] = [];
 
   constructor() {}
 
-  setCardProductList(products: CartProduct[]) {
-    this.cartProductList = products;
+  setCardProductList(products: CartProduct) {
+    this.cartProductList.push(products) ;
   }
 
   /*

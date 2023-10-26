@@ -1,5 +1,4 @@
 export interface CartProduct {
   name: string;
   quantity: number;
-  blocked: boolean;
 }
