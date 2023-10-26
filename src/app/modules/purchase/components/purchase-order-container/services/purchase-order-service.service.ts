@@ -29,6 +29,12 @@ export class PurchaseOrderServiceService {
 
   setCardProductList(products: CartProduct) {
     this.cartProductList.push(products) ;
+    console.log(this.listProductSelected)
+  }
+
+  setCardProductList2(productsList: CartProduct[]) {
+    this.cartProductList = productsList ;
+    console.log(this.cartProductList)
   }
 
   /*

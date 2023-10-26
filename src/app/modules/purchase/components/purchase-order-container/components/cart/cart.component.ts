@@ -19,7 +19,7 @@ export class CartComponent {
     if (index !== -1) {
       this.cardProducts.splice(index, 1);
       // Update the service's cardProductList
-      this.purchaseOrderService.setCardProductList(this.cardProducts);
+      this.purchaseOrderService.setCardProductList2(this.cardProducts);
     }
   }
 
