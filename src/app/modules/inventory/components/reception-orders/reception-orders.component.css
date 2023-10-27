@@ -1,0 +1,30 @@
+.add-product,
+.products-list {
+  background-color: #f2f0f0;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+.add-product {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2rem;
+}
+.add-product-list {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+tbody .list-item {
+  border-radius: 1rem;
+  margin: 0.5rem 0;
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+.buttons button {
+  flex-basis: 15rem;
+  margin: 1rem;
+}
