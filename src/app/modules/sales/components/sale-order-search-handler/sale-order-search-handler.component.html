@@ -1,4 +1,5 @@
 <div class="container-fluid" >
-    <fn-sale-order-search-filter (filter)="onReceiveFilter($event)"></fn-sale-order-search-filter>
+    <fn-sale-order-search-filter (nOrderToSend)="onReceiveIdOrder($event)" (datesToSend)="onReceiveDates($event)"
+        (docToSend)="onReceiveDoc($event)"></fn-sale-order-search-filter>
     <fn-sale-order-search-list></fn-sale-order-search-list>
 </div>

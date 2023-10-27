@@ -21,17 +21,59 @@ export class SaleOrderServiceService {
     return this.saleOrderProvider.getSaleOrders();
   }
 
-  getSaleOrdersByFilter(filter: string): SaleOrderModel[] {
-    const saleOrdersList: SaleOrderModel[] = [];
-    this.saleOrderProvider.getSaleOrdesByFilter(filter).subscribe((response) => {
-      if (response.ok) {
-        for (let sale of response.data) {
-          saleOrdersList.push(sale)
-          return saleOrdersList;
+  // getSaleOrdersByFilter(filter: string): SaleOrderModel[] {
+  //   const saleOrdersList: SaleOrderModel[] = [];
+  //   this.saleOrderProvider.getSaleOrdesByFilter(filter).subscribe((response) => {
+  //     if (response.ok) {
+  //       for (let sale of response.data) {
+  //         saleOrdersList.push(sale)
+  //         return saleOrdersList;
+  //       }
+  //     }
+  //     return null
+  //   });
+  //   return saleOrdersList;
+  // }
+
+  getSaleOrdersByFilter(idOrder?:string, doc?:string, fromDate?:string, toDate?:string) : SaleOrderModel[] {
+    const saleOrdersList : SaleOrderModel[] = [];
+    if(idOrder != "" && idOrder != null) {
+      this.saleOrderProvider.getSaleOrdesByFilter(idOrder, '', '', '').subscribe((response) => {
+        if(response.ok) {
+          for(let sale of response.data) {
+            saleOrdersList.push(sale)
+            console.log(saleOrdersList)
+          }
+          return saleOrdersList
+        } else {
+          alert('No fue posible recuperar los datos')
         }
-      }
-      return null
-    });
+        return null
+      })
+    } else if(doc != "" && doc != null) {
+      this.saleOrderProvider.getSaleOrdesByFilter('', doc, '', '').subscribe((response) => {
+        if(response.ok) {
+          for(let sale of response.data) {
+            saleOrdersList.push(sale)
+            console.log(saleOrdersList)
+          }
+          return saleOrdersList
+        }
+        return null
+      })
+    } else {
+      this.saleOrderProvider.getSaleOrdesByFilter('', '', fromDate, toDate).subscribe((response) => {
+        if(response.ok) {
+          for(let sale of response.data) {
+            saleOrdersList.push(sale)
+            console.log(saleOrdersList)
+          }
+          return saleOrdersList
+        }
+        return null
+      })
+    }
+    
     return saleOrdersList;
   }
 

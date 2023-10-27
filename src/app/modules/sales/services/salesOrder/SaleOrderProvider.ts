@@ -19,10 +19,18 @@ export class SaleOrderProvider {
     return this.http.post<IResponse>(url, body, { headers: header });
   }
 
-  getSaleOrdesByFilter(filter:string): Observable<IResponse> {
-    const url = this.urlBase + `/sales-order?${filter}`;
-    return this.http.get<IResponse>(url);
-  }
+  getSaleOrdesByFilter(idOrder?:string, doc?:string, fromDate?:string, toDate?:string): Observable<IResponse> {
+    let url:string = '';
+    if(idOrder != '' && idOrder != null) {
+      url = `http://localhost:8080/sales-order?id_order=${idOrder}`
+    } else if(doc != '' && doc != null) {
+      url = `http://localhost:8080/sales-order?doc_client=${doc}`
+    } else {
+      url = `http://localhost:8080/sales-order?from_date=${fromDate}&to_date=${toDate}`;
+    }
+      return this.http.get<IResponse>(url);
+    }
+
 
   getSaleOrders() : SaleOrderModel[] {
     const saleOrderList: SaleOrderModel[] =  [
