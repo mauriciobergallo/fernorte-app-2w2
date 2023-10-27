@@ -10,8 +10,8 @@ export class SaleOrderSearchFilterComponent {
   @Output() nOrderToSend:EventEmitter<string>= new EventEmitter();
   @Output() docToSend:EventEmitter<string>= new EventEmitter();
   @Output() datesToSend:EventEmitter<string>= new EventEmitter();
-  nOrder:string="";
-  doc:string="";
+  nOrder:string="0";
+  doc:string="0";
   fromDate:string="";
   toDate:string="";
   isSelected:string="";
