@@ -14,6 +14,7 @@ export class SaleOrderSearchFilterComponent {
   doc:string="";
   fromDate:string="";
   toDate:string="";
+  isSelected:string="";
 
   onSendNOrder(form : NgForm){
     if(form.valid) {
