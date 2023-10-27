@@ -1,8 +1,5 @@
 <div class="container border p-3">
     <div class="mb-3 col-md-3">
-        <label class="form-label category-label">Agregar categoría</label>
-    </div>
-    <div class="mb-3 col-md-3">
         <label for="inputCategoryName" class="form-label">Nombre</label>
         <input type="text" class="form-control" id="inputCategoryName">
     </div>
@@ -13,7 +10,7 @@
     </div>
 
     <div class="mb-3 col-md-3 links-add-category">
-        <a class="cancel-link" (click)="hideAddCategory()">Cancelar</a>
-        <a class="add-link" (click)="addCategory()">Agregar</a>
+        <a class="cancel-link" (click)="close()">Cancelar</a>
+        <a class="add-link" (click)="onSubmit()">Agregar</a>
     </div>
 </div>

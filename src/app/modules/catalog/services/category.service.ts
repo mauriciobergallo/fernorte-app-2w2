@@ -13,12 +13,12 @@ export class CategoryService {
    constructor(private requestResponseService: RequestResponseService) { }
    
    get(): Observable<ICategory[]> {
-      return this.requestResponseService.makeGetRequest<ICategory[]>(this.categories , );
+      return this.requestResponseService.makeGetRequest<ICategory[]>(this.categories);
    }
    getById(id: number): Observable<ICategory> {
       return this.requestResponseService.makeGetRequest<ICategory>(`${this.categories}/${id}`);
    }
-   put(category:ICategory): Observable<ICategory> {
-      return this.requestResponseService.makePutRequest<ICategory>(this.categories,{category});
+   put(request:any): Observable<ICategory> {
+      return this.requestResponseService.makePutRequest<ICategory>(this.categories,{request});
    }	
 }
