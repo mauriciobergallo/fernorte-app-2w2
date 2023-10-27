@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, from } from "rxjs";
-import { environment } from "../enviroment/environment";
-import { ISaleOrder } from "../interfaces/isale-order";
-import { IResponse } from "../interfaces/IResponse";
+import { Observable } from "rxjs";
+import { environment } from "../../enviroment/environment";
+import { SaleOrderModel } from "../../models/SaleOrderModel";
+import { IResponse } from "../../interfaces/IResponse";
 @Injectable()
 
 export class SaleOrderProvider {
@@ -12,7 +12,7 @@ export class SaleOrderProvider {
   constructor(private http: HttpClient) {
   }
 
-  createSaleOrder(saleOrder: ISaleOrder): Observable<IResponse> {
+  createSaleOrder(saleOrder: SaleOrderModel): Observable<IResponse> {
     const url = this.urlBase + "/sales-order/create-sale-order";
     const header = { "content-type": "application/json" };
     const body = saleOrder;
@@ -21,9 +21,9 @@ export class SaleOrderProvider {
 
   getSaleOrdesByFilter(idOrder?:string, doc?:string, fromDate?:string, toDate?:string): Observable<IResponse> {
     let url:string = '';
-    if(idOrder != '' || idOrder != null) {
+    if(idOrder != '' && idOrder != null) {
       url = `http://localhost:8080/sales-order?id_order=${idOrder}`
-    } else if(doc != '' || doc != null) {
+    } else if(doc != '' && doc != null) {
       url = `http://localhost:8080/sales-order?doc_client=${doc}`
     } else {
       url = `http://localhost:8080/sales-order?from_date=${fromDate}&to_date=${toDate}`;
@@ -32,8 +32,8 @@ export class SaleOrderProvider {
     }
 
 
-  getSaleOrders() : ISaleOrder[] {
-    const saleOrderList: ISaleOrder[] =  [
+  getSaleOrders() : SaleOrderModel[] {
+    const saleOrderList: SaleOrderModel[] =  [
       {
         id_sale_order: 1,
         id_seller: 1,
