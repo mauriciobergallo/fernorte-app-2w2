@@ -95,8 +95,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "analytics": false
-  }
+  } 
 }
