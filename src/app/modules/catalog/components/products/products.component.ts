@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EditProductComponent } from '../edit-product/edit-product.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 import { IProductCategory } from '../../models/IProductCategory';
+import { DeleteProductComponent } from './delete-product/delete-product.component';
+import { AddProductComponent } from './add-product/add-product.component';
 
 
 @Component({
@@ -19,6 +21,7 @@ export class ProductsComponent {
 
   currentPage = 1;
   itemsPerPage = 10;
+  collectionSize = 20;
 
   constructor(private productService: ProductService, private modalService: NgbModal) { }
 
@@ -31,6 +34,21 @@ export class ProductsComponent {
     modalRef.componentInstance.product = product;
   }
 
+  openDeleteModal(product: IProductCategory){
+    const modalRef = this.modalService.open(DeleteProductComponent, {size: 'lg'});
+    modalRef.componentInstance.product = product;
+  }
+
+  openCreateModal() {
+    const modalRef = this.modalService.open(AddProductComponent, { size: 'lg' });
+    modalRef.result.then(res => {
+      if (res) {
+        this.productService.get().subscribe((res: IProductCategory[]) => {
+          this.listProducts = res;
+        })
+      }
+    })
+  }
   private pagedProducts() {
     this.isLoading = true; // Mostrar el spinner
   

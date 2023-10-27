@@ -28,7 +28,7 @@ export class ListCategoriesComponent implements OnInit {
   }
   openEditModal(category: ICategory) {
     const modalRef = this.modalService.open(AddCategoryComponent, { size: 'lg' });
-    modalRef.componentInstance.discount = category;
+    modalRef.componentInstance.category = category;
     modalRef.componentInstance.isEdit = true;
     modalRef.result.then(data => {
       if (data) {
@@ -50,7 +50,7 @@ export class ListCategoriesComponent implements OnInit {
   }
   openDeleteModal(category: ICategory) {
     const modalRef = this.modalService.open(DeleteModalDiscountComponent, { size: 'lg' });
-    modalRef.componentInstance.discount = category;
+    modalRef.componentInstance.category = category;
     modalRef.result.then(() => {
       this.categoryService.get().subscribe((cat: ICategory[]) => {
         this.listCategories = cat;

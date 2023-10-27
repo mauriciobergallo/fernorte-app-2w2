@@ -23,11 +23,10 @@ export class ProductService {
    getProductsByCategory(id: number): Observable<IProductCategory[]> {
       return this.requestResponseService.makeGetRequest<IProductCategory[]>(`${this.categories}/${id}`);
    }
-   put(product:IProduct): Observable<IProduct> {
-      return this.requestResponseService.makePutRequest<IProduct>(this.products,{product});
+   put(product:any[]): Observable<IProduct[]> {
+      return this.requestResponseService.makePutRequest<IProduct>(this.products, product);
    }
    delete(id:number , username:string): Observable<any> {
-      return this.requestResponseService.makeDeleteRequest<any>(this.products + id + "?username=" + username);
+      return this.requestResponseService.makeDeleteRequest<any>(this.products + "/" + id + "?username=" + username);
    }
-
 }

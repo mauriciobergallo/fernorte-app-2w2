@@ -1,6 +1,7 @@
 <spinner *ngIf="isLoading"></spinner>
 
 <div class="container mt-4">
+  <button class="btn btn-primary" (click)="openCreateModal()">Agregar Productos</button>
   <table class="table">
     <thead>
       <tr>
@@ -23,11 +24,16 @@
         <td>{{ product.category.name }}</td>
         <td>
           <button type="button" class="btn btn-primary mx-2" (click)="openEditModal(product)">Editar</button>
-          <button type="button" class="btn btn-danger mx-2">Eliminar</button>
+          <button type="button" class="btn btn-danger mx-2" (click)="openDeleteModal(product)">Eliminar</button>
         </td>        
       </tr>
     </tbody>
   </table>
+</div>
+
+<div class="container mt-4">
+  <ngb-pagination [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="collectionSize" [maxSize]="5" [rotate]="true">
+  </ngb-pagination>
 </div>
 
 
