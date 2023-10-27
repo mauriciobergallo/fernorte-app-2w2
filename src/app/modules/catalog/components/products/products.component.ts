@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EditProductComponent } from '../edit-product/edit-product.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 import { IProductCategory } from '../../models/IProductCategory';
+import { DeleteProductComponent } from './delete-product/delete-product.component';
 
 
 @Component({
@@ -28,6 +29,11 @@ export class ProductsComponent {
 
   openEditModal(product: IProductCategory) {
     const modalRef = this.modalService.open(EditProductComponent, { size: 'lg' });
+    modalRef.componentInstance.product = product;
+  }
+
+  openDeleteModal(product: IProductCategory){
+    const modalRef = this.modalService.open(DeleteProductComponent, {size: 'lg'});
     modalRef.componentInstance.product = product;
   }
 

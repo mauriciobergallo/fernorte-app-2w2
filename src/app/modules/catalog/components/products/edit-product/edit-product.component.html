@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="modal-header">
+    <h5 class="modal-title">Editar producto</h5>
+    <button type="button" class="btn-close" (click)="close()"></button>
+  </div>
+  
+  <div class="modal-body">
+    <form [formGroup]="formGroup">
+      <div class="mb-3">
+        <label for="inputName" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="inputName" formControlName="name">
+      </div>
+  
+      <div class="mb-3">
+        <label for="selectCategory" class="form-label">Categoría</label>
+        <select class="form-select" id="selectCategory" formControlName="id_category">
+          <option value="1">Opción 1</option>
+          <option value="2">Opción 2</option>
+          <option value="3">Opción 3</option>
+        </select>
+      </div>
+  
+      <div class="mb-3">
+        <label for="inputPrice" class="form-label">Precio</label>
+        <input type="number" class="form-control" id="inputPrice" formControlName="unit_price">
+      </div>
+  
+      <div class="mb-3">
+        <label for="inputUnitOfMeasurement" class="form-label">Unidad de medida</label>
+        <input type="text" class="form-control" id="inputUnitOfMeasurement" formControlName="unit_of_measure">
+      </div>
+  
+      <div class="mb-3">
+        <label for="inputStock" class="form-label">Stock</label>
+        <input type="number" class="form-control" id="inputStock" formControlName="stock_quantity">
+      </div>
+  
+      <div class="mb-3">
+        <label for="inputDescription" class="form-label">Descripción</label>
+        <textarea class="form-control" id="inputDescription" rows="3" formControlName="description"></textarea>
+      </div>
+    </form>
+  </div>
+  
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="onSubmit()">Guardar</button>
+  </div>
+</div>
+
+<spinner *ngIf="isLoading"></spinner>

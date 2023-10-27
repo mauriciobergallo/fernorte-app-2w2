@@ -7,7 +7,7 @@ import { AddDiscountComponent } from './components/discounts/add-discount/add-di
 import { DiscountsComponent } from './components/discounts/discounts.component';
 import { AddCategoryComponent } from './components/categories/add-category/add-category.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { EditProductComponent } from './components/edit-product/edit-product.component';
+import { EditProductComponent } from './components/products/edit-product/edit-product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './components/spinner/viewspinner/spinner.component';
 import { CatalogRoutingModule } from './catalog-routing.module';
@@ -15,6 +15,7 @@ import { DeleteModalDiscountComponent } from './components/discounts/delete-moda
 import { ViewDiscountsComponent } from './components/discounts/view-discounts/view-discounts.component';
 import localeEs from '@angular/common/locales/es';
 import { ListCategoriesComponent } from './components/categories/list-categories/list-categories.component';
+import { DeleteProductComponent } from './components/products/delete-product/delete-product.component';
 
 registerLocaleData(localeEs);
 
@@ -30,7 +31,8 @@ registerLocaleData(localeEs);
     SpinnerComponent,
     DeleteModalDiscountComponent,
     ViewDiscountsComponent,
-  ListCategoriesComponent],
+    ListCategoriesComponent,
+    DeleteProductComponent],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],
   imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, CatalogRoutingModule],
   exports: [HomeComponent],
