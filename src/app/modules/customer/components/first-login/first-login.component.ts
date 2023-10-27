@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'fn-first-login',
@@ -12,7 +13,7 @@ export class FirstLoginComponent {
     password: ''
   };
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private userService: UserService) {
     this.route.params.subscribe(params => {
        this.forgot = params['forgot'] === 'true';
     });
@@ -21,14 +22,21 @@ export class FirstLoginComponent {
   }
 
   onFirstLogin() {
-    // Agregar lógica para restablecer la contraseña del usuario
-    console.log('Nueva Contraseña:', this.user.password);
-    // Aquí puedes agregar la lógica para restablecer la contraseña
+    this.changePassword();
   }
 
   onResetPassword() {
-    // Agregar lógica para restablecer la contraseña del usuario
-    console.log('Nueva Contraseña:', this.user.password);
-    // Aquí puedes agregar la lógica para restablecer la contraseña
+    this.changePassword();
+  }
+
+  changePassword(){
+    this.userService.changePassword(this.user.password).subscribe(
+      (response: any) => {
+       alert('Se cambio correctamente la contraseña');
+      },
+      (error: any) => {
+        alert('Error al cambiar la contraseña');
+      }
+    );
   }
 }

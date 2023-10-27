@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
@@ -18,10 +18,16 @@ import { FirstLoginComponent } from './components/first-login/first-login.compon
 import { LoginComponent } from './components/login/login.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
+const routes: Routes = [
+  { component: LoginComponent, path: 'login' },
+  { component: ForgotPasswordComponent, path: 'forgot-password' },
+  { component: FirstLoginComponent, path: 'first-login/:forgot' },
+];
+
 @NgModule({
   declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent, UserRootComponent, UserFormComponent, FirstLoginComponent, LoginComponent, ForgotPasswordComponent],
   providers: [],
-  imports: [CommonModule, BrowserModule, ReactiveFormsModule, NgbModule, FormsModule, HttpClientModule, ReactiveFormsModule, RouterModule],
-  exports: [HomeComponent],
+  imports: [CommonModule, BrowserModule, ReactiveFormsModule, NgbModule, FormsModule, HttpClientModule, ReactiveFormsModule, RouterModule, RouterModule.forRoot(routes)],
+  exports: [HomeComponent, RouterModule],
 })
 export class CustomerModule {}

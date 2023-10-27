@@ -9,7 +9,14 @@
                             <div class="form-group">
                                 <label for="password">Nueva Contraseña</label>
                                 <input type="password" id="password" class="form-control" name="password"
-                                    [(ngModel)]="user.password" required>
+                                    [(ngModel)]="user.password" required minlength="8" 
+                                    [ngClass]="{ 'is-invalid': resetPasswordForm.submitted && resetPasswordForm.invalid }">
+                                <div *ngIf="resetPasswordForm.submitted && resetPasswordForm.controls['password'].hasError('required')" class="invalid-feedback">
+                                    Contraseña es requerida.
+                                </div>
+                                <div *ngIf="resetPasswordForm.controls['password'].hasError('minlength')" class="invalid-feedback">
+                                    La contraseña debe tener al menos 8 caracteres.
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Restablecer Contraseña</button>
                         </form>
@@ -28,7 +35,7 @@
                     <div class="card-header">Establecer su Contraseña</div>
                     <div class="card-body">
                         <p>
-                            Bienvenido a FerNorte, ya que es su primer login aquí debera establecer su contraseña.
+                            Bienvenido a FerNorte, ya que es su primer inicio de sesión, aquí deberá establecer su contraseña.
                             No debe compartir esta contraseña con nadie.
                         </p>
                     </div>
@@ -37,7 +44,14 @@
                             <div class="form-group">
                                 <label for="password">Contraseña</label>
                                 <input type="password" id="password" class="form-control" name="password"
-                                    [(ngModel)]="user.password" required>
+                                    [(ngModel)]="user.password" required minlength="8" 
+                                    [ngClass]="{ 'is-invalid': firstLoginForm.submitted && firstLoginForm.invalid }">
+                                <div *ngIf="firstLoginForm.submitted && firstLoginForm.controls['password'].hasError('required')" class="invalid-feedback">
+                                    Contraseña es requerida.
+                                </div>
+                                <div *ngIf="firstLoginForm.controls['password'].hasError('minlength')" class="invalid-feedback">
+                                    La contraseña debe tener al menos 8 caracteres.
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </form>
