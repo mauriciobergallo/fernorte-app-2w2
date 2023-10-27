@@ -20,6 +20,7 @@ export class ProductsComponent {
 
   currentPage = 1;
   itemsPerPage = 10;
+  collectionSize = 20;
 
   constructor(private productService: ProductService, private modalService: NgbModal) { }
 
