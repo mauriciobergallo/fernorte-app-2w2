@@ -17,10 +17,19 @@ export class SaleOrderServiceService {
 
   constructor(private saleOrderProvider: SaleOrderProvider) { }
 
-  getSaleOrders(): SaleOrderModel[] {
-    return this.saleOrderProvider.getSaleOrders();
+  getSaleOrders() : SaleOrderModel[] {
+    let saleOrderList: SaleOrderModel[] = [];
+    this.saleOrderProvider.getSaleOrders().subscribe((response) =>{
+      if(response.ok){
+        for(let sale of response.data){
+          saleOrderList.push(sale)
+          return saleOrderList;
+        }
+      }
+      return null;
+    });
+    return saleOrderList;
   }
-
   getSaleOrdersByFilter(filter: string): SaleOrderModel[] {
     const saleOrdersList: SaleOrderModel[] = [];
     this.saleOrderProvider.getSaleOrdesByFilter(filter).subscribe((response) => {

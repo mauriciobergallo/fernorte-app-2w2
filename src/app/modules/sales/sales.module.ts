@@ -18,7 +18,7 @@ import { PaymentMethodComponent } from './components/payment-method/payment-meth
 import { CreatePaymentComponent } from './components/create-payment/create-payment.component';
 
 @NgModule({
-  declarations: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, CalcularImpuestosPipe, CalcularMontoTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent, SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent],
+  declarations: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, CalcularImpuestosPipe, CalcularMontoTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent,SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent],
   providers: [SaleOrderProvider,ProductProvider],
   imports: [CommonModule,FormsModule],
   exports: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent, SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent],
