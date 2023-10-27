@@ -14,9 +14,7 @@
       <div class="mb-3">
         <label for="selectCategory" class="form-label">Categoría</label>
         <select class="form-select" id="selectCategory" formControlName="id_category">
-          <option value="1">Opción 1</option>
-          <option value="2">Opción 2</option>
-          <option value="3">Opción 3</option>
+          <option *ngFor="let item of listCategories" [value]="item.id_category">{{item.name}}</option>
         </select>
       </div>
   

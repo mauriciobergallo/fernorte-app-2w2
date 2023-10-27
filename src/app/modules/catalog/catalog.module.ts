@@ -33,6 +33,8 @@ registerLocaleData(localeEs);
     ViewDiscountsComponent,
     ListCategoriesComponent,
     DeleteProductComponent],
+
+
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],
   imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, CatalogRoutingModule],
   exports: [HomeComponent],

@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductService } from '../../../services/product.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { CategoryService } from '../../../services/category.service';
+import { ICategory } from '../../../models/ICategory';
 
 @Component({
   selector: 'fn-edit-product',
@@ -12,11 +14,11 @@ import { Router } from '@angular/router';
 })
 export class EditProductComponent implements OnInit {
   @Input() product?: IProductCategory | null = null;
-
+  listCategories:ICategory[] = [];
   formGroup: FormGroup;
   isLoading: boolean = false;
 
-  constructor(private fb: FormBuilder, private prodService: ProductService, @Optional() private modalService: NgbActiveModal, private router: Router) {
+  constructor(private fb: FormBuilder, private prodService: ProductService, @Optional() private modalService: NgbActiveModal, private router: Router,private categoryService:CategoryService) {
     this.formGroup = this.fb.group({
       id_product: [null],
       name: [null],
@@ -42,8 +44,13 @@ export class EditProductComponent implements OnInit {
       image: this.product?.image,
       user_created: this.product?.user_created
     });
+    this.getCategories();
   }
-
+ getCategories(){
+    this.categoryService.get().subscribe((res) => {
+      this.listCategories = res;
+    });
+ }
   onSubmit() {
     this.isLoading = true;
 
