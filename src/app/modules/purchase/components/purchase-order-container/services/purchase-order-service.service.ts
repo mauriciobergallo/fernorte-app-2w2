@@ -25,15 +25,18 @@ export class PurchaseOrderServiceService {
   cartProductList: ISupplierProduct[] = [];
 
 
+
   constructor() {}
 
-  /* setCardProductList(products: ISupplierProduct) {
+  setCardProductList(products: ISupplierProduct) {
     this.cartProductList.push(products) ;
-  } */
+  }
 
   setCardProductList2(productsList: ISupplierProduct[]) {
     this.cartProductList = productsList ;
     console.log(this.cartProductList)
+    
+    this.listProductSelected.next(this.cartProductList);
   }
 
   /*
@@ -86,12 +89,5 @@ export class PurchaseOrderServiceService {
   getListProductSelected() {
     return this.listProductSelected.asObservable();
   }
-
-  pushToCartService(product: ISupplierProduct) {
-    this.cartProductList.push(product);
-    
-  }
-
-  
 
 }

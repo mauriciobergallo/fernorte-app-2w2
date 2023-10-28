@@ -21,7 +21,8 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
 
   idSelected: number = 0
   supplierList: ISupliers[] = []
-  public supplierSelected : ISupliers = {id: 0, socialReason:"", cuit:"" ,adress:"", fantasyName:""} 
+  public supplierSelected: ISupliers = { id: 0, socialReason: "", cuit: "", adress: "", fantasyName: "" }
+  blockHeader: boolean = false
   
   suscription = new Subscription()
   
@@ -44,7 +45,9 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
   */
   onSelectChange(event: any){
    
-    this.supplierSelected = this.supplierList.find(x => x.id == this.idSelected)!
+    if (this.blockHeader == false) { 
+
+      this.supplierSelected = this.supplierList.find(x => x.id == this.idSelected)!
 
     // console.log("supplier selected: " + this.supplierSelected + "id selected: " + this.idSelected)
 
@@ -60,6 +63,11 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
     //getting the value of the supplier selected and the id of the supplier from service
     this.getSupplierSelectedFromService()
     this.getIdFromService()
+
+    } else {
+      console.log("blockHeader is true")
+    }
+    
 
 
   }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CartProduct } from 'src/app/modules/purchase/models/CardProduct';
 import { PurchaseOrderServiceService } from '../../services/purchase-order-service.service';
+import { ISupplierProduct } from 'src/app/modules/purchase/models/ISuppliers';
 
 @Component({
   selector: 'fn-cart',
@@ -8,13 +9,13 @@ import { PurchaseOrderServiceService } from '../../services/purchase-order-servi
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent {
-  cardProducts: CartProduct[] = [];
+  cardProducts: ISupplierProduct[] = [];
 
   constructor(private purchaseOrderService: PurchaseOrderServiceService) {
     this.cardProducts = this.purchaseOrderService.getCardProductList();
   }
 
-  removeItem(product: CartProduct): void {
+  removeItem(product: ISupplierProduct): void {
     const index = this.cardProducts.indexOf(product);
     if (index !== -1) {
       this.cardProducts.splice(index, 1);

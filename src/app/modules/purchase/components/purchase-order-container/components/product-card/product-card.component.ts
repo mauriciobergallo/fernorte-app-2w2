@@ -35,7 +35,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     this._purchaseOrderSer.getListProductSelected().subscribe((data) => { 
       this.putListCart();
     });
-    this.putListCart();
+
   }
 
   ngOnDestroy(): void {
@@ -79,7 +79,6 @@ export class ProductCardComponent implements OnInit, OnDestroy {
 
   addToCart(product: IProduct2) {
     const quantity = this.productQuantities[product.id];
-    console.log(this.idSupplier)
     if (quantity > 0) {
       const ProductSupplier = {
         idSupplier: this.idSupplier,
@@ -88,8 +87,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
         price: product.price,
         quantity: quantity,
       };
-      this.cartProducts.push(ProductSupplier);
-      this._purchaseOrderSer.setCardProductList2(this.cartProducts);
+      this._purchaseOrderSer.setCardProductList(ProductSupplier);
       this.isButtonDisabled[product.id] = true;
       console.log(this._purchaseOrderSer.getCardProductList());
     } else {
@@ -104,32 +102,29 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     }
   }
 
+  
   putListCart() {
     this.suscription.add(
       this._purchaseOrderSer.getListProductSelected().subscribe({
-        next: (data: any) => {
+        next: (data: ISupplierProduct[]) => {
           this.cartProducts = data;
-          const isProductInCart = this.product_List.some(item => item.name === data.name);
-          if (isProductInCart) {
-            this.isButtonDisabled[data.id] = true;
-          }
-          this.isButtonDisabled[data.id] = false;
+          this.product_List.forEach((product) => {
+            const isProductInCart = this.isProductInCart(product);
+            this.isButtonDisabled[product.id] = isProductInCart;
+          });
         },
         error: (error: any) => {
-
+          // Manejar errores
         },
       })
     );
   }
+  
+  isProductInCart(product: IProduct2): boolean {
+    return this.cartProducts.some(item => item.idProduct === product.id);
+  }
+
 }
 
-/*
-  getProductsCart(product: IProduct2) {
-    const productList = this._purchaseOrderSer.getCardProductList();
-    const isProductInCart = productList.some(item => item.name === product.name);
-    if (isProductInCart) {
-      this.isButtonDisabled[product.id] = true;
-    }
-    this.isButtonDisabled[product.id] = false;  
-  }
-  */
+
+
