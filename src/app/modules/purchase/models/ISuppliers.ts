@@ -28,6 +28,7 @@ export interface IProduct2 {
   id: number;
   name: string;
   price: number;
+  blocked: boolean;
 }
 
 

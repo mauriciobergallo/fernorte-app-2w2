@@ -14,8 +14,8 @@
             <p class="card-text" style="height: 30px;">{{item.price| currency }}</p>
             <div class="btn-toolbar justify-content-between">
               <div class="btn-group" role="group" aria-label="Basic example">
-                <!-- <button type="button" class="btn btn-primary"
-                  (click)="Rest(item)">-</button> -->
+                <button type="button" class="btn btn-primary"
+                  (click)="Rest(item)">-</button>
                 <input #controlInput="ngModel" type="text"
                   style="width: 52px; text-align: center;"
                   [(ngModel)]="productQuantities[item.id]" required

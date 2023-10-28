@@ -32,7 +32,9 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       this.idSupplier = id;
       this.getProductsBySupplier(this.idSupplier);
     });
-    this._purchaseOrderSer.getListProductSelected();
+    this._purchaseOrderSer.getListProductSelected().subscribe((data) => { 
+      this.putListCart();
+    });
     this.putListCart();
   }
 
@@ -62,15 +64,19 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   }
 
   Summ(product: IProduct2) {
-    this._purchaseOrderSer.setSumm(product);
-    this._purchaseOrderSer.getSumm(product);
+    if (!this.productQuantities[product.id]) {
+      this.productQuantities[product.id] = 0;
+    }
+    this.productQuantities[product.id]++;
   }
 
-  /* Rest(product: IProduct2) {
-    this._purchaseOrderSer.setRest(product);
-    this.productQuantities[product.id] = this._purchaseOrderSer.getRest(product);
+  Rest(product: IProduct2) {
+    if (!this.productQuantities[product.id]) {
+      this.productQuantities[product.id] = 0;
+    }
+    this.productQuantities[product.id]--;
   }
- */
+
   addToCart(product: IProduct2) {
     const quantity = this.productQuantities[product.id];
     console.log(this.idSupplier)
@@ -83,7 +89,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
         quantity: quantity,
       };
       this.cartProducts.push(ProductSupplier);
-      this._purchaseOrderSer.setListProductSelected(this.cartProducts);
+      this._purchaseOrderSer.setCardProductList2(this.cartProducts);
       this.isButtonDisabled[product.id] = true;
       console.log(this._purchaseOrderSer.getCardProductList());
     } else {

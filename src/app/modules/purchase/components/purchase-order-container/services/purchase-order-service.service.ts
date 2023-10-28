@@ -22,18 +22,16 @@ export class PurchaseOrderServiceService {
     cuit: '',
   });
   listProductSelected = new BehaviorSubject<ISupplierProduct[]>([]);
+  cartProductList: ISupplierProduct[] = [];
 
-  productQuantities = new BehaviorSubject<number>(0);
-  productQuantitiesSubject = new BehaviorSubject<{ [productId: number]: number }>({});
-  cartProductList: CartProduct[] = [];
 
   constructor() {}
 
-  setCardProductList(products: CartProduct) {
+  /* setCardProductList(products: ISupplierProduct) {
     this.cartProductList.push(products) ;
-  }
+  } */
 
-  setCardProductList2(productsList: CartProduct[]) {
+  setCardProductList2(productsList: ISupplierProduct[]) {
     this.cartProductList = productsList ;
     console.log(this.cartProductList)
   }
@@ -41,7 +39,7 @@ export class PurchaseOrderServiceService {
   /*
    * method to return the list of card products
    */
-  getCardProductList(): CartProduct[] {
+  getCardProductList(): ISupplierProduct[] {
     return this.cartProductList;
   }
 
@@ -78,7 +76,7 @@ export class PurchaseOrderServiceService {
   /*
    * method to set and get the list of products selected
    */
-  setListProductSelected(productsList: ISupplierProduct[]) {
+  setProductSelected(productsList: ISupplierProduct[]) {
     this.listProductSelected.next(productsList);
   }
 
@@ -89,33 +87,11 @@ export class PurchaseOrderServiceService {
     return this.listProductSelected.asObservable();
   }
 
-
-  /* ------------------------------------------------------------------------- */
-  
-  setSumm(product: IProduct2) {
-    this.productQuantitiesSubject.next([product.id])
-    if (!this.productQuantitiesSubject) {
-      this.productQuantitiesSubject;
-    }
-    this.productQuantitiesSubject.value[product.id]++;
-    console.log(this.productQuantitiesSubject.value[product.id])
-  }
-
-  getSumm(product: IProduct2) {
-    return this.productQuantitiesSubject.asObservable();
+  pushToCartService(product: ISupplierProduct) {
+    this.cartProductList.push(product);
     
   }
-  
-  
-  /* setRest(product: IProduct2) {
-    if (!this.productQuantities[product.id]) {
-      this.productQuantities[product.id] = 0;
-    }
-    this.productQuantities[product.id]--;
-  }
 
-  getRest(product: IProduct2) {
-    return this.productQuantities[product.id];
-  } */
+  
 
 }
