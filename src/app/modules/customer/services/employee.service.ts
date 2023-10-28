@@ -8,7 +8,6 @@ import { EmployeeResponseDTO } from '../models/employeeResponseDTO';
 export class EmployeeService {
 
   private apiUrl = 'http://localhost:8090/employees';
-  private newEmployee = '/new-employee';
 
   constructor(private http: HttpClient) { }
 
@@ -22,7 +21,7 @@ createEmployee(employee: Employee){
 }
 
 postEmployee(employeePost: Employee): Observable<EmployeeResponseDTO>{
-  return this.http.post<EmployeeResponseDTO>(`${this.apiUrl}${this.newEmployee}`, employeePost) //Petición HTTP Post para crear empleado
+  return this.http.post<EmployeeResponseDTO>(`${this.apiUrl}`, employeePost) //Petición HTTP Post para crear empleado
 
 }
 

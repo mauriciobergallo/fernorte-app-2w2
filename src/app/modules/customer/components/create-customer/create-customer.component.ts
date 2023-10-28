@@ -20,17 +20,17 @@ formattedBirthDate: string = '';
 
 
 customer: CustomerRequest = {
-firstName:"",
-lastName:"",
-companyName: "",
-ivaCondition: "Monotributo",
-birthDate: new Date(),
-documentType:1,
-documentNumber:"",
-address:"",
-phoneNumber:"",
-email: "",
-customerType: ""
+	first_name: "",
+	last_name: "",
+   company_name: "",
+   iva_condition: "Monotributo",
+	birth_date: new Date().toISOString(),
+	id_document_type: 1,
+	document_number: "",
+	address: "",
+	phone_number: "",
+	email: "",
+	customer_type: ""
 };
 
   isCompany: boolean = false; 
@@ -49,23 +49,8 @@ customerType: ""
 				console.log("customer FORM",this.customerForm);
 				
 				console.log(this.formattedBirthDate)
-				let newCustomer: any = {
-					firstName: this.customer.firstName,
-					lastName: this.customer.lastName,
-					companyName: this.customer.companyName,
-					ivaCondition: this.customer.ivaCondition,
-					birthDate: this.formattedBirthDate,
-					documentType:{
-						idDocumentType: this.customer.documentType,
-						description: this.setDocumentTypeDescription(this.customer.documentType)
-					},
-					documentNumber: this.customer.documentNumber,
-					address: this.customer.address,
-					phoneNumber: this.customer.phoneNumber,
-					email: this.customer.email,
-					customerType: this.customer.customerType
-				}
-				this.customerService.postCustomer(newCustomer).subscribe(
+				this.customer.birth_date = this.formattedBirthDate
+				this.customerService.postCustomer(this.customer).subscribe(
 					(response) => {
 						alert("Se creo el cliente")
 					},
@@ -86,13 +71,13 @@ customerType: ""
 
 
   onChangeCompany(value: boolean){
-    this.customer.customerType = value ? "Juridica" : "Fisica"
+    this.customer.customer_type = value ? "Juridica" : "Fisica"
 	if(value){
-		this.customer.firstName = "";
-		this.customer.lastName = "";
+		this.customer.first_name = "";
+		this.customer.last_name = "";
 	}
 	else{
-		this.customer.companyName = "";
+		this.customer.company_name = "";
 	}
     this.isCompany = value;
 	this.isTypeChecked = true;

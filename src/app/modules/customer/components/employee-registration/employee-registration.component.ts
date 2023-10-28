@@ -16,15 +16,16 @@ export class EmployeeRegistrationComponent {
 	formattedBirthDate: string = '';
 
 	employee: Employee = {
-		firstName: "",
-		lastName: "",
-		birthDate: new Date(),
-		documentType: 1,
-		documentNumber: "",
+		first_name: "",
+		last_name: "",
+		birth_date: new Date().toISOString(),
+		document_type: 1,
+		document_number: "",
 		address: "",
-		phoneNumber: "",
-		personalEmail: ""
-	};
+		phone_number: "",
+		personal_email: ""
+	  };
+	  
 	closeResult = '';
 
 	constructor(private modalService: NgbModal, private employeeService: EmployeeService) { }
@@ -37,17 +38,8 @@ export class EmployeeRegistrationComponent {
 				console.log("RESULT", result);
 				console.log("EMPLOYEE FORM", this.employeeForm);
 
-				let newemployee: any = {
-					firstName: this.employee.firstName,
-					lastName: this.employee.lastName,
-					birthDate: this.formattedBirthDate,
-					documentType: this.employee.documentType,
-					address: this.employee.address,
-					phoneNumber: this.employee.phoneNumber,
-					documentNumber: this.employee.documentNumber,
-					personalEmail: this.employee.personalEmail
-				}
-				this.employeeService.postEmployee(newemployee).subscribe(
+				this.employee.birth_date = this.formattedBirthDate;
+				this.employeeService.postEmployee(this.employee).subscribe(
 
 
 					(response) => {

@@ -48,7 +48,7 @@ export class TurnsComponentComponent {
         (response) => {
           if (response) {
             this.showCustomerInfo(response);
-            const welcomeMessage = `Bienvenido ${response.firstName}, tu número de turno es ${response.number}, y fue creado el ${response.createdAt}`;
+            const welcomeMessage = `Bienvenido ${response.first_name}, tu número de turno es ${response.number}, y fue creado el ${response.created_at}`;
             alert(welcomeMessage);
             this.clearFields();
           } 

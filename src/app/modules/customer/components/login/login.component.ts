@@ -23,7 +23,7 @@ export class LoginComponent {
     if (form.valid) {
       this.loginService.onLogin(this.login).subscribe(
         (respuesta: any) => {
-          alert("Bienvenido " + respuesta.userName);
+          alert("Bienvenido " + respuesta.username);
         },
         (error: any) => {
           alert("Servicio no disponible");
