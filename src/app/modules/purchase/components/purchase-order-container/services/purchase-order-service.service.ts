@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IProduct, IProduct2 } from '../../../models/ISuppliers';
+import { IProduct, IProduct2, ISupplierProduct } from '../../../models/ISuppliers';
 import { ISupliers } from '../../../models/ISuppliers';
 import { CartProduct } from '../../../models/CardProduct';
 
@@ -21,15 +21,16 @@ export class PurchaseOrderServiceService {
     fantasyName: '',
     cuit: '',
   });
-  listProductSelected = new BehaviorSubject<IProduct2[]>([]);
+  listProductSelected = new BehaviorSubject<ISupplierProduct[]>([]);
 
+  productQuantities = new BehaviorSubject<number>(0);
+  productQuantitiesSubject = new BehaviorSubject<{ [productId: number]: number }>({});
   cartProductList: CartProduct[] = [];
 
   constructor() {}
 
   setCardProductList(products: CartProduct) {
     this.cartProductList.push(products) ;
-    console.log(this.listProductSelected)
   }
 
   setCardProductList2(productsList: CartProduct[]) {
@@ -77,8 +78,8 @@ export class PurchaseOrderServiceService {
   /*
    * method to set and get the list of products selected
    */
-  setListProductSelected(list: IProduct2[]) {
-    this.listProductSelected.next(list);
+  setListProductSelected(productsList: ISupplierProduct[]) {
+    this.listProductSelected.next(productsList);
   }
 
   /*
@@ -87,4 +88,34 @@ export class PurchaseOrderServiceService {
   getListProductSelected() {
     return this.listProductSelected.asObservable();
   }
+
+
+  /* ------------------------------------------------------------------------- */
+  
+  setSumm(product: IProduct2) {
+    this.productQuantitiesSubject.next([product.id])
+    if (!this.productQuantitiesSubject) {
+      this.productQuantitiesSubject;
+    }
+    this.productQuantitiesSubject.value[product.id]++;
+    console.log(this.productQuantitiesSubject.value[product.id])
+  }
+
+  getSumm(product: IProduct2) {
+    return this.productQuantitiesSubject.asObservable();
+    
+  }
+  
+  
+  /* setRest(product: IProduct2) {
+    if (!this.productQuantities[product.id]) {
+      this.productQuantities[product.id] = 0;
+    }
+    this.productQuantities[product.id]--;
+  }
+
+  getRest(product: IProduct2) {
+    return this.productQuantities[product.id];
+  } */
+
 }

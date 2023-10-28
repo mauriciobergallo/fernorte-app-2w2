@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { IProduct2 } from 'src/app/modules/purchase/models/ISuppliers';
+import { IProduct2, ISupplierProduct } from 'src/app/modules/purchase/models/ISuppliers';
 import { ProductsService } from 'src/app/modules/purchase/services/products.service';
 import { PurchaseOrderServiceService } from '../../../purchase-order-container/services/purchase-order-service.service';
 import { SupliersService } from '../../../supplier/services/supliers.service';
@@ -21,9 +21,9 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   productQuantities: { [productId: number]: number } = {};
   idSupplier: number = 0;
   product_List: IProduct2[] = [];
-  cartProducts: CartProduct[] = [];
-  isButtonDisabled: { [productId: number]: boolean } = {}; 
-  mostrarToastAddProduct: {[producId: number]: boolean} = {}
+  cartProducts: ISupplierProduct[] = [];
+  isButtonDisabled: { [productId: number]: boolean } = {};
+  mostrarToastAddProduct: { [producId: number]: boolean } = {}
 
   suscription = new Subscription();
 
@@ -32,6 +32,8 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       this.idSupplier = id;
       this.getProductsBySupplier(this.idSupplier);
     });
+    this._purchaseOrderSer.getListProductSelected();
+    this.putListCart();
   }
 
   ngOnDestroy(): void {
@@ -44,8 +46,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
           next: (data: any) => {
             if (data.products && Array.isArray(data.products)) {
               this.product_List = data.products;
-
-              this.productQuantities = {};
+              //this.productQuantities = {};
               this.product_List.forEach((product) => {
                 this.productQuantities[product.id] = 0;
                 this.isButtonDisabled[product.id] = false;
@@ -61,27 +62,28 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   }
 
   Summ(product: IProduct2) {
-    if (!this.productQuantities[product.id]) {
-      this.productQuantities[product.id] = 0;
-    }
-    this.productQuantities[product.id]++;
+    this._purchaseOrderSer.setSumm(product);
+    this._purchaseOrderSer.getSumm(product);
   }
 
-  Rest(product: IProduct2) {
-    if (this.productQuantities[product.id] > 0) {
-      this.productQuantities[product.id]--;
-    }
+  /* Rest(product: IProduct2) {
+    this._purchaseOrderSer.setRest(product);
+    this.productQuantities[product.id] = this._purchaseOrderSer.getRest(product);
   }
-
+ */
   addToCart(product: IProduct2) {
     const quantity = this.productQuantities[product.id];
+    console.log(this.idSupplier)
     if (quantity > 0) {
-      const cartProduct = {
+      const ProductSupplier = {
+        idSupplier: this.idSupplier,
+        idProduct: product.id,
         name: product.name,
+        price: product.price,
         quantity: quantity,
       };
-      this.cartProducts.push(cartProduct);
-      this._purchaseOrderSer.setCardProductList(cartProduct);
+      this.cartProducts.push(ProductSupplier);
+      this._purchaseOrderSer.setListProductSelected(this.cartProducts);
       this.isButtonDisabled[product.id] = true;
       console.log(this._purchaseOrderSer.getCardProductList());
     } else {
@@ -96,6 +98,26 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     }
   }
 
+  putListCart() {
+    this.suscription.add(
+      this._purchaseOrderSer.getListProductSelected().subscribe({
+        next: (data: any) => {
+          this.cartProducts = data;
+          const isProductInCart = this.product_List.some(item => item.name === data.name);
+          if (isProductInCart) {
+            this.isButtonDisabled[data.id] = true;
+          }
+          this.isButtonDisabled[data.id] = false;
+        },
+        error: (error: any) => {
+
+        },
+      })
+    );
+  }
+}
+
+/*
   getProductsCart(product: IProduct2) {
     const productList = this._purchaseOrderSer.getCardProductList();
     const isProductInCart = productList.some(item => item.name === product.name);
@@ -104,4 +126,4 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     }
     this.isButtonDisabled[product.id] = false;  
   }
-}
+  */
