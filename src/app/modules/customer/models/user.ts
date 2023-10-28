@@ -2,11 +2,13 @@ import { Email } from "./email";
 import { Role } from "./role";
 
 export interface User {
-    idUser: number;
-    employeeDocumentNumber: string;
+    id_user: number;
+    first_login: boolean;
+    password_reset: boolean;
+    document_number: string;
     email: Email;
-    userName: string;
-    userPassword: string;
-    isActive: boolean;
+    username: string;
+    user_password: string;
+    is_active: boolean;
     roles: Role[];
   }
