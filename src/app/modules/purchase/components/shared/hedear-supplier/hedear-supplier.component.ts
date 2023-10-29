@@ -21,18 +21,21 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
 
   idSelected: number = 0
   supplierList: ISupliers[] = []
-  public supplierSelected : ISupliers = {id: 0, socialReason:"", cuit:"" ,adress:"", fantasyName:""} 
+  public supplierSelected: ISupliers = { id: 0, socialReason: "", cuit: "", adress: "", fantasyName: "" }
+  blockHeader: boolean = false
   
   suscription = new Subscription()
   
 
   ngOnInit(): void {
+    this._purchaseOrderService.setIdSupplier(0)
     this.getListSuplierFromService()
 
   }
 
   ngOnDestroy(): void {
     this.suscription.unsubscribe()
+    this._purchaseOrderService.setIdSupplier(0)
   }
 
   /*
@@ -42,7 +45,9 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
   */
   onSelectChange(event: any){
    
-    this.supplierSelected = this.supplierList.find(x => x.id == this.idSelected)!
+    if (this.blockHeader == false) { 
+
+      this.supplierSelected = this.supplierList.find(x => x.id == this.idSelected)!
 
     // console.log("supplier selected: " + this.supplierSelected + "id selected: " + this.idSelected)
 
@@ -59,6 +64,11 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
     this.getSupplierSelectedFromService()
     this.getIdFromService()
 
+    } else {
+      console.log("blockHeader is true")
+    }
+    
+
 
   }
 
@@ -66,6 +76,7 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
     this.suscription.add(
       this._suplierService.getSupliers().subscribe({
         next: (data: ISupliers[]) => {
+          console.log(data);
           this.supplierList = data;
         },
         error: (error: any) => {

@@ -26,5 +26,21 @@ export interface IProduct {
 
 export interface IProduct2 {
   id: number;
+  name: string;
   price: number;
+  blocked: boolean;
+}
+
+
+// export interface ISupplierProduct {
+//   supplier: ISupliers;
+//   products: IProduct2[];
+// }
+
+export interface ISupplierProduct {
+  idSupplier: number;
+  idProduct: number;
+  name: string;
+  price: number;
+  quantity: number;
 }
