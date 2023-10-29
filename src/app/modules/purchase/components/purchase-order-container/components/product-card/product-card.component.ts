@@ -5,7 +5,6 @@ import { ProductsService } from 'src/app/modules/purchase/services/products.serv
 import { PurchaseOrderServiceService } from '../../../purchase-order-container/services/purchase-order-service.service';
 import { SupliersService } from '../../../supplier/services/supliers.service';
 import { NgModel } from '@angular/forms';
-import { CartProduct } from 'src/app/modules/purchase/models/CardProduct';
 
 @Component({
   selector: 'fn-product-card',

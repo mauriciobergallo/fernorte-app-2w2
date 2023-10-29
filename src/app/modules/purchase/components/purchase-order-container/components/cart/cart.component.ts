@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CartProduct } from 'src/app/modules/purchase/models/CardProduct';
 import { PurchaseOrderServiceService } from '../../services/purchase-order-service.service';
 import { ISupplierProduct } from 'src/app/modules/purchase/models/ISuppliers';
 
