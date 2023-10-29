@@ -21,9 +21,15 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
 
   idSelected: number = 0
   supplierList: ISupliers[] = []
+<<<<<<< Updated upstream
   public supplierSelected: ISupliers = { id: 0, socialReason: "", cuit: "", adress: "", fantasyName: "" }
   blockHeader: boolean = false
   
+=======
+  public supplierSelected : ISupliers = {id: 0, socialReason:"", cuit:"" ,adress:"", fantasyName:""} 
+  showDropDown: boolean = true
+
+>>>>>>> Stashed changes
   suscription = new Subscription()
   
 
@@ -112,6 +118,10 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
           error: (error: any) => { console.log(error) }
         }
       ))
+  }
+
+  showSelectSupplier(){
+    this.showDropDown = false
   }
 
 }

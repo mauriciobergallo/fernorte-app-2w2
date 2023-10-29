@@ -2,16 +2,20 @@
 
 
     <div class="container">
-        <div class="row">
+        <div class="row" *ngIf="showDropDown">
 
             <h5 class="col-sm-4 col-form-label col-form-label">Seleccionar proveedor</h5>
 
 
-            <div class="col-sm-8">
-                <select class="form-select" name="opcion" [(ngModel)]="idSelected"
+            <div class="col-sm-6 ">
+                <select class="form-select border border-primary" name="opcion" [(ngModel)]="idSelected"
                     (ngModelChange)="onSelectChange($event)">
                     <option *ngFor="let item of supplierList" [value]="item.id">{{item.socialReason}}</option>
                 </select>
+            </div>
+
+            <div class="col-sm-2">
+                <button type="button" class="btn btn-primary" (click)="showSelectSupplier()">Seleccionar</button>
             </div>
 
         </div>
