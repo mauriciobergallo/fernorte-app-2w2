@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IProduct, IProduct2, ISupplierProduct } from '../../../models/ISuppliers';
 import { ISupliers } from '../../../models/ISuppliers';
-import { CartProduct } from '../../../models/CardProduct';
 
 @Injectable({
   providedIn: 'root',
