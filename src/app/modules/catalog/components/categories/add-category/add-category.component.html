@@ -1,16 +1,30 @@
-<div class="container border p-3">
-    <div class="mb-3 col-md-3">
-        <label for="inputCategoryName" class="form-label">Nombre</label>
-        <input type="text" class="form-control" id="inputCategoryName">
-    </div>
-
-    <div class="mb-3 col-md-6">
-        <label for="inputDescription" class="form-label">Descripción</label>
-        <textarea class="form-control" id="inputDescription" rows="3"></textarea>
-    </div>
-
-    <div class="mb-3 col-md-3 links-add-category">
-        <a class="cancel-link" (click)="close()">Cancelar</a>
-        <a class="add-link" (click)="onSubmit()">Agregar</a>
-    </div>
-</div>
+<div class="container">
+    <form [formGroup]="formGroup">
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-2 col-xs-2">
+            <h3>{{isEdit?'Editar categoria':'Agregar categoria'}} </h3>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="mb-3 col-md-6">
+          <label for="inputCategoryName" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="inputCategoryName" formControlName="name">
+        </div>
+  
+        <div class="mb-3 col-md-6">
+          <label for="inputCategoryDescription" class="form-label">Descripción</label>
+          <input type="text" class="form-control" id="inputCategoryDescription" formControlName="description">
+        </div>
+      </div>
+  
+      <div class="row ">
+        <div class="col-md-6 col-lg-6 buttons-container">
+          <button type="button" class="btn btn-secondary m-1" (click)="close()">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="onSubmit()">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <spinner *ngIf="isLoading"></spinner>

@@ -14,8 +14,9 @@ export class AddCategoryComponent {
 
   @Input() category?: ICategory | null = null;
   @Input() isEdit?:boolean = false;
+    
+  formGroup:FormGroup = new FormGroup({});
 
-  formGroup:FormGroup;
   isLoading:boolean= false;
 
   constructor(private fb:FormBuilder,private catService:CategoryService,@Optional() private modalService: NgbActiveModal){
@@ -26,11 +27,13 @@ export class AddCategoryComponent {
       created_by: [null]
     })
   }
+
+ 
   ngOnInit(){
     this.formGroup.patchValue({
       id_category: this.category?.id_category,
       name: this.category?.name,
-      description: this.category?.id_category,
+      description: this.category?.description,
       created_by: this.category?.created_by
     })
   }
@@ -38,28 +41,30 @@ export class AddCategoryComponent {
   onSubmit(){
     this.isLoading = true;
     if(this.isEdit){
-      let request = this.formGroup.value;
-      request.id_category=Number(request.id_category)
-      request.name=String(request.name)
-      request.description=String(request.description)
-      request.created_by="Prueba";
-
-      this.catService.put([request]).subscribe((res)=>{
+      let request: ICategory = {
+        id_category: Number(this.formGroup.get('id_category')?.value),
+        name: String(this.formGroup.get('name')?.value),
+        description: String(this.formGroup.get('description')?.value),
+        created_by: "Prueba"
+      };
+      
+      this.catService.put(request).subscribe((res)=>{
         this.isLoading=false;
         this.modalService.close(res)
       })
     } else{
-      let request = this.formGroup.value;
-      request.id_category=null
-      request.name=String(request.name)
-      request.description=String(request.description)
-      request.created_by="Prueba";
-
-      this.catService.put([request]).subscribe((res)=>{
+      let request: ICategory = {
+        id_category: 0,
+        name: String(this.formGroup.get('name')?.value),
+        description: String(this.formGroup.get('description')?.value),
+        created_by: "Prueba"
+      };
+      this.catService.put(request).subscribe((res)=>{
         this.isLoading=false;
         this.modalService.close(res)
       })
     }
+
   }
 
   close(){
