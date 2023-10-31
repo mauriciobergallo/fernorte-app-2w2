@@ -6,6 +6,7 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { IProductCategory } from '../../models/IProductCategory';
 import { DeleteProductComponent } from './delete-product/delete-product.component';
 import { AddProductComponent } from './add-product/add-product.component';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -49,18 +50,24 @@ export class ProductsComponent {
       }
     })
   }
+
+  
   private pagedProducts() {
-    this.isLoading = true; // Mostrar el spinner
+    this.isLoading = true;
   
     this.subscription.add(
       this.productService.get().subscribe({
         next: (products: IProductCategory[]) => {
           this.listProducts = products;
-          this.isLoading = false; // Ocultar el spinner después de que los datos se carguen
+          this.isLoading = false;
         },
         error: () => {
-          alert('Error en la API');
-          this.isLoading = false; // Ocultar el spinner en caso de error
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error al cargar los productos, intente nuevamente',
+          });
+          this.isLoading = false;
         }
       })
     );

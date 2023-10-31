@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteModalDiscountComponent } from '../../discounts/delete-modal-discount/delete-modal-discount.component';
 import { CategoryService } from '../../../services/category.service';
 import { AddCategoryComponent } from '../add-category/add-category.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-categories',
@@ -20,11 +21,21 @@ export class ListCategoriesComponent implements OnInit {
   ngOnInit() {
     this.getCategories();
   }
-  getCategories(){
-    this.categoryService.get().subscribe((cat: ICategory[]) => {
-      this.isLoading = false;
-      this.listCategories = cat;
-    })
+  getCategories() {
+    this.categoryService.get().subscribe({
+      next: (cat: ICategory[]) => {
+        this.isLoading = false;
+        this.listCategories = cat;
+      },
+      error: () => {
+        this.isLoading = false;
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error al cargar las categorías, intente nuevamente',
+        });
+      }
+    });
   }
   openEditModal(category: ICategory) {
     const modalRef = this.modalService.open(AddCategoryComponent, { size: 'lg' });

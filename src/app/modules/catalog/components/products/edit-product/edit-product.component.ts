@@ -27,7 +27,6 @@ export class EditProductComponent implements OnInit {
       stock_quantity: [null],
       unit_of_measure: [null],
       id_category: [null],
-      image: [null],
       user_created: [null]
     });
   }
@@ -41,7 +40,6 @@ export class EditProductComponent implements OnInit {
       stock_quantity: this.product?.stock_quantity,
       unit_of_measure: this.product?.unit_of_measure,
       id_category: this.product?.category.id_category,
-      image: this.product?.image,
       user_created: this.product?.user_created
     });
     this.getCategories();
@@ -53,18 +51,13 @@ export class EditProductComponent implements OnInit {
  }
   onSubmit() {
     this.isLoading = true;
-
-    console.log(this.formGroup.value)
-    console.log(this.product)
-    
     let request = this.formGroup.value;
     request.id_product = Number(request.id_product);
     request.unit_price = Number(request.unit_price);
     request.stock_quantity = Number(request.stock_quantity);
     request.id_category = Number(request.id_category);
     request.user_created = 'prueba';
-    request.image = null;
-
+debugger
     this.prodService.put(request).subscribe((res) => {
       this.isLoading = false;
       this.modalService.close(res);

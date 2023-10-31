@@ -8,6 +8,8 @@ export interface IProductCategory{
     stock_quantity: number;
     unit_of_measure: string;
     category: ICategory;
-    image: string;
+    url_image: string;
     user_created:string;
+    price_product:number;
+    discount:number;
 }

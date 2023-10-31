@@ -17,7 +17,6 @@ export class DeleteProductComponent{
 
   onSubmit(){
     this.isLoading = true;
-
       this.productService.delete(Number(this.product?.id_product), 'usuario').subscribe((res)=>{
         this.isLoading = false;
         this.modalService.close(res)

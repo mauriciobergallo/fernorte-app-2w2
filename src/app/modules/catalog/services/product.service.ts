@@ -9,7 +9,7 @@ import { IProduct } from "../models/IProduct";
    providedIn: 'root'
 })
 export class ProductService {
-   private products: string = `${environment.urlLocal}products`;
+   private products: string = `${environment.production}products`;
    private categories: string = `${environment.production}products/categories`;
 
    constructor(private requestResponseService: RequestResponseService) { }
@@ -23,7 +23,7 @@ export class ProductService {
    getProductsByCategory(id: number): Observable<IProductCategory[]> {
       return this.requestResponseService.makeGetRequest<IProductCategory[]>(`${this.categories}/${id}`);
    }
-   put(product:any): Observable<IProduct[]> {
+   put(product:IProduct): Observable<IProduct> {
       return this.requestResponseService.makePutRequest<IProduct>(this.products, product);
    }
    delete(id:number , username:string): Observable<any> {

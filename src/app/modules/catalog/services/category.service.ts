@@ -8,7 +8,7 @@ import { ICategory } from "../models/ICategory";
    providedIn: 'root'
 })
 export class CategoryService {
-   private categories: string = `${environment.urlLocal}categories`;
+   private categories: string = `${environment.production}categories`;
 
    constructor(private requestResponseService: RequestResponseService) { }
    

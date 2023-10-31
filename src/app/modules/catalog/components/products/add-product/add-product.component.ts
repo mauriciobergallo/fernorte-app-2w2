@@ -52,20 +52,14 @@ export class AddProductComponent {
     fr.readAsDataURL(this.image as Blob);
   }
   onSubmit() {
-    debugger
-    
     this.isLoading = true;
     let request = this.formGroup.value;
-    console.log(request)
     request.id_product = Number(request.id_product);
     request.unit_price = Number(request.unit_price);
     request.stock_quantity = Number(request.stock_quantity);
     request.id_category = Number(request.id_category);
     request.user_created = 'prueba';
-   request.image = this.image;
-    
-   
-
+    request.image = this.image;
     this.prodService.put(request).subscribe((res) => {
       this.isLoading = false;
       this.modalService.close(res);

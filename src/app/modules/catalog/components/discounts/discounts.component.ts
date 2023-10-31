@@ -4,6 +4,7 @@ import { DiscountsService } from '../../services/discounts.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddDiscountComponent } from './add-discount/add-discount.component';
 import { DeleteModalDiscountComponent } from './delete-modal-discount/delete-modal-discount.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-discounts',
@@ -20,12 +21,25 @@ export class DiscountsComponent implements OnInit {
   constructor(private disService: DiscountsService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.disService.getDiscounts().subscribe((res: IDiscount[]) => {
-      this.isLoading = false; 
-      this.discountsList = res;
-    })
+   this.getDiscount();
   }
-
+  getDiscount(){
+    this.disService.getDiscounts().subscribe({
+      next: (dis: IDiscount[]) => {
+        this.isLoading = false;
+        this.discountsList = dis;
+      },
+      error: () => {
+        this.isLoading = false;
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error al cargar los descuentos, intente nuevamente',
+        });
+      }
+    });
+  }
+ 
   // get pagedDiscounts(): IDiscount[] {
   //   const startIndex = (this.currentPage - 1) * this.itemsPerPage;
   //   return this.products.slice(startIndex, startIndex + this.itemsPerPage);
