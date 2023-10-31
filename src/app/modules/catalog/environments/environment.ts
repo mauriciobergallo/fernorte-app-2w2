@@ -4,7 +4,7 @@
 
 export const environment = {
   production: "http://191.96.31.161:8080/",
-   urlLocal:"http://localhost:8080/"
+   urlLocal:"http://localhost:8086/"
 };
 
 /*
