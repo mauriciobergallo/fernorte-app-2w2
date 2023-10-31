@@ -8,12 +8,19 @@ import { Component } from '@angular/core';
 export class HomeComponent {
 
   searchProductVisible : boolean = true;
-
+  searchMovementsVisible : boolean = false;
 
   showSearchLocationProduct() : void {
     this.searchProductVisible = true;
+    this.searchMovementsVisible = false;
+
   }
 
+  showSearchMovements() : void {
+    this.searchMovementsVisible = true;
+    this.searchProductVisible = false;
+
+  }
 
 
 }

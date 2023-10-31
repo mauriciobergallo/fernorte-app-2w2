@@ -23,26 +23,26 @@
 
     <div class="row mt-2">
         <div class="col-4">
-            <label for="productName">{{productName}}</label>
+            <label for="productName">{{this.locationInfo.productName}}</label>
         </div>
     </div>
     <div class="row mt-2">
         <div class="col-4">
             <div class="form-group">
                 <label for="zone">Zona</label>
-                <input type="text" class="form-control" id="zone" readonly [(ngModel)]="zone">
+                <input type="text" class="form-control" id="zone" readonly [(ngModel)]="this.locationInfo.location.zone">
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
                 <label for="section">Sección</label>
-                <input type="text" class="form-control" id="section" readonly [(ngModel)]="section">
+                <input type="text" class="form-control" id="section" readonly [(ngModel)]="this.locationInfo.location.section">
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
                 <label for="space">Posición</label>
-                <input type="text" class="form-control" id="space" readonly [(ngModel)]="space">
+                <input type="text" class="form-control" id="space" readonly [(ngModel)]="this.locationInfo.location.space">
             </div>
         </div>
     </div>
@@ -50,20 +50,20 @@
         <div class="col-4">
             <div class="form-group">
                 <label for="capacityTotal">Capacidad total</label>
-                <input type="float" class="form-control" id="capacityTotal" readonly [(ngModel)]="capacityTotal">
+                <input type="float" class="form-control" id="capacityTotal" readonly [(ngModel)]="this.locationInfo.max_capacity">
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
                 <label for="capacityRemaining">Capacidad restante</label>
                 <input type="float" class="form-control" id="capacityRemaining" readonly
-                    [(ngModel)]="capacityRemaining">
+                    [(ngModel)]="this.locationInfo.capacityRemaining">
             </div>
         </div>
         <div class="col-4">
             <div class="form-group">
                 <label for="measureUnit">Unidad de medida</label>
-                <input type="text" class="form-control" id="measureUnit" readonly [(ngModel)]="measureUnit">
+                <input type="text" class="form-control" id="measureUnit" readonly [(ngModel)]="this.locationInfo.measure_unit">
             </div>
         </div>
     </div>

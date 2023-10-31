@@ -12,7 +12,8 @@
                     <div class="navbar-nav">
                         <a class="nav-link active" aria-current="page" (click)="showSearchLocationProduct()"
                             href="#">Ubicar Producto</a>
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" (click)="showSearchMovements()" 
+                            href="#">Consultar Movimientos</a>
                         <a class="nav-link" href="#">Features</a>
                     </div>
                 </div>
@@ -20,7 +21,7 @@
         </nav>
     </div>
     <div class="container">
-
+        <fn-search-inventory-movements *ngIf="searchMovementsVisible"></fn-search-inventory-movements>
         <fn-search-location-product *ngIf="searchProductVisible"></fn-search-location-product>
     </div>
 </div>

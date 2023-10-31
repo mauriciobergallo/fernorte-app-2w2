@@ -4,11 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
 import { SearchLocationProductComponent } from './components/search-location-product/search-location-product.component';
+import { SearchInventoryMovementsComponent } from './components/search-inventory-movements/search-inventory-movements.component';
+import { DatepickerRangePopupComponent } from './components/datepicker-range-popup/datepicker-range-popup.component';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  declarations: [HomeComponent, SearchLocationProductComponent],
+  declarations: [HomeComponent, SearchLocationProductComponent, SearchInventoryMovementsComponent, DatepickerRangePopupComponent],
   providers: [],
-  imports: [CommonModule,FormsModule,HttpClientModule],
+  imports: [CommonModule,FormsModule,HttpClientModule,NgbDatepickerModule],
   exports: [HomeComponent],
 })
 export class InventaryModule {}

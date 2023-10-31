@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { WarehouseService } from '../../services/warehouse.service';
+import { WarehouseService } from '../../services/warehouse-service/warehouse.service';
 import { ILocationInfoProduct } from '../../models/ILocationInfoProduct';
 import { NgForm } from '@angular/forms';
 
@@ -17,46 +17,48 @@ export class SearchLocationProductComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscripciones.unsubscribe();
-
+    
   }
   ngOnInit() { }
-
-  productName: string = '';
-  productCodeOrName: string = '';
-  zone: string = '';
-  section: string = '';
-  space: string = '';
-  capacityTotal?: number;
-  capacityRemaining?: number;
-  measureUnit: string = '';
-
+  
+  productCodeOrName: String = '';
   findProduct: boolean = true;
 
+  locationInfo : ILocationInfoProduct = {
+    code: 0,
+    categoryName: "",
+    productName: "",
+    capacityRemaining: undefined,
+    measure_unit: "",
+    max_capacity: undefined,
+    location:{
+      id:0,
+      zone: "",
+      section: "",
+      space: ""
+    }
+}
+  
   onSearch(form: NgForm) {
-    this.resetFields()
-    this.subscripciones.add(
-      this.warehouseService.getProductLocation(this.productCodeOrName).subscribe(
-        (locationInfo: ILocationInfoProduct) => {
-          if (locationInfo != null) {
-            this.findProduct = true;
-            this.productName = locationInfo.productName;
-            this.zone = locationInfo.location.zone;
-            this.section = locationInfo.location.section;
-            this.space = locationInfo.location.space;
-            this.capacityTotal = locationInfo.maxCapacity;
-            this.capacityRemaining = locationInfo.maxCapacity - locationInfo.quantity;
-            this.measureUnit = locationInfo.measureUnit;
 
+    this.subscripciones.add(
+      this.warehouseService.getProductLocation(form.value.productCodeOrName).subscribe({
+        next: (response: ILocationInfoProduct) => {
+          if (response != null) {
+            this.findProduct = true;
+            this.locationInfo = response;
+            this.locationInfo.capacityRemaining = (this.locationInfo?.max_capacity || 0) - (this.locationInfo?.quantity || 0);
           } else {
             this.findProduct = false;
           }
         },
-        (error: any) => {
-          console.error(error);
+        error: (error: Error) => {
           this.findProduct = false;
-        }
-      )
+          console.log(error.message)
+        },
+      })
     );
+    this.resetFields()
 
   }
   onInput(event: Event) {
@@ -64,13 +66,13 @@ export class SearchLocationProductComponent implements OnInit, OnDestroy {
   }
 
   resetFields() {
-    this.productName = '';
-    this.zone = '';
-    this.section = '';
-    this.space = '';
-    this.capacityTotal = undefined;
-    this.capacityRemaining = undefined;
-    this.measureUnit = '';
+    this.locationInfo.productName = '';
+    this.locationInfo.location.zone = '';
+    this.locationInfo.location.section = '';
+    this.locationInfo.location.space = '';
+    this.locationInfo.max_capacity = undefined;
+    this.locationInfo.capacityRemaining = undefined;
+    this.locationInfo.measure_unit = '';
   }
 }
 
