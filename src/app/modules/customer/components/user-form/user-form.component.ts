@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NewRole } from '../../models/new-role';
 import { Empleado } from '../../models/empleado';
 import { UserService } from '../../services/user.service';
+import { RoleService } from '../../services/role.service';
 
 @Component({
   selector: 'fn-user-form',
@@ -25,8 +26,9 @@ export class UserFormComponent implements OnInit {
   @Output() userCreated = new EventEmitter<string>(); //SweetAlert?
 
   constructor(
-    public userService: UserService,
-    private formBuilder: FormBuilder
+    private userService: UserService,
+    private formBuilder: FormBuilder,
+    private roleService: RoleService
   ) {
     this.userForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -52,7 +54,7 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.GetAllRoles().subscribe((roles: NewRole[]) => {
+    this.roleService.getAllWithFormat().subscribe((roles: NewRole[]) => {
       console.log(roles);
       this.availableRoles = roles;
     });

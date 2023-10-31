@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { NewRole } from '../models/new-role';
-import { map } from 'rxjs/operators';
 import { Role } from '../models/role';
 import { UserResponseDTO } from '../models/userResponseDTO';
 
@@ -18,11 +16,19 @@ export class UserService {
 
   constructor(private http: HttpClient) { } 
 
-  postNewUser(documentNumber: string, password: string, roles: number[]) {
+  postNewUser(documentNumber: string, password: string, roles: number[]): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'accept': '*/*'
     });
+  
+    const user = {
+      documentNumber,
+      password,
+      roles
+    };
+  
+    return this.http.post(this.apiUrlnewUser, user, { headers });
   }
 
     modifyUserRoles(targetUsername: string, newRoles: Role[]): Observable<UserResponseDTO> {
@@ -37,41 +43,33 @@ export class UserService {
       const url = `${this.baseUrl}/${username}`;
       return this.http.get<UserResponseDTO>(url);
     }
+  
 
-  //   const user = {
-  //     documentNumber,
-  //     password,
-  //     roles
-  //   };
+   sendResetEmail(email: string): Observable<any> {
+     const headers = new HttpHeaders({
+       'Content-Type': 'application/json',
+       'accept': '*/*'
+     });
 
-  //   return this.http.post(`${this.apiUrlnewUser}`, user, { headers });
-  // }
+     const data = {
+       email
+     };
 
-  // sendResetEmail(email: string): Observable<any> {
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'accept': '*/*'
-  //   });
+     return this.http.post(this.apiUrlResetEmail, data, { headers });
+   }
 
-  //   const data = {
-  //     email
-  //   };
+   changePassword(newPassword: string): Observable<any> {
+     const headers = new HttpHeaders({
+       'Content-Type': 'application/json',
+       'accept': '*/*'
+     });
 
-  //   return this.http.post(this.apiUrlResetEmail, data, { headers });
-  // }
+     const data = {
+       document_number: this.document_number,
+       password: newPassword,
+     };
 
-  // changePassword(newPassword: string): Observable<any> {
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'accept': '*/*'
-  //   });
-
-  //   const data = {
-  //     document_number: this.document_number,
-  //     password: newPassword,
-  //   };
-
-  //   return this.http.put(this.apiUrlChangePassword, data, { headers });
-  // }
-
+     return this.http.put(this.apiUrlChangePassword, data, { headers });
+   }
+  
 }

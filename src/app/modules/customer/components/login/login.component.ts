@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Login } from '../../models/login';
 import { NgForm } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
-import { User } from '../../models/user';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { UserCheckLogin } from '../../models/user-check-login';
 
 @Component({
   selector: 'fn-login',
@@ -24,7 +24,7 @@ export class LoginComponent {
     if (form.valid) {
 
       this.loginService.onLogin(this.login).subscribe(
-        (respuesta: User) => {
+        (respuesta: UserCheckLogin) => {
           this.userService.document_number = respuesta.document_number;
           alert("Bienvenido " + respuesta.username);
           if(respuesta.first_login == false)
