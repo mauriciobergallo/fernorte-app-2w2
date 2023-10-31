@@ -5,7 +5,7 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Nombre de Producto</th>
+        <th>Nombre de Producto </th>
         <th>Imagen</th>
         <th>Stock</th>
         <th>Precio</th>
@@ -46,13 +46,14 @@
         <td>
           <button type="button" class="btn btn-primary mx-2" (click)="openEditModal(product)">Editar</button>
           <button type="button" class="btn btn-danger mx-2" (click)="openDeleteModal(product)">Eliminar</button>
-        </td>        
+        </td>
       </tr>
     </tbody>
   </table>
 </div>
 
 <div class="container mt-4">
-  <ngb-pagination [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="collectionSize" [maxSize]="5" [rotate]="true">
+  <ngb-pagination [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="collectionSize" [maxSize]="5"
+    [rotate]="true">
   </ngb-pagination>
 </div>
