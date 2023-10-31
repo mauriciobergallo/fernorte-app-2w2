@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Role } from '../../models/role';
 import { NgForm, FormsModule } from '@angular/forms';
 import { RoleService } from '../../services/role.service';
@@ -12,7 +12,7 @@ import { RoleService } from '../../services/role.service';
 export class CreateRolComponent {
   role: Role = {
     name: "",
-    area: ""
+    area: "",
   }
 
   roleForm!: NgForm;
