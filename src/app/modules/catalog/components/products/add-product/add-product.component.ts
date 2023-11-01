@@ -86,7 +86,7 @@ export class AddProductComponent {
         setTimeout(() => {
           this.isLoading = false;
           this.modalService.close(res);
-          this.router.navigateByUrl('/catalog/products/list', { skipLocationChange: true }).then(() => {
+          this.router.navigateByUrl('/products/list', { skipLocationChange: true }).then(() => {
             location.reload();
           });
         }, 3000);  // Espera 3 segundos (ajustar esto según preferencias)

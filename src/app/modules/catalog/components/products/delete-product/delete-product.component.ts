@@ -20,7 +20,7 @@ export class DeleteProductComponent{
       this.productService.delete(Number(this.product?.id_product), 'usuario').subscribe((res)=>{
         this.isLoading = false;
         this.modalService.close(res)
-        this.router.navigateByUrl('/catalog/products/list', { skipLocationChange: true }).then(() => {
+        this.router.navigateByUrl('/products/list', { skipLocationChange: true }).then(() => {
           location.reload();
         });
       })

@@ -4,7 +4,7 @@ import { DiscountsService } from '../../services/discounts.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddDiscountComponent } from './add-discount/add-discount.component';
 import { DeleteModalDiscountComponent } from './delete-modal-discount/delete-modal-discount.component';
-import Swal from 'sweetalert2';
+//import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-discounts',
@@ -31,11 +31,11 @@ export class DiscountsComponent implements OnInit {
       },
       error: () => {
         this.isLoading = false;
-        Swal.fire({
+     /*   Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'Error al cargar los descuentos, intente nuevamente',
-        });
+        });*/
       }
     });
   }

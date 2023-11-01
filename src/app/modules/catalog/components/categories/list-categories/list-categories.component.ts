@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteModalDiscountComponent } from '../../discounts/delete-modal-discount/delete-modal-discount.component';
 import { CategoryService } from '../../../services/category.service';
 import { AddCategoryComponent } from '../add-category/add-category.component';
-import Swal from 'sweetalert2';
+//import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-categories',
@@ -29,11 +29,11 @@ export class ListCategoriesComponent implements OnInit {
       },
       error: () => {
         this.isLoading = false;
-        Swal.fire({
+      /*  Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'Error al cargar las categorías, intente nuevamente',
-        });
+        });*/
       }
     });
   }

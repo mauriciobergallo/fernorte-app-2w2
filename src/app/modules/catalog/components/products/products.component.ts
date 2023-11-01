@@ -6,7 +6,8 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { IProductCategory } from '../../models/IProductCategory';
 import { DeleteProductComponent } from './delete-product/delete-product.component';
 import { AddProductComponent } from './add-product/add-product.component';
-import Swal from 'sweetalert2';
+import { IProduct } from '../../models/IProduct';
+//import Swal from 'sweetalert2';
 
 
 @Component({
@@ -35,11 +36,16 @@ export class ProductsComponent {
     modalRef.componentInstance.product = product;
   }
 
-  openDeleteModal(product: IProductCategory){
-    const modalRef = this.modalService.open(DeleteProductComponent, {size: 'lg'});
+  openDeleteModal(product: IProductCategory) {
+    const modalRef = this.modalService.open(DeleteProductComponent, { size: 'lg' });
     modalRef.componentInstance.product = product;
+    modalRef.result.then(() => {
+      this.productService.get().subscribe((res: IProductCategory[]) => {
+        this.isLoading = false; 
+        this.listProducts = res;
+      })
+    })
   }
-
   openCreateModal() {
     const modalRef = this.modalService.open(AddProductComponent, { size: 'lg' });
     modalRef.result.then(res => {
@@ -54,7 +60,6 @@ export class ProductsComponent {
   
   private pagedProducts() {
     this.isLoading = true;
-  
     this.subscription.add(
       this.productService.get().subscribe({
         next: (products: IProductCategory[]) => {
@@ -62,11 +67,11 @@ export class ProductsComponent {
           this.isLoading = false;
         },
         error: () => {
-          Swal.fire({
+        /*  Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: 'Error al cargar los productos, intente nuevamente',
-          });
+          });*/
           this.isLoading = false;
         }
       })
