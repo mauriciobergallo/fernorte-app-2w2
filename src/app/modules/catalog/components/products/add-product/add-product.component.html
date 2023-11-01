@@ -1,47 +1,73 @@
 <div class="container">
-    <form [formGroup]="formGroup">
-      <div class="mb-3">
-        <label for="inputName" class="form-label">Nombre</label>
-        <input type="text" class="form-control" id="inputName" formControlName="name">
-      </div>
-  
-      <div class="mb-3">
-        <label for="selectCategory" class="form-label">Categoría</label>
-        <select class="form-select" id="selectCategory" formControlName="id_category">
-          <option *ngFor="let item of listCategories" [value]="item.id_category">{{item.name}}</option>
-        </select>
-      </div>
-  
-      <div class="mb-3">
-        <label for="inputPrice" class="form-label">Precio</label>
-        <input type="number" class="form-control" id="inputPrice" formControlName="unit_price">
-      </div>
-  
-      <div class="mb-3">
-        <label for="inputUnitOfMeasurement" class="form-label">Unidad de medida</label>
-        <input type="text" class="form-control" id="inputUnitOfMeasurement" formControlName="unit_of_measure">
-      </div>
-  
-      <div class="mb-3">
-        <label for="inputStock" class="form-label">Stock</label>
-        <input type="number" class="form-control" id="inputStock" formControlName="stock_quantity">
-      </div>
-  
-      <div class="mb-3">
-        <label for="inputDescription" class="form-label">Descripción</label>
-        <textarea class="form-control" id="inputDescription" rows="3" formControlName="description"></textarea>
-      </div>
-  
-      <div class="mb-3">
-        <label for="inputImage" class="form-label">Imagen</label>
-        <input type="file" class="form-control" id="inputImage" formControlName="image" (change)="onFileSelected($event)">
-      </div>
-    </form>
-  
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="close()">Cancelar</button>
-      <button type="button" class="btn btn-primary" (click)="onSubmit()">Guardar</button>
-    </div>
-  
-    <spinner *ngIf="isLoading"></spinner>
+  <!-- Mensaje de éxito en caso de que el producto se regitró correctamente -->
+  <div *ngIf="isSuccess" class="alert alert-success mb-3" role="alert">
+    <strong>{{ successMessage }}</strong>
   </div>
+
+  <!-- Mensaje de error en caso de que el formulario no sea válido -->
+  <div *ngIf="showInvalidFormAlert" class="alert alert-danger mb-3">
+    <strong>{{invalidFormMessage}}</strong>
+  </div>
+
+  <!-- Formulario -->
+  <form [formGroup]="formGroup">
+    <div class="mb-3">
+      <label for="inputName" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="inputName" formControlName="name">
+      <div *ngIf="controlName.touched && controlName.hasError('required')" class="alert alert-required" role="alert">
+        <strong>*Nombre requerido</strong>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="selectCategory" class="form-label">Categoría</label>
+      <select class="form-select" id="selectCategory" formControlName="id_category">
+        <option *ngFor="let item of listCategories" [value]="item.id_category">{{item.name}}</option>
+      </select>
+      <div *ngIf="controlCategory.touched && controlCategory.hasError('required')" class="alert alert-required"
+        role="alert">
+        <strong>*Categoría requerida</strong>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="inputPrice" class="form-label">Precio</label>
+      <input type="number" class="form-control" id="inputPrice" formControlName="unit_price">
+      <div *ngIf="controlUnitPrice.touched && controlUnitPrice.hasError('required')" class="alert alert-required"
+        role="alert">
+        <strong>*Precio requerido</strong>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="inputUnitOfMeasurement" class="form-label">Unidad de medida</label>
+      <input type="text" class="form-control" id="inputUnitOfMeasurement" formControlName="unit_of_measure">
+    </div>
+
+    <div class="mb-3">
+      <label for="inputStock" class="form-label">Stock</label>
+      <input type="number" class="form-control" id="inputStock" formControlName="stock_quantity">
+      <div *ngIf="controlStockQuantity.touched && controlStockQuantity.hasError('required')"
+        class="alert alert-required" role="alert">
+        <strong>*Stock requerido</strong>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="inputDescription" class="form-label">Descripción</label>
+      <textarea class="form-control" id="inputDescription" rows="3" formControlName="description"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="inputImage" class="form-label">Imagen</label>
+      <input type="file" class="form-control" id="inputImage" formControlName="image" (change)="onFileSelected($event)">
+    </div>
+  </form>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="onSubmit()">Guardar</button>
+  </div>
+
+  <spinner *ngIf="isLoading"></spinner>
+</div>
