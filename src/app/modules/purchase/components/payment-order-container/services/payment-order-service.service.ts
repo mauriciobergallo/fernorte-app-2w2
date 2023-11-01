@@ -8,14 +8,16 @@ import { Observable } from 'rxjs';
 })
 export class PaymentOrderServiceService {
 
-
   supplier: Isupplier[] = []
   url: string = 'http://localhost:8080/suppliers'
+
 
   constructor(private _http: HttpClient) { }
 
   getSupplier(id: number):Observable<Isupplier>{
     return this._http.get<Isupplier>(`${this.url}/${id}`)
   }
+
+
 
 }

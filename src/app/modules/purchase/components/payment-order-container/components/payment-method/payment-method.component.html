@@ -1,1 +1,71 @@
-<p>payment-method works!</p>
+<section class="content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col" class="w-75">Orden de compra</th>
+        <th scope="col">Método de pago</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Orden</td>
+        <td>
+          <div ngbDropdown container="body">
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm"
+              ngbDropdownToggle
+            >
+              Metodos
+            </button>
+            <div ngbDropdownMenu>
+              <button ngbDropdownItem>Debito</button>
+              <div class="dropdown-divider"></div>
+              <button ngbDropdownItem>Credito</button>
+              <div class="dropdown-divider"></div>
+              <button ngbDropdownItem>Efectivo</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>
+          <div class="btn-group">
+            <button
+              class="btn btn-secondary btn-sm dropdown-toggle"
+              type="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Small button
+            </button>
+            <div class="dropdown-menu">...</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>
+          <div class="btn-group">
+            <button
+              class="btn btn-secondary btn-sm dropdown-toggle"
+              type="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Small button
+            </button>
+            <div class="dropdown-menu">...</div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
