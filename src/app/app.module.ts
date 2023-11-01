@@ -26,7 +26,6 @@ import { AppComponent } from './app.component';
     ReactiveFormsModule,
     HttpClientModule,
 
-    AppRoutingModule,
     CatalogModule,
     CustomerModule,
     PurchaseModule,

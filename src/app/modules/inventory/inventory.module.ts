@@ -10,10 +10,12 @@ import { SearchInventoryMovementsComponent } from './components/search-inventory
 import { DatepickerRangePopupComponent } from './components/datepicker-range-popup/datepicker-range-popup.component';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
+import {InventoryRoutingModule} from './inventory-routing.module'
+
 @NgModule({
   declarations: [HomeComponent, ReceptionOrdersComponent, SearchLocationProductComponent, SearchInventoryMovementsComponent, DatepickerRangePopupComponent],
   providers: [],
-  imports: [CommonModule,FormsModule,HttpClientModule,NgbDatepickerModule],
+  imports: [CommonModule,FormsModule,HttpClientModule,NgbDatepickerModule,InventoryRoutingModule],
   exports: [HomeComponent],
 })
 export class InventaryModule {}
