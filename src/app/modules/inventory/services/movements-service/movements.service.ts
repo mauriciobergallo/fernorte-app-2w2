@@ -17,5 +17,4 @@ export class MovementsService {
     return this.http.get<IMovementDto[]>(baseUrl);
 
   }
-  
 }

@@ -11,7 +11,7 @@ export class DatepickerRangePopupComponent {
   @Output() onClearFilter = new EventEmitter<void>();
 
 
-  hoveredDate: NgbDate | null = null;
+    hoveredDate: NgbDate | null = null;
 	fromDate: NgbDate | null;
 	toDate: NgbDate | null;
 
