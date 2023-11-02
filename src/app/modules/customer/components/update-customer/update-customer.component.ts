@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CustomerRequest } from '../../models/customer-request';
 import { NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from '../../services/customer.service';
 import { DatePipe } from '@angular/common';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'fn-create-customer',
-  templateUrl: './create-customer.component.html',
-  styleUrls: ['./create-customer.component.css']
+  selector: 'fn-update-customer',
+  templateUrl: './update-customer.component.html',
+  styleUrls: ['./update-customer.component.css']
 })
-export class CreateCustomerComponent {
+export class UpdateCustomerComponent  implements OnInit{
 //	@ViewChild('customerForm') customerForm!: NgForm;
 customerForm!: NgForm;
 
@@ -20,13 +20,13 @@ formattedBirthDate: string = '';
 
 
 customer: CustomerRequest = {
-idCustomer:0,
+idCustomer: 0,
 firstName:"",
 lastName:"",
 companyName: "",
 ivaCondition: "Monotributo",
 birthDate: new Date().toISOString(),
-idDocumentType:1,
+idDocumentType: 1,
 documentNumber:"",
 address:"",
 phoneNumber:"",
@@ -40,7 +40,32 @@ customerType: ""
 
 	constructor(private modalService: NgbModal, private customerService: CustomerService) {}
 
+	ngOnInit(): void {
+	
+	
+	}
+
+	loadCustomerData(customerId: number) {
+		this.customerService.getCustomerById(customerId).subscribe(
+		  (customerData) => {
+			let transformData= this.convertSnakeToCamel(customerData);
+			this.customer = transformData;
+			console.log("CUSTOMER", this.customer);
+			
+		  },
+		  (error) => {
+			console.error('Error al obtener los datos del cliente', error);
+		  }
+		);
+	  }
+
+
+
+
+
 	open(content: any) {
+	
+		this.loadCustomerData(1);
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
 			(result) => {
 
@@ -49,13 +74,17 @@ customerType: ""
 				console.log("customer FORM",this.customerForm);
 				
 				console.log(this.formattedBirthDate)
-				let newCustomer: any = {
+				debugger;
+				let newCustomer: CustomerRequest = {
+					
+					idCustomer: this.customer.idCustomer,
 					firstName: this.customer.firstName,
 					lastName: this.customer.lastName,
 					companyName: this.customer.companyName,
 					ivaCondition: this.customer.ivaCondition,
-					birthDate: this.formattedBirthDate,
+					birthDate: new Date().toISOString(),
 					
+				
 					idDocumentType: this.customer.idDocumentType ,
 					documentNumber: this.customer.documentNumber,
 					address: this.customer.address,
@@ -63,11 +92,12 @@ customerType: ""
 					email: this.customer.email,
 					customerType: this.customer.customerType
 				}
-				let customerSnake = this.camelToSnake(newCustomer);
-
-				this.customerService.postCustomer(customerSnake).subscribe(
+				console.log("NEW CUSTOMER", newCustomer);
+				let customerEnSnake = this.camelToSnake(newCustomer);
+				console.log("CUSTOMER EN SNAKE", customerEnSnake);
+				this.customerService.putCustomer(customerEnSnake).subscribe(
 					(response) => {
-						alert("Se creo el cliente")
+						alert("Se actualizo el cliente")
 					},
 					(error) => {
 						alert("Error en el servidor")
@@ -111,23 +141,9 @@ customerType: ""
 	}
   }
 
-  setDocumentTypeDescription(id: number): string{
-	switch(id){
-		case 1:
-			return "DNI"
-		case 2:
-			return "Pasaporte"
-		case 3:
-			return "CUIT"
-		case 4:
-			return "CUIL"
-		case 5:
-			return "LC"
-		case 6:
-			return "LE"
-		default:
-			return ""
-	}
+  setDocumentTypeDescription(id: number): void{
+	this.customer.idDocumentType=id;
+	
   }
 
 
@@ -145,5 +161,30 @@ customerType: ""
         }
         return snakeObj;
     }
+  
+	
+	
+	 convertSnakeToCamel = (obj: any): any => {
+		if (obj === null || typeof obj !== 'object') {
+		  return obj;
+		}
+	  
+		if (Array.isArray(obj)) {
+		  return obj.map(this.convertSnakeToCamel);
+		}
+	  
+		const camelObj: { [key: string]: any } = {}; // Anotación de tipo
+	  
+		for (const key in obj) {
+		  if (obj.hasOwnProperty(key)) {
+			const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+			camelObj[camelKey] = this.convertSnakeToCamel(obj[key]);
+		  }
+		}
+		return camelObj;
+	  };
+	  
+	
+
 
 }
