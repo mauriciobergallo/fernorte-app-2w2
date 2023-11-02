@@ -1,4 +1,4 @@
 export interface DocumentType{
-    id_document_type: number;
+    idDocumentType: number;
     description: string;
 }

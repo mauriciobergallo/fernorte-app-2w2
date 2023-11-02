@@ -9,19 +9,19 @@
 			<div class="mb-3 d-flex">
 				<div class="flex-grow-1 me-2">
 					<label for="name">Nombre</label>
-					<input required [(ngModel)]="employee.first_name" type="text" name="name" id="name"
+					<input required [(ngModel)]="employee.firstName" type="text" name="name" id="name"
 						class="form-control" />
 				</div>
 				<div class="flex-grow-1">
 					<label for="lastName">Apellido</label>
-					<input required [(ngModel)]="employee.last_name" type="text" name="lastName" id="lastName"
+					<input required [(ngModel)]="employee.lastName" type="text" name="lastName" id="lastName"
 						class="form-control" />
 				</div>
 			</div>
 			<div class="mb-3 d-flex">
 				<div class="flex-grow-1 me-2">
 					<label for="documentType">Tipo de documento</label>
-					<select [(ngModel)]="employee.document_type" name="documentType" id="documentType"
+					<select [(ngModel)]="employee.documentType" name="documentType" id="documentType"
 						class="form-select">
 						<option value=1 >DNI</option>
 						<option value=2 >Pasaporte</option>
@@ -32,7 +32,7 @@
 				</div>
 				<div class="flex-grow-1">
 					<label for="documentNumber">Documento</label>
-					<input required [(ngModel)]="employee.document_number" type="text" name="documentNumber"
+					<input required [(ngModel)]="employee.documentNumber" type="text" name="documentNumber"
 						id="documentNumber" class="form-control" />
 				</div>
 			</div>
@@ -40,7 +40,7 @@
 			<div class="mb-3">
 				<label for="dateOfBirth">Fecha de nacimiento</label>
 				<div class="input-group">
-					<input required [(ngModel)]="employee.birth_date" (ngModelChange)="onBirthDateChange($event)"
+					<input required [(ngModel)]="employee.birthDate" (ngModelChange)="onBirthDateChange($event)"
 						id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
 						#dp="ngbDatepicker" />
 					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()"
@@ -50,7 +50,7 @@
 
 			<div class="flex-grow-1">
 				<label for="personalEmail">Email Personal</label>
-				<input [(ngModel)]="employee.personal_email" type="email" name="personalEmail" id="personalEmail"
+				<input [(ngModel)]="employee.personalEmail" type="email" name="personalEmail" id="personalEmail"
 					class="form-control" />
 			</div>
 
@@ -62,7 +62,7 @@
 				</div>
 				<div class="flex-grow-1">
 					<label for="phoneNumber">Número de teléfono</label>
-					<input [(ngModel)]="employee.phone_number" type="text" name="phoneNumber" id="phoneNumber"
+					<input [(ngModel)]="employee.phoneNumber" type="text" name="phoneNumber" id="phoneNumber"
 						class="form-control" />
 				</div>
 			</div>

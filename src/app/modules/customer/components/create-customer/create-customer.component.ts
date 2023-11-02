@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from '../../services/customer.service';
 import { DatePipe } from '@angular/common';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NamingConversionService } from '../../services/naming-conversion.service';
 
 
 @Component({
@@ -13,24 +14,23 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./create-customer.component.css']
 })
 export class CreateCustomerComponent {
-//	@ViewChild('customerForm') customerForm!: NgForm;
 customerForm!: NgForm;
 
 formattedBirthDate: string = '';
 
 
 customer: CustomerRequest = {
-	first_name: "",
-	last_name: "",
-   company_name: "",
-   iva_condition: "Monotributo",
-	birth_date: new Date().toISOString(),
-	id_document_type: 1,
-	document_number: "",
-	address: "",
-	phone_number: "",
-	email: "",
-	customer_type: ""
+	firstName: "",
+    lastName: "",
+    companyName: "",
+    ivaCondition: "Monotributo",
+    email: "",
+    birthDate: new Date().toISOString(),
+    idDocumentType: 1,
+    documentNumber: "", 
+    address: "",
+    phoneNumber: "",
+    customerType: "",
 };
 
   isCompany: boolean = false; 
@@ -38,7 +38,7 @@ customer: CustomerRequest = {
 
 	closeResult = '';
 
-	constructor(private modalService: NgbModal, private customerService: CustomerService) {}
+	constructor(private modalService: NgbModal, private customerService: CustomerService, private convertService: NamingConversionService) {}
 
 	open(content: any) {
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
@@ -49,8 +49,9 @@ customer: CustomerRequest = {
 				console.log("customer FORM",this.customerForm);
 				
 				console.log(this.formattedBirthDate)
-				this.customer.birth_date = this.formattedBirthDate
-				this.customerService.postCustomer(this.customer).subscribe(
+				this.customer.birthDate = this.formattedBirthDate
+				let snakeCaseDTO = this.convertService.camelToSnake(this.customer);
+				this.customerService.postCustomer(snakeCaseDTO).subscribe(
 					(response) => {
 						alert("Se creo el cliente")
 					},
@@ -71,13 +72,13 @@ customer: CustomerRequest = {
 
 
   onChangeCompany(value: boolean){
-    this.customer.customer_type = value ? "Juridica" : "Fisica"
+    this.customer.customerType = value ? "Juridica" : "Fisica"
 	if(value){
-		this.customer.first_name = "";
-		this.customer.last_name = "";
+		this.customer.firstName = "";
+		this.customer.lastName = "";
 	}
 	else{
-		this.customer.company_name = "";
+		this.customer.companyName = "";
 	}
     this.isCompany = value;
 	this.isTypeChecked = true;
@@ -85,7 +86,6 @@ customer: CustomerRequest = {
 
   onBirthDateChange(event: NgbDateStruct) {
 	if (event) {
-	  // Obtén el año, mes y día de ngbDatepicker
 	  const year = event.year || 0;
 	  const month = event.month || 1;
 	  const day = event.day || 1;
@@ -121,7 +121,9 @@ customer: CustomerRequest = {
 	onSubmitForm(customerForm: NgForm){
 		console.log("customerEE", customerForm);
 	}
+	
 
+	
   
 
 }

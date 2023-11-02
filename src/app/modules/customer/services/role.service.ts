@@ -6,14 +6,14 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class RoleService {
 
-  private apiUrl = "http://localhost:8095/role";
+  private apiUrl = "http://localhost:8092/roles";
 
   constructor(private http:HttpClient) { }
 
   //Post
   createRole(role : Role): Observable<Role>{
     console.log("Role", role);
-    return this.http.post<Role>(`${this.apiUrl}/new`,role );
+    return this.http.post<Role>(this.apiUrl,role );
   }
   
   clearFields(role: any){

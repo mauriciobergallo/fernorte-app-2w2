@@ -1,15 +1,15 @@
 import { DocumentType } from "./documentType";
 
 export interface CustomerRequest {
-    first_name: string;
-    last_name: string;
-    company_name: string;
-    iva_condition: string;
+    firstName: string;
+    lastName: string;
+    companyName: string;
+    ivaCondition: string;
     email: string;
-    birth_date: string;
-    id_document_type: number; 
-    document_number: string; 
+    birthDate: string;
+    idDocumentType: number; 
+    documentNumber: string; 
     address: string;
-    phone_number: string;
-    customer_type: string;
+    phoneNumber: string;
+    customerType: string;
 }

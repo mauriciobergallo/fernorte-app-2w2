@@ -9,7 +9,7 @@ export class TurnService {
   ToNoCustomer: boolean = false;
   Main: boolean = true;
 
-  private apiUrl = 'http://localhost:8080/turns';
+  private apiUrl = 'http://localhost:8091/turns';
   constructor(private http: HttpClient) {}
   
   postData(documentNumber?: string): Observable<TurnResponse> {    

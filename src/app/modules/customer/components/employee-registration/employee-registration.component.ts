@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeService } from '../../services/employee.service';
 import { NgForm } from '@angular/forms';
+import { NamingConversionService } from '../../services/naming-conversion.service';
 @Component({
 	selector: 'fn-employee-registration',
 	templateUrl: './employee-registration.component.html',
@@ -11,24 +12,24 @@ import { NgForm } from '@angular/forms';
 })
 export class EmployeeRegistrationComponent {
 
-	//@ViewChild('employeeForm') employeeForm!: NgForm;
 	employeeForm!: NgForm;
 	formattedBirthDate: string = '';
 
 	employee: Employee = {
-		first_name: "",
-		last_name: "",
-		birth_date: new Date().toISOString(),
-		document_type: 1,
-		document_number: "",
+		firstName: "",
+		lastName: "",
+		birthDate: new Date().toISOString(),
+		documentType: 1,
+		documentNumber: "",
 		address: "",
-		phone_number: "",
-		personal_email: ""
-	  };
+		phoneNumber: "",
+		personalEmail: ""
+	};
+	
 	  
 	closeResult = '';
 
-	constructor(private modalService: NgbModal, private employeeService: EmployeeService) { }
+	constructor(private modalService: NgbModal, private employeeService: EmployeeService, private convertService: NamingConversionService) { }
 
 	open(content: any) {
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
@@ -38,8 +39,9 @@ export class EmployeeRegistrationComponent {
 				console.log("RESULT", result);
 				console.log("EMPLOYEE FORM", this.employeeForm);
 
-				this.employee.birth_date = this.formattedBirthDate;
-				this.employeeService.postEmployee(this.employee).subscribe(
+				this.employee.birthDate = this.formattedBirthDate;
+				let snakeCaseDTO = this.convertService.camelToSnake(this.employee);
+				this.employeeService.postEmployee(snakeCaseDTO).subscribe(
 
 
 					(response) => {

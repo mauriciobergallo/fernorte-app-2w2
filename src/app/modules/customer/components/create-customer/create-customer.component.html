@@ -26,11 +26,11 @@
                 <div class="mb-3 d-flex">
                     <div class="flex-grow-1 me-2">
                         <label for="name">Nombre</label>
-                        <input required [(ngModel)]="customer.first_name" type="text" name="name" id="name" class="form-control" />
+                        <input required [(ngModel)]="customer.firstName" type="text" name="name" id="name" class="form-control" />
                     </div>
                     <div class="flex-grow-1">
                         <label for="lastName">Apellido</label>
-                        <input required [(ngModel)]="customer.last_name" type="text" name="lastName" id="lastName" class="form-control"/>
+                        <input required [(ngModel)]="customer.lastName" type="text" name="lastName" id="lastName" class="form-control"/>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 <div class="mb-3 d-flex">
                     <div class="flex-grow-1 me-2">
                         <label for="name">Nombre de Empresa</label>
-                        <input required [(ngModel)]="customer.company_name" type="text" name="companyName" id="companyName" class="form-control"/>
+                        <input required [(ngModel)]="customer.companyName" type="text" name="companyName" id="companyName" class="form-control"/>
                     </div>
                 </div>
             </div>
@@ -47,19 +47,19 @@
 			<div class="mb-3 d-flex">
 				<div class="flex-grow-1 me-2">
 					<label for="documentType">Tipo de documento</label>
-					<select [(ngModel)]="customer.id_document_type" name="documentType" id="documentType" class="form-select" required #controlDocumentType="ngModel">
-						<option value=1 *ngIf="customer.customer_type == 'Fisica'">DNI</option>
-						<option value=2 *ngIf="customer.customer_type == 'Fisica'">Pasaporte</option>
-						<option value=3 *ngIf="customer.customer_type == 'Juridica'">CUIT</option>
-						<option value=4 *ngIf="customer.customer_type == 'Fisica'">CUIL</option>
-						<option value=5 *ngIf="customer.customer_type == 'Fisica'">LC</option>
-						<option value=6 *ngIf="customer.customer_type == 'Fisica'">LE</option>
+					<select [(ngModel)]="customer.idDocumentType" name="documentType" id="documentType" class="form-select" required #controlDocumentType="ngModel">
+						<option value=1 *ngIf="customer.customerType == 'Fisica'">DNI</option>
+						<option value=2 *ngIf="customer.customerType == 'Fisica'">Pasaporte</option>
+						<option value=3 *ngIf="customer.customerType == 'Juridica'">CUIT</option>
+						<option value=4 *ngIf="customer.customerType == 'Fisica'">CUIL</option>
+						<option value=5 *ngIf="customer.customerType == 'Fisica'">LC</option>
+						<option value=6 *ngIf="customer.customerType == 'Fisica'">LE</option>
 					</select>
 					<div class="text-danger" *ngIf="controlDocumentType.invalid">Seleccione un tipo de documento</div>
 				</div>
 				<div class="flex-grow-1">
 					<label for="documentNumber">Documento</label>
-					<input required [(ngModel)]="customer.document_number"  type="text" name="documentNumber" id="documentNumber" class="form-control" #controlDocumentNumber = "ngModel"/>
+					<input required [(ngModel)]="customer.documentNumber"  type="text" name="documentNumber" id="documentNumber" class="form-control" #controlDocumentNumber = "ngModel"/>
 					<div class="text-danger" *ngIf="controlDocumentNumber.invalid && controlDocumentNumber.touched">Ingrese numero de documento de cliente</div>
 
 				</div>
@@ -67,7 +67,7 @@
 
             <div class="flex-grow-1 me-2">
                 <label for="ivaCondition">Condición de IVA</label>
-                <select [(ngModel)]="customer.iva_condition" name="ivaCondition" id="ivaCondition" class="form-select" required #controlIvaCondition="ngModel">
+                <select [(ngModel)]="customer.ivaCondition" name="ivaCondition" id="ivaCondition" class="form-select" required #controlIvaCondition="ngModel">
                     <option value="Monotributo">Monotributo</option>
                     <option value="Responsable Inscripto">Responsable Inscripto</option>
                 </select>
@@ -79,7 +79,7 @@
 				<div class="input-group">
 					<input
 					required
-					[(ngModel)]="customer.birth_date"
+					[(ngModel)]="customer.birthDate"
 					(ngModelChange)="onBirthDateChange($event)"
 					id="dateOfBirth"
 					class="form-control"
@@ -116,7 +116,7 @@
 				</div>
 				<div class="flex-grow-1">
 				  <label for="phoneNumber">Número de teléfono</label>
-				  <input [(ngModel)]="customer.phone_number" type="number" name="phoneNumber" id="phoneNumber" class="form-control" required #controlPhoneNumber ="ngModel"/>
+				  <input [(ngModel)]="customer.phoneNumber" type="number" name="phoneNumber" id="phoneNumber" class="form-control" required #controlPhoneNumber ="ngModel"/>
 				  <div class="text-danger" *ngIf="controlPhoneNumber.invalid && controlPhoneNumber.touched">Ingrese el numero de telefono del cliente </div>
 				</div>
 			  </div>
