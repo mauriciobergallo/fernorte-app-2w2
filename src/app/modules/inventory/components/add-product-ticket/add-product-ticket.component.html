@@ -1,0 +1,58 @@
+<div class="container">
+    <div style="justify-content: center; max-width: 100%;">
+        <label style="width: 100%; text-align: center; font-size: 30px; font-weight: bold;">Generar Ticket de Guardado</label>
+        <input style="width: 100%; background-color: lightgrey;" type="text" disabled placeholder="MAXIMILIANO CALVO">
+    </div>
+    
+
+    <div style="display: flex; justify-content: space-between; margin-top: 5%;">
+
+        <div style="flex: 1; margin-right: 2%;">
+            <div>
+                <label style="font-weight: bold;">Buscar producto</label>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <input type="text" [(ngModel)]="productId" style="flex-grow: 1;">
+                    <button class="btn" (click)="searchProduct()">Buscar</button>
+                </div>
+                <div *ngIf="errorMessage" style="color: red; margin-top: 10px;">
+                    {{ errorMessage }}
+                </div>
+            </div>
+            
+            <div>
+                <label style="font-weight: bold;">Cantidad</label>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <input [(ngModel)]="quantity" type="number" min="0" class="form-control" style="flex-grow: 1;">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Unidad de medida</label>
+                <input [(ngModel)]="unitOfMeasure" style="background-color: lightgrey;" type="text" disabled>
+            </div>
+            
+                
+        </div>
+
+        <div style="flex: 1; margin-left: 2%;">
+            <div class="input-group">
+                <label>Zona</label>
+                <input [(ngModel)]="zone" style="background-color: lightgrey;" type="text" disabled>
+            </div>
+            
+            <div class="input-group">
+                <label>Sección</label>
+                <input [(ngModel)]="section" style="background-color: lightgrey;" type="text" disabled>
+            </div>
+            
+            <div class="input-group">
+                <label>Espacio</label>
+                <input [(ngModel)]="space" style="background-color: lightgrey;" type="text" disabled>
+            </div>
+
+            <button class="btn" (click)="addProduct()">Agregar</button>
+            <div *ngIf="errorMessageAdd" style="color: red; margin-top: 10px;">
+                {{ errorMessageAdd }}
+            </div>
+        </div>
+
+    </div>

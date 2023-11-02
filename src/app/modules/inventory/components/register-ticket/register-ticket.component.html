@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Generador</title>
+        
+</head>
+
+<body>
+    <div style="width: 100%; display: flex; justify-content: center;">
+        <div class="card d-flex" style="width: 100vh; justify-content: center;">
+            <div class="card-body">
+                <fn-add-product-ticket (listProductEmmit)="onProductAdded($event)"></fn-add-product-ticket>
+                <fn-list-product-ticket [productList]="productList"></fn-list-product-ticket>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+
+</html>

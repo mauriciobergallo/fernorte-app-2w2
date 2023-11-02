@@ -1,0 +1,27 @@
+<div>
+    <table *ngIf="productList && productList.length > 0">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Ubicación</th>
+                <th>Cantidad</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of productList">
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.location.zone }} - {{ product.location.section }} - {{ product.location.space }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>
+                    <button class="btn delete-button" (click)="deleteProduct(product)">Borrar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="btn-group" style="justify-content: flex-end; display: flex; margin-top: 10px;" *ngIf="productList && productList.length > 0">
+        <button class="btn btn-danger" style="margin-right: 10px;">Cancelar</button>
+        <button class="btn" (click)="executeEndpointForAllProducts()">Generar ticket/tickets</button>
+    </div>
+</div>
