@@ -4,36 +4,44 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
+
         <form #userRolForm="ngForm" (ngSubmit)="onSubmitForm(userRolForm)">
 
             <div class="form-group">
                 <label for="username">Buscar Usuario por Nombre de Usuario:</label>
-                <input type="text" class="form-control" name="username" id="username" [(ngModel)]="searchedUsername">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="username" id="username" [(ngModel)]="username" (change)="searchedUsername()">
+                    <span [ngClass]="usuarioExistente ? 'verde' : 'rojo'" class="icon">
+                    {{ usuarioExistente ? '✔' : '✘' }}
+                    </span>
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="roles">Roles no asignados:</label>
                 <select class="form-control" name="roles" id="roles" [(ngModel)]="selectedRole">
-                    <option *ngFor="let role of unassignedRoles" [value]="role.id">{{ role.name }}</option>
+                    <option *ngFor="let role of rolesDisponibles" [value]="role">{{ role.name }}</option>
                 </select>
-                <button class="btn btn-sm btn-primary" (click)="addRole(selectedRole)">Agregar</button>
+                <button class="btn btn-sm btn-primary">Agregar</button>
             </div>
 
             <div>
                 <h4>Roles asignados:</h4>
                 <ul> 
-                    <li *ngFor="let role of assignedRoles">
+                    <li *ngFor="let role of rolesAsignados">
                         {{ role.name }}
-                        <button class="btn btn-sm btn-danger" (click)="removeRole(role)">Eliminar</button>
+                        <button class="btn btn-sm btn-danger">Eliminar</button>
+                        <!-- <button class="btn btn-sm btn-danger" (click)="removeRole(role)">Eliminar</button> -->
                     </li>
                 </ul>
-                <p *ngIf="assignedRoles.length === 0">Sin roles asignados.</p>
+                <!-- <p *ngIf="assignedRoles.length === 0">Sin roles asignados.</p> -->
             </div>
 
         </form>
+
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" [disabled]="!userRolForm.valid" (click)="confirmSaveChanges()">Guardar</button>
+        <button type="button" class="btn btn-outline-dark" [disabled]="!userRolForm.valid" (click)="modal.close(userRolForm)">Aceptar</button>
         <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cancel click')">Cancelar</button>
     </div>
 </ng-template>

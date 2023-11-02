@@ -1,0 +1,13 @@
+.verde {
+    color: green;
+  }
+  
+  .rojo {
+    color: red;
+  }
+
+  .icon {
+     /* O puedes usar "float: right;" para alinear a la derecha */
+    float: right;
+    margin-left: 10px; /* O ajusta el margen según tus necesidades */
+  }

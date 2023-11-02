@@ -1,5 +1,5 @@
 export class NewRole {
-    id_role: number;
-    name: string;
-    area: string
+    id_role: number = 0;
+    name: string = "";
+    area: string = "";
 }

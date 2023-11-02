@@ -11,9 +11,9 @@ import { RoleService } from '../../services/role.service';
   styleUrls: ['./user-form.component.css'],
 })
 export class UserFormComponent implements OnInit {
-  @Input() empleado: Empleado;
+  @Input() empleado: Empleado = new Empleado();
   password: string = '';
-  selectedRole: NewRole;
+  selectedRole: NewRole = new NewRole();
 
   availableRoles: NewRole[] = [];
   roles_name: string[] = [];

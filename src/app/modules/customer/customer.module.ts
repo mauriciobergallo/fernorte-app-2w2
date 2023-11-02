@@ -26,6 +26,7 @@ import { CreateRolComponent } from './components/create-rol/create-rol.component
 import { UserService } from './services/user.service';
 import { ModifyUserRolComponent } from './components/modify-user-rol/modify-user-rol.component';
 import { ModifyUserComponent } from './components/modify-user/modify-user.component';
+
 const routes: Routes = [
   { component: LoginComponent, path: 'login' },
   { component: ForgotPasswordComponent, path: 'forgot-password' },
