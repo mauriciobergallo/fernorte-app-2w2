@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CustomerRequest } from '../models/customer-request';
 import { Observable } from 'rxjs';
+import { CustomerActResponse } from '../models/customer-response';
 
 @Injectable()
 export class CustomerService {
@@ -37,13 +38,27 @@ postCustomer(customer: CustomerRequest): Observable<any>{
   }
 
 
-clearFields(customer: any){
-  for (const prop in customer) {
-    if (customer.hasOwnProperty(prop)) {
-      delete customer[prop];
+  clearFields(customer: any){
+    for (const prop in customer) {
+      if (customer.hasOwnProperty(prop)) {
+        delete customer[prop];
+      }
     }
+
   }
 
-}
+  deleteCustomer(id: number): Observable<string> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete<string>(url);
+  }
+
+  activateCustomer(id: number): Observable<CustomerActResponse> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.patch<CustomerActResponse>(url, null);
+  }
+
+  getAllCustomers(): Observable<CustomerActResponse[]> {
+    return this.http.get<CustomerActResponse[]>(`${this.apiUrl}/all`);
+  }
 
 }
