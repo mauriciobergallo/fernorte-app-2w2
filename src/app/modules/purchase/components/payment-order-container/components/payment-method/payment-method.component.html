@@ -1,14 +1,16 @@
 <section class="content">
+  <fn-total-resume [total]="totals.total" [cash]="totals.cash" [debit]="totals.debit" [credit]="totals.credit"></fn-total-resume>
   <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col" class="w-75">Orden de compra</th>
+        <th scope="col">Monto</th>
+        <th scope="col" class="w-50">Observación</th>
         <th scope="col">Método de pago</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <!-- <tr>
         <th scope="row">1</th>
         <td>Orden</td>
         <td>
@@ -21,49 +23,43 @@
               Metodos
             </button>
             <div ngbDropdownMenu>
-              <button ngbDropdownItem>Debito</button>
+              <option ngbDropdownItem>Debito</option>
               <div class="dropdown-divider"></div>
-              <button ngbDropdownItem>Credito</button>
+              <option ngbDropdownItem>Credito</option>
               <div class="dropdown-divider"></div>
-              <button ngbDropdownItem>Efectivo</button>
+              <option ngbDropdownItem>Efectivo</option>
             </div>
           </div>
         </td>
-      </tr>
-      <tr>
+      </tr> -->
+      <!-- <tr>
         <th scope="row">2</th>
         <td>Jacob</td>
         <td>
-          <div class="btn-group">
-            <button
-              class="btn btn-secondary btn-sm dropdown-toggle"
-              type="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
+            <select 
+            class="form-select border border-primary" 
+            name="opcion" 
+            [(ngModel)]="idSelected"
+            (ngModelChange)="'onSelectChange($event)'">
+            <option 
+            *ngFor="let item of supplierList"
+            [value]="item.id"
             >
-              Small button
-            </button>
-            <div class="dropdown-menu">...</div>
-          </div>
+              {{'item.socialReason'}}
+            </option>
+            </select>
         </td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
+      </tr> -->
+      <tr *ngFor="let paymentDetail of paymentOrderDetails">
+        <th scope="row">{{paymentDetail.purchaseOrderId}}</th>
+        <td>{{paymentDetail.amount}}</td>
+        <td>{{paymentDetail.observation}}</td>
         <td>
-          <div class="btn-group">
-            <button
-              class="btn btn-secondary btn-sm dropdown-toggle"
-              type="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Small button
-            </button>
-            <div class="dropdown-menu">...</div>
-          </div>
+          <select class="form-select" name="paymentMethod" id="paymentMethod" [(ngModel)]="paymentDetail.paymentMethod" required (change)="calculateTotals()">
+            <option value="CASH">Efectivo</option>
+            <option value="DEBIT">Débito</option>
+            <option value="CREDIT">Crédito</option>
+          </select>
         </td>
       </tr>
     </tbody>

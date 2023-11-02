@@ -11,7 +11,6 @@ export class PaymentOrderServiceService {
   supplier: Isupplier[] = []
   url: string = 'http://localhost:8080/suppliers'
 
-
   constructor(private _http: HttpClient) { }
 
   getSupplier(id: number):Observable<Isupplier>{
