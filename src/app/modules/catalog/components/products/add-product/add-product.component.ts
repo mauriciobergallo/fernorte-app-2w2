@@ -19,10 +19,9 @@ export class AddProductComponent {
   isLoading: boolean = false;
 
   //Variables utilizadas para mostrar mensajes de validaciones
-  isSuccess: boolean = false;
-  successMessage: string = 'El producto se registró correctamente.';
-  showInvalidFormError: boolean = false;
-  invalidFormMessage: string = 'Por favor, completá todos los campos requeridos.'
+  showMessage: boolean = false;
+  messageClass: string = '';
+  message: string = '';
 
   predeterminatedCategoryId: number = 1;
 
@@ -56,7 +55,7 @@ export class AddProductComponent {
   }
 
   onFileSelected(event: any) {
-     // Manejar la selección de archivos (imágenes)
+    // Manejar la selección de archivos (imágenes)
     this.image = event.target.files[0];
     const fr = new FileReader();
     fr.onload = (e: any) => {
@@ -68,7 +67,7 @@ export class AddProductComponent {
     if (this.formGroup.valid) {
       // El formulario es válido, procede con el envío
       this.isLoading = true;
-      //Formula el request
+      // Formula el request
       let request = this.formGroup.value;
       request.id_product = Number(request.id_product);
       request.unit_price = Number(request.unit_price);
@@ -78,24 +77,34 @@ export class AddProductComponent {
       request.image = this.image;
 
       // Envía el request al servicio
-      this.prodService.put(request).subscribe((res) => {
-        // El producto se registró con éxito, muestra la alerta de éxito
-        this.showSuccessAlert();
+      this.prodService.put(request).subscribe({
+        next: (res) => {
+          //console.log('Respuesta del servidor:', res);
+          // El producto se registró con éxito, muestra la alerta de éxito
+          this.showSuccessAlert('El producto se registró correctamente.');
 
-        // Simula una demora antes de cerrar el modal y redirigir para que la succesAlert sea visible
-        setTimeout(() => {
+          // Simula una demora antes de cerrar el modal y redirigir para que la succesAlert sea visible
+          setTimeout(() => {
+            this.isLoading = false;
+            this.modalService.close(res);
+            this.router.navigateByUrl('/products/list', { skipLocationChange: true }).then(() => {
+              location.reload();
+            });
+          }, 3000);  // Espera 3 segundos (ajustar esto según preferencias)
+        },
+        error: (error) => {
+          // Maneja el error de acuerdo a tus necesidades (mostrar un mensaje, registrar en un archivo de registro, etc.).
+          //console.error('Error en la solicitud al servidor:', error);
           this.isLoading = false;
-          this.modalService.close(res);
-          this.router.navigateByUrl('/products/list', { skipLocationChange: true }).then(() => {
-            location.reload();
-          });
-        }, 3000);  // Espera 3 segundos (ajustar esto según preferencias)
+          this.showErrorAlert('Error al registrar el producto.');
+        }
       });
     } else {
-      // El formulario no es válido entonces se muestra la alerta de error
-      this.showInvalidFormAlert();
+      // El formulario no es válido, muestra la alerta de error
+      this.showErrorAlert('Por favor completa todos los campos requeridos.');
     }
   }
+
 
 
 
@@ -120,19 +129,29 @@ export class AddProductComponent {
     return this.formGroup.controls['stock_quantity'] as FormControl;
   }
 
-// Método para mostrar la alerta de éxito
-  showSuccessAlert() {
-    this.isSuccess = true;
+  showSuccessAlert(message: string) {
+    this.showMessage = true;
+    this.messageClass = 'alert-success';
+    this.message = message;
+  
     setTimeout(() => {
-      this.isSuccess = false;
-    }, 3000); // La alerta de oculta después de 3 segundos
+      this.hideAlert();
+    }, 3000);
   }
+  
+  showErrorAlert(message: string) {
+    this.showMessage = true;
+    this.messageClass = 'alert-danger';
+    this.message = message;
 
-   // Método para mostrar la alerta de formulario inválido
-  showInvalidFormAlert() {
-    this.showInvalidFormError = true;
     setTimeout(() => {
-      this.showInvalidFormError = false;
-    }, 3000); // La alerta de oculta después de 3 segundos
+      this.hideAlert();
+    }, 3000);
+  }
+  
+  hideAlert() {
+    this.showMessage = false;
+    this.messageClass = '';
+    this.message = '';
   }
 }
