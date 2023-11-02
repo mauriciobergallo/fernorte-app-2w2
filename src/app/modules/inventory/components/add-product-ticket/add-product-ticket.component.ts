@@ -25,7 +25,6 @@ export class AddProductTicketComponent {
   constructor(private ticketService: TicketService) {}
 
   addProduct() {
-    debugger
     const isProductInList = this.listProduct.some(product => product.product_id == this.productId);
   
     if (isProductInList) {
