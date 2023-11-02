@@ -1,4 +1,5 @@
 import { ILocationDto } from "./ILocationDto";
+import { StorageTicketState } from './StorageTicketState.enum';
 
 export interface StorageTicket {
     ticket_id: number;
@@ -11,6 +12,6 @@ export interface StorageTicket {
     operator_name: string;
     remarks: string;
 
-    state: string;
+    state: StorageTicketState;
   }
   

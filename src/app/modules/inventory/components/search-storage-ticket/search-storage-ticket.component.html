@@ -15,18 +15,23 @@
         <tbody>
             <tr *ngFor="let ticket of this.storageTickets;let i = index">
                 <td>{{ ticket.ticket_id }}</td>
-                <td>{{(ticket.state == "")? "Sin Asignar": ticket.state}}</td>
+                <td>{{this.getStatusButtonContent(ticket)}}</td>
                 <td>{{ticket.created_at}}</td>
                 <td>{{(ticket.operator_name == "")? "Sin Asignar": ticket.operator_name}}</td>
                 <td><button (click)="ticketDetail=ticket"  type="button" class="btn btn-block btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button></td>
-                <td><button class="btn btn-block btn-success">Asignarme</button></td>
+                <td>
+                    <button (click)="ticketDetail=ticket" [ngClass]="{ 'disabled': ticket.state === this.stateFinish}" type="button" class="btn btn-block btn-primary" data-bs-toggle="modal" data-bs-target="#asignModal">
+                      {{ this.getStatusButtonContent(ticket) }}
+                    </button>
+                  </td>
+                  
             </tr>
         </tbody>
     </table>
 </div>
 
 <!-- Modal -->
-<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg ">
       <div class="modal-content">
         <div class="modal-header">
@@ -85,3 +90,21 @@
       </div>
     </div>
 </div>
+
+<!-- Asign Modal -->
+<div class="modal fade" id="asignModal" tabindex="-1" aria-labelledby="asignModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="asignModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        Desea asignarse el ticket: {{ticketDetail.ticket_id}} ?
+        </div>
+        <div class="modal-footer">
+          <button (click)="asignTicket(this.ticketDetail)" data-bs-dismiss="modal" type="button" class="btn btn-primary">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>

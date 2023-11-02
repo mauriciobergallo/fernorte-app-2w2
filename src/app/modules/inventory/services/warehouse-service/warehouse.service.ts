@@ -32,7 +32,14 @@ export class WarehouseService {
     return this.http.get<StorageTicket[]>(this.baseUrl+'storage-tickets');
   }
 
-
+  asignTicket(ticketId: number, operatorId: number): Observable<StorageTicket> {
+  //a confirmar
+    const body = {
+      ticket_id: ticketId,
+      product_id: operatorId
+    } 
+    return this.http.put<StorageTicket>(this.baseUrl,body)
+  }
 
 
 
