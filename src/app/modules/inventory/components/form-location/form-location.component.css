@@ -1,0 +1,29 @@
+.marginButtons{
+    margin: 5px;
+}
+
+.principalButtomPosition{
+    justify-content: end;
+    display: flex;
+}
+
+.positionButton{
+    margin-top: 60px;
+}
+
+.positionPaddingBut{
+    padding-bottom: 0;
+}
+
+.capacitiMargin{
+    margin: 3px;
+}
+
+/* Estilo para secciones inactivas */
+.seccion-inactiva {
+    pointer-events: none;
+    opacity: 0.6;
+}
+  
+
+
