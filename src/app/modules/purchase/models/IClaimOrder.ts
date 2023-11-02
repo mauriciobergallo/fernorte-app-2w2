@@ -36,3 +36,10 @@ export interface ClaimOrderDetailResponse {
 // -------------------------------------------- TYPES
 
 export type ClaimStatus = 'RECOGNIZED' | 'UNRECOGNIZED'
+
+
+  
+  
+  
+  
+  

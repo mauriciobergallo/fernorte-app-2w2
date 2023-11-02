@@ -1,0 +1,23 @@
+#date {
+    display: flex;
+    align-items: center;
+  }
+  .date-text {
+    border-bottom: 1px solid #000; /* Adjust the color and thickness as needed */
+    padding-bottom: 5px; /* Add space between the text and the line */
+  }
+  .info-line {
+    border-bottom: 1px solid #000; /* Adjust border style and color as needed */
+    margin-bottom: 10px; /* Add some margin between lines */
+    padding-bottom: 5px; /* Add space between text and the border */
+  }
+  
+  .info-line p:first-child {
+    border-bottom: none; /* Remove the border from the first child (field name) */
+  }
+  .full-width {
+    width: 100%;
+  }
+  .text-right {
+    text-align: right;
+  }

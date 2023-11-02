@@ -47,3 +47,9 @@ export interface PurchaseOrderDetailResponse {
 // -------------------------------------------- TYPES
 
 export type PurchaseStatus = 'GENERATED' | 'SENT' | 'ACCEPTED' | 'CANCELLED'
+
+
+  
+
+  
+  

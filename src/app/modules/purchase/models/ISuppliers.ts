@@ -34,4 +34,6 @@ export interface ISupplierProduct {
   name: string;
   price: number;
   quantity: number;
+
 }
+
