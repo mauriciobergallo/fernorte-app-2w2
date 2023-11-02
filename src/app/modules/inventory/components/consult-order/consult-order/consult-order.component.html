@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Consultar Orden de Entrega</h4>
+        <div class="input-group mb-3">
+          <input class="" [(ngModel)]="orderId" placeholder="Ingrese un término de búsqueda">
+          <div class="input-group-append">
+            <button class="btn btn-primary" (click)="search()">Buscar</button>
+          </div>
+        </div>
+  
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Cantidad</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of deliveryOrder?.details">
+              <td>{{ item.product_name }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.state }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
