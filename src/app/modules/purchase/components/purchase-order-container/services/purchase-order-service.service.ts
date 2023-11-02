@@ -22,6 +22,7 @@ export class PurchaseOrderServiceService {
   });
   listProductSelected = new BehaviorSubject<ISupplierProduct[]>([]);
   cartProductList: ISupplierProduct[] = [];
+  purchaseOrderFlow = new BehaviorSubject<boolean>(true);
 
 
 
@@ -87,6 +88,14 @@ export class PurchaseOrderServiceService {
    */
   getListProductSelected() {
     return this.listProductSelected.asObservable();
+  }
+
+  getPurchaseOrderFlow() {
+    return this.purchaseOrderFlow.asObservable();
+  }
+
+  setPurchaseOrderFlow() {
+    this.purchaseOrderFlow.next(!this.purchaseOrderFlow);
   }
 
 }
