@@ -31,7 +31,7 @@ executeEndpointForAllProducts() {
   for (const product of this.productList) {
     const ticketStorage: IticketStorage = {
       product_id: product.product_id,
-      location_id: 1,
+      location_id: product.location.id,
       quantity: product.quantity,
       created_by: 'TEST USER',
       remarks: 'X'
