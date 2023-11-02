@@ -1,4 +1,5 @@
 export interface Employee{
+    idEmployee:number;
     firstName: string;
     lastName: string;
     birthDate: Date;
