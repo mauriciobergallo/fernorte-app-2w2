@@ -1,45 +1,70 @@
-<div class="container" style="padding: 3%;">
+<section class="content">
   <div class="row row-cols-4 g-2">
-    <div class="col" *ngFor="let item of product_List; let i = index;">
+    <div class="col" *ngFor="let item of product_List; let i = index">
       <div class="d-flex justify-content-center">
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem">
           <img
             src="https://th.bing.com/th?q=TALADRO+Grande&w=138&h=138&c=7&o=5&pid=1.7&mkt=es-AR&cc=AR&setlang=es&adlt=moderate"
-            class="card-img-top" alt="...">
-          <hr style="margin: 0%;">
+            class="card-img-top"
+            alt="..."
+          />
+          <hr style="margin: 0%" />
           <div class="card-body">
-            <h5 class="card-title" style="height: 80px;">{{item.name}}</h5>
-            <p class="card-text" style="height: 30px;">{{item.price| currency }}</p>
+            <h5 class="card-title" style="height: 80px">{{ item.name }}</h5>
+            <p class="card-text" style="height: 30px">
+              {{ item.price | currency }}
+            </p>
             <div class="btn-toolbar justify-content-between">
               <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary"
-                  (click)="Rest(item)">-</button>
-                <input #controlInput="ngModel" type="text"
-                  style="width: 52px; text-align: center;"
-                  [(ngModel)]="productQuantities[item.id]" required
-                  minlength="1" maxlength="5" pattern="^[0-9]+$"
-                  (keypress)="onKeyPress($event)">
-                <button type="button" class="btn btn-primary"
-                  (click)="Summ(item)">+</button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="Rest(item)"
+                >
+                  -
+                </button>
+                <input
+                  #controlInput="ngModel"
+                  type="text"
+                  style="width: 52px; text-align: center"
+                  [(ngModel)]="productQuantities[item.id]"
+                  required
+                  minlength="1"
+                  maxlength="5"
+                  pattern="^[0-9]+$"
+                  (keypress)="onKeyPress($event)"
+                />
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="Summ(item)"
+                >
+                  +
+                </button>
               </div>
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="button" class="btn btn-success"
+                <button
+                  type="button"
+                  class="btn btn-success"
                   (click)="addToCart(item)"
-                  [disabled]="isButtonDisabled[item.id]">Agregar</button>
+                  [disabled]="isButtonDisabled[item.id]"
+                >
+                  Agregar
+                </button>
               </div>
-              <ngb-toast style="margin: 8% 0% 0% 0%;"
+              <ngb-toast
+                style="margin: 8% 0% 0% 0%"
                 *ngIf="mostrarToastAddProduct[item.id]"
                 class="toast bg-danger text-light"
                 [autohide]="true"
-                (hidden)="false"
-                [delay]="3000">No se puede agregar un producto con cantidad 0
+                (hidden)="(false)"
+                [delay]="3000"
+                >No se puede agregar un producto con cantidad 0
               </ngb-toast>
             </div>
-
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<fn-cart></fn-cart>
+</section>

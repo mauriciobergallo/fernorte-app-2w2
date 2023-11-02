@@ -19,7 +19,14 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   quantity: number = 0;
   productQuantities: { [productId: number]: number } = {};
   idSupplier: number = 0;
-  product_List: IProduct2[] = [];
+  product_List: IProduct2[] = [
+    {
+      id: 1,
+      name: 'sierra',
+      price: 15,
+      blocked: false
+    }
+  ];
   cartProducts: ISupplierProduct[] = [];
   isButtonDisabled: { [productId: number]: boolean } = {};
   mostrarToastAddProduct: { [producId: number]: boolean } = {}
