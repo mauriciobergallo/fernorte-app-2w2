@@ -1,1 +1,38 @@
-<p>payment-order-grid works!</p>
+<div class="container">
+  <h2 class="text-center">ORDENES DE PAGO</h2>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Observation</th>
+        <th>Total</th>
+        <th>Factura</th>
+        <th>Seleccionar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of allPurchaseOrder">
+        <td>{{order.date | date:'dd/MM/yyyy'}}</td>
+        <td>{{order.observation}}</td>
+        <td>{{order.total}}</td>
+        <td>
+          <a [href]="order.billUrl" target="_blank">Link</a>
+        </td>
+        <td>
+          <input type="checkbox" [(ngModel)]="order.selected" (change)="actualizarTotal()" />
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td></td>
+        <td><strong>Total:</strong></td>
+        <td>{{ totalSeleccionado }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="enviarOrdenDeCompraSeleccionada()">Pagar Ordenes de compra</button>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
