@@ -14,11 +14,9 @@ import { CustomerModule } from './modules/customer/customer.module';
 import { PurchaseModule } from './modules/purchase/purchase.module';
 import { InventaryModule } from './modules/inventory/inventory.module';
 import { SalesModule } from './modules/sales/sales.module';
-import { FormLocationComponent } from './form-location/form-location.component';
-import {LocationService} from './services/location.service'
 
 @NgModule({
-  declarations: [AppComponent, FormLocationComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -34,7 +32,7 @@ import {LocationService} from './services/location.service'
     InventaryModule,
     SalesModule,
   ],
-  providers: [ LocationService ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
