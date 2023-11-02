@@ -26,4 +26,8 @@ export class CartComponent {
   logToConsole(): void {
     console.log('Button clicked. Logging to console.');
   }
+
+  purchaseOrderFlow() {
+    this.purchaseOrderService.setPurchaseOrderFlow();
+  }
 }
