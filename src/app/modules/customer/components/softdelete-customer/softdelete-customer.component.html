@@ -1,0 +1,50 @@
+<div class="container">
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Empresa</th>
+                <th>Condición IVA</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Número de Documento</th>
+                <th>Tipo de Documento</th>
+                <th>Tipo de Cliente</th>
+                <th>Categoría</th>
+                <th>Factor de Descuento</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let customer of customers">
+                <td>{{ customer.first_name }}</td>
+                <td>{{ customer.last_name }}</td>
+                <td>{{ customer.company_name }}</td>
+                <td>{{ customer.iva_condition }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.phone_number }}</td>
+                <td>{{ customer.address }}</td>
+                <td>{{ customer.document_number }}</td>
+                <td>{{ customer.document_type }}</td>
+                <td>{{ customer.customer_type }}</td>
+                <td>{{ customer.customer_category }}</td>
+                <td>{{ customer.discount_factor }}</td>
+                <td>
+                    <button type="button" class="btn btn-success" [disabled]="!customer.is_active"
+                        (click)="activateCustomer(customer.id_customer)">
+                        Activar
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger" (click)="deleteCustomer(customer.id_customer)">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
