@@ -1,16 +1,16 @@
 
 
 <div class="container mt-5 ">
-
-    <fn-datepicker-range-popup (onFilter)="filterByDate($event)" (onClearFilter)="clearFilters()"></fn-datepicker-range-popup>
-    
-    
-    <div class="alert alert-warning alert-dismissible fade show" role="alert" 
-    *ngIf="!isLoading && this.movimientos.length == 0">
-    <strong class="text-danger">Movements no localizados</strong>
+    <div>
+        <h2>Movimientos de Inventario</h2>
+        <fn-datepicker-range-popup (onFilter)="filterByDate($event)" (onClearFilter)="clearFilters()"></fn-datepicker-range-popup>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert" 
+        *ngIf="!isLoading && this.movimientos.length == 0">
+        <strong class="text-danger">Movements no localizados</strong>
+    </div>
 </div>
 
-<table class="table table-striped table-bordered">
+    <table class="table table-striped table-hover table-bordered">
     <thead>
         <tr>
             <th>Movimiento N#</th>
@@ -32,7 +32,7 @@
         <tr>
             <td colspan="5">
                 <div class="table-responsive">
-                    <table class="table mb-0 table-hover ">
+                    <table class="table mb-0 table-bordered table-hover ">
                         <thead>
                             <tr>
                                 <th>Producto</th>
@@ -68,7 +68,7 @@
             </td>
         </tr>
     </tbody>
-</table>
+    </table>
 </div>
 
 

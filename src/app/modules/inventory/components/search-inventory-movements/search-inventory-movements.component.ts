@@ -26,27 +26,7 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.isLoading = true;
-    this.subscripciones.add(
-      this.movementService.getAllMovements().subscribe({
-        next: (response: IMovementDto[]) => {
-          if (response != null) {
-            
-            response.forEach(movement => {
-              
-              this.movimientosOriginales.push(movement)
-
-            })
-            this.movimientos = this.movimientosOriginales;
-          } else {
-            console.log('La respuesta está vacía');
-          }
-        },
-        error: (error: any) => {
-          console.log(error);
-        },
-      })
-    );
+   this.fillTable();
   }
 
   filterByDate(event: { from: NgbDate | null; to: NgbDate | null}) {
@@ -79,48 +59,29 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   clearFilters() {
     this.movimientos = this.movimientosOriginales; 
   }
+
+  fillTable(){
+    this.isLoading = true;
+    this.subscripciones.add(
+      this.movementService.getAllMovements().subscribe({
+        next: (response: IMovementDto[]) => {
+          if (response != null) {
+            
+            response.forEach(movement => {
+              
+              this.movimientosOriginales.push(movement)
+
+            })
+            this.movimientos = this.movimientosOriginales;
+          } else {
+            console.log('La respuesta está vacía');
+          }
+        },
+        error: (error: any) => {
+          console.log(error);
+        },
+      })
+    );
+  }
+  
 }
-    /*
-    this.movimientos = [
-      {
-        operator: 'John Doe',
-        movementType: MovementType.Outbound,
-        isInternal: true,
-        date: 'asd',
-        detailsMovementDtos: [
-          {
-            locationOrigin: { zone: 'A', section: '1', space: 'DE4' },
-            locationDestination: { zone: 'B', section: '2', space: 'AB3' },
-            quantity: 80,
-            product: 'Destornillador',
-          },
-          {
-            locationOrigin: { zone: 'A', section: '1', space: 'DE4' },
-            locationDestination: { zone: 'B', section: '2', space: 'AB3' },
-            quantity: 120,
-            product: 'Clavos',
-          },
-        ],
-      },
-      {
-        operator: 'Jane Smith',
-        movementType: MovementType.Inbound,
-        isInternal: false,
-        date: 'asd',
-        detailsMovementDtos: [
-          {
-            locationOrigin: { zone: 'B', section: '3', space: 'BE9' },
-            locationDestination: { zone: 'A', section: '2', space: 'AB4' },
-            quantity: 5,
-            product: 'Martillo',
-          },
-          {
-            locationOrigin: { zone: 'E', section: '4', space: 'EE10' },
-            locationDestination: { zone: 'F', section: '3', space: 'FF11' },
-            quantity: 8,
-            product: 'Llave inglesa',
-          },
-        ],
-      },
-    ];
-    */

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ILocationInfoProduct } from '../../models/ILocationInfoProduct';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { StorageTicket } from '../../models/StorageTicket.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,23 +11,33 @@ export class WarehouseService {
 
   constructor(private http: HttpClient) { }
 
+  baseUrl: string = 'http://localhost:8080/locations/';
 
   getProductLocation(codeOrName: string): Observable<ILocationInfoProduct> {
-    
-    const baseUrl = 'http://localhost:8080/locations/product';
 
     if(!isNaN(Number(codeOrName))){
       //es el code
       return this.http.get<ILocationInfoProduct>(
-        baseUrl+'?product_id=' + codeOrName
+        this.baseUrl+'product?product_id=' + codeOrName
       );
     }else{
             //es el name
             return this.http.get<ILocationInfoProduct>(
-              baseUrl+'?product_name=' + this.formatStringToTitleCase(codeOrName)
+              this.baseUrl+'product?product_name=' + this.formatStringToTitleCase(codeOrName)
             );
     }
   }
+
+  getStorageTickets(): Observable<StorageTicket[]> {
+    return this.http.get<StorageTicket[]>(this.baseUrl+'storage-tickets');
+  }
+
+
+
+
+
+
+
 
   private formatStringToTitleCase(inputString: string): string {
     if (!inputString) {

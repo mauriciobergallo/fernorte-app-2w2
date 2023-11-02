@@ -10,10 +10,11 @@ import { SearchInventoryMovementsComponent } from './components/search-inventory
 import { DatepickerRangePopupComponent } from './components/datepicker-range-popup/datepicker-range-popup.component';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
-import {InventoryRoutingModule} from './inventory-routing.module'
+import {InventoryRoutingModule} from './inventory-routing.module';
+import { SearchStorageTicketComponent } from './components/search-storage-ticket/search-storage-ticket.component';
 
 @NgModule({
-  declarations: [HomeComponent, ReceptionOrdersComponent, SearchLocationProductComponent, SearchInventoryMovementsComponent, DatepickerRangePopupComponent],
+  declarations: [HomeComponent, ReceptionOrdersComponent, SearchLocationProductComponent, SearchInventoryMovementsComponent, DatepickerRangePopupComponent, SearchStorageTicketComponent],
   providers: [],
   imports: [CommonModule,FormsModule,HttpClientModule,NgbDatepickerModule,InventoryRoutingModule],
   exports: [HomeComponent],
