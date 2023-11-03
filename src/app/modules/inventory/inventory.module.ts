@@ -7,7 +7,7 @@ import { CurrentInventoryComponent } from './components/current-inventory/curren
 import { ConsultOrderComponent } from './components/consult-order/consult-order/consult-order.component';
 
 @NgModule({
-  declarations: [HomeComponent, ReceptionOrdersComponent, CurrentInventoryComponent],
+  declarations: [HomeComponent, ReceptionOrdersComponent, CurrentInventoryComponent, ConsultOrderComponent],
   providers: [],
   imports: [CommonModule, FormsModule],
   exports: [HomeComponent,CurrentInventoryComponent],
