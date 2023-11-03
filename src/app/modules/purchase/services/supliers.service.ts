@@ -14,7 +14,7 @@ export class SupliersService {
   
 
   getSupliers(): Observable<ISupliers[]> {
-    return this._http.get<ISupliers[]>(this.url +'/AllSupliers');
+    return this._http.get<ISupliers[]>(this.url + '/');
   }
 
   getSuplier(id: number): Observable<ISupliers> {
