@@ -18,6 +18,6 @@ import { CurrentInventoryComponent } from './components/current-inventory/curren
   declarations: [HomeComponent,CurrentInventoryComponent , ReceptionOrdersComponent, SearchLocationProductComponent, SearchInventoryMovementsComponent, DatepickerRangePopupComponent, SearchStorageTicketComponent],
   providers: [],
   imports: [CommonModule,FormsModule,HttpClientModule,NgbDatepickerModule,InventoryRoutingModule],
-  exports: [HomeComponent],
+  exports: [HomeComponent]
 })
 export class InventaryModule {}
