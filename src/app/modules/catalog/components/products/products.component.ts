@@ -2,11 +2,9 @@ import { Component } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EditProductComponent } from './edit-product/edit-product.component';
 import { IProductCategory } from '../../models/IProductCategory';
 import { DeleteProductComponent } from './delete-product/delete-product.component';
 import { AddProductComponent } from './add-product/add-product.component';
-import { IProduct } from '../../models/IProduct';
 //import Swal from 'sweetalert2';
 
 
@@ -25,6 +23,7 @@ export class ProductsComponent {
   itemsPerPage = 10;
   collectionSize = 20;
 
+
   constructor(private productService: ProductService, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -32,8 +31,16 @@ export class ProductsComponent {
   }
 
   openEditModal(product: IProductCategory) {
-    const modalRef = this.modalService.open(EditProductComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(AddProductComponent, { size: 'lg' });
     modalRef.componentInstance.product = product;
+    modalRef.componentInstance.isEdit = true;
+    modalRef.result.then(data => {
+      if (data) {
+        this.productService.get().subscribe((products: IProductCategory[]) => {
+          this.listProducts = products;
+        })
+      }
+    })
   }
 
   openDeleteModal(product: IProductCategory) {
@@ -41,7 +48,7 @@ export class ProductsComponent {
     modalRef.componentInstance.product = product;
     modalRef.result.then(() => {
       this.productService.get().subscribe((res: IProductCategory[]) => {
-        this.isLoading = false; 
+        this.isLoading = false;
         this.listProducts = res;
       })
     })
@@ -57,7 +64,7 @@ export class ProductsComponent {
     })
   }
 
-  
+
   private pagedProducts() {
     this.isLoading = true;
     this.subscription.add(
@@ -67,11 +74,11 @@ export class ProductsComponent {
           this.isLoading = false;
         },
         error: () => {
-        /*  Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Error al cargar los productos, intente nuevamente',
-          });*/
+          /*  Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Error al cargar los productos, intente nuevamente',
+            });*/
           this.isLoading = false;
         }
       })

@@ -11,7 +11,7 @@
             <div class="mb-3 col-md-6">
                 <label for="selectProduct" class="form-label">Producto</label>
                 <select class="form-select" id="selectProduct" formControlName="id_product">
-                    <option *ngFor="let prod of products" [value]="prod.id_product">{{prod.name}}</option>
+                    <option *ngFor="let prod of listProducts" [value]="prod.id_product">{{prod.name}}</option>
                 </select>
             </div>
 

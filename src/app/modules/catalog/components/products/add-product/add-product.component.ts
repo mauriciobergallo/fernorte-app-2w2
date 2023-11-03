@@ -1,4 +1,4 @@
-import { Component, Input, Optional } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Optional } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -6,29 +6,33 @@ import { ICategory } from '../../../models/ICategory';
 import { IProductCategory } from '../../../models/IProductCategory';
 import { CategoryService } from '../../../services/category.service';
 import { ProductService } from '../../../services/product.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'fn-add-product',
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.css']
 })
-export class AddProductComponent {
+export class AddProductComponent implements OnDestroy, OnInit {
+
+  //Variables utilizadas para editar el producto
+  @Input() isEdit?: boolean | null = null;
   @Input() product?: IProductCategory | null = null;
   listCategories: ICategory[] = [];
+
   formGroup: FormGroup;
   isLoading: boolean = false;
 
-  //Variables utilizadas para mostrar mensajes de validaciones
   showMessage: boolean = false;
   messageClass: string = '';
   message: string = '';
-
   predeterminatedCategoryId: number = 1;
+
+  subscription: Subscription;
 
   image?: File
 
   constructor(private fb: FormBuilder, private prodService: ProductService, @Optional() private modalService: NgbActiveModal, private router: Router, private categoryService: CategoryService) {
-    // Creación del formulario con validaciones
     this.formGroup = this.fb.group({
       id_product: [null],
       name: [null, Validators.required],
@@ -40,14 +44,49 @@ export class AddProductComponent {
       image: [null],
       user_created: [null]
     });
+
+    this.subscription = new Subscription();
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
-  ngOnInit(): void {
-    // Obtener las categorías
+  ngOnInit() {
     this.getCategories();
-    //Se setea una categoría por defecto al iniciar el formulario
-    this.formGroup.patchValue({ id_category: this.predeterminatedCategoryId });
+
+    if (this.product && this.isEdit) {
+      this.formGroup.patchValue({
+        id_product: this.product.id_product,
+        name: this.product.name,
+        description: this.product.description,
+        unit_price: this.product.unit_price,
+        stock_quantity: this.product.stock_quantity,
+        unit_of_measure: this.product.unit_of_measure,
+        id_category: this.product.category.id_category,
+        url_image: this.product.url_image,
+        user_created: this.product.user_created,
+
+        price_product: this.product.price_product,
+        created_by: this.product.user_created
+      });
+    } else {
+      this.formGroup.patchValue({
+        id_product: null,
+        name: null,
+        description: null,
+        unit_price: null,
+        stock_quantity: null,
+        unit_of_measure: null,
+        id_category: this.predeterminatedCategoryId,
+        url_image: null,
+        user_created: null,
+        price_product: null,
+        created_by: null
+      });
+    }
   }
+
+
   getCategories() {
     this.categoryService.get().subscribe((res) => {
       this.listCategories = res;
@@ -55,7 +94,6 @@ export class AddProductComponent {
   }
 
   onFileSelected(event: any) {
-    // Manejar la selección de archivos (imágenes)
     this.image = event.target.files[0];
     const fr = new FileReader();
     fr.onload = (e: any) => {
@@ -63,11 +101,11 @@ export class AddProductComponent {
     }
     fr.readAsDataURL(this.image as Blob);
   }
+
   onSubmit() {
     if (this.formGroup.valid) {
-      // El formulario es válido, procede con el envío
       this.isLoading = true;
-      // Formula el request
+
       let request = this.formGroup.value;
       request.id_product = Number(request.id_product);
       request.unit_price = Number(request.unit_price);
@@ -76,44 +114,58 @@ export class AddProductComponent {
       request.user_created = 'prueba';
       request.image = this.image;
 
-      // Envía el request al servicio
-      this.prodService.put(request).subscribe({
-        next: (res) => {
-          //console.log('Respuesta del servidor:', res);
-          // El producto se registró con éxito, muestra la alerta de éxito
-          this.showSuccessAlert('El producto se registró correctamente.');
+      //Si envío todos los campos del modelo me arroja bad request 
 
-          // Simula una demora antes de cerrar el modal y redirigir para que la succesAlert sea visible
-          setTimeout(() => {
-            this.isLoading = false;
-            this.modalService.close(res);
-            this.router.navigateByUrl('/products/list', { skipLocationChange: true }).then(() => {
-              location.reload();
-            });
-          }, 3000);  // Espera 3 segundos (ajustar esto según preferencias)
+
+      //Modelo
+      /*       id_product: number;
+            name: string;
+            description: string;
+            unit_Price: number;
+            stock_Quantity: number;
+            unit_Of_Measure: string;
+            id_category: number;
+            image: string;
+            user_created:string; */
+
+
+      /*       const request: IProduct = {
+              id_product: this.isEdit ? Number(this.formGroup.get('id_product')?.value) : 0,
+              name: String(this.formGroup.get('name')?.value),
+              description: String(this.formGroup.get('description')?.value),
+              unit_Price: Number(this.formGroup.get('unit_price')?.value),
+              stock_Quantity: Number(this.formGroup.get('stock_quantity')?.value),
+              unit_Of_Measure: String(this.formGroup.get('unit_of_measure')?.value),
+              id_category: Number(this.formGroup.get('id_category')?.value),
+              image: String(this.formGroup.get('url_image')?.value),
+              user_created: 'Prueba',
+            }; */
+
+
+
+      this.subscription.add(this.prodService.put(request).subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          const message = this.isEdit
+            ? 'El producto se actualizó correctamente.'
+            : 'El producto se registró correctamente.';
+          this.showSuccessAlert(message);
+          setTimeout(() => this.modalService.close(res), 1500);
         },
         error: (error) => {
-          // Maneja el error de acuerdo a tus necesidades (mostrar un mensaje, registrar en un archivo de registro, etc.).
-          //console.error('Error en la solicitud al servidor:', error);
           this.isLoading = false;
           this.showErrorAlert('Error al registrar el producto.');
         }
-      });
+      }));
     } else {
-      // El formulario no es válido, muestra la alerta de error
       this.showErrorAlert('Por favor completa todos los campos requeridos.');
     }
   }
 
-
-
-
   close() {
-    // Cerrar el modal
     this.modalService.close(false);
   }
 
-  // Métodos para obtener controles específicos del formulario
   get controlName(): FormControl {
     return this.formGroup.controls['name'] as FormControl;
   }
@@ -121,6 +173,7 @@ export class AddProductComponent {
   get controlCategory(): FormControl {
     return this.formGroup.controls['id_category'] as FormControl;
   }
+
   get controlUnitPrice(): FormControl {
     return this.formGroup.controls['unit_price'] as FormControl;
   }
@@ -133,12 +186,12 @@ export class AddProductComponent {
     this.showMessage = true;
     this.messageClass = 'alert-success';
     this.message = message;
-  
+
     setTimeout(() => {
       this.hideAlert();
-    }, 3000);
+    }, 1500);
   }
-  
+
   showErrorAlert(message: string) {
     this.showMessage = true;
     this.messageClass = 'alert-danger';
@@ -146,9 +199,9 @@ export class AddProductComponent {
 
     setTimeout(() => {
       this.hideAlert();
-    }, 3000);
+    }, 1500);
   }
-  
+
   hideAlert() {
     this.showMessage = false;
     this.messageClass = '';
