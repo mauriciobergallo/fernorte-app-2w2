@@ -2,8 +2,8 @@ import {ILocationDto} from "./ILocationDto";
 
 export interface ILocationInfoProduct {
     code: number;
-    categoryName: string;
-    productName: string;
+    category_name: string;
+    product_name: string;
     capacityRemaining?: number;
     measure_unit: string;
     max_capacity?: number;

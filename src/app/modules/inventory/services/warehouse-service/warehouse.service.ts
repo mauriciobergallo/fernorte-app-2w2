@@ -3,6 +3,7 @@ import { ILocationInfoProduct } from '../../models/ILocationInfoProduct';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StorageTicket } from '../../models/StorageTicket.interface';
+import { LocationInfoDto } from '../../models/location-info.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,9 @@ export class WarehouseService {
   }
 
 
-
+  public getLocationsInfo(): Observable<LocationInfoDto[]> {
+    return this.http.get<LocationInfoDto[]>(this.locationBaseUrl+'products');
+  }
 
 
 

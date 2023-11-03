@@ -4,6 +4,7 @@ import { SearchInventoryMovementsComponent } from './components/search-inventory
 import { SearchLocationProductComponent } from './components/search-location-product/search-location-product.component'
 import {ReceptionOrdersComponent} from './components/reception-orders/reception-orders.component'
 import { SearchStorageTicketComponent } from './components/search-storage-ticket/search-storage-ticket.component';
+import { CurrentInventoryComponent } from './components/current-inventory/current-inventory.component';
 
 /*
 const routes: Routes = [
@@ -22,7 +23,9 @@ const routes: Routes = [
     { path: 'search-movements', component: SearchInventoryMovementsComponent },
     { path: 'locations-product', component: SearchLocationProductComponent },
     { path: 'reception-orders', component: ReceptionOrdersComponent },
-    { path: 'storage-tickets', component: SearchStorageTicketComponent }
+    { path: 'storage-tickets', component: SearchStorageTicketComponent },
+    { path: 'current-inventory', component: CurrentInventoryComponent }
+
 
   ];
 @NgModule({

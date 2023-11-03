@@ -26,8 +26,8 @@ export class SearchLocationProductComponent implements OnInit, OnDestroy {
 
   locationInfo : ILocationInfoProduct = {
     code: 0,
-    categoryName: "",
-    productName: "",
+    category_name: "",
+    product_name: "",
     capacityRemaining: undefined,
     measure_unit: "",
     max_capacity: undefined,
@@ -66,7 +66,7 @@ export class SearchLocationProductComponent implements OnInit, OnDestroy {
   }
 
   resetFields() {
-    this.locationInfo.productName = '';
+    this.locationInfo.product_name = '';
     this.locationInfo.location.zone = '';
     this.locationInfo.location.section = '';
     this.locationInfo.location.space = '';
