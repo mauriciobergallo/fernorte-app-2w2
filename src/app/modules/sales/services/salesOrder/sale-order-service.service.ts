@@ -7,19 +7,67 @@ import { TypeSalesOrder } from '../../models/TypeSaleOrder';
 import { SaleOrderStates } from '../../models/SalesOrderState';
 import { MontoTotalModel } from '../../models/ModelTotalModel';
 import { DetailsState } from '../../models/DetailsState';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { SaleOrderApi } from '../../models/SaleModelApi';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SaleOrderServiceService {
 
+  saleOrderList = new Observable<SaleOrderApi[]>();
 
-  constructor(private saleOrderProvider: SaleOrderProvider) { }
+  idOrder:string="";
+  doc:string="";
+  fromDate:string="";
+  toDate:string="";
 
-  getSaleOrders(): SaleOrderModel[] {
-    return this.saleOrderProvider.getSaleOrders();
+  constructor(private saleOrderProvider: SaleOrderProvider, 
+    private http : HttpClient) { }
+
+  // getSaleOrders(): SaleOrderModel[] {
+  //   return this.saleOrderProvider.getSaleOrders();
+  // }
+
+  getSaleOrders() : Observable<SaleOrderApi[]> {
+    this.saleOrderList = this.http.get<SaleOrderApi[]>("http://localhost:8080/sales-orders?from_date=2023-10-23&to_date=2023-10-31");
+    return this.saleOrderList;
   }
+
+  // getSaleOrdersByIdOrder(filterSent:any) : Observable<SaleOrderModel[]> {
+  //   this.idOrder=filterSent;
+  //   this.saleOrderList = this.http.get<SaleOrderModel[]>(`http://localhost:8080/sales-orders?id_order=${this.idOrder}`)
+  //   return this.saleOrderList;
+  // }
+
+  // getSaleOrdersByDoc(filterSent:any) : Observable<SaleOrderModel[]> {
+  //   this.doc=filterSent;
+  //   this.saleOrderList = this.http.get<SaleOrderModel[]>(`http://localhost:8080/sales-orders?doc_client=${this.doc}`)
+  //   return this.saleOrderList;
+  // }
+
+  // getSaleOrdersByDate(filterSent:any) : Observable<SaleOrderModel[]> {
+  //   if(filterSent.includes('-')){
+  //     const index = filterSent.indexOf('/')
+  //     this.fromDate = filterSent.slice(0,index)
+  //     this.toDate = filterSent.slice(index+1, filterSent.length)
+  //   }
+  //   this.saleOrderList = this.http.get<SaleOrderModel[]>(`http://localhost:8080/sales-orders?from_date=${this.fromDate}&to_date=${this.toDate}`)
+  //   console.log(this.saleOrderList);
+  //   return this.saleOrderList;
+  // }
+
+    // getSaleOrdersByDate(filterSent:any) : Observable<SaleOrderModel[]> {
+  //   if(filterSent.includes('-')){
+  //     const index = filterSent.indexOf('/')
+  //     this.fromDate = filterSent.slice(0,index)
+  //     this.toDate = filterSent.slice(index+1, filterSent.length)
+  //   }
+  //   this.saleOrderList = this.http.get<SaleOrderModel[]>(`http://localhost:8080/sales-orders?from_date=${this.fromDate}&to_date=${this.toDate}`)
+  //   console.log(this.saleOrderList);
+  //   return this.saleOrderList;
+  // }
 
   // getSaleOrdersByFilter(filter: string): SaleOrderModel[] {
   //   const saleOrdersList: SaleOrderModel[] = [];
@@ -35,47 +83,60 @@ export class SaleOrderServiceService {
   //   return saleOrdersList;
   // }
 
-  getSaleOrdersByFilter(idOrder?:string, doc?:string, fromDate?:string, toDate?:string) : SaleOrderModel[] {
-    const saleOrdersList : SaleOrderModel[] = [];
-    if(idOrder != "" && idOrder != null) {
-      this.saleOrderProvider.getSaleOrdesByFilter(idOrder, '', '', '').subscribe((response) => {
-        if(response.ok) {
-          for(let sale of response.data) {
-            saleOrdersList.push(sale)
-            console.log(saleOrdersList)
-          }
-          return saleOrdersList
-        } else {
-          alert('No fue posible recuperar los datos')
-        }
-        return null
-      })
-    } else if(doc != "" && doc != null) {
-      this.saleOrderProvider.getSaleOrdesByFilter('', doc, '', '').subscribe((response) => {
-        if(response.ok) {
-          for(let sale of response.data) {
-            saleOrdersList.push(sale)
-            console.log(saleOrdersList)
-          }
-          return saleOrdersList
-        }
-        return null
-      })
-    } else {
-      this.saleOrderProvider.getSaleOrdesByFilter('', '', fromDate, toDate).subscribe((response) => {
-        if(response.ok) {
-          for(let sale of response.data) {
-            saleOrdersList.push(sale)
-            console.log(saleOrdersList)
-          }
-          return saleOrdersList
-        }
-        return null
-      })
-    }
+  // getSaleOrdersByFilter(idOrder?:string, doc?:string, fromDate?:string, toDate?:string) : SaleOrderModel[] {
+  //   const saleOrdersList : SaleOrderModel[] = [];
+  //   if(idOrder != "" && idOrder != null) {
+  //     this.saleOrderProvider.getSaleOrdesByFilter(idOrder, '', '', '').subscribe((response) => {
+  //       if(response.ok) {
+  //         for(let sale of response.data) {
+  //           saleOrdersList.push(sale)
+  //           console.log(saleOrdersList)
+  //         }
+  //         return saleOrdersList
+  //       } else {
+  //         alert('No fue posible recuperar los datos')
+  //       }
+  //       return null
+  //     })
+  //   } else if(doc != "" && doc != null) {
+  //     this.saleOrderProvider.getSaleOrdesByFilter('', doc, '', '').subscribe((response) => {
+  //       if(response.ok) {
+  //         for(let sale of response.data) {
+  //           saleOrdersList.push(sale)
+  //           console.log(saleOrdersList)
+  //         }
+  //         return saleOrdersList
+  //       }
+  //       return null
+  //     })
+  //   } else {
+  //     this.saleOrderProvider.getSaleOrdesByFilter('', '', fromDate, toDate).subscribe((response) => {
+  //       if(response.ok) {
+  //         for(let sale of response.data) {
+  //           saleOrdersList.push(sale)
+  //           console.log(saleOrdersList)
+  //         }
+  //         return saleOrdersList
+  //       }
+  //       return null
+  //     })
+  //   }
     
-    return saleOrdersList;
-  }
+  //   return saleOrdersList;
+  // }
+
+  getSaleOrdesByFilter(idOrder?:string, doc?:string, fromDate?:string, toDate?:string): Observable<SaleOrderModel[]> {
+    let url:string = '';
+    if(idOrder != '' && idOrder != null) {
+      url = `http://localhost:8080/sales-order?id_order=${idOrder}`
+    } else if(doc != '' && doc != null) {
+      url = `http://localhost:8080/sales-order?doc_client=${doc}`
+    } else {
+      url = `http://localhost:8080/sales-order?from_date=${fromDate}&to_date=${toDate}`;
+    }
+      return this.http.get<SaleOrderModel[]>(url);
+    }
+
 
   ValidarPresupuestoOOrdenVenta(saleOrder: SaleOrderModel, carrito: ProductModel[]): boolean {
     return saleOrder.detail_sales_order.some(x => x.quantity > carrito.find(y => y.idProduct == x.id_product)!.stockQuantity)
@@ -93,8 +154,8 @@ export class SaleOrderServiceService {
       id_sale_order: id,
       id_seller: 1,
       id_client: 1,
-      date_of_issue: new Date().toISOString(),
-      date_of_expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
+      date_of_issue: new Date().toString(),
+      date_of_expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toString(),
       state_sale_order: state,
       detail_sales_order: []
 
