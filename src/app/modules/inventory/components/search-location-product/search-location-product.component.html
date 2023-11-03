@@ -1,5 +1,5 @@
 <section class="container">
-    <form #searchForm="ngForm">
+    <form #searchForm="ngForm" class="mt-4 ">
 
         <h1>Buscar ubicación de producto</h1>
         <div class="form-group">
@@ -20,6 +20,13 @@
             [disabled]="searchForm.invalid" (click)="onSearch(searchForm)">Buscar</button>
         </div>
     </form>
+
+    <div class="card text-center">
+        <div class="card-header">
+          Ubicacion {{this.locationInfo.productName}}
+        </div>
+        <div class="card-body">
+
 
     <div class="row mt-2">
         <div class="col-4">
@@ -67,4 +74,10 @@
             </div>
         </div>
     </div>
+
+
+    </div>
+</div>
+
 </section>
+

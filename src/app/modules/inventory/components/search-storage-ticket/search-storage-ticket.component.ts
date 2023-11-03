@@ -10,7 +10,7 @@ import { StorageTicketState } from '../../models/StorageTicketState.enum';
 })
 export class SearchStorageTicketComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription
-  stateFinish: StorageTicketState = StorageTicketState.Finalizado;
+  stateFinish: StorageTicketState = StorageTicketState.FINALIZED;
   storageTickets: StorageTicket[] = [];
   ticketDetail: StorageTicket = {
     ticket_id: 0,
@@ -27,14 +27,13 @@ export class SearchStorageTicketComponent implements OnInit, OnDestroy {
     created_by: "",
     operator_name: "",
     remarks: "",
-    state: StorageTicketState.Pendiente
+    state: StorageTicketState.PENDING
   }
 
   constructor(private warehouseService: WarehouseService) { }
 
 
   ngOnInit(): void {
-    this.storageTickets = this.data;
     this.fillTable();
   }
   ngOnDestroy(): void {
@@ -49,6 +48,7 @@ export class SearchStorageTicketComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.log(error);
+        console.log("eeeeeeoo")
       }
     })
   }
@@ -61,32 +61,36 @@ export class SearchStorageTicketComponent implements OnInit, OnDestroy {
     this.warehouseService.asignTicket(ticket.ticket_id,randomId).subscribe({
       next: (resp) => {
         //recargar tabla
+        console.log(resp)
         this.fillTable();
       },
       error: (error) => {
         console.log(error)
-/*
-        const index = this.storageTickets.findIndex(sTicket => sTicket.ticket_id === ticket.ticket_id);
-      
-        if (index !== -1) {
-          this.storageTickets[index].operator_name = randomId.toString();
-
-        }
-        */
       }
     })
   }
 
   getStatusButtonContent(ticket: StorageTicket): string {
     switch (ticket.state){
-      case StorageTicketState.Pendiente: return "Asignarme"
-      case StorageTicketState.Asignado: return "Finalizar"
-      case StorageTicketState.Finalizado: return "Completado"
-      default: return "Asignarme"
+      case StorageTicketState.PENDING: return "Asignarme"
+      case StorageTicketState.ASSIGNED: return "Finalizar"
+      case StorageTicketState.FINALIZED: return "Completado"
+      default : return ""
+     
     }
   }
 
+  stateSpanishTranslate(state: StorageTicketState) {
+    switch (state){
+      case StorageTicketState.PENDING: return "Pendiente"
+      case StorageTicketState.ASSIGNED: return "Asignado"
+      case StorageTicketState.FINALIZED: return "Completado"
+      default : return ""
+      
+    }
+  }
 
+/*
   data: StorageTicket[] = [
     {
       ticket_id: 1,
@@ -191,7 +195,7 @@ export class SearchStorageTicketComponent implements OnInit, OnDestroy {
       state: StorageTicketState.Finalizado
     }
   ];
-  
+  */
 
 }
 

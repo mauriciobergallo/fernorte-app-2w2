@@ -1,5 +1,5 @@
 export enum StorageTicketState {
-    Pendiente,
-    Asignado,
-    Finalizado
+    PENDING,
+    ASSIGNED,
+    FINALIZED
 }

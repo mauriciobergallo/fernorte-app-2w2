@@ -11,34 +11,35 @@ export class WarehouseService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl: string = 'http://localhost:8080/locations/';
+  locationBaseUrl: string = 'http://localhost:8080/locations/';
+  storageTicketBaseUrl: string = 'http://localhost:8080/storage-tickets'
 
   getProductLocation(codeOrName: string): Observable<ILocationInfoProduct> {
 
     if(!isNaN(Number(codeOrName))){
       //es el code
       return this.http.get<ILocationInfoProduct>(
-        this.baseUrl+'product?product_id=' + codeOrName
+        this.locationBaseUrl+'product?product_id=' + codeOrName
       );
     }else{
             //es el name
             return this.http.get<ILocationInfoProduct>(
-              this.baseUrl+'product?product_name=' + this.formatStringToTitleCase(codeOrName)
+              this.locationBaseUrl+'product?product_name=' + this.formatStringToTitleCase(codeOrName)
             );
     }
   }
 
   getStorageTickets(): Observable<StorageTicket[]> {
-    return this.http.get<StorageTicket[]>(this.baseUrl+'storage-tickets');
+    return this.http.get<StorageTicket[]>(this.storageTicketBaseUrl);
   }
 
   asignTicket(ticketId: number, operatorId: number): Observable<StorageTicket> {
   //a confirmar
     const body = {
       ticket_id: ticketId,
-      product_id: operatorId
+      operator_id: operatorId
     } 
-    return this.http.put<StorageTicket>(this.baseUrl,body)
+    return this.http.put<StorageTicket>(this.storageTicketBaseUrl,body)
   }
 
 
