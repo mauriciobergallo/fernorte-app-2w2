@@ -13,7 +13,6 @@ export class CurrentInventoryService {
   constructor(private httpClient: HttpClient) { 
     
   }
-
   public getLocationsInfo(): Observable<LocationInfoDto[]> {
     return this.httpClient.get<LocationInfoDto[]>(this.baseEndPoint+'products');
   }
