@@ -11,8 +11,10 @@ export class SupliersService {
 
   constructor(private _http: HttpClient) {}
 
+  
+
   getSupliers(): Observable<ISupliers[]> {
-    return this._http.get<ISupliers[]>(this.url);
+    return this._http.get<ISupliers[]>(this.url +'/AllSupliers');
   }
 
   getSuplier(id: number): Observable<ISupliers> {

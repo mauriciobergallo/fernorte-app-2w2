@@ -1,30 +1,30 @@
-<div class="container">
-  <!-- Header Section -->
+<div class="container-fluid">
+  <!-- Sección de Encabezado -->
   <div class="row mb-4">
     <div class="col-7 purchase-header">
-      <div class="purchase-title"><h1>Purchase Order</h1></div>
+      <div class="purchase-title"><h1>Orden de Compra</h1></div>
     </div>
-    <div id="date" class="col-5 purchase-header ">
+    <div id="date" class="col-5 purchase-header">
       <div class="purchase-date">
-        <h5 class="mb-3">Date: <span class="date-text">{{ currentDate | date:'dd/MM/yyyy' }}</span></h5>
-        <h5 >Order N°: <span class="date-text">Your Purchase Order Number</span></h5>
+        <h5 class="mb-3">Fecha: <span class="date-text">{{ currentDate | date:'dd/MM/yyyy' }}</span></h5>
+        <h5 >Orden N°: <span class="date-text">nueva</span></h5>
       </div>
     </div>
-  </div >
-  <!-- supplier and employee info -->
- <br>
- <br>
+  </div>
+  <!-- Información del Proveedor y Empleado -->
+  <br>
+  <br>
   <div class="mt-4">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="supplierInfo mr-4">
-          <h4 class="mb-4">Supplier Information</h4>
+          <h4 class="mb-4">Información del Proveedor</h4>
           <div class="info-line">
-            <p><strong>Supplier Name:</strong></p>
+            <p><strong>Nombre del Proveedor:</strong></p>
             <p>{{ supplier.socialReason }}</p>
           </div>
           <div class="info-line">
-            <p><strong>Fantasy Name:</strong></p>
+            <p><strong>Nombre de Fantasía:</strong></p>
             <p>{{ supplier.fantasyName }}</p>
           </div>
           <div class="info-line">
@@ -32,97 +32,57 @@
             <p>{{ supplier.cuit }}</p>
           </div>
           <div class="info-line">
-            <p><strong>Address:</strong></p>
+            <p><strong>Dirección:</strong></p>
             <p>{{ supplier.adress }}</p>
           </div>
         </div>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-6">
         <div class="employeeInfo">
-          <h4 class="mb-4">Employee Information</h4>
+          <h4 class="mb-4">Información del Empleado</h4>
           <div class="info-line">
-            <p><strong>Employee Name:</strong></p>
+            <p><strong>Nombre del Empleado:</strong></p>
             <p>John Doe</p>
           </div>
           <div class="info-line">
-            <p><strong>Employee Address:</strong></p>
-            <p>123 Main St, City</p>
+            <p><strong>Dirección del Empleado:</strong></p>
+            <p>123 Main St, Ciudad</p>
           </div>
           <div class="info-line">
-            <p><strong>Employee Number:</strong></p>
+            <p><strong>Número de Empleado:</strong></p>
             <p>1001</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-   <!-- purchase details -->
-  
-   
-    <h3 class="mt-5">Purchase Details</h3>
-    <table class="table mt-3">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Purchase Order ID</th>
-          <th>Product Supplier ID</th>
-          <th>Quantity Received</th>
-          <th>Delivery Date</th>
-          <th>Observation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let detail of purchaseDetails">
-          <td>{{ detail.id }}</td>
-          <td>{{ detail.purchaseOrderId }}</td>
-          <td>{{ detail.productSupplierId }}</td>
-          <td>{{ detail.quantityReceived }}</td>
-          <td>{{ detail.deliveryDate }}</td>
-          <td>{{ detail.observation }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="mt-3 row">
-      <div class="col-md-6 offset-md-6 text-right">
-        <button class="btn btn-primary">Edit purchase details</button>
-      </div>
+  <!-- Detalles de la Compra -->
+  <h3 class="mt-5">Detalles de la Compra</h3>
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of cardProducts; let i = index">
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.quantity }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="mt-3 row">
+    <div class="col-md-6 offset-md-6 text-right">
+      <button class="btn btn-primary">Editar Detalles de la Compra</button>
     </div>
-  
-     <!-- payment details -->
-    <div class="mt-4">
-      <h3 class="mt-5">Payment Details</h3>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Purchase Order ID</th>
-            <th>Payment Order ID</th>
-            <th>Amount</th>
-            <th>Payment Method</th>
-            <th>Observation</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let paymentDetail of paymentDetails">
-            <td>{{ paymentDetail.id }}</td>
-            <td>{{ paymentDetail.purchaseOrderId }}</td>
-            <td>{{ paymentDetail.paymentOrderId }}</td>
-            <td>{{ paymentDetail.amount }}</td>
-            <td>{{ paymentDetail.paymentMethod }}</td>
-            <td>{{ paymentDetail.observation }}</td>
-          </tr>
-        </tbody>
-      </table>
+  </div>
+  <!-- Detalles de Pago -->
+  <div class="row mt-3">
+    <div class="col-12">
+      <button class="btn btn-success full-width">Finalizar Orden de Compra</button>
     </div>
-    <div class="mt-3 row">
-      <div class="col-md-6 offset-md-6 text-right">
-        <button class="btn btn-primary">Edit payment details</button>
-      </div>
-    </div>
-
-    <div class="row mt-3">
-      <div class="col-12">
-        <button class="btn btn-success full-width">Finish Purchase Order</button>
-      </div>
-    </div>
+  </div>
 </div>
