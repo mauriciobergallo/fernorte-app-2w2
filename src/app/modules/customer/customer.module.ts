@@ -9,8 +9,7 @@ import { EmployeeRegistrationComponent } from './components/employee-registratio
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TurnsComponentComponent } from './components/turns-component/turns-component.component';
-import { BtnNoCustomerComponent } from './components/btn-no-customer/btn-no-customer.component';
-import { BtnCustomerComponent } from './components/btn-customer/btn-customer.component';
+
 import { LoginComponent } from './components/login/login.component';
 import { EmployeeService } from './services/employee.service';
 import { RoleService } from './services/role.service';
@@ -21,7 +20,7 @@ import { CustomerService } from './services/customer.service';
 import { CreateRolComponent } from './components/create-rol/create-rol.component';
 
 @NgModule({
-  declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent, LoginComponent, CreateCustomerComponent, CreateRolComponent],
+  declarations: [HomeComponent, TurnsComponentComponent, EmployeeRegistrationComponent, LoginComponent, CreateCustomerComponent, CreateRolComponent],
   providers: [EmployeeService, RoleService, TurnService, LoginService, CustomerService, DatePipe],
   imports: [CommonModule, BrowserModule, ReactiveFormsModule, NgbModule, FormsModule, HttpClientModule],
   exports: [HomeComponent],

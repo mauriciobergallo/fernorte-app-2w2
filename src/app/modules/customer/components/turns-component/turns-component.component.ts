@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TurnService } from '../../services/turn.service';
+import { TurnResponse } from '../../models/turn-response';
 
 @Component({
   selector: 'fn-turns-component',
@@ -7,79 +8,114 @@ import { TurnService } from '../../services/turn.service';
   styleUrls: ['./turns-component.component.css']
 })
 export class TurnsComponentComponent {
-  ToCustomer: boolean = false;
-  ToNoCustomer: boolean = false;
-  Main: boolean = true;
-  inputText:string='';
-  documentNumber:string='';
-
   show: boolean = false;
-
-  constructor(public turnService: TurnService){}
+  showCustomer: boolean = false;
+  showNoCustomer: boolean = false;
+  document_number: string = '';
+  inputText:string='';
 
   redirectToCustomer() {
-    this.ToCustomer = true;
-    this.Main = false;
+    this.showCustomer = true;
+    this.showNoCustomer = false;
   }
 
   redirectToNoCustomer() {
-    this.ToNoCustomer = true;
-    this.Main = false;
+    this.showNoCustomer = true;
+    this.showCustomer = false;
   }
 
-  eventBack(){
-    this.Main = true;
-    this.ToCustomer = false;
-    this.ToNoCustomer = false;
-  }
+  
+
+  
+
+  constructor(public turnService: TurnService){}
+
+  
+
+  
 
   addToInput(value:string){
     this.inputText += value;
-    this.documentNumber=this.inputText;
+    this.document_number=this.inputText;
   }
 
-  deleteLastCharInput(){
-    this.inputText = this.inputText.slice(0, -1);
-  }
-
-  sendDocumentNumber() {
-    if (this.documentNumber) {
-      this.turnService.postData(this.documentNumber).subscribe(
-        (response) => {
-          if (response) {
-            this.showCustomerInfo(response);
-            const welcomeMessage = `Bienvenido ${response.firstName}, tu número de turno es ${response.number}, y fue creado el ${response.createdAt}`;
-            alert(welcomeMessage);
-            this.clearFields();
-          } 
-        },
-        (error) => {          
-          alert("El numero de documento es incorrecto");
-          this.clearFields();
-        }
-      );
-    } else {
-      alert('El número de documento está vacío, por favor ingrese un número válido.');
+  deleteLastCharInput() {
+    if (this.inputText.length > 0) {
+      this.inputText = this.inputText.slice(0, -1);
+      this.document_number = this.inputText;
     }
   }
   
+  sendNoCustomer(){
+    
+      this.turnService.postData(this.document_number).subscribe(
+        (response)=>{
+          if(response){
+            this.showCustomerInfo(response);
+            const welcomeMessage=`Bienvenido, tu numero de turno es N°${response.number},aguarde unos minutos`
+            alert(welcomeMessage);
+            console.log(welcomeMessage, response.number);
+            
+          
+          }
+        },
+
+      )
+    }
+
+
+  
+
+    sendDocumentNumber() {
+      if (this.document_number) {
+        this.turnService.postData(this.document_number).subscribe(
+          (response) => {
+            if (response) {
+              this.showCustomerInfo(response);
+    
+              if (response.first_name == null && response.last_name == null) {
+                if (response.company_name) {
+                  const welcomeMessage = `Bienvenido a ${response.company_name}, tu número de turno es el N°${response.number}, y fue creado el ${response.created_at}`;
+                  alert(welcomeMessage);
+                }
+              } else {
+                const welcomeMessage = `Bienvenido ${response.first_name} ${response.last_name}, tu número de turno es el N°${response.number}, y fue creado el ${response.created_at}`;
+                alert(welcomeMessage);
+              }
+    
+              this.clearFields();
+            } else {
+              this.sendNoCustomer();
+            }
+          },
+          (error) => {
+            alert("El numero de documento es incorrecto");
+            this.clearFields();
+          }
+        );
+      } else {
+        alert('El número de documento está vacío, por favor ingrese un número válido.');
+      }
+    }
+    
   
   clearFields() {
-    this.inputText = ''; 
-    this.documentNumber = ''; 
-    this.ToCustomer = false; 
-    this.ToNoCustomer = false; 
-    this.Main = true; 
+    this.document_number = '';
+    this.showCustomer = false;
+    this.showNoCustomer = false;
+    this.inputText='';
   }
   
   showCustomerInfo(customerData: any) {
-    // Muestra la información del cliente en la interfaz de usuario
     console.log("Número: " + customerData.number);
-    console.log("Nombre: " + customerData.firstName);
-    console.log("Apellido: " + customerData.lastName);
-    console.log("Fecha de creación: " + customerData.createdAt);
-    if (customerData.companyName) {
-      console.log("Nombre de la empresa: " + customerData.companyName);
+    console.log("Nombre: " + customerData.first_name); 
+    console.log("Apellido: " + customerData.last_name); 
+    console.log("Fecha de creación: " + customerData.created_at);
+    if (customerData.company_name) {
+      console.log("Nombre de la empresa: " + customerData.company_name);
     }
   }
+
+
+ 
 }
