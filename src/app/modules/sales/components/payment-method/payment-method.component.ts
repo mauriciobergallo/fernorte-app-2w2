@@ -14,9 +14,15 @@ export class PaymentMethodComponent implements OnInit {
   editPayment: IPaymentMethod = { idPaymentMethod: 0, paymentMethod: '', surcharge: 0 };
   paymentMethods: IPaymentMethod[] = [];
   methodForm: FormGroup;
+  editForm: FormGroup;
 
-  constructor(private paymentMethodService: PaymentMethodService, private formBuilder: FormBuilder,private formGroup: FormGroup) {
+  constructor(private paymentMethodService: PaymentMethodService, private formBuilder: FormBuilder) {
     this.methodForm = this.formBuilder.group({
+      paymentMethod: ['', Validators.required],
+      surcharge: [0, Validators.required],
+    });
+
+    this.editForm = this.formBuilder.group({
       paymentMethod: ['', Validators.required],
       surcharge: [0, Validators.required],
     });
@@ -28,8 +34,8 @@ export class PaymentMethodComponent implements OnInit {
 
   saveNewPaymentMethod() {
     if (this.methodForm && this.methodForm.valid) {
-      this.payment.paymentMethod = this.methodForm.get('paymentMethod')?.value || '';
-      this.payment.surcharge = this.methodForm.get('surcharge')?.value || 0;
+      this.payment.paymentMethod = this.editForm.get('paymentMethod')?.value || '';
+      this.payment.surcharge = this.editForm.get('surcharge')?.value || 0;
   
       this.paymentMethodService.createPaymentMethod(this.payment).subscribe(
         (response) => {
@@ -55,6 +61,7 @@ export class PaymentMethodComponent implements OnInit {
   }
 
   updatePaymentMethod(editPayment: IPaymentMethod) {
+    if (this.editForm && this.editForm.valid) 
     this.paymentMethodService.updatePaymentMethod(this.editPayment).subscribe(
       (response) => {
         console.log('Método de pago actualizado:', response);
@@ -68,8 +75,10 @@ export class PaymentMethodComponent implements OnInit {
   }
 
   loadEditarForm(method: IPaymentMethod) {
+    
     this.editPayment.idPaymentMethod = method.idPaymentMethod;
     this.editPayment.paymentMethod = method.paymentMethod;
     this.editPayment.surcharge = method.surcharge;
+    console.log("este",this.editForm.value)
   }
 }
