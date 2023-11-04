@@ -4,6 +4,7 @@ import { BillOk } from '../../models/BillingOk';
 import { BillModel } from '../../models/BillingModelApi';
 import { ProductApi } from '../../models/ProductApi';
 import { ProductOk } from '../../models/ProductOk';
+import { BillServiceService } from '../../services/billing/bill-service.service';
 
 @Component({
   selector: 'fn-billing-search-list',
@@ -16,10 +17,24 @@ billListOk: BillOk[]=[];
 
 private subscriptions = new Subscription();
 
+constructor(private billingService: BillServiceService) {
+}
+
 ngOnDestroy(): void {
   this.subscriptions.unsubscribe();
 }
 ngOnInit(): void {
+  this.subscriptions.add(
+    this.billingService.getBills().subscribe(
+      (response:BillModel[])=>{
+        this.billList=response;
+        for(let item of this.billList){
+          this.billList.push(item)
+        }
+        console.log(this.billList)
+      }
+    )
+  )
   
 }
 
