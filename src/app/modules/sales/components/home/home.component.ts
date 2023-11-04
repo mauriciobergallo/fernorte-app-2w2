@@ -21,7 +21,8 @@ export class HomeComponent implements OnInit  {
     SalesOrderSearch : 'SalesOrderSearch',
     PaymentMethod: 'PaymentMethod',
     CreatePayment: 'CreatePayment',
-    SaleOrderSearchList: 'SaleOrderSearchList'
+    SaleOrderSearchList: 'SaleOrderSearchList',
+    BillingSearchList : 'BillingSearchList'
   };
 
   showBilling: boolean = false;
@@ -30,6 +31,7 @@ export class HomeComponent implements OnInit  {
   showSalesOrderSearch: boolean = false;
   showPayment:boolean = false;
   showSalesOrdersList:boolean = false;
+  showBillingSearchList:boolean=false;
 
   onShowSalesOrders() {
     this.onShowModule(this.modules.SalesOrders);
@@ -49,6 +51,9 @@ export class HomeComponent implements OnInit  {
   onShowPayment() {
     this.onShowModule(this.modules.CreatePayment);
   }
+  onShogBillingSearchList(){
+    this.onShowModule(this.modules.BillingSearchList)
+  }
 
   private onShowModule(moduleName: string) {
     this.showBilling = moduleName === this.modules.Billing;
@@ -57,5 +62,6 @@ export class HomeComponent implements OnInit  {
     this.showSalesOrderSearch=moduleName === this.modules.SalesOrderSearch;
     this.showSalesOrdersList=moduleName === this.modules.SaleOrderSearchList;
     this.showPayment= moduleName === this.modules.CreatePayment;
+    this.showBillingSearchList=moduleName===this.modules.BillingSearchList;
   }
 }
