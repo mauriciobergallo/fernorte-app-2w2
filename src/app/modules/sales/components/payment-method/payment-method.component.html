@@ -1,23 +1,30 @@
+<!-- payment-method.component.html -->
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <form #formDatos="ngForm" (ngSubmit)="saveNewPaymentMethod(formDatos)">
+            <form [formGroup]="methodForm" (ngSubmit)="saveNewPaymentMethod()">
+                <div class="row">
+                    <h2>Crear Métodos de Pago</h2>
+                </div>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="mb-2">
                             <label for="paymentMethod" class="form-label">Método de Pago</label>
-                            <input #controlPaymentMethod="ngModel" type="text" class="form-control" id="paymentMethod"
-                                name="paymentMethod" [(ngModel)]="payment.paymentMethod" required>
-                            <!-- <div *ngIf="controlPaymentMethod.touched && controlPaymentMethod.hasError('required')">El método de pago
-                    es obligatorio.</div> -->
+                            <input formControlName="paymentMethod" type="text" class="form-control" id="paymentMethod"
+                                name="paymentMethod" required>
+                            <div
+                                *ngIf="methodForm.get('paymentMethod')?.touched && methodForm.get('paymentMethod')?.hasError('required')">
+                                El método de pago es obligatorio.</div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-2">
                             <label for="surcharge" class="form-label">Recargo</label>
-                            <input #controlSurcharge="ngModel" type="number" class="form-control" id="surcharge"
-                                name="surcharge" [(ngModel)]="payment.surcharge" required>
-                            <!-- <div *ngIf="controlSurcharge.touched && controlSurcharge.hasError('required')">El recargo es obligatorio.</div> -->
+                            <input formControlName="surcharge" type="number" class="form-control" id="surcharge"
+                                name="surcharge" required>
+                            <div
+                                *ngIf="methodForm.get('surcharge')?.touched && methodForm.get('surcharge')?.hasError('required')">
+                                El recargo es obligatorio.</div>
                         </div>
                     </div>
                 </div>
@@ -39,39 +46,58 @@
                         <tr *ngFor="let method of paymentMethods">
                             <td>{{ method.paymentMethod }}</td>
                             <td>{{ method.surcharge }}</td>
-                            <td><button (click)="selectPaymenthMethod(method)"><i class="bi bi-pencil"></i></button>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal" data-bs-whatever="@mdo"
+                                    (click)="loadEditarForm(method)"><i class="bi bi-pencil"></i></button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+
     </div>
 </div>
 
-<div class="model-container">
-    <div class="cross-container">
-        <button class="cross" (click)="closeModal()">X</button>
-    </div>
-    <form #miForm="ngForm" class="container h-100 d-flex flex-column justify-content-between">
-        <h2 class="d-flex justify-content-center">Agregar Proveedor</h2>
-        <div class="row">
-            <div class="col-lg-6 col-md-12 col-sm-12">
-                <label for="paymentMethod" class="form-label">Método de Pago</label>
-                <input #controlPaymentMethod="ngModel" type="text" class="form-control" id="paymentMethod"
-                    name="paymentMethod" [(ngModel)]="payment.paymentMethod" required>
-            </div>
 
-            <div class="col-lg-6 col-md-12 col-sm-12">
-                <label for="surcharge" class="form-label">Recargo</label>
-                <input #controlSurcharge="ngModel" type="number" class="form-control" id="surcharge" name="surcharge"
-                    [(ngModel)]="payment.surcharge" required>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar forma de pago</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #formDatos="ngForm" (ngSubmit)="saveNewPaymentMethod()">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="mb-2">
+                                <label for="paymentMethod" class="form-label">Método de Pago</label>
+                                <input #controlPaymentMethod="ngModel" type="text" class="form-control"
+                                    id="paymentMethod" name="paymentMethod" [(ngModel)]="editPayment.paymentMethod"
+                                    required>
+                                <!-- <div *ngIf="controlPaymentMethod.touched && controlPaymentMethod.hasError('required')">El método de pago es obligatorio.</div> -->
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-2">
+                                <label for="surcharge" class="form-label">Recargo</label>
+                                <input #controlSurcharge="ngModel" type="number" class="form-control" id="surcharge"
+                                    name="surcharge" [(ngModel)]="editPayment.surcharge" required>
+                                <!-- <div *ngIf="controlSurcharge.touched && controlSurcharge.hasError('required')">El recargo es obligatorio.</div> -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary"
+                    (click)="updatePaymentMethod(editPayment)">Guardar</button>
             </div>
         </div>
-        <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="submit" class="btn btn-primary my-4" [disabled]="miForm.invalid" (click)="updatePaymenthMethod()">
-                Guardar
-            </button>
-        </div>
-    </form>
+    </div>
 </div>

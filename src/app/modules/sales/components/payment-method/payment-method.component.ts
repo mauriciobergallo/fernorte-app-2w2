@@ -1,4 +1,6 @@
+// payment-method.component.ts
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IPaymentMethod } from '../../interfaces/ipayment-method';
 import { PaymentMethodService } from '../../services/payment-method.service';
 
@@ -9,25 +11,36 @@ import { PaymentMethodService } from '../../services/payment-method.service';
 })
 export class PaymentMethodComponent implements OnInit {
   payment: IPaymentMethod = { idPaymentMethod: 0, paymentMethod: '', surcharge: 0 };
+  editPayment: IPaymentMethod = { idPaymentMethod: 0, paymentMethod: '', surcharge: 0 };
   paymentMethods: IPaymentMethod[] = [];
+  methodForm: FormGroup;
 
-  constructor(private paymentMethodService: PaymentMethodService) { }
+  constructor(private paymentMethodService: PaymentMethodService, private formBuilder: FormBuilder,private formGroup: FormGroup) {
+    this.methodForm = this.formBuilder.group({
+      paymentMethod: ['', Validators.required],
+      surcharge: [0, Validators.required],
+    });
+  }
 
   ngOnInit(): void {
     this.loadPaymentMethods();
   }
 
-  saveNewPaymentMethod(formDatos: any) {
-    console.log(this.payment);
-    this.paymentMethodService.createPaymentMethod(this.payment).subscribe(
-      (response) => {
-        console.log('Nuevo método de pago creado:', response);
-        this.loadPaymentMethods();
-      },
-      (error) => {
-        console.error('Error al crear el método de pago:', error);
-      }
-    );
+  saveNewPaymentMethod() {
+    if (this.methodForm && this.methodForm.valid) {
+      this.payment.paymentMethod = this.methodForm.get('paymentMethod')?.value || '';
+      this.payment.surcharge = this.methodForm.get('surcharge')?.value || 0;
+  
+      this.paymentMethodService.createPaymentMethod(this.payment).subscribe(
+        (response) => {
+          console.log('Nuevo método de pago creado:', response);
+          this.loadPaymentMethods();
+        },
+        (error) => {
+          console.error('Error al crear el método de pago:', error);
+        }
+      );
+    }
   }
 
   loadPaymentMethods() {
@@ -38,23 +51,25 @@ export class PaymentMethodComponent implements OnInit {
       (error) => {
         console.error('Error al cargar la lista de métodos de pago:', error);
       }
-    ); 
+    );
   }
 
-  selectPaymenthMethod(payment:IPaymentMethod){
-    this.payment.idPaymentMethod = payment.idPaymentMethod;
-    this.payment.paymentMethod = payment.paymentMethod;
-    this.payment.surcharge = payment.surcharge;
-  }
-  updatePaymenthMethod(payment:IPaymentMethod){
-    this.paymentMethodService.updatePaymentMethod(this.payment).subscribe(
+  updatePaymentMethod(editPayment: IPaymentMethod) {
+    this.paymentMethodService.updatePaymentMethod(this.editPayment).subscribe(
       (response) => {
-        console.log('método de pago actualizado :', response);
+        console.log('Método de pago actualizado:', response);
         this.loadPaymentMethods();
+        this.editPayment = { idPaymentMethod: 0, paymentMethod: '', surcharge: 0 };
       },
       (error) => {
         console.error('Error al actualizar el método de pago:', error);
       }
     );
+  }
+
+  loadEditarForm(method: IPaymentMethod) {
+    this.editPayment.idPaymentMethod = method.idPaymentMethod;
+    this.editPayment.paymentMethod = method.paymentMethod;
+    this.editPayment.surcharge = method.surcharge;
   }
 }

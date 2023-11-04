@@ -17,11 +17,12 @@ import { BillingComponent } from './components/billing/billing.component';
 import { PaymentMethodComponent } from './components/payment-method/payment-method.component';
 import { CreatePaymentComponent } from './components/create-payment/create-payment.component';
 import { ClientProvider } from './services/clients/clientProvider';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, CalcularImpuestosPipe, CalcularMontoTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent, SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent],
   providers: [SaleOrderProvider,ProductProvider,ClientProvider],
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,ReactiveFormsModule],
   exports: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent, SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent],
 })
 export class SalesModule {}
