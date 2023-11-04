@@ -1,4 +1,4 @@
-
+<!-- 
 <div class="container-flex p-3" id="homeSales">
     <div class="d-flex justify-content-end">
         <div class="btn-group" role="group" aria-label="Basic outlined example">
@@ -59,13 +59,14 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <div>
     <fn-sale-order *ngIf="showSalesOrder"></fn-sale-order>
     <fn-sale-order-search-handler *ngIf="showSalesOrderSearch"></fn-sale-order-search-handler>
     <fn-billing *ngIf="showBilling"></fn-billing>
     <fn-payment-method *ngIf="showPaymentMethod"></fn-payment-method>   
+    <fn-payment-method></fn-payment-method>   
     <fn-create-payment *ngIf="showPayment"></fn-create-payment>    
     <fn-sale-order-search-list *ngIf="showSalesOrdersList"></fn-sale-order-search-list>
 </div>

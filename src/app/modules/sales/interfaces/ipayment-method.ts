@@ -1,5 +1,5 @@
 export interface IPaymentMethod {
-    id: number;
+    idPaymentMethod: number;
     paymentMethod: string;
     surcharge: number;
 }

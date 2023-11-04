@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <form #formDatos="ngForm" (ngSubmit)="saveNewPaymentMethod(formDatos)">
                 <div class="row">
                     <div class="col-md-8">
@@ -24,7 +24,7 @@
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </form>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="col-md-8">
                 <h2>Lista de Métodos de Pago</h2>
                 <table class="table">
@@ -32,12 +32,14 @@
                         <tr>
                             <th>Método de Pago</th>
                             <th>Recargo</th>
+                            <th>Editar</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let method of paymentMethods">
                             <td>{{ method.paymentMethod }}</td>
                             <td>{{ method.surcharge }}</td>
+                            <td><button (click)="selectPaymenthMethod(method)"><i class="bi bi-pencil"></i></button></td>
                         </tr>
                     </tbody>
                 </table>

@@ -8,7 +8,7 @@ import { PaymentMethodService } from '../../services/payment-method.service';
   styleUrls: ['./payment-method.component.css']
 })
 export class PaymentMethodComponent implements OnInit {
-  payment: IPaymentMethod = { id: 0, paymentMethod: '', surcharge: 0 };
+  payment: IPaymentMethod = { idPaymentMethod: 0, paymentMethod: '', surcharge: 0 };
   paymentMethods: IPaymentMethod[] = [];
 
   constructor(private paymentMethodService: PaymentMethodService) { }
@@ -18,6 +18,7 @@ export class PaymentMethodComponent implements OnInit {
   }
 
   saveNewPaymentMethod(formDatos: any) {
+    console.log(this.payment);
     this.paymentMethodService.createPaymentMethod(this.payment).subscribe(
       (response) => {
         console.log('Nuevo método de pago creado:', response);
@@ -37,6 +38,12 @@ export class PaymentMethodComponent implements OnInit {
       (error) => {
         console.error('Error al cargar la lista de métodos de pago:', error);
       }
-    );
+    ); 
+  }
+
+  selectPaymenthMethod(payment:IPaymentMethod){
+    this.payment.idPaymentMethod = payment.idPaymentMethod;
+    this.payment.paymentMethod = payment.paymentMethod;
+    this.payment.surcharge = payment.surcharge;
   }
 }
