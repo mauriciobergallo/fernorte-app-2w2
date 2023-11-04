@@ -17,11 +17,14 @@ import { BillingComponent } from './components/billing/billing.component';
 import { PaymentMethodComponent } from './components/payment-method/payment-method.component';
 import { CreatePaymentComponent } from './components/create-payment/create-payment.component';
 import { ClientProvider } from './services/clients/clientProvider';
+import { RouterModule } from '@angular/router';
+import { RouterChildModule } from './router-child.module';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 @NgModule({
-  declarations: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, CalcularImpuestosPipe, CalcularMontoTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent, SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent],
+  declarations: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, CalcularImpuestosPipe, CalcularMontoTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent, SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent,SidenavComponent],
   providers: [SaleOrderProvider,ProductProvider,ClientProvider],
-  imports: [CommonModule,FormsModule],
-  exports: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent, SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent],
+  imports: [CommonModule,FormsModule, RouterModule, RouterChildModule],
+  exports: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent, SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent,SidenavComponent],
 })
 export class SalesModule {}

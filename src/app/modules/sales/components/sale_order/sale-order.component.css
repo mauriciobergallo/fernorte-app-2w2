@@ -1,4 +1,6 @@
-
+.content{
+  margin-left: 280px;
+}
 @keyframes rotate {
     0% {
       transform: rotate(0deg);
