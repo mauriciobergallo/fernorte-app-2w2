@@ -140,11 +140,6 @@ customerType: ""
 	}
   }
 
-//   setDocumentTypeDescription(id: number): void{
-// 	this.customer.idDocumentType=id;
-	
-//   }
-
 
 	onSubmitForm(customerForm: NgForm){
 		console.log("customerEE", customerForm);
@@ -183,7 +178,5 @@ customerType: ""
 		return camelObj;
 	  };
 	  
-	
-
 
 }
