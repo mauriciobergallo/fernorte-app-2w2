@@ -1,31 +1,61 @@
 <div class="container">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Consultar Orden de Entrega</h4>
-        <div class="input-group mb-3">
-          <input class="" [(ngModel)]="orderId" placeholder="Ingrese un término de búsqueda">
-          <div class="input-group-append">
-            <button class="btn btn-primary" (click)="search()">Buscar</button>
-          </div>
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Consultar orden de entrega</h4>
+      <div class="input-group mb-3 custom-search" style="max-width: 30%; margin-top: 20px;">
+        <input class="form-control col-1" [(ngModel)]="orderId" placeholder="">
+        <div class="input-group-append">
+          <button class="btn btn-primary search-button" (click)="search()">Buscar</button>
         </div>
-  
+      </div>
+
+      <div class="table-responsive">
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Cantidad</th>
-              <th>Estado</th>
+              <th class="text-center">Orden de compra</th>
+              <th class="text-center">Cliente</th>
+              <th class="text-center">Documento</th>
+              <th class="text-center">Creación</th>
+              <th class="text-center">Estado</th>
+              <th class="text-center">Detalle</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of deliveryOrder?.details">
-              <td>{{ item.product_name }}</td>
-              <td>{{ item.quantity }}</td>
-              <td>{{ item.state }}</td>
+            <tr *ngFor="let item of deliveryOrder?.items">
+              <td class="text-center">{{ item.sale_order_id }}</td>
+              <td class="text-center">{{ item.client.first_name }} {{ item.client.last_name }}</td>
+              <td class="text-center">{{ item.client.document_number }}</td>
+              <td class="text-center">{{ item.created_at }}</td>
+              <td class="text-center" style="font-size: 20px;">
+                <i [class]="item.state | stateIconPipe" [ngbTooltip]="getTooltipText(item.state)"></i>
+              </td>
+              <td class="text-center">
+                <i (click)="navigateToDetails(item.delivery_order_id)" [ngbTooltip]="'Ver'" class="bi bi-eye" style="cursor: pointer; font-size: 20px;"></i>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+  </div>
+
+
+  <div class="d-flex justify-content-center" style="margin-top: 5%;">
+    <ul class="pagination">
+      <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === 1" (click)="previousPage()">
+        <a class="page-link" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link">{{ currentPage }}</a>
+      </li>
+      <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === totalPages" (click)="nextPage()">
+        <a class="page-link" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
   </div>
   
