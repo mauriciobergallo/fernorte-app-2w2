@@ -1,6 +1,6 @@
 <ng-template #content let-modal id="modalWindow">
 	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Registrar empleado</h4>
+		<h4 class="modal-title" id="modal-basic-title">Registrar Empleado</h4>
 		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
 	</div>
 	<div class="modal-body">
@@ -57,18 +57,18 @@
 					<input
 						id="dateOfBirth" class="form-control" placeholder="DD/MM/AAAA" [minDate]="maxDate" [maxDate]="minDate" formControlName="birthDate" ngbDatepicker
 						#dp="ngbDatepicker"
-						
+						(change)="onBirthDateChange($event)"
 								/>
 					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button><br>
                 </div>
 			</div>
 			<div class="flex-grow-1">
 				<label for="personalEmail">Correo electronico</label>
-				<input required
+				<input 
 					   type="email" formControlName="personalEmail" id="personalEmail" class="form-control" placeholder="Correo electronico"
 					   
 							/>
-				<div *ngIf="true" class="invalid-feedback">
+				<div *ngIf="personalEmailControl?.invalid && personalEmailControl?.touched" class="text-danger">
 					Ingresa una dirección de correo electrónico válida.
 				</div>
 			</div>
