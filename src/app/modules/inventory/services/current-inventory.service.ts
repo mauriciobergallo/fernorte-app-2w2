@@ -9,6 +9,7 @@ import { LocationInfoDto } from '../models/location-info.interface';
 export class CurrentInventoryService {
   baseEndPoint: string = 'http://localhost:8080/locations/';
 
+  
   constructor(private httpClient: HttpClient) {}
   public getLocationsInfo(): Observable<LocationInfoDto[]> {
     return this.httpClient.get<LocationInfoDto[]>(
