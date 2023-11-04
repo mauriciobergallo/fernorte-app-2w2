@@ -1,3 +1,3 @@
-export class SoftDeleteResponse {
+export interface SoftDeleteResponse {
     fullname: string;
 }

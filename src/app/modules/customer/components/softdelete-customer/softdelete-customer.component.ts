@@ -8,7 +8,7 @@ import { CustomerService } from '../../services/customer.service';
   styleUrls: ['./softdelete-customer.component.css']
 })
 export class SoftdeleteCustomerComponent implements OnInit {
-  customers: CustomerActResponse[];
+  customers: CustomerActResponse[] = [];
 
   constructor(private customerService: CustomerService) {}
 
