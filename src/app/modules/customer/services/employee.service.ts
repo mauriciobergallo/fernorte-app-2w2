@@ -22,7 +22,8 @@ createEmployee(employee: Employee){
 }
 
 postEmployee(employeePost: Employee): Observable<EmployeeResponseDTO>{
-  return this.http.post<EmployeeResponseDTO>(`${this.apiUrl}${this.newEmployee}`, employeePost) //Petición HTTP Post para crear empleado
+
+  return this.http.post<EmployeeResponseDTO>(`${this.apiUrl}`, employeePost) 
 
 }
 

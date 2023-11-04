@@ -205,7 +205,8 @@ personalEmail:""
 					personalEmail: this.employeeForm.value.personalEmail
 				}
 
-				this.employeeService.postEmployee(newemployee).subscribe(
+				let employeeEnSnake = this.camelToSnake(newemployee);
+				this.employeeService.postEmployee(employeeEnSnake).subscribe(
 
 
 					(response) => {
@@ -226,26 +227,43 @@ personalEmail:""
 	}
 
 
-	// onBirthDateChange(event: any) {
-	// 	if (event) {
-	// 		const year = event.year || 0;
-	// 		const month = event.month || 1;
-	// 		const day = event.day || 1;
-
-	// 		const selectedDate = new Date(year, month - 1, day);
-	// 		debugger
-	// 		this.formattedBirthDate = selectedDate.toISOString();
-
-
-	// 	} else {
-	// 		this.formattedBirthDate = '';
-	// 	}
-	// }
-
 
 	onSubmitForm(employeeForm: FormGroup){
 		console.log("EMPLOYEEEE", employeeForm);
 	}
 
+
+	camelToSnake(obj: any): any {
+        const snakeObj: any = {};
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                const snakeKey = key.replace(/([A-Z])/g, "_$1").toLowerCase();
+                snakeObj[snakeKey] = obj[key];
+            }
+        }
+        return snakeObj;
+    }
+  
+	
+	
+	 convertSnakeToCamel = (obj: any): any => {
+		if (obj === null || typeof obj !== 'object') {
+		  return obj;
+		}
+	  
+		if (Array.isArray(obj)) {
+		  return obj.map(this.convertSnakeToCamel);
+		}
+	  
+		const camelObj: { [key: string]: any } = {}; // Anotación de tipo
+	  
+		for (const key in obj) {
+		  if (obj.hasOwnProperty(key)) {
+			const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+			camelObj[camelKey] = this.convertSnakeToCamel(obj[key]);
+		  }
+		}
+		return camelObj;
+	  };
   
 }
