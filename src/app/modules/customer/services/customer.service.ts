@@ -27,11 +27,11 @@ postCustomer(customer: CustomerRequest): Observable<any>{
   
   }
 
-  putCustomer(customer: any): Observable<any>{
+  putCustomer(customer: any, idCustomer: number): Observable<any>{
     debugger;
-    let id = customer.id_customer;
+    let id = idCustomer;
     let customerOk= customer;
-    customerOk.id_document_type=1;
+    //customerOk.id_document_type=1;
     return this.http.put<CustomerRequest>(this.apiUrl + "/" + id, customerOk );
   
   }

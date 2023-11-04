@@ -1,7 +1,7 @@
 import { DocumentType } from "./documentType";
 
 export interface CustomerRequest {
-    idCustomer: number;
+   // idCustomer: number;
     firstName: string;
     lastName: string;
     companyName: string;

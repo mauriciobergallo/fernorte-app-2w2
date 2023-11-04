@@ -20,7 +20,7 @@ formattedBirthDate: string = '';
 
 
 customer: CustomerRequest = {
-idCustomer:0,
+//idCustomer:0,
 firstName:"",
 lastName:"",
 companyName: "",

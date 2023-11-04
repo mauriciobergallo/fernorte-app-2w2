@@ -18,9 +18,10 @@ customerForm!: NgForm;
 
 formattedBirthDate: string = '';
 
+idCustomer:number=0;
 
 customer: CustomerRequest = {
-idCustomer: 0,
+//idCustomer: 0,
 firstName:"",
 lastName:"",
 companyName: "",
@@ -45,8 +46,8 @@ customerType: ""
 	
 	}
 
-	loadCustomerData(customerId: number) {
-		this.customerService.getCustomerById(customerId).subscribe(
+	loadCustomerData(idCustomer: number) {
+		this.customerService.getCustomerById(idCustomer).subscribe(
 		  (customerData) => {
 			let transformData= this.convertSnakeToCamel(customerData);
 			this.customer = transformData;
@@ -65,7 +66,7 @@ customerType: ""
 
 	open(content: any) {
 	
-		this.loadCustomerData(1);
+		this.loadCustomerData(this.idCustomer);
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
 			(result) => {
 
@@ -77,14 +78,12 @@ customerType: ""
 				debugger;
 				let newCustomer: CustomerRequest = {
 					
-					idCustomer: this.customer.idCustomer,
+					//idCustomer: this.customer.idCustomer,
 					firstName: this.customer.firstName,
 					lastName: this.customer.lastName,
 					companyName: this.customer.companyName,
 					ivaCondition: this.customer.ivaCondition,
-					birthDate: new Date().toISOString(),
-					
-				
+					birthDate: new Date().toISOString(),	
 					idDocumentType: this.customer.idDocumentType ,
 					documentNumber: this.customer.documentNumber,
 					address: this.customer.address,
@@ -95,7 +94,7 @@ customerType: ""
 				console.log("NEW CUSTOMER", newCustomer);
 				let customerEnSnake = this.camelToSnake(newCustomer);
 				console.log("CUSTOMER EN SNAKE", customerEnSnake);
-				this.customerService.putCustomer(customerEnSnake).subscribe(
+				this.customerService.putCustomer(customerEnSnake, this.idCustomer).subscribe(
 					(response) => {
 						alert("Se actualizo el cliente")
 					},
@@ -141,10 +140,10 @@ customerType: ""
 	}
   }
 
-  setDocumentTypeDescription(id: number): void{
-	this.customer.idDocumentType=id;
+//   setDocumentTypeDescription(id: number): void{
+// 	this.customer.idDocumentType=id;
 	
-  }
+//   }
 
 
 	onSubmitForm(customerForm: NgForm){
