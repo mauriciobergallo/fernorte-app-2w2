@@ -19,6 +19,12 @@ customerForm!: NgForm;
 formattedBirthDate: string = '';
 
 
+minDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
+maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };;
+currentYear = new Date().getFullYear();
+
+
+
 customer: CustomerRequest = {
 //idCustomer:0,
 firstName:"",
@@ -38,7 +44,27 @@ customerType: ""
 
 	closeResult = '';
 
-	constructor(private modalService: NgbModal, private customerService: CustomerService) {}
+	constructor(private modalService: NgbModal, private customerService: CustomerService) {
+
+
+
+		    // Obtén la fecha actual
+			const currentDate = new Date();
+			// Resta 16 años de la fecha actual
+			const minYear = currentDate.getFullYear() - 5;
+			const minMonth = currentDate.getMonth() + 1; // Los meses en JavaScript son de 0 a 11, ng-bootstrap es de 1 a 12
+			const minDay = currentDate.getDate();
+		
+			// Asigna la fecha calculada a minDate
+			this.minDate = { year: minYear, month: minMonth, day: minDay };
+		
+		
+			this.maxDate = {
+				year: currentDate.getFullYear() - 150, //Cambiar este numero si se quiere bajar la edad
+				month: currentDate.getMonth() + 1,
+				day: currentDate.getDate()
+			  };
+	}
 
 	open(content: any) {
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(

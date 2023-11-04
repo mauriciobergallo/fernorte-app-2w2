@@ -78,10 +78,11 @@
 					(ngModelChange)="onBirthDateChange($event)"
 					id="dateOfBirth"
 					class="form-control"
-					placeholder="yyyy-mm-dd"
+					placeholder="dd/mm/yyyy"
 					name="dp"
 					ngbDatepicker
 					#dp="ngbDatepicker"
+					[minDate]="maxDate" [maxDate]="minDate"
 				  />
 					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button><br>
                 </div>
