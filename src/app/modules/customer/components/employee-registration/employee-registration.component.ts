@@ -19,7 +19,7 @@ export class EmployeeRegistrationComponent  {
 
 	maxLengthDocument : number = 0;
 
-
+	formattedBirthDate: string = '';
 
 	employeeForm: FormGroup;
 	constructor(private modalService: NgbModal, private employeeService: EmployeeService, private fb: FormBuilder) {
@@ -86,6 +86,10 @@ personalEmail:""
 
 	  get documentNumberControl(): AbstractControl | null {
 		return this.employeeForm.get('documentNumber');
+	  }
+
+	  get personalEmailControl(): AbstractControl | null{
+		return this.employeeForm.get('personalEmail');
 	  }
 
 	onDocumentTypeChange() {
@@ -189,14 +193,51 @@ personalEmail:""
 				this.closeResult = `Closed with: ${result}`;
 				this.employeeForm.reset();
 
+				let newemployee: any = {
+					firstName: this.employeeForm.value.firstName,
+					lastName: this.employeeForm.value.lastName,
+					birthDate: this.formattedBirthDate,
+					documentType: this.employeeForm.value.documentType,
+					address: this.employeeForm.value.address,
+					phoneNumber: this.employeeForm.value.phoneNumber,
+					documentNumber: this.employeeForm.value.documentNumber,
+					personalEmail: this.employeeForm.value.personalEmail
+				}
+
+				this.employeeService.postEmployee(newemployee).subscribe(
+
+
+					(response) => {
+						alert("Se creo el empleado")
+					},
+					(error) => {
+						alert("Error en el servidor")
+					}
+				)
+
+				this.employeeForm.reset();
+
 			},
 			(reason) => {
-				
+				this.employeeForm.reset();
 			},
 		);
 	}
 
 
+	onBirthDateChange(event: any) {
+		if (event) {
+			const year = event.year || 0;
+			const month = event.month || 1;
+			const day = event.day || 1;
+
+			const selectedDate = new Date(year, month - 1, day);
+
+			this.formattedBirthDate = selectedDate.toISOString();
+		} else {
+			this.formattedBirthDate = '';
+		}
+	}
 
 
 	onSubmitForm(employeeForm: FormGroup){
