@@ -39,11 +39,39 @@
                         <tr *ngFor="let method of paymentMethods">
                             <td>{{ method.paymentMethod }}</td>
                             <td>{{ method.surcharge }}</td>
-                            <td><button (click)="selectPaymenthMethod(method)"><i class="bi bi-pencil"></i></button></td>
+                            <td><button (click)="selectPaymenthMethod(method)"><i class="bi bi-pencil"></i></button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+</div>
+
+<div class="model-container">
+    <div class="cross-container">
+        <button class="cross" (click)="closeModal()">X</button>
+    </div>
+    <form #miForm="ngForm" class="container h-100 d-flex flex-column justify-content-between">
+        <h2 class="d-flex justify-content-center">Agregar Proveedor</h2>
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <label for="paymentMethod" class="form-label">Método de Pago</label>
+                <input #controlPaymentMethod="ngModel" type="text" class="form-control" id="paymentMethod"
+                    name="paymentMethod" [(ngModel)]="payment.paymentMethod" required>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <label for="surcharge" class="form-label">Recargo</label>
+                <input #controlSurcharge="ngModel" type="number" class="form-control" id="surcharge" name="surcharge"
+                    [(ngModel)]="payment.surcharge" required>
+            </div>
+        </div>
+        <div class="d-grid gap-2 col-4 mx-auto">
+            <button type="submit" class="btn btn-primary my-4" [disabled]="miForm.invalid" (click)="updatePaymenthMethod()">
+                Guardar
+            </button>
+        </div>
+    </form>
 </div>

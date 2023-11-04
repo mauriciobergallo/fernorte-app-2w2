@@ -46,4 +46,15 @@ export class PaymentMethodComponent implements OnInit {
     this.payment.paymentMethod = payment.paymentMethod;
     this.payment.surcharge = payment.surcharge;
   }
+  updatePaymenthMethod(payment:IPaymentMethod){
+    this.paymentMethodService.updatePaymentMethod(this.payment).subscribe(
+      (response) => {
+        console.log('método de pago actualizado :', response);
+        this.loadPaymentMethods();
+      },
+      (error) => {
+        console.error('Error al actualizar el método de pago:', error);
+      }
+    );
+  }
 }
