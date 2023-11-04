@@ -188,10 +188,11 @@ personalEmail:""
 				console.log("EMPLOYEE FORM",this.employeeForm);
 
 
-				this.employeeService.createEmployee(this.employee);
-				this.employeeService.clearFields(this.employee);
-				this.closeResult = `Closed with: ${result}`;
-				this.employeeForm.reset();
+				const ngbDate: NgbDateStruct = this.employeeForm.value.birthDate;
+				const jsDate = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day);
+				this.formattedBirthDate = jsDate.toISOString();
+
+
 
 				let newemployee: any = {
 					firstName: this.employeeForm.value.firstName,
@@ -225,19 +226,21 @@ personalEmail:""
 	}
 
 
-	onBirthDateChange(event: any) {
-		if (event) {
-			const year = event.year || 0;
-			const month = event.month || 1;
-			const day = event.day || 1;
+	// onBirthDateChange(event: any) {
+	// 	if (event) {
+	// 		const year = event.year || 0;
+	// 		const month = event.month || 1;
+	// 		const day = event.day || 1;
 
-			const selectedDate = new Date(year, month - 1, day);
+	// 		const selectedDate = new Date(year, month - 1, day);
+	// 		debugger
+	// 		this.formattedBirthDate = selectedDate.toISOString();
 
-			this.formattedBirthDate = selectedDate.toISOString();
-		} else {
-			this.formattedBirthDate = '';
-		}
-	}
+
+	// 	} else {
+	// 		this.formattedBirthDate = '';
+	// 	}
+	// }
 
 
 	onSubmitForm(employeeForm: FormGroup){

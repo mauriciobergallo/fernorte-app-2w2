@@ -57,7 +57,7 @@
 					<input
 						id="dateOfBirth" class="form-control" placeholder="DD/MM/AAAA" [minDate]="maxDate" [maxDate]="minDate" formControlName="birthDate" ngbDatepicker
 						#dp="ngbDatepicker"
-						(change)="onBirthDateChange($event)"
+					
 								/>
 					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button><br>
                 </div>
