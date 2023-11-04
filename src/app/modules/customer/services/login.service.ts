@@ -38,13 +38,13 @@ export class LoginService {
           documentNumber: userDetails.document_number,
           roles: userDetails.roles.map((role: any) => {
             return {
-              idRole: role.idRole,
+              idRole: role.id_role,
               name: role.name,
               area: role.area
             };
           }),
           password_reset: userDetails.password_reset,
-          first_login: userDetails.first_login
+          id_user: userDetails.id_user
         };
         return user;
       })

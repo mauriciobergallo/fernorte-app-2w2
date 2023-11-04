@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NewRole } from '../../models/new-role';
-import { Empleado } from '../../models/empleado';
 import { UserService } from '../../services/user.service';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'fn-user-form',
@@ -10,9 +10,9 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./user-form.component.css'],
 })
 export class UserFormComponent implements OnInit {
-  @Input() empleado: Empleado;
+  @Input() user: User | undefined;
   password: string = '';
-  selectedRole: NewRole;
+  selectedRole: NewRole | undefined;
 
   availableRoles: NewRole[] = [];
   roles_name: string[] = [];
@@ -60,7 +60,7 @@ export class UserFormComponent implements OnInit {
 
   onSubmit() {
     if (this.userForm.valid) {
-      const documentNumber = this.empleado.documentNumber;
+      const documentNumber = this.user?.documentNumber;
       const password = this.userForm.get('password')?.value;
       const roles = this.sendRoles.map((role) => role.id_role);
 
@@ -91,7 +91,7 @@ export class UserFormComponent implements OnInit {
       }
     }
 
-    this.selectedRole = new NewRole();
+    this.selectedRole = undefined;
   }
 
   cancel() {

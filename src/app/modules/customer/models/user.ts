@@ -1,7 +1,7 @@
 import { Role } from "./role";
 
-export class User {
-    first_login: boolean;
+export interface User {
+    id_user: number;
     password_reset: boolean;
     username: string;
     documentNumber: string;

@@ -14,22 +14,13 @@ export class FirstLoginComponent {
   };
 
   constructor(private route: ActivatedRoute, private userService: UserService) {
-    this.route.params.subscribe(params => {
-       this.forgot = params['forgot'] === 'true';
-    });
-
-    console.log(this.forgot);
   }
 
   onFirstLogin() {
-    this.changePassword();
+    this.onResetPassword();
   }
 
-  onResetPassword() {
-    this.changePassword();
-  }
-
-  changePassword(){
+  onResetPassword(){
     this.userService.changePassword(this.user.password).subscribe(
       (response: any) => {
        alert('Se cambio correctamente la contraseña');

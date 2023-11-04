@@ -27,17 +27,11 @@ export class LoginComponent {
         (respuesta: User) => {
           this.userService.document_number = respuesta.documentNumber;
           alert("Bienvenido " + respuesta.username);
-          if(respuesta.first_login == false)
-          {
-            this.router.navigate(['/first-login', false]);
+          if(respuesta.password_reset == true){
+            this.router.navigate(['/first-login']);
           }
           else{
-            if(respuesta.password_reset == true){
-              this.router.navigate(['/first-login', true]);
-            }
-            else{
-              alert('logueado exitosamente');
-            }
+            alert('logueado exitosamente');
           }
         },
         (error: any) => {

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Empleado } from '../../models/empleado';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'fn-user-root',
@@ -7,15 +7,22 @@ import { Empleado } from '../../models/empleado';
   styleUrls: ['./user-root.component.css']
 })
 export class UserRootComponent  {
-  //TODO: ese componente recibira un empleado, para motivos de testing se le hardcodea el empleado
-  //@Input() empleado: Empleado;
+  //TODO: ese componente recibira un user, para motivos de testing se le hardcodea el user
+  //@Input() user: User;
   @Input() showComponent: boolean = true;
 
-  empleadoHardcodeado: Empleado = {
-    id_employee: 1,
-    first_name: 'Juan',
-    last_name: 'Pérez',
-    documentNumber: '12345'
+  userHardcodeado: User = {
+    id_user: 1,
+    password_reset: false,
+    username: 'Alex',
+    documentNumber: '123456',
+    roles:[
+      {
+        id_role: 1,
+        name: "Administrator",
+        area: "Compras"
+      }
+    ]
   };
 
   closeComponent(){

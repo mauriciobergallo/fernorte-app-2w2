@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
-  document_number: string;
+  document_number: string = "";
 
   private apiUrlGetAllRoles = 'http://localhost:8095/role';
   private apiUrlnewUser = 'http://localhost:8095/users/new-user';
@@ -18,18 +18,10 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   GetAllRoles(): Observable<NewRole[]> {
-    return this.http.get<any[]>(this.apiUrlGetAllRoles).pipe(
-      map(data => data.map(item => {
-        const role = new NewRole();
-        role.name = item.name;
-        role.id_role = item.id_role;
-        role.area = item.area;
-        return role;
-      }))
-    );
+    return this.http.get<NewRole[]>(this.apiUrlGetAllRoles);
   }
 
-  postNewUser(documentNumber: string, password: string, roles: number[]) {
+  postNewUser(documentNumber: string | undefined, password: string, roles: number[]) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'accept': '*/*'
