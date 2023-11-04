@@ -1,0 +1,19 @@
+<button class="btn btn-lg btn-outline-primary" (click)="show = show == true ? false : true">Mostrar Lista Roles</button>
+<hr>
+<div *ngIf="show" class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Area</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+        </tbody>
+    </table>
+</div>
