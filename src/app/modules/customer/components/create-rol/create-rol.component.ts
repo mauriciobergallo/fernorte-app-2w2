@@ -27,8 +27,13 @@ export class CreateRolComponent {
 				console.log("RESULT", result);
 				console.log("ROLE FORM",this.roleService);
 
-
-				this.roleService.createRole(this.role);
+				this.roleService.createRole(this.role).subscribe({
+					next:(newRole: Role) =>{
+						alert("Rol: "+ newRole.name + " Creado correctamente")//Esto despues hay que hacerlo con sweet alert
+					},error:() => {
+						alert('Error al comunicarse con la API');//Esto despues hay que hacerlo con sweet alert
+					  }
+				})
 				this.roleService.clearFields(this.role);
 				
 

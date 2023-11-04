@@ -1,19 +1,56 @@
-<div *ngIf="Main">
-    <div class="container text-center">
-        <h1>Turnero</h1>
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <button class="btn btn-primary" (click)="redirectToCustomer()">Soy cliente</button>
-                <button class="btn btn-secondary" (click)="redirectToNoCustomer()">No soy cliente</button>
+<button class="btn btn-lg btn-outline-primary" (click)="show = show == true ? false : true">Mostrar Turno</button>
+
+<hr />
+
+<div *ngIf="show">
+    <div *ngIf="Main">
+        <div class="container text-center">
+            <h1>Turnero</h1>
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <button class="btn btn-primary" (click)="redirectToCustomer()">Soy cliente</button>
+                    <button class="btn btn-secondary" (click)="redirectToNoCustomer()">No soy cliente</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<div *ngIf="ToCustomer">
-    <fn-btn-customer (back)="eventBack()"></fn-btn-customer>
-</div>
-
-<div *ngIf="ToNoCustomer">
-    <fn-btn-no-customer (back)="eventBack()"></fn-btn-no-customer>
+    
+    <div *ngIf="ToCustomer">
+        <div class="text-center">
+            <fn-btn-customer (back)="eventBack()">
+            </fn-btn-customer>
+            <form name="calculator">
+                
+                <p>Ingrese su número de documento</p>
+                <input type="text" name="ans" [(ngModel)]="inputText" value="" disabled>
+                <br>
+                <div class="btn-group">
+                    <input type="button" value="1" class="btn btn-secondary custom-button" (click)="addToInput('1')">
+                    <input type="button" value="2" class="btn btn-secondary custom-button" (click)="addToInput('2')">
+                    <input type="button" value="3" class="btn btn-secondary custom-button" (click)="addToInput('3')">
+                    <input type="button" value="⇐" class="btn btn-secondary custom-button" (click)="deleteLastCharInput()">
+                </div>
+                <br>
+                <div class="btn-group">
+                    <input type="button" value="4" class="btn btn-secondary custom-button" (click)="addToInput('4')">
+                    <input type="button" value="5" class="btn btn-secondary custom-button" (click)="addToInput('5')">
+                    <input type="button" value="6" class="btn btn-secondary custom-button" (click)="addToInput('6')">
+                    <input type="button" value="Enter" class="btn btn-primary custom-button" (click)="sendDocumentNumber()">
+                </div>
+                <br>
+                <div class="btn-group">
+                    <input type="button" value="7" class="btn btn-secondary custom-button" (click)="addToInput('7')">
+                    <input type="button" value="8" class="btn btn-secondary custom-button" (click)="addToInput('8')">
+                    <input type="button" value="9" class="btn btn-secondary custom-button" (click)="addToInput('9')">
+                    <input type="button" value="0" class="btn btn-secondary custom-button" (click)="addToInput('0')">
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+    
+    <div *ngIf="ToNoCustomer">
+        <fn-btn-no-customer (back)="eventBack()"></fn-btn-no-customer>
+    </div>   
 </div>
