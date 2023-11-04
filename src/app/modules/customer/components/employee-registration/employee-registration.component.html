@@ -44,7 +44,7 @@
 					<label for="documentNumber">Documento</label>
 					<input  
 						type="text" formControlName="documentNumber" id="documentNumber" class="form-control" [attr.maxlength]="maxLengthDocument" placeholder="Documento"
-						(input)="onDocumentNumberInput()"/>
+						/>
 						<!-- (input)="onDocumentNumberInput()"/> -->
 					<div *ngIf="documentNumberControl?.invalid && documentNumberControl?.touched" class="text-danger">
 						{{ getDocumentNumberErrorMessage() }}

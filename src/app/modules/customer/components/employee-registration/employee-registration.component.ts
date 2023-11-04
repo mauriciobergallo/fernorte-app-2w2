@@ -28,7 +28,7 @@ export class EmployeeRegistrationComponent  {
 			firstName: ['', [Validators.required, Validators.pattern('^[^0-9]+$')]],
 			lastName: ['', [Validators.required, Validators.pattern('^[^0-9]+$')]],	
 			documentType: [0, Validators.required],
-			documentNumber: ['', Validators.required, Validators.maxLength(this.maxLengthDocument)],
+			documentNumber: ['', [Validators.required, Validators.maxLength(this.maxLengthDocument)]],
 			birthDate:['', Validators.required],
 			personalEmail:['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}')]] ,
 			address:['', Validators.required],
