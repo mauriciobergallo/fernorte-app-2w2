@@ -13,6 +13,7 @@ import { InventoryRoutingModule } from './inventory-routing.module';
 import { SearchStorageTicketComponent } from './components/search-storage-ticket/search-storage-ticket.component';
 import { CurrentInventoryComponent } from './components/current-inventory/current-inventory.component';
 import { ConsultOrderComponent } from './components/consult-order/consult-order/consult-order.component';
+import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ConsultOrderComponent } from './components/consult-order/consult-order/
     DatepickerRangePopupComponent,
     SearchStorageTicketComponent,
     ConsultOrderComponent,
+    ConsultReceptionOrdersComponent,
   ],
 
   providers: [],

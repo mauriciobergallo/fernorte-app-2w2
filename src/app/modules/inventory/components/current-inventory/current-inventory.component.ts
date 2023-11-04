@@ -25,10 +25,6 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     this.fillTable();
   }
 
-
-
-
-  
   private fillTable() {
     this.warehouseService.getLocationsInfo().subscribe({
       next: (resp) => {
