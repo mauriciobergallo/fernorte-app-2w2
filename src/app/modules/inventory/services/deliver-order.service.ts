@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DeilveryOrder } from '../models/deilvery-order';
 import { Observable } from 'rxjs/internal/Observable';
+import { Pagination } from '../models/pagination';
+import { DeilveryOrder } from '../models/deilvery-order';
+import { DeliveryOrderPut } from '../models/delivery-order-put';
+import { catchError, map } from 'rxjs';
+import { DeilveryOrderDetails } from '../models/deilvery-order-details';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +16,46 @@ export class DeliverOrderService {
   
   private apiBaseUrl = 'http://localhost:8080/delivery-orders'
 
-  getDeliveryOrder(orderId: number): Observable<DeilveryOrder> {
+  getDeliveryOrder(orderId: string, currentPage:number): Observable<Pagination> {
+    const url = `${this.apiBaseUrl}/${orderId}/${currentPage}`;
+    return this.http.get<Pagination>(url);
+  }
+
+  getDeliveryOrderById(orderId: number): Observable<DeilveryOrder> {
     const url = `${this.apiBaseUrl}/${orderId}`;
-    return this.http.get<DeilveryOrder>(url);
+    
+    return this.http.get<DeilveryOrder>(url).pipe(
+      map(data => {
+        const deliveryOrder = new DeilveryOrder();
+        deliveryOrder.state = data.state;
+        deliveryOrder.details = data.details.map(detail => {
+          const detailOrder = new DeilveryOrderDetails();
+          detailOrder.product_id = detail.product_id;
+          detailOrder.product_name = detail.product_name;
+          detailOrder.state = detail.state;
+          detailOrder.quantity = detail.quantity;
+          detailOrder.delivered_quantity = detail.delivered_quantity;
+          detailOrder.quantity_delivery = detail.quantity - detail.delivered_quantity;
+          return detailOrder;
+        });
+        deliveryOrder.client = data.client;
+        deliveryOrder.delivery_order_id = data.delivery_order_id;
+        deliveryOrder.created_at = data.created_at;
+        deliveryOrder.sale_order_id = data.sale_order_id;
+        return deliveryOrder;
+      })
+    );
+  }
+  
+
+  updateDeliveryOrderDetails(order: DeliveryOrderPut): Observable<any> {
+    const url = `${this.apiBaseUrl}`;
+    return this.http.put(url, order)
+      .pipe(
+        catchError((error) => {
+          console.error('Error al realizar la petición:', error);
+          return error;
+        })
+      );
   }
 }

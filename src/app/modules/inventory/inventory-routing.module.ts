@@ -5,6 +5,8 @@ import { SearchLocationProductComponent } from './components/search-location-pro
 import {ReceptionOrdersComponent} from './components/reception-orders/reception-orders.component'
 import { SearchStorageTicketComponent } from './components/search-storage-ticket/search-storage-ticket.component';
 import { CurrentInventoryComponent } from './components/current-inventory/current-inventory.component';
+import { ConsultOrderComponent } from './components/consult-order/consult-order/consult-order.component';
+import { DeliveryOrderDetailsComponent } from './components/consult-order/delivery-order-details/delivery-order-details.component';
 
 /*
 const routes: Routes = [
@@ -24,7 +26,11 @@ const routes: Routes = [
     { path: 'locations-product', component: SearchLocationProductComponent },
     { path: 'reception-orders', component: ReceptionOrdersComponent },
     { path: 'storage-tickets', component: SearchStorageTicketComponent },
-    { path: 'current-inventory', component: CurrentInventoryComponent }
+    { path: 'current-inventory', component: CurrentInventoryComponent },
+    { path: 'orders', component: ConsultOrderComponent },
+    { path: 'orders/:id/details', component: DeliveryOrderDetailsComponent } 
+
+
 
 
   ];
