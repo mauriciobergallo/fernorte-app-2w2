@@ -22,6 +22,7 @@ import { UpdateCustomerComponent } from './components/update-customer/update-cus
 import { CategoryComponent } from './components/category/category.component';
 import { CategoryService } from './services/category.service';
 import { CustomDateParserFormatter } from './components/shared/custom-date-formatter';
+import { RoleListComponent } from './components/role-list/role-list.component';
 
 
 
@@ -29,7 +30,7 @@ import { CustomDateParserFormatter } from './components/shared/custom-date-forma
 
 @NgModule({
   declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent,CategoryComponent,
-    LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent],
+    LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent],
   providers: [CategoryService,  
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }, EmployeeService,
     RoleService, TurnService, LoginService, CustomerService],
