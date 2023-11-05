@@ -6,6 +6,9 @@ import { ReceptionOrdersComponent } from './components/reception-orders/receptio
 import { SearchStorageTicketComponent } from './components/search-storage-ticket/search-storage-ticket.component';
 import { CurrentInventoryComponent } from './components/current-inventory/current-inventory.component';
 import { ConsultOrderComponent } from './components/consult-order/consult-order/consult-order.component';
+import { DeliveryOrderDetailsComponent } from './components/consult-order/delivery-order-details/delivery-order-details.component';
+import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
+
 
 /*
 const routes: Routes = [
@@ -27,6 +30,9 @@ const routes: Routes = [
   { path: 'storage-tickets', component: SearchStorageTicketComponent },
   { path: 'current-inventory', component: CurrentInventoryComponent },
   { path: 'delivery-orders', component: ConsultOrderComponent },
+  { path: 'orders', component: ConsultOrderComponent },
+  { path: 'orders/:id/details', component: DeliveryOrderDetailsComponent },
+  { path: 'consult-receptions', component: ConsultReceptionOrdersComponent },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

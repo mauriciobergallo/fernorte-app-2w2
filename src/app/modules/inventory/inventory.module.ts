@@ -15,6 +15,13 @@ import { CurrentInventoryComponent } from './components/current-inventory/curren
 import { ConsultOrderComponent } from './components/consult-order/consult-order/consult-order.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
+import { StateIconPipePipe } from './pipes/state-icon-pipe.pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DeliveryOrderDetailsComponent } from './components/consult-order/delivery-order-details/delivery-order-details.component';
+
+import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
+
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -25,7 +32,13 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     DatepickerRangePopupComponent,
     SearchStorageTicketComponent,
     ConsultOrderComponent,
+
     SidebarComponent,
+
+    StateIconPipePipe,
+    DeliveryOrderDetailsComponent,
+    ConsultReceptionOrdersComponent,
+
   ],
 
   providers: [],
@@ -35,6 +48,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     HttpClientModule,
     NgbDatepickerModule,
     InventoryRoutingModule,
+    NgbModule
   ],
   exports: [HomeComponent],
 })

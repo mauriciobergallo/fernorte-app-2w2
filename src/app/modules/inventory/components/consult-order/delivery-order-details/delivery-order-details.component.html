@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="(order) as orderData">
+          <div class="row">
+            <div class="col-md-6">
+              <table class="w-100">
+                <tr>
+                  <td>
+                    <h5 class="card-title">Orden de compra</h5>
+                    <p>N#: {{ orderData.sale_order_id}}</p>
+                    <p>Estado: {{ getStatusText(orderData.state) }}</p>
+                    <p>Fecha de Creación: {{ orderData.created_at }}</p>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-md-6 text-right">
+              <table class="w-100">
+                <tr>
+                  <td class="info-cliente">
+                    <h5>Información del Cliente</h5>
+                    <p>Nombre del Cliente: {{ orderData.client?.first_name }} {{ orderData.client?.last_name }}</p>
+                    <p>Documento: {{ orderData.client?.document_number }}</p>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+  
+    
+          <h5>Detalles del Producto</h5>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th class="text-center">Nombre del producto</th>
+                <th class="text-center">Cantidad total</th>
+                <th class="text-center">Cantidad restante</th>
+                <th class="text-center">Cantidad a entregar</th>
+                <th class="text-center">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of orderData.details">
+                <td class="text-center">{{ detail.product_name }}</td>
+                <td class="text-center">{{ detail.quantity }}</td>
+                <td class="text-center">{{ detail.quantity - detail.delivered_quantity }} </td>
+                <td class="text-center">
+                  <input [hidden]="detail.state == 'DELIVERED' "class="form-control mx-auto" [(ngModel)]="detail.quantity_delivery" style="width: 50%;" type="number" min="0" (input)="limitInputValue($event, (detail.quantity - detail.delivered_quantity))">
+                </td>                
+                  <td class="text-center" style="font-size: 20px;">
+                    <i [class]="detail.state | stateIconPipe" [ngbTooltip]="getTooltipText(detail.state)"></i>
+                  </td>              
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="float: right;">
+            <button class="btn btn-secondary" style="margin-right: 10px;" (click)="confirmCancellation()">Cancelar</button>
+            <button class="btn btn-primary" (click)="save()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
