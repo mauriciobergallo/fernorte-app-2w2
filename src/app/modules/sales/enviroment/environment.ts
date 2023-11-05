@@ -7,6 +7,8 @@ export const environment = {
   urlBase:"http://localhost:3000",
   urlProductBase:"http://localhost:8080",
   urlClientsBase:"http://localhost:8081",
+  urlTurnBase:"http://localhost:8081",
+  urlEmployeBase:"http://localhost:8081",
 
   listSearch: [] as any[],
 };
