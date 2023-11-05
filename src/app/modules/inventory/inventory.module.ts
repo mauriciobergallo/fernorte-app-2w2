@@ -13,9 +13,13 @@ import { InventoryRoutingModule } from './inventory-routing.module';
 import { SearchStorageTicketComponent } from './components/search-storage-ticket/search-storage-ticket.component';
 import { CurrentInventoryComponent } from './components/current-inventory/current-inventory.component';
 import { ConsultOrderComponent } from './components/consult-order/consult-order/consult-order.component';
+
 import { StateIconPipePipe } from './pipes/state-icon-pipe.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeliveryOrderDetailsComponent } from './components/consult-order/delivery-order-details/delivery-order-details.component';
+
+import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +33,7 @@ import { DeliveryOrderDetailsComponent } from './components/consult-order/delive
     ConsultOrderComponent,
     StateIconPipePipe,
     DeliveryOrderDetailsComponent,
+    ConsultReceptionOrdersComponent,
   ],
 
   providers: [],
