@@ -17,11 +17,56 @@ import { BillingComponent } from './components/billing/billing.component';
 import { PaymentMethodComponent } from './components/payment-method/payment-method.component';
 import { CreatePaymentComponent } from './components/create-payment/create-payment.component';
 import { ClientProvider } from './services/clients/clientProvider';
+import { RouterModule } from '@angular/router';
+import { RouterChildModule } from './router-child.module';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { PaymentMethodNavComponent } from './components/payment-method-nav/payment-method-nav.component';
+import { SaleOrderNavComponent } from './components/sale-order-nav/sale-order-nav.component';
+import { BillingNavComponent } from './components/billing-nav/billing-nav.component';
+import { ReportNavComponent } from './components/report-nav/report-nav.component';
+import { TurnProvider } from './services/turns/TurnProvider';
 
 @NgModule({
-  declarations: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, CalcularImpuestosPipe, CalcularMontoTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent, SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent],
-  providers: [SaleOrderProvider,ProductProvider,ClientProvider],
-  imports: [CommonModule,FormsModule],
-  exports: [HomeComponent,SaleOrderComponent, CalcularTotalPipe, SaleOrderSearchHandlerComponent,SaleOrderSearchFilterComponent, SaleOrderSearchListComponent, BillingComponent, PaymentMethodComponent,CreatePaymentComponent],
+  declarations: [HomeComponent,
+    SaleOrderComponent, 
+    CalcularTotalPipe, 
+    CalcularImpuestosPipe, 
+    CalcularMontoTotalPipe, 
+    SaleOrderSearchHandlerComponent,
+    SaleOrderSearchFilterComponent, 
+    SaleOrderSearchListComponent, 
+    BillingComponent, 
+    PaymentMethodComponent,
+    CreatePaymentComponent,
+    SidenavComponent,
+    PaymentMethodNavComponent,
+    SaleOrderNavComponent,
+    BillingNavComponent,
+    ReportNavComponent],
+
+  providers: [SaleOrderProvider,
+    ProductProvider,
+    ClientProvider,
+    TurnProvider],
+
+  imports: [CommonModule,
+    FormsModule, 
+    RouterModule, 
+    RouterChildModule],
+
+  exports: [HomeComponent,
+    SaleOrderComponent, 
+    CalcularTotalPipe, 
+    SaleOrderSearchHandlerComponent,
+    SaleOrderSearchFilterComponent, 
+    SaleOrderSearchListComponent, 
+    BillingComponent, 
+    PaymentMethodComponent,
+    CreatePaymentComponent,
+    SidenavComponent,
+    PaymentMethodNavComponent,
+    SaleOrderNavComponent,
+    BillingNavComponent,
+    ReportNavComponent],
 })
 export class SalesModule {}
