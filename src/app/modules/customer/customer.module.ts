@@ -23,6 +23,7 @@ import { CategoryComponent } from './components/category/category.component';
 import { CategoryService } from './services/category.service';
 import { CustomDateParserFormatter } from './components/shared/custom-date-formatter';
 import { RoleListComponent } from './components/role-list/role-list.component';
+import { CaseConversionPipe } from './pipes/case-conversion.pipe';
 
 
 
@@ -30,7 +31,7 @@ import { RoleListComponent } from './components/role-list/role-list.component';
 
 @NgModule({
   declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent,CategoryComponent,
-    LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent],
+    LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent, CaseConversionPipe],
   providers: [CategoryService,  
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }, EmployeeService,
     RoleService, TurnService, LoginService, CustomerService],
