@@ -14,7 +14,7 @@ export class BtnNoCustomerComponent implements OnInit {
 
   ngOnInit() {
     this.turnService.postData().subscribe((response: any) => {
-      this.numberTurn = response;});
+      this.numberTurn = response.number;});
     console.log(this.numberTurn);
 
     setTimeout(() => {
