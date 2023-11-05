@@ -6,6 +6,7 @@ import { CustomerService } from '../../services/customer.service';
 import { DatePipe } from '@angular/common';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 
 @Component({
   selector: 'fn-update-customer',
@@ -28,7 +29,6 @@ currentYear = new Date().getFullYear();
 
 
 customer: CustomerRequest = {
-//idCustomer: 0,
 firstName:"",
 lastName:"",
 companyName: "",
@@ -46,7 +46,7 @@ customerType: ""
 
 	closeResult = '';
 
-	constructor(private modalService: NgbModal, private customerService: CustomerService) {
+	constructor(private modalService: NgbModal, private customerService: CustomerService, private conversion: CaseConversionPipe) {
 
 				    // Obtén la fecha actual
 					const currentDate = new Date();
@@ -76,7 +76,7 @@ customerType: ""
 	loadCustomerData(idCustomer: number) {
 		this.customerService.getCustomerById(idCustomer).subscribe(
 		  (customerData) => {
-			let transformData= this.convertSnakeToCamel(customerData);
+			let transformData= this.conversion.toCamelCase(customerData);
 			this.customer = transformData;
 			console.log("CUSTOMER", this.customer);
 			
@@ -102,24 +102,9 @@ customerType: ""
 				console.log("customer FORM",this.customerForm);
 				
 				console.log(this.formattedBirthDate)
-				debugger;
-				let newCustomer: CustomerRequest = {
-					
-					//idCustomer: this.customer.idCustomer,
-					firstName: this.customer.firstName,
-					lastName: this.customer.lastName,
-					companyName: this.customer.companyName,
-					ivaCondition: this.customer.ivaCondition,
-					birthDate: new Date().toISOString(),	
-					idDocumentType: this.customer.idDocumentType ,
-					documentNumber: this.customer.documentNumber,
-					address: this.customer.address,
-					phoneNumber: this.customer.phoneNumber,
-					email: this.customer.email,
-					customerType: this.customer.customerType
-				}
-				console.log("NEW CUSTOMER", newCustomer);
-				let customerEnSnake = this.camelToSnake(newCustomer);
+				this.customer.birthDate = this.formattedBirthDate
+				console.log("NEW CUSTOMER", this.customer);
+				let customerEnSnake = this.conversion.toSnakeCase(this.customer);
 				console.log("CUSTOMER EN SNAKE", customerEnSnake);
 				this.customerService.putCustomer(customerEnSnake, this.idCustomer).subscribe(
 					(response) => {
@@ -172,38 +157,6 @@ customerType: ""
 		console.log("customerEE", customerForm);
 	}
 
-	camelToSnake(obj: any): any {
-        const snakeObj: any = {};
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                const snakeKey = key.replace(/([A-Z])/g, "_$1").toLowerCase();
-                snakeObj[snakeKey] = obj[key];
-            }
-        }
-        return snakeObj;
-    }
-  
-	
-	
-	 convertSnakeToCamel = (obj: any): any => {
-		if (obj === null || typeof obj !== 'object') {
-		  return obj;
-		}
-	  
-		if (Array.isArray(obj)) {
-		  return obj.map(this.convertSnakeToCamel);
-		}
-	  
-		const camelObj: { [key: string]: any } = {}; // Anotación de tipo
-	  
-		for (const key in obj) {
-		  if (obj.hasOwnProperty(key)) {
-			const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
-			camelObj[camelKey] = this.convertSnakeToCamel(obj[key]);
-		  }
-		}
-		return camelObj;
-	  };
 	  
 
 }
