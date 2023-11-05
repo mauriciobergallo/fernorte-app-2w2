@@ -1,24 +1,34 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SaleOrderModel } from '../../models/SaleOrderModel';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { SaleOrderServiceService } from '../../services/salesOrder/sale-order-service.service';
 import { Observable, Subscription } from 'rxjs';
 import { SaleOrderOk } from '../../models/SaleOrderOk';
 import { SaleOrderApi } from '../../models/SaleModelApi';
 import { ProductApi } from '../../models/ProductApi';
 import { ProductOk } from '../../models/ProductOk';
+import { NgModel, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'fn-sale-order-search-list',
   templateUrl: './sale-order-search-list.component.html',
   styleUrls: ['./sale-order-search-list.component.css']
 })
-export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
+export class SaleOrderSearchListComponent implements OnInit, OnDestroy, OnChanges {
   saleOrdersList: SaleOrderApi[] = [];
   saleOrdersListOk: SaleOrderOk[]=[];
+
+  idOrder:string="0";
+  doc:string="0";
+  fromDate:string="";
+  toDate:string="";
+  stateOrder:string="";
+  filters: Map<string, string> = new Map();
 
   private subscriptions = new Subscription();
 
   constructor(private saleOrderServiceService: SaleOrderServiceService) {
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    throw new Error('Method not implemented.');
   }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
@@ -31,7 +41,6 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
           for(let item of this.saleOrdersList) {
             this.saleOrdersListOk.push(this.mapSaleOrder(item))
           }
-          console.log(this.saleOrdersList)
         }
       )
     )
@@ -44,6 +53,36 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   //     }
   //   )
   // }
+  
+  // onSendNOrder(form : NgForm){
+  //   if(form.valid) {
+  //     this.saleOrderService.getSaleOrdersByIdOrder(form.value.nOrder)
+  //   }
+  // }
+
+  onSendFilters(form : NgForm) {
+    if(form.valid) {
+      this.filters.set("idOrder", form.value.idOder)
+      this.filters.set("doc", form.value.doc)
+      this.filters.set("fromDate", form.value.fromDate)
+      this.filters.set("toDate", form.value.toDate)
+      this.filters.set("stateOrder", form.value.stateOrder)
+    }
+    debugger
+    //this.subscriptions.add(
+      this.saleOrderServiceService.getSaleOrdesByFilter(this.filters).subscribe(
+        ( response : SaleOrderApi[]) => {
+          debugger
+          this.saleOrdersList = response;
+          for(let item of this.saleOrdersList) {
+
+            this.saleOrdersListOk.push(this.mapSaleOrder(item))
+          }
+          console.log(this.saleOrdersList);
+        }
+      )
+    //)
+  }
 
   mapSaleOrder(saleOrder: SaleOrderApi): SaleOrderOk {
     const { id_sale_order, id_seller, id_client, date_of_issue, date_of_expiration, state_sale_order, detail_sales_order } = saleOrder;
