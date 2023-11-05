@@ -9,6 +9,7 @@ import { ConsultOrderComponent } from './components/consult-order/consult-order/
 import { DeliveryOrderDetailsComponent } from './components/consult-order/delivery-order-details/delivery-order-details.component';
 import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
 
+
 /*
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'reception-orders', component: ReceptionOrdersComponent },
   { path: 'storage-tickets', component: SearchStorageTicketComponent },
   { path: 'current-inventory', component: CurrentInventoryComponent },
+  { path: 'delivery-orders', component: ConsultOrderComponent },
   { path: 'orders', component: ConsultOrderComponent },
   { path: 'orders/:id/details', component: DeliveryOrderDetailsComponent },
   { path: 'consult-receptions', component: ConsultReceptionOrdersComponent },
