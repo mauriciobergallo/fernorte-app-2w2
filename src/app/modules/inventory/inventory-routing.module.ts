@@ -6,7 +6,6 @@ import { ReceptionOrdersComponent } from './components/reception-orders/receptio
 import { SearchStorageTicketComponent } from './components/search-storage-ticket/search-storage-ticket.component';
 import { CurrentInventoryComponent } from './components/current-inventory/current-inventory.component';
 import { ConsultOrderComponent } from './components/consult-order/consult-order/consult-order.component';
-import { HomeComponent } from './components/home/home.component';
 
 /*
 const routes: Routes = [
