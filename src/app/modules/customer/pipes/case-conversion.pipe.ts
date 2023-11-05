@@ -5,7 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CaseConversionPipe implements PipeTransform {
 
-  transform(obj: any): any {
+  transform(obj: any, ...args: unknown[]): any {
+    return null;
+  }
+
+  toSnakeCase(obj: any, ...args: unknown[]): any {
     const snakeObj: any = {};
     for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
@@ -15,5 +19,25 @@ export class CaseConversionPipe implements PipeTransform {
     }
     return snakeObj;
   }
+
+  toCamelCase(obj: any, ...args: unknown[]): any {
+		if (obj === null || typeof obj !== 'object') {
+		  return obj;
+		}
+	  
+		if (Array.isArray(obj)) {
+		  return obj.map(this.toCamelCase);
+		}
+	  
+		const camelObj: { [key: string]: any } = {}; 
+	  
+		for (const key in obj) {
+		  if (obj.hasOwnProperty(key)) {
+			const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+			camelObj[camelKey] = this.toCamelCase(obj[key]);
+		  }
+		}
+		return camelObj;
+	  };
 
 }

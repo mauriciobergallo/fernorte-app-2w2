@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from '../../services/customer.service';
 import { DatePipe } from '@angular/common';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 
 
 @Component({
@@ -26,7 +27,6 @@ currentYear = new Date().getFullYear();
 
 
 customer: CustomerRequest = {
-//idCustomer:0,
 firstName:"",
 lastName:"",
 companyName: "",
@@ -44,7 +44,7 @@ customerType: ""
 
 	closeResult = '';
 
-	constructor(private modalService: NgbModal, private customerService: CustomerService) {
+	constructor(private modalService: NgbModal, private customerService: CustomerService, private conversion: CaseConversionPipe) {
 
 
 
@@ -75,21 +75,8 @@ customerType: ""
 				console.log("customer FORM",this.customerForm);
 				
 				console.log(this.formattedBirthDate)
-				let newCustomer: any = {
-					firstName: this.customer.firstName,
-					lastName: this.customer.lastName,
-					companyName: this.customer.companyName,
-					ivaCondition: this.customer.ivaCondition,
-					birthDate: this.formattedBirthDate,
-					
-					idDocumentType: this.customer.idDocumentType ,
-					documentNumber: this.customer.documentNumber,
-					address: this.customer.address,
-					phoneNumber: this.customer.phoneNumber,
-					email: this.customer.email,
-					customerType: this.customer.customerType
-				}
-				let customerSnake = this.camelToSnake(newCustomer);
+				this.customer.birthDate = this.formattedBirthDate;
+				let customerSnake = this.conversion.transform(this.customer);
 
 				this.customerService.postCustomer(customerSnake).subscribe(
 					(response) => {
@@ -161,15 +148,5 @@ customerType: ""
 		console.log("customerEE", customerForm);
 	}
 
-	camelToSnake(obj: any): any {
-        const snakeObj: any = {};
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                const snakeKey = key.replace(/([A-Z])/g, "_$1").toLowerCase();
-                snakeObj[snakeKey] = obj[key];
-            }
-        }
-        return snakeObj;
-    }
 
 }

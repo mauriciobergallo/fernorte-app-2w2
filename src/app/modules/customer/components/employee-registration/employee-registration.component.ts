@@ -5,6 +5,7 @@ import { EmployeeService } from '../../services/employee.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { FormBuilder, FormGroup, FormsModule, Validators, AbstractControl  } from '@angular/forms';
+import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 @Component({
   selector: 'fn-employee-registration',
   templateUrl: './employee-registration.component.html',
@@ -22,7 +23,7 @@ export class EmployeeRegistrationComponent  {
 	formattedBirthDate: string = '';
 
 	employeeForm: FormGroup;
-	constructor(private modalService: NgbModal, private employeeService: EmployeeService, private fb: FormBuilder) {
+	constructor(private modalService: NgbModal, private employeeService: EmployeeService, private fb: FormBuilder, private conversion: CaseConversionPipe) {
 
 		this.employeeForm = this.fb.group({
 			firstName: ['', [Validators.required, Validators.pattern('^[^0-9]+$')]],
@@ -205,7 +206,7 @@ personalEmail:""
 					personalEmail: this.employeeForm.value.personalEmail
 				}
 
-				let employeeEnSnake = this.camelToSnake(newemployee);
+				let employeeEnSnake = this.conversion.toSnakeCase(newemployee);
 				this.employeeService.postEmployee(employeeEnSnake).subscribe(
 
 
@@ -232,38 +233,6 @@ personalEmail:""
 		console.log("EMPLOYEEEE", employeeForm);
 	}
 
-
-	camelToSnake(obj: any): any {
-        const snakeObj: any = {};
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                const snakeKey = key.replace(/([A-Z])/g, "_$1").toLowerCase();
-                snakeObj[snakeKey] = obj[key];
-            }
-        }
-        return snakeObj;
-    }
   
-	
-	
-	 convertSnakeToCamel = (obj: any): any => {
-		if (obj === null || typeof obj !== 'object') {
-		  return obj;
-		}
-	  
-		if (Array.isArray(obj)) {
-		  return obj.map(this.convertSnakeToCamel);
-		}
-	  
-		const camelObj: { [key: string]: any } = {}; // Anotación de tipo
-	  
-		for (const key in obj) {
-		  if (obj.hasOwnProperty(key)) {
-			const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
-			camelObj[camelKey] = this.convertSnakeToCamel(obj[key]);
-		  }
-		}
-		return camelObj;
-	  };
   
 }

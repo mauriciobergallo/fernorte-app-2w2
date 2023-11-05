@@ -31,10 +31,10 @@ import { CaseConversionPipe } from './pipes/case-conversion.pipe';
 
 @NgModule({
   declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent,CategoryComponent,
-    LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent, CaseConversionPipe],
+    LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent],
   providers: [CategoryService,  
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }, EmployeeService,
-    RoleService, TurnService, LoginService, CustomerService],
+    RoleService, TurnService, LoginService, CustomerService, CaseConversionPipe],
   imports: [CommonModule, BrowserModule, ReactiveFormsModule, 
     NgbModule, FormsModule, HttpClientModule, ReactiveFormsModule],
   exports: [HomeComponent],
