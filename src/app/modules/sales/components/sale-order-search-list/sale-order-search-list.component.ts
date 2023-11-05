@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SaleOrderServiceService } from '../../services/salesOrder/sale-order-service.service';
 import { Observable, Subscription } from 'rxjs';
 import { SaleOrderOk } from '../../models/SaleOrderOk';
@@ -12,7 +12,7 @@ import { NgModel, NgForm } from '@angular/forms';
   templateUrl: './sale-order-search-list.component.html',
   styleUrls: ['./sale-order-search-list.component.css']
 })
-export class SaleOrderSearchListComponent implements OnInit, OnDestroy, OnChanges {
+export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   saleOrdersList: SaleOrderApi[] = [];
   saleOrdersListOk: SaleOrderOk[]=[];
 
@@ -27,9 +27,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy, OnChange
 
   constructor(private saleOrderServiceService: SaleOrderServiceService) {
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    throw new Error('Method not implemented.');
-  }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
@@ -62,26 +60,24 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy, OnChange
 
   onSendFilters(form : NgForm) {
     if(form.valid) {
-      this.filters.set("idOrder", form.value.idOder)
+      this.filters.set("idOrder", form.value.idOrder)
       this.filters.set("doc", form.value.doc)
       this.filters.set("fromDate", form.value.fromDate)
       this.filters.set("toDate", form.value.toDate)
       this.filters.set("stateOrder", form.value.stateOrder)
     }
-    debugger
-    //this.subscriptions.add(
+    this.saleOrdersListOk = [];
+    this.subscriptions.add(
       this.saleOrderServiceService.getSaleOrdesByFilter(this.filters).subscribe(
         ( response : SaleOrderApi[]) => {
-          debugger
           this.saleOrdersList = response;
           for(let item of this.saleOrdersList) {
-
             this.saleOrdersListOk.push(this.mapSaleOrder(item))
           }
           console.log(this.saleOrdersList);
         }
       )
-    //)
+    )
   }
 
   mapSaleOrder(saleOrder: SaleOrderApi): SaleOrderOk {

@@ -18,11 +18,23 @@ export class SaleOrderServiceService {
 
   saleOrderList = new Observable<SaleOrderApi[]>();
 
-  idOrder:string="";
-  doc:string="";
-  fromDate:string="";
-  toDate:string="";
-  stateOrder:string="";
+  filters : Map<string, string> = new Map<string, string>();
+  get idOrder() {
+    return this.filters.get("idOrder")
+  }
+
+  get doc() {
+    return this.filters.get("doc")
+  } 
+  get fromDate() {
+    return this.filters.get("fromDate")
+  } 
+  get toDate() {
+    return this.filters.get("toDate")
+  } 
+  get stateOrder() {
+    return this.filters.get("stateOrder")
+  } 
 
   constructor(private saleOrderProvider: SaleOrderProvider, 
     private http : HttpClient) { }
@@ -129,27 +141,27 @@ export class SaleOrderServiceService {
   getSaleOrdesByFilter(filters : Map<string, string>): Observable<SaleOrderApi[]> {
     debugger
     let url:string = '';
-    this.onReceiveFilters(filters);
-    if (this.idOrder != '' && this.idOrder != undefined) {
-      url = `http://localhost:8080/sales-order?id_order=${this.idOrder}`
+    this.filters = filters
+    if (this.idOrder != '0' && this.idOrder != undefined) {
+      url = `http://localhost:8080/sales-orders?id_order=${this.idOrder}`
     } else if (this.doc != '0' && this.doc != null) {
-      url = `http://localhost:8080/sales-order?doc_client=${this.doc}`
+      url = `http://localhost:8080/sales-orders?doc_client=${this.doc}`
     } else if (this.stateOrder != '' && this.stateOrder != null) {
-      url = `http://localhost:8080/sales-order?state_order=${this.stateOrder}`
+      url = `http://localhost:8080/sales-orders?state_sale_order=${this.stateOrder}`
     } else {
-      url = `http://localhost:8080/sales-order?from_date=${this.fromDate}&to_date=${this.toDate}`;
+      url = `http://localhost:8080/sales-orders?from_date=${this.fromDate}&to_date=${this.toDate}`;
     }
     this.saleOrderList = this.http.get<SaleOrderApi[]>(url);
     return this.saleOrderList
   }
 
-  onReceiveFilters(filters : Map<string, string>) {
-    this.doc = filters.get("doc")!
-    this.idOrder = filters.get("idOrder")!
-    this.fromDate = filters.get("fromDate")!
-    this.toDate = filters.get("toDate")!
-    this.stateOrder = filters.get("state")!
-  }
+  // onReceiveFilters(filters : Map<string, string>) {
+  //   this.doc = filters.get("doc")!
+  //   this.idOrder = filters.get("idOrder")!
+  //   this.fromDate = filters.get("fromDate")!
+  //   this.toDate = filters.get("toDate")!
+  //   this.stateOrder = filters.get("state")!
+  // }
 
   ValidarPresupuestoOOrdenVenta(saleOrder: SaleOrderModel, carrito: ProductModel[]): boolean {
     return saleOrder.detail_sales_order.some(x => x.quantity > carrito.find(y => y.idProduct == x.id_product)!.stockQuantity)
