@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule,Routes } from '@angular/router';
-import { SaleOrderComponent } from './components/sale_order/sale-order.component';
-import { BillingComponent } from './components/billing/billing.component';
-import { PaymentMethodComponent } from './components/payment-method/payment-method.component';
 import { HomeComponent } from './components/home/home.component';
 import { PaymentMethodNavComponent } from './components/payment-method-nav/payment-method-nav.component';
+import { SaleOrderNavComponent } from './components/sale-order-nav/sale-order-nav.component';
+import { BillingNavComponent } from './components/billing-nav/billing-nav.component';
+import { ReportNavComponent } from './components/report-nav/report-nav.component';
 
 
 const childRoutes: Routes = [
@@ -13,9 +13,9 @@ const childRoutes: Routes = [
     component: HomeComponent,
     children: [
       { path: '', redirectTo: 'report', pathMatch: 'full' }, 
-      { path: 'report', component: SaleOrderComponent },
-      { path: 'sale-order', component: SaleOrderComponent },
-      { path: 'billing', component: BillingComponent },
+      { path: 'report', component: ReportNavComponent },
+      { path: 'sale-order', component: SaleOrderNavComponent },
+      { path: 'billing', component: BillingNavComponent },
       { path: 'payment-method', component: PaymentMethodNavComponent },
     ],
   },

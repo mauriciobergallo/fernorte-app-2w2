@@ -52,7 +52,6 @@
     </symbol>     
     </svg>
     </head>
-    <body>
     <div class="main-container d-flex">
     <div class="sidebar" id="side_nav">
         <div
@@ -82,7 +81,7 @@
                         <svg class="bi pe-none me-2" width="16" height="16">
                             <use xlink:href="#collection"></use>
                         </svg>
-                        Presupuesto
+                        Orden de venta
                     </a>
                 </li>
                 <li class="nav-item">
@@ -104,17 +103,22 @@
             </ul>
             <hr/>
             <div class="row">
-                <div class="d-flex justify-content-start align-items-center col-6">
-                    <label class=""><b>Turno : {{turnNumber}}</b> </label>
-                    </div>
-                    <div class="d-flex justify-content-end align-items-center col-6">
-
-                    <button type="button" class="btn btn-secondary">Siguiente</button>
+                <div class="d-flex justify-content-center align-items-center">
+                    <p class=""><b>Turno : {{turn.number}}</b> </p>
+                </div>
+                <br>
+                <br>
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-secondary" (click)="clearTurn()" id="btnCancel"[disabled]="cancelBtn">Cancelar</button>
+                        <button type="button" class="btn btn-primary" (click)="nextTurn()" id="btnNext"[disabled]="nextBtn">Siguiente</button>
+                    </div>  
+                    
                 </div>
             </div>                   
             <hr/>
-            <div class="d-flex justify-content-start">
-                <label class=""><b>{{rol}} : {{userName}}  </b> </label>
+            <div class="d-flex justify-content-center">
+                <p class=""><b>{{rol}} : {{userName}}  </b> </p>
             </div>
             <hr>
             <div class="btn-group pb-5" role="group" aria-label="Basic outlined example">
@@ -126,8 +130,6 @@
         <router-outlet></router-outlet>
     </div>
 </div>  
-
-    </body>
 
 
 

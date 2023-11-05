@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-payment-method-nav',
-  templateUrl: './payment-method-nav.component.html',
-  styleUrls: ['./payment-method-nav.component.css']
+  selector: 'app-report-nav',
+  templateUrl: './report-nav.component.html',
+  styleUrls: ['./report-nav.component.css']
 })
-export class PaymentMethodNavComponent implements OnInit {
+export class ReportNavComponent implements OnInit {
 
   activeTab:string="buscar"
   regist:boolean=false
