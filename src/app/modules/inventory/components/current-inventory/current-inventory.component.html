@@ -1,28 +1,28 @@
 <div class="text-center">
-    <h1>Current Inventory list :</h1>
+  <h1>Inventario actual</h1>
 </div>
 
 <div class="container mt-4">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Zone</th>
-                <th scope="col">Section</th>
-                <th scope="col">Space</th>
-                <th scope="col">Current quantity</th>
-                <th scope="col">Max Capacity</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let locationInfo of locationInfoList">
-                <td>{{ locationInfo.product_name }}</td>
-                <td>{{ locationInfo.location.zone }}</td>
-                <td>{{ locationInfo.location.section }}</td>
-                <td>{{ locationInfo.location.space }}</td>
-                <td>{{ locationInfo.quantity }}</td>
-                <td>{{ locationInfo.max_capacity }}</td>
-            </tr>
-        </tbody>
-    </table>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Producto</th>
+        <th scope="col">Zona</th>
+        <th scope="col">Seccion</th>
+        <th scope="col">Espacio</th>
+        <th scope="col">Cantidad actual</th>
+        <th scope="col">Maxima capacidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let locationInfo of locationInfoList">
+        <td>{{ locationInfo.product_name }}</td>
+        <td>{{ locationInfo.location.zone }}</td>
+        <td>{{ locationInfo.location.section }}</td>
+        <td>{{ locationInfo.location.space }}</td>
+        <td>{{ locationInfo.quantity }}</td>
+        <td>{{ locationInfo.max_capacity }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

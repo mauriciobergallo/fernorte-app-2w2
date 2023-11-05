@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
-import { ReceptionOrdersComponent } from './components/reception-orders/reception-orders.component';
 import { SearchLocationProductComponent } from './components/search-location-product/search-location-product.component';
 import { SearchInventoryMovementsComponent } from './components/search-inventory-movements/search-inventory-movements.component';
 import { DatepickerRangePopupComponent } from './components/datepicker-range-popup/datepicker-range-popup.component';
@@ -21,12 +20,10 @@ import { DeliveryOrderDetailsComponent } from './components/consult-order/delive
 
 import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
 
-
 @NgModule({
   declarations: [
     HomeComponent,
     CurrentInventoryComponent,
-    ReceptionOrdersComponent,
     SearchLocationProductComponent,
     SearchInventoryMovementsComponent,
     DatepickerRangePopupComponent,
@@ -38,7 +35,6 @@ import { ConsultReceptionOrdersComponent } from './components/consult-reception-
     StateIconPipePipe,
     DeliveryOrderDetailsComponent,
     ConsultReceptionOrdersComponent,
-
   ],
 
   providers: [],
@@ -48,7 +44,7 @@ import { ConsultReceptionOrdersComponent } from './components/consult-reception-
     HttpClientModule,
     NgbDatepickerModule,
     InventoryRoutingModule,
-    NgbModule
+    NgbModule,
   ],
   exports: [HomeComponent],
 })

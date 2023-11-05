@@ -102,7 +102,7 @@
 </head>
 
 <body>
-  <div class="main-container d-flex">
+  <div class="main-container">
     <div class="sidebar" id="side_nav">
       <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidenav sidebar" style="width: 280px">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
@@ -114,7 +114,7 @@
         <hr />
         <ul class="nav nav-pills flex-column mb-auto list-unstyled">
           <li class="nav-item active">
-            <a class="nav-link link-dark d-block" routerLink="/search-movements">
+            <a class="nav-link link-dark d-block" routerLink="/inventory/search-movements">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#speedometer2"></use>
               </svg>
@@ -122,7 +122,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link link-dark d-block" routerLink="/current-inventory">
+            <a class="nav-link link-dark d-block" routerLink="/inventory/current-inventory">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#people-circle"></use>
               </svg>
@@ -130,7 +130,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link link-dark d-block" routerLink="/reception-orders">
+            <a class="nav-link link-dark d-block" routerLink="/inventory/reception-orders">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#table"></use>
               </svg>
@@ -138,7 +138,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link link-dark d-block" routerLink="/storage-tickets">
+            <a class="nav-link link-dark d-block" routerLink="/inventory/storage-tickets">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#table"></use>
               </svg>
@@ -146,7 +146,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link link-dark d-block" routerLink="/delivery-orders">
+            <a class="nav-link link-dark d-block" routerLink="/inventory/orders">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#table"></use>
               </svg>
@@ -154,7 +154,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link link-dark d-block" routerLink="/locations-product">
+            <a class="nav-link link-dark d-block" routerLink="/inventory/locations-product">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#table"></use>
               </svg>
@@ -165,7 +165,8 @@
         <hr />
       </div>
     </div>
-    <div>
+    <div class="content">
       <router-outlet></router-outlet>
     </div>
   </div>
+</body>

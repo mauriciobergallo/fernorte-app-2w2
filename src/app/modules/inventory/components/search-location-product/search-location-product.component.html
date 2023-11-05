@@ -1,83 +1,85 @@
 <section class="container">
-    <form #searchForm="ngForm" class="mt-4 ">
+  <form #searchForm="ngForm" class="mt-4 ">
 
-        <h1>Buscar ubicación de producto</h1>
-        <div class="form-group">
-            <label for="productCodeOrName">Nombre o código del producto</label>
-            <input  type="text" class="form-control" id="productCodeOrName" [(ngModel)]="productCodeOrName" required
-            name="productCodeOrName"   #controlCodeOrName="ngModel" (input)="onInput($event)">
-        </div>
-        <div class="alert alert-warning alert-dismissible fade show" role="alert"
-            *ngIf="(controlCodeOrName.getError('required') && !controlCodeOrName.pristine)">
-            <strong class="text-danger">Codigo o nombre del producto es requerido</strong>
-        </div>
-        <div class="alert alert-warning alert-dismissible fade show" role="alert"
-        *ngIf="(!controlCodeOrName.pristine && !findProduct)">
-        <strong class="text-danger">Producto no localizado</strong>
+    <h1>Ubicación de producto</h1>
+    <div class="form-group">
+      <label for="productCodeOrName">Nombre o código del producto</label>
+      <input type="text" class="form-control" id="productCodeOrName" [(ngModel)]="productCodeOrName" required
+        name="productCodeOrName" #controlCodeOrName="ngModel" (input)="onInput($event)">
     </div>
-        <div class="form-group mt-2 ">
-            <button type="button" class="btn btn-primary"
-            [disabled]="searchForm.invalid" (click)="onSearch(searchForm)">Buscar</button>
-        </div>
-    </form>
-
-    <div class="card text-center">
-        <div class="card-header">
-          Ubicacion de {{this.locationInfo.product_name}}
-        </div>
-        <div class="card-body">
-
-
-    <div class="row mt-2">
-        <div class="col-4">
-            <label for="productName">{{this.locationInfo.product_name}}</label>
-        </div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert"
+      *ngIf="(controlCodeOrName.getError('required') && !controlCodeOrName.pristine)">
+      <strong class="text-danger">Codigo o nombre del producto es requerido</strong>
     </div>
-    <div class="row mt-2">
-        <div class="col-4">
-            <div class="form-group">
-                <label for="zone">Zona</label>
-                <input type="text" class="form-control" id="zone" readonly [(ngModel)]="this.locationInfo.location.zone">
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <label for="section">Sección</label>
-                <input type="text" class="form-control" id="section" readonly [(ngModel)]="this.locationInfo.location.section">
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <label for="space">Posición</label>
-                <input type="text" class="form-control" id="space" readonly [(ngModel)]="this.locationInfo.location.space">
-            </div>
-        </div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert"
+      *ngIf="(!controlCodeOrName.pristine && !findProduct)">
+      <strong class="text-danger">Producto no localizado</strong>
     </div>
-    <div class="row">
-        <div class="col-4">
-            <div class="form-group">
-                <label for="capacityTotal">Capacidad total</label>
-                <input type="float" class="form-control" id="capacityTotal" readonly [(ngModel)]="this.locationInfo.max_capacity">
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <label for="capacityRemaining">Capacidad restante</label>
-                <input type="float" class="form-control" id="capacityRemaining" readonly
-                    [(ngModel)]="this.locationInfo.capacityRemaining">
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <label for="measureUnit">Unidad de medida</label>
-                <input type="text" class="form-control" id="measureUnit" readonly [(ngModel)]="this.locationInfo.measure_unit">
-            </div>
-        </div>
+    <div class="form-group mt-2 ">
+      <button type="button" class="btn btn-primary" [disabled]="searchForm.invalid"
+        (click)="onSearch(searchForm)">Buscar</button>
     </div>
+  </form>
+
+  <div class="card text-center">
+    <div class="card-header">
+      Ubicacion de {{this.locationInfo.product_name}}
+    </div>
+    <div class="card-body">
+
+
+      <div class="row mt-2">
+        <div class="col-4">
+          <label for="productName">{{this.locationInfo.product_name}}</label>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-4">
+          <div class="form-group">
+            <label for="zone">Zona</label>
+            <input type="text" class="form-control" id="zone" readonly [(ngModel)]="this.locationInfo.location.zone">
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label for="section">Sección</label>
+            <input type="text" class="form-control" id="section" readonly
+              [(ngModel)]="this.locationInfo.location.section">
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label for="space">Posición</label>
+            <input type="text" class="form-control" id="space" readonly [(ngModel)]="this.locationInfo.location.space">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <div class="form-group">
+            <label for="capacityTotal">Capacidad total</label>
+            <input type="float" class="form-control" id="capacityTotal" readonly
+              [(ngModel)]="this.locationInfo.max_capacity">
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label for="capacityRemaining">Capacidad restante</label>
+            <input type="float" class="form-control" id="capacityRemaining" readonly
+              [(ngModel)]="this.locationInfo.capacityRemaining">
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label for="measureUnit">Unidad de medida</label>
+            <input type="text" class="form-control" id="measureUnit" readonly
+              [(ngModel)]="this.locationInfo.measure_unit">
+          </div>
+        </div>
+      </div>
 
 
     </div>
-</div>
+  </div>
 
 </section>
-
