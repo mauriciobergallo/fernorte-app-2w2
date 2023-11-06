@@ -1,0 +1,19 @@
+.material-symbols-outlined {
+   font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24
+}
+
+.dropdown-toggle::after {
+   display:none;
+}
+
+.btn-dropdown:active {
+   border: none;
+}
+
+.btn {
+   float: right;
+}
