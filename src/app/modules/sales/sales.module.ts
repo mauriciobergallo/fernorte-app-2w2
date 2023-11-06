@@ -10,6 +10,7 @@ import { SaleOrderSearchListComponent } from './components/sale-order-search-lis
 import { SaleOrderProvider } from './services/salesOrder/SaleOrderProvider';
 import { ProductProvider } from './services/products/productProvider';
 import { SaleOrderComponent } from './components/sale_order/sale-order.component';
+import { SaleOrderViewComponent } from './components/sale-order-view/sale-order-view.component';
 import { CalcularTotalPipe } from './pipes/calcular-total.pipe';
 import { CalcularImpuestosPipe } from './pipes/calcular-impuestos.pipe';
 import { CalcularMontoTotalPipe } from './pipes/calcular-monto-total.pipe';
@@ -42,7 +43,8 @@ import { TurnProvider } from './services/turns/TurnProvider';
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
-    ReportNavComponent],
+    ReportNavComponent,
+    SaleOrderViewComponent],
 
   providers: [SaleOrderProvider,
     ProductProvider,
@@ -67,6 +69,7 @@ import { TurnProvider } from './services/turns/TurnProvider';
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
-    ReportNavComponent],
+    ReportNavComponent,
+    SaleOrderViewComponent],
 })
 export class SalesModule {}

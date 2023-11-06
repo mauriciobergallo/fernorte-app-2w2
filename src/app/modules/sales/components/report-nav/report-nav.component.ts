@@ -12,6 +12,7 @@ export class ReportNavComponent implements OnInit {
   search:boolean=false
   update:boolean=false
   delete:boolean=false
+  anual:boolean=false
 
 
   constructor() { }
@@ -21,7 +22,8 @@ export class ReportNavComponent implements OnInit {
 
   toRegist(tab:string){
     this.activeTab=tab;
-    this.regist=true;
+    this.regist=false;
+    this.anual=true;
   }
   toSearch(tab:string){
     this.activeTab=tab;
