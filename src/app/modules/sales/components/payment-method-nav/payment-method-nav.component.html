@@ -6,7 +6,7 @@
       </div>
       <br>
       <br>
-      <div class="">
+      <!-- <div class="">
         <ul class="nav nav-tabs">
           <li class="nav-item">
             <a class="nav-link active" [class.active]="activeTab === 'buscar'" (click)="toSearch('buscar')" aria-current="page" href="#">Buscar</a>
@@ -21,12 +21,13 @@
             <a class="nav-link" [class.active]="activeTab === 'Eliminar'" (click)="toDelete('Eliminar')" >Eliminar</a>
           </li>
         </ul>
-      </div>
+      </div> -->
       
+
     </div>
   </div>  
   <div class="">
-    <fn-payment-method *ngIf="regist"></fn-payment-method>
+    <fn-payment-method></fn-payment-method>
   </div>
   
 </section>
