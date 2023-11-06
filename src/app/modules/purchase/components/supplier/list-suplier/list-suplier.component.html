@@ -1,115 +1,137 @@
-
-<div class="content">
-  <div class="container test" *ngIf="!isOpenProductSupplier">
-    <h2>Listado Proveedores</h2>
-    <button class="btn btn-primary" (click)="showAddSupplier()">Agregar</button>
+<div class="content position-relative">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2 class="mb-0 mt-2">Proveedores</h2>
+      <button class="btn btn-primary" (click)="openModalNewSupplier()">
+        Agregar
+      </button>
+    </div>
     <hr />
-    <input
-      type="text"
-      placeholder="Buscar..."
-      class="form-control w-25 mt-2 mb-2"
-      #buscar
-    />
-
+    <div class="d-flex align-items-center gap-4">
+      <input
+        type="text"
+        placeholder="Buscar..."
+        class="form-control w-25 mt-2 mb-2"
+        #buscar
+        (input)="filterSuppliers(buscar.value)"
+      />
+      <div class="w-25 d-flex align-items-center gap-2">
+        <div>Mostrar</div>
+        <select
+          class="form-select form-select-sm w-100"
+          aria-label=".form-select-lg example"
+          [(ngModel)]="showValue"
+          (change)="loadSuppliers()"
+        >
+          <option value="1" selected>Todos</option>
+          <option value="2">Activos</option>
+          <option value="3">Inactivos</option>
+        </select>
+      </div>
+    </div>
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Razon Social</th>
           <th scope="col">Nombre Fantasia</th>
           <th scope="col">Cuit</th>
           <th scope="col">Domicilio</th>
-          <th scope="col">Contacto</th>
+          <th scope="col">Activo</th>
           <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of supliers">
-          <th scope="row">{{ item.id }}</th>
+        <tr
+          *ngFor="
+            let item of filteredSuppliers
+              | slice : (page - 1) * pageSize : page * pageSize
+          "
+        >
           <td>{{ item.socialReason }}</td>
           <td>{{ item.fantasyName }}</td>
           <td>{{ item.cuit }}</td>
           <td>{{ item.adress }}</td>
           <td>
-            <button class="btn btn-primary" (click)="openContacts(item.id)">
-              Contacto
-            </button>
+            <svg
+              *ngIf="item.active"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-check2-circle"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"
+              />
+              <path
+                d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"
+              />
+            </svg>
+            <svg
+              *ngIf="!item.active"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-x-circle"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+              />
+              <path
+                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+              />
+            </svg>
           </td>
           <td>
-            <button class="btn btn-primary" (click)="openProducts(item.id)">
-              Productos
-            </button>
+            <div ngbDropdown class="d-inline-block">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                id="dropdownBasic1"
+                ngbDropdownToggle
+              >
+                ⋮
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem (click)="openModal(item.id)">
+                  Contacto
+                </button>
+                <button
+                  ngbDropdownItem
+                  routerLink="/supplier/products"
+                  (click)="openProducts(item.id)"
+                >
+                  Productos
+                </button>
+                <button ngbDropdownItem>Editar</button>
+                <button
+                  ngbDropdownItem
+                  [swal]="{
+                    title: '¿Estas seguro?',
+                    showCancelButton: true
+                  }"
+                  (confirm)="deleteSupplier(item.id)"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <ngb-pagination
-      [collectionSize]="supliers.length"
-      aria-label="Default pagination"
-    ></ngb-pagination>
-
-    
-  <!-- <fn-hedear-supplier></fn-hedear-supplier> -->
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [collectionSize]="suppliers.length"
+        (pageChange)="onPageChange($event)"
+        aria-label="Default pagination"
+      ></ngb-pagination>
+    </div>
   </div>
-
-  <fn-add-supplier
-    *ngIf="isOpenAddSupplier"
-    (closeAddSupplier)="closeAddSupplier()"
-    (refrescarService)="addedSupplier()"
-  ></fn-add-supplier>
-
-  <fn-contacts
-    *ngIf="isOpenContacts"
-    [contacts]="contacts"
-    (closeContacts)="closeContacts()"
-    (refreshService)="obtenerContactos($event)"
-    (addedContact)="addedContact()"
-    (removedContact)="removedContact()"
-  ></fn-contacts>
-
-  <fn-products-supplier
-    *ngIf="isOpenProductSupplier"
-    [supplier]="supplier2"
-  ></fn-products-supplier>
-
-  <div
-    class="background-config"
-    *ngIf="isOpenContacts || isOpenAddSupplier"
-  ></div>
-
-  <ngb-toast
-    *ngIf="toastAddSupplier"
-    class="toast bg-success text-light"
-    [autohide]="true"
-    (hidden)="toastAddSupplier = false"
-    [delay]="1500"
-  >
-    Proveedor Cargado Con Exito!
-  </ngb-toast>
-
-
-  <ngb-toast
-    *ngIf="toastAddContact"
-    class="toast bg-success text-light"
-    [autohide]="true"
-    (hidden)="toastAddContact = false"
-    [delay]="1500"
-  >
-    Contacto Cargado Con Exito!
-  </ngb-toast>
-
-
-  <ngb-toast
-    *ngIf="toastRemovedContact"
-    class="toast bg-danger text-light"
-    [autohide]="true"
-    (hidden)="toastRemovedContact = false"
-    [delay]="1500"
-  >
-    Contacto Eliminado Con Exito!
-  </ngb-toast>
-
-
-
 </div>

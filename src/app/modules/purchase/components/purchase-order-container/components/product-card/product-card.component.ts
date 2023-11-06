@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { IProduct2, ISupplierProduct } from 'src/app/modules/purchase/models/ISuppliers';
+import {
+  IProduct2,
+  ISupplierProduct,
+} from 'src/app/modules/purchase/models/ISuppliers';
 import { ProductsService } from 'src/app/modules/purchase/services/products.service';
 import { PurchaseOrderServiceService } from '../../../purchase-order-container/services/purchase-order-service.service';
 import { SupliersService } from '../../../supplier/services/supliers.service';
@@ -15,21 +18,14 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   constructor(
     private _purchaseOrderSer: PurchaseOrderServiceService,
     private _productService: ProductsService
-  ) { }
+  ) {}
   quantity: number = 0;
   productQuantities: { [productId: number]: number } = {};
   idSupplier: number = 0;
-  product_List: IProduct2[] = [
-    {
-      id: 1,
-      name: 'sierra',
-      price: 15,
-      blocked: false
-    }
-  ];
+  product_List: IProduct2[] = [];
   cartProducts: ISupplierProduct[] = [];
   isButtonDisabled: { [productId: number]: boolean } = {};
-  mostrarToastAddProduct: { [producId: number]: boolean } = {}
+  mostrarToastAddProduct: { [producId: number]: boolean } = {};
 
   suscription = new Subscription();
 
@@ -38,10 +34,9 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       this.idSupplier = id;
       this.getProductsBySupplier(this.idSupplier);
     });
-    this._purchaseOrderSer.getListProductSelected().subscribe((data) => { 
+    this._purchaseOrderSer.getListProductSelected().subscribe((data) => {
       this.putListCart();
     });
-
   }
 
   ngOnDestroy(): void {
@@ -108,7 +103,6 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  
   putListCart() {
     this.suscription.add(
       this._purchaseOrderSer.getListProductSelected().subscribe({
@@ -125,12 +119,8 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       })
     );
   }
-  
+
   isProductInCart(product: IProduct2): boolean {
-    return this.cartProducts.some(item => item.idProduct === product.id);
+    return this.cartProducts.some((item) => item.idProduct === product.id);
   }
-
 }
-
-
-

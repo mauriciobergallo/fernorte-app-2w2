@@ -1,10 +1,11 @@
 // --------------------------------------------------- SUPPLIERS
-export interface ISupliers {
+export interface ISupplier {
   id: number;
   socialReason: string;
   fantasyName: string;
   cuit: string;
   adress: string;
+  active?: boolean;
 }
 export interface IContacts {
   id: number;
@@ -28,12 +29,12 @@ export interface IProduct2 {
   price: number;
   blocked: boolean;
 }
+
 export interface ISupplierProduct {
   idSupplier: number;
   idProduct: number;
   name: string;
   price: number;
   quantity: number;
-
 }
 

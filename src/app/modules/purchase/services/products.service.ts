@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductsService {
-  url: string = 'http://localhost:8080/products';
-  urlSupplier: string = 'http://localhost:8080/product_by_supplier';
+  url: string = 'https://my-json-server.typicode.com/114537-Bothner-Eric/firma-productos/productos';
+  urlSupplier: string = 'http://localhost:8080/product-by-supplier';
 
   constructor(private _http: HttpClient) {}
 

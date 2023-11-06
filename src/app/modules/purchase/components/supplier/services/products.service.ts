@@ -1,16 +1,28 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IProduct, IProduct2 } from '../../../models/ISuppliers';
-import { Observable } from 'rxjs';
+import { IProduct, IProduct2, ISupplier } from '../../../models/ISuppliers';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
-  url: string = 'http://localhost:8080/products';
-  urlSupplier: string = 'http://localhost:8080/product_by_supplier';
+  url: string =
+    'https://my-json-server.typicode.com/114537-Bothner-Eric/firma-productos/productos';
+  urlSupplier: string = 'http://localhost:8080/product-by-supplier';
+  products: IProduct[] = [];
+
+  selectedProduct: number = 0;
 
   constructor(private _http: HttpClient) {}
+
+  private productCreated = new Subject<void>();
+
+  productCreated$ = this.productCreated.asObservable();
+
+  notifyProductCreated() {
+    this.productCreated.next();
+  }
 
   getProducts(): Observable<IProduct[]> {
     return this._http.get<IProduct[]>(this.url);
@@ -37,7 +49,9 @@ export class ProductsService {
   }
 
   deleteProduct(supplierId: number, productId: number): Observable<any> {
-    const params = new HttpParams().set('id_product', productId.toString()).set('id_supplier', supplierId.toString());
+    const params = new HttpParams()
+      .set('id_product', productId.toString())
+      .set('id_supplier', supplierId.toString());
 
     return this._http.delete<any>(this.urlSupplier, { params });
   }

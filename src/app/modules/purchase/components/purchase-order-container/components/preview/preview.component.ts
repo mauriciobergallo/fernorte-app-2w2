@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ISupliers, ISupplierProduct} from 'src/app/modules/purchase/models/ISuppliers';
+import { ISupplier, ISupplierProduct} from 'src/app/modules/purchase/models/ISuppliers';
 import { SupliersService } from '../../../supplier/services/supliers.service';
 import {PurchaseOrderDetailRequest, PurchaseOrderDetailResponse} from 'src/app/modules/purchase/models/IPurchaseOrder';
 import {PaymentOrderDetailResponse} from 'src/app/modules/purchase/models/IPaymentOrder';
@@ -26,7 +26,7 @@ export class PreviewComponent {
 
  
 
- supplier:ISupliers = {
+ supplier:ISupplier = {
     id: 1,
     socialReason: "",
     fantasyName: "",
@@ -41,7 +41,7 @@ export class PreviewComponent {
 
   ngOnInit(){
     
-    this.purchaseOrderService.getSupplierSelected().subscribe((data: ISupliers) => {
+    this.purchaseOrderService.getSupplierSelected().subscribe((data: ISupplier) => {
       this.supplier = data; 
     });
     

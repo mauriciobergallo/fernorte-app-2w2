@@ -3,7 +3,7 @@ import { PurchaseOrderServiceService } from '../../purchase-order-container/serv
 import { Isupplier } from '../../shared/interfaces/isupplier';
 import { SupliersService } from '../../../services/supliers.service';
 import { Subscription } from 'rxjs';
-import { ISupliers } from '../../../models/ISuppliers';
+import { ISupplier } from '../../../models/ISuppliers';
 
 @Component({
   selector: 'fn-hedear-supplier',
@@ -20,8 +20,8 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
 
 
   idSelected: number = 0
-  supplierList: ISupliers[] = []
-  public supplierSelected : ISupliers = {id: 0, socialReason:"", cuit:"" ,adress:"", fantasyName:""} 
+  supplierList: ISupplier[] = []
+  public supplierSelected : ISupplier = {id: 0, socialReason:"", cuit:"" ,adress:"", fantasyName:""} 
   showDropDown: boolean = true
 
   suscription = new Subscription()
@@ -73,7 +73,7 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
   getListSuplierFromService() {
     this.suscription.add(
       this._suplierService.getSupliers().subscribe({
-        next: (data: ISupliers[]) => {
+        next: (data: ISupplier[]) => {
           console.log(data);
           this.supplierList = data;
         },
@@ -103,7 +103,7 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
     this.suscription.add(
       this._purchaseOrderService.getSupplierSelected().subscribe(
         {
-          next: (data: ISupliers) => {
+          next: (data: ISupplier) => {
             console.log("supplier selected from service: " + data.socialReason),
               this.supplierSelected = data
           },
