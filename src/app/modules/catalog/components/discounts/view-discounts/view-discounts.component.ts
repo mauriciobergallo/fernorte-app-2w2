@@ -23,7 +23,7 @@ export class ViewDiscountsComponent implements OnInit{
   }
 
   transformDate(date: string) {
-    const datePipe = new DatePipe('es');
+    const datePipe = new DatePipe('es-AR');
     const formattedDate = datePipe.transform(date, 'dd \'de\' MMMM \'del\' yyyy');
     return formattedDate;
   }

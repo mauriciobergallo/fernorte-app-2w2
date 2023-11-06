@@ -4,8 +4,8 @@
 <div *ngIf="discount">
     <p class="fs-5">Nombre: <strong> {{discount.id_discount}} </strong></p>
     <p class="fs-5">Porcentaje de descuento: <strong> {{discount.discount_rate}}% </strong></p>
-    <p class="fs-5">Inicio del descuento: <strong>{{transformDate(discount.start_date)}} </strong></p>
-    <p class="fs-5">Fin del descuento: <strong> {{transformDate(discount.end_date)}}</strong></p>
+    <p class="fs-5">Inicio del descuento: <strong>{{discount.start_date | date: 'dd/MM/yyyy' }} </strong></p>
+    <p class="fs-5">Fin del descuento: <strong> {{discount.end_date | date: 'dd/MM/yyyy' }}</strong></p>
     <p class="fs-5 d-flex align-items-center">Estado: <strong>
             <div class="ms-2" *ngIf="isDiscountActive(discount)">
                 <span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">
