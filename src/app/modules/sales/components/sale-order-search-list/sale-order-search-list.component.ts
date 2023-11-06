@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SaleOrderModel } from '../../models/SaleOrderModel';
 import { SaleOrderServiceService } from '../../services/salesOrder/sale-order-service.service';
 import { Observable, Subscription } from 'rxjs';
 import { SaleOrderOk } from '../../models/SaleOrderOk';
 import { SaleOrderApi } from '../../models/SaleModelApi';
 import { ProductApi } from '../../models/ProductApi';
 import { ProductOk } from '../../models/ProductOk';
+import { NgModel, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'fn-sale-order-search-list',
@@ -16,10 +16,20 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   saleOrdersList: SaleOrderApi[] = [];
   saleOrdersListOk: SaleOrderOk[]=[];
 
+  saleOrderStates: string[] = [];
+
+  idOrder:string="0";
+  doc:string="0";
+  fromDate:string="";
+  toDate:string="";
+  stateOrder:string="";
+  filters: Map<string, string> = new Map();
+
   private subscriptions = new Subscription();
 
   constructor(private saleOrderServiceService: SaleOrderServiceService) {
   }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
@@ -31,7 +41,13 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
           for(let item of this.saleOrdersList) {
             this.saleOrdersListOk.push(this.mapSaleOrder(item))
           }
-          console.log(this.saleOrdersList)
+        }
+      )
+    )
+    this.subscriptions.add(
+      this.saleOrderServiceService.getSaleOrderStates().subscribe(
+        (response : string[]) => {
+          this.saleOrderStates = response;
         }
       )
     )
@@ -44,6 +60,34 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   //     }
   //   )
   // }
+  
+  // onSendNOrder(form : NgForm){
+  //   if(form.valid) {
+  //     this.saleOrderService.getSaleOrdersByIdOrder(form.value.nOrder)
+  //   }
+  // }
+
+  onSendFilters(form : NgForm) {
+    if(form.valid) {
+      this.filters.set("idOrder", form.value.idOrder)
+      this.filters.set("doc", form.value.doc)
+      this.filters.set("fromDate", form.value.fromDate)
+      this.filters.set("toDate", form.value.toDate)
+      this.filters.set("stateOrder", form.value.stateOrder)
+    }
+    this.saleOrdersListOk = [];
+    this.subscriptions.add(
+      this.saleOrderServiceService.getSaleOrdesByFilter(this.filters).subscribe(
+        ( response : SaleOrderApi[]) => {
+          this.saleOrdersList = response;
+          for(let item of this.saleOrdersList) {
+            this.saleOrdersListOk.push(this.mapSaleOrder(item))
+          }
+          console.log(this.saleOrdersList);
+        }
+      )
+    )
+  }
 
   mapSaleOrder(saleOrder: SaleOrderApi): SaleOrderOk {
     const { id_sale_order, id_seller, id_client, date_of_issue, date_of_expiration, state_sale_order, detail_sales_order } = saleOrder;

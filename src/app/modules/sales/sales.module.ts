@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { HomeComponent } from './components/home/home.component';
 
@@ -25,8 +26,6 @@ import { SaleOrderNavComponent } from './components/sale-order-nav/sale-order-na
 import { BillingNavComponent } from './components/billing-nav/billing-nav.component';
 import { ReportNavComponent } from './components/report-nav/report-nav.component';
 import { TurnProvider } from './services/turns/TurnProvider';
-import { BillingProvider } from './services/billing/BillingProvider';
-import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
 
 @NgModule({
   declarations: [HomeComponent,
@@ -44,14 +43,12 @@ import { BillingSearchListComponent } from './components/billing-search-list/bil
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
-    ReportNavComponent,
-  BillingSearchListComponent],
+    ReportNavComponent],
 
   providers: [SaleOrderProvider,
     ProductProvider,
     ClientProvider,
-    TurnProvider,
-  BillingProvider],
+    TurnProvider],
 
   imports: [CommonModule,
     FormsModule, 
@@ -71,7 +68,6 @@ import { BillingSearchListComponent } from './components/billing-search-list/bil
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
-    ReportNavComponent,
-  BillingSearchListComponent],
+    ReportNavComponent],
 })
 export class SalesModule {}
