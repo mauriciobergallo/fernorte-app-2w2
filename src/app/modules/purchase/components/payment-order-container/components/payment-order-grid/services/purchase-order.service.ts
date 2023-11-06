@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 })
 export class PurchaseOrderService {
 
-  url: string = 'http://localhost:8080/purchase-order/';
+  url: string = 'http://localhost:8080/purchaseOrder/';
 
   constructor(private _http: HttpClient) {}
 
@@ -23,7 +23,7 @@ export class PurchaseOrderService {
     return this._http.get<IPurchaseOrder[]>(this.url)
       .pipe(
         map((purchaseOrders: IPurchaseOrder[]) => {
-          // Filtrar los elementos cuando el estado sea aceptado... pasa a paid
+          console.log(purchaseOrders)
           return purchaseOrders.filter(order => order.purchaseStatus==="ACCEPTED");
         })
       );
