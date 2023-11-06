@@ -15,6 +15,7 @@ import { ViewDiscountsComponent } from './components/discounts/view-discounts/vi
 import localeEs from '@angular/common/locales/es';
 import { ListCategoriesComponent } from './components/categories/list-categories/list-categories.component';
 import { DeleteProductComponent } from './components/products/delete-product/delete-product.component';
+import { DeleteModalCategoryComponent } from './components/categories/delete-modal-category/delete-modal-category.component';
 
 registerLocaleData(localeEs);
 
@@ -30,7 +31,8 @@ registerLocaleData(localeEs);
     DeleteModalDiscountComponent,
     ViewDiscountsComponent,
     ListCategoriesComponent,
-    DeleteProductComponent],
+    DeleteProductComponent,
+    DeleteModalCategoryComponent],
 
 
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],

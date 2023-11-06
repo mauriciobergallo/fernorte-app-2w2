@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ICategory } from '../../../models/ICategory';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DeleteModalDiscountComponent } from '../../discounts/delete-modal-discount/delete-modal-discount.component';
 import { CategoryService } from '../../../services/category.service';
 import { AddCategoryComponent } from '../add-category/add-category.component';
+import { DeleteModalCategoryComponent } from '../delete-modal-category/delete-modal-category.component';
 //import Swal from 'sweetalert2';
 
 @Component({
@@ -60,7 +60,7 @@ export class ListCategoriesComponent implements OnInit {
     })
   }
   openDeleteModal(category: ICategory) {
-    const modalRef = this.modalService.open(DeleteModalDiscountComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(DeleteModalCategoryComponent, { size: 'lg' });
     modalRef.componentInstance.category = category;
     modalRef.result.then(() => {
       this.categoryService.get().subscribe((cat: ICategory[]) => {

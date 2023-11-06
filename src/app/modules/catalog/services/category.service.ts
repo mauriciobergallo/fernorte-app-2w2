@@ -20,5 +20,11 @@ export class CategoryService {
    }
    put(category:ICategory): Observable<ICategory> {
       return this.requestResponseService.makePutRequest<ICategory>(this.categories,category);
+   }
+   deleteCategory(id: number,username:String):Observable<ICategory[]>{
+      let params = {
+         username
+      }
+      return this.requestResponseService.makeDeleteRequest<ICategory[]>(`${this.categories}/${id}`,{params})
    }	
 }
