@@ -10,24 +10,26 @@ import { RequestResponseService } from './requestResponse.service';
 })
 export class DiscountsService {
 
+  private discounts: string = `${environment.production}discounts`;
+
   constructor(private requestResponseService: RequestResponseService) { }
 
   getDiscounts(): Observable<IDiscount[]> {
-    return this.requestResponseService.makeGetRequest<IDiscount[]>(`${environment.production}discounts`);
+    return this.requestResponseService.makeGetRequest<IDiscount[]>(this.discounts);
   }
-  getDiscountById(id:number): Observable<IDiscount> {
-    return this.requestResponseService.makeGetRequest<IDiscount[]>(`${environment.production}discounts/${id}`);
+  getDiscountById(id: number): Observable<IDiscount> {
+    return this.requestResponseService.makeGetRequest<IDiscount[]>(`${this.discounts}/${id}`);
   }
-  updateDiscounts(request:any[]): Observable<IDiscount[]> {
-    return this.requestResponseService.makePutRequest<IDiscount[]>(`${environment.production}discounts`, request);
+  updateDiscounts(request: any[]): Observable<IDiscount[]> {
+    return this.requestResponseService.makePutRequest<IDiscount[]>(this.discounts, request);
   }
-  deleteDiscounts(id:number, user:string): Observable<IDiscount[]> {
+  deleteDiscounts(id: number, user: string): Observable<IDiscount[]> {
 
     let params = {
       user
     }
 
-    return this.requestResponseService.makeDeleteRequest<IDiscount[]>(`${environment.production}discounts/${id}`, { params });
+    return this.requestResponseService.makeDeleteRequest<IDiscount[]>(`${this.discounts}/${id}`, { params });
   }
 
 }

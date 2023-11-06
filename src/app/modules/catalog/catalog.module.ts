@@ -7,7 +7,6 @@ import { AddDiscountComponent } from './components/discounts/add-discount/add-di
 import { DiscountsComponent } from './components/discounts/discounts.component';
 import { AddCategoryComponent } from './components/categories/add-category/add-category.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { EditProductComponent } from './components/products/edit-product/edit-product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './components/spinner/viewspinner/spinner.component';
 import { CatalogRoutingModule } from './catalog-routing.module';
@@ -27,7 +26,6 @@ registerLocaleData(localeEs);
     AddDiscountComponent,
     DiscountsComponent,
     AddCategoryComponent,
-    EditProductComponent,
     SpinnerComponent,
     DeleteModalDiscountComponent,
     ViewDiscountsComponent,
