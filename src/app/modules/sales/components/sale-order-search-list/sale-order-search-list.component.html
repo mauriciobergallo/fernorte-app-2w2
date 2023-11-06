@@ -1,63 +1,101 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Listado de Ordenes de Venta</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table, th, td {
-            border: 1px solid rgb(8, 57, 70);
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <h1 style="text-align: center; color: black;">Listado de Ordenes de Venta</h1>
-    <table>
-        <tr>
-            <th>Número</th>
-            <th>Vendedor</th>
-            <th>Fecha</th>
-            <th>Cliente</th>
-            <th>Tipo</th>
-            <th>Factura</th>
-            <th>Estado</th>
-            <th>Neto</th>
-            <th>IVA</th>
-            <th>Total</th>
-        </tr>
-        <tr>
-            <td><a href="#1.html">001</a></td>
-            <td>Juan Pérez</td>
-            <td>2023-01-15</td>
-            <td>Maria López</td>
-            <td>A</td>
-            <td>1234</td>
-            <td>Pagada</td>
-            <td>$500.00</td>
-            <td>$75.00</td>
-            <td>$575.00</td>
-        </tr>
-        <tr>
-            <td><a href="#2.html">002</a></td>
-            <td>Carlos Rodríguez</td>
-            <td>2023-02-10</td>
-            <td>Luisa García</td>
-            <td>B</td>
-            <td>1235</td>
-            <td>Entregado</td>
-            <td>$750.00</td>
-            <td>$112.50</td>
-            <td>$862.50</td>
-        </tr>
-    
-    </table>
-</body>
-</html>
+<div class="container-fluid">
+  <div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      Filtros
+    </button>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Filtros</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Seleccione sus filtros
+            <form #filterForm="ngForm" (ngSubmit)="onSendFilters(filterForm)">
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Documento de cliente</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" 
+                name="doc"
+                #docControl="ngModel"
+                [(ngModel)]="doc">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Número de presupuesto</label>
+                <input type="text" class="form-control" id="exampleInputPassword1"
+                name="idOrder"
+                #idOrderControl="ngModel"
+                [(ngModel)]="idOrder">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Estado de presupuesto</label>
+                <select class="form-control" aria-label="Default select example"
+                name="stateOrder"
+                #stateOrderControl="ngModel"
+                [(ngModel)]="stateOrder">
+                  <option selected
+                  *ngFor="let state of saleOrderStates" [value]="state">{{state | lowercase}}</option>
+                </select>
+                <div class="row">
+                  <div class="mb-3 col">
+                    <p>Desde</p>
+                    <input type="date" class="form-control" id="fromDate" 
+                    placeholder=""
+                    name="fromDate"
+                    #fromDateControl="ngModel"
+                    [(ngModel)]="fromDate">
+                  </div>
+                  <div class="mb-3 col">
+                    <p>Hasta</p>
+                    <input type="date" class="form-control" id="toDate" 
+                    placeholder=""
+                    name="toDate"
+                    #toDateControl="ngModel"
+                    [(ngModel)]="toDate">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Aplicar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Número</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Vendedor</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Detalle</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of saleOrdersListOk">
+            <th scope="row">{{item.idSaleOrder}}</th>
+            <td>{{item.idClient}}</td>
+            <td>{{item.idSeller}}</td>
+            <td>{{item.dateOfIssue | date:'short'}}</td>
+            <td>{{item.stateSaleOrder}}</td>
+            <td>
+                <ul>
+                    <li *ngFor="let prod of item.details">
+                        {{prod.idProduct}}
+                    </li>
+                </ul>
+            </td>
+            <td>
+              <button class="btn" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <img src="../../../../../assets/three-dots-icon.png" alt="puntitos" width="10" height="10">
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>
