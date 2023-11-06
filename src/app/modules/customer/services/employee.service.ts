@@ -27,7 +27,7 @@ postEmployee(employeePost: Employee): Observable<EmployeeResponseDTO>{
 }
 
 getEmployees(): Observable<any>{
-  return this.http.get<any>(`${this.apiUrl}`+"/1")
+  return this.http.get<any>(`${this.apiUrl}`+"/")
 }
 
 
