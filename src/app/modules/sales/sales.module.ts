@@ -25,6 +25,8 @@ import { SaleOrderNavComponent } from './components/sale-order-nav/sale-order-na
 import { BillingNavComponent } from './components/billing-nav/billing-nav.component';
 import { ReportNavComponent } from './components/report-nav/report-nav.component';
 import { TurnProvider } from './services/turns/TurnProvider';
+import { BillingProvider } from './services/billing/BillingProvider';
+import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
 
 @NgModule({
   declarations: [HomeComponent,
@@ -42,12 +44,14 @@ import { TurnProvider } from './services/turns/TurnProvider';
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
-    ReportNavComponent],
+    ReportNavComponent,
+  BillingSearchListComponent],
 
   providers: [SaleOrderProvider,
     ProductProvider,
     ClientProvider,
-    TurnProvider],
+    TurnProvider,
+  BillingProvider],
 
   imports: [CommonModule,
     FormsModule, 
@@ -67,6 +71,7 @@ import { TurnProvider } from './services/turns/TurnProvider';
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
-    ReportNavComponent],
+    ReportNavComponent,
+  BillingSearchListComponent],
 })
 export class SalesModule {}

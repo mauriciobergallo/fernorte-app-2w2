@@ -1,7 +1,7 @@
 <div class="container">
     <div>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Filtros de BILLING
+      <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Filtros
       </button>
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
@@ -63,7 +63,7 @@
               <th scope="row">{{item.idSaleOrder}}</th>
               <td>{{item.idClient}}</td>
               <td>{{item.idSeller}}</td>
-              <td>{{item.dateOfIssue | date:'short'}}</td>
+              <td>{{item.dateOfIssue}}</td>
               <td>{{item.stateSaleOrder}}</td>
               <td>
                   <ul>
