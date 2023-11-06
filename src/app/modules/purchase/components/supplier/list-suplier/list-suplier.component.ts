@@ -26,7 +26,7 @@ export class ListSuplierComponent implements OnInit {
   collapsed = true;
   suppliers: ISupplier[] = [];
   filteredSuppliers: ISupplier[] = [];
-  showValue: string = '1';
+  showValue: string = '2';
 
   constructor(
     private _serviceSuplier: SupliersService,

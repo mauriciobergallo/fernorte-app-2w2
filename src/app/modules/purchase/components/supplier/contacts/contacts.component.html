@@ -20,7 +20,15 @@
           </td>
           <td>{{ item.contactValue }}</td>
           <td>
-            <button class="btn btn-danger mx-1" (click)="deleteContact(item)">
+            <button
+              class="btn btn-danger mx-1"
+              (confirm)="deleteContact(item)"
+              [swal]="{
+                title: '¿Estas seguro?',
+                showCancelButton: true,
+                reverseButtons: true
+              }"
+            >
               Eliminar
             </button>
           </td>
@@ -82,7 +90,7 @@
         class="btn btn-primary my-4"
         [disabled]="miForm.invalid"
       >
-      Confirmar
+        Confirmar
       </button>
     </div>
   </form>

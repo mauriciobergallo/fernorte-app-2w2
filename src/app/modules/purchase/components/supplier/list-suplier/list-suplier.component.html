@@ -23,8 +23,8 @@
           [(ngModel)]="showValue"
           (change)="loadSuppliers()"
         >
-          <option value="1" selected>Todos</option>
-          <option value="2">Activos</option>
+          <option value="1">Todos</option>
+          <option value="2" selected>Activos</option>
           <option value="3">Inactivos</option>
         </select>
       </div>
@@ -111,7 +111,8 @@
                   ngbDropdownItem
                   [swal]="{
                     title: '¿Estas seguro?',
-                    showCancelButton: true
+                    showCancelButton: true,
+                    reverseButtons: true
                   }"
                   (confirm)="deleteSupplier(item.id)"
                 >

@@ -59,7 +59,7 @@ export class ContactsComponent implements OnInit {
           this.getContacts();
           Swal.fire({
             title: 'Transaccion completada',
-            text: 'Contacto Asinado on Exito!',
+            text: 'Contacto Asignado con Exito!',
             icon: 'success',
           });
         },
@@ -75,6 +75,11 @@ export class ContactsComponent implements OnInit {
         .subscribe({
           next: (data: any) => {
             this.getContacts();
+            Swal.fire({
+              title: 'Transaccion completada',
+              text: 'Contacto Eliminado con Exito!',
+              icon: 'success',
+            });
           },
           error: (error: any) => alert('error al cargar: ' + error),
         })
