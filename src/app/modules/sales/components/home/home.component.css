@@ -1,0 +1,12 @@
+/* Estilos para el contenedor */
+#navVentas .col-md-3 {
+    height: 100%; /* Establece la altura al 100% del contenedor padre */
+    display: flex; /* Utiliza un contenedor flexible */
+    flex-direction: column; /* Apila los elementos verticalmente */
+    justify-content: center; /* Alinea verticalmente en el centro */
+    position: relative;
+    transform: translateY(20%);
+}
+#navVentas .col-md-3 a {
+
+}
