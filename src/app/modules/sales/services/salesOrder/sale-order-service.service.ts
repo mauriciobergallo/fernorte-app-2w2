@@ -18,6 +18,8 @@ export class SaleOrderServiceService {
 
   saleOrderList = new Observable<SaleOrderApi[]>();
 
+  saleOrderStates = new Observable<string[]>();
+
   filters : Map<string, string> = new Map<string, string>();
   get idOrder() {
     return this.filters.get("idOrder")
@@ -46,6 +48,11 @@ export class SaleOrderServiceService {
   getSaleOrders() : Observable<SaleOrderApi[]> {
     this.saleOrderList = this.http.get<SaleOrderApi[]>("http://localhost:8080/sales-orders?from_date=2023-10-23&to_date=2023-10-31");
     return this.saleOrderList;
+  }
+
+  getSaleOrderStates() : Observable<string[]> {
+    this.saleOrderStates = this.http.get<string[]>("http://localhost:8080/sales-orders/states");
+    return this.saleOrderStates;
   }
 
   // getSaleOrdersByIdOrder(filterSent:any) : Observable<SaleOrderApi[]> {
@@ -139,7 +146,6 @@ export class SaleOrderServiceService {
   // }
 
   getSaleOrdesByFilter(filters : Map<string, string>): Observable<SaleOrderApi[]> {
-    debugger
     let url:string = '';
     this.filters = filters
     if (this.idOrder != '0' && this.idOrder != undefined) {

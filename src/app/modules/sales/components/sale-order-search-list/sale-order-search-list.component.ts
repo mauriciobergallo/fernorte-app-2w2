@@ -16,6 +16,8 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   saleOrdersList: SaleOrderApi[] = [];
   saleOrdersListOk: SaleOrderOk[]=[];
 
+  saleOrderStates: string[] = [];
+
   idOrder:string="0";
   doc:string="0";
   fromDate:string="";
@@ -39,6 +41,13 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
           for(let item of this.saleOrdersList) {
             this.saleOrdersListOk.push(this.mapSaleOrder(item))
           }
+        }
+      )
+    )
+    this.subscriptions.add(
+      this.saleOrderServiceService.getSaleOrderStates().subscribe(
+        (response : string[]) => {
+          this.saleOrderStates = response;
         }
       )
     )
