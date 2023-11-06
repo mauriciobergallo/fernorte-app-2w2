@@ -22,30 +22,30 @@
             <form name="calculator">
                 
                 <p>Ingrese su número de documento</p>
-                <input  type="text" [(ngModel)]="document_number" value="" disabled>
+                <input  type="text" [(ngModel)]="document_number" name="document_number" value="" disabled>
                 <br>
                 <div>
                     <input type="button" value="1" class="btn btn-outline-primary btn-lg" (click)="addToInput('1')">
-                    <input type="button" value="2" class="btn btn-outline-primary btn-lg mx-2 my-2" (click)="addToInput('2')">
+                    <input type="button" value="2" class="btn btn-outline-primary btn-lg mx-2 my-1" (click)="addToInput('2')">
                     <input type="button" value="3" class="btn btn-outline-primary btn-lg" (click)="addToInput('3')">
                    
                 </div>
                 
                 <div>
                     <input type="button" value="4" class="btn btn-outline-primary btn-lg" (click)="addToInput('4')">
-                    <input type="button" value="5" class="btn btn-outline-primary btn-lg mx-2 my-2" (click)="addToInput('5')">
+                    <input type="button" value="5" class="btn btn-outline-primary btn-lg mx-2 my-1" (click)="addToInput('5')">
                     <input type="button" value="6" class="btn btn-outline-primary btn-lg" (click)="addToInput('6')">
                 </div>
                 
                 <div>
                     <input type="button" value="7" class="btn btn-outline-primary btn-lg" (click)="addToInput('7')">
-                    <input type="button" value="8" class="btn btn-outline-primary btn-lg mx-2 my-2" (click)="addToInput('8')">
+                    <input type="button" value="8" class="btn btn-outline-primary btn-lg mx-2 my-1" (click)="addToInput('8')">
                     <input type="button" value="9" class="btn btn-outline-primary btn-lg" (click)="addToInput('9')">
                 </div>
                 
                 <div>
                     <input type="button" value="⇐" class="btn btn-outline-primary btn-lg" (click)="deleteLastCharInput()">
-                    <input type="button" value="0" class="btn btn-outline-primary btn-lg mx-2 my-2" (click)="addToInput('0')">
+                    <input type="button" value="0" class="btn btn-outline-primary btn-lg mx-2 my-1" (click)="addToInput('0')">
                     <input type="button" value="Ok" class="btn btn-outline-primary btn-lg" (click)="sendDocumentNumber()">
                 </div>
             </form>
