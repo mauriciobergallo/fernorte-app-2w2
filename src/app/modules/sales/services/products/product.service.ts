@@ -12,12 +12,10 @@ export class ProductService {
   private listProduct: ProductModel[] = [];
 
   getlistProduct(): ProductModel[] {
-    this.productProvider.getlistProduct().subscribe((res) => {
-      this.listProduct = res.map(x => {
-        x.cantidadSeleccionado = 1;
-        return x;
-      });
+    this.productProvider.getListProduct().subscribe((res) => {
+      this.listProduct = res
       return this.listProduct;
+      
     });
     return this.listProduct;
   }
@@ -33,7 +31,11 @@ export class ProductService {
     return this.listProduct;
   }
   filtrarProductos(texto: any) {
-    return this.listProduct.filter(producto => producto.name.toLowerCase().includes(texto.target.value.toLowerCase()));
+    if (texto.target && texto.target.value && texto.target.value.trim() !== '') {
+      return this.listProduct.filter(producto => producto.name.toLowerCase().includes(texto.target.value.toLowerCase()));
+    } else {
+      return [];
+    }
   }
   cleanProduct(): ProductModel {
     let productoSeleccionado = {
@@ -49,9 +51,10 @@ export class ProductService {
         description: ""
       },
       urlImage: "",
+      priceProduct: 0,
+      discount: 0,
       cantidadSeleccionado: 1
     }
-
     return productoSeleccionado;
   }
   

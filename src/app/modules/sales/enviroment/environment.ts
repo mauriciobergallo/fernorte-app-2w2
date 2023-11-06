@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  urlBase:"http://localhost:3000",
-  urlProductBase:"http://localhost:8080",
+  urlBase:"http://localhost:8087",
+  urlProductBase:"http://localhost:8086",
   urlClientsBase:"http://localhost:8081",
   urlTurnBase:"http://localhost:8081",
   urlEmployeBase:"http://localhost:8081",

@@ -11,5 +11,7 @@ export class ProductModel {
       description: ""
     };
     urlImage: string = ""
+    priceProduct: number = 0;
+    discount: number = 0;
     cantidadSeleccionado?: number
 }
