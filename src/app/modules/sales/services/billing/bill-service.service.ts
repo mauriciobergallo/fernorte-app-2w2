@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BillModel } from '../../models/BillingModelApi';
 import { Observable } from 'rxjs';
 import { BillingProvider } from './BillingProvider';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +11,7 @@ export class BillServiceService {
 
   billList = new Observable<BillModel[]>();
 
-  idOrder:string="";
-  doc:string="";
-  fromDate:string="";
-  toDate:string="";
+  urlBase:string="http://localhost:8008/bills";
 
 
   constructor(private billProvider: BillingProvider, 
@@ -22,20 +19,27 @@ export class BillServiceService {
   
 
     getBills() : Observable<BillModel[]> {
-      this.billList = this.http.get<BillModel[]>("verURL");
+      this.billList = this.http.get<BillModel[]>(this.urlBase);
       return this.billList;
     }
 
-    getBillsByFilter(idBill?:string, doc?:string, fromDate?:string, toDate?:string): Observable<BillModel[]> {
-      let url:string = '';
-      if(idBill != '' && doc != null) {
-        url = `VERLAURL=${idBill}`
-      } else if(doc != '' && doc != null) {
-        url = `VERLAURL=${doc}`
-      } else {
-        url = `VERLAURL=${fromDate}&to_date=${toDate}`;
+    getBillsByFilter(idBill?: string, clientId?: string, fromDate?: string, toDate?: string): Observable<BillModel[]> {
+      let params = new HttpParams();
+  
+      if (idBill) {
+        params = params.append('idBill', idBill);
       }
-        return this.http.get<BillModel[]>(url);
+      if (clientId) {
+        params = params.append('clientId', clientId);
       }
+      if (fromDate) {
+        params = params.append('fromDate', fromDate);
+      }
+      if (toDate) {
+        params = params.append('toDate', toDate);
+      }
+  
+      return this.http.get<BillModel[]>(this.urlBase, { params: params });
+    }
 
 }

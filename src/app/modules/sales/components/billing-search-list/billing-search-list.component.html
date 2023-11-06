@@ -12,7 +12,7 @@
             </div>
             <div class="modal-body">
               Seleccione sus filtros
-              <form>
+              <form #getBillsForm="ngForm" (ngSubmit)="onSubmit(getBillsForm)">
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Documento de cliente</label>
                   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">

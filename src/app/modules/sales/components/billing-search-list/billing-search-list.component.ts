@@ -5,6 +5,7 @@ import { BillModel } from '../../models/BillingModelApi';
 import { ProductApi } from '../../models/ProductApi';
 import { ProductOk } from '../../models/ProductOk';
 import { BillServiceService } from '../../services/billing/bill-service.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'fn-billing-search-list',
@@ -14,6 +15,11 @@ import { BillServiceService } from '../../services/billing/bill-service.service'
 export class BillingSearchListComponent implements OnInit, OnDestroy {
 billList:BillModel[]=[];
 billListOk: BillOk[]=[];
+
+idBill:string="";
+doc:string="";
+fromDate:string="";
+toDate:string="";
 
 private subscriptions = new Subscription();
 
@@ -35,7 +41,8 @@ ngOnInit(): void {
       }
     )
   )
-  
 }
+onSubmit(form: NgForm){
 
+}
 }
