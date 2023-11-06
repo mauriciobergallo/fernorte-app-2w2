@@ -1,0 +1,74 @@
+<div class="container-fluid px-4 filter">
+    <p class="fw-semibold">Filtros de búsqueda</p>
+    <div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" 
+        id="inlineCheckbox1" value="chkOrder" name="filter"
+        [(ngModel)]="isSelected">
+        <label class="form-check-label" for="inlineCheckbox1">N° de presupuesto</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" 
+        id="inlineCheckbox2" value="chkClient" name="filter"
+        [(ngModel)]="isSelected">
+        <label class="form-check-label" for="inlineCheckbox2">Cliente</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" 
+        id="inlineCheckbox3" value="chkDates" name="filter"
+        [(ngModel)]="isSelected">
+        <label class="form-check-label" for="inlineCheckbox3">Fecha</label>
+      </div>
+    </div>
+    <div class="container my-3" *ngIf="isSelected==='chkOrder'">
+      <form #nOrderForm="ngForm" (ngSubmit)="onSendNOrder(nOrderForm)">
+        <div class="mb-3">
+          <input type="text" class="form-control" id="textInput" 
+          placeholder="Ingrese n° de presupuesto"
+          name="nOrder"
+          #nOrderControl="ngModel"
+          [(ngModel)]="nOrder"
+          required>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+      </form>
+    </div>
+    <div class="container my-3" *ngIf="isSelected==='chkClient'">
+      <form #docForm="ngForm" (ngSubmit)="onSendDoc(docForm)">
+        <div class="mb-3">
+          <input type="text" class="form-control" id="textInput" 
+          placeholder="Ingrese n° de documento"
+          name="doc"
+          #docControl="ngModel"
+          [(ngModel)]="doc"
+          required>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+      </form>
+    </div>
+    <div class="container my-3" *ngIf="isSelected==='chkDates'">
+      <form #dateForm="ngForm" (ngSubmit)="onSendDates(dateForm)">
+        <div class="row">
+          <div class="mb-3 col">
+            <p>Desde</p>
+            <input type="date" class="form-control" id="fromDate" 
+            placeholder=""
+            name="fromDate"
+            #fromDateControl="ngModel"
+            [(ngModel)]="fromDate"
+            required>
+          </div>
+          <div class="mb-3 col">
+            <p>Hasta</p>
+            <input type="date" class="form-control" id="toDate" 
+            placeholder=""
+            name="toDate"
+            #toDateControl="ngModel"
+            [(ngModel)]="toDate"
+            required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+      </form>
+    </div>
+</div>
