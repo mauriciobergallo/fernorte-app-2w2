@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TurnService } from '../../services/turn.service';
 import { TurnResponse } from '../../models/turn-response';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'fn-turns-component',
@@ -8,11 +9,20 @@ import { TurnResponse } from '../../models/turn-response';
   styleUrls: ['./turns-component.component.css']
 })
 export class TurnsComponentComponent {
+
   show: boolean = false;
   showCustomer: boolean = false;
   showNoCustomer: boolean = false;
   document_number: string = '';
   inputText:string='';
+  modalRef: NgbModalRef | undefined;
+  turnNumber: number = 0;
+
+  openModal(message: string) {
+    this.modalRef = this.modalService.open(message, {
+      windowClass: 'modal-lg' // Aplica la clase para un modal grande
+    });
+  }
 
   redirectToCustomer() {
     this.showCustomer = true;
@@ -22,18 +32,11 @@ export class TurnsComponentComponent {
   redirectToNoCustomer() {
     this.showNoCustomer = true;
     this.showCustomer = false;
-  }
+  }  
 
-  
-
-  
-
-  constructor(public turnService: TurnService){}
-
-  
-
-  
-
+  constructor(private turnService: TurnService,
+    private modalService:NgbModal){}
+    
   addToInput(value:string){
     this.inputText += value;
     this.document_number=this.inputText;
@@ -51,9 +54,11 @@ export class TurnsComponentComponent {
       this.turnService.postData(this.document_number).subscribe(
         (response)=>{
           if(response){
+            
             this.showCustomerInfo(response);
             const welcomeMessage=`Bienvenido, tu numero de turno es N°${response.number},aguarde unos minutos`
-            alert(welcomeMessage);
+            this.turnNumber = response.number;
+            this.openModal(welcomeMessage);
             console.log(welcomeMessage, response.number);
             
           
@@ -63,24 +68,24 @@ export class TurnsComponentComponent {
       )
     }
 
-
-  
-
     sendDocumentNumber() {
       if (this.document_number) {
         this.turnService.postData(this.document_number).subscribe(
           (response) => {
             if (response) {
+              
               this.showCustomerInfo(response);
     
               if (response.first_name == null && response.last_name == null) {
                 if (response.company_name) {
-                  const welcomeMessage = `Bienvenido a ${response.company_name}, tu número de turno es el N°${response.number}, y fue creado el ${response.created_at}`;
-                  alert(welcomeMessage);
+                  const welcomeMessage = `Bienvenido ${response.company_name}, tu número de turno es el N°${response.number}, y fue creado el ${response.created_at}`;
+                  this.turnNumber = response.number;
+                  this.openModal(welcomeMessage);
                 }
               } else {
                 const welcomeMessage = `Bienvenido ${response.first_name} ${response.last_name}, tu número de turno es el N°${response.number}, y fue creado el ${response.created_at}`;
-                alert(welcomeMessage);
+                this.turnNumber = response.number;
+                this.openModal(welcomeMessage);
               }
     
               this.clearFields();
@@ -89,15 +94,16 @@ export class TurnsComponentComponent {
             }
           },
           (error) => {
-            alert("El numero de documento es incorrecto");
+            const errorMessage='El número de document es incorrecto';
+            this.openModal(errorMessage);
             this.clearFields();
           }
         );
       } else {
-        alert('El número de documento está vacío, por favor ingrese un número válido.');
+        const errorNotFound='El número de documento está vacío, por favor ingrese un número válido.';
+        this.openModal(errorNotFound);
       }
     }
-    
   
   clearFields() {
     this.document_number = '';
@@ -116,6 +122,4 @@ export class TurnsComponentComponent {
     }
   }
 
-
- 
 }
