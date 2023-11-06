@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
       Filtros
@@ -73,6 +73,7 @@
             <th scope="col">Fecha</th>
             <th scope="col">Estado</th>
             <th scope="col">Detalle</th>
+            <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -88,6 +89,11 @@
                         {{prod.idProduct}}
                     </li>
                 </ul>
+            </td>
+            <td>
+              <button class="btn" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <img src="../../../../../assets/three-dots-icon.png" alt="puntitos" width="10" height="10">
+              </button>
             </td>
           </tr>
         </tbody>
