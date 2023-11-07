@@ -25,3 +25,96 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+## Libraries
+
+### PDF
+
+To use PDF... 
+
+``` html
+<!-- default a4's width is 595.28px -->
+<div #myDiv id="page" style="width: 595.28px;color: black;background: white;">
+  <h3>PDF for Test</h3>
+  <p>Here is some content for testing!!</p>
+</div>
+
+<button id="btn" (click)="generatePdf()">Generate</button>
+```
+
+``` typescript
+@ViewChild('myDiv') myDiv: ElementRef | undefined;
+
+generatePdf() {
+    html2PDF(this.myDiv?.nativeElement, {
+        jsPDF: {
+            format: 'a4',
+        },
+        imageType: 'image/jpeg',
+        output: './pdf/generate.pdf'
+    });
+}
+```
+
+### ChartJS
+
+To use ChartJS...
+
+``` html
+<div style="display: block;">
+  <canvas baseChart width="400" height="400"
+    [type]="'line'"
+    [data]="lineChartData"
+    [options]="lineChartOptions"
+    [legend]="lineChartLegend">
+  </canvas>
+</div>
+```
+
+``` typescript
+import { ChartConfiguration, ChartOptions } from 'chart.js';
+
+...
+
+public lineChartData: ChartConfiguration<'line'>['data'] = {
+    labels: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July'
+    ],
+    datasets: [
+        {
+        data: [ 65, 59, 80, 81, 56, 55, 40 ],
+        label: 'Series A',
+        fill: true,
+        tension: 0.5,
+        borderColor: 'black',
+        backgroundColor: 'rgba(255,0,0,0.3)'
+        }
+    ]
+};
+public lineChartOptions: ChartOptions<'line'> = {
+    responsive: false
+};
+
+public lineChartLegend = true;
+```
+
+### SweetAlert2
+
+To use SweetAlert...
+
+``` html
+<button (click)="trySweetAlert()">Try SweetAlert</button>
+```
+
+``` typescript
+trySweetAlert() {
+    Swal.fire('Hola!', '<div> Este es un mensaje </div>');
+}
+```
