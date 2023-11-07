@@ -19,6 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeliveryOrderDetailsComponent } from './components/consult-order/delivery-order-details/delivery-order-details.component';
 
 import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ConsultReceptionOrdersComponent } from './components/consult-reception-
     NgbDatepickerModule,
     InventoryRoutingModule,
     NgbModule,
+    RouterModule,
   ],
   exports: [HomeComponent],
 })

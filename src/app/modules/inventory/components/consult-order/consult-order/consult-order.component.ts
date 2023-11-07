@@ -7,39 +7,47 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'fn-consult-order',
   templateUrl: './consult-order.component.html',
-  styleUrls: ['./consult-order.component.css']
+  styleUrls: ['./consult-order.component.css'],
 })
 export class ConsultOrderComponent {
   orderId: string = '';
   deliveryOrder: Pagination | null = null;
-  currentPage = 1; 
+  currentPage = 1;
   itemsPerPage = 10;
   totalPages = 1;
   pagesToShow: number[] = [];
 
-  constructor(private deliveryorderService: DeliverOrderService, private router: Router) {}
-
+  constructor(
+    private deliveryorderService: DeliverOrderService,
+    private router: Router
+  ) {}
 
   navigateToDetails(orderId: number) {
     this.router.navigate(['/orders', orderId, 'details']);
   }
-  
-  search()
-  {
-    this.deliveryorderService.getDeliveryOrder(this.orderId, this.currentPage-1).subscribe(
-      (result) => {
-        result.items = result.items.sort((a, b) => {
-          const statusOrder = ['CREATED', 'PARTIALLY_DELIVERED', 'DELIVERED', 'CANCELED'];
-          return statusOrder.indexOf(a.state) - statusOrder.indexOf(b.state);
-        });
-        this.deliveryOrder = result;
-        this.totalPages = result.totalPages;
-      },
-      (error) => {
-        alert('Orden No encontrada');
-        this.deliveryOrder = null; 
-      }
-    );
+
+  search() {
+    this.deliveryorderService
+      .getDeliveryOrder(this.orderId, this.currentPage - 1)
+      .subscribe(
+        (result) => {
+          result.items = result.items.sort((a, b) => {
+            const statusOrder = [
+              'CREATED',
+              'PARTIALLY_DELIVERED',
+              'DELIVERED',
+              'CANCELED',
+            ];
+            return statusOrder.indexOf(a.state) - statusOrder.indexOf(b.state);
+          });
+          this.deliveryOrder = result;
+          this.totalPages = result.totalPages;
+        },
+        (error) => {
+          alert('Orden No encontrada');
+          this.deliveryOrder = null;
+        }
+      );
   }
 
   getTooltipText(state: string): string {
@@ -56,19 +64,18 @@ export class ConsultOrderComponent {
         return '';
     }
   }
-  
 
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.search()
+      this.search();
     }
   }
 
   previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.search()
+      this.search();
     }
   }
   changePage(page: number) {

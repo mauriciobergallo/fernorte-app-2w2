@@ -25,7 +25,7 @@ const routes: Routes = [
 const routes: Routes = [
   {
     path: 'inventory',
-    component: HomeComponent,
+    component: HomeComponent, // Utiliza el componente contenedor
     children: [
       {
         path: 'search-movements',

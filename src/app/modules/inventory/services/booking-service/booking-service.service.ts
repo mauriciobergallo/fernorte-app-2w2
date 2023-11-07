@@ -4,17 +4,13 @@ import { Observable } from 'rxjs';
 import { GetReceptionOrderDto } from '../../models/get-reception-order';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BookingServiceService {
-
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {}
 
   getAllReceptionOrders(): Observable<GetReceptionOrderDto[]> {
-    
-    const baseUrl = 'http://localhost:8081/reception-orders';
+    const baseUrl = 'http://localhost:8082/reception-orders';
     return this.http.get<GetReceptionOrderDto[]>(baseUrl);
-
   }
 }

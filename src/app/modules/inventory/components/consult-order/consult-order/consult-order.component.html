@@ -1,7 +1,7 @@
-<div class="container">
+<div class="form-container">
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title">Consultar orden de entrega</h4>
+      <h4 class="card-title">Órdenes de entrega</h4>
       <div class="input-group mb-3 custom-search" style="max-width: 30%; margin-top: 20px;">
         <input class="form-control col-1" [(ngModel)]="orderId" placeholder="">
         <div class="input-group-append">
@@ -31,7 +31,8 @@
                 <i [class]="item.state | stateIconPipe" [ngbTooltip]="getTooltipText(item.state)"></i>
               </td>
               <td class="text-center">
-                <i (click)="navigateToDetails(item.delivery_order_id)" [ngbTooltip]="'Ver'" class="bi bi-eye" style="cursor: pointer; font-size: 20px;"></i>
+                <i (click)="navigateToDetails(item.delivery_order_id)" [ngbTooltip]="'Ver'" class="bi bi-eye"
+                  style="cursor: pointer; font-size: 20px;"></i>
               </td>
             </tr>
           </tbody>
@@ -39,8 +40,6 @@
       </div>
     </div>
   </div>
-
-
   <div class="d-flex justify-content-center" style="margin-top: 5%;">
     <ul class="pagination">
       <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === 1" (click)="previousPage()">
@@ -58,4 +57,4 @@
       </li>
     </ul>
   </div>
-  
+</div>

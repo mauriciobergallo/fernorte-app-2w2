@@ -4,17 +4,13 @@ import { Observable } from 'rxjs';
 import { IMovementDto } from '../../models/IMovementDto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MovementsService {
-
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {}
 
   getAllMovements(): Observable<IMovementDto[]> {
-    
-    const baseUrl = 'http://localhost:8081/movements';
+    const baseUrl = 'http://localhost:8083/movements';
     return this.http.get<IMovementDto[]>(baseUrl);
-
   }
 }

@@ -6,39 +6,37 @@ import { StorageTicketState } from '../../models/StorageTicketState.enum';
 @Component({
   selector: 'fn-search-storage-ticket',
   templateUrl: './search-storage-ticket.component.html',
-  styleUrls: ['./search-storage-ticket.component.css']
+  styleUrls: ['./search-storage-ticket.component.css'],
 })
 export class SearchStorageTicketComponent implements OnInit, OnDestroy {
-  private subscriptions = new Subscription
+  private subscriptions = new Subscription();
   stateFinish: StorageTicketState = StorageTicketState.FINALIZED;
   storageTickets: StorageTicket[] = [];
   ticketDetail: StorageTicket = {
     ticket_id: 0,
-    created_at: "",
-    product_name: "",
+    created_at: '',
+    product_name: '',
     location: {
       id: 1,
-      zone: "",
-      section: "",
-      space: ''
+      zone: '',
+      section: '',
+      space: '',
     },
     quantity: 1,
-    measure_unit: "",
-    created_by: "",
-    operator_name: "",
-    remarks: "",
-    state: StorageTicketState.PENDING
-  }
+    measure_unit: '',
+    created_by: '',
+    operator_name: '',
+    remarks: '',
+    state: StorageTicketState.PENDING,
+  };
 
-  constructor(private warehouseService: WarehouseService) { }
-
+  constructor(private warehouseService: WarehouseService) {}
 
   ngOnInit(): void {
     this.fillTable();
   }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
-
   }
 
   fillTable() {
@@ -48,49 +46,55 @@ export class SearchStorageTicketComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.log(error);
-        console.log("eeeeeeoo")
-      }
-    })
+        console.log('eeeeeeoo');
+      },
+    });
   }
 
   asignTicket(ticket: StorageTicket) {
-    //TODO: A travez del localstorage obtener id del operario logeado
+    //TODO: A traves del localstorage obtener id del operario logeado
     let operatorId;
     let randomId = Math.floor(Math.random() * 10) + 1;
-    
-    this.warehouseService.asignTicket(ticket.ticket_id,randomId).subscribe({
+
+    this.warehouseService.asignTicket(ticket.ticket_id, randomId).subscribe({
       next: (resp) => {
         //recargar tabla
-        console.log(resp)
+        console.log(resp);
         this.fillTable();
       },
       error: (error) => {
-        console.log(error)
-      }
-    })
+        console.log(error);
+      },
+    });
   }
 
   getStatusButtonContent(ticket: StorageTicket): string {
-    switch (ticket.state){
-      case StorageTicketState.PENDING: return "Asignarme"
-      case StorageTicketState.ASSIGNED: return "Finalizar"
-      case StorageTicketState.FINALIZED: return "Completado"
-      default : return ""
-     
+    switch (ticket.state) {
+      case StorageTicketState.PENDING:
+        return 'Asignarme';
+      case StorageTicketState.ASSIGNED:
+        return 'Finalizar';
+      case StorageTicketState.FINALIZED:
+        return 'Completado';
+      default:
+        return '';
     }
   }
 
   stateSpanishTranslate(state: StorageTicketState) {
-    switch (state){
-      case StorageTicketState.PENDING: return "Pendiente"
-      case StorageTicketState.ASSIGNED: return "Asignado"
-      case StorageTicketState.FINALIZED: return "Completado"
-      default : return ""
-      
+    switch (state) {
+      case StorageTicketState.PENDING:
+        return 'Pendiente';
+      case StorageTicketState.ASSIGNED:
+        return 'Asignado';
+      case StorageTicketState.FINALIZED:
+        return 'Completado';
+      default:
+        return '';
     }
   }
 
-/*
+  /*
   data: StorageTicket[] = [
     {
       ticket_id: 1,
@@ -196,6 +200,4 @@ export class SearchStorageTicketComponent implements OnInit, OnDestroy {
     }
   ];
   */
-
 }
-

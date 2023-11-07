@@ -1,93 +1,96 @@
 <div class="container mt-5">
-    <h2>Tickets Almacenamiento</h2>
-    <hr>
-    <table class="table table-hover table-bordered">
-        <thead>
-            <tr>
-                <th>Estado</th>
-                <th>Fecha</th>
-                <th>Responsable</th>
-                <th>Detalles</th>
-                <th>Accion</th>
-            </tr>
-        </thead>
+  <h2>Tickets Almacenamiento</h2>
+  <hr>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th>Estado</th>
+        <th>Fecha</th>
+        <th>Responsable</th>
+        <th>Detalles</th>
+        <th>Accion</th>
+      </tr>
+    </thead>
 
-        <tbody>
-            <tr *ngFor="let ticket of this.storageTickets;let i = index">
-                <td>{{this.stateSpanishTranslate(ticket.state)}}</td>
-                <td>{{ticket.created_at}}</td>
-                <td>{{(ticket.operator_name == "")? "Sin Asignar": ticket.operator_name}}</td>
-                <td><button (click)="ticketDetail=ticket"  type="button" class="btn btn-block btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ver</button></td>
-                <td>
-                    <button (click)="ticketDetail=ticket" [ngClass]="{ 'disabled': ticket.state === this.stateFinish}" type="button" class="btn btn-block btn-primary" data-bs-toggle="modal" data-bs-target="#asignModal">
-                      {{ this.getStatusButtonContent(ticket) }}
-                    </button>
-                  </td>
-                {{ticket.state|json}}
-            </tr>
-        </tbody>
-    </table>
+    <tbody>
+      <tr *ngFor="let ticket of this.storageTickets;let i = index">
+        <td>{{this.stateSpanishTranslate(ticket.state)}}</td>
+        <td>{{ticket.created_at}}</td>
+        <td>{{(ticket.operator_name == "")? "Sin Asignar": ticket.operator_name}}</td>
+        <td><button (click)="ticketDetail=ticket" type="button" class="btn btn-block btn-primary" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">Ver</button></td>
+        <td>
+          <button (click)="ticketDetail=ticket" [ngClass]="{ 'disabled': ticket.state === this.stateFinish}"
+            type="button" class="btn btn-block btn-primary" data-bs-toggle="modal" data-bs-target="#asignModal">
+            {{ this.getStatusButtonContent(ticket) }}
+          </button>
+
+        </td>
+        {{ticket.state|json}}
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <!-- Modal -->
 <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg ">
-      <div class="modal-content">
-        <div class="modal-header">
+  <div class="modal-dialog modal-lg ">
+    <div class="modal-content">
+      <div class="modal-header">
 
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="">
-                <div class="card text-center">
-                    <div class="card-header">
-                      Detalles del Ticket {{this.ticketDetail.ticket_id}}
-                    </div>
-                    <div class="card-body">
-            
-                        <table class="table table-hover table-bordered">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th colspan="3" >Ubicacion Destino</th>
-            
-                                </tr>
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Unidad de Medida</th>
-                                    <th>Cantidad</th>
-                                    <th>Descripcion</th>
-                                    <th>Zona</th>
-                                    <th>Section</th>
-                                    <th>Espacio</th>
-            
-                                </tr>
-                            </thead>
-                    
-                            <tbody>
-                                <tr >
-                                    <td>{{ this.ticketDetail.product_name }}</td>
-                                    <td>{{this.ticketDetail.measure_unit}}</td>
-                                    <td>{{this.ticketDetail.quantity}}</td>
-                                    <td>{{this.ticketDetail.remarks}}</td>
-                                    <td>{{this.ticketDetail.location.zone}}</td>
-                                    <td>{{this.ticketDetail.location.section}}</td>
-                                    <td>{{this.ticketDetail.location.space}}</td>
-                                    
-                                    
-                                </tr>
-                            </tbody>
-                        </table>
-            
-                    </div>
-                  </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="">
+          <div class="card text-center">
+            <div class="card-header">
+              Detalles del Ticket {{this.ticketDetail.ticket_id}}
             </div>
+            <div class="card-body">
+
+              <table class="table table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th colspan="3">Ubicacion Destino</th>
+
+                  </tr>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Unidad de Medida</th>
+                    <th>Cantidad</th>
+                    <th>Descripcion</th>
+                    <th>Zona</th>
+                    <th>Section</th>
+                    <th>Espacio</th>
+
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>{{ this.ticketDetail.product_name }}</td>
+                    <td>{{this.ticketDetail.measure_unit}}</td>
+                    <td>{{this.ticketDetail.quantity}}</td>
+                    <td>{{this.ticketDetail.remarks}}</td>
+                    <td>{{this.ticketDetail.location.zone}}</td>
+                    <td>{{this.ticketDetail.location.section}}</td>
+                    <td>{{this.ticketDetail.location.space}}</td>
+
+
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 </div>
 
 <!-- Asign Modal -->
@@ -102,7 +105,8 @@
         Desea asignarse el ticket: {{ticketDetail.remarks}} ?
       </div>
       <div class="modal-footer">
-        <button (click)="asignTicket(this.ticketDetail)" data-bs-dismiss="modal" type="button" class="btn btn-primary">Aceptar</button>
+        <button (click)="asignTicket(this.ticketDetail)" data-bs-dismiss="modal" type="button"
+          class="btn btn-primary">Aceptar</button>
         <button data-bs-dismiss="modal" type="button" class="btn btn-secondary">Cancelar</button>
       </div>
     </div>
