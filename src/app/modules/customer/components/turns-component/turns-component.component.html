@@ -3,79 +3,61 @@
 <hr />
 
 <div *ngIf="show">
-    <div *ngIf="!showCustomer">
-        <div class="container text-center">
-            <h5 class="text-center">Bienvenido a Fernorte</h5>
-            <h1 class="text-center">Saque su Turno</h1>
-            <br>
-            <div class="row align-items-center">
-                <div class="col-md-6 offset-md-3 d-flex justify-content-center align-items-center">
-                    <button class="btn btn-primary mx-2" (click)="redirectToCustomer()">Soy cliente</button>
-                    <button class="btn btn-secondary mx-2" (click)="sendNoCustomer()">No soy cliente</button>
-                </div>
-
-            </div>
+  <div *ngIf="!showCustomer">
+    <div class="container text-center">
+      <h5 class="text-center">Bienvenido a Fernorte</h5>
+      <h1 class="text-center">Saque su Turno</h1>
+      <br>
+      <div class="row align-items-center">
+        <div class="col-md-6 offset-md-3 d-flex justify-content-center align-items-center">
+          <button class="btn btn-primary mx-2" (click)="redirectToCustomer()">Soy cliente</button>
+          <button class="btn btn-secondary mx-2" (click)="sendNoCustomer()">No soy cliente</button>
         </div>
-    </div>
 
-    <div *ngIf="showCustomer">
-        <div class="text-center">
-
-            <form name="calculator">
-
-                <p>Ingrese su Número de Documento</p>
-                <input type="text" [(ngModel)]="document_number" name="document_number" value="" disabled>
-                <br>
-                <br>
-
-                <div>
-                    <input type="button" value="1" class="btn btn-outline-primary btn-lg" (click)="addToInput('1')">
-                    <input type="button" value="2" class="btn btn-outline-primary btn-lg mx-2 my-1" (click)="addToInput('2')">
-                    <input type="button" value="3" class="btn btn-outline-primary btn-lg" (click)="addToInput('3')">
-
-                </div>
-
-                <div>
-                    <input type="button" value="4" class="btn btn-outline-primary btn-lg" (click)="addToInput('4')">
-                    <input type="button" value="5" class="btn btn-outline-primary btn-lg mx-2 my-1" (click)="addToInput('5')">
-                    <input type="button" value="6" class="btn btn-outline-primary btn-lg" (click)="addToInput('6')">
-                </div>
-
-                <div>
-                    <input type="button" value="7" class="btn btn-outline-primary btn-lg" (click)="addToInput('7')">
-                    <input type="button" value="8" class="btn btn-outline-primary btn-lg mx-2 my-1" (click)="addToInput('8')">
-                    <input type="button" value="9" class="btn btn-outline-primary btn-lg" (click)="addToInput('9')">
-                </div>
-
-                <div>
-                    <input type="button" value="⇐" class="btn btn-outline-primary btn-lg" (click)="deleteLastCharInput()"><i class="bi bi-caret-left"></i>
-                    <input type="button" value="0" class="btn btn-outline-primary btn-lg mx-2 my-1" (click)="addToInput('0')">
-                    <button class="btn btn-outline-success btn-lg" (click)="sendDocumentNumber()"><i class="bi bi-check-lg"></i>
-                      </button>
-                </div>
-            </form>
-            <br>
-
-            <button class="btn btn-outline-secondary btn-lg">Cancelar</button>
-        </div>
-    </div>
-
-    <div class="modal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title text-center">Bienvenido</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-              <p>Tu número de turno es el {{ turnNumber }}</p>
-              <p>Aguarde unos minutos y será atendido.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-          </div>
-        </div>
       </div>
+    </div>
+  </div>
 
+  <div *ngIf="showCustomer">
+    <div class="text-center">
 
+      <form name="calculator">
+
+        <p>Ingrese su Número de Documento</p>
+        <input type="text" [(ngModel)]="document_number" name="document_number" value="" style="width: 260px;" disabled>
+        <br>
+        <br>
+
+        <div>
+          <button class="btn btn-outline-primary btn-lg  my-1" style="width: 80px; height: 60px; font-size: 18px;" (click)="addToInput('1')">1</button>
+          <button class="btn btn-outline-primary btn-lg mx-2 my-1" style="width: 80px; height: 60px; font-size: 18px;" (click)="addToInput('2')">2</button>
+          <button class="btn btn-outline-primary btn-lg  my-1" style="width: 80px; height: 60px; font-size: 18px;" (click)="addToInput('3')">3</button>
+
+        </div>
+
+        <div>
+          <button class="btn btn-outline-primary btn-lg  my-1" style="width: 80px; height: 60px; font-size: 18px;" (click)="addToInput('4')">4</button>
+          <button class="btn btn-outline-primary btn-lg mx-2 my-1" style="width: 80px; height: 60px; font-size: 18px;" (click)="addToInput('5')">5</button>
+          <button class="btn btn-outline-primary btn-lg my-1" style="width: 80px; height: 60px; font-size: 18px;" (click)="addToInput('6')">6</button>
+        </div>
+
+        <div>
+          <button class="btn btn-outline-primary btn-lg my-1" style="width: 80px; height: 60px; font-size: 18px;" (click)="addToInput('7')">7</button>
+          <button class="btn btn-outline-primary btn-lg mx-2 my-1" style="width: 80px; height: 60px; font-size: 18px;" (click)="addToInput('8')">8</button>
+          <button class="btn btn-outline-primary btn-lg  my-1" style="width: 80px; height: 60px; font-size: 18px;" (click)="addToInput('9')">9</button>
+        </div>
+
+        <div>
+          <button class="btn btn-outline-secondary btn-lg" style="width: 80px; height: 60px; font-size: 18px;" (click)="deleteLastCharInput()"><i class="bi bi-caret-left"></i></button>
+          <button class="btn btn-outline-primary btn-lg mx-2 my-1" style="width: 80px; height: 60px; font-size: 18px;" (click)="addToInput('0')">0</button>
+          <button class="btn btn-outline-success btn-lg" style="width: 80px; height: 60px; font-size: 18px;" (click)="sendDocumentNumber()"><i class="bi bi-check-lg"></i></button>
+        </div>
+      </form>
+      <br>
+      <button class="btn btn-outline-secondary btn-lg" (click)="cancelCustomer()">Cancelar</button>
+    </div>
+  </div>
+
+  
+
+</div>

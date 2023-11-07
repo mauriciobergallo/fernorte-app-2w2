@@ -20,9 +20,14 @@ export class TurnsComponentComponent {
 
   openModal(message: string) {
     this.modalRef = this.modalService.open(message, {
-      windowClass: 'modal-lg' // Aplica la clase para un modal grande
+      windowClass: 'modal-lg' 
     });
   }
+
+  cancelCustomer() {
+    this.showNoCustomer = false;  
+    this.showCustomer = false; 
+}
 
   redirectToCustomer() {
     this.showCustomer = true;
@@ -56,7 +61,7 @@ export class TurnsComponentComponent {
           if(response){
             
             this.showCustomerInfo(response);
-            const welcomeMessage=`Bienvenido, tu numero de turno es N°${response.number},aguarde unos minutos`
+            const welcomeMessage=`Bienvenido, tu turno es el N°${response.number}, aguarde unos minutos`
             this.turnNumber = response.number;
             this.openModal(welcomeMessage);
             console.log(welcomeMessage, response.number);
@@ -94,7 +99,7 @@ export class TurnsComponentComponent {
             }
           },
           (error) => {
-            const errorMessage='El número de document es incorrecto';
+            const errorMessage='El número de documento es incorrecto';
             this.openModal(errorMessage);
             this.clearFields();
           }
