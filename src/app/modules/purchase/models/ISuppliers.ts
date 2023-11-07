@@ -38,3 +38,8 @@ export interface ISupplierProduct {
   quantity: number;
 }
 
+export interface ISupplierAndProduct {
+  supplierName: string;
+  productName: string;
+  price: number;
+}

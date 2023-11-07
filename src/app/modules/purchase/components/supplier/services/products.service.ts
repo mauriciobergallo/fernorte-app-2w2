@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IProduct, IProduct2, ISupplier } from '../../../models/ISuppliers';
+import { IProduct, IProduct2, ISupplier, ISupplierAndProduct } from '../../../models/ISuppliers';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
@@ -10,6 +10,8 @@ export class ProductsService {
   url: string =
     'https://my-json-server.typicode.com/114537-Bothner-Eric/firma-productos/productos';
   urlSupplier: string = 'http://localhost:8080/product-by-supplier';
+  urlall:string='http://localhost:8080/product_by_supplier/all/all';
+
   products: IProduct[] = [];
 
   selectedProduct: number = 0;
@@ -32,7 +34,9 @@ export class ProductsService {
     const params = new HttpParams().set('id_supplier', id.toString());
     return this._http.get<IProduct2[]>(this.urlSupplier, { params });
   }
-
+  getProductsAndSupplier(): Observable<ISupplierAndProduct[]> {
+    return this._http.get<ISupplierAndProduct[]>(this.urlall);
+  }
   addProduct(
     supplierId: number,
     productId: number,
