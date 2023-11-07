@@ -2,9 +2,8 @@ import { Component, Input, OnDestroy, OnInit, Optional } from '@angular/core';
 import { IDiscount } from '../../../models/IDiscounts';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductService } from '../../../services/product.service';
-import { IProduct } from '../../../models/IProduct';
 import { DiscountsService } from '../../../services/discounts.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IProductCategory } from '../../../models/IProductCategory';
 import { Subscription } from 'rxjs';
 
@@ -21,10 +20,10 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   listProducts: IProductCategory[] = [];
   isLoading: boolean = false;
-
+  ngbModal:NgbModal
   subscription: Subscription;
 
-  constructor(private fb: FormBuilder, private prodService: ProductService, private disService: DiscountsService, @Optional() private modalService: NgbActiveModal) {
+  constructor(private fb: FormBuilder, _ngbModal:NgbModal, private prodService: ProductService, private disService: DiscountsService, @Optional() private modalService: NgbActiveModal) {
     this.formGroup = this.fb.group({
       id_discount: [null],
       id_product: [null],
@@ -32,7 +31,7 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
       start_date: [null],
       end_date: [null]
     });
-
+   this.ngbModal = _ngbModal;
     this.subscription = new Subscription();
   }
 

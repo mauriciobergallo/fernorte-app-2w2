@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Optional } from '@an
 import { ICategory } from '../../../models/ICategory';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../../../services/category.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -25,15 +25,15 @@ export class AddCategoryComponent implements OnDestroy, OnInit {
   message: string = '';
 
   subscription: Subscription;
-
-  constructor(private fb: FormBuilder, private catService: CategoryService, @Optional() private modalService: NgbActiveModal) {
+  ngbModal:NgbModal
+  constructor( _ngbModal:NgbModal ,  private fb: FormBuilder, private catService: CategoryService, @Optional() private modalService: NgbActiveModal) {
     this.formGroup = this.fb.group({
       id_category: [null],
       name: [null, Validators.required],
       description: [null, Validators.required],
       created_by: [null]
     });
-
+  this.ngbModal = _ngbModal;
     this.subscription = new Subscription();
   }
   ngOnDestroy(): void {

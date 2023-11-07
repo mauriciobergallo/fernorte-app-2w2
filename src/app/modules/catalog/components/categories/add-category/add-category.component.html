@@ -3,33 +3,24 @@
   <div *ngIf="showMessage" [ngClass]="messageClass" class="alert mb-3" role="alert">
     <strong>{{ message }}</strong>
   </div>
-
+  <div class="modal-header">
+    <h3>{{isEdit?'Editar Categoria':'Agregar Categoria'}} </h3>
+    <button type="button" class="btn-close" aria-label="Close" (click)="ngbModal.dismissAll()"></button>
+</div>
 
   <div class="modal-body">
   <form [formGroup]="formGroup">
-      <div class="row">
-        <div class="col-md-6 col-lg-6 col-sm-2 col-xs-2">
-          <h3>{{isEdit?'Editar categoria':'Agregar categoria'}} </h3>
-        </div>
-      </div>
+
 
       <div class="row">
         <div class="mb-3 col-md-6">
           <label for="inputCategoryName" class="form-label">Nombre</label>
-          <input type="text" class="form-control" id="inputCategoryName" formControlName="name">
-          <div *ngIf="controlName.touched && controlName.hasError('required')" class="alert alert-required"
-            role="alert">
-            <strong>*Nombre requerido</strong>
-          </div>
+          <input [class.is-invalid]="controlName.invalid && (controlName.dirty || controlName.touched)" type="text" class="form-control" id="inputCategoryName" formControlName="name">
         </div>
 
         <div class="mb-3 col-md-6">
           <label for="inputCategoryDescription" class="form-label">Descripción</label>
-          <input type="text" class="form-control" id="inputCategoryDescription" formControlName="description">
-          <div *ngIf="controlDescription.touched && controlDescription.hasError('required')" class="alert alert-required"
-            role="alert">
-            <strong>*Descripción requerido</strong>
-          </div>
+          <textarea [class.is-invalid]="controlDescription.invalid && (controlDescription.dirty || controlDescription.touched)" class="form-control" id="inputCategoryDescription" formControlName="description"></textarea>
         </div>
       </div>
 

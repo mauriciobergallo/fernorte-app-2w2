@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IDiscount } from '../../../models/IDiscounts';
 import { DiscountsService } from '../../../services/discounts.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal ,NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'fn-delete-modal-discount',
@@ -9,22 +9,25 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./delete-modal-discount.component.css']
 })
 export class DeleteModalDiscountComponent {
-  @Input() discount?:IDiscount | null = null;
-  isLoading:boolean = false;
+  @Input() discount?: IDiscount | null = null;
+  isLoading: boolean = false;
+  ngbModal: NgbModal
 
-  constructor(private disService:DiscountsService, private modalService: NgbActiveModal){}
-
-  onSubmit(){
-    this.isLoading = true;
-
-      this.disService.deleteDiscounts(Number(this.discount?.id_discount), 'usuario').subscribe((res)=>{
-        this.isLoading = false;
-        this.modalService.close(res)
-      })
+  constructor(_ngbModal: NgbModal, private disService: DiscountsService, private modalService: NgbActiveModal) { 
+    this.ngbModal = _ngbModal;
   }
-  
-  close(){
-    this.modalService.close();
-  }
+
+onSubmit(){
+  this.isLoading = true;
+
+  this.disService.deleteDiscounts(Number(this.discount?.id_discount), 'usuario').subscribe((res) => {
+    this.isLoading = false;
+    this.modalService.close(res)
+  })
+}
+
+close(){
+  this.modalService.close();
+}
   
 }

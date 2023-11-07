@@ -9,21 +9,16 @@
             <tr>
                 <th>Nombre</th>
                 <th>Descuento</th>
-                <th>Fecha inicio</th>
-                <th>Fecha final</th>
                 <th>Activo</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let discount of discountsList">
-                <!-- traer el producto a traves del servicio, momentaneamente dejo el ID -->
-                <td> <a [routerLink]="'../view/' + discount.id_discount">{{ discount.product.name }}</a></td>
+                <td>{{ discount.product.name }}</td>
                 <td>
                     {{discount.discount_rate}}%
                 </td>
-                <td>{{ discount.start_date | date: 'dd/MM/yyyy' }}</td>
-                <td>{{ discount.end_date | date: 'dd/MM/yyyy'}}</td>
                 <td *ngIf="isDiscountActive(discount)"><span class="material-symbols-outlined"
                         style="color: rgb(3, 139, 3);">
                         check_circle
@@ -40,6 +35,7 @@
                         <div ngbDropdownMenu>
                             <button ngbDropdownItem type="button" (click)="openEditModal(discount)">Editar</button>
                             <button ngbDropdownItem type="submit" (click)="openDeleteModal(discount)">Eliminar</button>
+                            <button ngbDropdownItem type="submit" (click)="openViewModal(discount)">Ver mas</button>
                         </div>
                     </div>
                 </td>

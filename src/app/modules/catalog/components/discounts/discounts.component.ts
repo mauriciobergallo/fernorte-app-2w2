@@ -4,6 +4,7 @@ import { DiscountsService } from '../../services/discounts.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddDiscountComponent } from './add-discount/add-discount.component';
 import { DeleteModalDiscountComponent } from './delete-modal-discount/delete-modal-discount.component';
+import { ViewDiscountsComponent } from './view-discounts/view-discounts.component';
 //import Swal from 'sweetalert2';
 
 @Component({
@@ -51,7 +52,7 @@ export class DiscountsComponent implements OnInit {
   }
 
   openEditModal(discount: IDiscount) {
-    const modalRef = this.modalService.open(AddDiscountComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(AddDiscountComponent, { size: 'lg',backdrop: 'static' });
     modalRef.componentInstance.discount = discount;
     modalRef.componentInstance.isEdit = true;
     modalRef.result.then(res => {
@@ -63,7 +64,7 @@ export class DiscountsComponent implements OnInit {
     })
   }
   openCreateModal() {
-    const modalRef = this.modalService.open(AddDiscountComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(AddDiscountComponent, { size: 'lg',backdrop: 'static' });
     modalRef.result.then(res => {
       if (res) {
         this.disService.getDiscounts().subscribe((res: IDiscount[]) => {
@@ -73,9 +74,20 @@ export class DiscountsComponent implements OnInit {
     })
   }
   openDeleteModal(discount: IDiscount) {
-    const modalRef = this.modalService.open(DeleteModalDiscountComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(DeleteModalDiscountComponent, { size: 'lg',backdrop: 'static' });
     modalRef.componentInstance.discount = discount;
 
+    modalRef.result.then(() => {
+      this.disService.getDiscounts().subscribe((res: IDiscount[]) => {
+        this.isLoading = false; 
+        this.discountsList = res;
+      })
+    })
+  }
+
+  openViewModal(discount: IDiscount) {
+    const modalRef = this.modalService.open(ViewDiscountsComponent, { backdrop: 'static' });
+    modalRef.componentInstance.discount = discount;
     modalRef.result.then(() => {
       this.disService.getDiscounts().subscribe((res: IDiscount[]) => {
         this.isLoading = false; 

@@ -15,7 +15,9 @@
         <tbody>
             <tr *ngFor="let category of listCategories">
                 <td>{{category.name}}</td>
-                <td>{{category.description}}</td>
+                <td>
+                  <textarea style="border: none; width: 100%; resize: none; outline: none;" readonly>{{category.description}}</textarea>
+                </td>
                 <td>
                     <div ngbDropdown container="body">
                         <button type="button" class="btn btn-sm btn-dropdown btn-light" ngbDropdownToggle>

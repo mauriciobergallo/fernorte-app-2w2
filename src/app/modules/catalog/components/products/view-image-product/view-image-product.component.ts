@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-view-image-product',
@@ -8,8 +9,10 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ViewImageProductComponent implements OnInit {
 
   @Input() imageUrl!: string;
-
-  constructor() { }
+  modalService:NgbModal
+  constructor( private _modalService:NgbModal) { 
+    this.modalService = _modalService;
+  }
 
   ngOnInit() {
   }

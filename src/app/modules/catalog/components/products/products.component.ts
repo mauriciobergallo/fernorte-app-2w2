@@ -15,7 +15,7 @@ import { ViewImageProductComponent } from './view-image-product/view-image-produ
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent {
-  isLoading = true;
+  isLoading = false;
 
   listProducts: IProductCategory[] = [];
   private subscription = new Subscription();
@@ -26,8 +26,10 @@ export class ProductsComponent {
   sortDir = 'desc';
   isDeleted = true;
 
+ 
 
-  constructor(private productService: ProductService, private modalService: NgbModal) { }
+  constructor(private productService: ProductService, private modalService: NgbModal) {
+   }
 
   ngOnInit() {
     this.pagedProducts();
@@ -60,7 +62,7 @@ export class ProductsComponent {
   
 
   openEditModal(product: IProductCategory) {
-    const modalRef = this.modalService.open(AddProductComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(AddProductComponent, { size: 'lg' , backdrop: 'static' });
     modalRef.componentInstance.product = product;
     modalRef.componentInstance.isEdit = true;
     modalRef.result.then(data => {
@@ -73,7 +75,7 @@ export class ProductsComponent {
   }
 
   openDeleteModal(product: IProductCategory) {
-    const modalRef = this.modalService.open(DeleteProductComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(DeleteProductComponent, { size: 'lg' , backdrop: 'static'  });
     modalRef.componentInstance.product = product;
     modalRef.result.then(() => {
       this.productService.get().subscribe((res: IProductCategory[]) => {
@@ -84,7 +86,7 @@ export class ProductsComponent {
   }
 
   openCreateModal() {
-    const modalRef = this.modalService.open(AddProductComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(AddProductComponent, { size: 'lg' , backdrop: 'static'  });
     modalRef.result.then(res => {
       if (res) {
         this.productService.get().subscribe((res: IProductCategory[]) => {
@@ -95,7 +97,7 @@ export class ProductsComponent {
   }
 
   openImageModal(imageUrl: string) {
-    const modalRef = this.modalService.open(ViewImageProductComponent, {size: 'md'});
+    const modalRef = this.modalService.open(ViewImageProductComponent, { backdrop: 'static' });
     modalRef.componentInstance.imageUrl = imageUrl;
     };
 

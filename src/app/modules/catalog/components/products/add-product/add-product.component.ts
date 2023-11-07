@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, Optional } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICategory } from '../../../models/ICategory';
 import { IProductCategory } from '../../../models/IProductCategory';
 import { CategoryService } from '../../../services/category.service';
@@ -29,10 +29,13 @@ export class AddProductComponent implements OnDestroy, OnInit {
   predeterminatedCategoryId: number = 1;
 
   subscription: Subscription;
-
+   ngbModal :NgbModal
   image?: File
 
-  constructor(private fb: FormBuilder, private prodService: ProductService, @Optional() private modalService: NgbActiveModal, private router: Router, private categoryService: CategoryService) {
+  constructor(private fb: FormBuilder, private prodService: ProductService,
+     @Optional() private modalService: NgbActiveModal, private router: Router,
+      private categoryService: CategoryService, private _ngbModal:NgbModal) {
+        this.ngbModal = _ngbModal;
     this.formGroup = this.fb.group({
       id_product: [null],
       name: [null, Validators.required],

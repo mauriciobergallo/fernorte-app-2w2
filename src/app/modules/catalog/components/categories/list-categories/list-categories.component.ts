@@ -38,7 +38,7 @@ export class ListCategoriesComponent implements OnInit {
     });
   }
   openEditModal(category: ICategory) {
-    const modalRef = this.modalService.open(AddCategoryComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(AddCategoryComponent, { size: 'lg' ,backdrop: 'static' });
     modalRef.componentInstance.category = category;
     modalRef.componentInstance.isEdit = true;
     modalRef.result.then(data => {
@@ -50,7 +50,7 @@ export class ListCategoriesComponent implements OnInit {
     })
   }
   openCreateModal() {
-    const modalRef = this.modalService.open(AddCategoryComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(AddCategoryComponent, { size: 'lg' ,backdrop: 'static'  });
     modalRef.result.then(data => {
       if (data) {
         this.categoryService.get().subscribe((cat: ICategory[]) => {
@@ -60,7 +60,7 @@ export class ListCategoriesComponent implements OnInit {
     })
   }
   openDeleteModal(category: ICategory) {
-    const modalRef = this.modalService.open(DeleteModalDiscountComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(DeleteModalDiscountComponent, { size: 'lg' ,backdrop: 'static'  });
     modalRef.componentInstance.category = category;
     modalRef.result.then(() => {
       this.categoryService.get().subscribe((cat: ICategory[]) => {
