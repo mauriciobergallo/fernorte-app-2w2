@@ -2,7 +2,7 @@
 <link rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <div class="container mt-4">
-  <button class="btn btn-primary" (click)="openCreateModal()">Agregar producto</button>
+  <button class="btn btn-primary" (click)="openCreateModal()">Agregar</button>
   <table class="table">
     <thead>
       <tr>
@@ -53,10 +53,11 @@
         <td>{{ product.category.name }}</td>
         <td class="text-center">
           <div ngbDropdown container="body">
-            <button type="button" class="btn btn-sm btn-dropdown" ngbDropdownToggle> <span
-                class="material-symbols-outlined">
+            <button type="button" class="btn btn-sm btn-dropdown" ngbDropdownToggle>
+              <span class="material-symbols-outlined">
                 more_vert
-              </span></button>
+              </span>
+            </button>
             <div ngbDropdownMenu>
               <button ngbDropdownItem (click)="openEditModal(product)">Editar</button>
               <button ngbDropdownItem (click)="openDeleteModal(product)">Eliminar</button>

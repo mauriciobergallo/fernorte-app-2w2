@@ -6,12 +6,12 @@
       'opsz' 24
 }
 
-.dropdown-toggle::after {
-   display:none;
+.btn-dropdown{
+   border: none;
 }
 
-.btn-dropdown:active {
-   border: none;
+.btn-dropdown::after {
+   display:none;
 }
 
 .btn {
