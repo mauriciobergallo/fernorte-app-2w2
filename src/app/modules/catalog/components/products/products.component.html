@@ -1,0 +1,75 @@
+<spinner *ngIf="isLoading"></spinner>
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<div class="container mt-4">
+  <button class="btn btn-primary" (click)="openCreateModal()">Agregar</button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre de Producto</th>
+        <!-- <th>Imagen</th> -->
+        <th>Stock</th>
+        <th>Precio</th>
+        <th>Precio con Descuento</th>
+        <th>Descuento</th>
+        <th>Categoría</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of listProducts">
+        <td>{{ product.name }}</td>
+        <!-- <td>
+          <ng-container *ngIf="product.url_image != null; else noImageProduct">
+            <img [src]="product.url_image" alt="Imagen del producto" height="100" />
+          </ng-container>
+          <ng-template #noImageProduct>
+            <span class="material-symbols-outlined">
+              block
+              </span>
+          </ng-template>
+        </td> -->
+        <td>{{ product.stock_quantity }}</td>
+        <td>
+          <span *ngIf="product.price_product; else noPriceProductUnit">
+            {{ product.unit_price | currency : 'ARS' : 'symbol' }}
+          </span>
+          <ng-template #noPriceProductUnit>
+            {{ product.unit_price | currency : 'ARS' : 'symbol' }}
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="product.price_product != null; else noPriceProduct">
+            {{ product.price_product | currency : 'ARS' : 'symbol' }}
+          </ng-container>
+          <ng-template #noPriceProduct>-</ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="product.discount; else noDiscount">
+            {{ product.discount }}%
+          </ng-container>
+          <ng-template #noDiscount>-</ng-template>
+        </td>
+        <td>{{ product.category.name }}</td>
+        <td>
+          <div ngbDropdown container="body">
+            <button type="button" class="btn btn-sm btn-dropdown btn-light" ngbDropdownToggle>
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <div ngbDropdownMenu>
+              <button ngbDropdownItem (click)="openEditModal(product)">Editar</button>
+              <button ngbDropdownItem (click)="openDeleteModal(product)">Eliminar</button>
+              <button ngbDropdownItem (click)="openImageModal(product.url_image)">Ver mas</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container mt-4">
+  <ngb-pagination class="d-flex justify-content-center" [(page)]="currentPage" [pageSize]="itemsPerPage"
+    [collectionSize]="totalItems" [maxSize]="5" [rotate]="true" (pageChange)="handlePagination($event)">
+  </ngb-pagination>
+</div>

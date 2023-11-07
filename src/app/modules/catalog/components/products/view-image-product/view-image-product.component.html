@@ -1,0 +1,17 @@
+
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <div class="modal-header">
+    <h1 class="text-center">Producto</h1>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
+  </div>
+  <div class="modal-body">
+  <ng-container *ngIf="imageUrl != null; else noImageProduct">
+    <img [src]="imageUrl" alt="Imagen del producto" class="img-fluid"/>
+  </ng-container>
+  <ng-template #noImageProduct class="text-center">
+    <span class="material-symbols-outlined">
+      block
+      </span> No posee imagen
+  </ng-template>
+</div>

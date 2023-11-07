@@ -1,0 +1,81 @@
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.row {
+    margin-bottom: 10px;
+}
+
+label {
+    color: #555;
+}
+
+.btn-secondary {
+    background-color: #888;
+    border-color: #888;
+    margin-right: 16px;
+}
+
+.btn-secondary:hover {
+    background-color: #666;
+    border-color: #666;
+}
+
+.btn-primary {
+    background-color: #007BFF;
+    border-color: #007BFF;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.add-category {
+    color: #7749F8;
+    text-decoration: underline;
+}
+
+/* Estilos para los mensajes de alerta de campos requeridos */
+.alert-required {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #721c24;
+    padding: 8px;
+    margin-top: 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+
+.alert-required strong {
+    font-weight: bold;
+}
+
+
+
+/* Estilos para la alerta de éxito */
+.alert.alert-success {
+    background-color: #5cb85c;
+    color: #fff;
+    border: 1px solid #4cae4c;
+}
+
+.alert.alert-success strong {
+    font-weight: bold;
+}
+
+
+/* Estilos para la alerta de error */
+.alert.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+}

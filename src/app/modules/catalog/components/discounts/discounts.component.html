@@ -1,0 +1,68 @@
+<spinner *ngIf="isLoading"></spinner>
+
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<div class="container mt-4">
+    <button class="btn btn-primary" (click)="openCreateModal()">Agregar</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descuento</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let discount of discountsList">
+                <td>{{ discount.product.name }}</td>
+                <td>
+                    {{discount.discount_rate}}%
+                </td>
+                <td *ngIf="isDiscountActive(discount)"><span class="material-symbols-outlined"
+                        style="color: rgb(3, 139, 3);">
+                        check_circle
+                    </span></td>
+                <td *ngIf="!isDiscountActive(discount)"><span style="color: rgb(202, 0, 0);"
+                        class="material-symbols-outlined">
+                        cancel
+                    </span></td>
+                <td>
+                    <div ngbDropdown container="body">
+                        <button type="button" class="btn btn-sm btn-dropdown btn-light" ngbDropdownToggle>
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <div ngbDropdownMenu>
+                            <button ngbDropdownItem type="button" (click)="openEditModal(discount)">Editar</button>
+                            <button ngbDropdownItem type="submit" (click)="openDeleteModal(discount)">Eliminar</button>
+                            <button ngbDropdownItem type="submit" (click)="openViewModal(discount)">Ver mas</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container mt-4">
+    <ngb-pagination class="d-flex justify-content-center" [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="5" [maxSize]="5" [rotate]="true">
+    </ngb-pagination>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

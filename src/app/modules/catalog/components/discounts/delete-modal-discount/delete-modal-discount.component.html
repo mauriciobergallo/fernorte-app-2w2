@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="modal-header">
+     <h3>Eliminar descuento</h3>
+        <button type="button" class="btn-close" aria-label="Close" (click)="ngbModal.dismissAll()"></button>
+    </div>
+    <p class="m-2">¿Esta seguro que desea eliminar el descuento {{discount?.product?.name}}?</p>
+    <div class="row m-2">
+        <div class="col-md-6 col-lg-6 buttons-container">
+            <button type="button" class="btn btn-secondary" (click)="close()">Cancelar</button>
+            <button type="button" class="btn btn-danger mx-2" (click)="onSubmit()">Eliminar</button>
+        </div>
+    </div>
+</div>
+
+<spinner *ngIf="isLoading"></spinner>
