@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { HomeComponent } from './components/home/home.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateParserFormatter, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeRegistrationComponent } from './components/employee-registration/employee-registration.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,11 +20,21 @@ import { CustomerService } from './services/customer.service';
 import { CreateRolComponent } from './components/create-rol/create-rol.component';
 import { UpdateCustomerComponent } from './components/update-customer/update-customer.component';
 import { SoftdeleteCustomerComponent } from './components/softdelete-customer/softdelete-customer.component';
+import { CategoryComponent } from './components/category/category.component';
+import { CategoryService } from './services/category.service';
+import { CustomDateParserFormatter } from './components/shared/custom-date-formatter';
+import { RoleListComponent } from './components/role-list/role-list.component';
+import { CaseConversionPipe } from './pipes/case-conversion.pipe';
 
 @NgModule({
-  declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent, LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, SoftdeleteCustomerComponent],
-  providers: [EmployeeService, RoleService, TurnService, LoginService, CustomerService, DatePipe],
-  imports: [CommonModule, BrowserModule, ReactiveFormsModule, NgbModule, FormsModule, HttpClientModule],
+  declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent,CategoryComponent,
+    LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent, SoftdeleteCustomerComponent],
+  providers: [CategoryService,  
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }, EmployeeService,
+    RoleService, TurnService, LoginService, CustomerService, CaseConversionPipe, DatePipe],
+  imports: [CommonModule, BrowserModule, ReactiveFormsModule, 
+    NgbModule, FormsModule, HttpClientModule, ReactiveFormsModule],
   exports: [HomeComponent],
 })
+
 export class CustomerModule {}

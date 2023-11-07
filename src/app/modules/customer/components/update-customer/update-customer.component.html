@@ -1,9 +1,13 @@
+<label>  ID:
+<input type="number" [(ngModel)]=idCustomer>
+
+
 <ng-template #content let-modal>
 	<div class="modal-header">
 		<h4 class="modal-title" id="modal-basic-title">Actualizar Cliente</h4>
 		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
 	</div>
-	<div class="modal-body">
+	<div *ngIf="idCustomer!==0" class="modal-body">
 		<form #customerForm="ngForm"  (ngSubmit)="onSubmitForm(customerForm)">
 
             <div>
@@ -47,12 +51,12 @@
 				<div class="flex-grow-1 me-2">
 					<label for="idDocumentType">Tipo de documento</label>
 					<select [(ngModel)]="customer.idDocumentType" name="idDocumentType" id="idDocumentType" class="form-select">
-						<option value=1 *ngIf="customer.customerType == 'Fisica'">DNI</option>
-						<option value=2 *ngIf="customer.customerType == 'Fisica'">Pasaporte</option>
-						<option value=3 *ngIf="customer.customerType == 'Juridica'">CUIT</option>
-						<option value=4 *ngIf="customer.customerType == 'Fisica'">CUIL</option>
-						<option value=5 *ngIf="customer.customerType == 'Fisica'">LC</option>
-						<option value=6 *ngIf="customer.customerType == 'Fisica'">LE</option>
+						<option value=1 *ngIf="customer.customerType === 'Fisica'">DNI</option>
+						<option value=2 *ngIf="customer.customerType === 'Fisica'">Pasaporte</option>
+						<option value=3 *ngIf="customer.customerType === 'Juridica'">CUIT</option>
+						<option value=4 *ngIf="customer.customerType === 'Fisica'">CUIL</option>
+						<option value=5 *ngIf="customer.customerType === 'Fisica'">LC</option>
+						<option value=6 *ngIf="customer.customerType === 'Fisica'">LE</option>
 					</select>
 				</div>
 				<div class="flex-grow-1">
@@ -78,10 +82,11 @@
 					(ngModelChange)="onBirthDateChange($event)"
 					id="dateOfBirth"
 					class="form-control"
-					placeholder="yyyy-mm-dd"
+					placeholder="dd/mm/yyyy"
 					name="dp"
 					ngbDatepicker
 					#dp="ngbDatepicker"
+					[minDate]="maxDate" [maxDate]="minDate"
 				  />
 					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button><br>
                 </div>
@@ -111,11 +116,10 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn btn-outline-dark" [disabled]="!customerForm.valid" (click)="modal.close(customerForm)">Registrar</button>
+		<button type="submit" class="btn btn-outline-dark"  (click)="modal.close(customerForm)">Registrar</button>
 	</div>
 </ng-template>
 
 <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Actualizar Cliente</button>
 
-<hr />
 

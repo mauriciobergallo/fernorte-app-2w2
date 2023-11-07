@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TurnService } from '../../services/turn.service';
+import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 
 @Component({
   selector: 'fn-turns-component',
@@ -15,7 +16,7 @@ export class TurnsComponentComponent {
 
   show: boolean = false;
 
-  constructor(public turnService: TurnService){}
+  constructor(public turnService: TurnService, private conversion: CaseConversionPipe){}
 
   redirectToCustomer() {
     this.ToCustomer = true;
@@ -48,6 +49,8 @@ export class TurnsComponentComponent {
         (response) => {
           if (response) {
             this.showCustomerInfo(response);
+            response = this.conversion.toCamelCase(response);
+            //TODO: ver formato hora (me devuelve la hora de Europa)
             const welcomeMessage = `Bienvenido ${response.firstName}, tu número de turno es ${response.number}, y fue creado el ${response.createdAt}`;
             alert(welcomeMessage);
             this.clearFields();
