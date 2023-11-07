@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IProductCategory } from '../../models/IProductCategory';
 import { DeleteProductComponent } from './delete-product/delete-product.component';
 import { AddProductComponent } from './add-product/add-product.component';
+import { ViewImageProductComponent } from './view-image-product/view-image-product.component';
 //import Swal from 'sweetalert2';
 
 
@@ -20,8 +21,10 @@ export class ProductsComponent {
   private subscription = new Subscription();
 
   currentPage = 1;
-  itemsPerPage = 10;
-  collectionSize = 20;
+  itemsPerPage = 15;
+  sortBy = 'name';
+  sortDir = 'desc';
+  isDeleted = true;
 
 
   constructor(private productService: ProductService, private modalService: NgbModal) { }
@@ -29,6 +32,32 @@ export class ProductsComponent {
   ngOnInit() {
     this.pagedProducts();
   }
+
+  private pagedProducts() {
+    this.isLoading = true;
+    this.subscription.add(
+      this.productService.get(this.currentPage, this.itemsPerPage, this.sortBy, this.sortDir, this.isDeleted).subscribe({
+        next: (products: IProductCategory[]) => {
+          this.listProducts = products;
+          this.isLoading = false;
+        },
+        error: () => {
+          /*  Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Error al cargar los productos, intente nuevamente',
+            });*/
+          this.isLoading = false;
+        }
+      })
+    );
+  }
+
+  public handlePagination(event: any) {
+    this.currentPage = event.page;
+    this.pagedProducts();
+  }
+  
 
   openEditModal(product: IProductCategory) {
     const modalRef = this.modalService.open(AddProductComponent, { size: 'lg' });
@@ -53,6 +82,7 @@ export class ProductsComponent {
       })
     })
   }
+
   openCreateModal() {
     const modalRef = this.modalService.open(AddProductComponent, { size: 'lg' });
     modalRef.result.then(res => {
@@ -64,26 +94,11 @@ export class ProductsComponent {
     })
   }
 
+  openImageModal(imageUrl: string) {
+    const modalRef = this.modalService.open(ViewImageProductComponent, {size: 'md'});
+    modalRef.componentInstance.imageUrl = imageUrl;
+    };
 
-  private pagedProducts() {
-    this.isLoading = true;
-    this.subscription.add(
-      this.productService.get().subscribe({
-        next: (products: IProductCategory[]) => {
-          this.listProducts = products;
-          this.isLoading = false;
-        },
-        error: () => {
-          /*  Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Error al cargar los productos, intente nuevamente',
-            });*/
-          this.isLoading = false;
-        }
-      })
-    );
-  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
