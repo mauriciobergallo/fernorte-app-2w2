@@ -27,17 +27,18 @@ import { ReportNavComponent } from './components/report-nav/report-nav.component
 import { TurnProvider } from './services/turns/TurnProvider';
 import { BillingProvider } from './services/billing/BillingProvider';
 import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [HomeComponent,
-    SaleOrderComponent, 
-    CalcularTotalPipe, 
-    CalcularImpuestosPipe, 
-    CalcularMontoTotalPipe, 
+    SaleOrderComponent,
+    CalcularTotalPipe,
+    CalcularImpuestosPipe,
+    CalcularMontoTotalPipe,
     SaleOrderSearchHandlerComponent,
-    SaleOrderSearchFilterComponent, 
-    SaleOrderSearchListComponent, 
-    BillingComponent, 
+    SaleOrderSearchFilterComponent,
+    SaleOrderSearchListComponent,
+    BillingComponent,
     PaymentMethodComponent,
     CreatePaymentComponent,
     SidenavComponent,
@@ -54,17 +55,18 @@ import { BillingSearchListComponent } from './components/billing-search-list/bil
   BillingProvider],
 
   imports: [CommonModule,
-    FormsModule, 
-    RouterModule, 
-    RouterChildModule],
+    FormsModule,
+    RouterModule,
+    RouterChildModule,
+    ReactiveFormsModule],
 
   exports: [HomeComponent,
-    SaleOrderComponent, 
-    CalcularTotalPipe, 
+    SaleOrderComponent,
+    CalcularTotalPipe,
     SaleOrderSearchHandlerComponent,
-    SaleOrderSearchFilterComponent, 
-    SaleOrderSearchListComponent, 
-    BillingComponent, 
+    SaleOrderSearchFilterComponent,
+    SaleOrderSearchListComponent,
+    BillingComponent,
     PaymentMethodComponent,
     CreatePaymentComponent,
     SidenavComponent,
