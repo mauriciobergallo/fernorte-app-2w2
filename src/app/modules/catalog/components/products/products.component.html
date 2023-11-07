@@ -69,12 +69,7 @@
 </div>
 
 <div class="container mt-4">
-  <ngb-pagination class="d-flex justify-content-center"
-    [(page)]="currentPage"
-    [pageSize]="itemsPerPage"
-    [collectionSize]="listProducts.length"
-    [maxSize]="5"
-    [rotate]="true"
-    (pageChange)="handlePagination($event)">
+  <ngb-pagination class="d-flex justify-content-center" [(page)]="currentPage" [pageSize]="itemsPerPage"
+    [collectionSize]="totalItems" [maxSize]="5" [rotate]="true" (pageChange)="handlePagination($event)">
   </ngb-pagination>
 </div>
