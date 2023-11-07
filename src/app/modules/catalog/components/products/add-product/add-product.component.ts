@@ -1,5 +1,18 @@
-import { Component, Input, OnDestroy, OnInit, Optional } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+} from '@angular/core';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICategory } from '../../../models/ICategory';
@@ -11,13 +24,13 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'fn-add-product',
   templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.css']
+  styleUrls: ['./add-product.component.css'],
 })
 export class AddProductComponent implements OnDestroy, OnInit {
-
   //Variables utilizadas para editar el producto
   @Input() isEdit?: boolean | null = null;
   @Input() product?: IProductCategory | null = null;
+  @Output() productAdded: EventEmitter<any> = new EventEmitter();
   listCategories: ICategory[] = [];
 
   formGroup: FormGroup;
@@ -29,13 +42,18 @@ export class AddProductComponent implements OnDestroy, OnInit {
   predeterminatedCategoryId: number = 1;
 
   subscription: Subscription;
-   ngbModal :NgbModal
-  image?: File
+  ngbModal: NgbModal;
+  image?: File;
 
-  constructor(private fb: FormBuilder, private prodService: ProductService,
-     @Optional() private modalService: NgbActiveModal, private router: Router,
-      private categoryService: CategoryService, private _ngbModal:NgbModal) {
-        this.ngbModal = _ngbModal;
+  constructor(
+    private fb: FormBuilder,
+    private prodService: ProductService,
+    @Optional() private modalService: NgbActiveModal,
+    private router: Router,
+    private categoryService: CategoryService,
+    private _ngbModal: NgbModal
+  ) {
+    this.ngbModal = _ngbModal;
     this.formGroup = this.fb.group({
       id_product: [null],
       name: [null, Validators.required],
@@ -45,7 +63,7 @@ export class AddProductComponent implements OnDestroy, OnInit {
       unit_of_measure: [null],
       id_category: [null, Validators.required],
       image: [null],
-      user_created: [null]
+      user_created: [null],
     });
 
     this.subscription = new Subscription();
@@ -70,7 +88,7 @@ export class AddProductComponent implements OnDestroy, OnInit {
         user_created: this.product.user_created,
 
         price_product: this.product.price_product,
-        created_by: this.product.user_created
+        created_by: this.product.user_created,
       });
     } else {
       this.formGroup.patchValue({
@@ -84,11 +102,10 @@ export class AddProductComponent implements OnDestroy, OnInit {
         url_image: null,
         user_created: null,
         price_product: null,
-        created_by: null
+        created_by: null,
       });
     }
   }
-
 
   getCategories() {
     this.categoryService.get().subscribe((res) => {
@@ -101,7 +118,7 @@ export class AddProductComponent implements OnDestroy, OnInit {
     const fr = new FileReader();
     fr.onload = (e: any) => {
       this.image = e.target.result;
-    }
+    };
     fr.readAsDataURL(this.image as Blob);
   }
 
@@ -117,8 +134,7 @@ export class AddProductComponent implements OnDestroy, OnInit {
       request.user_created = 'prueba';
       request.image = this.image;
 
-      //Si envío todos los campos del modelo me arroja bad request 
-
+      //Si envío todos los campos del modelo me arroja bad request
 
       //Modelo
       /*       id_product: number;
@@ -130,7 +146,6 @@ export class AddProductComponent implements OnDestroy, OnInit {
             id_category: number;
             image: string;
             user_created:string; */
-
 
       /*       const request: IProduct = {
               id_product: this.isEdit ? Number(this.formGroup.get('id_product')?.value) : 0,
@@ -144,22 +159,23 @@ export class AddProductComponent implements OnDestroy, OnInit {
               user_created: 'Prueba',
             }; */
 
-
-
-      this.subscription.add(this.prodService.put(request).subscribe({
-        next: (res) => {
-          this.isLoading = false;
-          const message = this.isEdit
-            ? 'El producto se actualizó correctamente.'
-            : 'El producto se registró correctamente.';
-          this.showSuccessAlert(message);
-          setTimeout(() => this.modalService.close(res), 1500);
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.showErrorAlert('Error al registrar el producto.');
-        }
-      }));
+      this.subscription.add(
+        this.prodService.put(request).subscribe({
+          next: (res) => {
+            this.isLoading = false;
+            const message = this.isEdit
+              ? 'El producto se actualizó correctamente.'
+              : 'El producto se registró correctamente.';
+            this.productAdded.emit();
+            this.showSuccessAlert(message);
+            setTimeout(() => this.modalService.close(res), 1500);
+          },
+          error: (error) => {
+            this.isLoading = false;
+            this.showErrorAlert('Error al registrar el producto.');
+          },
+        })
+      );
     } else {
       this.showErrorAlert('Por favor completa todos los campos requeridos.');
     }
