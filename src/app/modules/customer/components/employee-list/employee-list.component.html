@@ -8,7 +8,7 @@
         <th scope="col" class="text-center">Nombre</th>
         <th scope="col" class="text-center">Apellido</th>
         <th scope="col" class="text-center">Número de Documento</th>
-        <!-- <th scope="col" class="text-center">Tipo de Documento</th> -->
+        <th scope="col" class="text-center">Tipo de Documento</th>
         <th scope="col" class="text-center">Estado</th>
         <th scope="col" class="text-center">Acciones</th>
       </tr>
@@ -18,7 +18,7 @@
         <td class="text-center">{{ e.firstName }}</td>
         <td class="text-center">{{ e.lastName }}</td>
         <td class="text-center">{{ e.documentNumber }}</td>
-        <!-- <td class="text-center">{{ e.documentType. }}</td> -->
+        <td class="text-center">{{ e.documentType }}</td>
         <td *ngIf="e.isActive" class="text-center"><span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">
             check_circle
           </span></td>
@@ -27,17 +27,16 @@
         </span></td>  
         <td class="text-center">
           <div class="dropdown">
-            <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-three-dots-vertical"></i>
             </button>
             <div class="dropdown-content">
               <a (click)="onOptionClick('info')">Más Información</a>
               <a (click)="onOptionClick('actualizar')">Actualizar</a>
-              <a *ngIf="e.isActive" (click)="onOptionClick('eliminar')">Eliminar</a>
-              <a *ngIf="!e.isActive" (click)="onOptionClick('activar')">Activar</a>
+              <a *ngIf="e.isActive" (click)="onDelete(e)">Eliminar</a>
+              <a *ngIf="!e.isActive" (click)="onActive(e)">Activar</a>
             </div>
           </div>
-
         </td>
       </tr>
     </tbody>
@@ -45,6 +44,7 @@
 </div>
 <br>
 <br><br><br><br><br><br><br><br><br><br>
-para ruteo
-<!-- [routerLink]="[e.id, 'edit']" -->
+
+
+
 

@@ -30,6 +30,14 @@ getEmployees(): Observable<any>{
   return this.http.get<any>(`${this.apiUrl}`+"/")
 }
 
+delete(employee: EmployeeResponseDTO): Observable<any>{
+  return this.http.delete<any>(`${this.apiUrl}`+"/"+employee.idEmployee)
+}
+
+active(employee: EmployeeResponseDTO): Observable<any>{
+  return this.http.put<any>(`${this.apiUrl}`+"/"+ employee.idEmployee +"/active", employee)
+}
+
 
 
 clearFields(employee: any){

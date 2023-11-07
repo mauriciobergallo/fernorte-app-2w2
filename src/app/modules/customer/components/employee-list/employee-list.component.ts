@@ -15,10 +15,17 @@ export class EmployeeListComponent {
   constructor(private employeeService: EmployeeService, private conversion: CaseConversionPipe){}
 
   ngOnInit(): void{
+    this.onLoad()
+  }
+
+  onLoad(){
     this.employeeService.getEmployees().subscribe(
       (response) => {
-        // let toCamel: EmployeeResponseDTO = this.conversion.toCamelCase(response);
-        this.employeeList = response;
+        let toCamel: EmployeeResponseDTO[] = this.conversion.toCamelCase(response);
+        this.employeeList = toCamel;
+      },
+      (error) => {
+        console.log(error)
       }
     );
   }
@@ -27,5 +34,34 @@ export class EmployeeListComponent {
     // Acción a realizar cuando se selecciona una opción
     console.log('Opción seleccionada:', selectedOption);
   }
+
+  onDelete(employee: EmployeeResponseDTO){
+    //Confirmacion
+
+    this.employeeService.delete(employee).subscribe(
+      (response) => {
+        alert("Se dio de baja el empleado")
+        this.onLoad()
+      },
+      (error) => (
+        console.log(error)
+      )
+    )
+  }
+
+  onActive(employee: EmployeeResponseDTO){
+    //Confirmacion
+
+    this.employeeService.active(employee).subscribe(
+      (response) => {
+        alert("Se dio de alta el empleado")
+        this.onLoad()
+      },
+      (error) => (
+        console.log(error)
+      )
+    )
+  }
+
 
 }
