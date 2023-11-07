@@ -66,3 +66,7 @@ body {
 .router-sidebar{
     margin-left: 280px;
 }
+
+.nav-link.active{
+    background-color: #e5e5e5 !important;
+}
