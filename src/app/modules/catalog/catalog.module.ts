@@ -12,11 +12,11 @@ import { SpinnerComponent } from './components/spinner/viewspinner/spinner.compo
 import { CatalogRoutingModule } from './catalog-routing.module';
 import { DeleteModalDiscountComponent } from './components/discounts/delete-modal-discount/delete-modal-discount.component';
 import { ViewDiscountsComponent } from './components/discounts/view-discounts/view-discounts.component';
-import localeEs from '@angular/common/locales/es';
+import localeEs from '@angular/common/locales/es-AR';
 import { ListCategoriesComponent } from './components/categories/list-categories/list-categories.component';
 import { DeleteProductComponent } from './components/products/delete-product/delete-product.component';
 
-registerLocaleData(localeEs);
+registerLocaleData(localeEs, 'es-AR');
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ registerLocaleData(localeEs);
     DeleteProductComponent],
 
 
-  providers: [{ provide: LOCALE_ID, useValue: 'es' }],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-AR' }],
   imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, CatalogRoutingModule],
   exports: [HomeComponent],
 })
