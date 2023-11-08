@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8089/users';
+  private apiUrl = 'http://localhost:8092/users';
 
   deleteUser(userId: number): Observable<any> {
     const url = `${this.apiUrl}/${userId}`;
