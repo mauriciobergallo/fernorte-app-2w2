@@ -15,8 +15,12 @@
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="inputName" class="form-label">Nombre</label>
-          <input [class.is-invalid]="controlName.invalid && (controlName.dirty || controlName.touched)" type="text"
+          <input [class.is-invalid]="formGroup.get('name')?.invalid && (formGroup.get('name')?.dirty|| formGroup.get('name')?.touched)" type="text"
             class="form-control" id="inputName" formControlName="name">
+            <div
+            *ngIf="formGroup.get('name')?.invalid && (formGroup.get('name')?.dirty || formGroup.get('name')?.touched)">
+            <small class="text-danger" *ngIf="formGroup.get('name')?.errors?.['productNameExists']">El nombre ya está registrado en el catálogo.</small>
+            </div>
         </div>
         <div class="col-md-6 mb-3">
           <label for="selectCategory" class="form-label">Categoría</label>

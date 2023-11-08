@@ -1,7 +1,5 @@
 /* Estilo para el título del modal */
 .modal-header {
-   background-color: #007BFF;
-   color: #fff;
    text-align: center;
    padding: 1rem;
  }

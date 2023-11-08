@@ -12,6 +12,8 @@ import {
   FormBuilder,
   Validators,
   FormControl,
+  AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,7 +21,8 @@ import { ICategory } from '../../../models/ICategory';
 import { IProductCategory } from '../../../models/IProductCategory';
 import { CategoryService } from '../../../services/category.service';
 import { ProductService } from '../../../services/product.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, catchError, map, of, tap } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-add-product',
@@ -56,8 +59,11 @@ export class AddProductComponent implements OnDestroy, OnInit {
     this.ngbModal = _ngbModal;
     this.formGroup = this.fb.group({
       id_product: [null],
-      name: [null, Validators.required],
-      description: [null],
+      name: ['', {
+        validators: [Validators.required, Validators.minLength(5)],
+        asyncValidators: [this.productNameValidator.bind(this)],
+        updateOn: 'blur'
+      }], description: [null],
       unit_price: [null, Validators.required],
       stock_quantity: [null, Validators.required],
       unit_of_measure: [null],
@@ -106,7 +112,15 @@ export class AddProductComponent implements OnDestroy, OnInit {
       });
     }
   }
-
+  productNameValidator(control: AbstractControl): Observable<ValidationErrors | null> {
+    return this.prodService.get(1,0,"name","asc",true).pipe(
+      map((products: any) => {
+        const isProductNameExists = products.products.some((product: any) => product.name.toLowerCase() === control.value.toLowerCase());
+        return isProductNameExists ? { productNameExists: true } : null;
+      }),      
+      catchError(() => of(null))
+    );
+  }
   getCategories() {
     this.categoryService.get().subscribe((res) => {
       this.listCategories = res;
@@ -163,22 +177,24 @@ export class AddProductComponent implements OnDestroy, OnInit {
         this.prodService.put(request).subscribe({
           next: (res) => {
             this.isLoading = false;
-            const message = this.isEdit
-              ? 'El producto se actualizó correctamente.'
-              : 'El producto se registró correctamente.';
-            this.productAdded.emit();
-            this.showSuccessAlert(message);
+            Swal.fire({
+              title: "¡Éxito!",
+              text: "Operación ejecutada con éxito.",
+              icon: "success"
+            });
             setTimeout(() => this.modalService.close(res), 1500);
           },
           error: (error) => {
             this.isLoading = false;
-            this.showErrorAlert('Error al registrar el producto.');
+            Swal.fire({
+              icon: "error",
+              title: "¡Error!",
+              text: "Error al intentar registrar el producto.",
+            });
           },
         })
       );
-    } else {
-      this.showErrorAlert('Por favor completa todos los campos requeridos.');
-    }
+    } 
   }
 
   close() {

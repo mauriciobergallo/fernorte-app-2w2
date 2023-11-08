@@ -25,7 +25,7 @@
         <li class="list-group-item">Cantidad en Stock: {{ product.stock_quantity }}</li>
         <li class="list-group-item">Unidad de Medida: {{ product.unit_of_measure }}</li>
         <li class="list-group-item">Categoría: {{ product.category.name }}</li>
-        <li class="list-group-item">Precio con Descuento: {{ product.price_product | currency : 'ARS' : 'symbol' }}</li>
+        <li class="list-group-item" *ngIf="product.price_product != null">Precio con Descuento: {{ product.price_product | currency : 'ARS' : 'symbol' }}</li>
         <li class="list-group-item" *ngIf="product.discount != null">Descuento: {{ product.discount }}%</li>
       </ul>
     </div>

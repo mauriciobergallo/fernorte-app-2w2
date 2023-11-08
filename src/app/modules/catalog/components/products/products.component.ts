@@ -3,13 +3,12 @@ import { ProductService } from '../../services/product.service';
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IProductCategory } from '../../models/IProductCategory';
-import { DeleteProductComponent } from './delete-product/delete-product.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { ViewImageProductComponent } from './view-image-product/view-image-product.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
 import { ICategory } from '../../models/ICategory';
-//import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-products',
@@ -17,16 +16,17 @@ import { ICategory } from '../../models/ICategory';
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent {
+
   isLoading = false;
 
   listProducts: IProductCategory[] = [];
   private subscription = new Subscription();
   filterProduct: FormGroup;
 
-  currentPage = 0;
+  currentPage = 1;
   itemsPerPage = 15;
   sortBy = 'name';
-  sortDir = 'desc';
+  sortDir = 'asc';
   totalItems: number = 0;
   listCategories: ICategory[] = [];
   constructor(
@@ -38,7 +38,7 @@ export class ProductsComponent {
     this.filterProduct = this.fb.group({
       name: [''],
       category: [''],
-      isDeleted: [true]
+      isDeleted: [false]
     });
   }
 
@@ -73,16 +73,17 @@ export class ProductsComponent {
             this.isLoading = false;
           },
           error: () => {
-            /*  Swal.fire({
+            Swal.fire({
               icon: 'error',
-              title: 'Oops...',
-              text: 'Error al cargar los productos, intente nuevamente',
-            });*/
+              title: '!Error!',
+              text: 'No se han encontrado resultados.',
+            });
             this.isLoading = false;
           },
         })
     );
   }
+
 
   public handlePagination(event: any) {
     this.currentPage = event;
@@ -96,26 +97,34 @@ export class ProductsComponent {
     });
     modalRef.componentInstance.product = product;
     modalRef.componentInstance.isEdit = true;
-    modalRef.result.then((data) => {
-      if (data) {
-        this.productService.get().subscribe((products: IProductCategory[]) => {
-          this.listProducts = products;
-        });
-      }
+    modalRef.result.then(() => {
+      this.isLoading = true;
+      this.pagedProducts();
     });
   }
 
-  openDeleteModal(product: IProductCategory) {
-    const modalRef = this.modalService.open(DeleteProductComponent, {
-      size: 'lg',
-      backdrop: 'static',
-    });
-    modalRef.componentInstance.product = product;
-    modalRef.result.then(() => {
-      this.productService.get().subscribe((res: IProductCategory[]) => {
-        this.isLoading = false;
-        this.listProducts = res;
-      });
+  openDelete(product: IProductCategory) {
+    Swal.fire({
+      title: `¿Estás seguro que desea eliminar el producto, ${product.name}?`,
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc3545",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "¡Sí, bórrar!",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productService.delete(product.id_product, "prueba").subscribe(() => {
+          Swal.fire({
+            title: "¡Borrado!",
+            text: "El producto ha sido borrado.",
+            icon: "success"
+          });
+          this.isLoading = true;
+          this.pagedProducts();
+        });
+      }
     });
   }
 
@@ -124,12 +133,9 @@ export class ProductsComponent {
       size: 'lg',
       backdrop: 'static',
     });
-    modalRef.result.then((res) => {
-      if (res) {
-        this.productService.get().subscribe((res: IProductCategory[]) => {
-          this.listProducts = res;
-        });
-      }
+    modalRef.result.then(() => {
+      this.isLoading = true;
+      this.pagedProducts();
     });
   }
 

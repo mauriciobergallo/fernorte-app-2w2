@@ -12,4 +12,5 @@ export interface IProductCategory{
     user_created:string;
     price_product:number;
     discount:number;
+    is_deleted:boolean;
 }
