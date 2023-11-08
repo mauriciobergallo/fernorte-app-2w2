@@ -11,7 +11,7 @@ export class BillServiceService {
 
   billList = new Observable<BillModel[]>();
 
-  urlBase:string="http://localhost:8008/bills";
+  urlBase:string="http://localhost:8088/bills";
 
 
   constructor(private billProvider: BillingProvider, 

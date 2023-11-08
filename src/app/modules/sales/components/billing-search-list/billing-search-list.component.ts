@@ -14,7 +14,6 @@ import { NgForm } from '@angular/forms';
 })
 export class BillingSearchListComponent implements OnInit, OnDestroy {
 billList:BillModel[]=[];
-billListOk: BillOk[]=[];
 
 idBill:string="";
 doc:string="";
@@ -30,17 +29,14 @@ ngOnDestroy(): void {
   this.subscriptions.unsubscribe();
 }
 ngOnInit(): void {
-  this.subscriptions.add(
+ 
     this.billingService.getBills().subscribe(
-      (response:BillModel[])=>{
+      (response)=>{
         this.billList=response;
-        for(let item of this.billList){
-          this.billList.push(item)
-        }
-        console.log(this.billList)
       }
     )
-  )
+  
+  
 }
 onSubmit(form: NgForm){
 

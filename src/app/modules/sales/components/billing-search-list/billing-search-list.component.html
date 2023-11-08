@@ -53,7 +53,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Aplicar</button>
-                  </div>
+                </div>
               </form>
             </div>
           </div>
@@ -71,15 +71,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of billListOk">
-              <th scope="row">{{item.idSaleOrder}}</th>
-              <td>{{item.idClient}}</td>
-              <td>{{item.idSeller}}</td>
-              <td>{{item.dateOfIssue}}</td>
-              <td>{{item.stateSaleOrder}}</td>
+            <tr *ngFor="let item of billList">
+              <th scope="row">{{item.cae}}</th>
+              <td>{{item.idBill}}</td>
+              <td>{{item.idBill}}</td>
+              <td>{{item.expirationDateCae| date:'short'}}</td>
+              <td>{{item.totalPrice}}</td>
               <td>
                   <ul>
-                      <li *ngFor="let prod of item.details">
+                      <li *ngFor="let prod of item.detailBill">
                           {{prod.idProduct}}
                       </li>
                   </ul>
