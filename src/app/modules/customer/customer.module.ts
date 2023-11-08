@@ -24,6 +24,10 @@ import { CategoryService } from './services/category.service';
 import { CustomDateParserFormatter } from './components/shared/custom-date-formatter';
 import { RoleListComponent } from './components/role-list/role-list.component';
 import { CaseConversionPipe } from './pipes/case-conversion.pipe';
+import { EmployeeListComponent } from './components/employee-list/employee-list.component';
+import { RouterModule, Routes } from '@angular/router';
+import { CustomersSidebarComponent } from './components/customers-sidebar/customers-sidebar.component';
+import { CustomersRoutingModule } from './customers-routing.module';
 
 
 
@@ -31,12 +35,13 @@ import { CaseConversionPipe } from './pipes/case-conversion.pipe';
 
 @NgModule({
   declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent,CategoryComponent,
-    LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent],
+    LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent, EmployeeListComponent, CustomersSidebarComponent
+  ],
   providers: [CategoryService,  
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }, EmployeeService,
     RoleService, TurnService, LoginService, CustomerService, CaseConversionPipe],
   imports: [CommonModule, BrowserModule, ReactiveFormsModule, 
-    NgbModule, FormsModule, HttpClientModule, ReactiveFormsModule],
-  exports: [HomeComponent],
+    NgbModule, FormsModule, HttpClientModule, ReactiveFormsModule, CustomersRoutingModule],
+  exports: [HomeComponent, RouterModule],
 })
 export class CustomerModule {}
