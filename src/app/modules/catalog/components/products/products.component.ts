@@ -6,6 +6,9 @@ import { IProductCategory } from '../../models/IProductCategory';
 import { DeleteProductComponent } from './delete-product/delete-product.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { ViewImageProductComponent } from './view-image-product/view-image-product.component';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { CategoryService } from '../../services/category.service';
+import { ICategory } from '../../models/ICategory';
 //import Swal from 'sweetalert2';
 
 @Component({
@@ -18,21 +21,36 @@ export class ProductsComponent {
 
   listProducts: IProductCategory[] = [];
   private subscription = new Subscription();
+  filterProduct: FormGroup;
 
-  currentPage = 1;
+  currentPage = 0;
   itemsPerPage = 15;
   sortBy = 'name';
   sortDir = 'desc';
-  isDeleted = true;
   totalItems: number = 0;
-
+  listCategories: ICategory[] = [];
   constructor(
     private productService: ProductService,
-    private modalService: NgbModal
-  ) {}
+    private modalService: NgbModal,
+    private fb: FormBuilder,
+    private categoryService: CategoryService
+  ) {
+    this.filterProduct = this.fb.group({
+      name: [''],
+      category: [''],
+      isDeleted: [true]
+    });
+  }
 
   ngOnInit() {
     this.pagedProducts();
+    this.filterProduct.valueChanges.subscribe(() => {
+      this.pagedProducts();
+    });
+    this.categoryService.get().subscribe((res: ICategory[]) => {
+      this.listCategories = res;
+    });
+
   }
 
   private pagedProducts() {
@@ -44,11 +62,13 @@ export class ProductsComponent {
           this.itemsPerPage,
           this.sortBy,
           this.sortDir,
-          this.isDeleted
+          this.filterProduct.value.isDeleted,
+          this.filterProduct.value.name,
+          this.filterProduct.value.category
         )
         .subscribe({
-          next: (products: IProductCategory[]) => {
-            this.listProducts = products;
+          next: (products: any) => {
+            this.listProducts = products.products;
             this.totalItems = products.length;
             this.isLoading = false;
           },
@@ -123,4 +143,5 @@ export class ProductsComponent {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
 }

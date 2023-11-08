@@ -32,7 +32,8 @@ registerLocaleData(localeEs, 'es-AR');
     ViewDiscountsComponent,
     ListCategoriesComponent,
     DeleteProductComponent,
-    ViewImageProductComponent],
+    ViewImageProductComponent,
+  ],
 
 
   providers: [{ provide: LOCALE_ID, useValue: 'es-AR' }],
