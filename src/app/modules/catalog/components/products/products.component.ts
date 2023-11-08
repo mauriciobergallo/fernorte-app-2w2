@@ -23,7 +23,7 @@ export class ProductsComponent {
   private subscription = new Subscription();
   filterProduct: FormGroup;
 
-  currentPage = 0;
+  currentPage = 1;
   itemsPerPage = 15;
   sortBy = 'name';
   sortDir = 'desc';
