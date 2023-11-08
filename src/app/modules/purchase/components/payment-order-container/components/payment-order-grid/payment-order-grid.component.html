@@ -1,13 +1,21 @@
 <div class="container">
   <h2 class="text-center">ORDENES DE PAGO</h2>
-  <table class="table table-bordered table-striped">
+  <div class="row">
+    <div class="col-md-4">
+      <label for="supplierSelect">Seleccionar un proveedor:</label>
+      <select id="supplierSelect" class="form-control" [(ngModel)]="selectedSupplierId" (change)="onSupplierSelected()">
+        <option *ngFor="let supplier of allSupplierList" [value]="supplier.id">{{supplier.socialReason}}</option>
+      </select>
+    </div>
+  </div>
+  <table class="table table-bordered table-striped mt-4">
     <thead>
       <tr>
         <th>Fecha</th>
-        <th>Observation</th>
+        <th>Observación</th>
         <th>Total</th>
         <th>Factura</th>
-        <th>Seleccionar</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -19,7 +27,7 @@
           <a [href]="order.billUrl" target="_blank">Link</a>
         </td>
         <td>
-          <input type="checkbox" [(ngModel)]="order.selected" (change)="actualizarTotal()" />
+          <input type="checkbox" class="form-check-input" [(ngModel)]="order.selected" (change)="actualizarTotal()" />
         </td>
       </tr>
     </tbody>
@@ -30,7 +38,7 @@
         <td><strong>Total:</strong></td>
         <td>{{ totalSeleccionado }}</td>
         <td>
-          <button class="btn btn-primary" (click)="enviarOrdenDeCompraSeleccionada()">Pagar Ordenes de compra</button>
+          <button class="btn btn-primary" (click)="enviarOrdenDeCompraSeleccionada()">Pagar</button>
         </td>
       </tr>
     </tfoot>
