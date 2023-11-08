@@ -3,9 +3,8 @@ import { IDiscount } from '../../models/IDiscounts';
 import { DiscountsService } from '../../services/discounts.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddDiscountComponent } from './add-discount/add-discount.component';
-import { DeleteModalDiscountComponent } from './delete-modal-discount/delete-modal-discount.component';
 import { ViewDiscountsComponent } from './view-discounts/view-discounts.component';
-//import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-discounts',
@@ -22,9 +21,9 @@ export class DiscountsComponent implements OnInit {
   constructor(private disService: DiscountsService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-   this.getDiscount();
+    this.getDiscount();
   }
-  getDiscount(){
+  getDiscount() {
     this.disService.getDiscounts().subscribe({
       next: (dis: IDiscount[]) => {
         this.isLoading = false;
@@ -32,15 +31,15 @@ export class DiscountsComponent implements OnInit {
       },
       error: () => {
         this.isLoading = false;
-     /*   Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Error al cargar los descuentos, intente nuevamente',
-        });*/
+        /*   Swal.fire({
+             icon: 'error',
+             title: 'Oops...',
+             text: 'Error al cargar los descuentos, intente nuevamente',
+           });*/
       }
     });
   }
- 
+
   // get pagedDiscounts(): IDiscount[] {
   //   const startIndex = (this.currentPage - 1) * this.itemsPerPage;
   //   return this.products.slice(startIndex, startIndex + this.itemsPerPage);
@@ -52,7 +51,7 @@ export class DiscountsComponent implements OnInit {
   }
 
   openEditModal(discount: IDiscount) {
-    const modalRef = this.modalService.open(AddDiscountComponent, { size: 'lg',backdrop: 'static' });
+    const modalRef = this.modalService.open(AddDiscountComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.discount = discount;
     modalRef.componentInstance.isEdit = true;
     modalRef.result.then(res => {
@@ -64,7 +63,7 @@ export class DiscountsComponent implements OnInit {
     })
   }
   openCreateModal() {
-    const modalRef = this.modalService.open(AddDiscountComponent, { size: 'lg',backdrop: 'static' });
+    const modalRef = this.modalService.open(AddDiscountComponent, { size: 'lg', backdrop: 'static' });
     modalRef.result.then(res => {
       if (res) {
         this.disService.getDiscounts().subscribe((res: IDiscount[]) => {
@@ -74,15 +73,28 @@ export class DiscountsComponent implements OnInit {
     })
   }
   openDeleteModal(discount: IDiscount) {
-    const modalRef = this.modalService.open(DeleteModalDiscountComponent, { size: 'lg',backdrop: 'static' });
-    modalRef.componentInstance.discount = discount;
-
-    modalRef.result.then(() => {
-      this.disService.getDiscounts().subscribe((res: IDiscount[]) => {
-        this.isLoading = false; 
-        this.discountsList = res;
-      })
-    })
+    Swal.fire({
+      title: `¿Estás seguro que desea eliminar el descuento de ${discount.product.name}?`,
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc3545",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "¡Sí, bórrar!",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.disService.deleteDiscounts(discount.id_discount, "prueba").subscribe(() => {
+          Swal.fire({
+            title: "¡Borrado!",
+            text: "El descuento ha sido borrado.",
+            icon: "success"
+          });
+          this.isLoading = true;
+          this.getDiscount();
+        });
+      }
+    });
   }
 
   openViewModal(discount: IDiscount) {
@@ -90,7 +102,7 @@ export class DiscountsComponent implements OnInit {
     modalRef.componentInstance.discount = discount;
     modalRef.result.then(() => {
       this.disService.getDiscounts().subscribe((res: IDiscount[]) => {
-        this.isLoading = false; 
+        this.isLoading = false;
         this.discountsList = res;
       })
     })
