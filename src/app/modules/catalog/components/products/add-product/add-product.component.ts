@@ -62,7 +62,7 @@ export class AddProductComponent implements OnDestroy, OnInit {
       name: ['', {
         validators: [Validators.required, Validators.minLength(5)],
         asyncValidators: [this.productNameValidator.bind(this)],
-        updateOn: 'blur'
+        updateOn: 'change'
       }], description: [null],
       unit_price: [null, Validators.required],
       stock_quantity: [null, Validators.required],
