@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent {
+
   isLoading = false;
 
   listProducts: IProductCategory[] = [];
@@ -138,11 +139,11 @@ export class ProductsComponent {
     });
   }
 
-  openImageModal(imageUrl: string) {
+  openImageModal(product: IProductCategory) {
     const modalRef = this.modalService.open(ViewImageProductComponent, {
       backdrop: 'static',
     });
-    modalRef.componentInstance.imageUrl = imageUrl;
+    modalRef.componentInstance.product = product;
   }
 
   ngOnDestroy(): void {

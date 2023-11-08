@@ -1,0 +1,91 @@
+/* Estilo para el título del modal */
+.modal-header {
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .modal-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  
+  /* Estilo para el botón de cierre del modal */
+  .modal-header .btn-close {
+    color: #fff;
+    font-size: 1.25rem;
+  }
+ 
+  /* Estilo para el contenedor de la imagen */
+  .image-container {
+    display: flex;
+    justify-content: center;
+  }
+ 
+  /* Estilo para la imagen del producto */
+  .img-responsive {
+    max-width: 100%;
+    height: auto;
+  }
+ 
+  /* Estilo para el bloque de texto "No posee imagen" */
+  .noImageProduct {
+    font-size: 1.25rem;
+    color: #777;
+    margin: 1rem 0;
+  }
+ 
+  /* Estilo para el contenedor de la tarjeta */
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 1rem 0;
+  }
+ 
+  /* Estilo para el título de la tarjeta */
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 1rem 0 0.5rem;
+  }
+ 
+  /* Estilo para el cuerpo de la tarjeta */
+  .card-body {
+    padding: 1rem;
+  }
+ 
+  /* Estilo para el texto de la tarjeta */
+  .card-text {
+    font-size: 1rem;
+  }
+ 
+  /* Estilo para los elementos de la lista */
+  .list-group-item {
+    font-size: 1rem;
+    padding: 0.5rem;
+    border: none;
+  }
+ 
+  .list-group-item.discount {
+    font-weight: bold;
+    color: #007BFF;
+  }
+ 
+ @media (max-width: 768px) {
+   /* Estilos adicionales para pantallas más pequeñas (hasta 768px de ancho) */
+   .modal-header h1 {
+     font-size: 1.25rem;
+   }
+ 
+   .modal-header .btn-close {
+     font-size: 1rem;
+   }
+ 
+   .card-title {
+     font-size: 1rem;
+   }
+ 
+   .card-text {
+     font-size: 0.9rem;
+   }
+ }
+ 
