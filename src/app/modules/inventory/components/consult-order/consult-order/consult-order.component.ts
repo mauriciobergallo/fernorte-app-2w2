@@ -23,7 +23,7 @@ export class ConsultOrderComponent {
   ) {}
 
   navigateToDetails(orderId: number) {
-    this.router.navigate(['/orders', orderId, 'details']);
+    this.router.navigate(['inventory/orders', orderId, 'details']);
   }
 
   search() {
