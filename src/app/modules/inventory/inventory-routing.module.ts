@@ -25,8 +25,11 @@ const routes: Routes = [
 const routes: Routes = [
   {
     path: 'inventory',
-    component: HomeComponent, // Utiliza el componente contenedor
     children: [
+      {
+        path: '',
+        component: HomeComponent,
+      },
       {
         path: 'search-movements',
         component: SearchInventoryMovementsComponent,
@@ -34,10 +37,15 @@ const routes: Routes = [
       { path: 'locations-product', component: SearchLocationProductComponent },
       { path: 'storage-tickets', component: SearchStorageTicketComponent },
       { path: 'current-inventory', component: CurrentInventoryComponent },
-      { path: 'orders', component: ConsultOrderComponent },
       {
-        path: 'orders/:id/details',
-        component: DeliveryOrderDetailsComponent,
+        path: 'orders',
+        children: [
+          { path: '', component: ConsultOrderComponent },
+          {
+            path: ':id/details',
+            component: DeliveryOrderDetailsComponent,
+          },
+        ],
       },
       { path: 'reception-orders', component: ConsultReceptionOrdersComponent },
     ],
