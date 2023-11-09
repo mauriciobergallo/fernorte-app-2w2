@@ -5,7 +5,7 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col" class="text-center">Usuario</th>
+        <th scope="col" class="text-center">Nombre</th>
         <th scope="col" class="text-center">Número de Documento</th>
         <th scope="col" class="text-center">Email</th>
         <th scope="col" class="text-center">Estado</th>
@@ -20,6 +20,7 @@
         <!--<div *ngIf="c.company_name != ''">
           <td class="text-center">{{ c.company_name }}</td>
         </div>-->
+        <td class="text-center">{{ c.document_number }}</td>
         <td class="text-center">{{ c.email }}</td>
         <td *ngIf="c.is_active" class="text-center"><span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">
             check_circle
