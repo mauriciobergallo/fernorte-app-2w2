@@ -93,12 +93,12 @@ export class DeliveryOrderDetailsComponent {
 
   confirmCancellation() {
     if (confirm('¿Desea volver?')) {
-      this.router.navigate(['inventory/orders']);
+      this.router.navigate(['orders']);
     }
   }
 
   navigate() {
-    this.router.navigate(['inventory/orders']);
+    this.router.navigate(['orders']);
   }
   getTooltipText(state: string): string {
     switch (state) {

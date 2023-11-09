@@ -24,12 +24,9 @@ const routes: Routes = [
 
 const routes: Routes = [
   {
-    path: 'inventory',
+    path: '',
+    component: HomeComponent,
     children: [
-      {
-        path: '',
-        component: HomeComponent,
-      },
       {
         path: 'search-movements',
         component: SearchInventoryMovementsComponent,
