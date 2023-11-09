@@ -1,163 +1,159 @@
-import { Component, EventEmitter, Output, ViewChild, AfterViewInit } from '@angular/core';
-import { NgbDateStruct, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { NgbDateStruct, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../models/employee';
 import { NgForm } from '@angular/forms';
+import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 
 @Component({
   selector: 'fn-update-employee',
   templateUrl: './update-employee.component.html',
   styleUrls: ['./update-employee.component.css']
 })
-export class UpdateEmployeeComponent implements AfterViewInit {
-  @Output() updateClicked: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('updateEmployee') content: any;
+export class UpdateEmployeeComponent implements OnInit{
+  
 
   employeeForm!: NgForm;
-  employeeId: number | undefined;
-
-  modalRef: NgbModalRef | undefined;
 
   formattedBirthDate: string = '';
+  
+  idEmployee:number=0;
+  
+  minDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
+  maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };;
+  currentYear = new Date().getFullYear();
+  
+  
+  
+  
   employee: Employee = {
-    idEmployee: 1,
-    firstName: '',
-    lastName: '',
-    birthDate: new Date(),
-	idDocumentType:'',
-    idDocumentNumber: '',
-    address: '',
-    phoneNumber: '',
-    personalEmail: '',
-  };
-
-  closeResult = '';
-
-  constructor(private modalService: NgbModal, private employeeService: EmployeeService) { }
-
-  ngAfterViewInit(): void {
-    this.open();
-  }
-
-  loadEmployeeData(employeeId: number) {
-    this.employeeService.getEmployeeById(employeeId).subscribe(
-      (employeeData) => {
-        console.log('EmployeeData from service:', employeeData);
-        let transformData = this.convertSnakeToCamel(employeeData);
+  firstName:"",
+  lastName:"",
+  birthDate: new Date().toISOString(),
+  documentType: 1,
+  documentNumber:"",
+  address:"",
+  phoneNumber:"",
+  personalEmail: ""  
+  };  
+  
+    closeResult = '';
+  
+    constructor(private modalService: NgbModal, private employeeService: EmployeeService, private conversion: CaseConversionPipe) {
+  
+              // Obtén la fecha actual
+            const currentDate = new Date();
+            // Resta 16 años de la fecha actual
+            const minYear = currentDate.getFullYear() - 5;
+            const minMonth = currentDate.getMonth() + 1; // Los meses en JavaScript son de 0 a 11, ng-bootstrap es de 1 a 12
+            const minDay = currentDate.getDate();
+          
+            // Asigna la fecha calculada a minDate
+            this.minDate = { year: minYear, month: minMonth, day: minDay };
+          
+          
+            this.maxDate = {
+              year: currentDate.getFullYear() - 150, //Cambiar este numero si se quiere bajar la edad
+              month: currentDate.getMonth() + 1,
+              day: currentDate.getDate()
+              };
+  
+  
+    }
+  
+    ngOnInit(): void {
+    
+    
+    }
+    
+  	loadCustomerData(idEmployee: number) {
+      this.employeeService.getEmployeeById(idEmployee).subscribe(
+        (employeeData) => {
+        let transformData= this.conversion.toCamelCase(employeeData);
         this.employee = transformData;
         console.log("Employee", this.employee);
-
-        // Asigna los valores después de cargar los datos
-        this.assignValuesToForm();
-      },
-      (error) => {
-        console.error('Error al obtener los datos del empleado', error);
+        
+        },
+        (error) => {
+        console.error('Error al obtener los datos del Empleado', error);
+        }
+      );
       }
-    );
-  }
-
-  assignValuesToForm() {
-    if (this.employee && this.employee.birthDate) {
-      this.formattedBirthDate = this.employee.birthDate.toISOString();
-    }
-  }
-
-  open() {
-    if (this.employeeId) {
-      this.loadEmployeeData(this.employeeId);
-      console.log('cargando info del empleado');
-    }
-    this.modalRef = this.modalService.open(this.content, { ariaLabelledBy: 'modal-basic-title' });
-    this.modalRef.result.then(
-      (result) => {
-        console.log("CONTENT", this.content);
-        console.log("RESULT", result);
-        console.log("employee FORM", this.employeeForm);
-        console.log(this.formattedBirthDate);
-        debugger;
-        let updateEmployee: Employee = {
-          idEmployee: this.employeeId,
-          firstName: this.employee.firstName,
-          lastName: this.employee.lastName,
-          birthDate: new Date(),
-          address: this.employee.address,
-          phoneNumber: this.employee.phoneNumber,
-          personalEmail: this.employee.personalEmail,
-          idDocumentType: this.employee.idDocumentType,
-          idDocumentNumber: this.employee.idDocumentNumber
-        };
-        console.log("NEW Employee", updateEmployee);
-        let employeeInSnake = this.camelToSnake(updateEmployee);
-        console.log("Employee EN SNAKE", employeeInSnake);
-        this.employeeService.putEmployee(employeeInSnake).subscribe(
-          (response) => {
-            alert("Se actualizó el empleado");
-          },
-          (error) => {
-            alert("Error en el servidor");
+  
+  
+  
+  
+  
+    open(content: any) {
+    
+      this.loadCustomerData(this.idEmployee);
+      this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then(
+        (result) => {
+  
+          console.log("CONTENT", content);
+          console.log("RESULT", result);
+          console.log("employee FORM",this.employeeForm);
+          
+          console.log(this.formattedBirthDate)
+          this.employee.birthDate = this.formattedBirthDate
+          console.log("NEW CUSTOMER", this.employee);
+          let newEmployee: Employee = {
+            firstName: this.employee.firstName,
+            lastName: this.employee.lastName,            
+            birthDate: this.formattedBirthDate,
+            documentType: this.employee.documentType,
+            documentNumber: this.employee.documentNumber,
+            address: this.employee.address,
+            phoneNumber: this.employee.phoneNumber,
+            personalEmail: this.employee.personalEmail
+            
           }
-        );
-        this.employeeService.clearFields(this.employee);
-        this.closeResult = `Closed with: ${result}`;
-        this.updateClicked.emit();
-
-      },
-      (reason) => {
-
-      },
-    );
-  }
-
-  onBirthDateChange(event: NgbDateStruct) {
+          let employeeInSnake: Employee = this.conversion.toSnakeCase(newEmployee);
+          console.log("CUSTOMER EN SNAKE", employeeInSnake);
+          this.employeeService.putEmployee(employeeInSnake, this.idEmployee).subscribe(
+            (response) => {
+              alert("Se actualizo el empleado")
+            },
+            (error) => {
+              alert("Error en el servidor")
+            }
+          )
+          this.employeeService.clearFields(this.employee);
+          this.closeResult = `Closed with: ${result}`;
+          
+  
+        },
+        (reason) => {
+          
+        },
+      );
+    }
+  
+  
+  
+   
+  
+    onBirthDateChange(event: NgbDateStruct) {
     if (event) {
+      // Obtén el año, mes y día de ngbDatepicker
       const year = event.year || 0;
       const month = event.month || 1;
       const day = event.day || 1;
+    
       const selectedDate = new Date(year, month - 1, day);
       this.formattedBirthDate = selectedDate.toISOString();
     } else {
       this.formattedBirthDate = '';
     }
+    }
+  
+  
+    onSubmitForm(employeeForm: NgForm){
+      console.log("Employee", employeeForm);
+    }
+  
+      
+  
   }
+  
 
-  setDocumentTypeDescription(id: number): void {
-    this.employee.idDocumentType = id;
-  }
-
-  onSubmitForm(employeeForm: NgForm) {
-    console.log("employeeEE", employeeForm);
-    if (this.modalRef) {
-      this.modalRef.close();
-    }
-  }
-
-  camelToSnake(obj: any): any {
-    const snakeObj: any = {};
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        const snakeKey = key.replace(/([A-Z])/g, "_$1").toLowerCase();
-        snakeObj[snakeKey] = obj[key];
-      }
-    }
-    return snakeObj;
-  }
-
-  convertSnakeToCamel = (obj: any): any => {
-    if (obj === null || typeof obj !== 'object') {
-      return obj;
-    }
-
-    if (Array.isArray(obj)) {
-      return obj.map(this.convertSnakeToCamel);
-    }
-
-    const camelObj: { [key: string]: any } = {};
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
-        camelObj[camelKey] = this.convertSnakeToCamel(obj[key]);
-      }
-    }
-    return camelObj;
-  };
-}

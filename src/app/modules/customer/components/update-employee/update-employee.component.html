@@ -1,3 +1,6 @@
+<label>  ID:
+	<input type="number" [(ngModel)]=idEmployee>
+
 <ng-template #updateEmployee let-modal>
 	<div class="modal-header">
 		<h4 class="modal-title" id="modal-basic-title">Actualizar Empleado</h4>
@@ -47,9 +50,17 @@
 			<div class="mb-3">
 				<label for="dateOfBirth">Fecha de nacimiento</label>
 				<div class="input-group">
-					<input required [(ngModel)]="employee.birthDate" (ngModelChange)="onBirthDateChange($event)"
-						id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
-						#dp="ngbDatepicker" />
+					<input 
+					required 
+					[(ngModel)]="employee.birthDate" 
+					(ngModelChange)="onBirthDateChange($event)"
+					id="dateOfBirth" 
+					class="form-control" 
+					placeholder="dd-mm-yyyy" 
+					name="dp" 
+					ngbDatepicker
+					#dp="ngbDatepicker" 
+					/>
 					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()"
 						type="button"></button><br>
 				</div>
@@ -76,11 +87,11 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn btn-primary" [disabled]="!employeeForm.valid"
+		<button type="submit" class="btn btn-primary"
 			(click)="modal.close(employeeForm)">Actualizar</button>
 	</div>
 </ng-template>
 
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Actualizar Empleado</button>
 
 
-<hr />

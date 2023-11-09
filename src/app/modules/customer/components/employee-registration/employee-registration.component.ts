@@ -61,7 +61,7 @@ export class EmployeeRegistrationComponent  {
 employee: Employee = {
 firstName:"",
 lastName:"",
-birthDate: new Date(),
+birthDate: new Date().toISOString(),
 documentType: 0,
 documentNumber:"",
 address:"",

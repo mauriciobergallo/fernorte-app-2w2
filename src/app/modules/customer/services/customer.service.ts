@@ -27,7 +27,7 @@ postCustomer(customer: CustomerRequest): Observable<any>{
   
   }
 
-  putCustomer(customer: any, idCustomer: number): Observable<any>{
+  putCustumer(customer: any, idCustomer: number): Observable<any>{
      
     return this.http.put<CustomerRequest>(this.apiUrl + "/" + idCustomer, customer );
   

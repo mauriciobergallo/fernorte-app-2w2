@@ -23,14 +23,10 @@ createEmployee(employee: Employee){
                                  
 }
 
-putEmployee(employee: Employee): Observable<Employee> {
-  const url = `${this.apiUrl}/${employee.idEmployee}`;
-  return this.http.put<Employee>(url, employee).pipe(
-    catchError(error => {
-      console.error('Error en la solicitud PUT:', error);
-      throw error; // Puedes manejar el error de otra manera según tus necesidades
-    })
-  );
+putEmployee(employee: any, idEmployee: number): Observable<any>{
+     
+  return this.http.put<Employee>(this.apiUrl + "/" + idEmployee, employee );
+
 }
 
 postEmployee(employeePost: Employee): Observable<EmployeeResponseDTO>{
