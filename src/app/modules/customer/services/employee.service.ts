@@ -1,6 +1,6 @@
 import { Employee } from './../models/employee';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EmployeeResponseDTO } from '../models/employeeResponseDTO';
 
@@ -12,7 +12,7 @@ export class EmployeeService {
   constructor(private http: HttpClient) { }
 
 //get
-getEmployeeById(employeeId: any): Observable<any>{
+getEmployeeById(employeeId: number): Observable<Employee>{
   return this.http.get<Employee>(this.apiUrl + "/" + employeeId);
 } 
 
@@ -23,13 +23,14 @@ createEmployee(employee: Employee){
                                  
 }
 
-putEmployee(employee: any): Observable<any>{
-  debugger;
-  let id = employee.idEmployee;
-  let employeeOk= employee;
-  employeeOk.idDocumentType=1;
-  return this.http.put<Employee>(this.apiUrl + "/" + id, employeeOk );
-
+putEmployee(employee: Employee): Observable<Employee> {
+  const url = `${this.apiUrl}/${employee.idEmployee}`;
+  return this.http.put<Employee>(url, employee).pipe(
+    catchError(error => {
+      console.error('Error en la solicitud PUT:', error);
+      throw error; // Puedes manejar el error de otra manera según tus necesidades
+    })
+  );
 }
 
 postEmployee(employeePost: Employee): Observable<EmployeeResponseDTO>{

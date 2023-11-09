@@ -1,11 +1,11 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { Employee } from '../../models/employee';
+
 import { EmployeeService } from '../../services/employee.service';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 import { EmployeeResponseDTO } from '../../models/employeeResponseDTO';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEmployeeComponent } from '../update-employee/update-employee.component';
-import { NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'fn-employee-list',
@@ -14,8 +14,9 @@ import { NgForm } from '@angular/forms';
 })
 export class EmployeeListComponent {
 
-  @ViewChild('employeeUpdate') updateEmployeeModal: TemplateRef<any> | undefined;
+  @ViewChild('employeeForm') updateEmployeeModal: TemplateRef<any> | undefined;
   employeeList: EmployeeResponseDTO[] = [];
+  selectedEmployeeId: number | null = null;
   
 
   constructor(private employeeService: EmployeeService, private conversion: CaseConversionPipe, private modalService: NgbModal){}
@@ -37,12 +38,15 @@ export class EmployeeListComponent {
   }
   
   openUpdateEmployeeModal(idEmployee: number) {
+    this.selectedEmployeeId = idEmployee;
     const modalRef = this.modalService.open(UpdateEmployeeComponent, { ariaLabelledBy: 'modal-basic-title' });
     modalRef.componentInstance.employeeId = idEmployee; // Pasar el ID del empleado al componente de actualización
     
     modalRef.componentInstance.updateClicked.subscribe(() => {
       // Abrir el modal del formulario de actualización
       this.modalService.open(this.updateEmployeeModal);
+      console.log('se abrio el modal del dempleado');
+      
     });
   }
 
