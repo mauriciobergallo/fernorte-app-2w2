@@ -18,7 +18,12 @@ export class CategoryService {
    getById(id: number): Observable<ICategory> {
       return this.requestResponseService.makeGetRequest<ICategory>(`${this.categories}/${id}`);
    }
-   put(request:any): Observable<ICategory> {
-      return this.requestResponseService.makePutRequest<ICategory>(this.categories,{request});
+   put(category:ICategory): Observable<ICategory> {
+      return this.requestResponseService.makePutRequest<ICategory>(this.categories,category);
    }	
+   delete(id: number, username: string): Observable<any> {
+      return this.requestResponseService.makeDeleteRequest<any>(
+         this.categories + '/' + id + '?username=' + username
+      );
+   }
 }

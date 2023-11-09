@@ -1,66 +1,71 @@
 <div class="container">
-    <form>
-        <div class="row">
-            <div class="col-md-3">
-                <h3>Agregar producto</h3>
+  <div class="modal-header">
+    <h3 class="text-center">{{isEdit?'Editar Producto':'Agregar Producto'}} </h3>
+    <button type="button" class="btn-close" aria-label="Close" (click)="ngbModal.dismissAll()"></button>
+  </div>
+  <!-- Alerta en caso de éxito o error -->
+  <div *ngIf="showMessage" [ngClass]="messageClass" class="alert mb-3" role="alert">
+    <strong>{{ message }}</strong>
+  </div>
+
+  <!-- Formulario -->
+  <div class="modal-body">
+
+    <form [formGroup]="formGroup">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="inputName" class="form-label">Nombre</label>
+          <input [class.is-invalid]="formGroup.get('name')?.invalid && (formGroup.get('name')?.dirty|| formGroup.get('name')?.touched)" type="text"
+            class="form-control" id="inputName" formControlName="name">
+            <div
+            *ngIf="formGroup.get('name')?.invalid && (formGroup.get('name')?.dirty || formGroup.get('name')?.touched)">
+            <small class="text-danger" *ngIf="formGroup.get('name')?.errors?.['productNameExists']">El nombre ya está registrado en el catálogo.</small>
             </div>
         </div>
-
-        <div class=" row">
-            <div class="mb-3 col-md-3">
-                <label for="inputName" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="inputName">
-            </div>
-            <div class="mb-3 col-md-3">
-                <label for="selectCategory" class="form-label">Categoría</label>
-                <select class="form-select" id="selectCategory">
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
-                </select>
-            </div>
-
-            <div class="mb-3 col-md-3">
-                <a *ngIf="addCategoryLinkVisible" class="add-category" (click)="showAddCategory()">Agregar categoría</a>
-            </div>
+        <div class="col-md-6 mb-3">
+          <label for="selectCategory" class="form-label">Categoría</label>
+          <select class="form-select" id="selectCategory" formControlName="id_category">
+            <option [class.is-invalid]="controlCategory.invalid && (controlCategory.dirty || controlCategory.touched)"
+              *ngFor="let item of listCategories" [value]="item.id_category">{{item.name}}</option>
+          </select>
         </div>
 
-        <div *ngIf="addCategoryVisible" class="row">
-            <fn-add-category (onHideAddCategory)="hideAddCategory()"></fn-add-category>
+        <div class="col-md-6 mb-3">
+          <label for="inputPrice" class="form-label">Precio</label>
+          <input [class.is-invalid]="controlUnitPrice.invalid && (controlUnitPrice.dirty || controlUnitPrice.touched)"
+            type="number" class="form-control" id="inputPrice" formControlName="unit_price">
         </div>
 
-        <div class="row">
-            <div class="mb-3 col-md-2">
-                <label for="inputPrice" class="form-label">Precio</label>
-                <input type="number" class="form-control" id="inputPrice">
-            </div>
-
-            <div class="mb-3 col-md-3">
-                <label for="inputUnitOfMeasurement" class="form-label">Unidad de medida</label>
-                <input type="text" class="form-control" id="inputUnitOfMeasurement">
-            </div>
-
-
-            <div class="mb-3 col-md-1">
-                <label for="inputStock" class="form-label">Stock</label>
-                <input type="number" class="form-control" id="inputStock">
-            </div>
-
+        <div class="col-md-6 mb-3">
+          <label for="inputUnitOfMeasurement" class="form-label">Unidad de medida</label>
+          <input type="text" class="form-control" id="inputUnitOfMeasurement" formControlName="unit_of_measure">
         </div>
 
-        <div class="row">
-            <div class="mb-3 col-md-6">
-                <label for="inputDescription" class="form-label">Descripción</label>
-                <textarea class="form-control" id="inputDescription" rows="3"></textarea>
-            </div>
+        <div class="col-md-6 mb-3">
+          <label for="inputStock" class="form-label">Stock</label>
+          <input
+            [class.is-invalid]="controlStockQuantity.invalid && (controlStockQuantity.dirty || controlStockQuantity.touched)"
+            type="number" class="form-control" id="inputStock" formControlName="stock_quantity">
         </div>
 
-        <div class="row">
-            <div class="col-md-3">
-                <button type="submit" class="btn btn-secondary">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
+        <div class="col-md-6 mb-3">
+          <label for="inputDescription" class="form-label">Descripción</label>
+          <textarea class="form-control" id="inputDescription" rows="3" formControlName="description"></textarea>
         </div>
+
+        <div class="mb-3">
+          <label for="inputImage" class="form-label">Imagen</label>
+          <input type="file" class="form-control" id="inputImage" formControlName="image"
+            (change)="onFileSelected($event)">
+        </div>
+      </div>
 
     </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="onSubmit()">Guardar</button>
+  </div>
+
+  <spinner *ngIf="isLoading"></spinner>
 </div>

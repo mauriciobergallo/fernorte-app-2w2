@@ -1,16 +1,38 @@
-<div class="container border p-3">
-    <div class="mb-3 col-md-3">
-        <label for="inputCategoryName" class="form-label">Nombre</label>
-        <input type="text" class="form-control" id="inputCategoryName">
-    </div>
-
-    <div class="mb-3 col-md-6">
-        <label for="inputDescription" class="form-label">Descripción</label>
-        <textarea class="form-control" id="inputDescription" rows="3"></textarea>
-    </div>
-
-    <div class="mb-3 col-md-3 links-add-category">
-        <a class="cancel-link" (click)="close()">Cancelar</a>
-        <a class="add-link" (click)="onSubmit()">Agregar</a>
-    </div>
+<div class="container">
+  <!-- Alerta en caso de éxito o error -->
+  <div *ngIf="showMessage" [ngClass]="messageClass" class="alert mb-3" role="alert">
+    <strong>{{ message }}</strong>
+  </div>
+  <div class="modal-header">
+    <h3>{{isEdit?'Editar Categoria':'Agregar Categoria'}} </h3>
+    <button type="button" class="btn-close" aria-label="Close" (click)="ngbModal.dismissAll()"></button>
 </div>
+
+  <div class="modal-body">
+  <form [formGroup]="formGroup">
+
+
+      <div class="row">
+        <div class="mb-3 col-md-6">
+          <label for="inputCategoryName" class="form-label">Nombre</label>
+          <input [class.is-invalid]="controlName.invalid && (controlName.dirty || controlName.touched)" type="text" class="form-control" id="inputCategoryName" formControlName="name">
+        </div>
+
+        <div class="mb-3 col-md-6">
+          <label for="inputCategoryDescription" class="form-label">Descripción</label>
+          <textarea [class.is-invalid]="controlDescription.invalid && (controlDescription.dirty || controlDescription.touched)" class="form-control" id="inputCategoryDescription" formControlName="description"></textarea>
+        </div>
+      </div>
+
+      <div class="row ">
+        <div class="col-md-6 col-lg-6 buttons-container">
+          <button type="button" class="btn btn-secondary m-1" (click)="close()">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="onSubmit()">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<spinner *ngIf="isLoading"></spinner>

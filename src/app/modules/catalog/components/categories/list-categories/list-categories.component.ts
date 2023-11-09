@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ICategory } from '../../../models/ICategory';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DeleteModalDiscountComponent } from '../../discounts/delete-modal-discount/delete-modal-discount.component';
 import { CategoryService } from '../../../services/category.service';
 import { AddCategoryComponent } from '../add-category/add-category.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-categories',
@@ -20,14 +20,24 @@ export class ListCategoriesComponent implements OnInit {
   ngOnInit() {
     this.getCategories();
   }
-  getCategories(){
-    this.categoryService.get().subscribe((cat: ICategory[]) => {
-      this.isLoading = false;
-      this.listCategories = cat;
-    })
+  getCategories() {
+    this.categoryService.get().subscribe({
+      next: (cat: ICategory[]) => {
+        this.isLoading = false;
+        this.listCategories = cat;
+      },
+      error: () => {
+        this.isLoading = false;
+      /*  Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error al cargar las categorías, intente nuevamente',
+        });*/
+      }
+    });
   }
   openEditModal(category: ICategory) {
-    const modalRef = this.modalService.open(AddCategoryComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(AddCategoryComponent, { size: 'lg' ,backdrop: 'static' });
     modalRef.componentInstance.category = category;
     modalRef.componentInstance.isEdit = true;
     modalRef.result.then(data => {
@@ -39,7 +49,7 @@ export class ListCategoriesComponent implements OnInit {
     })
   }
   openCreateModal() {
-    const modalRef = this.modalService.open(AddCategoryComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(AddCategoryComponent, { size: 'lg' ,backdrop: 'static'  });
     modalRef.result.then(data => {
       if (data) {
         this.categoryService.get().subscribe((cat: ICategory[]) => {
@@ -48,13 +58,30 @@ export class ListCategoriesComponent implements OnInit {
       }
     })
   }
-  openDeleteModal(category: ICategory) {
-    const modalRef = this.modalService.open(DeleteModalDiscountComponent, { size: 'lg' });
-    modalRef.componentInstance.category = category;
-    modalRef.result.then(() => {
-      this.categoryService.get().subscribe((cat: ICategory[]) => {
-        this.listCategories = cat;
-      })
-    })
+    openDeleteModal(category: ICategory) {
+      Swal.fire({
+        title: `¿Estás seguro que desea eliminar la categoria, ${category.name}?`,
+        text: "¡No podrás revertir esto!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#dc3545",
+        cancelButtonColor: "#6c757d",
+        confirmButtonText: "¡Sí, bórrar!",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.categoryService.delete(category.id_category, "prueba").subscribe(() => {
+            Swal.fire({
+              title: "¡Borrado!",
+              text: "La categoria ha sido borrado.",
+              icon: "success"
+            });
+            this.isLoading = true;
+            this.getCategories();
+          });
+        }
+      });
+    }
+    
   }
-}
+

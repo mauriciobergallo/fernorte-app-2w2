@@ -1,39 +1,89 @@
 <spinner *ngIf="isLoading"></spinner>
-
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<div class="container col-12">
+  <button class="btn btn-primary" (click)="openCreateModal()">Agregar</button>
+</div>
 <div class="container mt-4">
-  <button class="btn btn-primary" (click)="openCreateModal()">Agregar Productos</button>
+  <form [formGroup]="filterProduct">
+    <div class="row mt-3 mb-3">
+      <div class="col-md-6">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Filtrar por nombre" formControlName="name">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <select class="form-control" formControlName="category">
+            <option value="" selected>Todas las categorias</option>
+            <option *ngFor="let category of listCategories" [value]="category.id_category">{{ category.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="showDeleted" formControlName="isDeleted">
+      <label class="form-check-label" for="showDeleted">
+        Mostrar productos eliminados
+      </label>
+    </div>
+  </form>
   <table class="table">
     <thead>
       <tr>
-        <th>Nombre de Producto</th>
-        <th>Imagen</th>
+        <th class="name-column">Nombre</th>
         <th>Stock</th>
         <th>Precio</th>
         <th>Categoría</th>
+        <th>Estado</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let product of listProducts  | slice: (currentPage-1) * itemsPerPage : currentPage * itemsPerPage">
-        <td>{{ product.name }}</td>
-        <td>
-          <img [src]="product.image" alt="Imagen del producto" height="50" />
-        </td>
+      <tr *ngFor="let product of listProducts">
+        <td class="name-column" [ngbTooltip]="product.name" container="body">{{ product.name }}</td>
         <td>{{ product.stock_quantity }}</td>
-        <td>{{ product.unit_price | currency:'USD':'symbol-narrow' }}</td>
+          <td>
+            <span *ngIf="product.price_product; else noPriceProductUnit">
+              {{ product.price_product | currency : 'ARS' : 'symbol' }}
+            </span>
+            <ng-template #noPriceProductUnit>
+              {{ product.unit_price | currency : 'ARS' : 'symbol' }}
+            </ng-template>
+          </td>
         <td>{{ product.category.name }}</td>
         <td>
-          <button type="button" class="btn btn-primary mx-2" (click)="openEditModal(product)">Editar</button>
-          <button type="button" class="btn btn-danger mx-2" (click)="openDeleteModal(product)">Eliminar</button>
-        </td>        
+          <strong>
+            <div class="ms-2" *ngIf="!product.is_deleted">
+              <span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">
+                check_circle
+              </span>
+            </div>
+            <div class="ms-2" *ngIf="product.is_deleted">
+              <span style="color: rgb(202, 0, 0);" class="material-symbols-outlined">
+                cancel
+              </span>
+            </div>
+          </strong>
+        </td>
+        <div ngbDropdown container="body">
+          <button type="button" class="btn btn-sm btn-dropdown btn-light" ngbDropdownToggle>
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
+          <div ngbDropdownMenu>
+            <button ngbDropdownItem (click)="openEditModal(product)">Editar</button>
+            <button ngbDropdownItem (click)="openDelete(product)">Eliminar</button>
+            <button ngbDropdownItem (click)="openImageModal(product)">Ver mas</button>
+          </div>
+        </div>
       </tr>
     </tbody>
   </table>
 </div>
 
 <div class="container mt-4">
-  <ngb-pagination [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="collectionSize" [maxSize]="5" [rotate]="true">
+  <ngb-pagination class="d-flex justify-content-center" [(page)]="currentPage" [pageSize]="itemsPerPage"
+    [collectionSize]="totalItems" [maxSize]="5" [rotate]="true" (pageChange)="handlePagination($event)">
   </ngb-pagination>
 </div>
-
-

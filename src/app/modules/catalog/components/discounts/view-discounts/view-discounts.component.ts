@@ -3,6 +3,7 @@ import { DiscountsService } from '../../../services/discounts.service';
 import { IDiscount } from '../../../models/IDiscounts';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'fn-view-discounts',
@@ -12,8 +13,10 @@ import { DatePipe } from '@angular/common';
 export class ViewDiscountsComponent implements OnInit{
 
   discount:IDiscount | null = null;
-
-  constructor(private disService:DiscountsService, private activeRouter:ActivatedRoute){}
+  modalService: NgbModal
+  constructor(private disService:DiscountsService, private activeRouter:ActivatedRoute,private _modalService: NgbModal){
+    this.modalService = _modalService;
+  }
   ngOnInit(): void {
     this.activeRouter.paramMap.subscribe((res:any)=>{
       this.disService.getDiscountById(res.params.id).subscribe((res:IDiscount)=>{
@@ -23,7 +26,7 @@ export class ViewDiscountsComponent implements OnInit{
   }
 
   transformDate(date: string) {
-    const datePipe = new DatePipe('es');
+    const datePipe = new DatePipe('es-AR');
     const formattedDate = datePipe.transform(date, 'dd \'de\' MMMM \'del\' yyyy');
     return formattedDate;
   }
