@@ -82,7 +82,7 @@ export class TurnsComponentComponent {
           const welcomeMessage = `Bienvenido, tu turno es el N°${response.number}, aguarde unos minutos`;
           this.turnNumber = response.number;
 
-          // Reemplaza la llamada a alert con SweetAlert2
+          
           Swal.fire({
             title: 'Bienvenido',
             text: welcomeMessage,
@@ -111,7 +111,7 @@ export class TurnsComponentComponent {
               welcomeMessage = `Bienvenido ${response.first_name} ${response.last_name}, tu número de turno es el N°${response.number}, y fue creado el ${response.created_at}`;
             }
 
-            // Reemplaza la llamada a openModal con SweetAlert2
+            
             Swal.fire({
               title: 'Bienvenido',
               text: welcomeMessage,
@@ -125,7 +125,7 @@ export class TurnsComponentComponent {
           }
         },
         (error) => {
-          // Reemplaza la llamada a openModal con SweetAlert2
+          
           Swal.fire({
             title: 'Error',
             text: 'El número de documento es incorrecto',
@@ -136,7 +136,7 @@ export class TurnsComponentComponent {
         }
       );
     } else {
-      // Reemplaza la llamada a openModal con SweetAlert2
+      
       Swal.fire({
         title: 'Error',
         text: 'El número de documento está vacío, por favor ingrese un número válido.',
