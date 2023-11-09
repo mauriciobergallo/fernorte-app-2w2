@@ -37,7 +37,7 @@ import { CustomersSidebarComponent } from './components/customers-sidebar/custom
 import { CustomersRoutingModule } from './customers-routing.module';
 
 
-
+import { RouterModule, Routes } from '@angular/router';
 
 
 const routes: Routes = [

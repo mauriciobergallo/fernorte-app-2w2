@@ -1,35 +1,49 @@
-
-
-
-
 <fn-employee-registration></fn-employee-registration>
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<div class="container">
+  <h1 class="h1">Empleados</h1>
+  <table class="table container">
+    <thead>
+      <tr>
+        <th scope="col" class="text-center col-2">Nombre</th>
+        <th scope="col" class="text-center col-2">Apellido</th>
+        <th scope="col" class="text-center col-2">Documento</th>
+        <!-- <th scope="col" class="text-center">Tipo de Documento</th> -->
+        <th scope="col" class="text-center col-2">Estado</th>
+        <th scope="col" class="text-left col-2">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of employeeList">
+        <td class="text-center">{{ e.firstName }}</td>
+        <td class="text-center">{{ e.lastName }}</td>
+        <td class="text-center">{{ e.documentType }} - {{ e.documentNumber }}</td>
+        <!-- <td class="text-center"></td> -->
+        <td *ngIf="e.isActive" class="text-center"><span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">
+            check_circle
+          </span></td>
+        <td *ngIf="!e.isActive" class="text-center"><span style="color: rgb(202, 0, 0);" class="material-symbols-outlined">
+            cancel
+        </span></td>  
+        <td class="text-left">
+          <div class="dropdown">
+            <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <div class="dropdown-content">
+              <a (click)="onOptionClick('info')">Más Información</a>
+              <a (click)="onOptionClick('actualizar')">Actualizar</a>
+              <a *ngIf="e.isActive" (click)="onDelete(e)">Eliminar</a>
+              <a *ngIf="!e.isActive" (click)="onActive(e)">Activar</a>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<br>
+<br><br><br><br><br><br><br><br><br><br>
 
-<div class="container mt-3">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellido</th>
-          <th scope="col">Tipo de Documento</th>
-          <th scope="col">Documento</th>
-          <th scope="col">Fecha de Nacimiento</th>
-          <th scope="col">Correo Electrónico</th>
-          <th scope="col">Domicilio</th>
-          <th scope="col">Número de Teléfono</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let employee of employees">
-          <td>{{ employee.firstName }}</td>
-          <td>{{ employee.lastName }}</td>
-          <td>{{ employee.documentType }}</td>
-          <td>{{ employee.documentNumber }}</td>
-          <td>{{ employee.birthDate | date:'dd/MM/yyyy' }}</td>
-          <td>{{ employee.personalEmail }}</td>
-          <td>{{ employee.address }}</td>
-          <td>{{ employee.phoneNumber }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+
