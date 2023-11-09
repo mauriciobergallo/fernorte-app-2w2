@@ -56,7 +56,8 @@ export class AddCategoryComponent implements OnDestroy, OnInit {
         id_category: this.isEdit ? Number(this.formGroup.get('id_category')?.value) : 0,
         name: String(this.formGroup.get('name')?.value),
         description: String(this.formGroup.get('description')?.value),
-        created_by: 'Prueba'
+        created_by: 'Prueba',
+        is_deleted:false
       };
 
       this.subscription.add(this.catService.put(request).subscribe({

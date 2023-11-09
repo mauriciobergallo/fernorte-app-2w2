@@ -3,4 +3,5 @@ export interface ICategory {
     name: string;
     description: string;
     created_by: string;
+    is_deleted: boolean;
 }
