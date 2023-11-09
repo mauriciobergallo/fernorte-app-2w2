@@ -24,7 +24,7 @@ export class DiscountsComponent implements OnInit {
   sortDir = 'asc';
   totalItems: number = 0;
 
-  constructor(private disService: DiscountsService, private modalService: NgbModal,private fb: FormBuilder) {
+  constructor(private disService: DiscountsService, private modalService: NgbModal, private fb: FormBuilder) {
     this.filterDiscount = this.fb.group({
       idProduct: [''],
       initStartDate: [Date],
@@ -33,12 +33,12 @@ export class DiscountsComponent implements OnInit {
       finalEndDate: [Date],
       isDeleted: [false]
     });
-   }
+  }
 
   ngOnInit(): void {
     this.getDiscount();
   }
-  private pagedDiscount(){
+  private pagedDiscount() {
     this.isLoading = true;
     this.subscription.add(
       this.disService
@@ -55,10 +55,10 @@ export class DiscountsComponent implements OnInit {
           this.filterDiscount.value.isDeleted,
         )
         .subscribe({
-          next: (discounts : any) => {
-            this.discountsList=discounts.discounts;
-            this.totalItems=discounts.length;
-            this.isLoading=false;
+          next: (discounts: any) => {
+            this.discountsList = discounts.discounts;
+            this.totalItems = discounts.length;
+            this.isLoading = false;
           },
           error: () => {
             Swal.fire({
@@ -78,17 +78,17 @@ export class DiscountsComponent implements OnInit {
   }
   getDiscount() {
     this.disService.getDiscounts().subscribe({
-      next: (dis: IDiscount[]) => {
+      next: (dis: any) => {
         this.isLoading = false;
-        this.discountsList = dis;
+        this.discountsList = dis.disocunts;
       },
       error: () => {
         this.isLoading = false;
-          Swal.fire({
+        Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'Error al cargar los descuentos, intente nuevamente',
-          });
+        });
       }
     });
   }

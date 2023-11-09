@@ -47,8 +47,8 @@ export class ProductsComponent {
     this.filterProduct.valueChanges.subscribe(() => {
       this.pagedProducts();
     });
-    this.categoryService.get().subscribe((res: ICategory[]) => {
-      this.listCategories = res;
+    this.categoryService.get().subscribe((res: any) => {
+      this.listCategories = res.categories;
     });
 
   }

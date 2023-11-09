@@ -20,10 +20,12 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   listProducts: IProductCategory[] = [];
   isLoading: boolean = false;
-  ngbModal:NgbModal
+  ngbModal: NgbModal
   subscription: Subscription;
+  page: number = 1;
+  size: number = 10000;
 
-  constructor(private fb: FormBuilder, _ngbModal:NgbModal, private prodService: ProductService, private disService: DiscountsService, @Optional() private modalService: NgbActiveModal) {
+  constructor(private fb: FormBuilder, _ngbModal: NgbModal, private prodService: ProductService, private disService: DiscountsService, @Optional() private modalService: NgbActiveModal) {
     this.formGroup = this.fb.group({
       id_discount: [null],
       id_product: [null],
@@ -31,7 +33,7 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
       start_date: [null],
       end_date: [null]
     });
-   this.ngbModal = _ngbModal;
+    this.ngbModal = _ngbModal;
     this.subscription = new Subscription();
   }
 
@@ -45,10 +47,18 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
 
 
   getProducts() {
-    this.subscription.add(this.prodService.get().subscribe((res) => {
-      this.listProducts = res;
+    this.subscription.add(this.prodService.get(this.page, this.size).subscribe((res: any) => {
+      console.log(res);
+      this.listProducts = res.products;
     }));
+
+    // this.subscription.add(this.prodService.get(1,0,"name","asc",true).subscribe((res: any) => {
+    //   console.log(res);
+    //   this.listProducts = res.products;
+    // }));
   }
+
+
 
 
 
