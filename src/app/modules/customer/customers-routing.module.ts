@@ -8,13 +8,8 @@ import { RoleListComponent } from "./components/role-list/role-list.component";
 import { TurnsComponentComponent } from "./components/turns-component/turns-component.component";
 import { LoginComponent } from "./components/login/login.component";
 import { UpdateCustomerComponent } from "./components/update-customer/update-customer.component";
+import { ForgotPasswordComponent } from "./components/forgot-password/forgot-password.component";
 
-// const routes: Routes = [
-//     {path:"s", component: HomeComponent},
-//     {path:"employees", component: EmployeeListComponent},
-//     {path:"customers", component: CreateCustomerComponent},
-
-//   ]
 
   const routes: Routes = [
     {
@@ -27,10 +22,11 @@ import { UpdateCustomerComponent } from "./components/update-customer/update-cus
         {path: 'role', component: RoleListComponent},
         {path: 'turns', component: TurnsComponentComponent},
         {path: "login", component: LoginComponent},
-        {path: "update-costumer", component: UpdateCustomerComponent}
+        {path: "update-costumer", component: UpdateCustomerComponent},
+        {path: 'forgot-password', component: ForgotPasswordComponent }
       ]
     }]
-  
+
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
