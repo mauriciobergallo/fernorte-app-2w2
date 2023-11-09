@@ -5,6 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddDiscountComponent } from './add-discount/add-discount.component';
 import { ViewDiscountsComponent } from './view-discounts/view-discounts.component';
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'fn-discounts',
@@ -14,14 +16,65 @@ import Swal from 'sweetalert2';
 export class DiscountsComponent implements OnInit {
   discountsList: IDiscount[] = [];
   isLoading = true;
-
+  private subscription = new Subscription();
+  filterDiscount: FormGroup;
   currentPage = 1;
-  itemsPerPage = 10;
+  itemsPerPage = 15;
+  sortBy = 'name';
+  sortDir = 'asc';
+  totalItems: number = 0;
 
-  constructor(private disService: DiscountsService, private modalService: NgbModal) { }
+  constructor(private disService: DiscountsService, private modalService: NgbModal,private fb: FormBuilder) {
+    this.filterDiscount = this.fb.group({
+      idProduct: [''],
+      initStartDate: [Date],
+      finalStartDate: [Date],
+      initEndDate: [Date],
+      finalEndDate: [Date],
+      isDeleted: [false]
+    });
+   }
 
   ngOnInit(): void {
     this.getDiscount();
+  }
+  private pagedDiscount(){
+    this.isLoading = true;
+    this.subscription.add(
+      this.disService
+        .getDiscounts(
+          this.currentPage,
+          this.itemsPerPage,
+          this.sortBy,
+          this.sortDir,
+          this.filterDiscount.value.idProduct,
+          this.filterDiscount.value.initStartDate,
+          this.filterDiscount.value.finalStartDate,
+          this.filterDiscount.value.initEndDate,
+          this.filterDiscount.value.finalEndDate,
+          this.filterDiscount.value.isDeleted,
+        )
+        .subscribe({
+          next: (discounts : any) => {
+            this.discountsList=discounts.discounts;
+            this.totalItems=discounts.length;
+            this.isLoading=false;
+          },
+          error: () => {
+            Swal.fire({
+              icon: 'error',
+              title: '!Error!',
+              text: 'No se han encontrado resultados.',
+            });
+            this.isLoading = false;
+          },
+        })
+    )
+  }
+
+  public handlePagination(event: any) {
+    this.currentPage = event;
+    this.pagedDiscount();
   }
   getDiscount() {
     this.disService.getDiscounts().subscribe({
@@ -31,11 +84,11 @@ export class DiscountsComponent implements OnInit {
       },
       error: () => {
         this.isLoading = false;
-        /*   Swal.fire({
-             icon: 'error',
-             title: 'Oops...',
-             text: 'Error al cargar los descuentos, intente nuevamente',
-           });*/
+          Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error al cargar los descuentos, intente nuevamente',
+          });
       }
     });
   }

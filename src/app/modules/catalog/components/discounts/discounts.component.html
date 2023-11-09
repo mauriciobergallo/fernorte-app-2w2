@@ -45,10 +45,10 @@
 </div>
 
 <div class="container mt-4">
-    <ngb-pagination class="d-flex justify-content-center" [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="5" [maxSize]="5" [rotate]="true">
+    <ngb-pagination class="d-flex justify-content-center" [(page)]="currentPage" [pageSize]="itemsPerPage"
+      [collectionSize]="totalItems" [maxSize]="5" [rotate]="true" (pageChange)="handlePagination($event)">
     </ngb-pagination>
 </div>
-
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
