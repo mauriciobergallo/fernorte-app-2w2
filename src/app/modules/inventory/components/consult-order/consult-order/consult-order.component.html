@@ -9,7 +9,7 @@
         </div>
       </div>
 
-      <div class="table-responsive">
+      <div class="table">
         <table class="table table-striped">
           <thead>
             <tr>
@@ -31,8 +31,16 @@
                 <i [class]="item.state | stateIconPipe" [ngbTooltip]="getTooltipText(item.state)"></i>
               </td>
               <td class="text-center">
-                <i (click)="navigateToDetails(item.delivery_order_id)" [ngbTooltip]="'Ver'" class="bi bi-eye"
-                  style="cursor: pointer; font-size: 20px;"></i>
+
+                <div class="dropdown">
+                  <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="bi bi-three-dots-vertical"></i>
+                  </button>
+                  <div class="dropdown-content" (click)="navigateToDetails(item.delivery_order_id)">
+                    <a><i class="bi bi-eye" style="cursor: pointer; font-size: 20px; margin-right: 5px;"></i>VER</a>
+                  </div>
+                  
+                </div>
               </td>
             </tr>
           </tbody>
