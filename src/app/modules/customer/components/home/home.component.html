@@ -1,6 +1,13 @@
-<fn-employee-registration></fn-employee-registration>
 
-<fn-create-customer></fn-create-customer>
+
+<div class="main-container d-flex">
+    <div class="sidebar" id="side_nav">
+        <fn-customers-sidebar></fn-customers-sidebar>    </div>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+<!-- <fn-create-customer></fn-create-customer>
 <fn-create-rol></fn-create-rol>
 <hr>
 <fn-role-list></fn-role-list>
@@ -9,3 +16,7 @@
 <fn-login></fn-login>
 
 <fn-update-customer></fn-update-customer>
+
+<br>
+<br>
+<fn-employee-list></fn-employee-list> -->

@@ -3,6 +3,7 @@ import { Employee } from '../../models/employee';
 import { EmployeeService } from '../../services/employee.service';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 import { EmployeeResponseDTO } from '../../models/employeeResponseDTO';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'fn-employee-list',
@@ -12,7 +13,7 @@ import { EmployeeResponseDTO } from '../../models/employeeResponseDTO';
 export class EmployeeListComponent {
   employeeList: EmployeeResponseDTO[] = [];
 
-  constructor(private employeeService: EmployeeService, private conversion: CaseConversionPipe){}
+  constructor(private employeeService: EmployeeService, private conversion: CaseConversionPipe, private modalService: NgbModal){}
 
   ngOnInit(): void{
     this.onLoad()
@@ -62,6 +63,5 @@ export class EmployeeListComponent {
       )
     )
   }
-
 
 }
