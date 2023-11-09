@@ -15,3 +15,11 @@
    text-overflow: ellipsis;
    white-space: nowrap;
  }
+
+ /* Estilo para el margen entre elementos en pantalla pequeña (<= 767px) */
+@media (max-width: 767px) {
+   .table-header .form-group {
+     margin-bottom: 10px; /* Ajusta el valor de margen según tus preferencias */
+   }
+ }
+ 
