@@ -8,7 +8,7 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
-  private apiUrl = "http://localhost:8085/customers"
+  private apiUrl = "http://localhost:8089/customers"
 
 //Post
 createCustomer(customer: CustomerRequest){
@@ -17,11 +17,21 @@ createCustomer(customer: CustomerRequest){
                                  
 }
 
+
+getCustomerById(customerId: any): Observable<any>{
+  return this.http.get<CustomerRequest>(this.apiUrl + "/" + customerId);
+} 
+
 postCustomer(customer: CustomerRequest): Observable<any>{
     return this.http.post<CustomerRequest>(this.apiUrl, customer );
   
   }
 
+  putCustomer(customer: any, idCustomer: number): Observable<any>{
+     
+    return this.http.put<CustomerRequest>(this.apiUrl + "/" + idCustomer, customer );
+  
+  }
 
 
 clearFields(customer: any){

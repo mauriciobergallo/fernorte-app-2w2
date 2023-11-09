@@ -20,7 +20,7 @@ export class CreateRolComponent {
   constructor(private modalService: NgbModal, private roleService: RoleService) {}
 
   open(content: any) {
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static'  }).result.then(
 			(result) => {
 
 				console.log("CONTENT", content);

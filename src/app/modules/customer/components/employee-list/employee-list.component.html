@@ -1,0 +1,35 @@
+
+
+
+
+<fn-employee-registration></fn-employee-registration>
+
+<div class="container mt-3">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Tipo de Documento</th>
+          <th scope="col">Documento</th>
+          <th scope="col">Fecha de Nacimiento</th>
+          <th scope="col">Correo Electrónico</th>
+          <th scope="col">Domicilio</th>
+          <th scope="col">Número de Teléfono</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees">
+          <td>{{ employee.firstName }}</td>
+          <td>{{ employee.lastName }}</td>
+          <td>{{ employee.documentType }}</td>
+          <td>{{ employee.documentNumber }}</td>
+          <td>{{ employee.birthDate | date:'dd/MM/yyyy' }}</td>
+          <td>{{ employee.personalEmail }}</td>
+          <td>{{ employee.address }}</td>
+          <td>{{ employee.phoneNumber }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

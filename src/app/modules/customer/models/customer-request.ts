@@ -6,8 +6,8 @@ export interface CustomerRequest {
     companyName: string;
     ivaCondition: string;
     email: string;
-    birthDate: Date;
-    documentType: number; 
+    birthDate: string;
+    idDocumentType: number; 
     documentNumber: string; 
     address: string;
     phoneNumber: string;

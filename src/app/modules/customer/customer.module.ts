@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { UserRootComponent } from './components/user-root/user-root.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateParserFormatter, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EmployeeRegistrationComponent } from './components/employee-registration/employee-registration.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -26,6 +26,19 @@ import { CreateRolComponent } from './components/create-rol/create-rol.component
 import { UserService } from './services/user.service';
 import { ModifyUserRolComponent } from './components/modify-user-rol/modify-user-rol.component';
 import { ModifyUserComponent } from './components/modify-user/modify-user.component';
+import { UpdateCustomerComponent } from './components/update-customer/update-customer.component';
+import { CategoryComponent } from './components/category/category.component';
+import { CategoryService } from './services/category.service';
+import { CustomDateParserFormatter } from './components/shared/custom-date-formatter';
+import { RoleListComponent } from './components/role-list/role-list.component';
+import { CaseConversionPipe } from './pipes/case-conversion.pipe';
+import { EmployeeListComponent } from './components/employee-list/employee-list.component';
+import { CustomersSidebarComponent } from './components/customers-sidebar/customers-sidebar.component';
+import { CustomersRoutingModule } from './customers-routing.module';
+
+
+
+
 
 const routes: Routes = [
   { component: LoginComponent, path: 'login' },
@@ -33,13 +46,15 @@ const routes: Routes = [
   { component: FirstLoginComponent, path: 'first-login/:forgot' },
 ];
 @NgModule({
-  declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, 
-    EmployeeRegistrationComponent,UserRootComponent,  LoginComponent, UserFormComponent, 
-    FirstLoginComponent,CreateCustomerComponent, CreateRolComponent, ModifyUserComponent, 
-    ForgotPasswordComponent, ModifyUserRolComponent
+  declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent,CategoryComponent, UserRootComponent, UserFormComponent,
+    LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent, EmployeeListComponent, CustomersSidebarComponent,FirstLoginComponent,
+    ModifyUserComponent, ForgotPasswordComponent,ModifyUserRolComponent
   ],
-  providers: [EmployeeService, RoleService, TurnService, LoginService, CustomerService, DatePipe, UserService],
-  imports: [CommonModule, BrowserModule, NgbModule, FormsModule, HttpClientModule,ReactiveFormsModule, RouterModule, RouterModule.forRoot(routes)],
+  providers: [CategoryService,  
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }, EmployeeService,
+    RoleService, TurnService, LoginService, CustomerService, CaseConversionPipe, DatePipe, UserService],
+  imports: [CommonModule, BrowserModule, ReactiveFormsModule, RouterModule, RouterModule.forRoot(routes),
+    NgbModule, FormsModule, HttpClientModule, ReactiveFormsModule, CustomersRoutingModule],
   exports: [HomeComponent, RouterModule],
 })
 export class CustomerModule {}

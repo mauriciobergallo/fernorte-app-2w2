@@ -1,0 +1,56 @@
+<button class="btn btn-lg btn-outline-primary" (click)="show = show == true ? false : true">Mostrar Categorias</button>
+
+<hr>
+<div class="vh-100" *ngIf="show">
+
+  <h1 class="m-3">Registro de categorias</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <label for="name" class="form-label">Nombre categoria</label>
+        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="category.name">
+      </div>
+      <div class="col">
+        <label for="rangeDownTo" class="form-label">Desde</label>
+        <input type="text" class="form-control" id="rangeDownTo" name="rangeDownTo" [(ngModel)]="category.rangeDownTo">
+      </div>
+      <div class="col">
+        <label for="rangeUpTo" class="form-label">Hasta</label>
+        <input type="text" class="form-control" id="rangeUpTo" name="rangeUpTo" [(ngModel)]="category.rangeUpTo">
+      </div>
+      <div class="col">
+        <label for="discount" class="form-label">Descuento (%)</label>
+        <input type="text" class="form-control" id="discount" name="discount" [(ngModel)]="category.discount">
+      </div>
+    </div>
+    <div class="row justify-content-end mt-2">
+      <div class="col-auto">
+        <button class="btn btn-primary" (click)="createCategory()">Aceptar</button>
+      </div>
+    </div>
+
+    
+  </div>
+  <div class="container mt-5">
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Nombre categoria</th>
+          <th scope="col">Desde</th>
+          <th scope="col">Hasta</th>
+          <th scope="col">Descuento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories">
+          <td>{{ category.name }}</td>
+          <td>{{ category.rangeDownTo }}</td>
+          <td>{{ category.rangeUpTo }}</td>
+          <td>{{ category.discount }}</td>
+         
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
