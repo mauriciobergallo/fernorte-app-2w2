@@ -47,7 +47,7 @@ export class ModifyUserComponent implements OnInit{
       const newRoles = this.usuario.roles.map(r => r.name);
   
       // Llama al servicio para actualizar los roles en el backend
-      this.userService.modifyUserRoles(this.usuario.user_name, this.usuario.roles).subscribe((updatedUser) => {
+      this.userService.modifyUserRoles(this.usuario).subscribe((updatedUser) => {
         this.usuario = updatedUser;
       });
     }
@@ -59,7 +59,7 @@ export class ModifyUserComponent implements OnInit{
         this.usuario.roles.push(selectedRole);
 
         // Llama al servicio para actualizar los roles en el backend
-        this.userService.modifyUserRoles(this.usuario.user_name, this.usuario.roles).subscribe((updatedUser) => {
+        this.userService.modifyUserRoles(this.usuario).subscribe((updatedUser) => {
             this.usuario = updatedUser;
         });
     }

@@ -31,12 +31,10 @@ export class UserService {
     return this.http.post(this.apiUrlnewUser, user, { headers });
   }
 
-    modifyUserRoles(targetUsername: string, newRoles: Role[]): Observable<UserResponseDTO> {
+    modifyUserRoles(userResponse: UserResponseDTO): Observable<UserResponseDTO> {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      const url = `${this.baseUrl}/${targetUsername}`;
-      return this.http.put<UserResponseDTO>(url, newRoles, { headers });
+      return this.http.put<UserResponseDTO>(this.baseUrl, userResponse, { headers });
     }
-  
     
   
     getUserByUsername(username: string): Observable<UserResponseDTO> {

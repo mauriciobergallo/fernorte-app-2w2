@@ -17,40 +17,41 @@ export class ModifyUserRolComponent{
 	userRolForm!: NgForm;
 	closeResult = '';
 
-	username: string = '';
-	usuarioExistente: boolean = false; // Inicialmente, el nombre no existe.
-  	usuario: UserResponseDTO | undefined; // Define la interfaz de usuario según tus modelos
-	rolesAsignados: Role [] = [];
-	rolesDisponibles: Role[] = [];
-
+	userName: string = '';
+	userExist: boolean = false;
+  	user: UserResponseDTO | null = null;
+	allRoles: Role[] = [];
+	assignedRoles: Role[] = [];
+	unassignedRoles: Role[] = [];
+	selectedRole: Role | null = null;
 
 	constructor(private modalService: NgbModal, private userService: UserService,private roleService: RoleService) {
-		this.rolesDisponibles = [
-			{ name: 'Administrador', area: 'Administración' },
-			{ name: 'Editor', area: 'Contenido' },
-			{ name: 'Ventas', area: 'General' },
-		  ];
 
-		this.rolesAsignados = [
-			{name: 'Ventas', area: 'General'}
-		]
-
-		this.usuario = {
-			user_name: 'gonzalo',
-			document_number: '41481418',
-			roles: this.rolesAsignados
-		} 
 	}
 
     open(content: any) {
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+
+		// Obtiene todos los roles
+		this.roleService.getAllRoles().subscribe((roles) => {
+			this.allRoles = roles;
+		});
+		
+		this.modalService.open(content, { 
+			ariaLabelledBy: 'modal-basic-title',
+			backdrop: 'static'
+
+		}).result.then(
 			(result) => {
 
 				console.log("CONTENT", content);
 				console.log("RESULT", result);
 				console.log("USERROL FORM", this.userRolForm);
-
 				this.closeResult = `Closed with: ${result}`;
+
+				if(this.user){
+					this.userService.modifyUserRoles(this.user).subscribe((updatedUser) => 
+					console.log(updatedUser));
+				}
 			},
 			(reason) => {
 
@@ -58,31 +59,59 @@ export class ModifyUserRolComponent{
 		);
 	}
 
-	searchedUsername() {
-		this.userService.getUserByUsername(this.username).subscribe(
-		  (user) => {
-			// Usuario encontrado: Mostrar la marca de verificación verde
-			this.usuario = user;
-			this.usuarioExistente = true; // Propiedad para indicar que el usuario existe
-		  },
-		  (error) => {
-			// Usuario no encontrado: Mostrar la cruz roja
-			this.usuario = undefined;
-			this.usuarioExistente = false; // Propiedad para indicar que el usuario no existe
-		  }
-		);
-	  }
+	searchUsername() {
+		//Obtiene el usuario
+		this.userService.getUserByUsername(this.userName).subscribe(
+			(user) => {
+				this.user = user;
+				this.userExist = true;
 
-	selectedRole() {
-		this.roleService.getAllRoles().subscribe((roles) => {
-			// Elimina los roles que el usuario ya tiene
-			this.rolesDisponibles = roles.filter(item => !this.usuario?.roles.includes(item));
-		 });	
+				//Obtiene los roles no asignados para el usuario
+				this.availableRoles();
+
+				console.log(this.user.roles);
+				console.log(this.allRoles);
+				console.log(this.unassignedRoles);
+			},
+			(error) => {
+				this.user = null;
+				this.userExist = false;
+			}
+		);
 	}
 
+	availableRoles() {
+		if (this.user) {
+			// Crear una lista de todos los roles asignados
+		  	const assignedRoles = this.user.roles;
+	  
+			// Filtrar los roles no asignados
+			this.unassignedRoles = this.allRoles.filter(role => !assignedRoles.some(assignedRole => this.equalsRoles(role, assignedRole)));
+		}
+	}
+	  
+	equalsRoles(objeto1: Role, objeto2: Role): boolean {
+		// Comparar todas las propiedades de los objetos
+		return JSON.stringify(objeto1) === JSON.stringify(objeto2);
+	}
+	
+	addRole() {
+		if (this.user && this.selectedRole) {
+			// Agrega el rol seleccionado al usuario
+			this.user.roles.push(this.selectedRole);
+			this.selectedRole = null;
+			this.availableRoles();
+		}
+	}
 
+	deleteRole(roleToDelete: Role | null) {
+		if (this.user && roleToDelete) {
+		  	// Elimina el rol seleccionado del usuario
+		  	this.user.roles = this.user.roles.filter(role => role !== roleToDelete);
+			this.availableRoles();
+		}
+	}
 
     onSubmitForm(userRol: NgForm) {
-		console.log("userRol", userRol);
 	}
 }
