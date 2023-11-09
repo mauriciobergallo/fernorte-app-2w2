@@ -1,49 +1,52 @@
-<button class="btn btn-lg btn-outline-primary" (click)="show = show == true ? false : true">Mostrar Login</button>
 
-<hr />
+    <div class="container my-5 mx-auto col-4">
+    <form #miFormulario="ngForm" (ngSubmit)="onAdd(miFormulario)">
 
-<div class="container my-5 mx-auto col-4" *ngIf="show">
-<form #miFormulario="ngForm" (ngSubmit)="onAdd(miFormulario)">
+        <div style="text-align: center;">
+            <!-- cambiar por el logo original -->
+            <img class="mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72"
+                height="57">
 
-    <div style="text-align: center;">
-        <!-- cambiar por el logo original -->
-        <img class="mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt=""                     width="72" height="57"> 
 
-        
-        <h1 class="h3 mb-3 fw-normal"><b>Iniciar sesión en FerNorte</b></h1>
-    </div>
-
-    <div class="form-floating">
-        <input type="text" class="form-control my-2" id="floatingInput" placeholder=""
-        name="username" #username = "ngModel" [(ngModel)]="login.identity"
-        [ngClass]="{ 'is-invalid': username.invalid && miFormulario.submitted}" required>
-        <label for="floatingInput">Usuario</label>
-        <div class="invalid-feedback">
-            Ingrese un usuario
+            <h1 class="h3 mb-3 fw-normal"><b>Iniciar sesión en FerNorte</b></h1>
         </div>
-    </div>
-    <div class="form-floating">
-        <input type="password" class="form-control my-2" id="floatingPassword" placeholder="Password"
-        name="password" #password = "ngModel" [(ngModel)]="login.password"
-        [ngClass]="{ 'is-invalid': password.invalid && miFormulario.submitted}" required>
-        <label for="floatingPassword">Contraseña</label>
-        <div class="invalid-feedback">
-            Ingrese una contraseña
+
+        <div class="form-floating">
+            <input type="text" class="form-control my-2" id="floatingInput" placeholder="name@example.com"
+                name="username" #username="ngModel" [(ngModel)]="login.identity"
+                [ngClass]="{ 'is-invalid': username.invalid && miFormulario.submitted}" required>
+            <label for="floatingInput">Username</label>
+            <div class="invalid-feedback">
+                Ingrese un userName
+            </div>
         </div>
-    </div>
+        <div class="form-floating">
+            <input type="password" class="form-control my-2" id="floatingPassword" placeholder="Password"
+                name="password" #password="ngModel" [(ngModel)]="login.password"
+                [ngClass]="{ 'is-invalid': password.invalid && miFormulario.submitted}" required>
+            <label for="floatingPassword">Password</label>
+            <div class="invalid-feedback">
+                Ingrese un password
+            </div>
+        </div>
 
-    <!-- <div class="form-check text-start my-3">
-        <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-            Remember me
-        </label>
-    </div> -->
-    <!-- <div class="form-check text-start my-3">
-        <a class="form-check-label" href="login.component.html">
-            I forgot my password
-        </a>
-    </div> -->
-    <button class="btn btn-primary w-100 py-2" type="submit">Iniciar Sesión</button>
+        <div class="form-check text-start my-3">
+            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                Remember me
+            </label>
+        </div>
+        <div class="form-check text-start my-3">
+            <a class="form-check-label" (click)="goToForgotPassword()">
+                I forgot my password
+            </a>
+        </div>
+        <button class="btn btn-primary w-100 py-2" type="submit">Iniciar Sesión</button>
 
-</form>
+    </form>
 </div>
+
+<div>
+    <router-outlet></router-outlet>
+</div>
+

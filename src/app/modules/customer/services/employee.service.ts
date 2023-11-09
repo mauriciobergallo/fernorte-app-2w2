@@ -39,17 +39,11 @@ active(employee: EmployeeResponseDTO): Observable<any>{
 }
 
 
-
-clearFields(employee: any){
-  for (const prop in employee) {
-    if (employee.hasOwnProperty(prop)) {
-      delete employee[prop];
+  clearFields(employee: any) {
+    for (const prop in employee) {
+      if (employee.hasOwnProperty(prop)) {
+        delete employee[prop];
+      }
     }
   }
-
-}
-
-
-
-
 }
