@@ -12,7 +12,14 @@ export class CategoryService {
 
    constructor(private requestResponseService: RequestResponseService) { }
    
-   get(): Observable<ICategory[]> {
+   get(
+      page?: number,
+      size?: number,
+      sortBy?: string,
+      sortDir?: string,
+      name?: string,
+      isDeleted?: boolean,
+   ): Observable<ICategory[]> {
       return this.requestResponseService.makeGetRequest<ICategory[]>(this.categories);
    }
    getById(id: number): Observable<ICategory> {
