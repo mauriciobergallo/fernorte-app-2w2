@@ -55,7 +55,7 @@
 						<option value=5 *ngIf="customer.customerType == 'Fisica'">LC</option>
 						<option value=6 *ngIf="customer.customerType == 'Fisica'">LE</option>
 					</select>
-					<div class="text-danger" *ngIf="controlDocumentType.invalid">Seleccione un tipo de documento</div>
+					<!-- <div class="text-danger" *ngIf="controlDocumentType.invalid">Seleccione un tipo de documento</div> -->
 				</div>
 				<div class="flex-grow-1">
 					<label for="documentNumber">Documento</label>
@@ -90,7 +90,7 @@
 					[minDate]="maxDate" [maxDate]="minDate"
 				  />
 					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button><br>
-					<div class="text-danger" *ngIf="controlBirthDate.invalid && controlBirthDate.touched">Ingrese una fecha de nacimiento</div>
+					<!-- <div class="text-danger" *ngIf="controlBirthDate.invalid && controlBirthDate.touched">Ingrese una fecha de nacimiento</div> -->
                 </div>
 			</div>
 

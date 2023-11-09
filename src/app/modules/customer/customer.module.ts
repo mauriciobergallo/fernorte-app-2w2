@@ -37,14 +37,15 @@ import { CustomersSidebarComponent } from './components/customers-sidebar/custom
 import { CustomersRoutingModule } from './customers-routing.module';
 
 
-import { RouterModule, Routes } from '@angular/router';
+
+// const routes: Routes = [
+//   { component: LoginComponent, path: 'login' },
+//   { component: ForgotPasswordComponent, path: 'forgot-password' },
+//   { component: FirstLoginComponent, path: 'first-login/:forgot' },
+// ];
 
 
-const routes: Routes = [
-  { component: LoginComponent, path: 'login' },
-  { component: ForgotPasswordComponent, path: 'forgot-password' },
-  { component: FirstLoginComponent, path: 'first-login/:forgot' },
-];
+
 @NgModule({
   declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent,CategoryComponent, UserRootComponent, UserFormComponent,
     LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent, EmployeeListComponent, CustomersSidebarComponent,FirstLoginComponent,
@@ -53,7 +54,7 @@ const routes: Routes = [
   providers: [CategoryService,  
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }, EmployeeService,
     RoleService, TurnService, LoginService, CustomerService, CaseConversionPipe, DatePipe, UserService],
-  imports: [CommonModule, BrowserModule, ReactiveFormsModule, RouterModule, RouterModule.forRoot(routes),
+  imports: [CommonModule, BrowserModule, ReactiveFormsModule, 
     NgbModule, FormsModule, HttpClientModule, ReactiveFormsModule, CustomersRoutingModule],
   exports: [HomeComponent, RouterModule],
 })
