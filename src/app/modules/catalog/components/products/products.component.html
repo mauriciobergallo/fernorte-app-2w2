@@ -13,7 +13,7 @@
   
         <div class="col-md-4">
           <div class="form-group">
-            <select class="form-control" formControlName="category">
+            <select class="form-select form-control" formControlName="category">
               <option value="" selected>Todas las categorías</option>
               <option *ngFor="let category of listCategories" [value]="category.id_category">{{ category.name }}</option>
             </select>
