@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TurnService } from '../../services/turn.service';
 import { TurnResponse } from '../../models/turn-response';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-turns-component',
@@ -54,62 +55,95 @@ export class TurnsComponentComponent {
     }
   }
   
-  sendNoCustomer(){
+  // sendNoCustomer(){
     
-      this.turnService.postData(this.document_number).subscribe(
-        (response)=>{
-          if(response){
+  //     this.turnService.postData(this.document_number).subscribe(
+  //       (response)=>{
+  //         if(response){
             
-            this.showCustomerInfo(response);
-            const welcomeMessage=`Bienvenido, tu turno es el N°${response.number}, aguarde unos minutos`
-            this.turnNumber = response.number;
-            this.openModal(welcomeMessage);
-            console.log(welcomeMessage, response.number);
+  //           this.showCustomerInfo(response);
+  //           const welcomeMessage=`Bienvenido, tu turno es el N°${response.number}, aguarde unos minutos`
+  //           this.turnNumber = response.number;
+  //           this.openModal(welcomeMessage);
+  //           console.log(welcomeMessage, response.number);
             
           
+  //         }
+  //       },
+
+  //     )
+  //   }
+
+  sendNoCustomer() {
+    this.turnService.postData(this.document_number).subscribe(
+      (response) => {
+        if (response) {
+          this.showCustomerInfo(response);
+          const welcomeMessage = `Bienvenido, tu turno es el N°${response.number}, aguarde unos minutos`;
+          this.turnNumber = response.number;
+
+          // Reemplaza la llamada a alert con SweetAlert2
+          Swal.fire({
+            title: 'Bienvenido',
+            text: welcomeMessage,
+            icon: 'success',
+          }).then(() => {
+            this.clearFields();
+          });
+        }
+      },
+    );
+  }
+
+  sendDocumentNumber() {
+    if (this.document_number) {
+      this.turnService.postData(this.document_number).subscribe(
+        (response) => {
+          if (response) {
+            this.showCustomerInfo(response);
+
+            let welcomeMessage = '';
+            if (response.first_name == null && response.last_name == null) {
+              if (response.company_name) {
+                welcomeMessage = `Bienvenido ${response.company_name}, tu número de turno es el N°${response.number}, y fue creado el ${response.created_at}`;
+              }
+            } else {
+              welcomeMessage = `Bienvenido ${response.first_name} ${response.last_name}, tu número de turno es el N°${response.number}, y fue creado el ${response.created_at}`;
+            }
+
+            // Reemplaza la llamada a openModal con SweetAlert2
+            Swal.fire({
+              title: 'Bienvenido',
+              text: welcomeMessage,
+              icon: 'success',
+            }).then(() => {
+              this.turnNumber = response.number;
+              this.clearFields();
+            });
+          } else {
+            this.sendNoCustomer();
           }
         },
-
-      )
-    }
-
-    sendDocumentNumber() {
-      if (this.document_number) {
-        this.turnService.postData(this.document_number).subscribe(
-          (response) => {
-            if (response) {
-              
-              this.showCustomerInfo(response);
-    
-              if (response.first_name == null && response.last_name == null) {
-                if (response.company_name) {
-                  const welcomeMessage = `Bienvenido ${response.company_name}, tu número de turno es el N°${response.number}, y fue creado el ${response.created_at}`;
-                  this.turnNumber = response.number;
-                  this.openModal(welcomeMessage);
-                }
-              } else {
-                const welcomeMessage = `Bienvenido ${response.first_name} ${response.last_name}, tu número de turno es el N°${response.number}, y fue creado el ${response.created_at}`;
-                this.turnNumber = response.number;
-                this.openModal(welcomeMessage);
-              }
-    
-              this.clearFields();
-            } else {
-              this.sendNoCustomer();
-            }
-          },
-          (error) => {
-            const errorMessage='El número de documento es incorrecto';
-            this.openModal(errorMessage);
+        (error) => {
+          // Reemplaza la llamada a openModal con SweetAlert2
+          Swal.fire({
+            title: 'Error',
+            text: 'El número de documento es incorrecto',
+            icon: 'error',
+          }).then(() => {
             this.clearFields();
-          }
-        );
-      } else {
-        const errorNotFound='El número de documento está vacío, por favor ingrese un número válido.';
-        this.openModal(errorNotFound);
-      }
+          });
+        }
+      );
+    } else {
+      // Reemplaza la llamada a openModal con SweetAlert2
+      Swal.fire({
+        title: 'Error',
+        text: 'El número de documento está vacío, por favor ingrese un número válido.',
+        icon: 'error',
+      });
     }
-  
+  }
   clearFields() {
     this.document_number = '';
     this.showCustomer = false;
