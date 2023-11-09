@@ -1,4 +1,4 @@
-export class CustomerActResponse {
+export interface CustomerActResponse {
     id_customer: number;
     first_name: string;
     last_name: string;
