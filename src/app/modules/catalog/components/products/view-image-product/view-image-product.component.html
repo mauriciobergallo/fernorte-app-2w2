@@ -7,7 +7,7 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
   </div>
   <div class="modal-body">
-    <div class="image-container" *ngIf="product.url_image != null; else noImageProduct">
+    <div class="img-fluid" *ngIf="product.url_image != null; else noImageProduct">
       <img [src]="product.url_image" alt="Imagen del producto" class="img-responsive" />
     </div>
     <ng-template #noImageProduct class="text-center">
