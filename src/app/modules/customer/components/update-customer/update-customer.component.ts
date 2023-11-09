@@ -6,6 +6,7 @@ import { CustomerService } from '../../services/customer.service';
 import { DatePipe } from '@angular/common';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 
 @Component({
   selector: 'fn-update-customer',
@@ -18,9 +19,16 @@ customerForm!: NgForm;
 
 formattedBirthDate: string = '';
 
+idCustomer:number=0;
+
+minDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
+maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };;
+currentYear = new Date().getFullYear();
+
+
+
 
 customer: CustomerRequest = {
-idCustomer: 0,
 firstName:"",
 lastName:"",
 companyName: "",
@@ -38,17 +46,37 @@ customerType: ""
 
 	closeResult = '';
 
-	constructor(private modalService: NgbModal, private customerService: CustomerService) {}
+	constructor(private modalService: NgbModal, private customerService: CustomerService, private conversion: CaseConversionPipe) {
+
+				    // Obtén la fecha actual
+					const currentDate = new Date();
+					// Resta 16 años de la fecha actual
+					const minYear = currentDate.getFullYear() - 5;
+					const minMonth = currentDate.getMonth() + 1; // Los meses en JavaScript son de 0 a 11, ng-bootstrap es de 1 a 12
+					const minDay = currentDate.getDate();
+				
+					// Asigna la fecha calculada a minDate
+					this.minDate = { year: minYear, month: minMonth, day: minDay };
+				
+				
+					this.maxDate = {
+						year: currentDate.getFullYear() - 150, //Cambiar este numero si se quiere bajar la edad
+						month: currentDate.getMonth() + 1,
+						day: currentDate.getDate()
+					  };
+
+
+	}
 
 	ngOnInit(): void {
 	
 	
 	}
 
-	loadCustomerData(customerId: number) {
-		this.customerService.getCustomerById(customerId).subscribe(
+	loadCustomerData(idCustomer: number) {
+		this.customerService.getCustomerById(idCustomer).subscribe(
 		  (customerData) => {
-			let transformData= this.convertSnakeToCamel(customerData);
+			let transformData= this.conversion.toCamelCase(customerData);
 			this.customer = transformData;
 			console.log("CUSTOMER", this.customer);
 			
@@ -65,8 +93,8 @@ customerType: ""
 
 	open(content: any) {
 	
-		this.loadCustomerData(1);
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+		this.loadCustomerData(this.idCustomer);
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then(
 			(result) => {
 
 				console.log("CONTENT", content);
@@ -74,28 +102,24 @@ customerType: ""
 				console.log("customer FORM",this.customerForm);
 				
 				console.log(this.formattedBirthDate)
-				debugger;
+				this.customer.birthDate = this.formattedBirthDate
+				console.log("NEW CUSTOMER", this.customer);
 				let newCustomer: CustomerRequest = {
-					
-					idCustomer: this.customer.idCustomer,
 					firstName: this.customer.firstName,
 					lastName: this.customer.lastName,
 					companyName: this.customer.companyName,
 					ivaCondition: this.customer.ivaCondition,
-					birthDate: new Date().toISOString(),
-					
-				
-					idDocumentType: this.customer.idDocumentType ,
+					birthDate: this.formattedBirthDate,
+					idDocumentType: this.customer.idDocumentType,
 					documentNumber: this.customer.documentNumber,
 					address: this.customer.address,
 					phoneNumber: this.customer.phoneNumber,
 					email: this.customer.email,
 					customerType: this.customer.customerType
 				}
-				console.log("NEW CUSTOMER", newCustomer);
-				let customerEnSnake = this.camelToSnake(newCustomer);
+				let customerEnSnake: CustomerRequest = this.conversion.toSnakeCase(newCustomer);
 				console.log("CUSTOMER EN SNAKE", customerEnSnake);
-				this.customerService.putCustomer(customerEnSnake).subscribe(
+				this.customerService.putCustomer(customerEnSnake, this.idCustomer).subscribe(
 					(response) => {
 						alert("Se actualizo el cliente")
 					},
@@ -141,50 +165,11 @@ customerType: ""
 	}
   }
 
-  setDocumentTypeDescription(id: number): void{
-	this.customer.idDocumentType=id;
-	
-  }
-
 
 	onSubmitForm(customerForm: NgForm){
 		console.log("customerEE", customerForm);
 	}
 
-	camelToSnake(obj: any): any {
-        const snakeObj: any = {};
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                const snakeKey = key.replace(/([A-Z])/g, "_$1").toLowerCase();
-                snakeObj[snakeKey] = obj[key];
-            }
-        }
-        return snakeObj;
-    }
-  
-	
-	
-	 convertSnakeToCamel = (obj: any): any => {
-		if (obj === null || typeof obj !== 'object') {
-		  return obj;
-		}
 	  
-		if (Array.isArray(obj)) {
-		  return obj.map(this.convertSnakeToCamel);
-		}
-	  
-		const camelObj: { [key: string]: any } = {}; // Anotación de tipo
-	  
-		for (const key in obj) {
-		  if (obj.hasOwnProperty(key)) {
-			const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
-			camelObj[camelKey] = this.convertSnakeToCamel(obj[key]);
-		  }
-		}
-		return camelObj;
-	  };
-	  
-	
-
 
 }
