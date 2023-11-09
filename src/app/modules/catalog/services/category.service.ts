@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { environment } from "../environments/environment";
 import { RequestResponseService } from "./requestResponse.service";
 import { ICategory } from "../models/ICategory";
+import { HttpParams } from "@angular/common/http";
 
 @Injectable({
    providedIn: 'root'
@@ -18,9 +19,36 @@ export class CategoryService {
       sortBy?: string,
       sortDir?: string,
       name?: string,
-      isDeleted?: boolean,
+      isDeleted: boolean = false,
    ): Observable<ICategory[]> {
-      return this.requestResponseService.makeGetRequest<ICategory[]>(this.categories);
+
+      let params = new HttpParams();
+      if (page) {
+         params = params.set('page', (page - 1).toString());
+      }
+
+      if (size) {
+         params = params.set('size', size.toString());
+      }
+
+      if (sortBy) {
+         params = params.set('sortBy', sortBy);
+      }
+
+      if (sortDir) {
+         params = params.set('sortDir', sortDir);
+      }
+
+      if (isDeleted) {
+         params = params.set('isDeleted', isDeleted.toString());
+      }else{
+         params = params.set('isDeleted', 'false');
+      }
+      if (name) {
+         params = params.set('name', name);
+      }
+
+      return this.requestResponseService.makeGetRequest<ICategory[]>(this.categories, { params });
    }
    getById(id: number): Observable<ICategory> {
       return this.requestResponseService.makeGetRequest<ICategory>(`${this.categories}/${id}`);

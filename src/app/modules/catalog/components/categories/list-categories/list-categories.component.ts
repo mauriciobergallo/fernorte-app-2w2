@@ -27,7 +27,7 @@ export class ListCategoriesComponent implements OnInit {
     
     this.filterCategories= this.fb.group({
         name: [''],
-        isDeleted: [false]
+        isDeleted: [true]
       });
    }
 
@@ -47,8 +47,8 @@ export class ListCategoriesComponent implements OnInit {
           this.itemsPerPage,
           this.sortBy,
           this.sortDir,
-          this.filterCategories.value.isDeleted,
-          this.filterCategories.value.name
+          this.filterCategories.value.name,
+          this.filterCategories.value.isDeleted
       )
       .subscribe({
         next: (categories:any) => {
@@ -120,7 +120,7 @@ export class ListCategoriesComponent implements OnInit {
         cancelButtonColor: "#6c757d",
         confirmButtonText: "¡Sí, bórrar!",
         cancelButtonText: "Cancelar"
-      }).then((result) => {
+      }).then((result:any) => {
         if (result.isConfirmed) {
           this.categoryService.delete(category.id_category, "prueba").subscribe(() => {
             Swal.fire({
