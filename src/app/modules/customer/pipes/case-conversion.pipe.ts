@@ -34,7 +34,7 @@ export class CaseConversionPipe implements PipeTransform {
 		for (const key in obj) {
 		  if (obj.hasOwnProperty(key)) {
 			const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
-			camelObj[camelKey] = this.toCamelCase(obj[key]);
+			camelObj[camelKey] = obj[key];
 		  }
 		}
 		return camelObj;

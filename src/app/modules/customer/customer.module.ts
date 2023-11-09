@@ -25,6 +25,7 @@ import { CustomDateParserFormatter } from './components/shared/custom-date-forma
 import { RoleListComponent } from './components/role-list/role-list.component';
 import { CaseConversionPipe } from './pipes/case-conversion.pipe';
 import { EmployeeListComponent } from './components/employee-list/employee-list.component';
+
 import { RouterModule, Routes } from '@angular/router';
 import { CustomersSidebarComponent } from './components/customers-sidebar/customers-sidebar.component';
 import { CustomersRoutingModule } from './customers-routing.module';
