@@ -92,7 +92,7 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn btn-outline-dark" [disabled]="!employeeForm.valid || employee.documentType === 'DNI'" (click)="modal.close(employeeForm)">Registrar</button>
+		<button type="submit" class="btn btn-outline-dark" [disabled]="!employeeForm.valid || employee.idDocumentType === 2" (click)="modal.close(employeeForm)">Registrar</button>
 	</div>
 </ng-template>
 

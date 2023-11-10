@@ -25,6 +25,15 @@ export class UpdateEmployeeComponent implements OnInit{
   maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };;
   currentYear = new Date().getFullYear();
   
+  documentTypes = [
+    { label: 'DNI', value: 1 },
+    { label: 'Pasaporte', value: 2 },
+    { label: 'CUIT', value: 3 },
+    { label: 'CUIL', value: 4 },
+    { label: 'LC', value: 5 },
+    { label: 'LE', value: 6 }    
+  ];
+
   
   
   
@@ -32,8 +41,8 @@ export class UpdateEmployeeComponent implements OnInit{
   firstName:"",
   lastName:"",
   birthDate: new Date().toISOString(),
-  documentType: '',
-  documentNumber:"",
+  idDocumentType: 1,
+  idDocumentNumber:"",
   address:"",
   phoneNumber:"",
   personalEmail: ""  
@@ -105,8 +114,8 @@ export class UpdateEmployeeComponent implements OnInit{
             firstName: this.employee.firstName,
             lastName: this.employee.lastName,            
             birthDate: this.formattedBirthDate,
-            documentType: this.employee.documentType,
-            documentNumber: this.employee.documentNumber,
+            idDocumentType: this.employee.idDocumentType,
+            idDocumentNumber: this.employee.idDocumentNumber,
             address: this.employee.address,
             phoneNumber: this.employee.phoneNumber,
             personalEmail: this.employee.personalEmail
@@ -117,6 +126,7 @@ export class UpdateEmployeeComponent implements OnInit{
           this.employeeService.putEmployee(employeeInSnake, this.idEmployee).subscribe(
             (response) => {
               alert("Se actualizo el empleado")
+              
             },
             (error) => {
               alert("Error en el servidor")

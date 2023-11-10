@@ -30,18 +30,15 @@
 				<div class="mb-3 d-flex">
 					<div class="flex-grow-1 me-2">
 						<label for="documentType">Tipo de documento</label>
-						<select [(ngModel)]="employee.documentType" name="documentType" id="documentType" class="form-select">
-							<option value='DNI' *ngIf="employee.documentType === 'DNI'">DNI</option>
-							<!-- <option value=2 *ngIf="employee.documentType === 2">Pasaporte</option>
-							<option value=3 *ngIf="employee.documentType === 3">CUIT</option>
-							<option value=4 *ngIf="employee.documentType === 4">CUIL</option>
-							<option value=5 *ngIf="employee.documentType === 5">LC</option>
-							<option value=6 *ngIf="employee.documentType === 6">LE</option> -->
+						<select [(ngModel)]="employee.idDocumentType" name="documentType" id="documentType" class="form-select">
+							<option *ngFor="let type of documentTypes" [value]="type.value" [selected]="employee.idDocumentType === type.value">
+								{{ type.label }}
+							  </option>							
 						</select>
 					</div>
 					<div class="flex-grow-1">
 						<label for="documentNumber">Documento</label>
-						<input required [(ngModel)]="employee.documentNumber"  type="text" name="documentNumber" id="documentNumber" class="form-control" />
+						<input required [(ngModel)]="employee.idDocumentNumber"  type="text" name="documentNumber" id="documentNumber" class="form-control" />
 					</div>
 				</div>
 	

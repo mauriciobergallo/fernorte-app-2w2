@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 
 import { EmployeeService } from '../../services/employee.service';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
@@ -12,7 +12,7 @@ import { UpdateEmployeeComponent } from '../update-employee/update-employee.comp
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.css']
 })
-export class EmployeeListComponent {
+export class EmployeeListComponent implements OnInit {
 
   @ViewChild('employeeForm') updateEmployeeModal: TemplateRef<any> | undefined;
   employeeList: EmployeeResponseDTO[] = [];
@@ -20,6 +20,8 @@ export class EmployeeListComponent {
   
 
   constructor(private employeeService: EmployeeService, private conversion: CaseConversionPipe, private modalService: NgbModal){}
+  
+  
 
   ngOnInit(): void{
     this.onLoad()
@@ -45,7 +47,7 @@ export class EmployeeListComponent {
     modalRef.componentInstance.updateClicked.subscribe(() => {
       // Abrir el modal del formulario de actualización
       this.modalService.open(this.updateEmployeeModal);
-      console.log('se abrio el modal del dempleado');
+      console.log('se abrio el modal del empleado');
       
     });
   }
