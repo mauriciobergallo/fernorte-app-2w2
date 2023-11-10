@@ -35,12 +35,12 @@ export class SaleOrderServiceService {
   //   return saleOrdersList;
   // }
 
-  getSaleOrdersByFilter(idOrder?:string, doc?:string, fromDate?:string, toDate?:string) : SaleOrderModel[] {
-    const saleOrdersList : SaleOrderModel[] = [];
-    if(idOrder != "" && idOrder != null) {
+  getSaleOrdersByFilter(idOrder?: string, doc?: string, fromDate?: string, toDate?: string): SaleOrderModel[] {
+    const saleOrdersList: SaleOrderModel[] = [];
+    if (idOrder != "" && idOrder != null) {
       this.saleOrderProvider.getSaleOrdesByFilter(idOrder, '', '', '').subscribe((response) => {
-        if(response.ok) {
-          for(let sale of response.data) {
+        if (response.ok) {
+          for (let sale of response.data) {
             saleOrdersList.push(sale)
             console.log(saleOrdersList)
           }
@@ -50,10 +50,10 @@ export class SaleOrderServiceService {
         }
         return null
       })
-    } else if(doc != "" && doc != null) {
+    } else if (doc != "" && doc != null) {
       this.saleOrderProvider.getSaleOrdesByFilter('', doc, '', '').subscribe((response) => {
-        if(response.ok) {
-          for(let sale of response.data) {
+        if (response.ok) {
+          for (let sale of response.data) {
             saleOrdersList.push(sale)
             console.log(saleOrdersList)
           }
@@ -63,8 +63,8 @@ export class SaleOrderServiceService {
       })
     } else {
       this.saleOrderProvider.getSaleOrdesByFilter('', '', fromDate, toDate).subscribe((response) => {
-        if(response.ok) {
-          for(let sale of response.data) {
+        if (response.ok) {
+          for (let sale of response.data) {
             saleOrdersList.push(sale)
             console.log(saleOrdersList)
           }
@@ -73,54 +73,59 @@ export class SaleOrderServiceService {
         return null
       })
     }
-    
+
     return saleOrdersList;
   }
 
   ValidarPresupuestoOOrdenVenta(saleOrder: SaleOrderModel, carrito: ProductModel[]): boolean {
-    return saleOrder.detail_sales_order.some(x => x.quantity > carrito.find(y => y.idProduct == x.id_product)!.stockQuantity)
+    return saleOrder.detailSalesOrder!.some(x => x.quantity > carrito.find(y => y.idProduct == x.id_product)!.stockQuantity)
   }
-  buildSaleOrder(state: SaleOrderStates, type: TypeSalesOrder, carrito: ProductModel[], orderSale?:SaleOrderModel): SaleOrderModel {
+  buildSaleOrder(state: SaleOrderStates, type: TypeSalesOrder, carrito: ProductModel[], orderSale?: SaleOrderModel): SaleOrderModel {
     let id = 0;
     let detailsState: DetailsState = DetailsState.CANCELLED;
-    if(type == TypeSalesOrder.ORDEN_VENTA){
-        id = orderSale?.id_sale_order!
-    } else if(type == TypeSalesOrder.PRESUPUESTO){
+    if (type == TypeSalesOrder.ORDEN_VENTA) {
+      id = orderSale?.idSaleOrder!
+    } else if (type == TypeSalesOrder.PRESUPUESTO) {
       detailsState = DetailsState.RESERVED
     }
 
     let saleOrder: SaleOrderModel = ({
-      id_sale_order: id,
-      id_seller: 1,
-      id_client: 1,
-      date_of_issue: new Date().toISOString(),
-      date_of_expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
-      state_sale_order: state,
-      detail_sales_order: []
+      idSaleOrder: id,
+      idSeller: 1,
+      firstNameClient: "Eze",
+      firstNameSeller: "Eze vende",
+      lastNameClient: "ale",
+      lastNameSeller: "ale vende",
+      companyName: "",
+      idClient: 1,
+      dateOfIssue: new Date().toISOString(),
+      dateOfExpiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
+      stateSaleOrder: state,
+      detailSalesOrder: []
 
     });
 
     for (let index = 0; index < carrito.length; index++) {
       const element = carrito[index];
-      let idDetail:number = 0;
+      let idDetail: number = 0;
 
       if (type == TypeSalesOrder.ORDEN_VENTA) {
-        const matchingDetails = orderSale!.detail_sales_order.filter(x => element.idProduct === x.id_product);
-    
+        const matchingDetails = orderSale!.detailSalesOrder!.filter(x => element.idProduct === x.id_product);
+
         if (matchingDetails.length > 0) {
           idDetail = matchingDetails[0].id_sale_order_details!;
         }
       }
 
       const detail_sales_order: DetailsSaleOrderModel = {
-        id_sale_order: id,
+        name: "Eze",
         id_sale_order_details: idDetail,
         id_product: element.idProduct,
         quantity: element.cantidadSeleccionado!,
         price: element.cantidadSeleccionado! * element.unitPrice,
         state_sale_order_detail: detailsState,
       };
-      saleOrder.detail_sales_order.push(detail_sales_order);
+      saleOrder.detailSalesOrder!.push(detail_sales_order);
     }
 
 

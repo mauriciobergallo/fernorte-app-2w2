@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SaleOrderServiceService } from '../../services/salesOrder/sale-order-service.service';
 import { SaleOrderModel } from '../../models/SaleOrderModel';
 import { LoadingService } from '../../services/loading.service';
@@ -41,7 +41,6 @@ export class SaleOrderComponent implements OnInit {
   permiteGenerar: boolean = true;
   listClients: ICustomer[] = []
   listClientsfiltrada: ICustomer[] = [];
-
   productoSeleccionado = this.productService.cleanProduct();
   readonly typeSalesOrder = TypeSalesOrder.ORDEN_VENTA;
   readonly typePresupuesto = TypeSalesOrder.PRESUPUESTO;
@@ -74,7 +73,6 @@ export class SaleOrderComponent implements OnInit {
       this.productoSeleccionado = this.productService.cleanProduct();
       return;
     }
-
 
     this.carrito = this.carritoService.agregarCarrito(this.productoSeleccionado);
     this.montoTotal = this.saleOrderServiceService.calcularTotal(this.carrito)
@@ -109,9 +107,7 @@ export class SaleOrderComponent implements OnInit {
     }
 
     this.saleOrderProvider.createSaleOrder(this.saleOrder!).subscribe((res) => {
-      if (res.ok) {
-        this.saleOrder = res.data
-      }
+      this.saleOrder = res.data
     });
     this.listProduct = this.productService.restarCantidad(this.productoSeleccionado)
     this.loader = this.loadingService.loading();
@@ -146,16 +142,16 @@ export class SaleOrderComponent implements OnInit {
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
       // Add title
       doc.setFontSize(16);
-      doc.text('Presupuesto', bufferXTitle,  bufferYTitle); // Ajusta la posición según tu preferencia
-      doc.addImage(img, 'PNG', bufferX, buffery , pdfWidth, pdfHeight, undefined, 'FAST');
+      doc.text('Presupuesto', bufferXTitle, bufferYTitle); // Ajusta la posición según tu preferencia
+      doc.addImage(img, 'PNG', bufferX, buffery, pdfWidth, pdfHeight, undefined, 'FAST');
 
-    return doc;
+      return doc;
     }).then((doc) => {
       doc.save('Presupuesto.pdf');
     });
   }
 
-  cancelOrderSale(){
+  cancelOrderSale() {
     this.productoSeleccionado = this.productService.cleanProduct();
     this.carrito = [];
   }
