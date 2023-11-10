@@ -13,7 +13,7 @@ import { DeilveryOrderDetails } from '../models/deilvery-order-details';
 export class DeliverOrderService {
   constructor(private http: HttpClient) {}
 
-  private apiBaseUrl = 'http://localhost:8080/delivery-orders';
+  private apiBaseUrl = 'http://localhost:8081/delivery-orders';
 
   getDeliveryOrder(
     orderId: string,
