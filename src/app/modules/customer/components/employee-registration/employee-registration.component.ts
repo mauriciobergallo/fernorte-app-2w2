@@ -28,7 +28,7 @@ export class EmployeeRegistrationComponent  {
 		this.employeeForm = this.fb.group({
 			firstName: ['', [Validators.required, Validators.pattern('^[^0-9]+$')]],
 			lastName: ['', [Validators.required, Validators.pattern('^[^0-9]+$')]],	
-			documentType: [0, Validators.required],
+			documentType: ['', Validators.required],
 			documentNumber: ['', [Validators.required, Validators.maxLength(this.maxLengthDocument)]],
 			birthDate:['', Validators.required],
 			personalEmail:['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}')]] ,
@@ -62,7 +62,7 @@ employee: Employee = {
 firstName:"",
 lastName:"",
 birthDate: new Date().toISOString(),
-documentType: 0,
+documentType: '',
 documentNumber:"",
 address:"",
 phoneNumber:"",
@@ -146,7 +146,7 @@ personalEmail:""
 	  }
 
 	  onDocumentNumberInput() {
-		if (Number(this.employee.documentType) === 3 || Number(this.employee.documentType === 4)) {
+		if (String(this.employee.documentType) === 'CUIT' || String(this.employee.documentType === 'CUIL')) {
 		  // Aplicar el formato XX-XXXXXXXX-X mientras el usuario escribe
 		  const input = this.employee.documentNumber.replace(/\D/g, '').substring(0, 11);
 		  this.employee.documentNumber = input.replace(/^(\d{2})(\d{8})(\d{1})$/, '$1-$2-$3');

@@ -32,7 +32,7 @@ export class UpdateEmployeeComponent implements OnInit{
   firstName:"",
   lastName:"",
   birthDate: new Date().toISOString(),
-  documentType: 1,
+  documentType: '',
   documentNumber:"",
   address:"",
   phoneNumber:"",
@@ -71,6 +71,8 @@ export class UpdateEmployeeComponent implements OnInit{
   	loadEmployeeData(idEmployee: number) {
       this.employeeService.getEmployeeById(idEmployee).subscribe(
         (employeeData) => {
+          console.log('carga empleado',employeeData);
+          
         let transformData= this.conversion.toCamelCase(employeeData);
         this.employee = transformData;
         console.log("Employee", this.employee);

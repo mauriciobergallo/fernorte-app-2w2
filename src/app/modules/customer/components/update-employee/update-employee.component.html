@@ -31,12 +31,12 @@
 					<div class="flex-grow-1 me-2">
 						<label for="documentType">Tipo de documento</label>
 						<select [(ngModel)]="employee.documentType" name="documentType" id="documentType" class="form-select">
-							<option value="1" *ngIf="employee.documentType === 1">DNI</option>
-							<option value="2" *ngIf="employee.documentType === 2">Pasaporte</option>
-							<option value="3" *ngIf="employee.documentType === 3">CUIT</option>
-							<option value="4" *ngIf="employee.documentType === 4">CUIL</option>
-							<option value="5" *ngIf="employee.documentType === 5">LC</option>
-							<option value="6" *ngIf="employee.documentType === 6">LE</option>
+							<option value='DNI' *ngIf="employee.documentType === 'DNI'">DNI</option>
+							<!-- <option value=2 *ngIf="employee.documentType === 2">Pasaporte</option>
+							<option value=3 *ngIf="employee.documentType === 3">CUIT</option>
+							<option value=4 *ngIf="employee.documentType === 4">CUIL</option>
+							<option value=5 *ngIf="employee.documentType === 5">LC</option>
+							<option value=6 *ngIf="employee.documentType === 6">LE</option> -->
 						</select>
 					</div>
 					<div class="flex-grow-1">
@@ -94,7 +94,7 @@
 		</div>
 	</ng-template>
 	
-	<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Actualizar Cliente</button>
+	<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Actualizar Empleado</button>
 	
 	
 	

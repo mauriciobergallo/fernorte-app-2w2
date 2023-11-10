@@ -23,9 +23,9 @@ createEmployee(employee: Employee){
                                  
 }
 
-putEmployee(employee: any, idEmployee: number): Observable<any>{
+putEmployee(employeePut: any, idEmployee: number): Observable<any>{
      
-  return this.http.put<Employee>(this.apiUrl + "/" + idEmployee, employee );
+  return this.http.put<Employee>(this.apiUrl + "/" + idEmployee, employeePut );
 
 }
 
