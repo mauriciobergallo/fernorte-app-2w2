@@ -3,7 +3,8 @@
 <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <div class="container mt-4">
-    <button class="btn btn-primary" (click)="openCreateModal()">Agregar</button>
+    <button class="btn btn-primary" (click)="openCreateModal()">Nueva categoría</button>
+
     <table class="table">
         <thead>
             <tr>
@@ -16,7 +17,8 @@
             <tr *ngFor="let category of listCategories">
                 <td>{{category.name}}</td>
                 <td>
-                  <textarea style="border: none; width: 100%; resize: none; outline: none;" readonly>{{category.description}}</textarea>
+                    <textarea style="border: none; width: 100%; resize: none; outline: none;"
+                        readonly>{{category.description}}</textarea>
                 </td>
                 <td>
                     <div ngbDropdown container="body">
@@ -35,6 +37,7 @@
 </div>
 
 <div class="container mt-4">
-    <ngb-pagination class="d-flex justify-content-center" [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="5" [maxSize]="5" [rotate]="true">
+    <ngb-pagination class="d-flex justify-content-center" [(page)]="currentPage" [pageSize]="itemsPerPage"
+        [collectionSize]="5" [maxSize]="5" [rotate]="true">
     </ngb-pagination>
 </div>
