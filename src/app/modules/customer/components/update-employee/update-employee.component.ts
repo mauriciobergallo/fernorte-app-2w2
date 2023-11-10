@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbDateStruct, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import { NgForm } from '@angular/forms';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../models/employee';
-import { NgForm } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
+
 
 @Component({
   selector: 'fn-update-employee',
@@ -66,7 +68,7 @@ export class UpdateEmployeeComponent implements OnInit{
     
     }
     
-  	loadCustomerData(idEmployee: number) {
+  	loadEmployeeData(idEmployee: number) {
       this.employeeService.getEmployeeById(idEmployee).subscribe(
         (employeeData) => {
         let transformData= this.conversion.toCamelCase(employeeData);
@@ -84,9 +86,9 @@ export class UpdateEmployeeComponent implements OnInit{
   
   
   
-    open(content: any) {
+    open(content:any) {
     
-      this.loadCustomerData(this.idEmployee);
+      this.loadEmployeeData(this.idEmployee);
       this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then(
         (result) => {
   
@@ -96,7 +98,7 @@ export class UpdateEmployeeComponent implements OnInit{
           
           console.log(this.formattedBirthDate)
           this.employee.birthDate = this.formattedBirthDate
-          console.log("NEW CUSTOMER", this.employee);
+          console.log("NEW Employee", this.employee);
           let newEmployee: Employee = {
             firstName: this.employee.firstName,
             lastName: this.employee.lastName,            
@@ -109,7 +111,7 @@ export class UpdateEmployeeComponent implements OnInit{
             
           }
           let employeeInSnake: Employee = this.conversion.toSnakeCase(newEmployee);
-          console.log("CUSTOMER EN SNAKE", employeeInSnake);
+          console.log("EMPLOYEE EN SNAKE", employeeInSnake);
           this.employeeService.putEmployee(employeeInSnake, this.idEmployee).subscribe(
             (response) => {
               alert("Se actualizo el empleado")

@@ -1,6 +1,6 @@
 import { Employee } from './../models/employee';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EmployeeResponseDTO } from '../models/employeeResponseDTO';
 
@@ -12,8 +12,8 @@ export class EmployeeService {
   constructor(private http: HttpClient) { }
 
 //get
-getEmployeeById(employeeId: number): Observable<Employee>{
-  return this.http.get<Employee>(this.apiUrl + "/" + employeeId);
+getEmployeeById(idEmployee: any): Observable<any>{
+  return this.http.get<Employee>(this.apiUrl + "/" + idEmployee);
 } 
 
 //Post
