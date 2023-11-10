@@ -46,8 +46,8 @@
 
 			<div class="mb-3 d-flex">
 				<div class="flex-grow-1 me-2">
-					<label for="documentType">Tipo de documento</label>
-					<select [(ngModel)]="customer.idDocumentType" name="documentType" id="documentType" class="form-select" required #controlDocumentType="ngModel">
+					<label for="idDocumentType">Tipo de documento</label>
+					<select [(ngModel)]="customer.idDocumentType" name="idDocumentType" id="idDocumentType" class="form-select">
 						<option value=1 *ngIf="customer.customerType == 'Fisica'">DNI</option>
 						<option value=2 *ngIf="customer.customerType == 'Fisica'">Pasaporte</option>
 						<option value=3 *ngIf="customer.customerType == 'Juridica'">CUIT</option>
@@ -55,7 +55,7 @@
 						<option value=5 *ngIf="customer.customerType == 'Fisica'">LC</option>
 						<option value=6 *ngIf="customer.customerType == 'Fisica'">LE</option>
 					</select>
-					<div class="text-danger" *ngIf="controlDocumentType.invalid">Seleccione un tipo de documento</div>
+					<!-- <div class="text-danger" *ngIf="controlDocumentType.invalid">Seleccione un tipo de documento</div> -->
 				</div>
 				<div class="flex-grow-1">
 					<label for="documentNumber">Documento</label>
@@ -83,15 +83,14 @@
 					(ngModelChange)="onBirthDateChange($event)"
 					id="dateOfBirth"
 					class="form-control"
-					placeholder="yyyy-mm-dd"
+					placeholder="dd/mm/yyyy"
 					name="dp"
 					ngbDatepicker
 					#dp="ngbDatepicker"
-					required
-					#controlBirthDate = "ngModel"
+					[minDate]="maxDate" [maxDate]="minDate"
 				  />
 					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button><br>
-					<div class="text-danger" *ngIf="controlBirthDate.invalid && controlBirthDate.touched">Ingrese una fecha de nacimiento</div>
+					<!-- <div class="text-danger" *ngIf="controlBirthDate.invalid && controlBirthDate.touched">Ingrese una fecha de nacimiento</div> -->
                 </div>
 			</div>
 

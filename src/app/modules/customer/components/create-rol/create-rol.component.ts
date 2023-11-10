@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Role } from '../../models/role';
 import { NgForm, FormsModule } from '@angular/forms';
 import { RoleService } from '../../services/role.service';
@@ -12,7 +12,7 @@ import { RoleService } from '../../services/role.service';
 export class CreateRolComponent {
   role: Role = {
     name: "",
-    area: 1
+    area: "",
   }
 
   roleForm!: NgForm;
@@ -20,7 +20,7 @@ export class CreateRolComponent {
   constructor(private modalService: NgbModal, private roleService: RoleService) {}
 
   open(content: any) {
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static'  }).result.then(
 			(result) => {
 
 				console.log("CONTENT", content);

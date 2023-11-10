@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { TurnService } from '../../services/turn.service';
 import { TurnResponse } from '../../models/turn-response';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'fn-turns-component',
@@ -41,7 +43,7 @@ export class TurnsComponentComponent {
   }  
 
   constructor(private turnService: TurnService,
-    private modalService:NgbModal){}
+    private modalService:NgbModal, private conversion: CaseConversionPipe){}
     
   addToInput(value:string){
     this.inputText += value;

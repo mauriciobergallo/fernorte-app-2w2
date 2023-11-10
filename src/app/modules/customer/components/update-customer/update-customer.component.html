@@ -1,0 +1,125 @@
+<label>  ID:
+<input type="number" [(ngModel)]=idCustomer>
+
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Actualizar Cliente</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div *ngIf="idCustomer!==0" class="modal-body">
+		<form #customerForm="ngForm"  (ngSubmit)="onSubmitForm(customerForm)">
+
+            <div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" (click)="onChangeCompany(false)">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      Persona
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" (click)="onChangeCompany(true)">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Empresa
+                    </label>
+                  </div>
+            </div>
+			
+            <div *ngIf="!isCompany">
+                <div class="mb-3 d-flex">
+                    <div class="flex-grow-1 me-2">
+                        <label for="name">Nombre</label>
+                        <input required [(ngModel)]="customer.firstName" type="text" name="name" id="name" class="form-control"/>
+                    </div>
+                    <div class="flex-grow-1">
+                        <label for="lastName">Apellido</label>
+                        <input required [(ngModel)]="customer.lastName" type="text" name="lastName" id="lastName" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="isCompany">
+                <div class="mb-3 d-flex">
+                    <div class="flex-grow-1 me-2">
+                        <label for="name">Nombre de Empresa</label>
+                        <input required [(ngModel)]="customer.companyName" type="text" name="companyName" id="companyName" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+
+			<div class="mb-3 d-flex">
+				<div class="flex-grow-1 me-2">
+					<label for="idDocumentType">Tipo de documento</label>
+					<select [(ngModel)]="customer.idDocumentType" name="idDocumentType" id="idDocumentType" class="form-select">
+						<option value=1 *ngIf="customer.customerType === 'Fisica'">DNI</option>
+						<option value=2 *ngIf="customer.customerType === 'Fisica'">Pasaporte</option>
+						<option value=3 *ngIf="customer.customerType === 'Juridica'">CUIT</option>
+						<option value=4 *ngIf="customer.customerType === 'Fisica'">CUIL</option>
+						<option value=5 *ngIf="customer.customerType === 'Fisica'">LC</option>
+						<option value=6 *ngIf="customer.customerType === 'Fisica'">LE</option>
+					</select>
+				</div>
+				<div class="flex-grow-1">
+					<label for="documentNumber">Documento</label>
+					<input required [(ngModel)]="customer.documentNumber"  type="text" name="documentNumber" id="documentNumber" class="form-control" />
+				</div>
+			</div>
+
+            <div class="flex-grow-1 me-2">
+                <label for="ivaCondition">Condición de IVA</label>
+                <select [(ngModel)]="customer.ivaCondition" name="ivaCondition" id="ivaCondition" class="form-select">
+                    <option value="Monotributo">Monotributo</option>
+                    <option value="Responsable Inscripto">Responsable Inscripto</option>
+                </select>
+            </div>
+
+			<div class="mb-3">
+				<label for="dateOfBirth">Fecha de nacimiento</label>
+				<div class="input-group">
+					<input
+					required
+					[(ngModel)]="customer.birthDate"
+					(ngModelChange)="onBirthDateChange($event)"
+					id="dateOfBirth"
+					class="form-control"
+					placeholder="dd/mm/yyyy"
+					name="dp"
+					ngbDatepicker
+					#dp="ngbDatepicker"
+					[minDate]="maxDate" [maxDate]="minDate"
+				  />
+					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button><br>
+                </div>
+			</div>
+
+			<div class="flex-grow-1">
+				<label for="email">Email Personal</label>
+				<input [(ngModel)]="customer.email" 
+					   type="email" 
+					   name="email" 
+					   id="email" 
+					   class="form-control" 
+				/>
+			  </div>
+
+			<div class="mb-3 d-flex">
+				<div class="flex-grow-1 me-2">
+				  <label for="address">Domicilio</label>
+				  <input [(ngModel)]="customer.address" type="text" name="address" id="address" class="form-control" />
+				</div>
+				<div class="flex-grow-1">
+				  <label for="phoneNumber">Número de teléfono</label>
+				  <input [(ngModel)]="customer.phoneNumber" type="text" name="phoneNumber" id="phoneNumber" class="form-control" />
+				</div>
+			  </div>
+
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-outline-dark"  (click)="modal.close(customerForm)">Registrar</button>
+	</div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Actualizar Cliente</button>
+
+
