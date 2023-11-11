@@ -34,7 +34,7 @@
                 #stateOrderControl="ngModel"
                 [(ngModel)]="stateOrder">
                   <option selected
-                  *ngFor="let state of saleOrderStates" [value]="state">{{state | lowercase}}</option>
+                  *ngFor="let state of saleOrderStates" [value]="state">{{state | translateStates}}</option>
                 </select>
                 <div class="row">
                   <div class="mb-3 col">
@@ -64,7 +64,7 @@
       </div>
     </div>
   </div>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
           <tr>
             <th scope="col">Número</th>
@@ -90,10 +90,16 @@
                     </li>
                 </ul>
             </td>
-            <td>
-              <button class="btn" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                <img src="../../../../../assets/three-dots-icon.png" alt="puntitos" width="10" height="10">
-              </button>
+            <td class="text-center">
+              <div class="dropdown">
+                <button type="button" class="btn btn-light dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a (click)="onShowDetails()">Ver detalles</a>
+                  <a (click)="onPrint()">Imprimir</a>
+                </div>
+              </div>
             </td>
           </tr>
         </tbody>

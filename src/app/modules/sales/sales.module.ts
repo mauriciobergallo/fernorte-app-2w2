@@ -26,6 +26,7 @@ import { SaleOrderNavComponent } from './components/sale-order-nav/sale-order-na
 import { BillingNavComponent } from './components/billing-nav/billing-nav.component';
 import { ReportNavComponent } from './components/report-nav/report-nav.component';
 import { TurnProvider } from './services/turns/TurnProvider';
+import { TranslateStatesPipe } from './pipes/translateStates.pipe';
 
 @NgModule({
   declarations: [HomeComponent,
@@ -43,7 +44,8 @@ import { TurnProvider } from './services/turns/TurnProvider';
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
-    ReportNavComponent],
+    ReportNavComponent,
+    TranslateStatesPipe],
 
   providers: [SaleOrderProvider,
     ProductProvider,
