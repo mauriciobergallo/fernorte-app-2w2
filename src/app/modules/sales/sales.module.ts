@@ -5,8 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { HomeComponent } from './components/home/home.component';
 
-import { SaleOrderSearchHandlerComponent } from './components/sale-order-search-handler/sale-order-search-handler.component';
-import { SaleOrderSearchFilterComponent } from './components/sale-order-search-filter/sale-order-search-filter.component';
 import { SaleOrderSearchListComponent } from './components/sale-order-search-list/sale-order-search-list.component';
 import { SaleOrderProvider } from './services/salesOrder/SaleOrderProvider';
 import { ProductProvider } from './services/products/productProvider';
@@ -33,9 +31,7 @@ import { TranslateStatesPipe } from './pipes/translateStates.pipe';
     SaleOrderComponent, 
     CalcularTotalPipe, 
     CalcularImpuestosPipe, 
-    CalcularMontoTotalPipe, 
-    SaleOrderSearchHandlerComponent,
-    SaleOrderSearchFilterComponent, 
+    CalcularMontoTotalPipe,
     SaleOrderSearchListComponent, 
     BillingComponent, 
     PaymentMethodComponent,
@@ -60,8 +56,6 @@ import { TranslateStatesPipe } from './pipes/translateStates.pipe';
   exports: [HomeComponent,
     SaleOrderComponent, 
     CalcularTotalPipe, 
-    SaleOrderSearchHandlerComponent,
-    SaleOrderSearchFilterComponent, 
     SaleOrderSearchListComponent, 
     BillingComponent, 
     PaymentMethodComponent,

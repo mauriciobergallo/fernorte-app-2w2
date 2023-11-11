@@ -82,7 +82,7 @@
             <td>{{item.idClient}}</td>
             <td>{{item.idSeller}}</td>
             <td>{{item.dateOfIssue | date:'short'}}</td>
-            <td>{{item.stateSaleOrder}}</td>
+            <td>{{item.stateSaleOrder | translateStates}}</td>
             <td>
                 <ul>
                     <li *ngFor="let prod of item.details">
