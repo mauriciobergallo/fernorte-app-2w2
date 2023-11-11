@@ -19,7 +19,7 @@ export class PaymentMethodService {
     return this.http.get<IPaymentMethod[]>(url);
   }
   createPaymentMethod(payment: IPaymentMethod): Observable<IPaymentMethod> {
-
+    console.log("payment service create payment: ", payment)
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<IPaymentMethod>(url, payment, { headers });
   }

@@ -14,15 +14,15 @@
                 <tbody>
                     <tr *ngFor="let method of paymentMethods">
                         <td>{{ method.payment_method }}</td>
-                        <td>{{ method.surcharge }} </td> 
+                        <td>{{ method.surcharge }} </td>
                         <td>
-                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal" data-bs-whatever="@mdo"
-                                    (click)="loadEditarForm(method)"><i class="bi bi-pencil"></i></button>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                data-bs-target="#editModal" data-bs-whatever="@mdo" (click)="loadEditarForm(method)"><i
+                                    class="bi bi-pencil"></i></button>
                         </td>
                     </tr>
                     <tr> <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal" data-bs-whatever="@mdo">Nuevo metodo de pago</button>
+                            data-bs-target="#NewMethodModal" data-bs-whatever="@mdo">Nuevo metodo de pago</button>
                     </tr>
 
                 </tbody>
@@ -31,15 +31,15 @@
     </div>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar forma de pago</h5>
+                <h4 class="modal-title" id="editModalLabel">Editar forma de pago</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="editForm" (ngSubmit)="saveNewPaymentMethod()">
+                <form [formGroup]="editForm" (ngSubmit)="updatePaymentMethod()">
                     <div class="row">
                         <div class="col-md-8">
                             <div class="mb-2">
@@ -62,12 +62,51 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary"
-                    (click)="updatePaymentMethod(editPayment)">Guardar</button>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="NewMethodModal" tabindex="-1" aria-labelledby="NewMethodModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="NewMethodModalLabel">Registrar forma de pago</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editForm" (ngSubmit)="saveNewPaymentMethod()">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="mb-2">
+                                <label for="paymentMethod" class="form-label">Método de Pago</label>
+                                <input formControlName="paymentMethod" type="text" class="form-control"
+                                    id="paymentMethod"required>
+                                <div
+                                    *ngIf="editForm.get('paymentMethod')!.touched && editForm.get('paymentMethod')!.hasError('required')">
+                                    El método de pago es obligatorio.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-2">
+                                <label for="surcharge" class="form-label">Recargo</label>
+                                <input formControlName="surcharge" type="number" class="form-control" id="surcharge"
+                                    name="surcharge" required>
+                                <div
+                                    *ngIf="editForm.get('surcharge')!.touched && editForm.get('surcharge')!.hasError('required')">
+                                    El recargo es obligatorio.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

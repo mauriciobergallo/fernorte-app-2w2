@@ -15,6 +15,7 @@ export class PaymentMethodComponent implements OnInit {
   methodForm: FormGroup;
   editForm: FormGroup;
 
+
   constructor(private paymentMethodService: PaymentMethodService, private formBuilder: FormBuilder) {
     this.methodForm = this.formBuilder.group({
       paymentMethod: ['', Validators.required],
@@ -32,54 +33,60 @@ export class PaymentMethodComponent implements OnInit {
   }
 
   saveNewPaymentMethod() {
-    if (this.methodForm && this.methodForm.valid) {
+
+    if (this.editForm && this.editForm.valid) {
+      this.payment.id_payment_method = 0;
       this.payment.payment_method = this.editForm.get('paymentMethod')?.value || '';
       this.payment.surcharge = this.editForm.get('surcharge')?.value || 0;
+      this.editForm.get('paymentMethod')?.setValue('');
+      this.editForm.get('surcharge')?.setValue(0);
 
-      this.paymentMethodService.createPaymentMethod(this.payment).subscribe(
-        (response) => {
-          console.log('Nuevo método de pago creado:', response);
-          this.loadPaymentMethods();
+      this.paymentMethodService.createPaymentMethod(this.payment).subscribe({
+        next:(methods) => {
+          console.log('Nuevo método de pago creado:', methods);
+          this.loadPaymentMethods();  
         },
-        (error) => {
-          console.error('Error al crear el método de pago:', error);
+        error:(err)=>{
+          alert("error")
         }
-      );
+      })
     }
   }
 
   loadPaymentMethods() {
-    this.paymentMethodService.getPaymentMethods().subscribe(
-      (methods) => {
+    this.paymentMethodService.getPaymentMethods().subscribe({
+      next:(methods) => {
         this.paymentMethods = methods;
         console.log("payment Methods: ", methods)
-      
       },
-      (error) => {
-        console.error('Error al cargar la lista de métodos de pago:', error);
+      error:(err)=>{
+        alert("error")
       }
-    );
+    })
   }
+  
 
-  updatePaymentMethod(editPayment: IPaymentMethod) {
+  updatePaymentMethod() {
     if (this.editForm && this.editForm.valid)
-      this.paymentMethodService.updatePaymentMethod(this.editPayment).subscribe(
-        (response) => {
-          console.log('Método de pago actualizado:', response);
-          this.loadPaymentMethods();
-          this.editPayment = { id_payment_method: 0, payment_method: '', surcharge: 0 };
-        },
-        (error) => {
-          console.error('Error al actualizar el método de pago:', error);
-        }
-      );
+      this.paymentMethodService.updatePaymentMethod(this.editPayment).subscribe({
+      next:(method) => {
+        console.log('Método de pago actualizado:', method);
+        this.loadPaymentMethods();
+        this.editForm.get('paymentMethod')?.setValue('');
+        this.editForm.get('surcharge')?.setValue(0);
+        this.editPayment = { id_payment_method: 0, payment_method: '', surcharge: 0 };
+      },
+      error:(err)=>{
+        alert("error")
+      }
+    })
   }
-
+  
   loadEditarForm(method: IPaymentMethod) {
 
     this.editPayment.id_payment_method = method.id_payment_method;
     this.editPayment.payment_method = method.payment_method;
     this.editPayment.surcharge = method.surcharge;
-    console.log("este", this.editForm.value)
+    
   }
 }
