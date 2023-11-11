@@ -1,6 +1,7 @@
 export interface ICategory {
-    id_category: number;
+    idCategory: number;
     name: string;
     description: string;
-    created_by: string;
+    createdBy?: string;
+    isDeleted?: boolean;
 }

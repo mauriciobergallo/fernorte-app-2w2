@@ -58,18 +58,18 @@ export class AddProductComponent implements OnDestroy, OnInit {
   ) {
     this.ngbModal = _ngbModal;
     this.formGroup = this.fb.group({
-      id_product: [null],
+      idProduct: [null],
       name: ['', {
         validators: [Validators.required, Validators.minLength(5)],
         asyncValidators: [this.productNameValidator.bind(this)],
         updateOn: 'change'
       }], description: [null],
-      unit_price: [null, Validators.required],
-      stock_quantity: [null, Validators.required],
-      unit_of_measure: [null],
-      id_category: [null, Validators.required],
+      unitPrice: [null, Validators.required],
+      stockQuantity: [null, Validators.required],
+      unitOfMeasure: [null],
+      idCategory: [null, Validators.required],
       image: [null],
-      user_created: [null],
+      userCreated: [null],
     });
 
     this.subscription = new Subscription();
@@ -80,50 +80,49 @@ export class AddProductComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.getCategories();
-
     if (this.product && this.isEdit) {
+      debugger
       this.formGroup.patchValue({
-        id_product: this.product.id_product,
+        idProduct: this.product.idProduct,
         name: this.product.name,
         description: this.product.description,
-        unit_price: this.product.unit_price,
-        stock_quantity: this.product.stock_quantity,
-        unit_of_measure: this.product.unit_of_measure,
-        id_category: this.product.category.id_category,
-        url_image: this.product.url_image,
-        user_created: this.product.user_created,
-
-        price_product: this.product.price_product,
-        created_by: this.product.user_created,
+        unitPrice: this.product.unitPrice,
+        stockQuantity: this.product.stockQuantity,
+        unitOfMeasure: this.product.unitOfMeasure,
+        idCategory: this.product.category.idCategory,
+        urlImage: this.product.urlImage,
+        userCreated: this.product.userCreated,
+        priceProduct: this.product.priceProduct,
+        createdBy: this.product.userCreated,
       });
     } else {
       this.formGroup.patchValue({
-        id_product: null,
+        idProduct: null,
         name: null,
         description: null,
-        unit_price: null,
-        stock_quantity: null,
-        unit_of_measure: null,
-        id_category: this.predeterminatedCategoryId,
-        url_image: null,
-        user_created: null,
-        price_product: null,
-        created_by: null,
+        unitPrice: null,
+        stockQuantity: null,
+        unitOfMeasure: null,
+        idCategory: this.predeterminatedCategoryId,
+        urlImage: null,
+        userCreated: null,
+        priceProduct: null,
+        createdBy: null,
       });
     }
   }
   productNameValidator(control: AbstractControl): Observable<ValidationErrors | null> {
-    return this.prodService.get(1,0,"name","asc",true).pipe(
+    return this.prodService.get(1, 0, "name", "asc", true).pipe(
       map((products: any) => {
         const isProductNameExists = products.products.some((product: any) => product.name.toLowerCase() === control.value.toLowerCase());
         return isProductNameExists ? { productNameExists: true } : null;
-      }),      
+      }),
       catchError(() => of(null))
     );
   }
   getCategories() {
     this.categoryService.get().subscribe((res) => {
-      this.listCategories = res;
+      this.listCategories = res.categories;
     });
   }
 
@@ -141,36 +140,36 @@ export class AddProductComponent implements OnDestroy, OnInit {
       this.isLoading = true;
 
       let request = this.formGroup.value;
-      request.id_product = Number(request.id_product);
-      request.unit_price = Number(request.unit_price);
-      request.stock_quantity = Number(request.stock_quantity);
-      request.id_category = Number(request.id_category);
-      request.user_created = 'prueba';
+      request.idProduct = Number(request.idProduct);
+      request.unitPrice = Number(request.unitPrice);
+      request.stockQuantity = Number(request.stockQuantity);
+      request.idCategory = Number(request.idCategory);
+      request.userCreated = 'prueba';
       request.image = this.image;
 
       //Si envío todos los campos del modelo me arroja bad request
 
       //Modelo
-      /*       id_product: number;
+      /*       idProduct: number;
             name: string;
             description: string;
-            unit_Price: number;
-            stock_Quantity: number;
-            unit_Of_Measure: string;
-            id_category: number;
+            unitPrice: number;
+            stockQuantity: number;
+            unitOfMeasure: string;
+            idCategory: number;
             image: string;
-            user_created:string; */
+            userCreated:string; */
 
       /*       const request: IProduct = {
-              id_product: this.isEdit ? Number(this.formGroup.get('id_product')?.value) : 0,
+              idProduct: this.isEdit ? Number(this.formGroup.get('idProduct')?.value) : 0,
               name: String(this.formGroup.get('name')?.value),
               description: String(this.formGroup.get('description')?.value),
-              unit_Price: Number(this.formGroup.get('unit_price')?.value),
-              stock_Quantity: Number(this.formGroup.get('stock_quantity')?.value),
-              unit_Of_Measure: String(this.formGroup.get('unit_of_measure')?.value),
-              id_category: Number(this.formGroup.get('id_category')?.value),
-              image: String(this.formGroup.get('url_image')?.value),
-              user_created: 'Prueba',
+              unitPrice: Number(this.formGroup.get('unitPrice')?.value),
+              stockQuantity: Number(this.formGroup.get('stockQuantity')?.value),
+              unitOfMeasure: String(this.formGroup.get('unitOfMeasure')?.value),
+              idCategory: Number(this.formGroup.get('idCategory')?.value),
+              image: String(this.formGroup.get('urlImage')?.value),
+              userCreated: 'Prueba',
             }; */
 
       this.subscription.add(
@@ -194,7 +193,7 @@ export class AddProductComponent implements OnDestroy, OnInit {
           },
         })
       );
-    } 
+    }
   }
 
   close() {
@@ -206,15 +205,15 @@ export class AddProductComponent implements OnDestroy, OnInit {
   }
 
   get controlCategory(): FormControl {
-    return this.formGroup.controls['id_category'] as FormControl;
+    return this.formGroup.controls['idCategory'] as FormControl;
   }
 
   get controlUnitPrice(): FormControl {
-    return this.formGroup.controls['unit_price'] as FormControl;
+    return this.formGroup.controls['unitPrice'] as FormControl;
   }
 
   get controlStockQuantity(): FormControl {
-    return this.formGroup.controls['stock_quantity'] as FormControl;
+    return this.formGroup.controls['stockQuantity'] as FormControl;
   }
 
   showSuccessAlert(message: string) {

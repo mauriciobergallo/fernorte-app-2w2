@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ProductService } from '../../services/product.service';
-import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IProductCategory } from '../../models/IProductCategory';
 import { AddProductComponent } from './add-product/add-product.component';
@@ -9,6 +8,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
 import { ICategory } from '../../models/ICategory';
 import Swal from 'sweetalert2';
+import { IProduct } from '../../models/IProduct';
 
 @Component({
   selector: 'fn-products',
@@ -17,12 +17,11 @@ import Swal from 'sweetalert2';
 })
 export class ProductsComponent {
 
-  isLoading = false;
+  isLoading = true;
 
   listProducts: IProductCategory[] = [];
-  private subscription = new Subscription();
   filterProduct: FormGroup;
-
+  sortOrder = 'asc'; 
   currentPage = 1;
   itemsPerPage = 15;
   sortBy = 'name';
@@ -47,46 +46,50 @@ export class ProductsComponent {
     this.filterProduct.valueChanges.subscribe(() => {
       this.pagedProducts();
     });
-    this.categoryService.get().subscribe((res: ICategory[]) => {
-      this.listCategories = res;
+    this.categoryService.get().subscribe((res: any) => {
+      this.listCategories = res.categories;
     });
-
   }
 
   private pagedProducts() {
-    this.isLoading = true;
-    this.subscription.add(
-      this.productService
-        .get(
-          this.currentPage,
-          this.itemsPerPage,
-          this.sortBy,
-          this.sortDir,
-          this.filterProduct.value.isDeleted,
-          this.filterProduct.value.name,
-          this.filterProduct.value.category
-        )
-        .subscribe({
-          next: (products: any) => {
-            this.listProducts = products.products;
-            this.totalItems = products.length;
-            this.isLoading = false;
-          },
-          error: () => {
-            Swal.fire({
-              icon: 'error',
-              title: '!Error!',
-              text: 'No se han encontrado resultados.',
-            });
-            this.isLoading = false;
-          },
-        })
-    );
+    this.productService
+      .get(
+        this.currentPage,
+        this.itemsPerPage,
+        this.sortBy,
+        this.sortDir,
+        this.filterProduct.value.isDeleted,
+        this.filterProduct.value.name,
+        this.filterProduct.value.category
+      )
+      .subscribe({
+        next: (products) => {
+          this.listProducts = products.products;
+          this.totalItems = products.totalItems;
+          this.isLoading = false;
+        },
+        error: () => {
+          Swal.fire({
+            icon: 'error',
+            title: '!Error!',
+            text: 'No se han encontrado resultados.',
+          });
+          this.isLoading = false;
+        },
+      })
   }
 
 
   public handlePagination(event: any) {
     this.currentPage = event;
+    this.pagedProducts();
+  }
+  
+
+  sortTable(column: string) {
+    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    this.sortBy = column;
+    this.sortDir = this.sortOrder;
     this.pagedProducts();
   }
 
@@ -115,7 +118,7 @@ export class ProductsComponent {
       cancelButtonText: "Cancelar"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.productService.delete(product.id_product, "prueba").subscribe(() => {
+        this.productService.delete(product.idProduct, "prueba").subscribe(() => {
           Swal.fire({
             title: "¡Borrado!",
             text: "El producto ha sido borrado.",
@@ -146,8 +149,5 @@ export class ProductsComponent {
     modalRef.componentInstance.product = product;
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
 
 }

@@ -7,13 +7,15 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
   </div>
   <div class="modal-body">
-    <div class="img-fluid" *ngIf="product.url_image != null; else noImageProduct">
-      <img [src]="product.url_image" alt="Imagen del producto" class="img-responsive" />
+    <div class="img-fluid" *ngIf="product.urlImage != null; else noImageProduct">
+      <img [src]="product.urlImage" alt="Imagen del producto" class="img-responsive" />
     </div>
-    <ng-template #noImageProduct class="text-center">
-      <span class="material-symbols-outlined">
-        block
-      </span> No posee imagen
+    <ng-template #noImageProduct>
+      <div class="text-center">
+        <span class="materialSymbolsOutlined">
+          block
+        </span> No posee imagen
+      </div>
     </ng-template>
     <div class="card">
       <div class="card-body">
@@ -21,14 +23,12 @@
         <p class="card-text">{{ product.description }}</p>
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">Precio Unitario: {{ product.unit_price | currency : 'ARS' : 'symbol' }}</li>
-        <li class="list-group-item">Cantidad en Stock: {{ product.stock_quantity }}</li>
-        <li class="list-group-item">Unidad de Medida: {{ product.unit_of_measure }}</li>
+        <li class="list-group-item">Precio Unitario: {{ product.unitPrice | currency : 'ARS' : 'symbol' }}</li>
+        <li class="list-group-item">Cantidad en Stock: {{ product.stockQuantity }}</li>
+        <li class="list-group-item">Unidad de Medida: {{ product.unitOfMeasure }}</li>
         <li class="list-group-item">Categoría: {{ product.category.name }}</li>
-        <li class="list-group-item" *ngIf="product.price_product != null">Precio con Descuento: {{ product.price_product | currency : 'ARS' : 'symbol' }}</li>
+        <li class="list-group-item" *ngIf="product.priceProduct != null">Precio con Descuento: {{ product.priceProduct | currency : 'ARS' : 'symbol' }}</li>
         <li class="list-group-item" *ngIf="product.discount != null">Descuento: {{ product.discount }}%</li>
       </ul>
     </div>
   </div>
-
-

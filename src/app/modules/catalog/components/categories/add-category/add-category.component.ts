@@ -28,10 +28,10 @@ export class AddCategoryComponent implements OnDestroy, OnInit {
   ngbModal:NgbModal
   constructor( _ngbModal:NgbModal ,  private fb: FormBuilder, private catService: CategoryService, @Optional() private modalService: NgbActiveModal) {
     this.formGroup = this.fb.group({
-      id_category: [null],
+      idCategory: [null],
       name: [null, Validators.required],
       description: [null, Validators.required],
-      created_by: [null]
+      createdBy: [null]
     });
   this.ngbModal = _ngbModal;
     this.subscription = new Subscription();
@@ -42,10 +42,10 @@ export class AddCategoryComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.formGroup.patchValue({
-      id_category: this.category?.id_category,
+      idCategory: this.category?.idCategory,
       name: this.category?.name,
       description: this.category?.description,
-      created_by: this.category?.created_by
+      createdBy: this.category?.createdBy
     });
   }
 
@@ -53,10 +53,10 @@ export class AddCategoryComponent implements OnDestroy, OnInit {
     if (this.formGroup.valid) {
       this.isLoading = true;
       const request: ICategory = {
-        id_category: this.isEdit ? Number(this.formGroup.get('id_category')?.value) : 0,
+        idCategory: this.isEdit ? Number(this.formGroup.get('idCategory')?.value) : 0,
         name: String(this.formGroup.get('name')?.value),
         description: String(this.formGroup.get('description')?.value),
-        created_by: 'Prueba'
+        createdBy: 'Prueba'
       };
 
       this.subscription.add(this.catService.put(request).subscribe({

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IProductCategory } from '../models/IProductCategory';
-import { Observable } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { environment } from '../environments/environment';
 import { RequestResponseService } from './requestResponse.service';
 import { IProduct } from '../models/IProduct';
@@ -23,7 +23,7 @@ export class ProductService {
       isDeleted?: boolean,
       name?: string,
       idCategory?: number
-   ): Observable<IProductCategory[]> {
+   ): Observable<{ products: IProductCategory[]; totalItems: number; }> {
       let params = new HttpParams();
       if (page) {
          params = params.set('page', (page - 1).toString());
@@ -50,11 +50,37 @@ export class ProductService {
       if (idCategory) {
          params = params.set('idCategory', idCategory.toString());
       }
-      return this.requestResponseService.makeGetRequest<IProductCategory[]>(
-         this.products,
-         { params: params }
-      );
+      
+      return this.requestResponseService.makeGetRequest<{ products: IProductCategory[]; totalItems: number; }>
+         (this.products, { params: params })
+         .pipe(
+            map((response: any) => {
+               const products = response.products;
+               return {
+                  products: products.map((product: any) => ({
+                     idProduct: product.id_product,
+                     name: product.name,
+                     description: product.description,
+                     unitPrice: product.unit_price,
+                     stockQuantity: product.stock_quantity,
+                     unitOfMeasure: product.unit_of_measure,
+                     category: {
+                        idCategory: product.category.id_category,
+                        name: product.category.name,
+                        description: product.category.description,
+                     },
+                     urlImage: product.url_image,
+                     userCreated: product.user_created,
+                     priceProduct: product.price_product,
+                     discount: product.discount,
+                     isDeleted: product.is_deleted
+                  })),
+                  totalItems: response.length
+               };
+            }),
+         );
    }
+
    getById(id: number): Observable<IProductCategory> {
       return this.requestResponseService.makeGetRequest<IProduct>(
          `${this.products}/${id}`
@@ -66,9 +92,20 @@ export class ProductService {
       );
    }
    put(product: IProduct): Observable<IProduct> {
+      const productApi = {
+         id_product: product.idProduct,
+         name: product.name,
+         description: product.description,
+         unit_price: product.unitPrice,
+         stock_quantity: product.stockQuantity,
+         unit_of_measure: product.unitOfMeasure,
+         image: product.image,
+         user_created: product.userCreated,
+         id_category: product.idCategory,
+      }
       return this.requestResponseService.makePutRequest<IProduct>(
          this.products,
-         product
+          productApi 
       );
    }
    delete(id: number, username: string): Observable<any> {

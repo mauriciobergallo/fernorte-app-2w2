@@ -8,14 +8,14 @@
 
             <div class="mb-3 col-md-6">
                 <label for="selectProduct" class="form-label">Producto</label>
-                <select class="form-select" id="selectProduct" formControlName="id_product">
-                    <option *ngFor="let prod of listProducts" [value]="prod.id_product">{{prod.name}}</option>
+                <select class="form-select" id="selectProduct" formControlName="idProduct">
+                    <option *ngFor="let prod of listProducts" [value]="prod.idProduct">{{prod.name}}</option>
                 </select>
             </div>
 
             <div class="mb-3 col-md-4">
                 <label for="inputDiscountRate" class="form-label">Porcentaje de descuento</label>
-                <input type="text" class="form-control" id="inputDiscountRate" formControlName="discount_rate">
+                <input type="text" class="form-control" id="inputDiscountRate" formControlName="discountRate">
             </div>
         </div>
 
@@ -23,19 +23,19 @@
         <div class="row">
             <div class="mb-3 col-md-4 col-lg-4">
                 <label for="inputDiscountStartDate" class="form-label">Inicio del descuento</label>
-                <input type="date" class="form-control" id="inputDiscountStartDate" formControlName="start_date">
+                <input type="date" class="form-control" id="inputDiscountStartDate" formControlName="startDate">
             </div>
 
             <div class="mb-3 col-md-4 col-lg-4">
                 <label for="inputDiscountEndDate" class="form-label">Fin del descuento</label>
-                <input type="date" class="form-control" id="inputDiscountEndDate" formControlName="end_date">
+                <input type="date" class="form-control" id="inputDiscountEndDate" formControlName="endDate">
             </div>
 
 
         </div>
 
         <div class="row">
-            <div class="col-md-6 col-lg-6 buttons-container">
+            <div class="col-md-6 col-lg-6 buttonsContainer">
                 <button type="button" class="btn btn-secondary" (click)="close()">Cancelar</button>
                 <button type="button" class="btn btn-primary" (click)="onSubmit()">Guardar</button>
             </div>

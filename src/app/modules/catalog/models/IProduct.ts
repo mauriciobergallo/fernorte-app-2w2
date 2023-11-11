@@ -1,12 +1,12 @@
 
 export interface IProduct{
-    id_product: number;
+    idProduct: number;
     name: string;
     description: string;
-    unit_Price: number;
-    stock_Quantity: number;
-    unit_Of_Measure: string;
-    id_category: number;
+    unitPrice: number;
+    stockQuantity: number;
+    unitOfMeasure: string;
+    idCategory: number;
     image: string;
-    user_created:string;
+    userCreated:string;
 }

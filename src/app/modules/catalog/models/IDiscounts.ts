@@ -1,9 +1,10 @@
 import { IProduct } from "./IProduct";
 
 export interface IDiscount {
-    id_discount: number;
+    idDiscount: number;
     product: IProduct;
-    discount_rate: number;
-    start_date: string;
-    end_date: string;
+    discountRate: number;
+    startDate: string;
+    endDate: string;
+    isDeleted: boolean;
 }

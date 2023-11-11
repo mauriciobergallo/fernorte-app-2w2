@@ -3,12 +3,53 @@
 <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <div class="container mt-4">
-    <button class="btn btn-primary" (click)="openCreateModal()">Nuevo descuento</button>
+    <button class="btn btn-primary" (click)="openCreateModal()">Agregar</button>
+    <form [formGroup]="filterForm">
+        <div class="row m-2">
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="date" class="form-control" placeholder="Fecha de inicio inicial"
+                        formControlName="initStartDate">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="date" class="form-control" placeholder="Fecha de fin final"
+                        formControlName="finalEndDate">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <select class="form-select form-control" formControlName="idProduct">
+                        <option value="" selected>Todos los productos</option>
+                        <option *ngFor="let product of listProducts" [value]="product.idProduct">{{ product.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-check col-md-6">
+                <input class="form-check-input" type="checkbox" id="showDeleted" formControlName="isDeleted">
+                <label class="form-check-label" for="showDeleted">
+                    Inactivos
+                </label>
+            </div>
+        </div>
+    </form>
     <table class="table">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Descuento</th>
+                <th class="nameColumn" (click)="sortTable('name')">
+                    Nombre
+                    <i class="bi bi-arrow-up-down"
+                      [ngClass]="{'bi-arrow-down': sortOrder === 'asc', 'bi-arrow-up': sortOrder === 'desc'}"></i>
+                  </th>                <th>Descuento</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
@@ -17,19 +58,31 @@
             <tr *ngFor="let discount of discountsList">
                 <td>{{ discount.product.name }}</td>
                 <td>
-                    {{discount.discount_rate}}%
+                    {{discount.discountRate}}%
                 </td>
-                <td *ngIf="isDiscountActive(discount)"><span class="material-symbols-outlined"
-                        style="color: rgb(3, 139, 3);">
-                        check_circle
-                    </span></td>
-                <td *ngIf="!isDiscountActive(discount)"><span style="color: rgb(202, 0, 0);"
-                        class="material-symbols-outlined">
-                        cancel
-                    </span></td>
+                <td>
+                    {{discount.startDate | date: 'dd/MM/yyyy'}}
+                </td>
+                <td>
+                    {{discount.endDate | date: 'dd/MM/yyyy'}}
+                </td>
+                <td>
+                    <strong>
+                        <div class="ms-2" *ngIf="!discount.isDeleted">
+                            <span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">
+                                check_circle
+                            </span>
+                        </div>
+                        <div class="ms-2" *ngIf="discount.isDeleted">
+                            <span style="color: rgb(202, 0, 0);" class="material-symbols-outlined">
+                                cancel
+                            </span>
+                        </div>
+                    </strong>
+                </td>
                 <td>
                     <div ngbDropdown container="body">
-                        <button type="button" class="btn btn-sm btn-dropdown btn-light" ngbDropdownToggle>
+                        <button type="button" class="btn btn-sm btnDropdown btn-light" ngbDropdownToggle>
                             <i class="bi bi-three-dots-vertical"></i>
                         </button>
                         <div ngbDropdownMenu>
@@ -45,24 +98,7 @@
 </div>
 
 <div class="container mt-4">
-    <ngb-pagination class="d-flex justify-content-center" [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="5" [maxSize]="5" [rotate]="true">
+    <ngb-pagination class="d-flex justify-content-center" [(page)]="currentPage" [pageSize]="itemsPerPage"
+        [collectionSize]="totalItems" [maxSize]="5" [rotate]="true" (pageChange)="handlePagination($event)">
     </ngb-pagination>
-</div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
 </div>

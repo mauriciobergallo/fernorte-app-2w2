@@ -1,16 +1,16 @@
 import { ICategory } from "./ICategory";
 
 export interface IProductCategory{
-    id_product: number;
+    idProduct: number;
     name: string;
     description: string;
-    unit_price: number;
-    stock_quantity: number;
-    unit_of_measure: string;
+    unitPrice: number;
+    stockQuantity: number;
+    unitOfMeasure: string;
     category: ICategory;
-    url_image: string;
-    user_created:string;
-    price_product:number;
+    urlImage: string;
+    userCreated:string;
+    priceProduct:number;
     discount:number;
-    is_deleted:boolean;
+    isDeleted:boolean;
 }

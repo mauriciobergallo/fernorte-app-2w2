@@ -24,28 +24,28 @@
         </div>
         <div class="col-md-6 mb-3">
           <label for="selectCategory" class="form-label">Categoría</label>
-          <select class="form-select" id="selectCategory" formControlName="id_category">
+          <select class="form-select" id="selectCategory" formControlName="idCategory">
             <option [class.is-invalid]="controlCategory.invalid && (controlCategory.dirty || controlCategory.touched)"
-              *ngFor="let item of listCategories" [value]="item.id_category">{{item.name}}</option>
+              *ngFor="let item of listCategories" [value]="item.idCategory">{{item.name}}</option>
           </select>
         </div>
 
         <div class="col-md-6 mb-3">
           <label for="inputPrice" class="form-label">Precio</label>
           <input [class.is-invalid]="controlUnitPrice.invalid && (controlUnitPrice.dirty || controlUnitPrice.touched)"
-            type="number" class="form-control" id="inputPrice" formControlName="unit_price">
+            type="number" class="form-control" id="inputPrice" formControlName="unitPrice">
         </div>
 
         <div class="col-md-6 mb-3">
           <label for="inputUnitOfMeasurement" class="form-label">Unidad de medida</label>
-          <input type="text" class="form-control" id="inputUnitOfMeasurement" formControlName="unit_of_measure">
+          <input type="text" class="form-control" id="inputUnitOfMeasurement" formControlName="unitOfMeasure">
         </div>
 
         <div class="col-md-6 mb-3">
           <label for="inputStock" class="form-label">Stock</label>
           <input
             [class.is-invalid]="controlStockQuantity.invalid && (controlStockQuantity.dirty || controlStockQuantity.touched)"
-            type="number" class="form-control" id="inputStock" formControlName="stock_quantity">
+            type="number" class="form-control" id="inputStock" formControlName="stockQuantity">
         </div>
 
         <div class="col-md-6 mb-3">

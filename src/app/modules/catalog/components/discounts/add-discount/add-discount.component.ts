@@ -34,11 +34,11 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder, _ngbModal: NgbModal, private prodService: ProductService, private disService: DiscountsService, @Optional() private modalService: NgbActiveModal) {
     this.formGroup = this.fb.group({
-      id_discount: [null],
-      id_product: [null],
-      discount_rate: [null],
-      start_date: [null],
-      end_date: [null]
+      idDiscount: [null],
+      idProduct: [null],
+      discountRate: [null],
+      startDate: [null],
+      endDate: [null]
     });
     this.ngbModal = _ngbModal;
     this.subscription = new Subscription();
@@ -54,12 +54,11 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
 
 
   getProducts() {
-    
-    this.subscription.add(this.prodService.get().subscribe((res) => {
-      this.listProducts = res;
-    }));
-  }
+    this.prodService.get(this.currentPage,1500,this.sortBy,this.sortDir,false).subscribe((res: any) => {
+      this.listProducts = res.products
+    })
 
+  }
 
 
 
@@ -67,9 +66,9 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     if (this.isEdit) {
       let request = this.formGroup.value;
-      request.id_product = Number(request.id_product)
-      request.start_date = new Date(request.start_date)
-      request.end_date = new Date(request.end_date)
+      request.idProduct = Number(request.idProduct)
+      request.startDate = new Date(request.startDate)
+      request.endDate = new Date(request.endDate)
       request.user = 'prueba';
 
       this.disService.updateDiscounts([request]).subscribe((res) => {
@@ -78,10 +77,10 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
       })
     } else {
       let request = this.formGroup.value;
-      request.id_discount = 0;
-      request.id_product = Number(request.id_product)
-      request.start_date = new Date(request.start_date)
-      request.end_date = new Date(request.end_date)
+      request.idDiscount = 0;
+      request.idProduct = Number(request.idProduct)
+      request.startDate = new Date(request.startDate)
+      request.endDate = new Date(request.endDate)
       request.user = 'prueba';
 
       this.disService.updateDiscounts([request]).subscribe((res) => {
