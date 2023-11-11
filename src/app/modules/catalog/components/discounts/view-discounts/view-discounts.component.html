@@ -1,35 +1,35 @@
 <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-
-<div class="modalHeader">
-    <h1 class="textCenter">Detalle del descuento</h1>
-    <button type="button" class="btnClose" aria-label="Close" (click)="modalService.dismissAll()"></button>
+<div class="modal-header">
+  <h1 class="text-center">Detalle del descuento</h1>
+  <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
 </div>
-<div class="modalBody">
-    <div class="card">
-        <div class="cardBody">
-            <h5 class="cardTitle">Descuento del producto {{discount?.product?.name}}</h5>
-            <p class="cardText"> Informacion del producto: {{discount?.product?.description}}</p>
-        </div>
-        <ul class="listGroup listGroupFlush">
-            <li class="listGroupItem">Porcentaje de descuento {{ discount?.discountRate}}%</li>
-            <li class="listGroupItem">Inicio del descuento: {{ discount?.startDate }}</li>
-            <li class="listGroupItem">Fin del descuento: {{ discount?.endDate }}</li>
-            <li class="listGroupItem" *ngIf="discount != null">
-                <p class="fs5 dFlex alignItemsCenter">Estado: <strong>
-                        <div class="ms2" *ngIf="isDiscountActive(discount)">
-                            <span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">
-                                check_circle
-                            </span> Activo
-                        </div>
-                        <div class="ms2" *ngIf="!isDiscountActive(discount)">
-                            <span style="color: rgb(202, 0, 0);" class="material-symbols-outlined">
-                                cancel
-                            </span> Inactivo
-                        </div>
-                    </strong></p>
-            </li>
-        </ul>
+
+<div class="modal-body">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Descuento del producto {{discount?.product?.name}}</h5>
+      <p class="card-text">Información del producto: {{discount?.product?.description}}</p>
     </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Porcentaje de descuento {{ discount?.discountRate}}%</li>
+      <li class="list-group-item">Inicio del descuento: {{ discount?.startDate }}</li>
+      <li class="list-group-item">Fin del descuento: {{ discount?.endDate }}</li>
+      <li class="list-group-item" *ngIf="discount != null">
+        <p class="fs-5 d-flex align-items-center">Estado: <strong>
+            <div class="ms-2" *ngIf="isDiscountActive(discount)">
+              <span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">
+                check_circle
+              </span> Activo
+            </div>
+            <div class="ms-2" *ngIf="!isDiscountActive(discount)">
+              <span style="color: rgb(202, 0, 0);" class="material-symbols-outlined">
+                cancel
+              </span> Inactivo
+            </div>
+          </strong></p>
+      </li>
+    </ul>
+  </div>
 </div>

@@ -46,7 +46,6 @@ export class ListCategoriesComponent implements OnInit {
     this.getCategories();
   }
   getCategories() {
-    debugger
     this.categoryService.get(this.currentPage, this.itemsPerPage, this.sortBy, this.sortDir, this.filterCategory.value.isDeleted, this.filterCategory.value.name).subscribe({
       next: (cat) => {
         this.isLoading = false;

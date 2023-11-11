@@ -64,7 +64,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="close()">Cancelar</button>
-    <button type="button" class="btn btn-primary" (click)="onSubmit()">Guardar</button>
+    <button type="button" class="btn btn-primary" (click)="onSubmit()" [disabled]="formGroup.invalid">Guardar</button>
   </div>
 
   <spinner *ngIf="isLoading"></spinner>

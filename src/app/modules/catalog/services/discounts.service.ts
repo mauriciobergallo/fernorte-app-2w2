@@ -23,7 +23,9 @@ export class DiscountsService {
     isDeleted?: boolean,
     idProduct?: number,
     initStartDate?: Date,
-    finalEndDate?: Date
+      finalStartDate?: Date,
+      initEndDate?: Date,
+      finalEndDate?: Date,
   ): Observable<{ discounts: IDiscount[]; totalItems: number; }> {
     let params = new HttpParams();
     if (page) params = params.append('page', (page - 1).toString());
@@ -32,8 +34,18 @@ export class DiscountsService {
     if (sortDir) params = params.append('sortDir', sortDir);
     if (isDeleted) params = params.append('isDeleted', isDeleted.toString());
     if (idProduct) params = params.append('idProduct', idProduct);
-    if (initStartDate) params = params.append('initStartDate', new Date(initStartDate).toISOString().slice(0, -1));
-    if (finalEndDate) params = params.append('finalEndDate', new Date(finalEndDate).toISOString().slice(0, -1));
+    if (initStartDate) {
+      params = params.set('initStartDate', new Date(initStartDate).toISOString().slice(0, -1));
+   }
+   if (finalStartDate) {
+      params = params.set('finalStartDate', new Date(finalStartDate).toISOString().slice(0, -1));
+   }
+   if (initEndDate) {
+      params = params.set('initEndDate', new Date(initEndDate).toISOString().slice(0, -1));
+   }
+   if (finalEndDate) {
+      params = params.set('finalEndDate', new Date(finalEndDate).toISOString().slice(0, -1));
+   }
     return this.requestResponseService.makeGetRequest<{ discounts: IDiscount[]; totalItems: number; }>(this.discounts, { params: params })
       .pipe(
         map((response: any) => {
@@ -61,7 +73,23 @@ export class DiscountsService {
     return this.requestResponseService.makeGetRequest<IDiscount[]>(`${this.discounts}/${id}`);
   }
   updateDiscounts(request: any[]): Observable<IDiscount[]> {
-    return this.requestResponseService.makePutRequest<IDiscount[]>(this.discounts, request);
+
+    let disFinal:any[] = []
+
+    request.forEach((e) => {
+      let dis = {
+        name: e.name,
+        id_discount: e.idDiscount,
+        id_product: e.idProduct,
+        discount_rate: e.discountRate,
+        start_date: e.startDate,
+        end_date: e.endDate,
+        user: e.user
+      }
+      disFinal.push(dis)
+    });
+
+    return this.requestResponseService.makePutRequest<IDiscount[]>(this.discounts, disFinal);
   }
   deleteDiscounts(id: number, user: string): Observable<IDiscount[]> {
 

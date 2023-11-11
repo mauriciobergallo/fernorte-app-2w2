@@ -29,6 +29,8 @@ export class DiscountsComponent implements OnInit {
     this.filterForm = this.fb.group({
       idProduct: '',
       initStartDate: '',
+      finalStartDate: '',
+      initEndDate: '',
       finalEndDate: '',
       isDeleted: false
     });
@@ -68,8 +70,10 @@ export class DiscountsComponent implements OnInit {
       this.sortBy,
       this.sortDir,
       this.filterForm.value.isDeleted,
-      this.filterForm.value.product,
+      this.filterForm.value.idProduct,
       this.filterForm.value.initStartDate,
+      this.filterForm.value.finalStartDate,
+      this.filterForm.value.initEndDate,
       this.filterForm.value.finalEndDate
     ).subscribe({
       next: (dis) => {

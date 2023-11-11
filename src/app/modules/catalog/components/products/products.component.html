@@ -1,6 +1,6 @@
 <spinner *ngIf="isLoading"></spinner>
-<link rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
 <div class="container table-header mt-4 mb-4">
   <form [formGroup]="filterProduct">
@@ -48,15 +48,12 @@
       </th>
       <th class="nameColumn">
         Stock
-        <!-- <i class="bi bi-arrow-up-down" [ngClass]="{'bi-arrow-down': sortOrder === 'asc', 'bi-arrow-up': sortOrder === 'desc'}"></i> -->
       </th>
       <th class="nameColumn">
         Precio
-        <!-- <-- <i class="bi bi-arrow-up-down" [ngClass]="{'bi-arrow-down': sortOrder === 'asc', 'bi-arrow-up': sortOrder === 'desc'}"></i>-->
       </th>
       <th class="nameColumn" (click)="sortTable('categoria')">
         Categoria
-        <!-- <i class="bi bi-arrow-up-down" [ngClass]="{'bi-arrow-down': sortOrder === 'asc', 'bi-arrow-up': sortOrder === 'desc'}"></i> -->
       </th>
       <th class="nameColumn">
         Estado
@@ -93,20 +90,21 @@
           </div>
         </strong>
       </td>
-      <div ngbDropdown container="body">
-        <button type="button" class="btn btn-sm btnDropdown btn-light" ngbDropdownToggle>
-          <i class="bi bi-three-dots-vertical"></i>
-        </button>
-        <div ngbDropdownMenu>
-          <button ngbDropdownItem (click)="openEditModal(product)">Editar</button>
-          <button ngbDropdownItem (click)="openDelete(product)">Eliminar</button>
-          <button ngbDropdownItem (click)="openImageModal(product)">Ver mas</button>
+      <td>
+        <div ngbDropdown container="body" class="center">
+          <button type="button" class="btn btn-sm btnDropdown btn-light" ngbDropdownToggle>
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
+          <div ngbDropdownMenu>
+            <button ngbDropdownItem (click)="openEditModal(product)">Editar</button>
+            <button ngbDropdownItem *ngIf="!product.isDeleted" (click)="openDelete(product)">Eliminar</button>
+            <button ngbDropdownItem (click)="openImageModal(product)">Ver mas</button>
+          </div>
         </div>
-      </div>
+      </td>
     </tr>
   </tbody>
 </table>
-
 
 <div class="container mt-4">
   <ngb-pagination class="d-flex justify-content-center" [(page)]="currentPage" [pageSize]="itemsPerPage"

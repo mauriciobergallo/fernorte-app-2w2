@@ -63,7 +63,7 @@ export class AddProductComponent implements OnDestroy, OnInit {
         validators: [Validators.required, Validators.minLength(5)],
         asyncValidators: [this.productNameValidator.bind(this)],
         updateOn: 'change'
-      }], description: [null],
+      }], description: [null, Validators.maxLength(255)],
       unitPrice: [null, Validators.required],
       stockQuantity: [null, Validators.required],
       unitOfMeasure: [null],
@@ -81,7 +81,6 @@ export class AddProductComponent implements OnDestroy, OnInit {
   ngOnInit() {
     this.getCategories();
     if (this.product && this.isEdit) {
-      debugger
       this.formGroup.patchValue({
         idProduct: this.product.idProduct,
         name: this.product.name,
@@ -112,9 +111,10 @@ export class AddProductComponent implements OnDestroy, OnInit {
     }
   }
   productNameValidator(control: AbstractControl): Observable<ValidationErrors | null> {
+    console.log(this.product)
     return this.prodService.get(1, 0, "name", "asc", true).pipe(
       map((products: any) => {
-        const isProductNameExists = products.products.some((product: any) => product.name.toLowerCase() === control.value.toLowerCase());
+        const isProductNameExists = products.products.some((product: any) => product.name.toLowerCase() === control.value.toLowerCase() && product.idProduct != this.product?.idProduct);
         return isProductNameExists ? { productNameExists: true } : null;
       }),
       catchError(() => of(null))

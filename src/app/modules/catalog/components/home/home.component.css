@@ -65,8 +65,48 @@ body {
 
 .router-sidebar{
     margin-left: 280px;
+    width: 100%;
+    padding: 25px;
 }
 
 .nav-link.active{
     background-color: #e5e5e5 !important;
+}
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.icon-move{
+    display: none;
+}
+
+@media (max-width:850px) {
+    .icon-move{
+        position: absolute;
+        right: 0;
+        cursor: pointer;
+        display: inline;
+    }
+    .sidenav .sidebar{
+        position: fixed;
+        left: -250px !important;
+    }
+    .sidebar{
+        position: fixed;
+        left: -250px !important;
+    }
+    .sidebar.active{
+        position: fixed;
+        left: 0 !important;
+    }
+    .router-sidebar{
+        margin-left: 0;
+    }
+    .router-sidebar.active{
+        margin-left: 280px;
+    }
 }
