@@ -1,58 +1,36 @@
 <div class="container text-center mt-4">
-    <h2>Ordenes de recepcion</h2>
+  <h2>Ordenes de recepcion</h2>
 </div>
 <div class="container mt-5 text-center">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Proovedor</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Hora</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Nro Orden de Compra</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let reception of receptionOrderList">
-                <td>{{ reception.supplier_name }}</td>
-                <td>{{ reception.reception_date }}</td>
-                <td>{{ reception.reception_hour }}</td>
-                <td>{{ reception.state }}</td>
-                <td>{{ reception.purchase_order_number }}</td>
-                <td>
-                    <button class="btn btn-primary rounded-circle"
-                    data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Acciones Disponibles</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row container">
-            <button class="btn btn-lg btn-danger mt-2">Eliminar</button>
-            <br>
-            <button class="btn btn-lg btn-warning mt-2">Actualizar</button>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Proovedor</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Hora</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Nro Orden de Compra</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reception of receptionOrderList">
+        <td>{{ reception.supplier_name }}</td>
+        <td>{{ reception.reception_date }}</td>
+        <td>{{ reception.reception_hour }}</td>
+        <td>{{ reception.state }}</td>
+        <td>{{ reception.purchase_order_number }}</td>
+        <td>
+          <div class="dropdown">
+            <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <div class="dropdown-content" (click)="navigateToDetails(reception.id_reception_order)">
+              <a><i class="bi bi-eye" style="cursor: pointer; font-size: 20px; margin-right: 5px;"></i>VER</a>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-            
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
-          <button type="button" class="btn btn-primary">Guardar cambios</button>
-        </div>
-      </div>
-    </div>
-  </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -20,6 +20,7 @@ import { DeliveryOrderDetailsComponent } from './components/consult-order/delive
 
 import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
 import { RouterModule } from '@angular/router';
+import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { RouterModule } from '@angular/router';
     StateIconPipePipe,
     DeliveryOrderDetailsComponent,
     ConsultReceptionOrdersComponent,
+    ReceptionOrderDetailsComponent,
   ],
 
   providers: [],

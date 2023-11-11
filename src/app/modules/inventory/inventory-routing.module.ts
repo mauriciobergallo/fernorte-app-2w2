@@ -8,6 +8,7 @@ import { ConsultOrderComponent } from './components/consult-order/consult-order/
 import { DeliveryOrderDetailsComponent } from './components/consult-order/delivery-order-details/delivery-order-details.component';
 import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
 import { HomeComponent } from './components/home/home.component';
+import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
 
 /*
 const routes: Routes = [
@@ -44,7 +45,13 @@ const routes: Routes = [
           },
         ],
       },
-      { path: 'reception-orders', component: ConsultReceptionOrdersComponent },
+      {
+        path: 'reception-orders',
+        children: [
+          { path: '', component: ConsultReceptionOrdersComponent },
+          { path: ':id/details', component: ReceptionOrderDetailsComponent },
+        ],
+      },
     ],
   },
 ];
