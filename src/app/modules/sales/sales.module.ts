@@ -28,6 +28,7 @@ import { ReportNavComponent } from './components/report-nav/report-nav.component
 import { TurnProvider } from './services/turns/TurnProvider';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaxComponent } from './components/tax/tax.component';
+import { TaxNavComponent } from './components/tax-nav/tax-nav.component';
 
 @NgModule({
   declarations: [HomeComponent,
@@ -46,6 +47,7 @@ import { TaxComponent } from './components/tax/tax.component';
     SaleOrderNavComponent,
     BillingNavComponent,
     TaxComponent,
+    TaxNavComponent,
     ReportNavComponent],
 
   providers: [SaleOrderProvider,
@@ -73,6 +75,7 @@ import { TaxComponent } from './components/tax/tax.component';
     SaleOrderNavComponent,
     BillingNavComponent,
     TaxComponent,
+    TaxNavComponent,
     ReportNavComponent],
 })
 export class SalesModule {}

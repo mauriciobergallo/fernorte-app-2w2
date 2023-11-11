@@ -1,0 +1,20 @@
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 p-3">
+                <h2>Impuestos</h2>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active"
+                    [class.active]="activeTab === 'taxes'"
+                    (click)="toTaxes('tax')"
+                    aria-current="page">Impuestos</a>
+                </li>
+            </ul>
+        </div>
+        <div class="centered-content">
+            <fn-tax></fn-tax>
+        </div>
+    </div>
+</section>
