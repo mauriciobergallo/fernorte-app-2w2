@@ -23,28 +23,23 @@ import { CategoryService } from '../../../services/category.service';
 import { ProductService } from '../../../services/product.service';
 import { Observable, Subscription, catchError, map, of, tap } from 'rxjs';
 import Swal from 'sweetalert2';
+import { IProduct } from '../../../models/IProduct';
 
 @Component({
   selector: 'fn-add-product',
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.css'],
 })
-export class AddProductComponent implements OnDestroy, OnInit {
+export class AddProductComponent implements OnInit {
   //Variables utilizadas para editar el producto
   @Input() isEdit?: boolean | null = null;
   @Input() product?: IProductCategory | null = null;
-  @Output() productAdded: EventEmitter<any> = new EventEmitter();
+
   listCategories: ICategory[] = [];
 
   formGroup: FormGroup;
   isLoading: boolean = false;
 
-  showMessage: boolean = false;
-  messageClass: string = '';
-  message: string = '';
-  predeterminatedCategoryId: number = 1;
-
-  subscription: Subscription;
   ngbModal: NgbModal;
   image?: File;
 
@@ -72,11 +67,8 @@ export class AddProductComponent implements OnDestroy, OnInit {
       userCreated: [null],
     });
 
-    this.subscription = new Subscription();
   }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+
 
   ngOnInit() {
     this.getCategories();
@@ -102,7 +94,7 @@ export class AddProductComponent implements OnDestroy, OnInit {
         unitPrice: null,
         stockQuantity: null,
         unitOfMeasure: null,
-        idCategory: this.predeterminatedCategoryId,
+        idCategory: null,
         urlImage: null,
         userCreated: null,
         priceProduct: null,
@@ -138,61 +130,31 @@ export class AddProductComponent implements OnDestroy, OnInit {
   onSubmit() {
     if (this.formGroup.valid) {
       this.isLoading = true;
-
-      let request = this.formGroup.value;
-      request.idProduct = Number(request.idProduct);
-      request.unitPrice = Number(request.unitPrice);
-      request.stockQuantity = Number(request.stockQuantity);
-      request.idCategory = Number(request.idCategory);
-      request.userCreated = 'prueba';
-      request.image = this.image;
-
-      //Si envío todos los campos del modelo me arroja bad request
-
-      //Modelo
-      /*       idProduct: number;
-            name: string;
-            description: string;
-            unitPrice: number;
-            stockQuantity: number;
-            unitOfMeasure: string;
-            idCategory: number;
-            image: string;
-            userCreated:string; */
-
-      /*       const request: IProduct = {
-              idProduct: this.isEdit ? Number(this.formGroup.get('idProduct')?.value) : 0,
-              name: String(this.formGroup.get('name')?.value),
-              description: String(this.formGroup.get('description')?.value),
-              unitPrice: Number(this.formGroup.get('unitPrice')?.value),
-              stockQuantity: Number(this.formGroup.get('stockQuantity')?.value),
-              unitOfMeasure: String(this.formGroup.get('unitOfMeasure')?.value),
-              idCategory: Number(this.formGroup.get('idCategory')?.value),
-              image: String(this.formGroup.get('urlImage')?.value),
-              userCreated: 'Prueba',
-            }; */
-
-      this.subscription.add(
-        this.prodService.put(request).subscribe({
-          next: (res) => {
-            this.isLoading = false;
-            Swal.fire({
-              title: "¡Éxito!",
-              text: "Operación ejecutada con éxito.",
-              icon: "success"
-            });
-            setTimeout(() => this.modalService.close(res), 1500);
-          },
-          error: (error) => {
-            this.isLoading = false;
-            Swal.fire({
-              icon: "error",
-              title: "¡Error!",
-              text: "Error al intentar registrar el producto.",
-            });
-          },
-        })
-      );
+      let product = this.formGroup.value;
+      if (this.image) {
+        product.image = this.image
+      }
+      this.prodService.put(product).subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          Swal.fire({
+            title: "¡Éxito!",
+            text: "Operación ejecutada con éxito.",
+            icon: "success"
+          });
+          setTimeout(() => this.modalService.close(res), 1500);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          Swal.fire({
+            icon: "error",
+            title: "¡Error!",
+            text: "Error al intentar registrar el producto.",
+          });
+        },
+      });
+    } else {
+      this.formGroup.markAllAsTouched()
     }
   }
 
@@ -216,29 +178,4 @@ export class AddProductComponent implements OnDestroy, OnInit {
     return this.formGroup.controls['stockQuantity'] as FormControl;
   }
 
-  showSuccessAlert(message: string) {
-    this.showMessage = true;
-    this.messageClass = 'alert-success';
-    this.message = message;
-
-    setTimeout(() => {
-      this.hideAlert();
-    }, 1500);
-  }
-
-  showErrorAlert(message: string) {
-    this.showMessage = true;
-    this.messageClass = 'alert-danger';
-    this.message = message;
-
-    setTimeout(() => {
-      this.hideAlert();
-    }, 1500);
-  }
-
-  hideAlert() {
-    this.showMessage = false;
-    this.messageClass = '';
-    this.message = '';
-  }
 }
