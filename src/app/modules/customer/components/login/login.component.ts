@@ -29,11 +29,11 @@ export class LoginComponent {
           alert("Bienvenido " + respuesta.username);
           if(respuesta.first_login == false)
           {
-            this.router.navigate(['/first-login', false]);
+            this.router.navigate(['customers/first-login', false]);
           }
           else{
             if(respuesta.password_reset == true){
-              this.router.navigate(['/first-login', true]);
+              this.router.navigate(['customers/first-login', true]);
             }
             else{
               alert('logueado exitosamente');

@@ -8,11 +8,11 @@ import { UserResponseDTO } from '../models/userResponseDTO';
 export class UserService {
   document_number!: string;
 
-  private apiUrlGetAllRoles = 'http://localhost:8095/role';
-  private apiUrlnewUser = 'http://localhost:8095/users/new-user';
-  private apiUrlResetEmail = 'http://localhost:8095/users/reset';
-  private apiUrlChangePassword = 'http://localhost:8095/users/change_password';
-  private baseUrl = 'http://localhost:8095/users';
+  private apiUrlGetAllRoles = 'http://localhost:8092/role';
+  private apiUrlnewUser = 'http://localhost:8092/users/new-user';
+  private apiUrlResetEmail = 'http://localhost:8092/users/reset';
+  private apiUrlChangePassword = 'http://localhost:8092/users/';
+  private baseUrl = 'http://localhost:8092/users';
 
   constructor(private http: HttpClient) { } 
 
@@ -66,8 +66,8 @@ export class UserService {
        document_number: this.document_number,
        password: newPassword,
      };
-
-     return this.http.put(this.apiUrlChangePassword, data, { headers });
+     debugger
+     return this.http.put(this.apiUrlChangePassword + data.document_number, data.password, { headers });
    }
   
 }

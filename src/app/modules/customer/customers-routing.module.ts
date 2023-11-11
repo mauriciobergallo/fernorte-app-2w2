@@ -9,6 +9,7 @@ import { TurnsComponentComponent } from "./components/turns-component/turns-comp
 import { LoginComponent } from "./components/login/login.component";
 import { UpdateCustomerComponent } from "./components/update-customer/update-customer.component";
 import { ForgotPasswordComponent } from "./components/forgot-password/forgot-password.component";
+import { FirstLoginComponent } from "./components/first-login/first-login.component";
 
 
   const routes: Routes = [
@@ -23,7 +24,8 @@ import { ForgotPasswordComponent } from "./components/forgot-password/forgot-pas
         {path: 'turns', component: TurnsComponentComponent},
         {path: "login", component: LoginComponent},
         {path: "update-costumer", component: UpdateCustomerComponent},
-        {path: 'forgot-password', component: ForgotPasswordComponent }
+        {path: 'forgot-password', component: ForgotPasswordComponent },
+        {path: 'first-login/:true', component: FirstLoginComponent },
       ]
     }]
 
