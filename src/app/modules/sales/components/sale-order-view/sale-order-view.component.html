@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
 
 
-    <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900">
 
@@ -14,9 +13,9 @@
 </head>
 <body>
 
-<!-- Invoice 2 start -->
+
 <div class="invoice-2 invoice-content">
-    <div class="container">
+    <div class="container" >
         <div class="row">
             <div class="col-lg-12">
                 <div class="invoice-inner clearfix">
@@ -25,19 +24,19 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="invoice-logo">
-                                        <!-- logo started -->
+                                        
                                         <div class="logo">
                                             <img src="" alt="">
                                         </div>
-                                        <!-- logo ended -->
+                                    
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="invoice-id">
                                         <div class="info">
                                             <h1 class="inv-header-1">Orden de Venta</h1>
-                                            <p class="mb-1">Orden de Venta: <span>#45613</span></p>
-                                            <p class="mb-0">Fecha: <span>06/11/2023</span></p>
+                                            <p class="mb-1">Orden de Venta: <span>#{{saleOrder.id_sale_order}}</span></p>
+                                            <p class="mb-0">Fecha: <span>{{saleOrder.date_of_issue}}</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -48,15 +47,19 @@
                                 <div class="col-sm-6">
                                     <div class="invoice-number mb-30">
                                         <h4 class="inv-title-1">Cliente</h4>
-                                        <h2 class="name">Ignacio Prado</h2>
-                                    
+                                        <h2 class="name">{{saleOrder.first_name_client}} {{saleOrder.last_name_client}}</h2>
+                                        <p class="invo-addr-1">
+                                            {{saleOrder.telephone}} <br/>
+                                                {{saleOrder.email}}<br/>
+                                            {{saleOrder.address}} <br/>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="invoice-number mb-30">
                                         <div class="invoice-number-inner">
                                             <h4 class="inv-title-1">Vendedor</h4>
-                                            <h2 class="name">Román Gonzales</h2>
+                                            <h2 class="name">{{saleOrder.first_name_seller}} {{saleOrder.last_name_seller}} </h2>
                                             <p class="invo-addr-1">
                                             
                                             </p>
@@ -77,73 +80,39 @@
                                         <th class="text-end">Total</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr class="tr">
+                                    <tbody >
+                                    <tr class="tr" *ngFor="let item of saleOrder.detail_sales_order">
                                         <td>
                                             <div class="item-desc-1">
-                                                <span>01</span>
+                                                <span>{{item.id_sale_order_details}}</span>
                                             </div>
                                         </td>
-                                        <td class="pl0">Clavo</td>
-                                        <td class="text-center">$300</td>
-                                        <td class="text-center">2</td>
-                                        <td class="text-end">$600.00</td>
+                                        <td class="pl0">{{item.name}}</td>
+                                        <td class="text-center">${{item.price}}</td>
+                                        <td class="text-center">{{item.quantity}}</td>
+                                        <td class="text-end">${{item.price * item.quantity}}</td>
                                     </tr>
-                                    <tr class="bg-grea">
-                                        <td>
-                                            <div class="item-desc-1">
-                                                <span>02</span>
-
-                                            </div>
-                                        </td>
-                                        <td class="pl0">Arandela</td>
-                                        <td class="text-center">$400</td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-end">$60.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="item-desc-1">
-                                                <span>03</span>
-                                            </div>
-                                        </td>
-                                        <td class="pl0">Tornillo</td>
-                                        <td class="text-center">$240</td>
-                                        <td class="text-center">3</td>
-                                        <td class="text-end">$640.00</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="item-desc-1">
-                                                <span>04</span>
-                                            </div>
-                                        </td>
-                                        <td class="pl0">Destornillador</td>
-                                        <td class="text-center">$720</td>
-                                        <td class="text-center">4</td>
-                                        <td class="text-end">$640.00</td>
-                                    </tr>
+                                    
                                     <tr class="tr2">
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td class="text-center">SubTotal</td>
-                                        <td class="text-end">$710.99</td>
+                                        <td class="text-end">${{subtotal}}</td>
                                     </tr>
                                     <tr class="tr2">
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td class="text-center">Impuestos</td>
-                                        <td class="text-end">$85.99</td>
+                                        <td class="text-end">${{iva}}</td>
                                     </tr>
                                     <tr class="tr2">
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td class="text-center f-w-600 active-color">Total</td>
-                                        <td class="f-w-600 text-end active-color">$795.99</td>
+                                        <td class="f-w-600 text-end active-color">${{subtotal+iva}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -153,11 +122,10 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-5 col-sm-5">
                                     <div class="payment-method mb-30">
-                                        <h3 class="inv-title-1">Metodo de Pago</h3>
+                                        <h3 class="inv-title-1">Vencimiento</h3>
                                         <ul class="payment-method-list-1 text-14">
-                                            <li><strong>Account No:</strong> 00 123 647 840</li>
-                                            <li><strong>Account Name:</strong> Jhon Doe</li>
-                                            <li><strong>Branch Name:</strong> xyz</li>
+                                            <li><strong>Fecha: </strong>{{saleOrder.date_of_expiration}}</li>
+                                        
                                         </ul>
                                     </div>
                                 </div>
@@ -168,9 +136,9 @@
                             <div class="row g-0">
                                 <div class="col-sm-12">
                                     <div class="contact-info clearfix">
-                                        <a href="tel:+55-4XX-634-7071" class="d-flex"><i class="fa fa-phone"></i> +54 351456734</a>
-                                        <a href="tel:info@themevessel.com" class="d-flex"><i class="fa fa-envelope"></i> info@fernorte.com.ar</a>
-                                        <a href="tel:info@themevessel.com" class="mr-0 d-flex d-none-580"><i class="fa fa-map-marker"></i> 9 de Julio 34 Córdoba, Argentina</a>
+                                        <a href="" class="d-flex"><i class="bi bi-telephone"></i> +54 351456734</a>
+                                        <a href="" class="d-flex"><i class="bi bi-envelope-at"></i> info@fernorte.com.ar</a>
+                                        <a href="" class="mr-0 d-flex d-none-580"><i class="bi bi-geo-alt"></i> 9 de Julio 34 Córdoba, Argentina</a>
                                     </div>
                                 </div>
                             </div>
@@ -178,10 +146,10 @@
                     </div>
                     <div class="invoice-btn-section clearfix d-print-none">
                         <a href="javascript:window.print()" class="btn btn-lg btn-print">
-                            <i class="fa fa-print"></i> Imprimir
+                            <i class="bi bi-printer"></i> Imprimir
                         </a>
                         <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme">
-                            <i class="fa fa-download"></i> Descargar
+                            <i class="bi bi-download"></i> Descargar
                         </a>
                     </div>
                 </div>
@@ -189,11 +157,6 @@
         </div>
     </div>
 </div>
-
-
-
-<script src="assets/js/jspdf.min.js"></script>
-<script src="assets/js/html2canvas.js"></script>
 
 </body>
 </html>
