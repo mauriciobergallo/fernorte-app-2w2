@@ -7,19 +7,87 @@ import { TypeSalesOrder } from '../../models/TypeSaleOrder';
 import { SaleOrderStates } from '../../models/SalesOrderState';
 import { MontoTotalModel } from '../../models/ModelTotalModel';
 import { DetailsState } from '../../models/DetailsState';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { SaleOrderApi } from '../../models/SaleModelApi';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SaleOrderServiceService {
 
+  saleOrderList = new Observable<SaleOrderApi[]>();
 
-  constructor(private saleOrderProvider: SaleOrderProvider) { }
+  saleOrderStates = new Observable<string[]>();
 
-  getSaleOrders(): SaleOrderModel[] {
-    return this.saleOrderProvider.getSaleOrders();
+  filters : Map<string, string> = new Map<string, string>();
+  get idOrder() {
+    return this.filters.get("idOrder")
   }
+
+  get doc() {
+    return this.filters.get("doc")
+  }
+  get fromDate() {
+    return this.filters.get("fromDate")
+  }
+  get toDate() {
+    return this.filters.get("toDate")
+  }
+  get stateOrder() {
+    return this.filters.get("stateOrder")
+  }
+
+  constructor(private saleOrderProvider: SaleOrderProvider,
+    private http : HttpClient) { }
+
+  // getSaleOrders(): SaleOrderModel[] {
+  //   return this.saleOrderProvider.getSaleOrders();
+  // }
+
+  getSaleOrders() : Observable<SaleOrderApi[]> {
+    this.saleOrderList = this.http.get<SaleOrderApi[]>("http://localhost:8080/sales-orders?from_date=2023-10-23&to_date=2023-10-31");
+    return this.saleOrderList;
+  }
+
+  getSaleOrderStates() : Observable<string[]> {
+    this.saleOrderStates = this.http.get<string[]>("http://localhost:8080/sales-orders/states");
+    return this.saleOrderStates;
+  }
+
+  // getSaleOrdersByIdOrder(filterSent:any) : Observable<SaleOrderApi[]> {
+  //   this.idOrder=filterSent;
+  //   this.saleOrderList = this.http.get<SaleOrderModel[]>(`http://localhost:8080/sales-orders?id_order=${this.idOrder}`)
+  //   return this.saleOrderList;
+  // }
+
+  // getSaleOrdersByDoc(filterSent:any) : Observable<SaleOrderModel[]> {
+  //   this.doc=filterSent;
+  //   this.saleOrderList = this.http.get<SaleOrderModel[]>(`http://localhost:8080/sales-orders?doc_client=${this.doc}`)
+  //   return this.saleOrderList;
+  // }
+
+  // getSaleOrdersByDate(filterSent:any) : Observable<SaleOrderModel[]> {
+  //   if(filterSent.includes('-')){
+  //     const index = filterSent.indexOf('/')
+  //     this.fromDate = filterSent.slice(0,index)
+  //     this.toDate = filterSent.slice(index+1, filterSent.length)
+  //   }
+  //   this.saleOrderList = this.http.get<SaleOrderModel[]>(`http://localhost:8080/sales-orders?from_date=${this.fromDate}&to_date=${this.toDate}`)
+  //   console.log(this.saleOrderList);
+  //   return this.saleOrderList;
+  // }
+
+    // getSaleOrdersByDate(filterSent:any) : Observable<SaleOrderModel[]> {
+  //   if(filterSent.includes('-')){
+  //     const index = filterSent.indexOf('/')
+  //     this.fromDate = filterSent.slice(0,index)
+  //     this.toDate = filterSent.slice(index+1, filterSent.length)
+  //   }
+  //   this.saleOrderList = this.http.get<SaleOrderModel[]>(`http://localhost:8080/sales-orders?from_date=${this.fromDate}&to_date=${this.toDate}`)
+  //   console.log(this.saleOrderList);
+  //   return this.saleOrderList;
+  // }
 
   // getSaleOrdersByFilter(filter: string): SaleOrderModel[] {
   //   const saleOrdersList: SaleOrderModel[] = [];
@@ -76,6 +144,14 @@ export class SaleOrderServiceService {
 
     return saleOrdersList;
   }
+
+  // onReceiveFilters(filters : Map<string, string>) {
+  //   this.doc = filters.get("doc")!
+  //   this.idOrder = filters.get("idOrder")!
+  //   this.fromDate = filters.get("fromDate")!
+  //   this.toDate = filters.get("toDate")!
+  //   this.stateOrder = filters.get("state")!
+  // }
 
   ValidarPresupuestoOOrdenVenta(saleOrder: SaleOrderModel, carrito: ProductModel[]): boolean {
     return saleOrder.detailSalesOrder!.some(x => x.quantity > carrito.find(y => y.idProduct == x.id_product)!.stockQuantity)
