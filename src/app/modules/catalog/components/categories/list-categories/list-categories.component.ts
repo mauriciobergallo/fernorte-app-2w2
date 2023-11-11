@@ -18,7 +18,7 @@ export class ListCategoriesComponent implements OnInit {
   isLoading = true;
   listCategories: ICategory[] = [];
   currentPage = 1;
-  itemsPerPage = 5;
+  itemsPerPage = 15;
   sortBy = 'name';
   sortDir = 'asc';
   totalItems: number = 0;
