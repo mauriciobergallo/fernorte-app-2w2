@@ -8,23 +8,35 @@
                     <tr>
                         <th>Método de Pago</th>
                         <th>Recargo</th>
-                        <th>Editar</th>
+                        <th class="d-flex align-items-center justify-content-center">Editar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let method of paymentMethods">
                         <td>{{ method.payment_method }}</td>
-                        <td>{{ method.surcharge }} </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                data-bs-target="#editModal" data-bs-whatever="@mdo" (click)="loadEditarForm(method)"><i
-                                    class="bi bi-pencil"></i></button>
+                        <td>{{ method.surcharge }}% </td>
+                        <td class="d-flex align-items-center justify-content-center">
+                            <button 
+                            type="button" 
+                            class="btn btn-sm btn-primary "
+
+                            data-bs-toggle="modal"
+                            data-bs-target="#editModal" 
+                            data-bs-whatever="@mdo" 
+                            (click)="loadEditarForm(method)">
+                            <i class="bi bi-pencil"></i></button>
                         </td>
                     </tr>
-                    <tr> <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#NewMethodModal" data-bs-whatever="@mdo">Nuevo metodo de pago</button>
+                    <tr class="text-center"> 
+                        <td colspan="3">
+                            <button 
+                                type="button" 
+                                class="btn btn-primary" 
+                                data-bs-toggle="modal"
+                                data-bs-target="#NewMethodModal" 
+                                data-bs-whatever="@mdo">Agregar</button>
+                        </td>
                     </tr>
-
                 </tbody>
             </table>
         </div>
@@ -35,7 +47,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="editModalLabel">Editar forma de pago</h4>
+                <h4 class="modal-title" id="editModalLabel">Editar método de Pago</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -75,7 +87,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="NewMethodModalLabel">Registrar forma de pago</h4>
+                <h4 class="modal-title" id="NewMethodModalLabel">Registrar método de pago</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
