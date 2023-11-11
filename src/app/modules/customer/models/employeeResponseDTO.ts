@@ -1,5 +1,5 @@
 export interface EmployeeResponseDTO{
-    idEmployee: string;
+    idEmployee: number;
     firstName: string;
     lastName: string;
     birthDate: Date;

@@ -1,5 +1,5 @@
+import { Employee } from './../models/employee';
 import { Injectable } from '@angular/core';
-import { Employee } from '../models/employee';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EmployeeResponseDTO } from '../models/employeeResponseDTO';
@@ -11,13 +11,22 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-
+//get
+getEmployeeById(idEmployee: any): Observable<any>{
+  return this.http.get<Employee>(this.apiUrl + "/" + idEmployee);
+} 
 
 //Post
 createEmployee(employee: Employee){
   console.log("EMPLEADO", employee)
   alert(JSON.stringify(employee))
                                  
+}
+
+putEmployee(employeePut: any, idEmployee: number): Observable<any>{
+     
+  return this.http.put<Employee>(this.apiUrl + "/" + idEmployee, employeePut );
+
 }
 
 postEmployee(employeePost: Employee): Observable<EmployeeResponseDTO>{

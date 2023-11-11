@@ -8,6 +8,7 @@ import { RoleListComponent } from "./components/role-list/role-list.component";
 import { TurnsComponentComponent } from "./components/turns-component/turns-component.component";
 import { LoginComponent } from "./components/login/login.component";
 import { UpdateCustomerComponent } from "./components/update-customer/update-customer.component";
+import { UpdateEmployeeComponent } from "./components/update-employee/update-employee.component";
 import { ForgotPasswordComponent } from "./components/forgot-password/forgot-password.component";
 
 
@@ -16,14 +17,15 @@ import { ForgotPasswordComponent } from "./components/forgot-password/forgot-pas
       path: 'customers',
       component: HomeComponent, // Este es el componente que actúa como contenedor para las rutas anidadas
       children: [
-        { path: 's', component: HomeComponent },
-        { path: 'employees', component: EmployeeListComponent },
+        {path: 's', component: HomeComponent },
+        {path: 'employees', component: EmployeeListComponent },
         {path: 'create-rol', component: CreateRolComponent},
         {path: 'role', component: RoleListComponent},
         {path: 'turns', component: TurnsComponentComponent},
         {path: "login", component: LoginComponent},
         {path: "update-costumer", component: UpdateCustomerComponent},
-        {path: 'forgot-password', component: ForgotPasswordComponent }
+        {path: "update-employee", component: UpdateEmployeeComponent},
+        {path: 'forgot-password', component: ForgotPasswordComponent },
       ]
     }]
 

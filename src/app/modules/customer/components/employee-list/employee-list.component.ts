@@ -1,19 +1,27 @@
-import { Component } from '@angular/core';
-import { Employee } from '../../models/employee';
+import { Component, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+
 import { EmployeeService } from '../../services/employee.service';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 import { EmployeeResponseDTO } from '../../models/employeeResponseDTO';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UpdateEmployeeComponent } from '../update-employee/update-employee.component';
+
 
 @Component({
   selector: 'fn-employee-list',
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.css']
 })
-export class EmployeeListComponent {
+export class EmployeeListComponent implements OnInit {
+
+  @ViewChild('employeeForm') updateEmployeeModal: TemplateRef<any> | undefined;
   employeeList: EmployeeResponseDTO[] = [];
+  selectedEmployeeId: number | null = null;
+  
 
   constructor(private employeeService: EmployeeService, private conversion: CaseConversionPipe, private modalService: NgbModal){}
+  
+  
 
   ngOnInit(): void{
     this.onLoad()
@@ -30,10 +38,18 @@ export class EmployeeListComponent {
       }
     );
   }
-
-  onOptionClick(selectedOption: string) {
-    // Acción a realizar cuando se selecciona una opción
-    console.log('Opción seleccionada:', selectedOption);
+  
+  openUpdateEmployeeModal(idEmployee: number) {
+    this.selectedEmployeeId = idEmployee;
+    const modalRef = this.modalService.open(UpdateEmployeeComponent, { ariaLabelledBy: 'modal-basic-title' });
+    modalRef.componentInstance.employeeId = idEmployee; // Pasar el ID del empleado al componente de actualización
+    
+    modalRef.componentInstance.updateClicked.subscribe(() => {
+      // Abrir el modal del formulario de actualización
+      this.modalService.open(this.updateEmployeeModal);
+      console.log('se abrio el modal del empleado');
+      
+    });
   }
 
   onDelete(employee: EmployeeResponseDTO){
