@@ -40,7 +40,8 @@ email: "",
 customerType: ""
 };
 
-	isCompany: boolean = false; 
+  isCompany: boolean = false; 
+  isTypeChecked: boolean = false;
 
 	closeResult = '';
 
@@ -108,6 +109,7 @@ customerType: ""
 		this.customer.companyName = "";
 	}
     this.isCompany = value;
+	this.isTypeChecked = true;
   }
 
   onBirthDateChange(event: NgbDateStruct) {
@@ -144,6 +146,7 @@ customerType: ""
   }
 
 
+ 
 	onSubmitForm(customerForm: NgForm){
 		console.log("customerEE", customerForm);
 	}

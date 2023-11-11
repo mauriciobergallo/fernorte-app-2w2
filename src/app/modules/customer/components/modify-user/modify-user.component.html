@@ -1,0 +1,33 @@
+<div>
+    <h2>Modificar Usuario</h2>
+    <label for="username">Nombre de Usuario:</label>
+    <input type="text" id="username" [(ngModel)]="username">
+    <button (click)="buscarUsuario()">Buscar</button>
+</div>
+
+<div *ngIf="usuario">
+    <h3>Roles de {{ usuario.user_name }}</h3>
+    <ul>
+        <li *ngFor="let role of usuario.roles">
+            {{ role.name }}
+            <button (click)="quitarRol(role)">Quitar</button>
+        </li>
+    </ul>
+
+    <h3>Roles Disponibles</h3>
+    <ul>
+        <li *ngFor="let role of rolesDisponibles">
+            {{ role.name }}
+            <button (click)="agregarRol(role)">Agregar</button>
+        </li>
+    </ul>
+    
+    <div>
+        <label for="selectRole">Seleccionar Rol:</label>
+        <select id="selectRole" [(ngModel)]="selectedRole">
+            <option value="" disabled>-- Selecciona un rol --</option>
+            <option *ngFor="let role of rolesDisponibles" [value]="role">{{ role.name }}</option>
+        </select>
+        <button (click)="agregarRol(selectedRole)">Agregar Rol Seleccionado</button>
+    </div>
+</div>

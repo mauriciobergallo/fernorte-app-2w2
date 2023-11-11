@@ -9,13 +9,8 @@ import { TurnsComponentComponent } from "./components/turns-component/turns-comp
 import { LoginComponent } from "./components/login/login.component";
 import { UpdateCustomerComponent } from "./components/update-customer/update-customer.component";
 import { UpdateEmployeeComponent } from "./components/update-employee/update-employee.component";
+import { ForgotPasswordComponent } from "./components/forgot-password/forgot-password.component";
 
-// const routes: Routes = [
-//     {path:"s", component: HomeComponent},
-//     {path:"employees", component: EmployeeListComponent},
-//     {path:"customers", component: CreateCustomerComponent},
-
-//   ]
 
   const routes: Routes = [
     {
@@ -29,10 +24,11 @@ import { UpdateEmployeeComponent } from "./components/update-employee/update-emp
         {path: 'turns', component: TurnsComponentComponent},
         {path: "login", component: LoginComponent},
         {path: "update-costumer", component: UpdateCustomerComponent},
-        {path: "update-employee", component: UpdateEmployeeComponent}
+        {path: "update-employee", component: UpdateEmployeeComponent},
+        {path: 'forgot-password', component: ForgotPasswordComponent },
       ]
     }]
-  
+
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],

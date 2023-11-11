@@ -1,0 +1,19 @@
+.verde {
+  color: green;
+}
+.rojo {
+  color: red;
+}
+.green-on-hover:hover {
+  background-color: green;
+  color: white;
+}
+.red-on-hover:hover {
+  background-color: red;
+  color: white;
+}
+/* Estilo para centrar los botones horizontalmente en el medio del formulario */
+.center-form-buttons {
+  display: flex;
+  justify-content: center;
+}
