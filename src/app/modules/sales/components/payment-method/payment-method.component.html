@@ -13,18 +13,18 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let method of paymentMethods">
-                        <td>{{ method.paymentMethod }}</td>
-                        <td>{{ method.surcharge }}</td>
+                        <td>{{ method.payment_method }}</td>
+                        <td>{{ method.surcharge }} </td> 
                         <td>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal" data-bs-whatever="@mdo"
-                                (click)="loadEditarForm(method)"><i class="bi bi-pencil"></i></button>
+                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal" data-bs-whatever="@mdo"
+                                    (click)="loadEditarForm(method)"><i class="bi bi-pencil"></i></button>
                         </td>
                     </tr>
                     <tr> <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal" data-bs-whatever="@mdo">Agregar Metodo de pago</button>
+                            data-bs-target="#exampleModal" data-bs-whatever="@mdo">Nuevo metodo de pago</button>
                     </tr>
-                    <tr></tr>
+
                 </tbody>
             </table>
         </div>
@@ -45,7 +45,7 @@
                             <div class="mb-2">
                                 <label for="paymentMethod" class="form-label">Método de Pago</label>
                                 <input formControlName="paymentMethod" type="text" class="form-control"
-                                    id="paymentMethod" [(ngModel)]="editPayment.paymentMethod" required>
+                                    id="paymentMethod" [(ngModel)]="editPayment.payment_method" required>
                                 <div
                                     *ngIf="editForm.get('paymentMethod')!.touched && editForm.get('paymentMethod')!.hasError('required')">
                                     El método de pago es obligatorio.</div>

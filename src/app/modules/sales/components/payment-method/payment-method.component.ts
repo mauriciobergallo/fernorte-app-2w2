@@ -9,8 +9,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./payment-method.component.css']
 })
 export class PaymentMethodComponent implements OnInit {
-  payment: IPaymentMethod = { idPaymentMethod: 0, paymentMethod: '', surcharge: 0 };
-  editPayment: IPaymentMethod = { idPaymentMethod: 0, paymentMethod: '', surcharge: 0 };
+  payment: IPaymentMethod = { id_payment_method: 0, payment_method: '', surcharge: 0 };
+  editPayment: IPaymentMethod = { id_payment_method: 0, payment_method: '', surcharge: 0 };
   paymentMethods: IPaymentMethod[] = [];
   methodForm: FormGroup;
   editForm: FormGroup;
@@ -33,7 +33,7 @@ export class PaymentMethodComponent implements OnInit {
 
   saveNewPaymentMethod() {
     if (this.methodForm && this.methodForm.valid) {
-      this.payment.paymentMethod = this.editForm.get('paymentMethod')?.value || '';
+      this.payment.payment_method = this.editForm.get('paymentMethod')?.value || '';
       this.payment.surcharge = this.editForm.get('surcharge')?.value || 0;
 
       this.paymentMethodService.createPaymentMethod(this.payment).subscribe(
@@ -52,6 +52,8 @@ export class PaymentMethodComponent implements OnInit {
     this.paymentMethodService.getPaymentMethods().subscribe(
       (methods) => {
         this.paymentMethods = methods;
+        console.log("payment Methods: ", methods)
+      
       },
       (error) => {
         console.error('Error al cargar la lista de métodos de pago:', error);
@@ -65,7 +67,7 @@ export class PaymentMethodComponent implements OnInit {
         (response) => {
           console.log('Método de pago actualizado:', response);
           this.loadPaymentMethods();
-          this.editPayment = { idPaymentMethod: 0, paymentMethod: '', surcharge: 0 };
+          this.editPayment = { id_payment_method: 0, payment_method: '', surcharge: 0 };
         },
         (error) => {
           console.error('Error al actualizar el método de pago:', error);
@@ -75,8 +77,8 @@ export class PaymentMethodComponent implements OnInit {
 
   loadEditarForm(method: IPaymentMethod) {
 
-    this.editPayment.idPaymentMethod = method.idPaymentMethod;
-    this.editPayment.paymentMethod = method.paymentMethod;
+    this.editPayment.id_payment_method = method.id_payment_method;
+    this.editPayment.payment_method = method.payment_method;
     this.editPayment.surcharge = method.surcharge;
     console.log("este", this.editForm.value)
   }
