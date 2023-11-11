@@ -25,6 +25,8 @@ import { BillingNavComponent } from './components/billing-nav/billing-nav.compon
 import { ReportNavComponent } from './components/report-nav/report-nav.component';
 import { TurnProvider } from './services/turns/TurnProvider';
 import { TranslateStatesPipe } from './pipes/translateStates.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TaxComponent } from './components/tax/tax.component';
 
 @NgModule({
   declarations: [HomeComponent,
@@ -41,7 +43,9 @@ import { TranslateStatesPipe } from './pipes/translateStates.pipe';
     SaleOrderNavComponent,
     BillingNavComponent,
     ReportNavComponent,
-    TranslateStatesPipe],
+    TranslateStatesPipe,
+    TaxComponent,
+    ReportNavComponent],
 
   providers: [SaleOrderProvider,
     ProductProvider,
@@ -51,7 +55,8 @@ import { TranslateStatesPipe } from './pipes/translateStates.pipe';
   imports: [CommonModule,
     FormsModule, 
     RouterModule, 
-    RouterChildModule],
+    RouterChildModule,
+    ReactiveFormsModule],
 
   exports: [HomeComponent,
     SaleOrderComponent, 
@@ -64,6 +69,7 @@ import { TranslateStatesPipe } from './pipes/translateStates.pipe';
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
+    TaxComponent,
     ReportNavComponent],
 })
 export class SalesModule {}

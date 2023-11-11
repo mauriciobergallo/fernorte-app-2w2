@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentMethodNavComponent implements OnInit {
 
-  activeTab:string="buscar"
+  activeTab:string="Metodos"
   regist:boolean=false
   search:boolean=false
   update:boolean=false
@@ -19,21 +19,9 @@ export class PaymentMethodNavComponent implements OnInit {
   ngOnInit() {
   }
 
-  toRegist(tab:string){
+  toMethods(tab:string){
     this.activeTab=tab;
     this.regist=true;
-  }
-  toSearch(tab:string){
-    this.activeTab=tab;
-    this.search=true;
-  }
-  toUpdate(tab:string){
-    this.activeTab=tab;
-    this.update=true;
-  }
-  toDelete(tab:string){
-    this.activeTab=tab;
-    this.delete=true;
   }
 
 }
