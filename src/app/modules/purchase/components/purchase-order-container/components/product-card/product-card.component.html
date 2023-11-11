@@ -1,32 +1,32 @@
 <section class="content">
   <div class="row row-cols-4 g-2">
     <div class="col" *ngFor="let item of product_List; let i = index">
-      <div class="d-flex justify-content-center">
-        <div class="card" style="width: 18rem">
+      <div class="d-flex flex-wrap">
+        <div class="card" style="width: 18rem; height: 66vh;">
           <img
             src="https://th.bing.com/th?q=TALADRO+Grande&w=138&h=138&c=7&o=5&pid=1.7&mkt=es-AR&cc=AR&setlang=es&adlt=moderate"
-            class="card-img-top"
-            alt="..."
+            class="card-img-top prod-img"
+            alt="{{item.name}}"
           />
           <hr style="margin: 0%" />
           <div class="card-body">
-            <h5 class="card-title" style="height: 80px">{{ item.name }}</h5>
-            <p class="card-text" style="height: 30px">
-              {{ item.price | currency }}
-            </p>
-            <div class="btn-toolbar justify-content-between">
+            <div class="container-fluid">
+              <h5 class="card-title text-center prod-name" >{{ item.name }}</h5>
+              <p class="card-text text-center prod-price"><strong>{{ item.price | currency }}</strong></p>
+            </div>
+            <div class="btn-toolbar prod-add">
               <div class="btn-group" role="group" aria-label="Basic example">
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  class="btn btn-info btn-sm"
                   (click)="Rest(item)"
                 >
-                  -
+                  <strong>-</strong>
                 </button>
                 <input
                   #controlInput="ngModel"
                   type="text"
-                  style="width: 52px; text-align: center"
+                  class="prod-q"
                   [(ngModel)]="productQuantities[item.id]"
                   required
                   minlength="1"
@@ -36,10 +36,10 @@
                 />
                 <button
                   type="button"
-                  class="btn btn-primary"
+                  class="btn btn-info btn-sm"
                   (click)="Summ(item)"
                 >
-                  +
+                  <strong>+</strong>
                 </button>
               </div>
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">

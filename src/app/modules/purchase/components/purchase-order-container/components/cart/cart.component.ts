@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PurchaseOrderServiceService } from '../../services/purchase-order-service.service';
 import { ISupplierProduct } from 'src/app/modules/purchase/models/ISuppliers';
 
@@ -7,11 +7,33 @@ import { ISupplierProduct } from 'src/app/modules/purchase/models/ISuppliers';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent {
-  cardProducts: ISupplierProduct[] = [];
+export class CartComponent implements OnInit{
+  cardProducts: ISupplierProduct[] = [{
+    idSupplier: 1,
+    idProduct: 2,
+    name: 'Taladro',
+    price: 254,
+    quantity: 15,
+  },
+  {
+    idSupplier: 1,
+    idProduct: 2,
+    name: 'Taladro',
+    price: 254,
+    quantity: 15,
+  },
+  {
+    idSupplier: 1,
+    idProduct: 2,
+    name: 'Taladro',
+    price: 254,
+    quantity: 15,
+  }];
 
-  constructor(private purchaseOrderService: PurchaseOrderServiceService) {
-    this.cardProducts = this.purchaseOrderService.getCardProductList();
+  constructor(private purchaseOrderService: PurchaseOrderServiceService) {}
+
+  ngOnInit (): void {
+    // this.cardProducts = this.purchaseOrderService.getCardProductList();
   }
 
   removeItem(product: ISupplierProduct): void {
