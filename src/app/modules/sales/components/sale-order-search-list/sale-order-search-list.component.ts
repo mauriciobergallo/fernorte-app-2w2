@@ -67,8 +67,10 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   //   }
   // }
 
-  onSendFilters(form : NgForm) {
-    if(form.valid) {
+  //ARREGLAR
+
+   onSendFilters(form : NgForm) {
+ /*   if(form.valid) {
       this.filters.set("idOrder", form.value.idOrder)
       this.filters.set("doc", form.value.doc)
       this.filters.set("fromDate", form.value.fromDate)
@@ -77,7 +79,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     }
     this.saleOrdersListOk = [];
     this.subscriptions.add(
-      this.saleOrderServiceService.getSaleOrdesByFilter(this.filters).subscribe(
+      this.saleOrderServiceService.getSaleOrdersByFilter(this.filters).subscribe(
         ( response : SaleOrderApi[]) => {
           this.saleOrdersList = response;
           for(let item of this.saleOrdersList) {
@@ -87,6 +89,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
         }
       )
     )
+    */
   }
 
   mapSaleOrder(saleOrder: SaleOrderApi): SaleOrderOk {
@@ -105,7 +108,8 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
       details: productList
     };
     return saleOrderOk;
-  }
+    
+  } 
 
   mapProduct(product : ProductApi) : ProductOk {
     const { id_product, id_sale_order_details, price, quantity, state_sale_order_detail } = product;
