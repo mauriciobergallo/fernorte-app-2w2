@@ -1,11 +1,3 @@
-  .content{
-      margin-left: 280px;
-    }
-
-    /* Estilos para centrar el componente fn-payment-method */
-  .centered-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 55vh;
-  }
+.content{
+  margin-left: 280px;
+}
