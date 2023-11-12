@@ -25,7 +25,7 @@ import { FirstLoginComponent } from "./components/first-login/first-login.compon
         {path: "login", component: LoginComponent},
         {path: "update-costumer", component: UpdateCustomerComponent},
         {path: 'forgot-password', component: ForgotPasswordComponent },
-        {path: 'first-login/:true', component: FirstLoginComponent },
+        {path: ':document-number/first-login/:true', component: FirstLoginComponent },
       ]
     }]
 

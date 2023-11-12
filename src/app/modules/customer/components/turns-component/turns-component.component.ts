@@ -77,7 +77,7 @@ export class TurnsComponentComponent {
   //   }
 
   sendNoCustomer() {
-    this.turnService.postData(this.document_number).subscribe(
+    this.turnService.postData().subscribe(
       (response) => {
         if (response) {
           this.showCustomerInfo(response);
@@ -94,6 +94,13 @@ export class TurnsComponentComponent {
           });
         }
       },
+      (error) => {
+        Swal.fire({
+          title: '¡Error!',
+          text: 'Servicio no disponible',
+          icon: 'error',
+        })
+      }
     );
   }
 
@@ -101,6 +108,7 @@ export class TurnsComponentComponent {
     if (this.document_number) {
       this.turnService.postData(this.document_number).subscribe(
         (response) => {
+          console.log(response)
           if (response) {
             this.showCustomerInfo(response);
 
@@ -112,7 +120,6 @@ export class TurnsComponentComponent {
             } else {
               welcomeMessage = `Bienvenido ${response.first_name} ${response.last_name}, tu número de turno es el N°${response.number}, y fue creado el ${response.created_at}`;
             }
-
             
             Swal.fire({
               title: 'Bienvenido',
@@ -127,14 +134,27 @@ export class TurnsComponentComponent {
           }
         },
         (error) => {
-          
-          Swal.fire({
-            title: 'Error',
-            text: 'El número de documento es incorrecto',
-            icon: 'error',
-          }).then(() => {
-            this.clearFields();
-          });
+          if (error.status === 404) {
+            // Ruta no encontrada (404) --> No se encuentra el cliente
+            Swal.fire({
+              title: '¡Error!',
+              text: 'El número de documento es incorrecto',
+              icon: 'error',
+            }).then(() => {
+              this.clearFields();
+            });
+          } else if (error.status === 500) {
+            // Error interno del servidor (500) --> Se rompio Customers (le mandamos un numero preferencia)
+            this.sendNoCustomer();
+          } else {
+            // Se rompio Turns
+            Swal.fire({
+              title: '¡Error!',
+              text: 'Servicio no disponible',
+              icon: 'error',
+            });
+          }
+
         }
       );
     } else {

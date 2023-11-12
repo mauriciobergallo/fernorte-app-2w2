@@ -56,17 +56,16 @@ export class UserService {
      return this.http.post(this.apiUrlResetEmail, data, { headers });
    }
 
-   changePassword(newPassword: string): Observable<any> {
+   changePassword(newPassword: string, document_number: string): Observable<any> {
      const headers = new HttpHeaders({
        'Content-Type': 'application/json',
        'accept': '*/*'
      });
 
      const data = {
-       document_number: this.document_number,
+       document_number: document_number,
        password: newPassword,
      };
-     debugger
      return this.http.put(this.apiUrlChangePassword + data.document_number, data.password, { headers });
    }
   
