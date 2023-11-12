@@ -30,7 +30,6 @@ putEmployee(employeePut: any, idEmployee: number): Observable<any>{
 }
 
 postEmployee(employeePost: Employee): Observable<EmployeeResponseDTO>{
-
   return this.http.post<EmployeeResponseDTO>(`${this.apiUrl}`, employeePost) 
 
 }

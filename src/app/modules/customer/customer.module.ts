@@ -11,8 +11,6 @@ import { EmployeeRegistrationComponent } from './components/employee-registratio
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TurnsComponentComponent } from './components/turns-component/turns-component.component';
-import { BtnNoCustomerComponent } from './components/btn-no-customer/btn-no-customer.component';
-import { BtnCustomerComponent } from './components/btn-customer/btn-customer.component';
 import { FirstLoginComponent } from './components/first-login/first-login.component';
 import { LoginComponent } from './components/login/login.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
@@ -44,7 +42,7 @@ import { CustomersRoutingModule } from './customers-routing.module';
 // ];
 
 @NgModule({
-  declarations: [HomeComponent, TurnsComponentComponent, BtnNoCustomerComponent, BtnCustomerComponent, EmployeeRegistrationComponent,CategoryComponent, UserRootComponent, UserFormComponent,
+  declarations: [HomeComponent, TurnsComponentComponent, EmployeeRegistrationComponent,CategoryComponent, UserRootComponent, UserFormComponent,
     LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent, EmployeeListComponent, CustomersSidebarComponent,FirstLoginComponent,
     ModifyUserComponent,UpdateEmployeeComponent, ForgotPasswordComponent,ModifyUserRolComponent
   ],

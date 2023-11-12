@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { TurnService } from '../../services/turn.service';
+import { TurnResponse } from '../../models/turn-response';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'fn-turns-component',
@@ -8,81 +12,175 @@ import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
   styleUrls: ['./turns-component.component.css']
 })
 export class TurnsComponentComponent {
-  ToCustomer: boolean = false;
-  ToNoCustomer: boolean = false;
-  Main: boolean = true;
-  inputText:string='';
-  documentNumber:string='';
 
   show: boolean = false;
+  showCustomer: boolean = false;
+  showNoCustomer: boolean = false;
+  document_number: string = '';
+  inputText:string='';
+  modalRef: NgbModalRef | undefined;
+  turnNumber: number = 0;
 
-  constructor(public turnService: TurnService, private conversion: CaseConversionPipe){}
+  openModal(message: string) {
+    this.modalRef = this.modalService.open(message, {
+      windowClass: 'modal-lg' 
+    });
+  }
+
+  cancelCustomer() {
+    this.showNoCustomer = false;  
+    this.showCustomer = false; 
+}
 
   redirectToCustomer() {
-    this.ToCustomer = true;
-    this.Main = false;
+    this.showCustomer = true;
+    this.showNoCustomer = false;
   }
 
   redirectToNoCustomer() {
-    this.ToNoCustomer = true;
-    this.Main = false;
-  }
+    this.showNoCustomer = true;
+    this.showCustomer = false;
+  }  
 
-  eventBack(){
-    this.Main = true;
-    this.ToCustomer = false;
-    this.ToNoCustomer = false;
-  }
-
+  constructor(private turnService: TurnService,
+    private modalService:NgbModal, private conversion: CaseConversionPipe){}
+    
   addToInput(value:string){
     this.inputText += value;
-    this.documentNumber=this.inputText;
+    this.document_number=this.inputText;
   }
 
-  deleteLastCharInput(){
-    this.inputText = this.inputText.slice(0, -1);
+  deleteLastCharInput() {
+    if (this.inputText.length > 0) {
+      this.inputText = this.inputText.slice(0, -1);
+      this.document_number = this.inputText;
+    }
+  }
+  
+  // sendNoCustomer(){
+    
+  //     this.turnService.postData(this.document_number).subscribe(
+  //       (response)=>{
+  //         if(response){
+            
+  //           this.showCustomerInfo(response);
+  //           const welcomeMessage=`Bienvenido, tu turno es el N°${response.number}, aguarde unos minutos`
+  //           this.turnNumber = response.number;
+  //           this.openModal(welcomeMessage);
+  //           console.log(welcomeMessage, response.number);
+            
+          
+  //         }
+  //       },
+
+  //     )
+  //   }
+
+  sendNoCustomer() {
+    this.turnService.postData().subscribe(
+      (response) => {
+        if (response) {
+          this.showCustomerInfo(response);
+          const welcomeMessage = `Bienvenido, tu turno es el N°${response.number}, aguarde unos minutos`;
+          this.turnNumber = response.number;
+
+          
+          Swal.fire({
+            title: 'Bienvenido',
+            text: welcomeMessage,
+            icon: 'success',
+          }).then(() => {
+            this.clearFields();
+          });
+        }
+      },
+      (error) => {
+        Swal.fire({
+          title: '¡Error!',
+          text: 'Servicio no disponible',
+          icon: 'error',
+        })
+      }
+    );
   }
 
   sendDocumentNumber() {
-    if (this.documentNumber) {
-      this.turnService.postData(this.documentNumber).subscribe(
+    if (this.document_number) {
+      this.turnService.postData(this.document_number).subscribe(
         (response) => {
+          console.log(response)
           if (response) {
             this.showCustomerInfo(response);
-            response = this.conversion.toCamelCase(response);
-            //TODO: ver formato hora (me devuelve la hora de Europa)
-            const welcomeMessage = `Bienvenido ${response.firstName}, tu número de turno es ${response.number}, y fue creado el ${response.createdAt}`;
-            alert(welcomeMessage);
-            this.clearFields();
-          } 
+
+            let welcomeMessage = '';
+            if (response.first_name == null && response.last_name == null) {
+              if (response.company_name) {
+                welcomeMessage = `Bienvenido ${response.company_name}, tu número de turno es el N°${response.number}, y fue creado el ${response.created_at}`;
+              }
+            } else {
+              welcomeMessage = `Bienvenido ${response.first_name} ${response.last_name}, tu número de turno es el N°${response.number}, y fue creado el ${response.created_at}`;
+            }
+            
+            Swal.fire({
+              title: 'Bienvenido',
+              text: welcomeMessage,
+              icon: 'success',
+            }).then(() => {
+              this.turnNumber = response.number;
+              this.clearFields();
+            });
+          } else {
+            this.sendNoCustomer();
+          }
         },
-        (error) => {          
-          alert("El numero de documento es incorrecto");
-          this.clearFields();
+        (error) => {
+          if (error.status === 404) {
+            // Ruta no encontrada (404) --> No se encuentra el cliente
+            Swal.fire({
+              title: '¡Error!',
+              text: 'El número de documento es incorrecto',
+              icon: 'error',
+            }).then(() => {
+              this.clearFields();
+            });
+          } else if (error.status === 500) {
+            // Error interno del servidor (500) --> Se rompio Customers (le mandamos un numero preferencia)
+            this.sendNoCustomer();
+          } else {
+            // Se rompio Turns
+            Swal.fire({
+              title: '¡Error!',
+              text: 'Servicio no disponible',
+              icon: 'error',
+            });
+          }
+
         }
       );
     } else {
-      alert('El número de documento está vacío, por favor ingrese un número válido.');
+      
+      Swal.fire({
+        title: 'Error',
+        text: 'El número de documento está vacío, por favor ingrese un número válido.',
+        icon: 'error',
+      });
     }
   }
-  
-  
   clearFields() {
-    this.inputText = ''; 
-    this.documentNumber = ''; 
-    this.ToCustomer = false; 
-    this.ToNoCustomer = false; 
-    this.Main = true; 
+    this.document_number = '';
+    this.showCustomer = false;
+    this.showNoCustomer = false;
+    this.inputText='';
   }
   
   showCustomerInfo(customerData: any) {
-    // Muestra la información del cliente en la interfaz de usuario
     console.log("Número: " + customerData.number);
-    console.log("Nombre: " + customerData.firstName);
-    console.log("Apellido: " + customerData.lastName);
-    console.log("Fecha de creación: " + customerData.createdAt);
-    if (customerData.companyName) {
-      console.log("Nombre de la empresa: " + customerData.companyName);
+    console.log("Nombre: " + customerData.first_name); 
+    console.log("Apellido: " + customerData.last_name); 
+    console.log("Fecha de creación: " + customerData.created_at);
+    if (customerData.company_name) {
+      console.log("Nombre de la empresa: " + customerData.company_name);
     }
   }
+
 }

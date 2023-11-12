@@ -1,8 +1,7 @@
 export interface TurnResponse {
-    number: number;
-    createdAt: Date;
-    firstName: string;
-    lastName: string;
-    companyName: string;
-  
+  number: number;
+  created_at: Date;
+  first_name: string;
+  last_name: string;
+  company_name: string;
 }

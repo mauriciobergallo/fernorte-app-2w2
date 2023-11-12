@@ -10,6 +10,7 @@ import { LoginComponent } from "./components/login/login.component";
 import { UpdateCustomerComponent } from "./components/update-customer/update-customer.component";
 import { UpdateEmployeeComponent } from "./components/update-employee/update-employee.component";
 import { ForgotPasswordComponent } from "./components/forgot-password/forgot-password.component";
+import { FirstLoginComponent } from "./components/first-login/first-login.component";
 
 
   const routes: Routes = [
@@ -24,8 +25,8 @@ import { ForgotPasswordComponent } from "./components/forgot-password/forgot-pas
         {path: 'turns', component: TurnsComponentComponent},
         {path: "login", component: LoginComponent},
         {path: "update-costumer", component: UpdateCustomerComponent},
-        {path: "update-employee", component: UpdateEmployeeComponent},
         {path: 'forgot-password', component: ForgotPasswordComponent },
+        {path: ':document-number/first-login/:true', component: FirstLoginComponent },
       ]
     }]
 

@@ -14,7 +14,6 @@ import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
   styleUrls: ['./create-customer.component.css']
 })
 export class CreateCustomerComponent {
-//	@ViewChild('customerForm') customerForm!: NgForm;
 customerForm!: NgForm;
 
 formattedBirthDate: string = '';
@@ -114,7 +113,6 @@ customerType: ""
 
   onBirthDateChange(event: NgbDateStruct) {
 	if (event) {
-	  // Obtén el año, mes y día de ngbDatepicker
 	  const year = event.year || 0;
 	  const month = event.month || 1;
 	  const day = event.day || 1;
@@ -150,6 +148,6 @@ customerType: ""
 	onSubmitForm(customerForm: NgForm){
 		console.log("customerEE", customerForm);
 	}
-
+	
 
 }
