@@ -12,11 +12,24 @@ export class SaleOrderProvider {
   constructor(private http: HttpClient) {
   }
 
-  createSaleOrder(saleOrder: SaleOrderModel): Observable<IResponse> {
-    const url = this.urlBase + "/sales-order/create-sale-order";
+  createSaleOrder(saleOrder: SaleOrderModel): Observable<any> {
+    const url = this.urlBase + "/sales-orders";
     const header = { "content-type": "application/json" };
-    const body = saleOrder;
-    return this.http.post<IResponse>(url, body, { headers: header });
+    const body = {
+      id_sale_order: saleOrder.idSaleOrder,
+      id_seller: saleOrder.idSeller,
+      first_name_seller: saleOrder.firstNameSeller,
+      last_name_seller: saleOrder.lastNameSeller,
+      id_client: saleOrder.idClient,
+      first_name_client: saleOrder.firstNameClient,
+      last_name_client: saleOrder.lastNameClient,
+      company_name: saleOrder.companyName,
+      date_of_issue: saleOrder.dateOfIssue,
+      date_of_expiration: saleOrder.dateOfExpiration,
+      state_sale_order: saleOrder.stateSaleOrder,
+      detail_sales_order: saleOrder.detailSalesOrder
+    };
+    return this.http.post<any>(url, body, { headers: header });
   }
 
   // getSaleOrdesByFilter(idOrder?:string, doc?:string, fromDate?:string, toDate?:string): Observable<IResponse> {
