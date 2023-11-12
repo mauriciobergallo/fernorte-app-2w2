@@ -5,8 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { HomeComponent } from './components/home/home.component';
 
-import { SaleOrderSearchHandlerComponent } from './components/sale-order-search-handler/sale-order-search-handler.component';
-import { SaleOrderSearchFilterComponent } from './components/sale-order-search-filter/sale-order-search-filter.component';
 import { SaleOrderSearchListComponent } from './components/sale-order-search-list/sale-order-search-list.component';
 import { SaleOrderProvider } from './services/salesOrder/SaleOrderProvider';
 import { ProductProvider } from './services/products/productProvider';
@@ -26,6 +24,7 @@ import { SaleOrderNavComponent } from './components/sale-order-nav/sale-order-na
 import { BillingNavComponent } from './components/billing-nav/billing-nav.component';
 import { ReportNavComponent } from './components/report-nav/report-nav.component';
 import { TurnProvider } from './services/turns/TurnProvider';
+import { TranslateStatesPipe } from './pipes/translateStates.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaxComponent } from './components/tax/tax.component';
 
@@ -34,9 +33,7 @@ import { TaxComponent } from './components/tax/tax.component';
     SaleOrderComponent, 
     CalcularTotalPipe, 
     CalcularImpuestosPipe, 
-    CalcularMontoTotalPipe, 
-    SaleOrderSearchHandlerComponent,
-    SaleOrderSearchFilterComponent, 
+    CalcularMontoTotalPipe,
     SaleOrderSearchListComponent, 
     BillingComponent, 
     PaymentMethodComponent,
@@ -45,6 +42,8 @@ import { TaxComponent } from './components/tax/tax.component';
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
+    ReportNavComponent,
+    TranslateStatesPipe,
     TaxComponent,
     ReportNavComponent],
 
@@ -62,8 +61,6 @@ import { TaxComponent } from './components/tax/tax.component';
   exports: [HomeComponent,
     SaleOrderComponent, 
     CalcularTotalPipe, 
-    SaleOrderSearchHandlerComponent,
-    SaleOrderSearchFilterComponent, 
     SaleOrderSearchListComponent, 
     BillingComponent, 
     PaymentMethodComponent,
