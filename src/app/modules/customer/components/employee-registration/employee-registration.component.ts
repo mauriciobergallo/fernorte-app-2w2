@@ -28,7 +28,7 @@ export class EmployeeRegistrationComponent  {
 		this.employeeForm = this.fb.group({
 			firstName: ['', [Validators.required, Validators.pattern('^[^0-9]+$')]],
 			lastName: ['', [Validators.required, Validators.pattern('^[^0-9]+$')]],	
-			documentType: [0, Validators.required],
+			documentType: ['', Validators.required],
 			documentNumber: ['', [Validators.required, Validators.maxLength(this.maxLengthDocument)]],
 			birthDate:['', Validators.required],
 			personalEmail:['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}')]] ,
@@ -62,8 +62,8 @@ employee: Employee = {
 firstName:"",
 lastName:"",
 birthDate: new Date().toISOString(),
-documentType: 0,
-documentNumber:"",
+idDocumentType: 1,
+idDocumentNumber:"",
 address:"",
 phoneNumber:"",
 personalEmail:""
@@ -101,9 +101,9 @@ personalEmail:""
 		const documentNumberControl = this.employeeForm.get('documentNumber');
 
 		console.log("DOCUMENT NUMBER", documentNumberControl);
-		const selectedDocumentType = this.employeeForm.value.documentType;
+		const selectedDocumentType = this.employeeForm.value.idDocumentType;
 		// Restablecer el valor del campo de documento
-		this.employee.documentNumber = '';
+		this.employee.idDocumentNumber = '';
 
 
 
@@ -146,16 +146,16 @@ personalEmail:""
 	  }
 
 	  onDocumentNumberInput() {
-		if (Number(this.employee.documentType) === 3 || Number(this.employee.documentType === 4)) {
+		if (Number(this.employee.idDocumentType) === 5 || Number(this.employee.idDocumentType === 4)) {
 		  // Aplicar el formato XX-XXXXXXXX-X mientras el usuario escribe
-		  const input = this.employee.documentNumber.replace(/\D/g, '').substring(0, 11);
-		  this.employee.documentNumber = input.replace(/^(\d{2})(\d{8})(\d{1})$/, '$1-$2-$3');
+		  const input = this.employee.idDocumentNumber.replace(/\D/g, '').substring(0, 11);
+		  this.employee.idDocumentNumber = input.replace(/^(\d{2})(\d{8})(\d{1})$/, '$1-$2-$3');
 		}
 	  }
 
 	  
 	getDocumentNumberErrorMessage() {
-		switch (Number(this.employee.documentType)) {
+		switch (Number(this.employee.idDocumentType)) {
 		case 2:
 			this.documentNumberTouched = false;
 			return 'Ingresa solo números para DNI.';

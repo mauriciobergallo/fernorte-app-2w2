@@ -1,4 +1,4 @@
-<fn-employee-registration></fn-employee-registration>
+
 <link rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <div class="container">
@@ -32,8 +32,10 @@
               <i class="bi bi-three-dots-vertical"></i>
             </button>
             <div class="dropdown-content">
-              <a (click)="onOptionClick('info')">Más Información</a>
-              <a (click)="onOptionClick('actualizar')">Actualizar</a>
+              <!-- <a (click)="onOptionClick('info')">Más Información</a> -->
+              <a (click)="openUpdateEmployeeModal(e.idEmployee)">Actualizar</a>
+              <!-- <button class="btn btn-lg btn-outline-primary" (click)="onOptionClick('employeeUpdate')">Actualizar Empleado</button> -->
+
               <a *ngIf="e.isActive" (click)="onDelete(e)">Eliminar</a>
               <a *ngIf="!e.isActive" (click)="onActive(e)">Activar</a>
             </div>
@@ -45,5 +47,8 @@
 </div>
 <br>
 <br><br><br><br><br><br><br><br><br><br>
+
+
+
 
 

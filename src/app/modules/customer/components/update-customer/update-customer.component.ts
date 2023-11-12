@@ -8,6 +8,9 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 
+
+
+
 @Component({
   selector: 'fn-update-customer',
   templateUrl: './update-customer.component.html',
@@ -68,8 +71,7 @@ customerType: ""
 
 	}
 
-	ngOnInit(): void {
-	
+	ngOnInit(): void {		
 	
 	}
 
@@ -119,7 +121,7 @@ customerType: ""
 				}
 				let customerEnSnake: CustomerRequest = this.conversion.toSnakeCase(newCustomer);
 				console.log("CUSTOMER EN SNAKE", customerEnSnake);
-				this.customerService.putCustomer(customerEnSnake, this.idCustomer).subscribe(
+				this.customerService.putCustumer(customerEnSnake, this.idCustomer).subscribe(
 					(response) => {
 						alert("Se actualizo el cliente")
 					},
