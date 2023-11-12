@@ -5,8 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { HomeComponent } from './components/home/home.component';
 
-import { SaleOrderSearchHandlerComponent } from './components/sale-order-search-handler/sale-order-search-handler.component';
-import { SaleOrderSearchFilterComponent } from './components/sale-order-search-filter/sale-order-search-filter.component';
 import { SaleOrderSearchListComponent } from './components/sale-order-search-list/sale-order-search-list.component';
 import { SaleOrderProvider } from './services/salesOrder/SaleOrderProvider';
 import { ProductProvider } from './services/products/productProvider';
@@ -27,17 +25,18 @@ import { SaleOrderNavComponent } from './components/sale-order-nav/sale-order-na
 import { BillingNavComponent } from './components/billing-nav/billing-nav.component';
 import { ReportNavComponent } from './components/report-nav/report-nav.component';
 import { TurnProvider } from './services/turns/TurnProvider';
+import { TranslateStatesPipe } from './pipes/translateStates.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TaxComponent } from './components/tax/tax.component';
 
 @NgModule({
   declarations: [HomeComponent,
-    SaleOrderComponent, 
-    CalcularTotalPipe, 
-    CalcularImpuestosPipe, 
-    CalcularMontoTotalPipe, 
-    SaleOrderSearchHandlerComponent,
-    SaleOrderSearchFilterComponent, 
-    SaleOrderSearchListComponent, 
-    BillingComponent, 
+    SaleOrderComponent,
+    CalcularTotalPipe,
+    CalcularImpuestosPipe,
+    CalcularMontoTotalPipe,
+    SaleOrderSearchListComponent,
+    BillingComponent,
     PaymentMethodComponent,
     CreatePaymentComponent,
     SidenavComponent,
@@ -45,7 +44,13 @@ import { TurnProvider } from './services/turns/TurnProvider';
     SaleOrderNavComponent,
     BillingNavComponent,
     ReportNavComponent,
+
     SaleOrderViewComponent],
+
+    TranslateStatesPipe,
+    TaxComponent,
+    ReportNavComponent],
+   sales&bill/develop
 
   providers: [SaleOrderProvider,
     ProductProvider,
@@ -53,24 +58,28 @@ import { TurnProvider } from './services/turns/TurnProvider';
     TurnProvider],
 
   imports: [CommonModule,
-    FormsModule, 
-    RouterModule, 
-    RouterChildModule],
+    FormsModule,
+    RouterModule,
+    RouterChildModule,
+    ReactiveFormsModule],
 
   exports: [HomeComponent,
-    SaleOrderComponent, 
-    CalcularTotalPipe, 
-    SaleOrderSearchHandlerComponent,
-    SaleOrderSearchFilterComponent, 
-    SaleOrderSearchListComponent, 
-    BillingComponent, 
+    SaleOrderComponent,
+    CalcularTotalPipe,
+    SaleOrderSearchListComponent,
+    BillingComponent,
     PaymentMethodComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
+
     ReportNavComponent,
     SaleOrderViewComponent],
+
+    TaxComponent,
+    ReportNavComponent]
+
 })
 export class SalesModule {}
