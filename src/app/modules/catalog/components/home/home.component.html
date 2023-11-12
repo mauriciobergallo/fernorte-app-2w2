@@ -101,14 +101,16 @@
                     d="M0 1.5A.5.5 0 0 1 .5 1h15a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5H15a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5zM5 12a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm7 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" />
             </symbol>
             <symbol id="boxes" viewBox="0 0 16 16">
-                <path d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434L7.752.066ZM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504ZM7.5 9.933l-2.75 1.571v3.134l2.75-1.571V9.933Zm1 3.134 2.75 1.571v-3.134L8.5 9.933v3.134Zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567-2.742 1.567Zm2.242-2.433V3.504L8.5 5.076V8.21l2.75-1.572ZM7.5 8.21V5.076L4.75 3.504v3.134L7.5 8.21ZM5.258 2.643 8 4.21l2.742-1.567L8 1.076 5.258 2.643ZM15 9.933l-2.75 1.571v3.134L15 13.067V9.933ZM3.75 14.638v-3.134L1 9.933v3.134l2.75 1.571Z"/>
+                <path
+                    d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434L7.752.066ZM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504ZM7.5 9.933l-2.75 1.571v3.134l2.75-1.571V9.933Zm1 3.134 2.75 1.571v-3.134L8.5 9.933v3.134Zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567-2.742 1.567Zm2.242-2.433V3.504L8.5 5.076V8.21l2.75-1.572ZM7.5 8.21V5.076L4.75 3.504v3.134L7.5 8.21ZM5.258 2.643 8 4.21l2.742-1.567L8 1.076 5.258 2.643ZM15 9.933l-2.75 1.571v3.134L15 13.067V9.933ZM3.75 14.638v-3.134L1 9.933v3.134l2.75 1.571Z" />
             </symbol>
         </svg>
     </head>
     <div class="main-container d-flex">
         <div class="sidebar" id="side_nav">
             <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidenav sidebar" style="width: 280px">
-                <a href="/catalog" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                <a href="/catalog"
+                    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                     <svg class="bi pe-none me-2" width="40" height="32">
                         <use xlink:href="#tools"></use>
                     </svg>
@@ -125,7 +127,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link link-dark d-block" routerLink="/categories/list" [routerLinkActive]="'active'">
+                        <a class="nav-link link-dark d-block" routerLink="/categories/list"
+                            [routerLinkActive]="'active'">
                             <svg class="bi pe-none me-2" width="16" height="16">
                                 <use xlink:href="#toggles2"></use>
                             </svg>
@@ -140,12 +143,48 @@
                             Descuentos </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link link-dark d-block" routerLink="">
+                        <a class="nav-link link-dark d-block" (click)="showReports = !showReports">
                             <svg class="bi pe-none me-2" width="16" height="16">
                                 <use xlink:href="#speedometer2"></use>
                             </svg>
                             Reportes
                         </a>
+                        <ul class="nav nav-pills flex-column mb-auto list-unstyled" *ngIf="showReports">
+                            <li class="nav-item">
+                                <a class="nav-link link-dark d-block" routerLink="/reporting/price-history"
+                                    [routerLinkActive]="'active'">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-book" viewBox="0 0 16 16">
+                                        <path
+                                            d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" />
+                                    </svg>
+                                    Precios Historicos
+                                </a>
+                            </li>
+                            <!-- Agregar más reportes aca -->
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link-dark d-block" (click)="showGraph = !showGraph">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="#speedometer2"></use>
+                            </svg>
+                            Graficos
+                        </a>
+                        <ul class="nav nav-pills flex-column mb-auto list-unstyled" *ngIf="showGraph">
+                            <li class="nav-item">
+                                <a class="nav-link link-dark d-block" routerLink="/reporting/grahps-price-history"
+                                    [routerLinkActive]="'active'">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-book" viewBox="0 0 16 16">
+                                        <path
+                                            d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" />
+                                    </svg>
+                                    Precios Historicos
+                                </a>
+                            </li>
+                            <!-- Agregar más reportes aca -->
+                        </ul>
                     </li>
                 </ul>
                 <hr />

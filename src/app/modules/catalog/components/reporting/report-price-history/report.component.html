@@ -1,0 +1,66 @@
+<spinner *ngIf="isLoading"></spinner>
+
+<form [formGroup]="filterForm">
+  <div class="row">
+    <div class="col-md-6">
+      <label for="startDate">Fecha de inicio</label>
+      <input type="date" id="startDate" formControlName="startDate" class="form-control">
+    </div>
+    <div class="col-md-6">
+      <label for="endDate">Fecha de fin</label>
+      <input type="date" id="endDate" formControlName="endDate" class="form-control">
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-6">
+      <input type="text" id="name" formControlName="name" class="form-control">
+    </div>
+    <div class="col-md-6">
+      <button type="button" (click)="clean()" class="btn btn-primary">Limpiar</button>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-md-11">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="nameColumn" (click)="sortTable()">
+            Nombre
+            <i class="bi" [ngClass]="{'bi-arrow-up': sortOrder, 'bi-arrow-down': !sortOrder}"></i>
+          </th>
+          <th scope="col">Precio</th>
+          <th scope="col">Inicio Precio</th>
+          <th scope="col">Fin Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr *ngFor="let report of reports; index as i"> -->
+        <tr *ngFor="let item of listPriceHistory.slice((page-1) * pageSize, (page-1) * pageSize + pageSize)">
+          <td style="max-width: 25ch; word-wrap: break-word;">{{item.name}}</td>
+          <td>{{item.unitPrice}}</td>
+          <td>{{item.startDate | date:'dd/MM/yyyy'}}</td>
+          <td>
+            <ng-container *ngIf="item.endDate!=null;else noContent"> {{item.endDate | date:'dd/MM/yyyy'}}
+            </ng-container>
+            <ng-template #noContent>
+              ----
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ngb-pagination [collectionSize]="listPriceHistory.length" [(page)]="page" [pageSize]="pageSize"></ngb-pagination>
+  </div>
+  <div class="col-md-1">
+    <div ngbDropdown container="body">
+      <button type="button" class="btn btn-sm btnDropdown btn-success" ngbDropdownToggle>
+        <i class="bi bi-three-dots-vertical"></i>
+      </button>
+      <div ngbDropdownMenu>
+        <button ngbDropdownItem type="button" (click)="downloadPDF()">Descargar PDF</button>
+        <button ngbDropdownItem type="button" (click)="downloadCSV()">Descagar CSV</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<spinner *ngIf="isLoading"></spinner>
+
+<div class="container mt-5">
+  <form [formGroup]="filterFom" class="row g-3">
+    <h4 class="text-center">Precios Historicos</h4>
+    <div class="col-md-4">
+      <label for="productName" class="form-label">Nombre del producto:</label>
+      <input [class.is-invalid]="filterFom.get('name')?.invalid && (filterFom.get('name')?.dirty|| filterFom.get('name')?.touched)" type="text" id="productName" formControlName="name" class="form-control">
+    </div>
+    <div class="col-md-4">
+      <label for="startDate" class="form-label">Fecha de inicio:</label>
+      <input [class.is-invalid]="filterFom.get('startDate')?.invalid && (filterFom.get('startDate')?.dirty|| filterFom.get('startDate')?.touched)" type="date" id="startDate" formControlName="startDate" class="form-control">
+    </div>
+    <div class="col-md-4">
+      <label for="endDate" class="form-label">Fecha de fin:</label>
+      <input type="date" id="endDate" formControlName="endDate" class="form-control">
+    </div>
+    <div class="col-md-12 d-flex justify-content-center">
+      <button type="submit" class="btn btn-primary m-1 " (click)="showGraphs()">Generar</button>
+      <button type="button" class="btn btn-secondary m-1" (click)="clean()">Limpiar</button>
+  </div>
+  </form>
+</div>
+
+<div class="container mt-5">
+  <canvas id="myChart"></canvas>
+</div>

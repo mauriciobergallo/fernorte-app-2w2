@@ -5,6 +5,7 @@ import { environment } from '../environments/environment';
 import { RequestResponseService } from './requestResponse.service';
 import { IProduct } from '../models/IProduct';
 import { HttpParams } from '@angular/common/http';
+import { PriceHistory } from '../models/priceHistory';
 
 @Injectable({
    providedIn: 'root',
@@ -12,7 +13,7 @@ import { HttpParams } from '@angular/common/http';
 export class ProductService {
    private products: string = `${environment.production}products`;
    private categories: string = `${environment.production}products/categories`;
-
+   private priceHistory: string = `${environment.production}product-prices`;
    constructor(private requestResponseService: RequestResponseService) { }
 
    get(
@@ -50,7 +51,7 @@ export class ProductService {
       if (idCategory) {
          params = params.set('idCategory', idCategory.toString());
       }
-      
+
       return this.requestResponseService.makeGetRequest<{ products: IProductCategory[]; totalItems: number; }>
          (this.products, { params: params })
          .pipe(
@@ -105,7 +106,7 @@ export class ProductService {
       }
       return this.requestResponseService.makePutRequest<IProduct>(
          this.products,
-          productApi 
+         productApi
       );
    }
    delete(id: number, username: string): Observable<any> {
@@ -113,4 +114,24 @@ export class ProductService {
          this.products + '/' + id + '?username=' + username
       );
    }
+
+   getPriceHistory(): Observable<{ priceHistory: PriceHistory[] }> {
+      return this.requestResponseService.makeGetRequest<{ products: PriceHistory[]; totalItems: number; }>
+         (this.priceHistory)
+         .pipe(
+            tap(response => console.log(response)),
+            map((response: any) => ({
+               priceHistory: response.map((item: any) => ({
+                  name: item.product.name,
+                  unitPrice: item.unit_price,
+                  endDate: item.end_date,
+                  startDate: item.start_date
+               })),
+               totalItems: response.length
+            })),
+         tap(response => console.log(response))
+         );
+   }
 }
+
+

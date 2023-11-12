@@ -37,7 +37,7 @@ export class ProductsComponent {
     this.filterProduct = this.fb.group({
       name: [''],
       category: [''],
-      isDeleted: [false]
+      isDeleted: [true]
     });
   }
 
