@@ -46,12 +46,12 @@ export class SaleOrderServiceService {
   // }
 
   getSaleOrders() : Observable<SaleOrderApi[]> {
-    this.saleOrderList = this.http.get<SaleOrderApi[]>("http://localhost:8080/sales-orders?from_date=2023-10-23&to_date=2023-10-31");
+    this.saleOrderList = this.http.get<SaleOrderApi[]>("http://localhost:8087/sales-orders?from_date=2023-10-23&to_date=2023-10-31");
     return this.saleOrderList;
   }
 
   getSaleOrderStates() : Observable<string[]> {
-    this.saleOrderStates = this.http.get<string[]>("http://localhost:8080/sales-orders/states");
+    this.saleOrderStates = this.http.get<string[]>("http://localhost:8087/sales-orders/states");
     return this.saleOrderStates;
   }
 
@@ -149,13 +149,13 @@ export class SaleOrderServiceService {
     let url:string = '';
     this.filters = filters
     if (this.idOrder != '0' && this.idOrder != undefined) {
-      url = `http://localhost:8080/sales-orders?id_order=${this.idOrder}`
+      url = `http://localhost:8087/sales-orders?id_order=${this.idOrder}`
     } else if (this.doc != '0' && this.doc != null) {
-      url = `http://localhost:8080/sales-orders?doc_client=${this.doc}`
+      url = `http://localhost:8087/sales-orders?doc_client=${this.doc}`
     } else if (this.stateOrder != '' && this.stateOrder != null) {
-      url = `http://localhost:8080/sales-orders?state_sale_order=${this.stateOrder}`
+      url = `http://localhost:8087/sales-orders?state_sale_order=${this.stateOrder}`
     } else {
-      url = `http://localhost:8080/sales-orders?from_date=${this.fromDate}&to_date=${this.toDate}`;
+      url = `http://localhost:8087/sales-orders?from_date=${this.fromDate}&to_date=${this.toDate}`;
     }
     this.saleOrderList = this.http.get<SaleOrderApi[]>(url);
     return this.saleOrderList

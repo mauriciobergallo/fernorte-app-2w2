@@ -6,6 +6,7 @@ import { SaleOrderApi } from '../../models/SaleModelApi';
 import { ProductApi } from '../../models/ProductApi';
 import { ProductOk } from '../../models/ProductOk';
 import { NgModel, NgForm } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
   selector: 'fn-sale-order-search-list',
@@ -17,6 +18,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   saleOrdersListOk: SaleOrderOk[]=[];
 
   saleOrderStates: string[] = [];
+
 
   idOrder:string="0";
   doc:string="0";
@@ -52,20 +54,6 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
       )
     )
   }
-
-  // showSaleOrderFiltered() {
-  //   this.saleOrderServiceService.getSaleOrdesByFilter().subscribe(
-  //     ( response : SaleOrderModel[]) => {
-  //       this.saleOrdersList = response;
-  //     }
-  //   )
-  // }
-  
-  // onSendNOrder(form : NgForm){
-  //   if(form.valid) {
-  //     this.saleOrderService.getSaleOrdersByIdOrder(form.value.nOrder)
-  //   }
-  // }
 
   onSendFilters(form : NgForm) {
     if(form.valid) {
@@ -117,5 +105,13 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
       stateSaleOrderDetail : state_sale_order_detail
     } 
     return productOk
+  }
+
+  onShowDetails() {
+
+  }
+
+  onPrint() {
+    
   }
 }
