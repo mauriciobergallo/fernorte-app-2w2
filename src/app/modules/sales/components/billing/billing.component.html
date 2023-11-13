@@ -6,15 +6,15 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form #f="ngForm">
           <div class="row">
-            <div class="col-4">
-              <select class="form-select" aria-label="paymentSelect" id="paymentMethodSelect" placeholder [(ngModel)]="selectedPaymentMethod" name="paymentMethod">
-                <option selected disabled value="">Seleccionar Metodo</option>
-                <option *ngFor="let payment of paymentList" value="{{payment.id}}">{{payment.name}}</option>
+            <div class="col-4 pt-2">
+              <select class="form-select" aria-label="paymentSelect" id="paymentMethodSelect"  [(ngModel)]="selectedPaymentMethod" name="selectedPaymentMethod">
+                <option selected disabled value="-1">Seleccionar Metodo</option>
+                <option *ngFor="let payment of paymentMethods" [ngValue]="payment">{{payment.paymentMethod}}</option>
               </select>
-              <label for="ammount" class="form-label mt-3">Monto:</label>
-              <input id="ammount" class="form-control">
+              <label for="ammount" class="form-label mt-3" >Monto:</label>
+              <input id="ammount" class="form-control" [(ngModel)]="amount" name="amount">
               <button type="submit" class="btn btn-primary mt-3" (click)="addPayment()">Agregar</button>
             </div>
             <div class="col-8">
@@ -28,17 +28,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let item of productList">
-                  <td>{{item.idProduct}}</td>
-                  <td>{{item.name}}</td>
-                  <td>${{item.unitPrice}}</td>
-                  <td>${{item.quantity}}</td>
-                  <th><i class="fa-solid fa-xmark fa-xl"></i></th>
+                <tr *ngFor="let item of paymentList">
+                  <td>{{item.paymentMethod.paymentMethod}}</td>
+                  <td>${{item.amount}}</td>
+                  <td>${{Number(item.paymentMethod.surcharge)/100 * Number(item.amount)}}</td>
+                  <td>${{Number(item.paymentMethod.surcharge)/100 * Number(item.amount) + Number(item.amount)}}</td>
                 </tr>
                 </tbody>
               </table>
             </div>
 
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <p>Restante: ${{100}}</p>
+              <p>Subtotal: ${{100}}</p>
+            </div>
+            <div class="col-6">
+              <p>Total a pagar: ${{100}}</p>
+            </div>
           </div>
         </form>
       </div>
@@ -67,8 +75,8 @@
       <h4 class="m-2">Cargar Orden/Presupuesto</h4>
       <div class="card p-2 m-1">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Nro de orden" aria-label="orden">
-          <button class="btn btn-primary" id="btn-search">Buscar</button>
+          <input type="text" class="form-control" placeholder="Nro de orden" aria-label="orden" name="orderNumber" [(ngModel)]="orderId">
+          <button class="btn btn-primary" id="btn-search" (click)="searchBill()">Buscar</button>
         </div>
       </div>
     </div>
@@ -89,15 +97,12 @@
           </tr>
           </thead>
           <tbody>
-          <!-- Aquí se agregarán las filas de la tabla dinámicamente -->
-          <tr *ngFor="let item of productList">
-            <td>{{item.idProduct}}</td>
-            <td>{{item.name}}</td>
+          <tr *ngFor="let item of order.detailBill">
+            <td>{{item.idBill}}</td>
+            <td>{{item.idSaleOrder}}</td>
             <td>${{item.unitPrice}}</td>
             <td>${{item.quantity}}</td>
-            <td>${{item.unitPrice * item.quantity}}
-            </td>
-            <th><i class="fa-solid fa-xmark fa-xl"></i></th>
+            <td>${{item.unitPrice * item.quantity}}</td>
           </tr>
           </tbody>
         </table>
@@ -127,7 +132,7 @@
             <p class="m-0" (click)="cancelOrder()">Cancelar</p>
           </button>
           <button class="btn btn-primary" >
-            <p class="m-0" (click)="checkOrder(orderId)">Pagar</p>
+            <p class="m-0" (click)="checkOrder()">Pagar</p>
           </button>
         </div>
       </div>
