@@ -33,8 +33,8 @@
             </button>
             <div class="dropdown-content">
               <!-- <a (click)="onOptionClick('info')">Más Información</a> -->
-              <a (click)="openUpdateEmployeeModal(e.idEmployee)">Actualizar</a>
-              <!-- <button class="btn btn-lg btn-outline-primary" (click)="onOptionClick('employeeUpdate')">Actualizar Empleado</button> -->
+            
+              <a class="btn btn-lg btn-outline-primary" (click)="openUpdateEmployeeModal(e.idEmployee)">Actualizar</a>
 
               <a *ngIf="e.isActive" (click)="onDelete(e)">Eliminar</a>
               <a *ngIf="!e.isActive" (click)="onActive(e)">Activar</a>

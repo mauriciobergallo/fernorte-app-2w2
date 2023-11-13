@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit, Optional, TemplateRef } from '@angular/core';
 import { NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import { EmployeeService } from '../../services/employee.service';
@@ -19,7 +19,7 @@ export class UpdateEmployeeComponent implements OnInit{
 
   formattedBirthDate: string = '';
   
-  idEmployee:number=0;
+  @Input() idEmployee:number=0;
   
   minDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
   maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };;
@@ -50,7 +50,7 @@ export class UpdateEmployeeComponent implements OnInit{
   
     closeResult = '';
   
-    constructor(private modalService: NgbModal, private employeeService: EmployeeService, private conversion: CaseConversionPipe) {
+    constructor(public modalService: NgbModal, private employeeService: EmployeeService, private conversion: CaseConversionPipe) {
   
               // Obtén la fecha actual
             const currentDate = new Date();
@@ -74,7 +74,7 @@ export class UpdateEmployeeComponent implements OnInit{
   
     ngOnInit(): void {
     
-    
+      console.log(this);
     }
     
   	loadEmployeeData(idEmployee: number) {
@@ -145,7 +145,10 @@ export class UpdateEmployeeComponent implements OnInit{
   
   
   
-   
+   onSubmit(employeeForm: any){
+
+    console.log("FORMULARIO DE EMPLEADOS", employeeForm);
+   }
   
     onBirthDateChange(event: NgbDateStruct) {
     if (event) {
