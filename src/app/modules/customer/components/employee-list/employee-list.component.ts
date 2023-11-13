@@ -54,7 +54,7 @@ export class EmployeeListComponent implements OnInit {
   ngOnInit(): void{
     
     this.onLoad()
-   
+  //  this.employeeList = this.employeesHardCoded;
   }
 
   onLoad(){

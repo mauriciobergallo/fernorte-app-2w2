@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Optional, TemplateRef } from '@angular/core';
-import { NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../models/employee';
@@ -53,7 +53,10 @@ export class UpdateEmployeeComponent implements OnInit{
   
     closeResult = '';
   
-    constructor(public modalService: NgbModal, private employeeService: EmployeeService, private conversion: CaseConversionPipe) {
+    constructor(public modalService: NgbModal, 
+      private employeeService: EmployeeService, 
+      private conversion: CaseConversionPipe,
+      private ngbDateParserFormatter: NgbDateParserFormatter) {
   
               // Obtén la fecha actual
             const currentDate = new Date();
@@ -77,8 +80,23 @@ export class UpdateEmployeeComponent implements OnInit{
   
     ngOnInit(): void {
     
+      this.mapEmployee()
       console.log("EMPLEADO", this.employeeToUpdate);
+      //this.employee = this.employeeToUpdate;
     }
+
+
+    convertIsoStringToNgbDate(isoString: string): NgbDateStruct | null {
+      const date = new Date(isoString);
+  
+      if (!isNaN(date.getTime())) {
+        return { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() };
+      }
+  
+      return null;
+    }
+
+
     
   	loadEmployeeData(idEmployee: number) {
       this.employeeService.getEmployeeById(idEmployee).subscribe(
@@ -96,7 +114,18 @@ export class UpdateEmployeeComponent implements OnInit{
       );
       }
   
-  
+      mapEmployee(){
+        if(this.employeeToUpdate != null){
+          this.employee.firstName = this.employeeToUpdate.firstName;
+          this.employee.lastName = this.employeeToUpdate.lastName;
+          this.employee.idDocumentType = this.employeeToUpdate.documentType;
+          this.employee.personalEmail = this.employeeToUpdate.personalEmail;
+          this.employee.phoneNumber = this.employeeToUpdate.phoneNumber;
+          this.employee.birthDate = this.employeeToUpdate.birthDate.toISOString();
+          this.employee.idDocumentNumber = this.employeeToUpdate.documentNumber;
+          this.employee.address = this.employeeToUpdate.address;
+      }
+      }
   
   
   
