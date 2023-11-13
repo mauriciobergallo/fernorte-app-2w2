@@ -21,7 +21,8 @@
       <button
         type="button"
         class="btn btn-primary m-0"
-        (click)="logToConsole(); purchaseOrderFlow()"
+        (click)="onSubmit()"
+        [disabled]="cardProducts.length === 0"
       >
         Siguiente
       </button>

@@ -21,17 +21,37 @@ export class PreviewComponent {
    employeeId: number = 0;
   observation: string ="";
   billUrl: string ="";
-  cardProducts: ISupplierProduct[] = [];
+  cardProducts: ISupplierProduct[] = [{
+    idSupplier: 1,
+    idProduct: 2,
+    name: 'Taladro',
+    price: 254,
+    quantity: 15,
+  },
+  {
+    idSupplier: 1,
+    idProduct: 2,
+    name: 'Taladro',
+    price: 254,
+    quantity: 15,
+  },
+  {
+    idSupplier: 1,
+    idProduct: 2,
+    name: 'Taladro',
+    price: 254,
+    quantity: 15,
+  }];
   purchaseDetails:PurchaseOrderDetailResponse[] = []
 
  
 
  supplier:ISupplier = {
     id: 1,
-    socialReason: "",
-    fantasyName: "",
-    cuit: "",
-    adress: ""
+    socialReason: "Proveedor",
+    fantasyName: "Cachito",
+    cuit: "20323730019",
+    adress: "Alberdi 342"
   };
    currentDate: Date = new Date();
 
@@ -42,10 +62,10 @@ export class PreviewComponent {
   ngOnInit(){
     
     this.purchaseOrderService.getSupplierSelected().subscribe((data: ISupplier) => {
-      this.supplier = data; 
+      // this.supplier = data; 
     });
     
-    this.cardProducts = this.purchaseOrderService.getCardProductList();
+    // this.cardProducts = this.purchaseOrderService.getCardProductList();
     
   const purchaseDetails = this.cardProducts.map((product) => ({
   id: 0,  // You can set the appropriate values for these fields

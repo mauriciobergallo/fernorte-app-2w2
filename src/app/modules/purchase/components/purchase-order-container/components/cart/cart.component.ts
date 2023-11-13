@@ -45,11 +45,7 @@ export class CartComponent implements OnInit{
     }
   }
 
-  logToConsole(): void {
-    console.log('Button clicked. Logging to console.');
-  }
-
-  purchaseOrderFlow() {
+  onSubmit() {
     this.purchaseOrderService.setPurchaseOrderFlow();
   }
 }
