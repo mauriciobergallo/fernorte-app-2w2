@@ -15,7 +15,7 @@ export class EmployeeRegistrationComponent  {
 	
 	
 	minDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
-	maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };;
+	maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
 	currentYear = new Date().getFullYear();
 
 	maxLengthDocument : number = 0;
@@ -208,7 +208,6 @@ personalEmail:""
 
 				let employeeEnSnake = this.conversion.toSnakeCase(newemployee);
 				this.employeeService.postEmployee(employeeEnSnake).subscribe(
-
 
 					(response) => {
 						alert("Se creo el empleado")

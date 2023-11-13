@@ -8,11 +8,11 @@ import { UserResponseDTO } from '../models/userResponseDTO';
 export class UserService {
   document_number!: string;
 
-  private apiUrlGetAllRoles = 'http://localhost:8095/role';
-  private apiUrlnewUser = 'http://localhost:8095/users/new-user';
-  private apiUrlResetEmail = 'http://localhost:8095/users/reset';
-  private apiUrlChangePassword = 'http://localhost:8095/users/change_password';
-  private baseUrl = 'http://localhost:8095/users';
+  private apiUrlGetAllRoles = 'http://localhost:8092/role';
+  private apiUrlnewUser = 'http://localhost:8092/users/new-user';
+  private apiUrlResetEmail = 'http://localhost:8092/users/reset';
+  private apiUrlChangePassword = 'http://localhost:8092/users/';
+  private baseUrl = 'http://localhost:8092/users';
 
   constructor(private http: HttpClient) { } 
 
@@ -56,18 +56,17 @@ export class UserService {
      return this.http.post(this.apiUrlResetEmail, data, { headers });
    }
 
-   changePassword(newPassword: string): Observable<any> {
+   changePassword(newPassword: string, document_number: string): Observable<any> {
      const headers = new HttpHeaders({
        'Content-Type': 'application/json',
        'accept': '*/*'
      });
 
      const data = {
-       document_number: this.document_number,
+       document_number: document_number,
        password: newPassword,
      };
-
-     return this.http.put(this.apiUrlChangePassword, data, { headers });
+     return this.http.put(this.apiUrlChangePassword + data.document_number, data.password, { headers });
    }
   
 }

@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-first-login',
@@ -9,6 +11,7 @@ import { UserService } from '../../services/user.service';
 })
 export class FirstLoginComponent {
   forgot: boolean = false;
+  document_number = "";
   user = {
     password: ''
   };
@@ -16,27 +19,40 @@ export class FirstLoginComponent {
   constructor(private route: ActivatedRoute, private userService: UserService) {
     this.route.params.subscribe(params => {
        this.forgot = params['forgot'] === 'true';
+       this.document_number = params['document-number']
     });
 
     console.log(this.forgot);
   }
 
-  onFirstLogin() {
-    this.changePassword();
+  onFirstLogin(form: NgForm) {
+    this.changePassword(form);
   }
 
-  onResetPassword() {
-    this.changePassword();
+  onResetPassword(form: NgForm) {
+    this.changePassword(form);
   }
 
-  changePassword(){
-    this.userService.changePassword(this.user.password).subscribe(
-      (response: any) => {
-       alert('Se cambio correctamente la contraseña');
-      },
-      (error: any) => {
-        alert('Error al cambiar la contraseña');
-      }
-    );
+  changePassword(form: NgForm){
+    if(form.valid){
+      this.userService.changePassword(this.user.password, this.document_number).subscribe(
+        (response: any) => {
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'Se cambió la contraseña correctamente',
+            icon: 'success',
+          })
+        //si fue un exito, no llevarlo al login sino que ya esta logeado
+        },
+        (error: any) => {
+          Swal.fire({
+            title: '¡Error!',
+            text: 'No se pudo cambiar la contraseña.',
+            icon: 'error',
+          });
+        }
+      );
+    }
   }
+  
 }

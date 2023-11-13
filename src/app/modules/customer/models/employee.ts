@@ -1,3 +1,4 @@
+
 export interface Employee{    
     firstName: string;
     lastName: string;
@@ -5,6 +6,7 @@ export interface Employee{
     idDocumentType: number; //Cambiar a tipo de dato acorde dependiendo si usamos Enum o tabla aparte
     idDocumentNumber: string; 
     address: string;
-    phoneNumber:string;
-    personalEmail: string; //Test
-}
+    phoneNumber: string;
+    personalEmail: string; // Test
+  }
+  

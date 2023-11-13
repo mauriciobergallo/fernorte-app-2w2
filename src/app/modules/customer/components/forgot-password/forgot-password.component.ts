@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-forgot-password',
@@ -11,7 +13,7 @@ export class ForgotPasswordComponent {
     email: '',
   };
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   onSubmit() {
     console.log('Correo Electrónico:', this.user.email);
@@ -19,14 +21,30 @@ export class ForgotPasswordComponent {
     this.userService.sendResetEmail(this.user.email).subscribe(
       (response: any) => {
         if(response.success == true){
-          alert('Correo electrónico enviado correctamente');
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'Correo electrónico enviado correctamente',
+            icon: 'success',
+          })
+          setTimeout(() => {
+            this.router.navigate(['customers/login']);
+          }, 3000); 
+          
         }
         else{
-          alert('No se pudo validar correctamente su email');
+          Swal.fire({
+            title: '¡Error!',
+            text: 'No se pudo validar correctamente su email.',
+            icon: 'error',
+          });
         }
       },
       (error: any) => {
-        alert('Error al enviar el correo electrónico');
+        Swal.fire({
+          title: '¡Error!',
+          text: 'Error al enviar el correo electrónico.',
+          icon: 'error',
+        });
       }
     );
   }
