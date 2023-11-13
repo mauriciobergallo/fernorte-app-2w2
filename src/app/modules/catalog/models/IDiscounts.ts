@@ -7,4 +7,5 @@ export interface IDiscount {
     startDate: string;
     endDate: string;
     isDeleted: boolean;
+    user: string;
 }

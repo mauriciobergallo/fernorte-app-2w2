@@ -70,3 +70,15 @@ body {
 .nav-link.active{
     background-color: #e5e5e5 !important;
 }
+
+.nav-item{
+    margin: 3px 0
+}
+
+.sub-nav{
+    margin-left: 20px;
+}
+
+.dropdown-icons{
+    margin-left: 10px;
+}

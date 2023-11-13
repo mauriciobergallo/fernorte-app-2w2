@@ -6,7 +6,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { AddDiscountComponent } from './components/discounts/add-discount/add-discount.component';
 import { DiscountsComponent } from './components/discounts/discounts.component';
 import { AddCategoryComponent } from './components/categories/add-category/add-category.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './components/spinner/viewspinner/spinner.component';
 import { CatalogRoutingModule } from './catalog-routing.module';
@@ -16,7 +16,7 @@ import { ListCategoriesComponent } from './components/categories/list-categories
 import { ViewImageProductComponent } from './components/products/view-image-product/view-image-product.component';
 import { ReportPriceHistoryComponent } from './components/reporting/report-price-history/report.component';
 import { GraphsPriceHistoryComponent } from './components/reporting/report-price-history/graphs-price-history/graphs-price-history.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localeEs, 'es-AR');
 
@@ -38,7 +38,7 @@ registerLocaleData(localeEs, 'es-AR');
 
 
   providers: [{ provide: LOCALE_ID, useValue: 'es-AR' },DatePipe],
-  imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, CatalogRoutingModule,DatePipe],
+  imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, CatalogRoutingModule, DatePipe, BrowserAnimationsModule, NgbCollapseModule],
   exports: [HomeComponent],
 })
 

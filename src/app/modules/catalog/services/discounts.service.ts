@@ -60,9 +60,24 @@ export class DiscountsService {
   getDiscountById(id: number): Observable<IDiscount> {
     return this.requestResponseService.makeGetRequest<IDiscount[]>(`${this.discounts}/${id}`);
   }
-  updateDiscounts(request: any[]): Observable<IDiscount[]> {
+
+  updateDiscounts1(request: any[]): Observable<IDiscount[]> {
     return this.requestResponseService.makePutRequest<IDiscount[]>(this.discounts, request);
   }
+
+  updateDiscounts(request: any): Observable<IDiscount[]> {
+    const discountsApi = {
+      id_discount: request.idDiscount,
+      id_product: request.idProduct,
+      discount_rate: request.discountRate,
+      start_date: request.startDate,
+      end_date: request.endDate,
+      user: request.user
+    };
+  
+    return this.requestResponseService.makePutRequest<IDiscount[]>(this.discounts, [discountsApi]);
+  }
+
   deleteDiscounts(id: number, user: string): Observable<IDiscount[]> {
 
     let params = {

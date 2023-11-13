@@ -1,6 +1,7 @@
 <spinner *ngIf="isLoading"></spinner>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
 <div class="container mt-5">
     <button class="btn btn-primary" (click)="openCreateModal()">Agregar</button>
@@ -11,7 +12,7 @@
         <div class="form-check">
             <input class="form-check-input" type="checkbox" id="showDeleted" formControlName="isDeleted">
             <label class="form-check-label" for="showDeleted">
-               Inactivos
+                Inactivos
             </label>
         </div>
     </form>
@@ -21,8 +22,8 @@
                 <th class="nameColumn" (click)="sortTable('name')">
                     Nombre
                     <i class="bi bi-arrow-up-down"
-                      [ngClass]="{'bi-arrow-down': sortOrder === 'asc', 'bi-arrow-up': sortOrder === 'desc'}"></i>
-                  </th>
+                        [ngClass]="{'bi-arrow-down': sortOrder === 'asc', 'bi-arrow-up': sortOrder === 'desc'}"></i>
+                </th>
                 <th>Descripcion</th>
                 <th>Estado</th>
                 <th>Acciones</th>

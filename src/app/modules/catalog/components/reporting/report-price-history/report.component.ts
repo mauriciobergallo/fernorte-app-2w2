@@ -4,7 +4,7 @@ import { ProductService } from '../../../services/product.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { jsPDF } from "jspdf";
-import "jspdf-autotable";
+// import "jspdf-autotable";
 
 @Component({
   selector: 'app-report',

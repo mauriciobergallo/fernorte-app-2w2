@@ -1,12 +1,11 @@
 <spinner *ngIf="isLoading"></spinner>
 
-<link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
 <div class="container mt-4">
     <button class="btn btn-primary" (click)="openCreateModal()">Agregar</button>
     <form [formGroup]="filterForm">
-        <div class="row m-2">
-
+        <div class="row mb-3">
 
             <div class="col-md-6">
                 <div class="form-group">
@@ -22,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-md-6">
                 <div class="form-group">
                     <select class="form-select form-control" formControlName="idProduct">
@@ -32,10 +31,10 @@
                     </select>
                 </div>
             </div>
-            <div class="form-check col-md-6">
+            <div class="form-check col-md-6 mt-2">
                 <input class="form-check-input" type="checkbox" id="showDeleted" formControlName="isDeleted">
                 <label class="form-check-label" for="showDeleted">
-                    Inactivos
+                    Descuentos caducados
                 </label>
             </div>
         </div>
@@ -46,8 +45,9 @@
                 <th class="nameColumn" (click)="sortTable('name')">
                     Nombre
                     <i class="bi bi-arrow-up-down"
-                      [ngClass]="{'bi-arrow-down': sortOrder === 'asc', 'bi-arrow-up': sortOrder === 'desc'}"></i>
-                  </th>                <th>Descuento</th>
+                        [ngClass]="{'bi-arrow-down': sortOrder === 'asc', 'bi-arrow-up': sortOrder === 'desc'}"></i>
+                </th>
+                <th>Descuento</th>
                 <th>Fecha Inicio</th>
                 <th>Fecha Fin</th>
                 <th>Estado</th>

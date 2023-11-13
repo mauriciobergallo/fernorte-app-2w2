@@ -46,7 +46,6 @@ export class ListCategoriesComponent implements OnInit {
     this.getCategories();
   }
   getCategories() {
-    debugger
     this.categoryService.get(this.currentPage, this.itemsPerPage, this.sortBy, this.sortDir, this.filterCategory.value.isDeleted, this.filterCategory.value.name).subscribe({
       next: (cat) => {
         this.isLoading = false;
@@ -89,7 +88,7 @@ export class ListCategoriesComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: "#dc3545",
       cancelButtonColor: "#6c757d",
-      confirmButtonText: "¡Sí, bórrar!",
+      confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar"
     }).then((result) => {
       if (result.isConfirmed) {
