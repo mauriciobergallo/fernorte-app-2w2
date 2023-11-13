@@ -14,8 +14,7 @@ export class BillServiceService {
   urlBase:string="http://localhost:8008/bills";
 
 
-  constructor(private billProvider: BillingProvider,
-    private http : HttpClient) { }
+  constructor(private http : HttpClient) { }
 
 
     getBills() : Observable<BillModel[]> {
