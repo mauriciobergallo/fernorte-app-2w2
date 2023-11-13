@@ -1,33 +1,40 @@
-<div class="container">
+<div class="container-fluid">
   <div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
       Filtros
     </button>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Filtros</h5>
+            <h5 class="modal-title" id="staticBackdropLabel">Filtros</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             Seleccione sus filtros
-            <form>
+            <form #filterForm="ngForm" (ngSubmit)="onSendFilters(filterForm)">
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Documento de cliente</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="email" class="form-control" id="exampleInputEmail1" 
+                name="doc"
+                #docControl="ngModel"
+                [(ngModel)]="doc">
               </div>
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Número de presupuesto</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
+                <input type="text" class="form-control" id="exampleInputPassword1"
+                name="idOrder"
+                #idOrderControl="ngModel"
+                [(ngModel)]="idOrder">
               </div>
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Estado de presupuesto</label>
-                <select class="form-control" aria-label="Default select example">
-                  <option selected>Pendiente de pago</option>
-                  <option value="1">Presupuesto</option>
-                  <option value="2">Pendiente de entrega</option>
-                  <option value="3">Entregado</option>
+                <select class="form-control" aria-label="Default select example"
+                name="stateOrder"
+                #stateOrderControl="ngModel"
+                [(ngModel)]="stateOrder">
+                  <option selected
+                  *ngFor="let state of saleOrderStates" [value]="state">{{state | translateStates}}</option>
                 </select>
                 <div class="row">
                   <div class="mb-3 col">
@@ -35,27 +42,29 @@
                     <input type="date" class="form-control" id="fromDate" 
                     placeholder=""
                     name="fromDate"
-                    required>
+                    #fromDateControl="ngModel"
+                    [(ngModel)]="fromDate">
                   </div>
                   <div class="mb-3 col">
                     <p>Hasta</p>
                     <input type="date" class="form-control" id="toDate" 
                     placeholder=""
                     name="toDate"
-                    required>
+                    #toDateControl="ngModel"
+                    [(ngModel)]="toDate">
                   </div>
                 </div>
               </div>
+              <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Aplicar</button>
+              </div>
             </form>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Aplicar</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
           <tr>
             <th scope="col">Número</th>
@@ -64,6 +73,7 @@
             <th scope="col">Fecha</th>
             <th scope="col">Estado</th>
             <th scope="col">Detalle</th>
+            <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -72,13 +82,24 @@
             <td>{{item.idClient}}</td>
             <td>{{item.idSeller}}</td>
             <td>{{item.dateOfIssue | date:'short'}}</td>
-            <td>{{item.stateSaleOrder}}</td>
+            <td>{{item.stateSaleOrder | translateStates}}</td>
             <td>
                 <ul>
                     <li *ngFor="let prod of item.details">
                         {{prod.idProduct}}
                     </li>
                 </ul>
+            </td>
+            <td class="text-center">
+              <div class="dropdown">
+                <button type="button" class="btn btn-light dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a (click)="onShowDetails()">Ver detalles</a>
+                  <a (click)="onPrint()">Imprimir</a>
+                </div>
+              </div>
             </td>
           </tr>
         </tbody>

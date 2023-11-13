@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { HomeComponent } from './components/home/home.component';
 
-import { SaleOrderSearchHandlerComponent } from './components/sale-order-search-handler/sale-order-search-handler.component';
-import { SaleOrderSearchFilterComponent } from './components/sale-order-search-filter/sale-order-search-filter.component';
 import { SaleOrderSearchListComponent } from './components/sale-order-search-list/sale-order-search-list.component';
 import { SaleOrderProvider } from './services/salesOrder/SaleOrderProvider';
 import { ProductProvider } from './services/products/productProvider';
@@ -25,20 +24,18 @@ import { SaleOrderNavComponent } from './components/sale-order-nav/sale-order-na
 import { BillingNavComponent } from './components/billing-nav/billing-nav.component';
 import { ReportNavComponent } from './components/report-nav/report-nav.component';
 import { TurnProvider } from './services/turns/TurnProvider';
-import { BillingProvider } from './services/billing/BillingProvider';
-import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
+import { TranslateStatesPipe } from './pipes/translateStates.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TaxComponent } from './components/tax/tax.component';
 
 @NgModule({
   declarations: [HomeComponent,
-    SaleOrderComponent,
-    CalcularTotalPipe,
-    CalcularImpuestosPipe,
+    SaleOrderComponent, 
+    CalcularTotalPipe, 
+    CalcularImpuestosPipe, 
     CalcularMontoTotalPipe,
-    SaleOrderSearchHandlerComponent,
-    SaleOrderSearchFilterComponent,
-    SaleOrderSearchListComponent,
-    BillingComponent,
+    SaleOrderSearchListComponent, 
+    BillingComponent, 
     PaymentMethodComponent,
     CreatePaymentComponent,
     SidenavComponent,
@@ -46,34 +43,33 @@ import { ReactiveFormsModule } from '@angular/forms';
     SaleOrderNavComponent,
     BillingNavComponent,
     ReportNavComponent,
-  BillingSearchListComponent],
+    TranslateStatesPipe,
+    TaxComponent,
+    ReportNavComponent],
 
   providers: [SaleOrderProvider,
     ProductProvider,
     ClientProvider,
-    TurnProvider,
-  BillingProvider],
+    TurnProvider],
 
   imports: [CommonModule,
-    FormsModule,
-    RouterModule,
+    FormsModule, 
+    RouterModule, 
     RouterChildModule,
     ReactiveFormsModule],
 
   exports: [HomeComponent,
-    SaleOrderComponent,
-    CalcularTotalPipe,
-    SaleOrderSearchHandlerComponent,
-    SaleOrderSearchFilterComponent,
-    SaleOrderSearchListComponent,
-    BillingComponent,
+    SaleOrderComponent, 
+    CalcularTotalPipe, 
+    SaleOrderSearchListComponent, 
+    BillingComponent, 
     PaymentMethodComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
-    ReportNavComponent,
-  BillingSearchListComponent],
+    TaxComponent,
+    ReportNavComponent],
 })
 export class SalesModule {}
