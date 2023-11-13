@@ -44,13 +44,11 @@ import { TaxComponent } from './components/tax/tax.component';
     SaleOrderNavComponent,
     BillingNavComponent,
     ReportNavComponent,
-
-    SaleOrderViewComponent],
-
+    SaleOrderViewComponent,
     TranslateStatesPipe,
     TaxComponent,
     ReportNavComponent],
-   sales&bill/develop
+
 
   providers: [SaleOrderProvider,
     ProductProvider,
@@ -74,10 +72,8 @@ import { TaxComponent } from './components/tax/tax.component';
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
-
     ReportNavComponent,
-    SaleOrderViewComponent],
-
+    SaleOrderViewComponent,
     TaxComponent,
     ReportNavComponent]
 

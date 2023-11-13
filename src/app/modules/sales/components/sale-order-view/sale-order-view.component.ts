@@ -54,12 +54,19 @@ export class SaleOrderViewComponent implements OnInit {
   
   subtotal:number = 0;
   iva: number = 0;
+  saleOrderId: number = 0;
 
   constructor(private saleOrderService : SaleOrderServiceService, private activatedRoute: ActivatedRoute, 
     private router: Router,) {}
 
   ngOnInit(): void {
-    this.calculateSub();
+    this.activatedRoute.paramMap.subscribe(s => {
+      this.saleOrderId = +s.get('id')!});
+      this.saleOrderService.getSaleOrdersById(this.saleOrderId).subscribe((x)=>{
+      this.listSaleOrder = x;
+      });   
+
+      this.calculateSub();
     this.calculateIva();
 
   }
