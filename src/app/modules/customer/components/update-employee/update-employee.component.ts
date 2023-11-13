@@ -5,6 +5,7 @@ import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../models/employee';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
+import { EmployeeResponseDTO } from '../../models/employeeResponseDTO';
 
 
 @Component({
@@ -21,6 +22,8 @@ export class UpdateEmployeeComponent implements OnInit{
   
   @Input() idEmployee:number=0;
   
+  @Input() employeeToUpdate: EmployeeResponseDTO | undefined;
+
   minDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
   maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };;
   currentYear = new Date().getFullYear();
@@ -74,7 +77,7 @@ export class UpdateEmployeeComponent implements OnInit{
   
     ngOnInit(): void {
     
-      console.log(this);
+      console.log("EMPLEADO", this.employeeToUpdate);
     }
     
   	loadEmployeeData(idEmployee: number) {
@@ -99,6 +102,7 @@ export class UpdateEmployeeComponent implements OnInit{
   
     open(content:any) {
     
+      console.log("PRUEBA PRUEBA PRUEBA");
       this.loadEmployeeData(this.idEmployee);
       this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then(
         (result) => {

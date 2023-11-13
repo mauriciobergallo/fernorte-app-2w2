@@ -34,7 +34,7 @@
             <div class="dropdown-content">
               <!-- <a (click)="onOptionClick('info')">Más Información</a> -->
             
-              <a class="btn btn-lg btn-outline-primary" (click)="openUpdateEmployeeModal(e.idEmployee)">Actualizar</a>
+              <a (click)="openUpdateEmployeeModal(e)">Actualizar</a>
 
               <a *ngIf="e.isActive" (click)="onDelete(e)">Eliminar</a>
               <a *ngIf="!e.isActive" (click)="onActive(e)">Activar</a>

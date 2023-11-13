@@ -69,10 +69,10 @@ export class EmployeeListComponent implements OnInit {
     );
   }
   
-  openUpdateEmployeeModal(idEmployee: number) {
-    this.selectedEmployeeId = idEmployee;
+  openUpdateEmployeeModal(employee: EmployeeResponseDTO) {
+    this.selectedEmployeeId = employee.idEmployee;
     const modalRef = this.modalService.open(UpdateEmployeeComponent, { ariaLabelledBy: 'modal-basic-title' });
-    modalRef.componentInstance.idEmployee = idEmployee; // Pasar el ID del empleado al componente de actualización
+    modalRef.componentInstance.employeeToUpdate = employee; // Pasar el ID del empleado al componente de actualización
     
     modalRef.componentInstance.updateClicked.subscribe(() => {
       // Abrir el modal del formulario de actualización
