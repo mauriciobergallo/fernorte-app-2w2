@@ -1,10 +1,8 @@
-<section class="content test">
-  <div class="container">
+<section class="container-fluid">
     <div class="row" *ngIf="showDropDown">
-      <h5 class="col-sm-4 col-form-label col-form-label">
-        Seleccionar proveedor
+      <h5 class="col-sm-4 col-form-label">
+        Seleccione un proveedor:
       </h5>
-
       <div class="col-sm-6">
         <select
           class="form-select border border-primary"
@@ -17,7 +15,6 @@
           </option>
         </select>
       </div>
-
       <div class="col-sm-2">
         <button
           type="button"
@@ -28,49 +25,5 @@
         </button>
       </div>
     </div>
-  </div>
-
-  <hr />
-
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <h4 class="text-center">Datos del proveedor seleccionado</h4>
-      </div>
-
-      <div class="container">
-        <div class="row my-2 border border-success p-2 border-opacity-10">
-          <div class="col-md-3">
-            <label for="razon">Razon Social:</label>
-          </div>
-          <div class="col-md-3">
-            {{ supplierSelected.socialReason }}
-          </div>
-
-          <div class="col-md-3">
-            <label for="direccion">Nombre Fantasia</label>
-          </div>
-          <div class="col-md-3">
-            {{ supplierSelected.fantasyName }}
-          </div>
-        </div>
-
-        <div class="row my-4 border border-success p-2 border-opacity-10">
-          <div class="col-md-3">
-            <label for="cuit">Cuit:</label>
-          </div>
-          <div class="col-md-3">
-            {{ supplierSelected.cuit }}
-          </div>
-
-          <div class="col-md-3">
-            <label for="direccion">Dirección:</label>
-          </div>
-          <div class="col-md-3">
-            {{ supplierSelected.adress }}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </section>
+<hr />

@@ -1,19 +1,38 @@
 <aside class="right-sidebar">
   <div class="header">
-    <h2>Carrito</h2>
-    <hr class="separator" />
+    <h2 class="mb-0 mt-3">Carrito</h2>
+    <!-- <hr class="separator" /> -->
+    <hr />
   </div>
-  <div class="content">
-    <div *ngFor="let product of cardProducts" class="item">
-      <div class="item-content">
-        <div class="info">
-          <p>{{ product.name }}</p>
-          <p>X{{ product.quantity }}</p>
-        </div>
-        <button (click)="removeItem(product)">Remove</button>
-      </div>
+  <div class="container-fluid justify-content-center cart">
+    <div *ngIf="cardProducts.length === 0">
+      <h6 class="text-center">El carrito está vacío</h6>
     </div>
-    <hr class="separator" />
-    <button class="final-button" (click)="logToConsole(); purchaseOrderFlow()">Click Me</button>
+    <div *ngFor="let product of cardProducts" class="d-flex justify-content-center margin">
+        <div class="item">
+          <div class="prod">
+            <span>{{ product.name }}</span>
+            <span>x{{ product.quantity }}</span>
+          </div>
+          <button type="button" class="btn btn-outline-danger btn-sm m-0" (click)="removeItem(product)">Quitar</button>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center margin">
+      <div class="item">
+        <div class="prod">
+          <span><strong>Total:</strong> {{ total | currency }}</span>
+        </div>
+      </div>
+  </div>
+    <div class="text-center bottom">
+      <button
+        type="button"
+        class="btn btn-primary m-0"
+        (click)="onSubmit()"
+        [disabled]="cardProducts.length === 0"
+      >
+        Siguiente
+      </button>
+    </div>
   </div>
 </aside>

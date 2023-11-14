@@ -39,7 +39,4 @@ export interface PaymentOrderDetailResponse {
 
 export type PaymentMethod = 'CASH' | 'DEBIT' | 'CREDIT'
 export type PaymentState = 'GENERATED' | 'PAID' | 'ACCEPTED' | 'CANCELLED'
-
-
 export type PaymentFlow = 'GRID' | 'METHODS' | 'PREVIEW'
-

@@ -1,0 +1,52 @@
+<div class="modal-body">
+  <form class="model-container" #miForm="ngForm">
+    <div class="d-flex justify-content-center align-items-center fs-4 fw-bold">
+      Agregar Producto a Proveedor
+    </div>
+    <div class="d-flex justify-content-between align-items-center m-2">
+      <span>Precio</span>
+      <input
+        type="number"
+        name="price"
+        [(ngModel)]="product.precio"
+        #priceInput="ngModel"
+        class="form-control w-50"
+        [ngClass]="{
+          'border-red': !priceInput.valid && priceInput.touched
+        }"
+        required
+      />
+    </div>
+    <div class="d-flex justify-content-between align-items-center m-2">
+      <span>Observaciones</span>
+      <textarea
+        type="text"
+        name="observations"
+        class="form-control w-50"
+        [(ngModel)]="product.observations"
+        #observationsInput="ngModel"
+        [ngClass]="{
+          'border-red': !observationsInput.valid && observationsInput.touched
+        }"
+      ></textarea>
+    </div>
+    <div class="d-flex justify-content-center align-items-center mt-4">
+      <button class="btn btn-secondarymx-2" (click)="closeModal()">
+        Volver
+      </button>
+      <button
+        class="btn btn-primary"
+        (click)="addSupplier()"
+        type="submit"
+        [disabled]="miForm.invalid"
+        [swal]="[
+          'Transaccion Completada!',
+          'Producto Asignado Con Exito!',
+          'success'
+        ]"
+      >
+        Confirmar
+      </button>
+    </div>
+  </form>
+</div>

@@ -5,12 +5,14 @@ import { ListSuplierComponent } from './components/supplier/list-suplier/list-su
 import { PurchaseOrderContainerComponent } from './components/purchase-order-container/purchase-order-container.component';
 import { PaymentOrderContainerComponent } from './components/payment-order-container/payment-order-container.component';
 import { ClaimOrderContainerComponent } from './components/claim-order-container/claim-order-container.component';
+import { ProductsSupplierComponent } from './components/supplier/products-supplier/products-supplier.component';
 
 
 const childRoutes: Routes = [
   {path: '', component: ReportContainerComponent},
   {path: 'report', component: ReportContainerComponent},
   {path: 'supplier', component: ListSuplierComponent},
+  {path: 'supplier/products', component: ProductsSupplierComponent},
   {path: 'purchase-order', component: PurchaseOrderContainerComponent},
   {path: 'payment-order', component: PaymentOrderContainerComponent},
   {path: 'claim-order', component: ClaimOrderContainerComponent}];
