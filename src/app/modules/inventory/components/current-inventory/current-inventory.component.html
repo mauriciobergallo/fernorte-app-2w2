@@ -16,12 +16,12 @@
         </thead>
         <tbody>
             <tr *ngFor="let locationInfo of locationInfoList">
-                <td>{{ locationInfo.productName }}</td>
+                <td>{{ locationInfo.product_name }}</td>
                 <td>{{ locationInfo.location.zone }}</td>
                 <td>{{ locationInfo.location.section }}</td>
                 <td>{{ locationInfo.location.space }}</td>
                 <td>{{ locationInfo.quantity }}</td>
-                <td>{{ locationInfo.maxCapacity }}</td>
+                <td>{{ locationInfo.max_capacity }}</td>
             </tr>
         </tbody>
     </table>

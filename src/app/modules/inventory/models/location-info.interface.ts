@@ -6,9 +6,9 @@ interface Location {
   
   export interface LocationInfoDto {
     location: Location;
-    categoryName: string;
-    productName: string;
+    category_name: string;
+    product_name: string;
     quantity: number;
-    measureUnit: number;
-    maxCapacity: number;
+    measure_unit: number;
+    max_capacity: number;
   }
