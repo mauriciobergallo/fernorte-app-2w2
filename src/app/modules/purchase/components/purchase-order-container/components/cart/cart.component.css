@@ -1,66 +1,45 @@
 .right-sidebar {
+    position: fixed;
     display: flex;
     flex-direction: column;
-    position: fixed;
-    top: 1;
-    right: 0;
-    height: 100%;
-    width: 300px;
+    height: 100vh;
     background-color: #f0f0f0;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     z-index: 999;
+    width: 20vw;
+    right: 0;
   }
   
-  .header {
+ .header {
     text-align: center;
-    padding: 20px 0;
   }
   
   .header h2 {
     margin: 0;
   }
   
-  .separator {
-    width: 100%;
-    margin: 10px auto;
-    border: 1px solid #000000;
-  }
-  
   .content {
     padding: 20px;
   }
   
+  .margin {
+    margin: 1vh 0;
+    margin-bottom: auto;
+  }
+  
   .item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px 0;
-  }
-  
-  .item-content {
-    display: flex;
-    align-items: center;
-  }
-  
-  .info {
-    flex: 1;
-  }
-  
-  button {
-    margin-left: 4rem;
-    margin-bottom: 1rem;
+    justify-content: space-around;
+    width: 100%;
   }
 
-  .final-button {
-    background-color: #007BFF;
-    color: #000;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    justify-content: center;
+  .prod {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 75%;
   }
-  
-  .final-button:hover {
-    background-color: #0056b3;
+
+  .bottom {
+    margin-top: 2vh;
   }
-  

@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ISupliers } from '../../../models/ISuppliers';
+import { ISupplier } from '../../../models/ISuppliers';
 
 @Pipe({
   name: 'buscar'
 })
 export class BuscarPipe implements PipeTransform {
 
-  transform(list: ISupliers[], buscar: string = ""): ISupliers[] {
+  transform(list: ISupplier[], buscar: string = ""): ISupplier[] {
 
     if(buscar.length == 0){
       return list

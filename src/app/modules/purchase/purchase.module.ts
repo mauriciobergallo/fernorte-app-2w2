@@ -4,8 +4,9 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
 import { ListSuplierComponent } from './components/supplier/list-suplier/list-suplier.component';
 import { FormsModule } from '@angular/forms';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
-import {NgbDropdownMenu, NgbDropdownModule, NgbModule, NgbToastModule} from "@ng-bootstrap/ng-bootstrap"
+import {NgbDropdownMenu, NgbDropdownModule, NgbModalModule, NgbModule, NgbToastModule} from "@ng-bootstrap/ng-bootstrap"
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { BuscarPipe } from './components/supplier/pipes/buscar.pipe';
 import { AddSupplierComponent } from './components/supplier/add-supplier/add-supplier.component';
@@ -29,12 +30,19 @@ import { OrderButtonsComponent } from './components/shared/order-buttons/order-b
 import { RouterModule } from '@angular/router';
 
 import { RouterChildModule } from './router-child.module';
+import { AddProductModalComponent } from './components/supplier/add-product-modal/add-product-modal.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, TotalSidebarComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent],
+  declarations: [HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, TotalSidebarComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent, AddProductModalComponent],
   providers: [],
-  imports: [CommonModule, FormsModule,NgbModule, NgbPaginationModule, NgbDropdownModule, NgbToastModule,RouterModule, RouterChildModule],
+  imports: [CommonModule, FormsModule,NgbModule, NgbPaginationModule, NgbDropdownModule, NgbToastModule,RouterModule, RouterChildModule, NgbModalModule, SweetAlert2Module.forRoot({
+    provideSwal: () => import('sweetalert2').then(({ default: swal }) => swal.mixin({
+      // example: set global options here
+      confirmButtonText: `Confirmar`,
+      cancelButtonText: `Cancelar`
+    }))
+  })],
   exports: [HomeComponent],
 })
 export class PurchaseModule {}

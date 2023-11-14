@@ -5,128 +5,127 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { IContacts, IProduct, ISupliers } from '../../../models/ISuppliers';
+import { IContacts, IProduct, ISupplier } from '../../../models/ISuppliers';
 import { PurchaseModule } from '../../../purchase.module';
-import { SupliersService } from '../../../services/supliers.service';
+import { SupliersService } from '../services/supliers.service';
 import { Subscription } from 'rxjs';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ContactsComponent } from '../contacts/contacts.component';
+import { AddSupplierComponent } from '../add-supplier/add-supplier.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-list-suplier',
   templateUrl: './list-suplier.component.html',
   styleUrls: ['./list-suplier.component.css'],
 })
-export class ListSuplierComponent implements OnInit, OnDestroy {
-  isOpenAddSupplier: boolean = false;
-  isOpenContacts: boolean = false;
-  isOpenAddContact: boolean = false;
-  isOpenProductSupplier: boolean = false;
-
-  toastAddSupplier: boolean = false;
-  toastAddContact: boolean = false;
-  toastRemovedContact: boolean = false;
-
-  suplier: ISupliers = {} as ISupliers;
-  supliers: ISupliers[] = [];
-  contacts: IContacts = {} as IContacts;
-
-  supplier2: ISupliers = {} as ISupliers;
-
+export class ListSuplierComponent implements OnInit {
+  page = 1;
+  pageSize = 3;
   suscription = new Subscription();
+  collapsed = true;
+  suppliers: ISupplier[] = [];
+  filteredSuppliers: ISupplier[] = [];
+  showValue: string = '2';
 
-  constructor(private _serviceSuplier: SupliersService) {}
+  constructor(
+    private _serviceSuplier: SupliersService,
+    private modalService: NgbModal,
+    private _supplierService: SupliersService
+  ) {}
+
+  ngOnInit() {
+    this.loadSuppliers();
+    this._serviceSuplier.productCreated$.subscribe(() => {
+      this.loadSuppliers();
+    });
+  }
+
+  filterSuppliers(searchText: string) {
+    // Update the filteredSuppliers based on the search text
+    this.filteredSuppliers = this.suppliers.filter((supplier) => {
+      const cuitStr = supplier.cuit.toString(); // Convert cuit to a string
+      return (
+        supplier.socialReason
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        supplier.fantasyName.toLowerCase().includes(searchText.toLowerCase()) ||
+        cuitStr.includes(searchText) || // Compare as a string
+        supplier.adress.toLowerCase().includes(searchText.toLowerCase())
+      );
+    });
+  }
+
+  loadSuppliers() {
+    if (this.showValue == '1') {
+      this._supplierService.getSupliers().subscribe((suppliers) => {
+        this.suppliers = suppliers;
+        this.filteredSuppliers = suppliers;
+      });
+    } else if (this.showValue == '2') {
+      this._supplierService.getActiveSuppliers().subscribe((suppliers) => {
+        this.suppliers = suppliers;
+        this.filteredSuppliers = suppliers;
+      });
+    } else if (this.showValue == '3') {
+      this._supplierService.getInactiveSuppliers().subscribe((suppliers) => {
+        this.suppliers = suppliers;
+        this.filteredSuppliers = suppliers;
+      });
+    }
+  }
+
+  showFunction(isActive: boolean | undefined) {
+    if (this.showValue == '1') {
+      return true;
+    } else if (isActive && this.showValue == '2') {
+      return true;
+    } else if (!isActive && this.showValue == '3') {
+      return true;
+    }
+    return false;
+  }
+
+  openModal(id: number) {
+    this.modalService.open(ContactsComponent, {
+      backdrop: 'static',
+      size: 'lg',
+    });
+    this._serviceSuplier.selectedSupplier = id;
+  }
+
+  openModalNewSupplier() {
+    this.modalService.open(AddSupplierComponent, {
+      backdrop: 'static',
+      size: 'lg',
+    });
+  }
 
   ngOnDestroy(): void {
     this.suscription.unsubscribe();
   }
 
-  ngOnInit(): void {
-    this.refescarService();
-  }
-
-  showAddSupplier() {
-    this.isOpenAddSupplier = true;
-  }
-
-  closeAddSupplier() {
-    this.isOpenAddSupplier = false;
-  }
-
-  openContacts(id: number) {
-    this.obtenerContactos(id);
-    this.isOpenContacts = true;
-  }
-
-  closeContacts() {
-    this.isOpenContacts = false;
-  }
-
   openProducts(id: number) {
-    this._serviceSuplier.getSuplier(id).subscribe({
-      next: (data: ISupliers) => {
-        this.supplier2 = data;
-        this.isOpenProductSupplier = true;
-      },
-      error: (error: any) => {
-        console.log(error);
-      },
-    });
-  }
-
-  refescarService() {
-    this.suscription.add(
-      this._serviceSuplier.getSupliers().subscribe({
-        next: (data: ISupliers[]) => {
-          this.supliers = data;
-        },
-        error: (error: any) => {
-          console.log(error);
-        },
-      })
-    );
-  }
-
-  addedSupplier() {
-    this.toastAddSupplier = true;
-    this.refescarService();
+    this._serviceSuplier.selectedSupplier = id;
   }
 
   obtenerContactos(id: number) {
+    this.suscription.add(this._serviceSuplier.getContacts(id).subscribe({}));
+  }
+  deleteSupplier(id: number) {
     this.suscription.add(
-      this._serviceSuplier.getContacts(id).subscribe({
-        next: (data: IContacts) => {
-          this.contacts = data;
-        },
-        error: (error: any) => {
-          console.log(error);
-        },
+      this._serviceSuplier.deleteSuplier(id).subscribe(() => {
+        this.loadSuppliers();
+        Swal.fire({
+          title: 'Transaccion completada',
+          text: 'Proveedor Eliminado con Exito!',
+          icon: 'success',
+        });
       })
     );
   }
 
-  addedContact(){
-    this.toastAddContact = true;
-  }
-
-  removedContact(){
-    this.toastRemovedContact = true;
-  }
-
-  eliminar(suplier: ISupliers) {
-    let confirmar = confirm(
-      '¿Desea eliminar el proveedor ' + suplier.socialReason + '?'
-    );
-
-    if (!confirmar) {
-      return;
-    }
-
-    this.suscription.add(
-      this._serviceSuplier.deleteSuplier(suplier).subscribe({
-        next: (data: ISupliers) => {
-          this.refescarService();
-        },
-        error: (error) => alert('error al eliminar: ' + error),
-      })
-    );
+  onPageChange(page: number) {
+    this.page = page;
   }
 }

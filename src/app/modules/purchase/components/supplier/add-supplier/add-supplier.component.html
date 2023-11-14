@@ -1,7 +1,4 @@
-<div class="model-container">
-  <div class="cross-container">
-    <button class="cross" (click)="closeModal()">X</button>
-  </div>
+<div class="modal-body">
   <form
     #miForm="ngForm"
     class="container h-100 d-flex flex-column justify-content-between"
@@ -66,16 +63,27 @@
         />
       </div>
     </div>
-    <div class="d-grid gap-2 col-4 mx-auto">
+    <div class="d-flex justify-content-center gap-2">
+      <button
+        type="submit"
+        class="btn btn-secondary my-4"
+        (click)="closeModal()"
+      >
+        Volver
+      </button>
       <button
         type="submit"
         class="btn btn-primary my-4"
         [disabled]="miForm.invalid"
         (click)="addSupplier()"
+        [swal]="[
+          'Transaccion Completada!',
+          'Proveedor Cargado con Exito!',
+          'success'
+        ]"
       >
-        Guardar
+        Confirmar
       </button>
     </div>
   </form>
 </div>
-

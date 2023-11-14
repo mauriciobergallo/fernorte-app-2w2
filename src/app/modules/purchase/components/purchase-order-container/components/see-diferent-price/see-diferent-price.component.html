@@ -1,0 +1,29 @@
+<div class="container">
+    <form class="d-flex" role="search">
+      <div class="input-group mb-3">
+        <input class="form-control"  name="searchText" type="search" placeholder="Search" aria-label="Search">
+      </div>
+    </form>
+  
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Nombre del Producto</th>
+          <th scope="col">Nombre del Proveedor</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Acciones</th>
+          <!-- Agrega cualquier otra cabecera de columna que desees mostrar -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listAll | filter: searchText">
+          <td>{{ item.productName }}</td>
+          <td>{{ item.supplierName }}</td>
+          <td>{{ item.price }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="comprarProducto(item.productName)">Comprar</button>
+          </td>          
+        </tr>
+      </tbody>
+    </table>
+  </div>

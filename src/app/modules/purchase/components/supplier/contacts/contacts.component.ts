@@ -1,64 +1,88 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SupliersService } from '../../../services/supliers.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SupliersService } from '../services/supliers.service';
 import { Contact, IContacts } from '../../../models/ISuppliers';
 import { Subscription } from 'rxjs';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-contacts',
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css'],
 })
-export class ContactsComponent {
-  @Input() contacts: IContacts = {} as IContacts;
-  @Output() closeContacts = new EventEmitter<string>();
-  @Output() refreshService = new EventEmitter<number>();
-  @Output() addedContact = new EventEmitter<string>();
-  @Output() removedContact = new EventEmitter<string>();
-
-  buttonText: string = 'Agregar';
-
+export class ContactsComponent implements OnInit {
   showingList: boolean = true;
 
   contact: Contact = {} as Contact;
 
-  constructor(private _serviceSuplier: SupliersService) {}
+  contacts: IContacts = this._serviceSuplier.contacts;
+
+  getContacts() {
+    this._serviceSuplier
+      .getContacts(this._serviceSuplier.selectedSupplier)
+      .subscribe({
+        next: (data: any) => {
+          this.contacts = data;
+        },
+        error: (error: any) => {
+          console.log(error);
+        },
+      });
+  }
+
+  ngOnInit() {
+    this.getContacts();
+  }
+
+  constructor(
+    private _serviceSuplier: SupliersService,
+    public activeModal: NgbActiveModal
+  ) {}
+
+  closeModal() {
+    this.activeModal.close('Modal closed');
+  }
 
   suscription = new Subscription();
 
   switchShowing() {
     this.showingList = !this.showingList;
-    this.refreshService.emit(this.contacts.id);
-    this.buttonText = this.showingList ? 'Agregar' : 'Listado';
   }
 
   onSubmit() {
     this.suscription.add(
-      this._serviceSuplier.addContact(this.contacts.id, this.contact).subscribe({
+      this._serviceSuplier.addContact(this.contact).subscribe({
         next: (data: any) => {
-          this.contact.contactType = ''
-          this.contact.contactValue = ''
-          this.addedContact.emit();
+          this.contact.contactType = '';
+          this.contact.contactValue = '';
           this.switchShowing();
+          this.getContacts();
+          Swal.fire({
+            title: 'Transaccion completada',
+            text: 'Contacto Asignado con Exito!',
+            icon: 'success',
+          });
         },
         error: (error) => alert('error al cargar: ' + error),
       })
     );
   }
 
-  deleteContact(contact: Contact){
+  deleteContact(contact: Contact) {
     this.suscription.add(
-      this._serviceSuplier.deleteContact(this.contacts.id, contact).subscribe({
-        next: (data: any) => {
-          this.removedContact.emit();
-          this.refreshService.emit(this.contacts.id);
-        },
-        error: (error: any) => alert('error al cargar: ' + error),
-      })
+      this._serviceSuplier
+        .deleteContact(this._serviceSuplier.selectedSupplier, contact)
+        .subscribe({
+          next: (data: any) => {
+            this.getContacts();
+            Swal.fire({
+              title: 'Transaccion completada',
+              text: 'Contacto Eliminado con Exito!',
+              icon: 'success',
+            });
+          },
+          error: (error: any) => alert('error al cargar: ' + error),
+        })
     );
-  }
-
-
-  closeModal() {
-    this.closeContacts.emit();
   }
 }

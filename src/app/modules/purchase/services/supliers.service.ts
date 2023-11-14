@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Contact, IContacts, ISupliers } from '../models/ISuppliers';
+import { Contact, IContacts, ISupplier } from '../models/ISuppliers';
 
 @Injectable({
   providedIn: 'root',
@@ -9,16 +9,17 @@ import { Contact, IContacts, ISupliers } from '../models/ISuppliers';
 export class SupliersService {
   url: string = 'http://localhost:8080/suppliers';
 
+  
   constructor(private _http: HttpClient) {}
 
   
 
-  getSupliers(): Observable<ISupliers[]> {
-    return this._http.get<ISupliers[]>(this.url + '/');
+  getSupliers(): Observable<ISupplier[]> {
+    return this._http.get<ISupplier[]>(this.url);
   }
 
-  getSuplier(id: number): Observable<ISupliers> {
-    return this._http.get<ISupliers>(this.url + '/' + id);
+  getSuplier(id: number): Observable<ISupplier> {
+    return this._http.get<ISupplier>(this.url + '/' + id);
   }
 
   getContacts(id: number): Observable<IContacts> {
@@ -34,15 +35,15 @@ export class SupliersService {
   }
 
 
-  addSuplier(suplier: ISupliers): Observable<ISupliers> {
-    return this._http.post<ISupliers>(this.url, suplier);
+  addSuplier(suplier: ISupplier): Observable<ISupplier> {
+    return this._http.post<ISupplier>(this.url, suplier);
   }
 
-  deleteSuplier(suplier: ISupliers): Observable<ISupliers> {
-    return this._http.delete<ISupliers>(this.url + '/' + suplier.id);
+  deleteSuplier(suplier: ISupplier): Observable<ISupplier> {
+    return this._http.delete<ISupplier>(this.url + '/' + suplier.id);
   }
 
-  updateSuplier(suplier: ISupliers): Observable<ISupliers> {
-    return this._http.put<ISupliers>(this.url + '/' + suplier.id, suplier);
+  updateSuplier(suplier: ISupplier): Observable<ISupplier> {
+    return this._http.put<ISupplier>(this.url + '/' + suplier.id, suplier);
   }
 }
