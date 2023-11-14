@@ -5,7 +5,9 @@ import {PaymentMethodService} from "../../services/payment-method.service";
 import {IPaymentMethod} from "../../interfaces/ipayment-method";
 import {SaleOrderServiceService} from "../../services/salesOrder/sale-order-service.service";
 import _default from "chart.js/dist/plugins/plugin.tooltip";
+
 import numbers = _default.defaults.animations.numbers;
+import Swal from "sweetalert2";
 declare var window: any;
 
 @Component({
@@ -17,12 +19,12 @@ export class BillingComponent {
   paymentMethods: any[] = [];
   paymentList: any = [];
   amount: number | null = null;
-  totalAmount: number | null = null;
+  totalAmount: number | null = 0;
   orderId: number | null = null;
   paymentModal: any;
   selectedPaymentMethod: any = -1;
   order: any = {};
-  name: string = "";
+  name: string = "Ingrese numero de orden";
   amountPayed:number =  0;
   subCharges:number =  0;
   realAmount : number = 0;
@@ -46,11 +48,21 @@ export class BillingComponent {
   finishPayment() {
     // confirm or save something
     if(this.amountPayed == this.realAmount){
-      alert("pagado");
+      /*Swal.fire({
+        title: "Pago exitoso!",
+        text: "Se realizó correctamente el pago",
+        icon: "success"
+      });*/
+      alert("pago exitoso")
       this.paymentModal.hide();
       return
     }
-    alert("monto restante a pagar")
+    /*Swal.fire({
+      title: "Pago no completado!",
+      text: "Todavía queda monto restante a pagar",
+      icon: "error"
+    });*/
+    alert("pago no completado")
   }
 
   printOrder() {
@@ -58,12 +70,26 @@ export class BillingComponent {
   }
 
   cancelOrder() {
-
+    this.paymentList = [];
+    this.amount = null;
+    this.totalAmount = 0;
+    this.orderId = null;
+    this.selectedPaymentMethod = -1;
+    this.order = {};
+    this.name = "Ingrese numero de orden";
+    this.amountPayed =  0;
+    this.subCharges =  0;
+    this.realAmount = 0;
   }
 
   checkOrder() {
     if (this.orderId == null || !this.billService.checkOrder(Number(this.orderId))) {
-      alert("invalidOrder")
+      /*Swal.fire({
+        title: "Orden invalida!",
+        text: "Cargue una orden valida!",
+        icon: "error"
+      });*/
+      alert("orden invalida");
       return
     }
     this.openPaymentModal()
@@ -73,7 +99,12 @@ export class BillingComponent {
   addPayment() {
     if (this.selectedPaymentMethod != -1 && this.amount != null){
       if((Number(this.amount) + Number(this.amountPayed)) > Number(this.realAmount)){
-        alert("Monto superado")
+        /*Swal.fire({
+          title: "Monto superado!",
+          text: "Ingrese un monto valido",
+          icon: "error"
+        });*/
+        alert("monto superado");
         return
       }
       this.paymentList.push({

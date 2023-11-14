@@ -9,13 +9,20 @@
         <form #f="ngForm">
           <div class="row">
             <div class="col-4 pt-2">
-              <select class="form-select" aria-label="paymentSelect" id="paymentMethodSelect"  [(ngModel)]="selectedPaymentMethod" name="selectedPaymentMethod">
-                <option selected disabled value="-1">Seleccionar Metodo</option>
-                <option *ngFor="let payment of paymentMethods" [ngValue]="payment">{{payment.payment_method}}</option>
-              </select>
-              <label for="ammount" class="form-label mt-3" >Monto:</label>
-              <input id="ammount" class="form-control" [(ngModel)]="amount" name="amount">
-              <button type="submit" class="btn btn-primary mt-3" (click)="addPayment()">Agregar</button>
+              <div class="card p-3">
+                <select class="form-select" aria-label="paymentSelect" id="paymentMethodSelect"  [(ngModel)]="selectedPaymentMethod" name="selectedPaymentMethod">
+                  <option selected disabled value="-1">Seleccionar Metodo</option>
+                  <option *ngFor="let payment of paymentMethods" [ngValue]="payment">{{payment.payment_method}}</option>
+                </select>
+                <label for="ammount" class="form-label mt-3" >Monto:</label>
+                <input id="ammount" class="form-control" [(ngModel)]="amount" name="amount">
+                <button type="submit" class="btn btn-primary mt-3" (click)="addPayment()">Agregar</button>
+              </div>
+              <div class="row card m-1 mt-2 p-2">
+                  <p class="pt-2 h5">Subtotal: ${{realAmount}}</p>
+                  <p class="h5">Restante: ${{Number(realAmount)-Number(amountPayed)}}</p>
+                  <p class="h4">Total a pagar: ${{Number(realAmount)+Number(subCharges)}}</p>
+              </div>
             </div>
             <div class="col-8">
               <table class="table">
@@ -30,7 +37,7 @@
                 <tbody>
                 <tr *ngFor="let item of paymentList">
                   <td>{{item.paymentMethod.payment_method}}</td>
-                  <td>${{item.amount}}</td>
+                  <td>{{item.amount}}</td>
                   <td>${{Number(item.paymentMethod.surcharge)/100 * Number(item.amount)}}</td>
                   <td>${{Number(item.paymentMethod.surcharge)/100 * Number(item.amount) + Number(item.amount)}}</td>
                 </tr>
@@ -39,15 +46,7 @@
             </div>
 
           </div>
-          <div class="row">
-            <div class="col-6">
-              <p>Restante: ${{Number(realAmount)-Number(amountPayed)}}</p>
-              <p>Subtotal: ${{realAmount}}</p>
-            </div>
-            <div class="col-6">
-              <p>Total a pagar: ${{Number(realAmount)+Number(subCharges)}}</p>
-            </div>
-          </div>
+
         </form>
       </div>
       <div class="modal-footer">
@@ -110,7 +109,7 @@
     </div>
     <div class="col-12" style="display: flex;flex-direction: row-reverse;">
       <div class="col-md-3" id="totalDetalle">
-        <div class=" card p-2 m-1">
+        <div class=" card p-2 mb-0 m-1 mt-3">
           <!-- Resumen de la venta -->
           <div class="text-center">
             <p>Subtotal: ${{totalAmount}}</p>
