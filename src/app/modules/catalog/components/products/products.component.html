@@ -1,0 +1,58 @@
+<spinner *ngIf="isLoading"></spinner>
+
+<div class="container mt-4">
+  <button class="btn btn-primary" (click)="openCreateModal()">Agregar Productos</button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre de Producto</th>
+        <th>Imagen</th>
+        <th>Stock</th>
+        <th>Precio</th>
+        <th>Precio con Descuento</th>
+        <th>Descuento</th>
+        <th>Categoría</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of listProducts  | slice: (currentPage-1) * itemsPerPage : currentPage * itemsPerPage">
+        <td>{{ product.name }}</td>
+        <td>
+          <img [src]="product.url_image" alt="Imagen del producto" height="100" />
+        </td>
+        <td>{{ product.stock_quantity }}</td>
+        <td>
+          <span *ngIf="product.price_product; else noPriceProductUnit">
+            <del>{{ product.unit_price | currency:'USD':'symbol-narrow' }}</del>
+          </span>
+          <ng-template #noPriceProductUnit>
+            {{ product.unit_price | currency:'USD':'symbol-narrow' }}
+          </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="product.price_product != null; else noPriceProduct">
+            {{ product.price_product | currency:'USD':'symbol-narrow' }}
+          </ng-container>
+          <ng-template #noPriceProduct>NO TIENE</ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="product.discount; else noDiscount">
+            {{ product.discount }}%
+          </ng-container>
+          <ng-template #noDiscount>NO TIENE</ng-template>
+        </td>
+        <td>{{ product.category.name }}</td>
+        <td>
+          <button type="button" class="btn btn-primary mx-2" (click)="openEditModal(product)">Editar</button>
+          <button type="button" class="btn btn-danger mx-2" (click)="openDeleteModal(product)">Eliminar</button>
+        </td>        
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container mt-4">
+  <ngb-pagination [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="collectionSize" [maxSize]="5" [rotate]="true">
+  </ngb-pagination>
+</div>
