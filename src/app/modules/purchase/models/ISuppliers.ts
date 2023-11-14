@@ -27,7 +27,8 @@ export interface IProduct2 {
   id: number;
   name: string;
   price: number;
-  blocked: boolean;
+  active: boolean;
+  // image: string;
 }
 
 export interface ISupplierProduct {
@@ -43,3 +44,13 @@ export interface ISupplierAndProduct {
   productName: string;
   price: number;
 }
+
+export interface IProductBySupplierDTO {
+  supplierId: number;
+  productId: number;
+  name: string;
+  price: number;
+  observations: string;
+  active: true;
+}
+

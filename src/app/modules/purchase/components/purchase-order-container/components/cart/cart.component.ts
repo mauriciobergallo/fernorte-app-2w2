@@ -8,32 +8,16 @@ import { ISupplierProduct } from 'src/app/modules/purchase/models/ISuppliers';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit{
-  cardProducts: ISupplierProduct[] = [{
-    idSupplier: 1,
-    idProduct: 2,
-    name: 'Taladro',
-    price: 254,
-    quantity: 15,
-  },
-  {
-    idSupplier: 1,
-    idProduct: 2,
-    name: 'Taladro',
-    price: 254,
-    quantity: 15,
-  },
-  {
-    idSupplier: 1,
-    idProduct: 2,
-    name: 'Taladro',
-    price: 254,
-    quantity: 15,
-  }];
+  cardProducts: ISupplierProduct[] = [];
+  total: number = 0;
 
   constructor(private purchaseOrderService: PurchaseOrderServiceService) {}
 
   ngOnInit (): void {
-    // this.cardProducts = this.purchaseOrderService.getCardProductList();
+    this.purchaseOrderService.getCardProductList2().subscribe((prod: ISupplierProduct[]) => {
+      this.cardProducts = prod;
+      this.calculateTotal();
+    });
   }
 
   removeItem(product: ISupplierProduct): void {
@@ -42,7 +26,12 @@ export class CartComponent implements OnInit{
       this.cardProducts.splice(index, 1);
       // Update the service's cardProductList
       this.purchaseOrderService.setCardProductList2(this.cardProducts);
+      this.calculateTotal();
     }
+  }
+
+  calculateTotal(): void {
+    this.total = this.cardProducts?.map(prod => prod.price).reduce((a, b) => a+b, 0);
   }
 
   onSubmit() {

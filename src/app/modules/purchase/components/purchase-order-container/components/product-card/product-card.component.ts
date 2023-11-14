@@ -4,10 +4,10 @@ import {
   IProduct2,
   ISupplierProduct,
 } from 'src/app/modules/purchase/models/ISuppliers';
-import { ProductsService } from 'src/app/modules/purchase/services/products.service';
 import { PurchaseOrderServiceService } from '../../../purchase-order-container/services/purchase-order-service.service';
 import { SupliersService } from '../../../supplier/services/supliers.service';
 import { NgModel } from '@angular/forms';
+import { ProductsService } from '../../../supplier/services/products.service';
 
 @Component({
   selector: 'fn-product-card',
@@ -25,101 +25,34 @@ export class ProductCardComponent implements OnInit, OnDestroy {
 
   product_List: IProduct2[] = [{
     id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
+    name: "Taladro",
+    price: 250,
+    active: true
+  },
+  {
+    id: 2,
+    name: "Taladro",
+    price: 250,
+    active: true
+  },
+  {
+    id: 3,
+    name: "Taladro",
+    price: 250,
+    active: true
+  },
+  {
+    id: 4,
+    name: "Taladro",
+    price: 250,
+    active: true
   },
   {
     id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  },
-  {
-    id: 1,
-    name: 'Producto con nombre largo',
-    price: 2352,
-    blocked: false,
-  }
-];
+    name: "Taladro",
+    price: 250,
+    active: true
+  }];
 
   cartProducts: ISupplierProduct[] = [];
   isButtonDisabled: { [productId: number]: boolean } = {};
@@ -145,8 +78,9 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       this.suscription.add(
         this._productService.getProductsBySupplier(id).subscribe({
           next: (data: any) => {
-            if (data.products && Array.isArray(data.products)) {
-              this.product_List = data.products;
+            console.log('DATA->', data) // data.products
+            if (data && Array.isArray(data)) {
+              this.product_List = data;
               //this.productQuantities = {};
               this.product_List.forEach((product) => {
                 this.productQuantities[product.id] = 0;
@@ -154,9 +88,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
               });
             }
           },
-          error: (error: any) => {
-            console.log(error);
-          },
+          error: (error: any) => console.log(error)
         })
       );
     }
@@ -179,16 +111,17 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   addToCart(product: IProduct2) {
     const quantity = this.productQuantities[product.id];
     if (quantity > 0) {
-      const ProductSupplier = {
+      const productSupplier: ISupplierProduct = {
         idSupplier: this.idSupplier,
         idProduct: product.id,
         name: product.name,
         price: product.price,
-        quantity: quantity,
+        quantity: quantity
       };
-      this._purchaseOrderSer.setCardProductList(ProductSupplier);
+      this.cartProducts.push(productSupplier)
+      this._purchaseOrderSer.setCardProductList2(this.cartProducts);
       this.isButtonDisabled[product.id] = true;
-      console.log(this._purchaseOrderSer.getCardProductList());
+      console.log('PROD->', this._purchaseOrderSer.getCardProductList());
     } else {
       this.mostrarToastAddProduct[product.id] = true;
     }
@@ -211,9 +144,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
             this.isButtonDisabled[product.id] = isProductInCart;
           });
         },
-        error: (error: any) => {
-          // Manejar errores
-        },
+        error: (error: any) => console.log(error)
       })
     );
   }

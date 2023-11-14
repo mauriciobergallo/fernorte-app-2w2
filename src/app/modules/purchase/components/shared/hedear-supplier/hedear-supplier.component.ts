@@ -20,8 +20,13 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
 
 
   idSelected: number = 0
-  supplierList: ISupplier[] = []
-  public supplierSelected : ISupplier = {id: 0, socialReason:"", cuit:"" ,adress:"", fantasyName:""} 
+  supplierList: ISupplier[] = [{
+    id: 1, 
+    socialReason:"Proveedor Test", 
+    cuit:"20121231231" ,
+    adress:"Av. Siempre Viva", 
+    fantasyName:"TPI"}]
+  public supplierSelected : ISupplier = { id: 0, socialReason:"", cuit:"" , adress:"", fantasyName:"" } 
   showDropDown: boolean = true
 
   suscription = new Subscription()
@@ -29,7 +34,7 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._purchaseOrderService.setIdSupplier(0)
-    this.getListSuplierFromService()
+    // this.getListSuplierFromService()
 
   }
 
@@ -44,12 +49,7 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
   * then the supplier is searched in the list of suppliers with the id that was selected
   */
   onSelectChange(event: any){
-   
-   
-
-      this.supplierSelected = this.supplierList.find(x => x.id == this.idSelected)!
-
-    // console.log("supplier selected: " + this.supplierSelected + "id selected: " + this.idSelected)
+    this.supplierSelected = this.supplierList.find(x => x.id == this.idSelected)!
 
     //going to the service to change the value of the supplier selected and the id of the supplier
     this._purchaseOrderService.setIdSupplier(this.idSelected)
@@ -63,11 +63,6 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
     //getting the value of the supplier selected and the id of the supplier from service
     this.getSupplierSelectedFromService()
     this.getIdFromService()
-
-    
-    
-
-
   }
 
   getListSuplierFromService() {

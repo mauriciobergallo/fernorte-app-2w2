@@ -17,6 +17,13 @@
           <button type="button" class="btn btn-outline-danger btn-sm m-0" (click)="removeItem(product)">Quitar</button>
         </div>
     </div>
+    <div class="d-flex justify-content-center margin">
+      <div class="item">
+        <div class="prod">
+          <span><strong>Total:</strong> {{ total | currency }}</span>
+        </div>
+      </div>
+  </div>
     <div class="text-center bottom">
       <button
         type="button"
