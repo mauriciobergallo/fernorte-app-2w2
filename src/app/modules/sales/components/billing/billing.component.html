@@ -1,1 +1,141 @@
-<p>billing works!</p>
+<div class="modal fade modal-xl" id="paymentModal" tabindex="-1"  aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="paymentModalLabel">Payments</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm">
+          <div class="row">
+            <div class="col-4 pt-2">
+              <select class="form-select" aria-label="paymentSelect" id="paymentMethodSelect"  [(ngModel)]="selectedPaymentMethod" name="selectedPaymentMethod">
+                <option selected disabled value="-1">Seleccionar Metodo</option>
+                <option *ngFor="let payment of paymentMethods" [ngValue]="payment">{{payment.payment_method}}</option>
+              </select>
+              <label for="ammount" class="form-label mt-3" >Monto:</label>
+              <input id="ammount" class="form-control" [(ngModel)]="amount" name="amount">
+              <button type="submit" class="btn btn-primary mt-3" (click)="addPayment()">Agregar</button>
+            </div>
+            <div class="col-8">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>Metodo de Pago</th>
+                  <th>Subtotal</th>
+                  <th>Recargo</th>
+                  <th>Precio Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of paymentList">
+                  <td>{{item.paymentMethod.payment_method}}</td>
+                  <td>${{item.amount}}</td>
+                  <td>${{Number(item.paymentMethod.surcharge)/100 * Number(item.amount)}}</td>
+                  <td>${{Number(item.paymentMethod.surcharge)/100 * Number(item.amount) + Number(item.amount)}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <p>Restante: ${{Number(realAmount)-Number(amountPayed)}}</p>
+              <p>Subtotal: ${{realAmount}}</p>
+            </div>
+            <div class="col-6">
+              <p>Total a pagar: ${{Number(realAmount)+Number(subCharges)}}</p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary" (click)="finishPayment()">Pagar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <h4 class="m-2">Cliente</h4>
+      <div class=" card p-2 m-1">
+        <div class="text-center p-2 pb-0">
+            <h5>{{name}}</h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <h4 class="m-2">Cargar Orden/Presupuesto</h4>
+      <div class="card p-2 m-1">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Nro de orden" aria-label="orden" name="orderNumber" [(ngModel)]="orderId">
+          <button class="btn btn-primary" id="btn-search" (click)="searchBill()">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4" id="saleOrderDetail">
+    <div class="col-md-12">
+      <h4 class="m-2">Detalle</h4>
+      <div class=" card p-2 m-1">
+        <!-- Tabla de productos -->
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Código</th>
+            <th>Producto</th>
+            <th>Precio Unitario</th>
+            <th>Cantidad</th>
+            <th>Precio Total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of order.detailBill">
+            <td>{{item.idBill}}</td>
+            <td>{{item.itemName}}</td>
+            <td>${{item.unitPrice}}</td>
+            <td>${{item.quantity}}</td>
+            <td>${{item.unitPrice * item.quantity}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-12" style="display: flex;flex-direction: row-reverse;">
+      <div class="col-md-3" id="totalDetalle">
+        <div class=" card p-2 m-1">
+          <!-- Resumen de la venta -->
+          <div class="text-center">
+            <p>Subtotal: ${{totalAmount}}</p>
+            <p>Impuestos: ${{totalAmount! | calcularImpuestos:10}}</p>
+            <p class="mb-0">Total: ${{ totalAmount! | calcularMontoTotal:10}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4 justify-content-end align-items-center">
+    <div class="col-12">
+      <div class=" card p-2 m-1">
+        <div class="col-12 d-flex justify-content-around">
+          <button class="btn btn-primary" >
+            <p class="m-0" (click)="printOrder()">Imprimir</p>
+          </button>
+          <button class="btn btn-secondary" >
+            <p class="m-0" (click)="cancelOrder()">Cancelar</p>
+          </button>
+          <button class="btn btn-primary" >
+            <p class="m-0" (click)="checkOrder()">Pagar</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

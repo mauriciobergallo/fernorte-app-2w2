@@ -14,9 +14,8 @@ export class BillServiceService {
   urlBase:string="http://localhost:8088/bills";
 
 
-  constructor(private billProvider: BillingProvider, 
-    private http : HttpClient) { }
-  
+  constructor(private http : HttpClient) { }
+
 
     getBills() : Observable<BillModel[]> {
       this.billList = this.http.get<BillModel[]>(this.urlBase);
@@ -25,7 +24,7 @@ export class BillServiceService {
 
     getBillsByFilter(idBill?: string, clientId?: string, fromDate?: string, toDate?: string): Observable<BillModel[]> {
       let params = new HttpParams();
-  
+
       if (idBill) {
         params = params.append('idBill', idBill);
       }
@@ -38,8 +37,12 @@ export class BillServiceService {
       if (toDate) {
         params = params.append('toDate', toDate);
       }
-  
+
       return this.http.get<BillModel[]>(this.urlBase, { params: params });
+    }
+
+    checkOrder(orderId: number): boolean{
+    return true
     }
 
 }

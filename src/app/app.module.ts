@@ -14,6 +14,7 @@ import { SalesModule } from './modules/sales/sales.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,7 @@ import { AppComponent } from './app.component';
     PurchaseModule,
     InventaryModule,
     SalesModule,
+    NgChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
