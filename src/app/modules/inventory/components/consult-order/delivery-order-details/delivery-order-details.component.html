@@ -47,8 +47,7 @@
               <td class="text-center">{{ detail.quantity - detail.delivered_quantity }} </td>
               <td class="text-center">
                 <input [hidden]="detail.state == 'DELIVERED' " class="form-control mx-auto"
-                  [(ngModel)]="detail.quantity_delivery" style="width: 50%;" type="number" min="0"
-                  (input)="limitInputValue($event, (detail.quantity - detail.delivered_quantity))">
+                  [(ngModel)]="detail.delivered_quantity" style="width: 50%;" type="number" min="0">
               </td>
               <td class="text-center" style="font-size: 20px;">
                 <i [class]="detail.state | stateIconPipe" [ngbTooltip]="getTooltipText(detail.state)"></i>
@@ -64,3 +63,4 @@
     </div>
   </div>
 </div>
+<span>{{order | json}}</span>

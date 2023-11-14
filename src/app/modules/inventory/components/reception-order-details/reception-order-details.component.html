@@ -30,35 +30,89 @@
 
 
         <h5>Detalles del Producto</h5>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th class="text-center">Nombre del producto</th>
-              <th class="text-center">Cantidad Acordada</th>
-              <th class="text-center">Cantidad Recibida</th>
-              <!-- <th class="text-center">Cantidad a entregar</th>
-              <th class="text-center">Estado</th> -->
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let detail of details">
-              <td class="text-center">{{ detail.product_name }}</td>
-              <td class="text-center">{{ detail.agreed_quantity }}</td>
-              <td class="text-center">
-                <input class="form-control mx-auto" [(ngModel)]="detail.received_quantity" style="width: 50%;"
-                  type="number" min="0">
-              </td>
-              <!-- <td class="text-center" style="font-size: 20px;">
-                <i [class]="detail.state | stateIconPipe"></i>
-              </td> -->
-            </tr>
-          </tbody>
-        </table>
+        <form [formGroup]="detailsForm">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="text-center mx-4">Nombre del producto</th>
+                <th class="text-center mx-4">Cantidad Acordada</th>
+                <th class="text-center mx-4">Cantidad Recibida</th>
+                <th class="text-center mx-4">Estado de productos</th>
+                <th class="text-center mx-4">Acciones</th>
+
+              </tr>
+            </thead>
+
+            <tbody formArrayName="details">
+              <tr [formGroupName]="i" *ngFor="let detail of details.controls;let i = index">
+                <td class="text-center">{{ detail.get('product_name')?.value }}</td>
+                <td class="text-center">{{ detail.get('agreed_quantity')?.value }}</td>
+                <td class="text-center">
+                  <input class="form-control mx-auto" style="width: 50%;" type="number" min="0" name="received_quantity"
+                    formControlName="received_quantity">
+                </td>
+                <td class="text-center">
+                  <select class="form-select" aria-label="Default select example" name="is_broken"
+                    formControlName="is_broken">
+                    <option value="false">Buen estado</option>
+                    <option value="true">Producto dañado</option>
+                  </select>
+                </td>
+                <td class="text-center">
+                  <div class="dropdown">
+                    <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <div class="dropdown-content">
+                      <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="addComment(i)">Agregar
+                        Observación</a>
+                    </div>
+
+                  </div>
+
+                </td>
+                <!-- Button trigger modal -->
+                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                          Launch static backdrop modal
+                        </button> -->
+
+
+              </tr>
+            </tbody>
+
+          </table>
+          <div style="float: right;">
+            <button class="btn btn-secondary" style="margin-right: 10px;">Volver</button>
+            <button class="btn btn-primary" [disabled]="detailsForm.invalid" (click)="updateOrder()">Guardar</button>
+          </div>
+        </form>
+
+
+        <span>{{ detailsForm.value | json}}</span>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-100"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Observaciones</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-floating">
+                  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                  <label for="floatingTextarea">Observaciones</label>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div style="float: right;">
-        <button class="btn btn-secondary" style="margin-right: 10px;">Volver</button>
-        <button class="btn btn-primary">Guardar</button>
-      </div>
+
     </div>
   </div>
 </div>

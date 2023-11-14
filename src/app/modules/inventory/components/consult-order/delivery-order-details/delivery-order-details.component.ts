@@ -25,7 +25,8 @@ export class DeliveryOrderDetailsComponent {
   save() {
     if (confirm('¿Desea guardar la información?')) {
       const deliveryOrderPut = this.mapToDeliveryOrderPut();
-
+      console.log('ORDEN');
+      console.log(deliveryOrderPut);
       this.deliveryorderService
         .updateDeliveryOrderDetails(deliveryOrderPut)
         .pipe(
@@ -35,6 +36,7 @@ export class DeliveryOrderDetailsComponent {
         )
         .subscribe((orderData) => {
           this.order = orderData;
+          console.log('DELIVERY ORDER UPDATED');
           console.log(orderData);
         });
     }
@@ -46,12 +48,13 @@ export class DeliveryOrderDetailsComponent {
 
     deliveryOrderPut.details = this.order.details.map((detail) => {
       const detailPut = new DeliveryOrderDetailPut();
-      detailPut.quantity = detail.quantity_delivery;
+      detailPut.quantity = detail.delivered_quantity;
       detailPut.product_id = detail.product_id;
+      console.log('DETALLE ');
+      console.log(detailPut);
       return detailPut;
     });
 
-    console.log(deliveryOrderPut);
     return deliveryOrderPut;
   }
 
@@ -64,6 +67,7 @@ export class DeliveryOrderDetailsComponent {
           .getDeliveryOrderById(this.orderId)
           .subscribe((orderData) => {
             this.order = orderData;
+            console.log(this.order);
           });
       }
     });
@@ -93,12 +97,12 @@ export class DeliveryOrderDetailsComponent {
 
   confirmCancellation() {
     if (confirm('¿Desea volver?')) {
-      this.router.navigate(['orders']);
+      this.router.navigate(['inventory', 'orders']);
     }
   }
 
   navigate() {
-    this.router.navigate(['orders']);
+    this.router.navigate(['inventory', 'orders']);
   }
   getTooltipText(state: string): string {
     switch (state) {

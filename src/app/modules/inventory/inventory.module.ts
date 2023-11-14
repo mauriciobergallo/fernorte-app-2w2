@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
 import { SearchLocationProductComponent } from './components/search-location-product/search-location-product.component';
@@ -49,6 +49,7 @@ import { ReceptionOrderDetailsComponent } from './components/reception-order-det
     InventoryRoutingModule,
     NgbModule,
     RouterModule,
+    ReactiveFormsModule,
   ],
   exports: [HomeComponent],
 })

@@ -25,7 +25,7 @@ const routes: Routes = [
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'inventory',
     component: HomeComponent,
     children: [
       {

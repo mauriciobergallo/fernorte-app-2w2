@@ -42,6 +42,6 @@ export class ConsultReceptionOrdersComponent implements OnInit {
     });
   }
   navigateToDetails(orderId: number) {
-    this.router.navigate(['reception-orders', orderId, 'details']);
+    this.router.navigate(['inventory', 'reception-orders', orderId, 'details']);
   }
 }
