@@ -27,6 +27,7 @@ import { PaymentMethodComponent } from './components/payment-order-container/com
 import { TotalResumeComponent } from './components/payment-order-container/components/total-resume/total-resume.component';
 import { HedearSupplierComponent } from './components/shared/hedear-supplier/hedear-supplier.component';
 import { OrderButtonsComponent } from './components/shared/order-buttons/order-buttons.component';
+import { PaymentPreviewComponent } from './components/payment-order-container/components/payment-preview/payment-preview.component';
 import { RouterModule } from '@angular/router';
 
 import { RouterChildModule } from './router-child.module';
@@ -34,7 +35,7 @@ import { AddProductModalComponent } from './components/supplier/add-product-moda
 
 
 @NgModule({
-  declarations: [HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, TotalSidebarComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent, AddProductModalComponent],
+  declarations: [HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, TotalSidebarComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent, AddProductModalComponent, PaymentPreviewComponent],
   providers: [],
   imports: [CommonModule, FormsModule,NgbModule, NgbPaginationModule, NgbDropdownModule, NgbToastModule,RouterModule, RouterChildModule, NgbModalModule, SweetAlert2Module.forRoot({
     provideSwal: () => import('sweetalert2').then(({ default: swal }) => swal.mixin({
