@@ -25,6 +25,26 @@ export interface PurchaseOrderResponse {
     claimOrder: ClaimOrderDetailResponse[];
 }
 
+export interface PurchaseOrderBack{
+  supplierName: string;
+  date: Date;
+  purchaseStatus: PurchaseStatus;
+  total: number;
+  employeeName: string;
+  observation: string;
+  billUrl: string;
+}
+
+export interface PurchaseOrderFront{
+    supplierName: string;
+    date: Date;
+    purchaseStatus: PurchaseStatus;
+    total: number;
+    employeeName: string;
+    observation: string;
+    billUrl: string;
+}
+
 // ----------------------------------------------- PURCHASE ORDER DETAIL
 export interface PurchaseOrderDetailRequest {
     purchaseOrderId: number;
@@ -49,7 +69,7 @@ export interface PurchaseOrderDetailResponse {
 export type PurchaseStatus = 'GENERATED' | 'SENT' | 'ACCEPTED' | 'CANCELLED'
 
 
-  
 
-  
-  
+
+
+
