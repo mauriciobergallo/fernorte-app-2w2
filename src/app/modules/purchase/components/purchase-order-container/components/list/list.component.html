@@ -1,1 +1,29 @@
-<p>list works!</p>
+
+<div class="container">
+  <h2>Item List</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre de proveedor</th>
+        <th>Fecha</th>
+        <th>Estatus de compra</th>
+        <th>Total</th>
+        <th>Nombre de empleado</th>
+        <th>Observación</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of listOrders">
+        <td>{{ order.supplierName }}</td>
+        <td>{{ order.date | date }}</td>
+        <td>{{ order.purchaseStatus }}</td>
+        <td>{{ order.total | currency }}</td>
+        <td>{{ order.employeeName }}</td>
+        <td>{{ order.observation }}</td>
+        <td><a [href]="order.billUrl" target="_blank">View Bill</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
