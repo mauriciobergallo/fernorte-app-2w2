@@ -68,21 +68,33 @@
               <th scope="col">Vendedor</th>
               <th scope="col">Fecha</th>
               <th scope="col">Detalle</th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let item of billList">
-              <th scope="row">{{item.cae}}</th>
-              <td>{{item.idBill}}</td>
-              <td>{{item.idBill}}</td>
-              <td>{{item.expirationDateCae| date:'short'}}</td>
-              <td>{{item.totalPrice}}</td>
+              <th scope="row">{{item.idSaleOrder}}</th>
+              <td>{{item.idClient}}</td>
+              <td>{{item.idSeller}}</td>
+              <td>{{item.totalPrice| date:'short'}}</td>
+              <td>{{item.createdDate| translateStates}}</td>
               <td>
                   <ul>
                       <li *ngFor="let prod of item.detailBill">
                           {{prod.idProduct}}
                       </li>
                   </ul>
+              </td>
+              <td class="text-center">
+                <div class="dropdown">
+                  <button type="button" class="btn btn-light dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical"></i>
+                  </button>
+                  <div class="dropdown-content">
+                    <a (click)="onShowDetails()">Ver detalles</a>
+                    <a (click)="onPrint()">Imprimir</a>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>

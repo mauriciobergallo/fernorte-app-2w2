@@ -6,6 +6,7 @@ import { ProductApi } from '../../models/ProductApi';
 import { ProductOk } from '../../models/ProductOk';
 import { BillServiceService } from '../../services/billing/bill-service.service';
 import { NgForm } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'fn-billing-search-list',
@@ -38,7 +39,15 @@ ngOnInit(): void {
   
   
 }
+
 onSubmit(form: NgForm){
 
 }
+
+onShowDetails(){
+
 }
+
+onPrint(){
+
+}}
