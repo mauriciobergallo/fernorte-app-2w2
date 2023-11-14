@@ -28,7 +28,7 @@ minDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
 maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };;
 currentYear = new Date().getFullYear();
 
-
+dataPickerBirth: NgbDateStruct = { year: 2000, month: 1, day: 1 };
 
 
 customer: CustomerRequest = {
@@ -71,7 +71,10 @@ customerType: ""
 
 	}
 
-	ngOnInit(): void {		
+	ngOnInit(): void {
+		if (this.customer.birthDate != null) {
+			this.dataPickerBirth = this.birthDateFormated(this.customer.birthDate);
+		  }
 	
 	}
 
@@ -165,6 +168,21 @@ customerType: ""
 	} else {
 	  this.formattedBirthDate = '';
 	}
+  }
+
+  birthDateFormated(date: string): NgbDateStruct {
+    const datePart = date.split('T')[0];
+    const dateComponents = datePart.split('-').map(Number);
+
+    if (dateComponents.length === 3) {
+      return {
+        year: dateComponents[0],
+        month: dateComponents[1],
+        day: dateComponents[2],
+      };
+    } else {
+      return { year: 2000, month: 1, day: 1 };
+    }
   }
 
 
