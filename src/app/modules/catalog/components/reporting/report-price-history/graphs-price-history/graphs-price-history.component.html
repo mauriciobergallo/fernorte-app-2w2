@@ -1,27 +1,40 @@
 <spinner *ngIf="isLoading"></spinner>
 
-<div class="container mt-5">
-  <form [formGroup]="filterFom" class="row g-3">
-    <h4 class="text-center">Precios Historicos</h4>
-    <div class="col-md-4">
-      <label for="productName" class="form-label">Nombre del producto:</label>
-      <input [class.is-invalid]="filterFom.get('name')?.invalid && (filterFom.get('name')?.dirty|| filterFom.get('name')?.touched)" type="text" id="productName" formControlName="name" class="form-control">
+<div class="container-fluid mt-5 d-flex justify-content-center">
+  <form [formGroup]="filterFom">
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <label for="productName" class="form-label">Nombre:</label>
+        <select class="form-select" id="selectProduct" formControlName="name">
+          <option *ngFor="let prod of listProduct" [value]="prod.name">{{prod.name}}</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="chart" class="form-label">Tipo:</label>
+        <select class="form-select" id="selectProduct" formControlName="chart">
+          <option *ngFor="let chart of listCharts" [value]="chart.value"> {{chart.name}} </option>
+        </select>
+      </div>
     </div>
-    <div class="col-md-4">
-      <label for="startDate" class="form-label">Fecha de inicio:</label>
-      <input [class.is-invalid]="filterFom.get('startDate')?.invalid && (filterFom.get('startDate')?.dirty|| filterFom.get('startDate')?.touched)" type="date" id="startDate" formControlName="startDate" class="form-control">
-    </div>
-    <div class="col-md-4">
-      <label for="endDate" class="form-label">Fecha de fin:</label>
-      <input type="date" id="endDate" formControlName="endDate" class="form-control">
+    <div class="row mt-1">
+      <div class="col-md-6">
+        <label for="startDate" class="form-label">Inicio:</label>
+        <input
+          [class.is-invalid]="filterFom.get('startDate')?.invalid && (filterFom.get('startDate')?.dirty|| filterFom.get('startDate')?.touched)"
+          type="date" id="startDate" formControlName="startDate" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label for="endDate" class="form-label">Fin:</label>
+        <input type="date" id="endDate" formControlName="endDate" class="form-control">
+      </div>
     </div>
     <div class="col-md-12 d-flex justify-content-center">
-      <button type="submit" class="btn btn-primary m-1 " (click)="showGraphs()">Generar</button>
-      <button type="button" class="btn btn-secondary m-1" (click)="clean()">Limpiar</button>
-  </div>
+      <button type="submit" class="btn btn-primary  m-2 " (click)="showGraphs()">Generar</button>
+      <button type="button" class="btn btn-secondary  m-2 " (click)="clean()">Limpiar</button>
+    </div>
   </form>
 </div>
 
-<div class="container mt-5">
+<div class="container-fluid">
   <canvas id="myChart"></canvas>
 </div>

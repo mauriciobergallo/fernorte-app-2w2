@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Chart } from 'chart.js';
+import { Chart, ChartType } from 'chart.js';
 import { ProductService } from 'src/app/modules/catalog/services/product.service';
 import { ChartOptions } from 'chart.js/auto';
 import Swal from 'sweetalert2';
+import { IProductCategory } from 'src/app/modules/catalog/models/IProductCategory';
 
 @Component({
   selector: 'app-graphs-price-history',
@@ -14,53 +15,74 @@ import Swal from 'sweetalert2';
 export class GraphsPriceHistoryComponent implements OnInit {
   listPriceHistory: any[] = [];
   filterFom: FormGroup = new FormGroup({});
-  myChart?: Chart;
   isLoading: boolean = false;
+  myChart?: Chart;
+  listProduct: IProductCategory[] = [];
+  listCharts: any[] = [{
+    name: 'Línea',
+    value: 'line'
+  },
+  {
+    name: 'Barra',
+    value: 'bar'
+  },
+  {
+    name: 'Radar',
+    value: 'radar'
+  },
+  {
+    name: 'Pastel',
+    value: 'pie'
+  },
+  {
+    name: 'Rosquilla',
+    value: 'doughnut'
+  },
+  {
+    name: 'Área Polar',
+    value: 'polarArea'
+  }];
 
   constructor(private datePipe: DatePipe, private productService: ProductService, private fb: FormBuilder) {
 
 
   }
-
   ngOnInit() {
+    this.getProducts();
+    this.getPriceHistory();
+    this.filterFom = this.fb.group({
+      name: ['', [Validators.required]],
+      startDate: ['', [Validators.required]],
+      endDate: [''],
+      chart: [this.myChart, Validators.required]
+    });
+
+
+  }
+
+  getPriceHistory() {
     this.productService.getPriceHistory().subscribe({
       next: (res) => {
         this.listPriceHistory = res.priceHistory;
       }
-    })
-
-    this.filterFom = this.fb.group({
-      name: ['', [Validators.required]],
-      startDate: ['', [Validators.required]],
-      endDate: ['']
     });
+  }
 
+  getProducts() {
+    this.productService.get().subscribe({
+      next: (res) => {
+        this.listProduct = res.products;
+        if (this.listProduct.length > 0) {
+          this.filterFom.get('name')?.setValue(this.listProduct[0].name);
+        }
+      }
+    });
   }
 
   async showGraphs() {
     if (this.filterFom.valid) {
-      const { value: chartType } = await Swal.fire({
-        title: 'Selecciona el tipo de gráfico',
-        input: 'select',
-        inputOptions: {
-          line: 'Línea',
-          bar: 'Barra',
-          radar: 'Radar',
-          pie: 'Pastel',
-          doughnut: 'Rosquilla',
-          polarArea: 'Área Polar',
-        },
-        inputPlaceholder: 'Selecciona un tipo de gráfico',
-        showCancelButton: true,
-        confirmButtonColor: "#007bff",
-        cancelButtonColor: "#6c757d",
-        confirmButtonText: "Generar",
-        cancelButtonText: "Cancelar",
-      });
+      const chartType = this.filterFom.get('chart')?.value;
 
-      if (!chartType) {
-        return;
-      }
 
       this.isLoading = true;
       setTimeout(async () => {
@@ -80,6 +102,7 @@ export class GraphsPriceHistoryComponent implements OnInit {
         }
 
         const ctx = document.getElementById('myChart') as HTMLCanvasElement;
+
         if (!ctx) {
           return;
         }
@@ -97,7 +120,7 @@ export class GraphsPriceHistoryComponent implements OnInit {
           this.myChart.destroy();
         }
         this.myChart = new Chart(ctx, {
-          type: chartType, // Change this line
+          type: chartType,
           data: {
             labels: labels,
             datasets: [{
@@ -142,8 +165,6 @@ export class GraphsPriceHistoryComponent implements OnInit {
       startDate: '',
       endDate: ''
     });
-    if (this.myChart) {
-      this.myChart.destroy();
-    }
+    this.myChart?.destroy();
   }
 }

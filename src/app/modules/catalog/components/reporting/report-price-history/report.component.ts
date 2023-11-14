@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+import { IProductCategory } from '../../../models/IProductCategory';
 
 @Component({
   selector: 'app-report',
@@ -13,54 +14,59 @@ import "jspdf-autotable";
 })
 export class ReportPriceHistoryComponent implements OnInit {
   listPriceHistory: PriceHistory[] = []
-  originalListPriceHistory: PriceHistory[] = [];
-  page = 1;
-  pageSize = 10;
   filterForm: FormGroup = new FormGroup({});
   sortOrder: boolean = false;
   dataForPDF: PriceHistory[] = [];
   isLoading: boolean = false;
+  listProduct: IProductCategory[] = [];
 
+  currentPage = 1;
+  itemsPerPage = 15;
+  sortBy = 'unitPrice';
+  sortDir = 'desc';
+  totalItems: number = 0;
   constructor(private productService: ProductService, private fb: FormBuilder, private datePipe: DatePipe) {
 
   }
   ngOnInit() {
-    this.getpriceHistory();
+    this.getProducts();
     this.filterForm = this.fb.group({
       startDate: [''],
       endDate: [''],
-      name: ['']
+      idProduct: [''],
     });
-
-    this.filterForm.valueChanges.subscribe(() => this.filter());
+    this.getpriceHistory();
+    this.filterForm.valueChanges.subscribe(() => this.getpriceHistory());
   }
 
+  getProducts() {
+    this.productService.get().subscribe({
+      next: (res) => {
+        this.listProduct = res.products;
+        if (this.listProduct.length > 0) {
+          this.filterForm.get('idProduct')?.setValue(this.listProduct[0].idProduct);
+        }
+      }
+    });
+  }
+  public handlePagination(event: any) {
+    this.currentPage = event.page;
+    this.getpriceHistory();
+  }
   getpriceHistory() {
     this.isLoading = true;
-    this.productService.getPriceHistory().subscribe({
-      next: (res) => {
-        this.originalListPriceHistory = res.priceHistory;
-        this.listPriceHistory = [...this.originalListPriceHistory]; // Copia la lista original a listPriceHistory
-        this.filter();
-        this.sortTable();
-        this.isLoading = false;
-      }
-    })
+    this.productService.getPriceHistory(this.currentPage, this.itemsPerPage, this.sortBy, this.sortDir,
+      this.filterForm.value.idProduct, this.filterForm.value.starDate, this.filterForm.value.endDate).subscribe({
+        next: (res) => {
+          this.listPriceHistory = res.priceHistory;
+          this.totalItems = res.totalItems;
+          this.sortTable();
+          this.isLoading = false;
+        }
+      })
   }
 
 
-  filter() {
-    const startDateStr = this.filterForm.get('startDate')?.value;
-    const endDateStr = this.filterForm.get('endDate')?.value;
-    const nameStr = this.filterForm.get('name')?.value.toLowerCase();
-    this.listPriceHistory = this.originalListPriceHistory.filter(item => {
-      const startDate = this.formatDateWithTime(new Date(item.startDate));
-      const endDate = this.formatDateWithTime(new Date(item.endDate))
-      const name = item.name.toLowerCase();
-
-      return startDate >= startDateStr && endDateStr <= endDate && name.includes(nameStr);
-    });
-  }
   formatDateWithTime(fecha: Date): string {
     return this.datePipe.transform(fecha, 'yyyy-MM-dd') || '';
   }
@@ -94,7 +100,6 @@ export class ReportPriceHistoryComponent implements OnInit {
 
       return 0;
     });
-    // Update the list used for the PDF
     this.dataForPDF = [...this.listPriceHistory];
   }
   downloadPDF() {
@@ -105,18 +110,18 @@ export class ReportPriceHistoryComponent implements OnInit {
     const headers = ['Nombre', 'Precio', 'Fecha de inicio', 'Fecha de fin'];
 
     const rows = data.map((item) => {
-      const endDate = item.endDate ? this.datePipe.transform(item.endDate, 'dd/MM/yyyy') : '----';
+      const endDate = item.endDate ? this.formatDateWithTime(new Date(item.endDate)) : '----';
       return [
         item.name,
         item.unitPrice,
-        this.datePipe.transform(item.startDate, 'dd/MM/yyyy'),
+        this.formatDateWithTime(new Date(item.startDate)),
         endDate
       ];
     });
-
     const filters = [];
-    if (this.filterForm.value.name) {
-      filters.push(['Nombre', this.filterForm.value.name]);
+    if (this.filterForm.value.idProduct) {
+      const product = this.listProduct.find((item) => item.idProduct == this.filterForm.value.idProduct);
+      filters.push(['Nombre', product?.name]);
     }
     if (this.filterForm.value.startDate) {
       filters.push(['Fecha de inicio', this.filterForm.value.startDate]);
@@ -146,13 +151,13 @@ export class ReportPriceHistoryComponent implements OnInit {
     pdf.save('report.pdf');
   }
   downloadCSV() {
-    const data = this.filterForm.value.name ? this.listPriceHistory : this.originalListPriceHistory;
+    const data = this.dataForPDF
 
     let csvContent = 'Nro Nombre Precio Fecha de inicio Fecha de fin\n';
 
     data.forEach((item, index) => {
-      const endDate = item.endDate ? this.datePipe.transform(item.endDate, 'dd/MM/yyyy') : '----';
-      csvContent += `${index + 1} ${item.name} ${item.unitPrice} ${this.datePipe.transform(item.startDate, 'dd/MM/yyyy')},${endDate}\n`;
+      const endDate = item.endDate ? this.formatDateWithTime(new Date(item.endDate,)) : '----';
+      csvContent += `${index + 1} ${item.name} ${item.unitPrice} ${this.formatDateWithTime(new Date(item.startDate))},${endDate}\n`;
     });
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
