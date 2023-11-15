@@ -15,9 +15,10 @@ import { SalesModule } from './modules/sales/sales.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgChartsModule } from 'ng2-charts';
+import { RoleListComponent } from './role-list/role-list.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, RoleListComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
