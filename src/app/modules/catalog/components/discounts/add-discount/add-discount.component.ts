@@ -96,8 +96,10 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           Swal.fire({
             title: "¡Éxito!",
-            text: "Operación ejecutada con éxito.",
-            icon: "success"
+            text: "Descuento editado con éxito.",
+            icon: "success",
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#6c757d'
           });
           setTimeout(() => this.modalService.close(res), 1500);
         },
@@ -107,6 +109,8 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
             icon: "error",
             title: "¡Error!",
             text: "Error al intentar actualizar el descuento.",
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#6c757d'
           });
         },
       });
@@ -118,8 +122,10 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
             this.isLoading = false;
             Swal.fire({
               title: "¡Éxito!",
-              text: "Operación ejecutada con éxito.",
-              icon: "success"
+              text: "Descuento agregado con éxito.",
+              icon: "success",
+              confirmButtonText: 'Cerrar',
+              confirmButtonColor: '#6c757d'
             });
             setTimeout(() => this.modalService.close(res), 1500);
           },
@@ -129,6 +135,8 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
               icon: "error",
               title: "¡Error!",
               text: "Error al intentar agregar el descuento.",
+              confirmButtonText: 'Cerrar',
+              confirmButtonColor: '#6c757d'
             });
           },
         });
@@ -137,6 +145,8 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
           icon: "error",
           title: "¡Error!",
           text: "Debe seleccionar un producto.",
+          confirmButtonText: 'Cerrar',
+          confirmButtonColor: '#6c757d'
         });
       }
     }

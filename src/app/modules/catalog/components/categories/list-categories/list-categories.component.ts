@@ -58,6 +58,8 @@ export class ListCategoriesComponent implements OnInit {
           icon: 'error',
           title: '!Error!',
           text: 'No se han encontrado resultados.',
+          confirmButtonText: 'Cerrar',
+          confirmButtonColor: '#6c757d'
         })
       }
     });
@@ -82,21 +84,27 @@ export class ListCategoriesComponent implements OnInit {
   }
   openDeleteModal(category: ICategory) {
     Swal.fire({
-      title: `¿Estás seguro que desea eliminar la categoria, ${category.name}?`,
+      title: `¿Estás seguro que desea eliminar la categoría: ${category.name}?`,
       text: "¡No podrás revertir esto!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#dc3545",
       cancelButtonColor: "#6c757d",
       confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar"
+      cancelButtonText: "Cancelar",
+      customClass: {
+        confirmButton: "order-2",
+        cancelButton: "order-1",
+      }
     }).then((result) => {
       if (result.isConfirmed) {
         this.categoryService.delete(category.idCategory, "prueba").subscribe(() => {
           Swal.fire({
-            title: "¡Borrado!",
-            text: "La categoria ha sido borrado.",
-            icon: "success"
+            title: "¡Eliminada!",
+            text: "La categoría ha sido eliminada.",
+            icon: "success",
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#6c757d'
           });
           this.isLoading = true;
           this.getCategories();
