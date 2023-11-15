@@ -1,5 +1,13 @@
 
 <div class="container">
+  <input
+  type="text"
+  placeholder="Buscar..."
+  class="form-control w-25 mt-2 mb-2"
+  #buscar
+  (input)="filterPurchaseOrder(buscar.value)"
+/>
+
   <h2>Item List</h2>
   <table class="table">
     <thead>
@@ -14,7 +22,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let order of listOrders">
+      <tr *ngFor="let order of listOrdersFiltered">
         <td>{{ order.supplierName }}</td>
         <td>{{ order.date | date }}</td>
         <td>{{ order.purchaseStatus }}</td>
