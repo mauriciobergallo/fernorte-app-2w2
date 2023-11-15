@@ -12,6 +12,9 @@ export class ListComponent implements OnInit {
   listOrders:PurchaseOrderBack[] = [];
   listOrdersFiltered:PurchaseOrderBack[] = [];
 
+  page = 1;
+  pageSize = 2;
+
   constructor(private servicePurchase:PurchaseOrderServiceService){
 
   }
@@ -29,5 +32,9 @@ export class ListComponent implements OnInit {
       purchaseOrder.purchaseStatus.toLowerCase().includes(value.toLowerCase()) ||
       purchaseOrder.total.toString().includes(value)
     );
+  }
+
+  onPageChange(page: number) {
+    this.page = page;
   }
 }

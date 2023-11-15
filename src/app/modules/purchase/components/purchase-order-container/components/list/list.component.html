@@ -1,7 +1,7 @@
 
 <div class="container">
 
-  <h2>Item List</h2>
+  <h2>Listado de Órdenes de Compra</h2>
 
   <input
   type="text"
@@ -25,7 +25,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let order of (buscar.value ? listOrdersFiltered : listOrders)">
+      <tr *ngFor="let order of (buscar.value ? listOrdersFiltered : listOrders) ">
         <td>{{ order.supplierName }}</td>
         <td>{{ order.date | date }}</td>
         <td>{{ order.purchaseStatus }}</td>
@@ -37,5 +37,7 @@
       </tr>
     </tbody>
   </table>
+
+  
 </div>
 
