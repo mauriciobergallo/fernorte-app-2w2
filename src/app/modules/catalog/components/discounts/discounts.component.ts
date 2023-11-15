@@ -85,6 +85,8 @@ export class DiscountsComponent implements OnInit {
           icon: 'error',
           title: '!Error!',
           text: 'No se han encontrado resultados.',
+          confirmButtonText: 'Cerrar',
+          confirmButtonColor: '#6c757d'
         });
       }
     });
@@ -124,15 +126,21 @@ export class DiscountsComponent implements OnInit {
       confirmButtonColor: "#dc3545",
       cancelButtonColor: "#6c757d",
       confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar"
+      cancelButtonText: "Cancelar",
+      customClass: {
+        confirmButton: "order-2",
+        cancelButton: "order-1",
+      }
     }).then((result) => {
       if (result.isConfirmed) {
         this.disService.deleteDiscounts(discount.idDiscount, "prueba").subscribe({
           next: (data) => {
             Swal.fire({
               title: "¡Borrado!",
-              text: "El descuento ha sido borrado.",
-              icon: "success"
+              text: "El descuento ha sido eliminado.",
+              icon: "success",
+              confirmButtonText: 'Cerrar',
+              confirmButtonColor: '#6c757d'
             });
             this.isLoading = true;
             this.getDiscounts();
@@ -141,7 +149,9 @@ export class DiscountsComponent implements OnInit {
             Swal.fire({
               title: "!Error!",
               text: "No se ha podido eliminar el descuento.",
-              icon: "error"
+              icon: "error",
+              confirmButtonText: 'Cerrar',
+              confirmButtonColor: '#6c757d'
             })
           }
         });
