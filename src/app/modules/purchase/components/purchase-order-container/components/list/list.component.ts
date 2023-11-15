@@ -18,19 +18,16 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.listOrders = this.servicePurchase.GetListMockPurchase();
+    this.listOrdersFiltered = [...this.listOrders];
   }
 
-  filterPurchaseOrder(value: string){
-    this.listOrdersFiltered = this.listOrders.filter((purchaseOrder) => 
-    {
-      return  (
-        purchaseOrder.supplierName.toLowerCase().includes(value.toLowerCase()) ||
-        purchaseOrder.employeeName.toLowerCase().includes(value.toLowerCase()) ||
-        purchaseOrder.observation.toLowerCase().includes(value.toLowerCase()) ||
-        purchaseOrder.purchaseStatus.toLowerCase().includes(value.toLowerCase()) ||
-        purchaseOrder.total.toString().includes(value)
-      );
-    }
-  )}
-
+  filterPurchaseOrder(value: string) {
+    this.listOrdersFiltered = this.listOrders.filter((purchaseOrder) =>
+      purchaseOrder.supplierName.toLowerCase().includes(value.toLowerCase()) ||
+      purchaseOrder.employeeName.toLowerCase().includes(value.toLowerCase()) ||
+      purchaseOrder.observation.toLowerCase().includes(value.toLowerCase()) ||
+      purchaseOrder.purchaseStatus.toLowerCase().includes(value.toLowerCase()) ||
+      purchaseOrder.total.toString().includes(value)
+    );
+  }
 }
