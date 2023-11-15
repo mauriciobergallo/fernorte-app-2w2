@@ -25,7 +25,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let order of (buscar.value ? listOrdersFiltered : listOrders) ">
+      <tr *ngFor="let order of (buscar.value ? listOrdersFiltered : listOrders)| slice : (page - 1) * pageSize : page * pageSize" >
         <td>{{ order.supplierName }}</td>
         <td>{{ order.date | date }}</td>
         <td>{{ order.purchaseStatus }}</td>
@@ -37,7 +37,15 @@
       </tr>
     </tbody>
   </table>
+  <div class="d-flex justify-content-center">
+    <ngb-pagination
+      [(page)]="page"
+      [pageSize]="pageSize"
+      [collectionSize]="listOrders.length"
+      (pageChange)="onPageChange($event)"
+      aria-label="Default pagination"
+    ></ngb-pagination>
+  </div>
 
-  
 </div>
 
