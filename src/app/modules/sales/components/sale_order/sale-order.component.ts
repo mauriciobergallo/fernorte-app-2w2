@@ -13,8 +13,7 @@ import { SaleOrderProvider } from '../../services/salesOrder/SaleOrderProvider';
 import { ICustomer } from '../../interfaces/iCustomer';
 import { ClientProvider } from '../../services/clients/clientProvider';
 import { ClientService } from '../../services/clients/client.service';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import html2PDF from 'jspdf-html2canvas';
 
 
 @Component({
@@ -23,6 +22,7 @@ import jsPDF from 'jspdf';
   styleUrls: ['./sale-order.component.css']
 })
 export class SaleOrderComponent implements OnInit {
+  @ViewChild('detalleOrdenVenta') detalleOrdenVenta: ElementRef | undefined;
 
   constructor(private saleOrderServiceService: SaleOrderServiceService,
     private loadingService: LoadingService,
@@ -118,38 +118,18 @@ export class SaleOrderComponent implements OnInit {
     this.ActualizarTotal();
   }
 
-  generatePDF() {
 
-    const div = document.getElementById('detalleOrdenVenta');
-
-    const options = {
-      background: 'white',
-      scale: 3
-    };
-
-    html2canvas(div!, options).then((canvas) => {
-
-      var img = canvas.toDataURL("image/PNG");
-      var doc = new jsPDF('l', 'mm', 'a4', true);
-
-      // Add image Canvas to PDF
-      const bufferXTitle = 130;
-      const bufferYTitle = 15;
-      const bufferX = 5
-      const buffery = 35
-      const imgProps = (<any>doc).getImageProperties(img);
-      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      // Add title
-      doc.setFontSize(16);
-      doc.text('Presupuesto', bufferXTitle, bufferYTitle); // Ajusta la posición según tu preferencia
-      doc.addImage(img, 'PNG', bufferX, buffery, pdfWidth, pdfHeight, undefined, 'FAST');
-
-      return doc;
-    }).then((doc) => {
-      doc.save('Presupuesto.pdf');
+  generatePdf() {
+    html2PDF(this.detalleOrdenVenta?.nativeElement, {
+      jsPDF: {
+        format: 'a4',
+      },
+      imageType: 'image/jpeg',
+      output: './pdf/generate.pdf'
     });
   }
+
+
 
   cancelOrderSale() {
     this.productoSeleccionado = this.productService.cleanProduct();
