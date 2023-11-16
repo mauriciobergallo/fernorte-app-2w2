@@ -11,9 +11,7 @@ import { CarritoService } from '../../services/carrito.service';
 import { MontoTotalModel } from '../../models/ModelTotalModel';
 import { SaleOrderProvider } from '../../services/salesOrder/SaleOrderProvider';
 import { ICustomer } from '../../interfaces/iCustomer';
-import { ClientProvider } from '../../services/clients/clientProvider';
 import { ClientService } from '../../services/clients/client.service';
-import html2PDF from 'jspdf-html2canvas';
 
 
 @Component({
@@ -120,13 +118,7 @@ export class SaleOrderComponent implements OnInit {
 
 
   generatePdf() {
-    html2PDF(this.detalleOrdenVenta?.nativeElement, {
-      jsPDF: {
-        format: 'a4',
-      },
-      imageType: 'image/jpeg',
-      output: './pdf/generate.pdf'
-    });
+    this.saleOrderServiceService.generatePdf(this.detalleOrdenVenta)
   }
 
 

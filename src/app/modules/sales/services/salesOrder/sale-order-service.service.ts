@@ -10,6 +10,7 @@ import { DetailsState } from '../../models/DetailsState';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SaleOrderApi } from '../../models/SaleModelApi';
+//import html2PDF from 'jspdf-html2canvas/dist/js-pdf';
 
 @Injectable({
   providedIn: 'root'
@@ -45,13 +46,23 @@ export class SaleOrderServiceService {
   //   return this.saleOrderProvider.getSaleOrders();
   // }
 
-
-  getSaleOrders() : Observable<SaleOrderApi[]> {
+  generatePdf(detalleOrdenVenta: any) {
+    // if (detalleOrdenVenta) {
+    //   html2PDF(detalleOrdenVenta.nativeElement, {
+    //     jsPDF: {
+    //       format: 'a4',
+    //     },
+    //     imageType: 'image/jpeg',
+    //     output: './pdf/generate.pdf'
+    //   });
+    // }
+  }
+  getSaleOrders(): Observable<SaleOrderApi[]> {
     this.saleOrderList = this.http.get<SaleOrderApi[]>("http://localhost:8087/sales-orders?from_date=2023-10-23&to_date=2023-10-31");
     return this.saleOrderList;
   }
 
-  getSaleOrderStates() : Observable<string[]> {
+  getSaleOrderStates(): Observable<string[]> {
     this.saleOrderStates = this.http.get<string[]>("http://localhost:8087/sales-orders/states");
     return this.saleOrderStates;
   }

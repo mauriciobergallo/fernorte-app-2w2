@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../enviroment/environment";
 import { SaleOrderModel } from "../../models/SaleOrderModel";
-import { IResponse } from "../../interfaces/IResponse";
 @Injectable()
 
 export class SaleOrderProvider {
