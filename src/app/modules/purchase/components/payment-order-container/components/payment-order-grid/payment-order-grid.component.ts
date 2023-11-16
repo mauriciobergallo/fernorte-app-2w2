@@ -3,7 +3,7 @@ import { IPurchaseOrderDetail } from './models/PurchaseOrderDetail';
 import { IPurchaseOrder } from './models/PurchaseOrder';
 import { PurchaseOrderService } from './services/purchase-order.service';
 import { SupliersService } from 'src/app/modules/purchase/services/supliers.service';
-import { ISupliers } from 'src/app/modules/purchase/models/ISuppliers';
+import { ISupplier } from 'src/app/modules/purchase/models/ISuppliers';
 
 @Component({
   selector: 'fn-payment-order-grid',
@@ -16,7 +16,7 @@ export class PaymentOrderGridComponent implements OnInit{
   // aca se carga el total del precio de las ordenes de compra seleccionadas.
   totalSeleccionado: number | null = null; 
 
-  allSupplierList:ISupliers[]=[];
+  allSupplierList:ISupplier[]=[];
 
   selectedSupplierId: number | null = null;
 
@@ -26,7 +26,7 @@ export class PaymentOrderGridComponent implements OnInit{
 ngOnInit(): void {
     // Cargar la lista de proveedores al iniciar el componente
     this._suppliersService.getSupliers().subscribe({
-      next: (data: ISupliers[]) => {
+      next: (data: ISupplier[]) => {
         this.allSupplierList = data;
       },
       error: (error: any) => {
