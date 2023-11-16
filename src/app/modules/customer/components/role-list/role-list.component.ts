@@ -14,19 +14,21 @@ export class RoleListComponent {
 
   roles: Role[] = [];
   filteredRoles: Role[] = [];
+  pagedRoles: Role[] = [];
   areas: string[] = [];
   selectedArea: string = '';
   showOptions: boolean = false;
 
-  // Utiliza FormGroup y FormBuilder
   searchForm: FormGroup = this.formBuilder.group({
     selectedArea: ['']
   });
 
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+
   constructor(private roleService: RoleService, private formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    // Observa los cambios en el campo de área
     this.searchForm.get('selectedArea')?.valueChanges.subscribe(() => {
       this.filterRoles();
     });
@@ -39,37 +41,44 @@ export class RoleListComponent {
       this.roles = data;
       this.filteredRoles = data;
       this.areas = Array.from(new Set(data.map(role => role.area)));
+      this.pageChanged(1);
     });
   }
 
-  onOptionClick(action: string, role: any) {
-    // Implementa la lógica según la acción
-  }
-
-  toggleOptions(isHovered: boolean) {
-    this.showOptions = isHovered;
-  }
-
   filterRoles() {
-    // Obtén el valor del campo selectedArea
     const selectedArea = this.searchForm.get('selectedArea')?.value;
 
-    // Filtra por área
     if (selectedArea === '') {
       this.filteredRoles = this.roles;
     } else {
       this.filteredRoles = this.roles.filter(role => role.area === selectedArea);
     }
+
+    this.pageChanged(1);
   }
 
   get selectedAreaControl() {
     return this.searchForm.get('selectedArea');
   }
-  
 
   filterByArea(area: string) {
-    // Actualiza el valor del formulario reactivo
     this.searchForm.patchValue({ selectedArea: area });
     this.filterRoles();
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredRoles.length / this.itemsPerPage);
+  }
+
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+  pageChanged(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      const startIndex = (page - 1) * this.itemsPerPage;
+      this.currentPage = page;
+      this.pagedRoles = this.filteredRoles.slice(startIndex, startIndex + this.itemsPerPage);
+    }
   }
 }

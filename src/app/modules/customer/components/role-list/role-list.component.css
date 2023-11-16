@@ -28,6 +28,11 @@
     padding: 10px 20px;
     cursor: pointer;
   }
+
+  .my-pagination {
+    text-align: center;
+    margin-top: 20px; /* Ajusta según sea necesario */
+  }
   
   .dropdown-content {
     display: none;
