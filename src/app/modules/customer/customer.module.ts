@@ -35,6 +35,7 @@ import { EmployeeListComponent } from './components/employee-list/employee-list.
 import { CustomersSidebarComponent } from './components/customers-sidebar/customers-sidebar.component';
 import { CustomersRoutingModule } from './customers-routing.module';
 import { UserListComponent } from './components/user-list/user-list.component';
+import { CustomerListComponent } from './components/customer-list/customer-list.component';
 
 // const routes: Routes = [
 //   { component: LoginComponent, path: 'login' },
@@ -45,7 +46,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 @NgModule({
   declarations: [HomeComponent, TurnsComponentComponent, EmployeeRegistrationComponent,CategoryComponent, UserRootComponent, UserFormComponent,
     LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent, EmployeeListComponent, CustomersSidebarComponent,FirstLoginComponent,
-    ModifyUserComponent,UpdateEmployeeComponent, ForgotPasswordComponent,ModifyUserRolComponent, UserListComponent
+    ModifyUserComponent,UpdateEmployeeComponent, ForgotPasswordComponent,ModifyUserRolComponent, UserListComponent, CustomerListComponent
   ],
   providers: [CategoryService,  
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }, EmployeeService,
