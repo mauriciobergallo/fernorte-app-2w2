@@ -5,6 +5,8 @@ import { MovementType } from '../../models/IMovementTypeEnum';
 import { MovementsService } from '../../services/movements-service/movements.service';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Pagination } from '../../models/pagination';
+import jsPDF from 'jspdf';
+import { Chart } from 'chart.js/auto';
 
 @Component({
   selector: 'fn-search-inventory-movements',
@@ -24,24 +26,24 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   mostrarDetalleMovimiento: number | null = null;
   mostrarDetalle: boolean = false;
 
-  showDetail(i: number){
-    if(i === this.mostrarDetalleMovimiento) {
+  showDetail(i: number) {
+    if (i === this.mostrarDetalleMovimiento) {
       this.mostrarDetalle = false;
       this.mostrarDetalleMovimiento = null;
       return;
     }
-    this.mostrarDetalle=true;
+    this.mostrarDetalle = true;
     this.mostrarDetalleMovimiento = i;
   }
 
-  getMovementTypeTranslate(mov : MovementType | null): string  {
-    if(mov == null) return '-'
-    if(mov == MovementType.INBOUND) return 'Entrada'
-    if(mov == MovementType.OUTBOUND) return 'Salida'
+  getMovementTypeTranslate(mov: MovementType | null): string {
+    if (mov == null) return '-'
+    if (mov == MovementType.INBOUND) return 'Entrada'
+    if (mov == MovementType.OUTBOUND) return 'Salida'
     return '-'
   }
 
-  orderDetail(idx: number){
+  orderDetail(idx: number) {
     //this.movimientos[idx].movement_details.
   }
 
@@ -163,11 +165,115 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
 
   }
 
+  generateChart() {
+    const labels = ['Productos Salientes', 'Productos Ingresantes'];
+  
+    const canvas = document.getElementById('myChart') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d');
+    Chart.getChart(canvas)?.destroy();
+  
+    const outboundMovements = this.movimientos.filter(movement => movement.movement_type === MovementType.OUTBOUND);
+    const productsSalientes = outboundMovements.reduce((total, movement) => {
+      movement.movement_details.forEach(detail => {
+        total += detail.quantity;
+      });
+      return total;
+    }, 0);
+  
+    const inboundMovements = this.movimientos.filter(movement => movement.movement_type === MovementType.INBOUND);
+    const productsIngresantes = inboundMovements.reduce((total, movement) => {
+      // Iterar sobre los detalles del movimiento y sumar las cantidades
+      movement.movement_details.forEach(detail => {
+        total += detail.quantity;
+      });
+      return total;
+    }, 0);
+  
+    const backgroundColors = [
+      'rgba(255, 99, 132, 0.2)', // Color para productos salientes
+      'rgba(54, 162, 235, 0.2)', // Color para productos ingresantes
+    ];
+  
+    const borderColors = [
+      'rgba(255, 99, 132, 1)', // Borde para productos salientes
+      'rgba(54, 162, 235, 1)', // Borde para productos ingresantes
+    ];
+  
+    const chartData = {
+      labels,
+      datasets: [{
+        data: [productsSalientes, productsIngresantes],
+        backgroundColor: backgroundColors,
+        borderColor: borderColors,
+        borderWidth: 1,
+      }],
+    };
+  
+    if (ctx) {
+      // Crear el gráfico
+      new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: {
+          animation: {
+            duration: 0,
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Cantidad de Productos',
+              },
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Tipo de Producto',
+              },
+            },
+          },
+          plugins:{
+            legend: {
+              display: false,
+            }
+          }
+        },
+      });
+  
+      return new Promise<string>((resolve) => {
+        setTimeout(() => {
+          const chartImage = canvas.toDataURL('image/png');
+          resolve(chartImage);
+        }, 1000);
+      });
+    }
+    return Promise.resolve('');
+  }
+
+  async downloadPDF() {
+    const dataTable = this.movimientos;
+    const pdf = new jsPDF('landscape', 'px', 'a4') as any;
+  
+    pdf.text('Reporte de Inventario Actual', 10, 10);
+  
+    // Renderizar el gráfico en el PDF
+    const chartImage = await this.generateChart();
+    if (chartImage) {
+      const imageWidth = pdf.internal.pageSize.getWidth() - 20; // Ancho del gráfico igual al ancho del PDF
+      const imageHeight = pdf.internal.pageSize.getHeight() - 100; // Alto del gráfico menor que el alto del PDF
+  
+      pdf.addImage(chartImage, 'PNG', 10, 80, imageWidth, imageHeight);
+    }
+  
+    pdf.save('reporte_inventario.pdf');
+  }
+  
 
   private movimientosData: IMovementDto[] = [
     {
       operator: 'John Doe',
-      movement_type: null,
+      movement_type: MovementType.INBOUND,
       is_internal: true,
       movement_details: [
         {
@@ -240,7 +346,7 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
             section: 'Section 4',
             space: 'Space W',
           },
-          quantity: 8,
+          quantity: 17,
           product: 'Product C',
         },
       ],
