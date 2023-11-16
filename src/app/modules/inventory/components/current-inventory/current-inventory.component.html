@@ -3,6 +3,18 @@
 </div>
 
 <div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      <input type="text" class="form-control" placeholder="Zona" [(ngModel)]="filterZone">
+    </div>
+    <div class="col-md-4">
+      <input type="text" class="form-control" placeholder="Sección" [(ngModel)]="filterSection">
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-primary" (click)="applyFilters()">Aplicar Filtros</button>
+    </div>
+  </div>
+
   <table class="table table-hover">
     <thead>
       <tr>
@@ -15,7 +27,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let locationInfo of locationInfoList">
+      <tr *ngFor="let locationInfo of filteredList">
         <td>{{ locationInfo.product_name }}</td>
         <td>{{ locationInfo.location.zone }}</td>
         <td>{{ locationInfo.location.section }}</td>
@@ -25,4 +37,8 @@
       </tr>
     </tbody>
   </table>
+
+  <button class="btn btn-primary" (click)="downloadPDF()">Exportar PDF</button>
+  <canvas id="myChart" style="position: absolute; left: -9999px;"></canvas>
+
 </div>
