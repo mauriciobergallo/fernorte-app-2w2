@@ -1,35 +1,40 @@
 <div class="container">
   <h1 class="h1">Roles</h1>
-  <div class="mb-3">
-    <label for="areaFilter" class="form-label">Filtrar por Área:</label>
-    <select id="areaFilter" class="form-select" (change)="filterRoles()">
-      <option value="" selected>Todos</option>
-      <option *ngFor="let area of areas" [value]="area">{{ area }}</option>
-    </select>
-  </div>  
+  <div class="row">
+    <div class="col-lg-9">
+      <form [formGroup]="searchForm">
+        <div class="mb-3">
+          <label for="areaFilter" class="form-label">Filtrar por Área:</label>
+          <div class="input-group">
+            <select id="areaFilter" class="form-select form-control-sm" formControlName="selectedArea">
+              <option value="" selected>Todos</option>
+              <option *ngFor="let area of areas" [value]="area">{{ area }}</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-3">
+      <div class="mb-3">
+        <label for=""></label>
+        <div class="d-flex align-items-center">
+          <label class="mx-2" style="margin-top: 15px;">Agregar Rol</label>
+          <a class="btn btn-outline-primary btn-sm"  style="margin-top: 10px;"><i class="bi bi-plus-circle"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
   <table class="table container">
     <thead>
       <tr>
         <th scope="col" class="text-right col-2">Nombre de Rol</th>
-        <th scope="col" class="text-right col-2">Nombre de Área</th>
-        <th scope="col" class="text-left col-2">Acciones</th>
+        <th scope="col" class="text-right col-2">Nombre de Área</th>        
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let role of filteredRoles">
         <td class="text-right">{{ role.name }}</td>
-        <td class="text-right">{{ role.area }}</td>
-        <td class="text-left">
-          <div class="dropdown">
-            <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-three-dots-vertical"></i>
-            </button>
-            <div class="dropdown-content">
-              <a (click)="onOptionClick('info', role)">Más información</a>
-              <a (click)="onOptionClick('create', role)">Crear</a>
-            </div>
-          </div>
-        </td>
+        <td class="text-right">{{ role.area }}</td>        
       </tr>
     </tbody>
   </table>

@@ -19,8 +19,8 @@ export class RoleListComponent {
   showOptions: boolean = false;
 
   // Utiliza FormGroup y FormBuilder
-  searchForm: FormGroup = new FormGroup({
-    selectedArea: new FormControl([''])
+  searchForm: FormGroup = this.formBuilder.group({
+    selectedArea: ['']
   });
 
   constructor(private roleService: RoleService, private formBuilder: FormBuilder) {}
@@ -60,6 +60,10 @@ export class RoleListComponent {
     } else {
       this.filteredRoles = this.roles.filter(role => role.area === selectedArea);
     }
+  }
+
+  get selectedAreaControl() {
+    return this.searchForm.get('selectedArea');
   }
   
 
