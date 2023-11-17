@@ -7,6 +7,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IProductCategory } from '../../../models/IProductCategory';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'fn-add-discount',
@@ -34,7 +35,7 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
   category = 0;
   today = new Date().toISOString().split('T')[0];
 
-  constructor(private fb: FormBuilder, _ngbModal: NgbModal, private prodService: ProductService, private disService: DiscountsService, @Optional() private modalService: NgbActiveModal) {
+  constructor(private fb: FormBuilder, _ngbModal: NgbModal, private prodService: ProductService, private disService: DiscountsService, @Optional() private modalService: NgbActiveModal, private activeRoute:ActivatedRoute) {
     this.formGroup = this.fb.group({
       idDiscount: [null],
       idProduct: [null, [Validators.required]],
@@ -102,6 +103,8 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
       request.endDate = new Date(request.endDate)
       request.user = 'prueba';
       request.name = this.listProducts?.filter(p => p.idProduct == request.idProduct)[0].name;
+
+      console.log(request)
 
       this.disService.updateDiscounts([request]).subscribe(
       {
