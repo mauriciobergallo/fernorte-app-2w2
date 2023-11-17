@@ -78,7 +78,7 @@ export class UpdateEmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.mapEmployee();
     console.log('EMPLEADO', this.employeeToUpdate);
-    //this.employee = this.employeeToUpdate;
+    
 
     if (this.employee.birthDate != null) {
       this.dataPickerBirth = this.birthDateFormated(this.employee.birthDate);
@@ -129,7 +129,7 @@ export class UpdateEmployeeComponent implements OnInit {
 
   open(content: any) {
     console.log('PRUEBA PRUEBA PRUEBA');
-    this.loadEmployeeData(this.idEmployee);
+   // this.loadEmployeeData(this.idEmployee);
     this.modalService
       .open(content, {
         ariaLabelledBy: 'modal-basic-title',
@@ -176,6 +176,33 @@ export class UpdateEmployeeComponent implements OnInit {
 
   onSubmit(employeeForm: any) {
     console.log('FORMULARIO DE EMPLEADOS', employeeForm);
+
+    console.log(this.formattedBirthDate);
+    this.employee.birthDate = this.formattedBirthDate;
+    console.log('NEW Employee', this.employee);
+    let newEmployee: Employee = {
+      firstName: this.employee.firstName,
+      lastName: this.employee.lastName,
+      birthDate: this.formattedBirthDate,
+      idDocumentType: this.employee.idDocumentType,
+      idDocumentNumber: this.employee.idDocumentNumber,
+      address: this.employee.address,
+      phoneNumber: this.employee.phoneNumber,
+      personalEmail: this.employee.personalEmail,
+    };
+    let employeeInSnake: Employee =
+      this.conversion.toSnakeCase(newEmployee);
+    console.log('EMPLOYEE EN SNAKE', employeeInSnake);
+    this.employeeService
+      .putEmployee(employeeInSnake, this.idEmployee)
+      .subscribe(
+        (response) => {
+          alert('Se actualizo el empleado');
+        },
+        (error) => {
+          alert('Error en el servidor');
+        }
+      );
   }
 
   onBirthDateChange(event: NgbDateStruct) {
