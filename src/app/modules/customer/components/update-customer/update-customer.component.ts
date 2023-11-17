@@ -49,7 +49,7 @@ export class UpdateCustomerComponent implements OnInit {
   closeResult = '';
 
   constructor(
-    private modalService: NgbModal,
+    public modalService: NgbModal,
     private customerService: CustomerService,
     private conversion: CaseConversionPipe
   ) {
@@ -192,6 +192,12 @@ export class UpdateCustomerComponent implements OnInit {
       this.formattedBirthDate = '';
     }
   }
+
+
+onSubmit(clientForm: any){
+
+}
+
 
   onSubmitForm(customerForm: NgForm) {
     console.log('customerEE', customerForm);

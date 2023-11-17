@@ -1,4 +1,9 @@
-<ng-template #content let-modal>
+
+
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Actualizar Cliente</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
+	</div>
 	<div class="modal-body">
 		<form #customerForm="ngForm"  (ngSubmit)="onSubmitForm(customerForm)">
 
@@ -108,10 +113,9 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn btn-outline-dark"  (click)="modal.close(customerForm)">Registrar</button>
+		<button type="submit" class="btn btn-outline-dark"  (click)="onSubmit(customerForm)">Registrar</button>
 	</div>
-</ng-template>
 
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Actualizar Cliente</button>
+
 
 
