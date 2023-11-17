@@ -9,7 +9,7 @@ export interface CustomerRequest {
     birthDate: string;
     idDocumentType: number; 
     documentNumber: string; 
-    address: string;
+    address?: string;
     phoneNumber: string;
     customerType: string;
 }

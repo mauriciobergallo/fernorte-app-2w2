@@ -11,6 +11,8 @@ import { UpdateCustomerComponent } from "./components/update-customer/update-cus
 import { UpdateEmployeeComponent } from "./components/update-employee/update-employee.component";
 import { ForgotPasswordComponent } from "./components/forgot-password/forgot-password.component";
 import { FirstLoginComponent } from "./components/first-login/first-login.component";
+import { UserListComponent } from "./components/user-list/user-list.component";
+import { CustomerListComponent } from "./components/customer-list/customer-list.component";
 
 
   const routes: Routes = [
@@ -24,6 +26,8 @@ import { FirstLoginComponent } from "./components/first-login/first-login.compon
         {path: 'role', component: RoleListComponent},
         {path: 'turns', component: TurnsComponentComponent},
         {path: "login", component: LoginComponent},
+        {path: 'users', component: UserListComponent },
+        {path: 'customers', component: CustomerListComponent },
         {path: "update-costumer", component: UpdateCustomerComponent},
         {path: 'forgot-password', component: ForgotPasswordComponent },
         {path: ':document-number/first-login/:true', component: FirstLoginComponent },
