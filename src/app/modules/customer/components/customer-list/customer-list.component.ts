@@ -18,7 +18,39 @@ export class CustomerListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUser();
+//    this.customerList = this.customers;
   }
+
+   customers: Customer[] = [
+    {
+      id_customer: 1,
+      first_name: "John",
+      last_name: "Doe",
+      company_name: "ABC Inc",
+      iva_condition: "IVA Registered",
+      email: "john.doe@example.com",
+      phone_number: "123-456-7890",
+      birth_date: new Date("1990-01-01"),
+      address: "123 Main St, City",
+      document_number: "ABC123",
+      document_type: "ID Card",
+      customer_type: "Corporate",
+      discount_factor: 0.1,
+      customer_category: "Gold",
+    },
+    {
+      id_customer: 2,
+      first_name: "Jane",
+      last_name: "Smith",
+      email: "jane.smith@example.com",
+      phone_number: "987-654-3210",
+      birth_date: new Date("1985-05-15"),
+      document_number: "XYZ789",
+      document_type: "Passport",
+      customer_type: "Individual",
+    },
+    // Add more customer objects as needed
+  ];
 
   loadUser() {
     this.customerService.getAllCustomer().subscribe((data: Customer[]) => {
