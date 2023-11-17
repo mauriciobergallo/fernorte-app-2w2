@@ -1,4 +1,3 @@
-<!-- payment-method.component.html -->
 <div class="container">
 
     <div class="row">
@@ -6,35 +5,25 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Método de Pago</th>
-                        <th>Recargo</th>
+                        <th>Impuesto</th>
+                        <th>Valor</th>
                         <th class="d-flex align-items-center justify-content-center">Editar</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let method of paymentMethods">
-                        <td>{{ method.payment_method }}</td>
-                        <td>{{ method.surcharge }}% </td>
+                    <tr *ngFor="let tax of taxList">
+                        <td>{{ tax.tax_type }}</td>
+                        <td>{{ tax.tax_value }}% </td>
                         <td class="d-flex align-items-center justify-content-center">
-                            <button 
-                            type="button" 
-                            class="btn btn-sm btn-primary "
-
-                            data-bs-toggle="modal"
-                            data-bs-target="#editModal" 
-                            data-bs-whatever="@mdo" 
-                            (click)="loadEditarForm(method)">
-                            <i class="bi bi-pencil"></i></button>
+                            <button type="button" class="btn btn-sm btn-primary " data-bs-toggle="modal"
+                                data-bs-target="#editModal" data-bs-whatever="@mdo" (click)="loadTaxList(tax)">
+                                <i class="bi bi-pencil"></i></button>
                         </td>
                     </tr>
-                    <tr class="text-center"> 
+                    <tr class="text-center">
                         <td colspan="3">
-                            <button 
-                                type="button" 
-                                class="btn btn-primary" 
-                                data-bs-toggle="modal"
-                                data-bs-target="#NewMethodModal" 
-                                data-bs-whatever="@mdo">Agregar</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#NewMethodModal" data-bs-whatever="@mdo">Agregar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -51,32 +40,30 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="taxEditForm" (ngSubmit)="updatePaymentMethod()">
+                <form [formGroup]="taxEditForm" (ngSubmit)="updateTax()">
                     <div class="row">
                         <div class="col-md-8">
                             <div class="mb-2">
-                                <label for="paymentMethod" class="form-label">Método de Pago</label>
-                                <input formControlName="paymentMethod" type="text" class="form-control"
-                                    id="paymentMethod" [(ngModel)]="editPayment.payment_method" required>
-                                <div
-                                    *ngIf="taxEditForm.get('paymentMethod')!.touched && taxEditForm.get('paymentMethod')!.hasError('required')">
-                                    El método de pago es obligatorio.</div>
+                                <select class="form-control" aria-label="Default select example" name="taxType"
+                                    formControlName="taxType" id="taxType">
+                                    <option selected *ngFor="let taxType of taxTypeList">{{taxType}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-2">
+                                    <label for="taxValue" class="form-label">Recargo</label>
+                                    <input formControlName="taxValue" type="number" class="form-control" id="taxValue"
+                                        name="taxValue" [(ngModel)]="taxEdit.tax_value" required>
+                                    <div
+                                        *ngIf="taxEditForm.get('taxValue')!.touched && taxEditForm.get('taxValue')!.hasError('required')">
+                                        El recargo es obligatorio.</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="mb-2">
-                                <label for="surcharge" class="form-label">Recargo</label>
-                                <input formControlName="surcharge" type="number" class="form-control" id="surcharge"
-                                    name="surcharge" [(ngModel)]="editPayment.surcharge" required>
-                                <div
-                                    *ngIf="taxEditForm.get('surcharge')!.touched && taxEditForm.get('surcharge')!.hasError('required')">
-                                    El recargo es obligatorio.</div>
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -91,25 +78,32 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="taxEditForm" (ngSubmit)="saveNewPaymentMethod()">
+                <form [formGroup]="taxEditForm" (ngSubmit)="saveNewTax()">
                     <div class="row">
                         <div class="col-md-8">
                             <div class="mb-2">
-                                <label for="paymentMethod" class="form-label">Método de Pago</label>
-                                <input formControlName="paymentMethod" type="text" class="form-control"
-                                    id="paymentMethod"required>
+                                <label for="taxType" class="form-label">Estado de presupuesto</label>
+                                <select class="form-control" aria-label="Default select example" name="taxType"
+                                    formControlName="taxType" id="taxType">
+                                    <option selected *ngFor="let taxType of taxTypeList">{{taxType}}</option>
+                                </select>
+
+
+                                <!-- <label for="taxType" class="form-label">Método de Pago</label>
+                                <input formControlName="taxType" type="text" class="form-control"
+                                    id="taxType"required>
                                 <div
-                                    *ngIf="taxEditForm.get('paymentMethod')!.touched && taxEditForm.get('paymentMethod')!.hasError('required')">
-                                    El método de pago es obligatorio.</div>
+                                    *ngIf="taxEditForm.get('taxType')!.touched && taxEditForm.get('taxType')!.hasError('required')">
+                                    El método de pago es obligatorio.</div> -->
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-2">
-                                <label for="surcharge" class="form-label">Recargo</label>
-                                <input formControlName="surcharge" type="number" class="form-control" id="surcharge"
-                                    name="surcharge" required>
+                                <label for="taxValue" class="form-label">RECARGO    </label>
+                                <input formControlName="taxValue" type="number" class="form-control" id="taxValue"
+                                    name="taxValue" required>
                                 <div
-                                    *ngIf="taxEditForm.get('surcharge')!.touched && taxEditForm.get('surcharge')!.hasError('required')">
+                                    *ngIf="taxEditForm.get('taxValue')!.touched && taxEditForm.get('taxValue')!.hasError('required')">
                                     El recargo es obligatorio.</div>
                             </div>
                         </div>

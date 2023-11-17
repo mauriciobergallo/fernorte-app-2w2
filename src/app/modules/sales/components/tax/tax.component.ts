@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Tax, TaxEmpty } from '../../models/Tax';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TaxService } from '../../services/tax/tax.service';
 
 @Component({
   selector: 'fn-tax',
@@ -14,49 +15,54 @@ export class TaxComponent implements OnInit {
   taxForm: FormGroup;
   taxEditForm: FormGroup;
 
+  taxTypeList: string[] = ["VAT", "IIBB"];
 
-  constructor(private paymentMethodService: PaymentMethodService, private formBuilder: FormBuilder) {
-    this.methodForm = this.formBuilder.group({
-      paymentMethod: ['', Validators.required],
-      surcharge: [0, Validators.required],
+
+  constructor(private taxService: TaxService, private formBuilder: FormBuilder) {
+    this.taxForm = this.formBuilder.group({
+      taxType: ['', Validators.required],
+      taxValue: [0, Validators.required],
     });
 
-    this.editForm = this.formBuilder.group({
-      paymentMethod: ['', Validators.required],
-      surcharge: [0, Validators.required],
+    this.taxEditForm = this.formBuilder.group({
+      taxType: ['', Validators.required],
+      taxValue: [0, Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.loadPaymentMethods();
+    this.loadTax();
   }
 
-  saveNewPaymentMethod() {
+  saveNewTax() {
+    if (this.taxEditForm && this.taxEditForm.valid) {
+      this.tax = {
+        id: 0,
+        tax_type: this.taxEditForm.get('taxType')?.value || '',
+        tax_value: this.taxEditForm.get('taxValue')?.value || 0
+      };
 
-    if (this.editForm && this.editForm.valid) {
-      this.payment.id_payment_method = 0;
-      this.payment.payment_method = this.editForm.get('paymentMethod')?.value || '';
-      this.payment.surcharge = this.editForm.get('surcharge')?.value || 0;
-      this.editForm.get('paymentMethod')?.setValue('');
-      this.editForm.get('surcharge')?.setValue(0);
-
-      this.paymentMethodService.createPaymentMethod(this.payment).subscribe({
-        next:(methods) => {
-          console.log('Nuevo método de pago creado:', methods);
-          this.loadPaymentMethods();  
+      console.log('Nueva tax a crear:', this.tax);
+  
+      this.taxService.createTax(this.tax).subscribe({
+        next: (methods) => {
+          console.log('Nueva tax creada:', methods);
+          this.loadTax();
+          this.taxEditForm.reset(); // Esto restablecerá el formulario
         },
-        error:(err)=>{
-          alert("error")
+        error: (err) => {
+          alert("error");
         }
-      })
+      });
     }
   }
+  
 
-  loadPaymentMethods() {
-    this.paymentMethodService.getPaymentMethods().subscribe({
-      next:(methods) => {
-        this.paymentMethods = methods;
-        console.log("payment Methods: ", methods)
+  loadTax() {
+    this.taxService.getTaxList().subscribe({
+      next:(tax) => {
+        this.taxList= tax;
+        console.log("payment Methods: ", tax)
       },
       error:(err)=>{
         alert("error")
@@ -65,15 +71,15 @@ export class TaxComponent implements OnInit {
   }
   
 
-  updatePaymentMethod() {
-    if (this.editForm && this.editForm.valid)
-      this.paymentMethodService.updatePaymentMethod(this.editPayment).subscribe({
-      next:(method) => {
-        console.log('Método de pago actualizado:', method);
-        this.loadPaymentMethods();
-        this.editForm.get('paymentMethod')?.setValue('');
-        this.editForm.get('surcharge')?.setValue(0);
-        this.editPayment = { id_payment_method: 0, payment_method: '', surcharge: 0 };
+  updateTax() {
+    if (this.taxEditForm && this.taxEditForm.valid)
+      this.taxService.updateTax(this.taxEdit).subscribe({
+      next:(tax) => {
+        console.log('tax actualizada:', tax);
+        this.loadTax();
+        this.taxEditForm.get('taxType')?.setValue('');
+        this.taxEditForm.get('taxValue')?.setValue(0);
+        this.taxEdit = { id: 0, tax_type: '', tax_value: 0 };
       },
       error:(err)=>{
         alert("error")
@@ -81,11 +87,11 @@ export class TaxComponent implements OnInit {
     })
   }
   
-  loadEditarForm(method: IPaymentMethod) {
+  loadTaxList(tax: Tax) {
 
-    this.editPayment.id_payment_method = method.id_payment_method;
-    this.editPayment.payment_method = method.payment_method;
-    this.editPayment.surcharge = method.surcharge;
+    this.taxEdit.id = tax.id;
+    this.taxEdit.tax_type = tax.tax_type;
+    this.taxEdit.tax_value = tax.tax_value;
     
   }
 }
