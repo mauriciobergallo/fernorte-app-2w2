@@ -68,6 +68,7 @@ export class UpdateCustomerComponent implements OnInit {
       month: currentDate.getMonth() + 1,
       day: currentDate.getDate(),
     };
+  }
 
   ngOnInit(): void {
     this.mapCustomer();
