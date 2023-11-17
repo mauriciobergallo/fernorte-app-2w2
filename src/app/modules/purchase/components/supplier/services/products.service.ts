@@ -29,10 +29,9 @@ export class ProductsService {
   getProducts(): Observable<IProduct[]> {
     return this._http.get<IProduct[]>(this.url);
   }
-  getProductsBySupplier(id: number): Observable<IProductBySupplierDTO[]> { // IProduct2
+  getProductsBySupplier(id: number): Observable<IProduct2[]> {
     const params = new HttpParams().set('supplier-id', id.toString());
-    console.log('TRIGGER', params)
-    return this._http.get<IProductBySupplierDTO[]>(this.urlSupplier, { params });
+    return this._http.get<IProduct2[]>(this.urlSupplier, { params });
   }
   getProductsAndSupplier(): Observable<ISupplierAndProduct[]> {
     return this._http.get<ISupplierAndProduct[]>(this.urlall);

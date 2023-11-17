@@ -31,7 +31,7 @@ export class CartComponent implements OnInit{
   }
 
   calculateTotal(): void {
-    this.total = this.cardProducts?.map(prod => prod.price).reduce((a, b) => a+b, 0);
+    this.total = this.cardProducts?.map(prod => prod.price*prod.quantity).reduce((a, b) => a+b, 0);
   }
 
   onSubmit() {

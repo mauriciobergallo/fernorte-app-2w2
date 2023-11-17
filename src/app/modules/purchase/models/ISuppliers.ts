@@ -24,11 +24,13 @@ export interface IProduct {
   price: number;
 }
 export interface IProduct2 {
-  id: number;
   name: string;
   price: number;
   active: boolean;
-  // image: string;
+  imageUrl: string;
+  productId: number;
+  supplierId: number;
+  observations: string;
 }
 
 export interface ISupplierProduct {

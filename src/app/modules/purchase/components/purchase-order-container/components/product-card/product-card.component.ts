@@ -23,36 +23,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   productQuantities: { [productId: number]: number } = {};
   idSupplier: number = 0;
 
-  product_List: IProduct2[] = [{
-    id: 1,
-    name: "Taladro",
-    price: 250,
-    active: true
-  },
-  {
-    id: 2,
-    name: "Taladro",
-    price: 250,
-    active: true
-  },
-  {
-    id: 3,
-    name: "Taladro",
-    price: 250,
-    active: true
-  },
-  {
-    id: 4,
-    name: "Taladro",
-    price: 250,
-    active: true
-  },
-  {
-    id: 1,
-    name: "Taladro",
-    price: 250,
-    active: true
-  }];
+  product_List: IProduct2[] = [];
 
   cartProducts: ISupplierProduct[] = [];
   isButtonDisabled: { [productId: number]: boolean } = {};
@@ -78,13 +49,13 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       this.suscription.add(
         this._productService.getProductsBySupplier(id).subscribe({
           next: (data: any) => {
-            console.log('DATA->', data) // data.products
+            console.log('PRODUCTS->', data) // data.products
             if (data && Array.isArray(data)) {
               this.product_List = data;
               //this.productQuantities = {};
               this.product_List.forEach((product) => {
-                this.productQuantities[product.id] = 0;
-                this.isButtonDisabled[product.id] = false;
+                this.productQuantities[product.productId] = 0;
+                this.isButtonDisabled[product.productId] = false;
               });
             }
           },
@@ -95,35 +66,35 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   }
 
   Summ(product: IProduct2) {
-    if (!this.productQuantities[product.id]) {
-      this.productQuantities[product.id] = 0;
+    if (!this.productQuantities[product.productId]) {
+      this.productQuantities[product.productId] = 0;
     }
-    this.productQuantities[product.id]++;
+    this.productQuantities[product.productId]++;
   }
 
   Rest(product: IProduct2) {
-    if (!this.productQuantities[product.id]) {
-      this.productQuantities[product.id] = 0;
+    if (!this.productQuantities[product.productId]) {
+      this.productQuantities[product.productId] = 0;
     }
-    this.productQuantities[product.id]--;
+    this.productQuantities[product.productId]--;
   }
 
   addToCart(product: IProduct2) {
-    const quantity = this.productQuantities[product.id];
+    const quantity = this.productQuantities[product.productId];
     if (quantity > 0) {
       const productSupplier: ISupplierProduct = {
         idSupplier: this.idSupplier,
-        idProduct: product.id,
+        idProduct: product.productId,
         name: product.name,
         price: product.price,
         quantity: quantity
       };
       this.cartProducts.push(productSupplier)
       this._purchaseOrderSer.setCardProductList2(this.cartProducts);
-      this.isButtonDisabled[product.id] = true;
+      this.isButtonDisabled[product.productId] = true;
       console.log('PROD->', this._purchaseOrderSer.getCardProductList());
     } else {
-      this.mostrarToastAddProduct[product.id] = true;
+      this.mostrarToastAddProduct[product.productId] = true;
     }
   }
 
@@ -141,7 +112,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
           this.cartProducts = data;
           this.product_List.forEach((product) => {
             const isProductInCart = this.isProductInCart(product);
-            this.isButtonDisabled[product.id] = isProductInCart;
+            this.isButtonDisabled[product.productId] = isProductInCart;
           });
         },
         error: (error: any) => console.log(error)
@@ -150,6 +121,6 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   }
 
   isProductInCart(product: IProduct2): boolean {
-    return this.cartProducts.some((item) => item.idProduct === product.id);
+    return this.cartProducts.some((item) => item.idProduct === product.productId);
   }
 }
