@@ -20,8 +20,8 @@
             <table class="w-100">
               <tr>
                 <td class="info-cliente">
-                  <h5>Información del Proveedor</h5>
-                  <p>Nombre del Cliente: {{ orderData?.supplier_name }}</p>
+                  <h5>Información del proveedor</h5>
+                  <p>Nombre: {{ orderData?.supplier_name }}</p>
                 </td>
               </tr>
             </table>
@@ -29,14 +29,14 @@
         </div>
 
 
-        <h5>Detalles del Producto</h5>
+        <h5>Detalles del producto</h5>
         <form [formGroup]="detailsForm">
           <table class="table">
             <thead>
               <tr>
                 <th class="text-center mx-4">Nombre del producto</th>
-                <th class="text-center mx-4">Cantidad Acordada</th>
-                <th class="text-center mx-4">Cantidad Recibida</th>
+                <th class="text-center mx-4">Cantidad acordada</th>
+                <th class="text-center mx-4">Cantidad recibida</th>
                 <th class="text-center mx-4">Estado de productos</th>
                 <th class="text-center mx-4">Acciones</th>
 

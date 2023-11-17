@@ -10,7 +10,7 @@
                   <h5 class="card-title">Orden de entrega</h5>
                   <p>N#: {{ orderData.sale_order_id}}</p>
                   <p>Estado: {{ getStatusText(orderData.state) }}</p>
-                  <p>Fecha de Creación: {{ orderData.created_at }}</p>
+                  <p>Fecha de creación: {{ orderData.created_at }}</p>
                 </td>
               </tr>
             </table>
@@ -19,8 +19,8 @@
             <table class="w-100">
               <tr>
                 <td class="info-cliente">
-                  <h5>Información del Cliente</h5>
-                  <p>Nombre del Cliente: {{ orderData.client?.first_name }} {{ orderData.client?.last_name }}</p>
+                  <h5>Información del cliente</h5>
+                  <p>Nombre: {{ orderData.client?.first_name }} {{ orderData.client?.last_name }}</p>
                   <p>Documento: {{ orderData.client?.document_number }}</p>
                 </td>
               </tr>
