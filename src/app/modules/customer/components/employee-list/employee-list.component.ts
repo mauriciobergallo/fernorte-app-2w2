@@ -60,6 +60,7 @@ export class EmployeeListComponent implements OnInit {
   onLoad(){
     this.employeeService.getEmployees().subscribe(
       (response) => {
+        console.log(response)
         let toCamel: EmployeeResponseDTO[] = this.conversion.toCamelCase(response);
         this.employeeList = toCamel;
       },
@@ -68,10 +69,10 @@ export class EmployeeListComponent implements OnInit {
       }
     );
   }
-  
+
   openUpdateEmployeeModal(employee: EmployeeResponseDTO) {
     this.selectedEmployeeId = employee.idEmployee;
-    const modalRef = this.modalService.open(UpdateEmployeeComponent, { ariaLabelledBy: 'modal-basic-title' });
+    const modalRef = this.modalService.open(UpdateEmployeeComponent, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' });
     modalRef.componentInstance.employeeToUpdate = employee; // Pasar el ID del empleado al componente de actualización
     
     modalRef.componentInstance.updateClicked.subscribe(() => {

@@ -38,6 +38,11 @@ getEmployees(): Observable<any>{
   return this.http.get<any>(`${this.apiUrl}`+"/")
 }
 
+getDocumentType(): Observable<any>{
+  return this.http.get<any>("http://localhost:8090/document-type/")
+}
+
+
 delete(employee: EmployeeResponseDTO): Observable<any>{
   return this.http.delete<any>(`${this.apiUrl}`+"/"+employee.idEmployee)
 }

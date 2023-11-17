@@ -9,6 +9,7 @@ import { Employee } from '../../models/employee';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 import { EmployeeResponseDTO } from '../../models/employeeResponseDTO';
+import { DocumentType } from '../../models/documentType';
 
 @Component({
   selector: 'fn-update-employee',
@@ -20,7 +21,9 @@ export class UpdateEmployeeComponent implements OnInit {
 
   formattedBirthDate: string = '';
 
-  @Input() idEmployee: number = 0;
+  idEmployee: number = 0;
+
+  lstDocumentType: DocumentType[] = [];
 
   @Input() employeeToUpdate: EmployeeResponseDTO | undefined;
 
@@ -31,15 +34,6 @@ export class UpdateEmployeeComponent implements OnInit {
   currentYear = new Date().getFullYear();
 
   dataPickerBirth: NgbDateStruct = { year: 2000, month: 1, day: 1 };
-
-  documentTypes = [
-    { label: 'DNI', value: 'DNI' },
-    { label: 'Pasaporte', value: 'Pasaporte' },
-    { label: 'CUIT', value: 'CUIT' },
-    { label: 'CUIL', value: 'CUIL' },
-    { label: 'LC', value: 'LC' },
-    { label: 'LE', value: 'LE' },
-  ];
 
   employee: Employee = {
     firstName: '',
@@ -82,6 +76,11 @@ export class UpdateEmployeeComponent implements OnInit {
 
     this.dataPickerBirth = this.birthDateFormated(this.employee.birthDate);
     console.log(this.employee.idDocumentType)
+    this.employeeService.getDocumentType().subscribe(
+      (response)=>{
+        this.lstDocumentType = this.conversion.toCamelCase(response);
+      }
+    );
   }
 
   loadEmployeeData(idEmployee: number) {
@@ -101,14 +100,34 @@ export class UpdateEmployeeComponent implements OnInit {
 
   mapEmployee() {
     if (this.employeeToUpdate != null) {
+      this.idEmployee = this.employeeToUpdate.idEmployee;
       this.employee.firstName = this.employeeToUpdate.firstName;
       this.employee.lastName = this.employeeToUpdate.lastName;
-      this.employee.idDocumentType =this.employeeToUpdate.documentType;
+      this.employee.idDocumentType = this.setIdDocumentType(this.employeeToUpdate.documentType);
       this.employee.personalEmail = this.employeeToUpdate.personalEmail;
       this.employee.phoneNumber = this.employeeToUpdate.phoneNumber;
       this.employee.birthDate = this.employeeToUpdate.birthDate;
       this.employee.idDocumentNumber = this.employeeToUpdate.documentNumber;
       this.employee.address = this.employeeToUpdate.address;
+    }
+  }
+
+  setIdDocumentType(documentType: string | number): number{
+    switch(documentType){
+      case 'DNI':
+        return 1;
+      case 'Pasaporte':
+        return 2;
+      case 'CUIT':
+        return 3;
+      case 'CUIL':
+        return 4;
+      case 'LC':
+        return 5;
+      case 'LE':
+        return 6;
+      default:
+        return 0;
     }
   }
   
@@ -133,7 +152,7 @@ export class UpdateEmployeeComponent implements OnInit {
             firstName: this.employee.firstName,
             lastName: this.employee.lastName,
             birthDate: this.formattedBirthDate,
-            idDocumentType: this.employee.idDocumentType,
+            idDocumentType:  this.employee.idDocumentType,
             idDocumentNumber: this.employee.idDocumentNumber,
             address: this.employee.address,
             phoneNumber: this.employee.phoneNumber,
