@@ -1,1 +1,101 @@
-<p>payment-preview works!</p>
+
+<section class="container-fluid">
+    <!-- Encabezado -->
+    <div class="row mb-4">
+      <div class="col-lg-9 purchase-header">
+        <div class="purchase-title">
+          <h2 class="mb-0 mt-2">Orden de compra</h2>
+          <hr />
+        </div>
+      </div>
+      <div id="date" class="col-lg-3 purchase-header">
+        <div class="purchase-date">
+          <h5 >Orden N°: <span class=""><strong>15</strong></span></h5>
+          <h5 class="mb-3">Fecha: <span class="">{{ 22/12/2023 | date:'dd/MM/yyyy' }}</span></h5>
+        </div>
+      </div>
+    </div>
+
+    <!-- Información del Proveedor y Empleado-->
+    <div class="row mt-4">
+      <div class="col-lg-7">
+        <div class="supplierInfo mr-4">
+          <h4 class="mb-4">Información del Proveedor</h4>
+          <div class="data">
+            <p><strong>Nombre del Proveedor:</strong></p>
+            <p>{{ supplier.socialReason }}</p>
+          </div>
+          <div class="data">
+            <p><strong>Nombre de Fantasía:</strong></p>
+            <p>{{ supplier.fantasyName }}</p>
+          </div>
+          <div class="data">
+            <p><strong>CUIT:</strong></p>
+            <p>{{ supplier.cuit }}</p>
+          </div>
+          <div class="data info-line">
+            <p><strong>Dirección:</strong></p>
+            <p>{{ supplier.address }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="employeeInfo">
+          <h4 class="mb-4">Información del Empleado</h4>
+          <div class="data">
+            <p><strong>Nombre del Empleado:</strong></p>
+            <p>John Doe</p>
+          </div>
+          <div class="data">
+            <p><strong>Dirección del Empleado:</strong></p>
+            <p>123 Main St, Ciudad</p>
+          </div>
+          <div class="data">
+            <p><strong>Número de Empleado:</strong></p>
+            <p>1001</p>
+          </div>
+          <div class="data info-line">
+            <p><strong>Nivel de acceso:</strong></p>
+            <p>Standard</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detalles de la Compra -->
+    <div class="row">
+      <div class="col-lg-12">
+        <h4 class="mt-2">Detalles del pago</h4>
+      <table class="table mt-3">
+        <thead>
+          <tr>
+            <th class="w-75">fecha</th>
+            <th class="text-center">observacion</th>
+            <th class="text-center">total</th>
+            <th class="text-center">factura</th>
+            <th class="text-center">acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products; let i = index">
+            <td>{{ product.name }}</td>
+            <td class="text-center">{{ product.price | currency }}</td>
+            <td class="text-center">{{ product.quantity }}</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div class="mt-3 row">
+      <div class="col-lg-4 offset-lg-8 text-right">
+        <button class="btn btn-primary" (click)="onEdit()">Editar</button>
+      </div>
+    </div>
+
+    <!-- Sumbmit -->
+    <div class="row mt-3 mb-2">
+      <div class="col-lg-4 offset-lg-8 text-right">
+        <button class="btn btn-success full-width">Generar Orden de Pago</button>
+      </div>
+    </div>
+  </section>
