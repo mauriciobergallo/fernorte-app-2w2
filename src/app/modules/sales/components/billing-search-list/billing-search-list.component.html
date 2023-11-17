@@ -12,14 +12,20 @@
             </div>
             <div class="modal-body">
               Seleccione sus filtros
-              <form #getBillsForm="ngForm" (ngSubmit)="onSubmit(getBillsForm)">
+              <form #getBillsForm="ngForm" (ngSubmit)="onSendFilters(getBillsForm)">
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Documento de cliente</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                  name="doc"
+                #docControl="ngModel"
+                [(ngModel)]="doc">
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">Número de factura</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1">
+                  <input type="password" class="form-control" id="exampleInputPassword1"
+                  name="idBill"
+                #idBillControl="ngModel"
+                [(ngModel)]="idBill">
                 </div>
                 <div class="mb-3">
                   <div class="row">
@@ -28,21 +34,27 @@
                       <input type="date" class="form-control" id="fromDate" 
                       placeholder=""
                       name="fromDate"
-                      required>
+                      required
+                      name="fromDate"
+                    #fromDateControl="ngModel"
+                    [(ngModel)]="fromDate">
                     </div>
                     <div class="mb-3 col">
                       <p>Hasta</p>
                       <input type="date" class="form-control" id="toDate" 
                       placeholder=""
                       name="toDate"
-                      required>
+                      required
+                      name="toDate"
+                    #toDateControl="ngModel"
+                    [(ngModel)]="toDate">
                     </div>
                   </div>
                 </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Aplicar</button>
+                </div>
               </form>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Aplicar</button>
             </div>
           </div>
         </div>
@@ -54,23 +66,35 @@
               <th scope="col">Número</th>
               <th scope="col">Cliente</th>
               <th scope="col">Vendedor</th>
-              <th scope="col">Fecha</th>
+              <th scope="col">Fecha Creación</th>
               <th scope="col">Detalle</th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of billListOk">
-              <th scope="row">{{item.idSaleOrder}}</th>
-              <td>{{item.idClient}}</td>
-              <td>{{item.idSeller}}</td>
-              <td>{{item.dateOfIssue}}</td>
-              <td>{{item.stateSaleOrder}}</td>
+            <tr *ngFor="let item of billList">   
+              <th scope="row">{{item.idBill}}</th>
+              <td>{{item.nameSeller}}</td>
+              <td>{{item.firstName}}</td>
+              <td>{{item.createdDate| dateFormat}}</td>
+              <td>{{item.totalPrice}}</td>
               <td>
                   <ul>
-                      <li *ngFor="let prod of item.details">
+                      <li *ngFor="let prod of item.detailBill">
                           {{prod.idProduct}}
                       </li>
                   </ul>
+              </td>
+              <td class="text-center">
+                <div class="dropdown">
+                  <button type="button" class="btn btn-light dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical"></i>
+                  </button>
+                  <div class="dropdown-content">
+                    <a (click)="onShowDetails()">Ver detalles</a>
+                    <a (click)="onPrint()">Imprimir</a>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>

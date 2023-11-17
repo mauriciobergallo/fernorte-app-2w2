@@ -10,6 +10,8 @@ import { SaleOrderProvider } from './services/salesOrder/SaleOrderProvider';
 import { ProductProvider } from './services/products/productProvider';
 import { SaleOrderComponent } from './components/sale_order/sale-order.component';
 import { CalcularTotalPipe } from './pipes/calcular-total.pipe';
+import { DateFormatPipe } from './pipes/date-format.pipe';
+import { CaseConverterPipe } from './pipes/case-converter.pipe';
 import { CalcularImpuestosPipe } from './pipes/calcular-impuestos.pipe';
 import { CalcularMontoTotalPipe } from './pipes/calcular-monto-total.pipe';
 import { BillingComponent } from './components/billing/billing.component';
@@ -27,6 +29,10 @@ import { TurnProvider } from './services/turns/TurnProvider';
 import { TranslateStatesPipe } from './pipes/translateStates.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaxComponent } from './components/tax/tax.component';
+import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
+import { BillingProvider } from './services/billing/BillingProvider';
+
+
 
 @NgModule({
   declarations: [HomeComponent,
@@ -45,12 +51,16 @@ import { TaxComponent } from './components/tax/tax.component';
     ReportNavComponent,
     TranslateStatesPipe,
     TaxComponent,
-    ReportNavComponent],
+    ReportNavComponent,
+    BillingSearchListComponent,
+    DateFormatPipe],
 
   providers: [SaleOrderProvider,
     ProductProvider,
     ClientProvider,
-    TurnProvider],
+    TurnProvider,
+    BillingProvider,
+    CaseConverterPipe],
 
   imports: [CommonModule,
     FormsModule, 
@@ -70,6 +80,8 @@ import { TaxComponent } from './components/tax/tax.component';
     SaleOrderNavComponent,
     BillingNavComponent,
     TaxComponent,
-    ReportNavComponent],
+    ReportNavComponent,
+    BillingSearchListComponent,
+    DateFormatPipe],
 })
 export class SalesModule {}
