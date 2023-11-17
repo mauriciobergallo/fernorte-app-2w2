@@ -82,6 +82,14 @@ export class EmployeeListComponent implements OnInit {
     });
   }
 
+  onClickInfo(employee: EmployeeResponseDTO){
+alert("Test");
+const modalRef = this.modalService.open(UpdateEmployeeComponent, { ariaLabelledBy: 'modal-basic-title' });
+modalRef.componentInstance.employeeToUpdate = employee; // Pasar el ID del empleado al componente de actualización
+modalRef.componentInstance.onlyForRead = true;
+
+  }
+
   onDelete(employee: EmployeeResponseDTO){
     //Confirmacion
 

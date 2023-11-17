@@ -1,52 +1,43 @@
-<div class="container">
-  <h1 class="h1">Roles</h1>
-  <div class="row">
-    <div class="col-lg-6">
-      <form [formGroup]="searchForm">
-        <div class="mb-3">
-          <label for="areaFilter" class="form-label">Filtrar por Área:</label>
-          <div class="input-group">
-            <select id="areaFilter" class="form-select form-control-sm" formControlName="selectedArea">
-              <option value="" selected>Todos</option>
-              <option *ngFor="let area of areas" [value]="area">{{ area }}</option>
-            </select>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="col-lg-3">
+<div class="row">
+  <div class="col-lg-6">
+    <form [formGroup]="searchForm">
       <div class="mb-3">
-        <label for=""></label>
-        <div class="d-flex align-items-center">
-          <label class="mx-2" style="margin-top: 15px;">Agregar Rol</label>
-          <a class="btn btn-outline-success btn-sm"  style="margin-top: 10px;"><i class="bi bi-plus-circle"></i></a>
+        <label for="areaFilter" class="form-label">Filtrar por Área:</label>
+        <div class="input-group">
+          <select id="areaFilter" class="form-select form-control-sm" formControlName="selectedArea">
+            <option value="" selected>Todos</option>
+            <option *ngFor="let area of areas" [value]="area">{{ area }}</option>
+          </select>
         </div>
       </div>
+    </form>
+  </div>
+  <div class="col-lg-3">
+    <div class="mb-3 d-flex align-items-center justify-content-center" style="height: 100%;">
+      <label class="mx-2">Agregar Rol</label>
+      <button class="btn btn-success btn-sm" (click)="openNewRoleModal()"><i class="bi bi-file-earmark-plus"></i></button>
     </div>
   </div>
+</div>
   <table class="table container">
     <thead>
       <tr>
         <th scope="col" class="text-center col-2">Nombre de Rol</th>
-        <th scope="col" class="text-center col-2">Nombre de Área</th>        
+        <th scope="col" class="text-center col-2">Nombre de Área</th>
       </tr>
     </thead>
     <tbody>
 
       <tr *ngFor="let role of pagedRoles">
         <td class="text-center">{{ role.name }}</td>
-        <td class="text-center">{{ role.area }}</td>        
+        <td class="text-center">{{ role.area }}</td>
       </tr>
-      <!-- <tr *ngFor="let role of filteredRoles">
-        <td class="text-center">{{ role.name }}</td>
-        <td class="text-center">{{ role.area }}</td>        
-      </tr> -->
     </tbody>
   </table>
-</div>
 
 
- <nav aria-label="Page navigation example" class="my-pagination">
+
+<nav aria-label="Page navigation example" class="my-pagination">
   <ul class="pagination justify-content-center mb-4">
     <li class="page-item" [class.disabled]="currentPage === 1">
       <a class="page-link" (click)="pageChanged(currentPage - 1)" aria-label="Previous">
@@ -64,3 +55,4 @@
   </ul>
 </nav>
 
+<fn-create-rol *ngIf="isCreateRoleModalOpen"></fn-create-rol>

@@ -1,8 +1,10 @@
-import { Component} from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { RoleService } from '../../services/role.service';
 import { Role } from '../../models/role';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CreateRolComponent } from '../create-rol/create-rol.component';
+import { NewRole } from '../../models/new-role';
 
 
 @Component({
@@ -10,8 +12,17 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   templateUrl: './role-list.component.html',
   styleUrls: ['./role-list.component.css']
 })
-export class RoleListComponent {
+export class RoleListComponent implements OnInit {
 
+  @ViewChild('roleForm') newRoleModal: TemplateRef<any> | undefined;
+
+  createRole: NewRole = {
+    id_role: 0,
+    name: "",
+    area: "",
+  };
+
+  isCreateRoleModalOpen = false;
   roles: Role[] = [];
   filteredRoles: Role[] = [];
   pagedRoles: Role[] = [];
@@ -25,8 +36,14 @@ export class RoleListComponent {
 
   currentPage: number = 1;
   itemsPerPage: number = 10;
+  contentRole: any;
 
-  constructor(private roleService: RoleService, private formBuilder: FormBuilder) {}
+  constructor(private roleService: RoleService,
+    private formBuilder: FormBuilder,
+    private modalService: NgbModal) { }
+
+
+
 
   ngOnInit() {
     this.searchForm.get('selectedArea')?.valueChanges.subscribe(() => {
@@ -34,6 +51,10 @@ export class RoleListComponent {
     });
 
     this.getRoles();
+    this.roleService.getRolesUpdatedObservable().subscribe(() => {
+      this.getRoles();
+    });
+
   }
 
   getRoles() {
@@ -80,5 +101,24 @@ export class RoleListComponent {
       this.currentPage = page;
       this.pagedRoles = this.filteredRoles.slice(startIndex, startIndex + this.itemsPerPage);
     }
+  }
+
+  openNewRoleModal() {
+    const modalRef = this.modalService.open(CreateRolComponent, { ariaLabelledBy: 'modal-basic-title' ,backdrop: 'static'});
+    modalRef.componentInstance.createRole = this.createRole;
+
+    modalRef.result.then(
+      (newRole: Role) => {
+        if (newRole) {
+          this.roles.push(newRole);
+          console.log('Roles después de agregar:', this.roles);
+          this.filteredRoles = [...this.roles];
+          this.pageChanged(this.currentPage);
+          this.isCreateRoleModalOpen = false;
+        }
+      },
+      (reason) => {
+      }
+    );
   }
 }

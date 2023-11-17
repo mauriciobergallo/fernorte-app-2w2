@@ -1,37 +1,45 @@
-<ng-template #contentRole let-modal>
+
+<div class="form-container">
+
+
+<form [formGroup]="roleForm" (ngSubmit)="onSubmitForm()">
+	
 	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Registrar nuevo Rol</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+		<h4 class="modal-title mt-2" id="modal-basic-title">Registrar Rol</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="closeForm()"></button>
 	</div>
-	<div class="modal-body">
-		<form #roleForm="ngForm">
 
-			<div class="mb-3 d-flex">
-				<div class="flex-grow-1 me-2">
-					<label for="name">Nombre del rol</label>
-					<input [(ngModel)]="role.name" type="text" name="name" id="name" class="form-control"
-						#controlRolName="ngModel" required="" />
-					<div *ngIf="controlRolName.invalid && controlRolName.touched" class="text-danger">Por favor ingrese
-						el nombre del Rol</div>
-				</div>
-				<div class="flex-grow-1">
-					<label for="name">Area del rol</label>
-					<select class="form-select" [(ngModel)]="role.area" #controlRolArea="ngModel" required name="area" aria-label="Default select example">
-						<option value=1>Compra</option>
-						<option value=2>Venta</option>
-						<option value=3>Inventario</option>
-						<option value=4>Stock</option>
-					</select>
-					<div *ngIf="controlRolArea.invalid" class="text-danger">Por favor Seleccione un area</div>
-				</div>
-			</div>
-			<div class="mb-3 d-flex">
-
-			</div>
-		</form>
-	</div>
+	<div class="mb-3 d-flex">
+	  <div class="flex-grow-2 me-2">
+		<label for="name" class="mt-3">Nombre del Rol</label>
+		<input formControlName="name" type="text" id="name" class="form-control mt-1" required />
+		<div *ngIf="roleForm.get('name')?.hasError('required') && roleForm.get('name')?.touched"
+		  class="text-danger">Por favor ingrese el nombre del Rol</div>
+		<div *ngIf="roleForm.get('name')?.hasError('minlength') && roleForm.get('name')?.touched"
+		  class="text-danger">El nombre debe tener al menos 3 caracteres</div>
+		<div *ngIf="roleForm.get('name')?.hasError('maxlength') && roleForm.get('name')?.touched"
+		  class="text-danger">El nombre no debe tener más de 20 caracteres</div>
+	  </div>
+  
+	  <div class="flex-grow-1">
+		<label for="area" class="mt-3">Área del Rol</label>
+		<select formControlName="area" class="form-select mt-1" aria-label="Default select example">
+		  <option value="" disabled>Selecciona un área</option>
+		  <option value='Compras'>Compras</option>
+		  <option value='Ventas'>Ventas</option>
+		  <option value='Inventario'>Inventario</option>
+		  <option value='Catalogo'>Catálogo</option>
+		  <option value='Sistemas'>Sistemas</option>
+		</select>
+		<div *ngIf="roleForm.get('area')?.hasError('required') && roleForm.get('area')?.touched"
+		  class="text-danger">Por favor selecciona un área</div>
+	  </div>
+	</div>	
+  
 	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-dark" [disabled]="!roleForm.valid" (click)="modal.close($event)">Save</button>
+		<button type="button" class="btn btn-outline-secondary mt-3" (click)="showCancelConfirmation()">Cancelar</button>
+		<button type="button" class="btn btn-outline-dark mt-3" (click)="showConfirmation()">Registrar</button>
 	</div>
-</ng-template>
-<button class="btn btn-lg btn-outline-primary" (click)="open(contentRole)">Crear Nuevo Rol</button> 
+  </form>
+</div>
+  

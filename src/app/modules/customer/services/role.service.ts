@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Role } from '../models/role';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, catchError, map } from 'rxjs';
 import { NewRole } from '../models/new-role';
 
 @Injectable()
@@ -9,20 +9,21 @@ export class RoleService {
 
   private apiUrl = "http://localhost:8092/roles";
 
-  constructor(private http:HttpClient) { }
+  private rolesUpdatedSubject = new BehaviorSubject<void>(undefined);
 
-  //Post
-  createRole(role : Role): Observable<Role>{
-    console.log("Role", role);
-    return this.http.post<Role>(this.apiUrl,role );
+  constructor(private http: HttpClient) { }
+
+
+  createRole(role: Role): Observable<Role> {
+    return this.http.post<Role>(this.apiUrl, role);
   }
-  
-  clearFields(role: any){
+
+  clearFields(role: any) {
     for (const prop in role) {
       if (role.hasOwnProperty(prop)) {
         delete role[prop];
       }
-    }  
+    }
   }
 
   getAllRoles(): Observable<Role[]> {
@@ -39,6 +40,14 @@ export class RoleService {
         return role;
       }))
     );
+  }
+
+  getRolesUpdatedObservable(): Observable<void> {
+    return this.rolesUpdatedSubject.asObservable();
+  }
+
+  notifyRolesUpdated() {
+    this.rolesUpdatedSubject.next();
   }
 
 }

@@ -24,6 +24,8 @@ export class UpdateEmployeeComponent implements OnInit {
 
   @Input() employeeToUpdate: EmployeeResponseDTO | undefined;
 
+  @Input() onlyForRead: boolean = false;
+
   minDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
   maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
   currentYear = new Date().getFullYear();
