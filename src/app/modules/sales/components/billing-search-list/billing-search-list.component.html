@@ -60,28 +60,29 @@
         </div>
       </div>
     </div>
-      <table class="table">
+      <table class="table table-striped">
           <thead>
             <tr>
               <th scope="col">Número</th>
               <th scope="col">Cliente</th>
               <th scope="col">Vendedor</th>
               <th scope="col">Fecha Creación</th>
+              <th scope="col">Total</th>
               <th scope="col">Detalle</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let item of billList">   
-              <th scope="row">{{item.idBill}}</th>
-              <td>{{item.nameSeller}}</td>
-              <td>{{item.firstName}}</td>
-              <td>{{item.createdDate| dateFormat}}</td>
-              <td>{{item.totalPrice}}</td>
+              <th scope="row">{{item.id_bill}}</th>
+              <td>{{item.id_seller}}</td>
+              <td>{{item.id_client}}</td>
+              <td>{{item.created_date| dateFormat}}</td>
+              <td>{{item.total_price}}</td>
               <td>
                   <ul>
-                      <li *ngFor="let prod of item.detailBill">
-                          {{prod.idProduct}}
+                      <li *ngFor="let prod of item.detail_bill">
+                          {{prod.id_product}}
                       </li>
                   </ul>
               </td>

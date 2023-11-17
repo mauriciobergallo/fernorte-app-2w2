@@ -2,23 +2,23 @@ import { DetailBill } from "./DetailBillModel";
 import { Payment } from "./PaymentModel";
 
 export class BillModel {
-    idBill?: number = 0;
+    id_bill?: number = 0;
     address:string="";
-    idSaleOrder?: number = 0;
-    idSeller: number = 0;
-    nameSeller: string = "";
-    idClient: number = 0;
-    firstName: string = "";
-    lasName: string="";
-    companyName:string="";
+    id_sale_order?: number = 0;
+    id_seller: number = 0;
+    name_seller: string = "";
+    id_client: number = 0;
+    first_name: string = "";
+    las_name: string="";
+    company_name:string="";
     telephone:number=0;
     email:string="";
-    vatCondition: string = "";
-    billType: string = "";
+    vat_condition: string = "";
+    bill_type: string = "";
     cae: string = "";
-    expirationDateCae: number[] = [];
-    createdDate: number[] = [];
-    totalPrice: number = 0;
-    detailBill: DetailBill[] = [];
+    expiration_date_cae: number[] = [];
+    created_date: number[] = [];
+    total_price: number = 0;
+    detail_bill: DetailBill[] = [];
     payments: Payment[] = [];
 }

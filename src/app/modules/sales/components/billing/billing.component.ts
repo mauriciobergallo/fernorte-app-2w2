@@ -26,8 +26,10 @@ export class BillingComponent {
   amountPayed:number =  0;
   subCharges:number =  0;
   realAmount : number = 0;
+  filters: Map<string, string> = new Map();
 
-  constructor(private billService: BillServiceService, private paymentMethodService: PaymentMethodService) {
+  constructor(private billService: BillServiceService, private paymentMethodService: PaymentMethodService,
+    private saleOrderService:SaleOrderServiceService) {
   }
 
   ngOnInit(): void {
@@ -90,7 +92,7 @@ export class BillingComponent {
 
   searchBill() {
 
-    if (this.orderId != null){
+   /*  if (this.orderId != null){
       if(this.orderId == 1){
         this.name = "Lucas A";
         this.totalAmount = 100;
@@ -130,14 +132,20 @@ export class BillingComponent {
             quantity:2
           }
         ]
+      } */
+      if(this.orderId!=null){
+        this.filters.set("idOrder", this.orderId.toString())
+        this.saleOrderService.getSaleOrdesByFilter(this.filters).subscribe((order) => {
+          this.order = order[0];
+          console.log(this.order);
+          }
+        )
       }
-      //this.saleOrderService.getSaleOrder(this.orderId).subscribe((order) => {
-        //this.order = order;
-        //console.log(this.order);
-       // }
-     // )
+        
+      
+      
     }
+    protected readonly Number = Number;
   }
 
-  protected readonly Number = Number;
-}
+  

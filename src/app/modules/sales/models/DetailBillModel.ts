@@ -3,11 +3,11 @@ import {Tax} from "./TaxModel"
 export class DetailBill{
     id?:number=0;
     tax:Tax=new Tax;
-    idProduct:number=0;
-    nameProduct:string="";
+    id_product:number=0;
+    name_product:string="";
     quantity:number=0;
     unit:string="";
-    taxValue:number=0;
-    unitaryPrice:number=0;
-    discountAmount:number=0; 
+    tax_value:number=0;
+    unitary_price:number=0;
+    discount_amount:number=0; 
 }
