@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ILocationInfoProduct } from '../../models/ILocationInfoProduct';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { StorageTicket } from '../../models/StorageTicket.interface';
 import { LocationInfoDto } from '../../models/location-info.interface';
 
@@ -44,7 +44,7 @@ export class WarehouseService {
   }
 
   public getLocationsInfo(): Observable<LocationInfoDto[]> {
-    return this.http.get<LocationInfoDto[]>(this.locationBaseUrl);
+    return this.http.get<LocationInfoDto[]>(this.locationBaseUrl).pipe(shareReplay(1))
   }
 
   private formatStringToTitleCase(inputString: string): string {

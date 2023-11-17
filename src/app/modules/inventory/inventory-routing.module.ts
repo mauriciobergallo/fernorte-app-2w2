@@ -9,6 +9,7 @@ import { DeliveryOrderDetailsComponent } from './components/consult-order/delive
 import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
 import { HomeComponent } from './components/home/home.component';
 import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
+import { CreateMovementComponent } from './components/create-movement/create-movement.component';
 
 /*
 const routes: Routes = [
@@ -22,7 +23,6 @@ const routes: Routes = [
   }
 ];
   */
-
 const routes: Routes = [
   {
     path: '',
@@ -33,6 +33,7 @@ const routes: Routes = [
         component: SearchInventoryMovementsComponent,
       },
       { path: 'locations-product', component: SearchLocationProductComponent },
+      { path: 'new-movement', component: CreateMovementComponent },
       { path: 'storage-tickets', component: SearchStorageTicketComponent },
       { path: 'current-inventory', component: CurrentInventoryComponent },
       {

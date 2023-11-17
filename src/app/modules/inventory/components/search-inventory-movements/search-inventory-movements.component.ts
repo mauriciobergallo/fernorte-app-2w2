@@ -17,7 +17,6 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   private subscripciones = new Subscription();
 
-  deliveryOrder: Pagination | null = null;
   currentPage = 1;
   totalPages = 1;
 
@@ -135,15 +134,16 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   }
 
   getMovementsPage(page: number) {
-    this.isLoading = false;
+    this.isLoading = true;
     this.subscripciones.add(
       this.movementService.getPaginationMovements(this.currentPage - 1).subscribe({
         next: (response: Pagination) => {
           if (response != null) {
             response.items.forEach(movement => {
-              this.movimientosOriginales.push(movement)
+              this.movimientosOriginales.push(new IMovementDto(movement))
             })
             this.movimientos = this.movimientosOriginales;
+    this.isLoading = false;
           } else {
             console.log("No content")
           }
@@ -154,16 +154,16 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
       })
     )
 
-    // Simula una espera de 2 segundos antes de establecer isLoading en true
-    timer(3000).subscribe(() => {
+    // Simula una espera
+   // timer(3000).subscribe(() => {
       this.isLoading = true;
-      this.movimientosOriginales = this.movimientosData;
-      this.movimientos = this.movimientosData;
-    });
+     // this.movimientosOriginales = this.movimientosData;
+     // this.movimientos = this.movimientosData;
+   // });
 
   }
 
-
+/*
   private movimientosData: IMovementDto[] = [
     {
       operator: 'John Doe',
@@ -186,6 +186,38 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
           quantity: 10,
           product: 'Product A',
         },
+        {
+          location_origin: {
+            id: 1,
+            zone: 'Zone A',
+            section: 'Section 1',
+            space: 'Space X',
+          },
+          location_destination: {
+            id: 2,
+            zone: 'Zone B',
+            section: 'Section 2',
+            space: 'Space Y',
+          },
+          quantity: 100,
+          product: 'Product A',
+        },
+        {
+          location_origin: {
+            id: 1,
+            zone: 'Zone A',
+            section: 'Section 1',
+            space: 'Space X',
+          },
+          location_destination: {
+            id: 2,
+            zone: 'Zone B',
+            section: 'Section 2',
+            space: 'Space Y',
+          },
+          quantity: 5,
+          product: 'Product A',
+        }
       ],
       date: '08-11-2023 23:07:11',
     },
@@ -247,4 +279,5 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
       date: '12-11-2023 09:15:20',
     }
   ];
+*/
 }

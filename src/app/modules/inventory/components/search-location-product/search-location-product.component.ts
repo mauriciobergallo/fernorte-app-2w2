@@ -25,7 +25,7 @@ export class SearchLocationProductComponent implements OnInit, OnDestroy {
   findProduct: boolean = true;
 
   locationInfo : ILocationInfoProduct = {
-    code: 0,
+    location_id: 0,
     category_name: "",
     product_name: "",
     capacityRemaining: undefined,
