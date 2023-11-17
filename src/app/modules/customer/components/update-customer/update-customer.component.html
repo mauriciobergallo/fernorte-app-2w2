@@ -1,9 +1,5 @@
 <ng-template #content let-modal>
-	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Actualizar Cliente</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-	</div>
-	<div *ngIf="idCustomer!==0" class="modal-body">
+	<div class="modal-body">
 		<form #customerForm="ngForm"  (ngSubmit)="onSubmitForm(customerForm)">
 
             <div>

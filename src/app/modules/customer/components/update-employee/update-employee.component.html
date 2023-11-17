@@ -30,9 +30,10 @@
 					<div class="flex-grow-1 me-2">
 						<label for="documentType">Tipo de documento</label>
 						<select [(ngModel)]="employee.idDocumentType" name="documentType" id="documentType" class="form-select">
-							<option *ngFor="let type of documentTypes" [value]="type.value" [selected]="employee.idDocumentType === type.value">
+							{{employee.idDocumentType}}
+							<option *ngFor="let type of documentTypes" [value]="type.value">
 								{{ type.label }}
-							  </option>							
+							</option>
 						</select>
 					</div>
 					<div class="flex-grow-1">

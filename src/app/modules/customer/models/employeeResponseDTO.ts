@@ -2,7 +2,7 @@ export interface EmployeeResponseDTO{
     idEmployee: number;
     firstName: string;
     lastName: string;
-    birthDate: Date;
+    birthDate: string
     documentType: number; //Cambiar a tipo de dato acorde dependiendo si usamos Enum o tabla aparte
     documentNumber: string; 
     address: string;

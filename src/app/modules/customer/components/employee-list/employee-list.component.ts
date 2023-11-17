@@ -26,7 +26,7 @@ export class EmployeeListComponent implements OnInit {
       idEmployee: 1,
       firstName: 'John',
       lastName: 'Doe',
-      birthDate: new Date('1990-01-01'),
+      birthDate: '01-01-1985',
       documentType: 1, // Puedes cambiar esto según tus necesidades
       documentNumber: '123456789',
       address: '123 Main St',
@@ -38,7 +38,7 @@ export class EmployeeListComponent implements OnInit {
       idEmployee: 2,
       firstName: 'Jane',
       lastName: 'Smith',
-      birthDate: new Date('1985-05-15'),
+      birthDate: '15-05-1985',
       documentType: 2, // Puedes cambiar esto según tus necesidades
       documentNumber: '987654321',
       address: '456 Oak St',

@@ -31,12 +31,12 @@ export class UpdateEmployeeComponent implements OnInit {
   dataPickerBirth: NgbDateStruct = { year: 2000, month: 1, day: 1 };
 
   documentTypes = [
-    { label: 'DNI', value: 1 },
-    { label: 'Pasaporte', value: 2 },
-    { label: 'CUIT', value: 3 },
-    { label: 'CUIL', value: 4 },
-    { label: 'LC', value: 5 },
-    { label: 'LE', value: 6 },
+    { label: 'DNI', value: 'DNI' },
+    { label: 'Pasaporte', value: 'Pasaporte' },
+    { label: 'CUIT', value: 'CUIT' },
+    { label: 'CUIL', value: 'CUIL' },
+    { label: 'LC', value: 'LC' },
+    { label: 'LE', value: 'LE' },
   ];
 
   employee: Employee = {
@@ -55,8 +55,7 @@ export class UpdateEmployeeComponent implements OnInit {
   constructor(
     public modalService: NgbModal,
     private employeeService: EmployeeService,
-    private conversion: CaseConversionPipe,
-    private ngbDateParserFormatter: NgbDateParserFormatter
+    private conversion: CaseConversionPipe
   ) {
     // Obtén la fecha actual
     const currentDate = new Date();
@@ -76,27 +75,11 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mapEmployee();
     console.log('EMPLEADO', this.employeeToUpdate);
-    
+    this.mapEmployee();
 
-    if (this.employee.birthDate != null) {
-      this.dataPickerBirth = this.birthDateFormated(this.employee.birthDate);
-    }
-  }
-
-  convertIsoStringToNgbDate(isoString: string): NgbDateStruct | null {
-    const date = new Date(isoString);
-
-    if (!isNaN(date.getTime())) {
-      return {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate(),
-      };
-    }
-
-    return null;
+    this.dataPickerBirth = this.birthDateFormated(this.employee.birthDate);
+    console.log(this.employee.idDocumentType)
   }
 
   loadEmployeeData(idEmployee: number) {
@@ -118,18 +101,18 @@ export class UpdateEmployeeComponent implements OnInit {
     if (this.employeeToUpdate != null) {
       this.employee.firstName = this.employeeToUpdate.firstName;
       this.employee.lastName = this.employeeToUpdate.lastName;
-      this.employee.idDocumentType = this.employeeToUpdate.documentType;
+      this.employee.idDocumentType =this.employeeToUpdate.documentType;
       this.employee.personalEmail = this.employeeToUpdate.personalEmail;
       this.employee.phoneNumber = this.employeeToUpdate.phoneNumber;
-      this.employee.birthDate = this.employeeToUpdate.birthDate.toISOString();
+      this.employee.birthDate = this.employeeToUpdate.birthDate;
       this.employee.idDocumentNumber = this.employeeToUpdate.documentNumber;
       this.employee.address = this.employeeToUpdate.address;
     }
   }
-
+  
   open(content: any) {
     console.log('PRUEBA PRUEBA PRUEBA');
-   // this.loadEmployeeData(this.idEmployee);
+    // this.loadEmployeeData(this.idEmployee);
     this.modalService
       .open(content, {
         ariaLabelledBy: 'modal-basic-title',
@@ -190,8 +173,7 @@ export class UpdateEmployeeComponent implements OnInit {
       phoneNumber: this.employee.phoneNumber,
       personalEmail: this.employee.personalEmail,
     };
-    let employeeInSnake: Employee =
-      this.conversion.toSnakeCase(newEmployee);
+    let employeeInSnake: Employee = this.conversion.toSnakeCase(newEmployee);
     console.log('EMPLOYEE EN SNAKE', employeeInSnake);
     this.employeeService
       .putEmployee(employeeInSnake, this.idEmployee)
@@ -220,14 +202,13 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   birthDateFormated(date: string): NgbDateStruct {
-    const datePart = date.split('T')[0];
-    const dateComponents = datePart.split('-').map(Number);
+    const dateComponents = date.split('-').map(Number);
 
     if (dateComponents.length === 3) {
       return {
-        year: dateComponents[0],
+        year: dateComponents[2],
         month: dateComponents[1],
-        day: dateComponents[2],
+        day: dateComponents[0],
       };
     } else {
       return { year: 2000, month: 1, day: 1 };
