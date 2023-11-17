@@ -1,23 +1,33 @@
 <section class="content"><div class="container">
   <div *ngIf="paymentOrderFlow === 'GRID'" class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-12">
+      <h2 class="mb-0 mt-2">Orden de pago</h2>
+        <hr />
       <fn-hedear-supplier></fn-hedear-supplier>
       <fn-payment-order-grid></fn-payment-order-grid>
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-primary" (click)="setPaymentOrderFlow()">Siguiente</button>
+      </div>
     </div>
-    <div class="col-lg-4 d-flex align-items-center justify-content-center">
-      <!-- <fn-cart></fn-cart> -->
+    <!-- <div class="col-lg-4 d-flex align-items-center justify-content-center">
+      <fn-cart></fn-cart>
       <button class="btn btn-primary" (click)="setPaymentOrderFlow()">Siguiente</button>
-    </div>
+    </div> -->
   </div>
   <div *ngIf="paymentOrderFlow === 'METHODS'" class="row">
-    <div class="col-lg-8">
-      <fn-hedear-supplier></fn-hedear-supplier>
+    <div class="col-lg-12">
+      <h2 class="mb-0 mt-2">Orden de pago</h2>
+        <hr />
+      <!-- <fn-hedear-supplier></fn-hedear-supplier> -->
       <fn-payment-method></fn-payment-method>
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-primary" (click)="setPaymentOrderFlow()">Siguiente</button>
+      </div>
     </div>
-    <div class="col-lg-4 d-flex align-items-center justify-content-center">
-      <!-- <fn-cart></fn-cart> -->
+<!--     <div class="col-lg-4 d-flex align-items-center justify-content-center">
+      <fn-cart></fn-cart>
       <button class="btn btn-primary" (click)="setPaymentOrderFlow()">Siguiente</button>
-    </div>
+    </div> -->
   </div>
   <div *ngIf="paymentOrderFlow === 'PREVIEW'" class="row">
     <div class="col-lg-12">

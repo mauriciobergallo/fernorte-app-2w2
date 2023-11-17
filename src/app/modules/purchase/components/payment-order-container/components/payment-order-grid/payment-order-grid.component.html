@@ -1,20 +1,20 @@
 <div class="container">
   <h2 class="text-center">ORDENES DE PAGO</h2>
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-md-4">
       <label for="supplierSelect">Seleccionar un proveedor:</label>
       <select id="supplierSelect" class="form-control" [(ngModel)]="selectedSupplierId" (change)="onSupplierSelected()">
         <option *ngFor="let supplier of allSupplierList" [value]="supplier.id">{{supplier.socialReason}}</option>
       </select>
     </div>
-  </div>
+  </div> -->
   <table class="table table-bordered table-striped mt-4">
     <thead>
       <tr>
         <th>Fecha</th>
-        <th>Observación</th>
+        <th class="w-25">Observación</th>
         <th>Total</th>
-        <th>Factura</th>
+        <th class="w-25">Factura</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -22,7 +22,7 @@
       <tr *ngFor="let order of allPurchaseOrder">
         <td>{{order.date | date:'dd/MM/yyyy'}}</td>
         <td>{{order.observation}}</td>
-        <td>{{order.total}}</td>
+        <td>{{order.total | currency}}</td>
         <td>
           <a [href]="order.billUrl" target="_blank">Link</a>
         </td>
@@ -38,7 +38,7 @@
         <td><strong>Total:</strong></td>
         <td>{{ totalSeleccionado }}</td>
         <td>
-          <button class="btn btn-primary" (click)="enviarOrdenDeCompraSeleccionada()">Pagar</button>
+          <button class="btn btn-success btn-sm" (click)="enviarOrdenDeCompraSeleccionada()">Pagar</button>
         </td>
       </tr>
     </tfoot>
