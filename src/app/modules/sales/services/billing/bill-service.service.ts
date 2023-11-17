@@ -18,13 +18,13 @@ export class BillServiceService {
   }
   get clientId() {
     return this.filters.get("clientId")
-  } 
+  }
   get fromDate() {
     return this.filters.get("fromDate")
-  } 
+  }
   get toDate() {
     return this.filters.get("toDate")
-  } 
+  }
 
 
   urlBase:string="http://localhost:8088/bills";
@@ -56,5 +56,9 @@ export class BillServiceService {
     checkOrder(orderId: number): boolean{
     return true
     }
+    addBill(bill: any) : Observable<BillModel[]> {
+    console.log(bill);
+    return this.http.post<BillModel[]>(this.urlBase, bill);
+  }
 
 }

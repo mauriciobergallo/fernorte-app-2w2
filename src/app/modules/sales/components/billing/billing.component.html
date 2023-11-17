@@ -31,8 +31,8 @@
                 <tr *ngFor="let item of paymentList">
                   <td>{{item.paymentMethod.payment_method}}</td>
                   <td>${{item.amount}}</td>
-                  <td>${{Number(item.paymentMethod.surcharge)/100 * Number(item.amount)}}</td>
-                  <td>${{Number(item.paymentMethod.surcharge)/100 * Number(item.amount) + Number(item.amount)}}</td>
+                  <td>${{(Number(item.paymentMethod.surcharge)/100 * Number(item.amount)).toFixed(2)}}</td>
+                  <td>${{(Number(item.paymentMethod.surcharge)/100 * Number(item.amount) + Number(item.amount)).toFixed(2)}}</td>
                 </tr>
                 </tbody>
               </table>
@@ -41,7 +41,7 @@
           </div>
           <div class="row">
             <div class="col-6">
-              <p>Restante: ${{Number(realAmount)-Number(amountPayed)}}</p>
+              <p>Restante: ${{(Number(realAmount)-Number(amountPayed)).toFixed(2)}}</p>
               <p>Subtotal: ${{realAmount}}</p>
             </div>
             <div class="col-6">
@@ -51,7 +51,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cleanPayment()">Cancelar</button>
         <button type="submit" class="btn btn-primary" (click)="finishPayment()">Pagar</button>
       </div>
     </div>
@@ -101,7 +101,7 @@
             <td>{{item.id_product}}</td>
             <td>{{item.name}}</td>
             <td>${{item.price}}</td>
-            <td>${{item.quantity}}</td>
+            <td>{{item.quantity}}</td>
             <td>${{item.price * item.quantity}}</td>
           </tr>
           </tbody>
@@ -114,8 +114,8 @@
           <!-- Resumen de la venta -->
           <div class="text-center">
             <p>Subtotal: ${{totalAmount}}</p>
-            <p>Impuestos: ${{totalAmount! | calcularImpuestos:10}}</p>
-            <p class="mb-0">Total: ${{ totalAmount! | calcularMontoTotal:10}}</p>
+            <p>Impuestos: ${{totalAmount | calcularImpuestos:10}}</p>
+            <p class="mb-0">Total: ${{ totalAmount | calcularMontoTotal:10}}</p>
           </div>
         </div>
       </div>

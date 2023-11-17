@@ -4,6 +4,7 @@ import {BillServiceService} from "../../services/billing/bill-service.service";
 import {PaymentMethodService} from "../../services/payment-method.service";
 import {IPaymentMethod} from "../../interfaces/ipayment-method";
 import {SaleOrderServiceService} from "../../services/salesOrder/sale-order-service.service";
+import Swal from "sweetalert2";
 import _default from "chart.js/dist/plugins/plugin.tooltip";
 import numbers = _default.defaults.animations.numbers;
 declare var window: any;
@@ -17,12 +18,12 @@ export class BillingComponent {
   paymentMethods: any[] = [];
   paymentList: any = [];
   amount: number | null = null;
-  totalAmount: number | null = null;
+  totalAmount: number = 0;
   orderId: number | null = null;
   paymentModal: any;
   selectedPaymentMethod: any = -1;
   order: any = {};
-  name: string = "";
+  name: string = "Cargue una orden para continuar";
   amountPayed:number =  0;
   subCharges:number =  0;
   realAmount : number = 0;
@@ -47,12 +48,22 @@ export class BillingComponent {
   }
   finishPayment() {
     // confirm or save something
-    if(this.amountPayed == this.realAmount){
-      alert("pagado");
+    if(this.amountPayed == this.realAmount){Swal.fire({
+      title: "Pagado exitosamente!",
+      text: "Se pago correctamente!",
+      icon: "success"
+    });
+      this.order.paymentList = this.paymentList;
+      this.billService.addBill(this.order);
+      this.paymentList = [];
       this.paymentModal.hide();
       return
     }
-    alert("monto restante a pagar")
+    Swal.fire({
+      title: "Falta pagar!",
+      text: "Monto restante a pagar!",
+      icon: "error"
+    });
   }
 
   printOrder() {
@@ -65,7 +76,11 @@ export class BillingComponent {
 
   checkOrder() {
     if (this.orderId == null || !this.billService.checkOrder(Number(this.orderId))) {
-      alert("invalidOrder")
+      Swal.fire({
+        title: "Orden invalida!",
+        text: "Ingrese una orden valida!",
+        icon: "error"
+      });
       return
     }
     this.openPaymentModal()
@@ -75,7 +90,11 @@ export class BillingComponent {
   addPayment() {
     if (this.selectedPaymentMethod != -1 && this.amount != null){
       if((Number(this.amount) + Number(this.amountPayed)) > Number(this.realAmount)){
-        alert("Monto superado")
+        Swal.fire({
+          title: "Monto superado!",
+          text: "Ingrese una monto valido!",
+          icon: "error"
+        });
         return
       }
       this.paymentList.push({
@@ -84,68 +103,35 @@ export class BillingComponent {
       });
       let lastPaymentMethod = this.paymentList.at(this.paymentList.length-1);
       this.subCharges += Number(lastPaymentMethod.paymentMethod.surcharge)/100 * Number(lastPaymentMethod.amount);
+      this.subCharges = Number(this.subCharges.toFixed(2));
       this.amountPayed += Number(this.amount);
+      this.amountPayed = Number(this.amountPayed.toFixed(2));
       this.selectedPaymentMethod = -1;
       this.amount = null;
     }
   }
-
+  cleanPayment(){
+    this.paymentList = [];
+  }
   searchBill() {
-
-   /*  if (this.orderId != null){
-      if(this.orderId == 1){
-        this.name = "Lucas A";
-        this.totalAmount = 100;
-        this.realAmount = 110;
-        this.order.detailBill = [
-          {
-            idBill: 1,
-            itemName:"clavo",
-            unitPrice:100,
-            quantity:1
-          }
-        ]
-      }
-      if(this.orderId == 2){
-        this.name = "Juan A";
-        this.totalAmount = 150;
-        this.realAmount = 165;
-        this.order.detailBill = [
-          {
-            idBill: 1,
-            itemName:"martillo",
-            unitPrice:150,
-            quantity:1
-          }
-        ]
-      }
-      if(this.orderId == 3){
-        this.name = "Ignacio P"
-        this.totalAmount = 200;
-        this.realAmount = 220;
-
-        this.order.detailBill = [
-          {
-            idBill: 1,
-            itemName:"clavo",
-            unitPrice:100,
-            quantity:2
-          }
-        ]
-      } */
       if(this.orderId!=null){
         this.filters.set("idOrder", this.orderId.toString())
         this.saleOrderService.getSaleOrdesByFilter(this.filters).subscribe((order) => {
           this.order = order[0];
-          console.log(this.order);
+          this.name = this.order.first_name_client + ' ' + this.order.last_name_client;
+          this.order.detail_sales_order.forEach((item: any) => {
+            this.totalAmount += (item.price * item.quantity);
+            this.realAmount = this.totalAmount;
+          })
+          this.totalAmount = Number(this.totalAmount.toFixed(2));
+          this.realAmount = this.totalAmount;
           }
         )
       }
-        
-      
-      
+
+
+
     }
     protected readonly Number = Number;
   }
 
-  
