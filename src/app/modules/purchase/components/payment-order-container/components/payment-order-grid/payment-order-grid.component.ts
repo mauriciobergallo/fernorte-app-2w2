@@ -20,6 +20,9 @@ export class PaymentOrderGridComponent implements OnInit{
 
   selectedSupplierId: number | null = null;
 
+
+  showDropDown: boolean = true
+
   constructor(private _purchaseOrdersService:PurchaseOrderService,
               private _suppliersService: SupliersService){}
 
@@ -94,5 +97,8 @@ ngOnInit(): void {
         },
       });
     }
+  }
+  showSelectSupplier(){
+    this.showDropDown = false
   }
 }

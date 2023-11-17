@@ -11,4 +11,5 @@ export interface IPurchaseOrder {
     billUrl: string,
     purchaseDetails: IPurchaseOrderDetail[];
     selected: boolean; // Nueva propiedad para seguimiento de selección
+    paymentMethod:string;
 }

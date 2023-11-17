@@ -7,7 +7,7 @@ import { Contact, IContacts, ISupplier } from '../models/ISuppliers';
   providedIn: 'root',
 })
 export class SupliersService {
-  url: string = 'http://localhost:8080/suppliers';
+  url: string = 'http://localhost:8085/suppliers';
 
   
   constructor(private _http: HttpClient) {}
