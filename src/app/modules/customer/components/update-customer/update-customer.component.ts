@@ -28,6 +28,8 @@ export class UpdateCustomerComponent implements OnInit {
   maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
   currentYear = new Date().getFullYear();
 
+  dataPickerBirth: NgbDateStruct = { year: 2000, month: 1, day: 1 };
+
   customer: CustomerRequest = {
     firstName: '',
     lastName: '',
@@ -66,11 +68,13 @@ export class UpdateCustomerComponent implements OnInit {
       month: currentDate.getMonth() + 1,
       day: currentDate.getDate(),
     };
-  }
 
   ngOnInit(): void {
     this.mapCustomer();
-    console.log('EMPLEADO', this.customerToUpdate);
+    if (this.customer.birthDate != null) {
+			this.dataPickerBirth = this.birthDateFormated(this.customer.birthDate);
+		  }
+    console.log('Cliente', this.customerToUpdate);
   }
 
   loadCustomerData(idCustomer: number) {
@@ -146,6 +150,21 @@ export class UpdateCustomerComponent implements OnInit {
         },
         (reason) => {}
       );
+  }
+
+  birthDateFormated(date: string): NgbDateStruct {
+    const datePart = date.split('T')[0];
+    const dateComponents = datePart.split('-').map(Number);
+
+    if (dateComponents.length === 3) {
+      return {
+        year: dateComponents[0],
+        month: dateComponents[1],
+        day: dateComponents[2],
+      };
+    } else {
+      return { year: 2000, month: 1, day: 1 };
+    }
   }
 
   onChangeCompany(value: boolean) {
