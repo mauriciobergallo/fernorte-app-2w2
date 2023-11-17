@@ -20,12 +20,12 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
 
 
   idSelected: number = 0
-  supplierList: ISupplier[] = [{
+  supplierList: ISupplier[] = [/* {
     id: 1, 
     socialReason:"Proveedor Test", 
     cuit:"20121231231" ,
     adress:"Av. Siempre Viva", 
-    fantasyName:"TPI"}]
+    fantasyName:"TPI"} */]
   public supplierSelected : ISupplier = { id: 0, socialReason:"", cuit:"" , adress:"", fantasyName:"" } 
   showDropDown: boolean = true
 
@@ -34,7 +34,7 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._purchaseOrderService.setIdSupplier(0)
-    // this.getListSuplierFromService()
+    this.getListSuplierFromService()
 
   }
 
@@ -69,7 +69,7 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
     this.suscription.add(
       this._suplierService.getSupliers().subscribe({
         next: (data: ISupplier[]) => {
-          console.log(data);
+          console.log("SUPPLIERS->", data);
           this.supplierList = data;
         },
         error: (error: any) => {
