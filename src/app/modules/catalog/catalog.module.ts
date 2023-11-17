@@ -1,12 +1,12 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { CommonModule, registerLocaleData } from '@angular/common';
+import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
 import { AddProductComponent } from './components/products/add-product/add-product.component';
 import { ProductsComponent } from './components/products/products.component';
 import { AddDiscountComponent } from './components/discounts/add-discount/add-discount.component';
 import { DiscountsComponent } from './components/discounts/discounts.component';
 import { AddCategoryComponent } from './components/categories/add-category/add-category.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './components/spinner/viewspinner/spinner.component';
 import { CatalogRoutingModule } from './catalog-routing.module';
@@ -14,6 +14,9 @@ import { ViewDiscountsComponent } from './components/discounts/view-discounts/vi
 import localeEs from '@angular/common/locales/es-AR';
 import { ListCategoriesComponent } from './components/categories/list-categories/list-categories.component';
 import { ViewImageProductComponent } from './components/products/view-image-product/view-image-product.component';
+import { ReportPriceHistoryComponent } from './components/reporting/report-price-history/report.component';
+import { GraphsPriceHistoryComponent } from './components/reporting/report-price-history/graphs-price-history/graphs-price-history.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localeEs, 'es-AR');
 
@@ -29,11 +32,13 @@ registerLocaleData(localeEs, 'es-AR');
     ViewDiscountsComponent,
     ListCategoriesComponent,
     ViewImageProductComponent,
+    ReportPriceHistoryComponent,
+    GraphsPriceHistoryComponent
   ],
 
 
-  providers: [{ provide: LOCALE_ID, useValue: 'es-AR' }],
-  imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, CatalogRoutingModule],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-AR' },DatePipe],
+  imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, CatalogRoutingModule, DatePipe, BrowserAnimationsModule, NgbCollapseModule],
   exports: [HomeComponent],
 })
 

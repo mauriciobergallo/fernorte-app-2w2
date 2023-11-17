@@ -139,8 +139,10 @@ export class AddProductComponent implements OnInit {
           this.isLoading = false;
           Swal.fire({
             title: "¡Éxito!",
-            text: "Operación ejecutada con éxito.",
-            icon: "success"
+            text: "Producto agregado con éxito.",
+            icon: "success",
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#6c757d'
           });
           setTimeout(() => this.modalService.close(res), 1500);
         },
@@ -149,7 +151,9 @@ export class AddProductComponent implements OnInit {
           Swal.fire({
             icon: "error",
             title: "¡Error!",
-            text: "Error al intentar registrar el producto.",
+            text: "Error al intentar agregado el producto.",
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#6c757d'
           });
         },
       });

@@ -37,7 +37,7 @@ export class ProductsComponent {
     this.filterProduct = this.fb.group({
       name: [''],
       category: [''],
-      isDeleted: [false]
+      isDeleted: [true]
     });
   }
 
@@ -73,6 +73,8 @@ export class ProductsComponent {
             icon: 'error',
             title: '!Error!',
             text: 'No se han encontrado resultados.',
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#6c757d'
           });
           this.isLoading = false;
         },
@@ -108,21 +110,27 @@ export class ProductsComponent {
 
   openDelete(product: IProductCategory) {
     Swal.fire({
-      title: `¿Estás seguro que desea eliminar el producto, ${product.name}?`,
+      title: `¿Estás seguro que desea eliminar el producto: ${product.name}?`,
       text: "¡No podrás revertir esto!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#dc3545",
       cancelButtonColor: "#6c757d",
-      confirmButtonText: "¡Sí, bórrar!",
-      cancelButtonText: "Cancelar"
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+      customClass: {
+        confirmButton: "order-2",
+        cancelButton: "order-1",
+      }
     }).then((result) => {
       if (result.isConfirmed) {
         this.productService.delete(product.idProduct, "prueba").subscribe(() => {
           Swal.fire({
-            title: "¡Borrado!",
-            text: "El producto ha sido borrado.",
-            icon: "success"
+            title: "¡Eliminado!",
+            text: "El producto ha sido eliminado.",
+            icon: "success",
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#6c757d'
           });
           this.isLoading = true;
           this.pagedProducts();

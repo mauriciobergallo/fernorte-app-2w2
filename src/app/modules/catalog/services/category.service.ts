@@ -31,21 +31,20 @@ export class CategoryService {
       if (name) params = params.append('name', name);
 
       return this.requestResponseService.makeGetRequest<{ categories: ICategory[]; totalItems: number; }>(this.categories, { params: params })
-      .pipe(
-        map((response: any) => {
-          const categories = response.categories;
-          return {
-            categories: categories.map((category: any) => ({
-              idCategory: category.id_category,
-              name: category.name,
-              description: category.description,
-              isDeleted: category.is_deleted,
-            })),
-            totalItems: response.length
-          };
-        }),
-        tap(response => console.log(response))
-      );
+         .pipe(
+            map((response: any) => {
+               const categories = response.categories;
+               return {
+                  categories: categories.map((category: any) => ({
+                     idCategory: category.id_category,
+                     name: category.name,
+                     description: category.description,
+                     isDeleted: category.is_deleted,
+                  })),
+                  totalItems: response.length
+               };
+            })
+         );
    }
    getById(id: number): Observable<ICategory> {
       return this.requestResponseService.makeGetRequest<ICategory>(`${this.categories}/${id}`);

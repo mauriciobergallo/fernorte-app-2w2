@@ -6,7 +6,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  showReports = false;
+  showGraph = false;
 
+  public isCollapsedReports = false;
+  public isCollapsedCharts = false;
+
+
+  toggleCollapseReports() {
+    this.isCollapsedReports = !this.isCollapsedReports;
+    this.isCollapsedCharts = false;
+  }
+
+  
+  toggleCollapseCharts () {
+    this.isCollapsedCharts = !this.isCollapsedCharts;
+    this.isCollapsedReports = false;
+  }
   isActive:boolean = false;
- 
+
 }

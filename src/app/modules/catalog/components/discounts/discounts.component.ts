@@ -1,11 +1,11 @@
-import { Component, OnInit, afterNextRender } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IDiscount } from '../../models/IDiscounts';
 import { DiscountsService } from '../../services/discounts.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddDiscountComponent } from './add-discount/add-discount.component';
 import { ViewDiscountsComponent } from './view-discounts/view-discounts.component';
 import Swal from 'sweetalert2';
-import { Form, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 
 @Component({
@@ -24,6 +24,7 @@ export class DiscountsComponent implements OnInit {
   totalItems: number = 0;
   filterForm: FormGroup
   listProducts: any
+
   constructor(private disService: DiscountsService, private modalService: NgbModal,
     private fb: FormBuilder, private productService: ProductService) {
     this.filterForm = this.fb.group({
@@ -34,36 +35,37 @@ export class DiscountsComponent implements OnInit {
       finalEndDate: '',
       isDeleted: false
     });
-
-
   }
 
   ngOnInit(): void {
-    this.getDiscount();
+    this.getDiscounts();
     this.filterForm.valueChanges.subscribe(() => {
-      this.getDiscount();
+      this.getDiscounts();
     });
     this.getProducts();
   }
+
   public handlePagination(event: any) {
     this.currentPage = event;
-    this.getDiscount();
+    this.getDiscounts();
   }
 
   getProducts() {
-    this.productService.get(this.currentPage,1500,this.sortBy,this.sortDir,false).subscribe((res: any) => {
+    this.isLoading = true;
+    this.productService.get(undefined, undefined, this.sortBy, this.sortDir, false).subscribe((res: any) => {
       this.listProducts = res.products
+      this.isLoading = false;
     })
-
   }
 
   sortTable(column: string) {
     this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
     this.sortBy = column;
     this.sortDir = this.sortOrder;
-    this.getDiscount();
+    this.getDiscounts();
   }
-  getDiscount() {
+
+  getDiscounts() {
     this.disService.getDiscounts(
       this.currentPage,
       this.itemsPerPage,
@@ -87,15 +89,12 @@ export class DiscountsComponent implements OnInit {
           icon: 'error',
           title: '!Error!',
           text: 'No se han encontrado resultados.',
+          confirmButtonText: 'Cerrar',
+          confirmButtonColor: '#6c757d'
         });
       }
     });
   }
-
-  // get pagedDiscounts(): IDiscount[] {
-  //   const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-  //   return this.products.slice(startIndex, startIndex + this.itemsPerPage);
-  // }
 
   isDiscountActive(discount: IDiscount) {
     const currentDate = new Date();
@@ -108,18 +107,20 @@ export class DiscountsComponent implements OnInit {
     modalRef.componentInstance.isEdit = true;
     modalRef.result.then(res => {
       if (res) {
-        this.getDiscount();
+        this.getDiscounts();
       }
     })
   }
+
   openCreateModal() {
     const modalRef = this.modalService.open(AddDiscountComponent, { size: 'lg', backdrop: 'static' });
     modalRef.result.then(res => {
       if (res) {
-        this.getDiscount();
+        this.getDiscounts();
       }
     })
   }
+
   openDeleteModal(discount: IDiscount) {
     Swal.fire({
       title: `¿Estás seguro que desea eliminar el descuento de ${discount.product.name}?`,
@@ -128,36 +129,45 @@ export class DiscountsComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: "#dc3545",
       cancelButtonColor: "#6c757d",
-      confirmButtonText: "¡Sí, bórrar!",
-      cancelButtonText: "Cancelar"
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+      customClass: {
+        confirmButton: "order-2",
+        cancelButton: "order-1",
+      }
     }).then((result) => {
       if (result.isConfirmed) {
         this.disService.deleteDiscounts(discount.idDiscount, "prueba").subscribe({
           next: (data) => {
             Swal.fire({
               title: "¡Borrado!",
-              text: "El descuento ha sido borrado.",
-              icon: "success"
+              text: "El descuento ha sido eliminado.",
+              icon: "success",
+              confirmButtonText: 'Cerrar',
+              confirmButtonColor: '#6c757d'
             });
             this.isLoading = true;
-            this.getDiscount();
+            this.getDiscounts();
           },
           error: () => {
             Swal.fire({
               title: "!Error!",
               text: "No se ha podido eliminar el descuento.",
-              icon: "error"
+              icon: "error",
+              confirmButtonText: 'Cerrar',
+              confirmButtonColor: '#6c757d'
             })
           }
         });
       }
     });
   }
+
   openViewModal(discount: IDiscount) {
     const modalRef = this.modalService.open(ViewDiscountsComponent, { backdrop: 'static' });
     modalRef.componentInstance.discount = discount;
     modalRef.result.then(() => {
-      this.getDiscount();
+      this.getDiscounts();
     })
   }
 

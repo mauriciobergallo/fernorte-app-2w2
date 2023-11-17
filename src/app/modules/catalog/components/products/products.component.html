@@ -91,16 +91,17 @@
         </strong>
       </td>
       <td>
+        <td>
         <div ngbDropdown container="body" class="center">
-          <button type="button" class="btn btn-sm btnDropdown btn-light" ngbDropdownToggle>
-            <i class="bi bi-three-dots-vertical"></i>
-          </button>
-          <div ngbDropdownMenu>
-            <button ngbDropdownItem (click)="openEditModal(product)">Editar</button>
-            <button ngbDropdownItem *ngIf="!product.isDeleted" (click)="openDelete(product)">Eliminar</button>
-            <button ngbDropdownItem (click)="openImageModal(product)">Ver mas</button>
+            <button type="button" class="btn btn-sm btnDropdown btn-light" ngbDropdownToggle>
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <div ngbDropdownMenu>
+              <button ngbDropdownItem (click)="openEditModal(product)">Editar</button>
+              <button ngbDropdownItem *ngIf="!product.isDeleted" (click)="openDelete(product)">Eliminar</button>
+              <button ngbDropdownItem (click)="openImageModal(product)">Ver mas</button>
+            </div>
           </div>
-        </div>
       </td>
     </tr>
   </tbody>
