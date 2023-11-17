@@ -25,7 +25,7 @@ export class PurchaseOrderService {
       .pipe(
         map((purchaseOrders: IPurchaseOrder[]) => {
           console.log(supplierId);
-          return purchaseOrders.filter(order => order.purchaseStatus === "ACCEPTED" && order.supplierId.toString() === supplierId.toString());
+          return purchaseOrders.filter(order => order.supplierId.toString() === supplierId.toString());
         })
       );
   }
