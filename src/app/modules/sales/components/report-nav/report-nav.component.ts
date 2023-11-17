@@ -32,6 +32,8 @@ export class ReportNavComponent implements OnInit {
   toUpdate(tab:string){
     this.activeTab=tab;
     this.update=true;
+    this.regist=false;
+    this.anual=false;
   }
   toDelete(tab:string){
     this.activeTab=tab;

@@ -28,6 +28,8 @@ import { TurnProvider } from './services/turns/TurnProvider';
 import { TranslateStatesPipe } from './pipes/translateStates.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaxComponent } from './components/tax/tax.component';
+import { ViewPaymentComponent } from './components/view-payment/view-payment.component';
+
 
 @NgModule({
   declarations: [HomeComponent,
@@ -47,7 +49,9 @@ import { TaxComponent } from './components/tax/tax.component';
     SaleOrderViewComponent,
     TranslateStatesPipe,
     TaxComponent,
-    ReportNavComponent],
+    ReportNavComponent,
+    ViewPaymentComponent
+    ],
 
 
   providers: [SaleOrderProvider,
@@ -75,7 +79,9 @@ import { TaxComponent } from './components/tax/tax.component';
     ReportNavComponent,
     SaleOrderViewComponent,
     TaxComponent,
-    ReportNavComponent]
+    ReportNavComponent,
+    ViewPaymentComponent
+    ]
 
 })
 export class SalesModule {}
