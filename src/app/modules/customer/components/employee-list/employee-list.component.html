@@ -32,8 +32,7 @@
               <i class="bi bi-three-dots-vertical"></i>
             </button>
             <div class="dropdown-content">
-              <!-- <a (click)="onOptionClick('info')">Más Información</a> -->
-              <a>Info</a>
+               <a (click)="onClickInfo(e)">Más Información</a> 
               <a (click)="openUpdateEmployeeModal(e)">Actualizar</a>
 
               <a *ngIf="e.isActive" (click)="onDelete(e)">Eliminar</a>

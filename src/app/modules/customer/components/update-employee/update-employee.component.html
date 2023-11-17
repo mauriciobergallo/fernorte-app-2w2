@@ -1,6 +1,8 @@
 
 			<div class="modal-header">
-			<h4 class="modal-title" id="modal-basic-title">Actualizar Empleado</h4>
+			<h4 class="modal-title" id="modal-basic-title" *ngIf="!onlyForRead">Actualizar Empleado</h4>
+			<h4 class="modal-title" id="modal-basic-title" *ngIf="onlyForRead">Información de Empleado</h4>
+	
 			<button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
 		</div>
 	
@@ -15,11 +17,11 @@
 					<div class="mb-3 d-flex">
 						<div class="flex-grow-1 me-2">
 							<label for="name">Nombre</label>
-							<input required [(ngModel)]="employee.firstName" type="text" name="name" id="name" class="form-control"/>
+							<input required [(ngModel)]="employee.firstName" [disabled]="onlyForRead" type="text" name="name" id="name" class="form-control"/>
 						</div>
 						<div class="flex-grow-1">
 							<label for="lastName">Apellido</label>
-							<input required [(ngModel)]="employee.lastName" type="text" name="lastName" id="lastName" class="form-control"/>
+							<input required [(ngModel)]="employee.lastName" [disabled]="onlyForRead"  type="text" name="lastName" id="lastName" class="form-control"/>
 						</div>
 					</div>
 				
@@ -29,7 +31,7 @@
 				<div class="mb-3 d-flex">
 					<div class="flex-grow-1 me-2">
 						<label for="documentType">Tipo de documento</label>
-						<select [(ngModel)]="employee.idDocumentType" name="documentType" id="documentType" class="form-select">
+						<select [(ngModel)]="employee.idDocumentType" [disabled]="onlyForRead" name="documentType" id="documentType" class="form-select">
 							<option *ngFor="let type of documentTypes" [value]="type.value" [selected]="employee.idDocumentType === type.value">
 								{{ type.label }}
 							  </option>							
@@ -37,7 +39,7 @@
 					</div>
 					<div class="flex-grow-1">
 						<label for="documentNumber">Documento</label>
-						<input required [(ngModel)]="employee.idDocumentNumber"  type="text" name="documentNumber" id="documentNumber" class="form-control" />
+						<input required [(ngModel)]="employee.idDocumentNumber" [disabled]="onlyForRead"  type="text" name="documentNumber" id="documentNumber" class="form-control" />
 					</div>
 				</div>
 	
@@ -47,6 +49,7 @@
 					<label for="dateOfBirth">Fecha de nacimiento</label>
 					<div class="input-group">
 						<input
+						[disabled]="onlyForRead"
 						required
 						[(ngModel)]="dataPickerBirth"
 						(ngModelChange)="onBirthDateChange($event)"
@@ -65,6 +68,7 @@
 				<div class="flex-grow-1">
 					<label for="personalEmail">Email Personal</label>
 					<input [(ngModel)]="employee.personalEmail" 
+					[disabled]="onlyForRead"
 						   type="personalEmail" 
 						   name="personalEmail" 
 						   id="personalEmail" 
@@ -75,18 +79,18 @@
 				<div class="mb-3 d-flex">
 					<div class="flex-grow-1 me-2">
 					  <label for="address">Domicilio</label>
-					  <input [(ngModel)]="employee.address" type="text" name="address" id="address" class="form-control" />
+					  <input [(ngModel)]="employee.address" [disabled]="onlyForRead" type="text" name="address" id="address" class="form-control" />
 					</div>
 					<div class="flex-grow-1">
 					  <label for="phoneNumber">Número de teléfono</label>
-					  <input [(ngModel)]="employee.phoneNumber" type="text" name="phoneNumber" id="phoneNumber" class="form-control" />
+					  <input [(ngModel)]="employee.phoneNumber" [disabled]="onlyForRead" type="text" name="phoneNumber" id="phoneNumber" class="form-control" />
 					</div>
 				  </div>
 	
 			</form>
 		</div>
 		<div class="modal-footer">
-			<button type="submit" class="btn btn-outline-dark"  (click)="onSubmit(employeeForm)">Actualizar</button>
+			<button  *ngIf="!onlyForRead" type="submit" class="btn btn-outline-dark"  (click)="onSubmit(employeeForm)">Actualizar</button>
 		</div>
 	</div>
 	
