@@ -14,8 +14,10 @@ export class TaxComponent implements OnInit {
   taxList: Tax[] = [];
   taxForm: FormGroup;
   taxEditForm: FormGroup;
+  isFormDisabled: boolean = true;
 
   taxTypeList: string[] = ["VAT", "IIBB"];
+
 
 
   constructor(private taxService: TaxService, private formBuilder: FormBuilder) {
@@ -34,29 +36,29 @@ export class TaxComponent implements OnInit {
     this.loadTax();
   }
 
-  saveNewTax() {
-    if (this.taxEditForm && this.taxEditForm.valid) {
-      this.tax = {
-        id: 0,
-        tax_type: this.taxEditForm.get('taxType')?.value || '',
-        tax_value: this.taxEditForm.get('taxValue')?.value || 0
-      };
+saveNewTax() {
+  if (this.taxEditForm && this.taxEditForm.valid) {
+    this.tax = {
+      id: 0,
+      tax_type: this.taxEditForm.get('taxType')?.value || '',
+      tax_value: this.taxEditForm.get('taxValue')?.value || 0
+    };
 
-      console.log('Nueva tax a crear:', this.tax);
-  
-      this.taxService.createTax(this.tax).subscribe({
-        next: (methods) => {
-          console.log('Nueva tax creada:', methods);
-          this.loadTax();
-          this.taxEditForm.reset(); // Esto restablecerá el formulario
-        },
-        error: (err) => {
-          alert("error");
-        }
-      });
-    }
+    console.log('Nueva tax a crear:', this.tax);
+
+    this.taxService.createTax(this.tax).subscribe({
+      next: (methods) => {
+        console.log('Nueva tax creada:', methods);
+        this.loadTax();
+        this.taxEditForm.reset(); // Esto restablecerá el formulario
+      },
+      error: (err) => {
+        alert("error");
+      }
+    });
   }
-  
+}
+
 
   loadTax() {
     this.taxService.getTaxList().subscribe({
@@ -88,10 +90,12 @@ export class TaxComponent implements OnInit {
   }
   
   loadTaxList(tax: Tax) {
-
+    console.log("tax selec", tax)
     this.taxEdit.id = tax.id;
     this.taxEdit.tax_type = tax.tax_type;
     this.taxEdit.tax_value = tax.tax_value;
+    this.taxEditForm.get('taxType')?.setValue(this.taxEdit.tax_type);
+    this.taxEditForm.get('taxValue')?.setValue(this.taxEdit.tax_value);
     
   }
 }

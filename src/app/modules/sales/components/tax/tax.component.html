@@ -36,7 +36,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="editModalLabel">Editar método de Pago</h4>
+                <h4 class="modal-title" id="editModalLabel">Editar impuesto</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -44,9 +44,10 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="mb-2">
+                                <label for="taxType" class="form-label">Impuesto</label>
                                 <select class="form-control" aria-label="Default select example" name="taxType"
-                                    formControlName="taxType" id="taxType">
-                                    <option selected *ngFor="let taxType of taxTypeList">{{taxType}}</option>
+                                    formControlName="taxType" id="taxType" >
+                                    <option selected *ngFor="let taxType of taxTypeList" disabled>{{taxType}}</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
@@ -74,7 +75,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="NewMethodModalLabel">Registrar método de pago</h4>
+                <h4 class="modal-title" id="NewMethodModalLabel">Registrar nuevo impuesto</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -82,9 +83,9 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="mb-2">
-                                <label for="taxType" class="form-label">Estado de presupuesto</label>
+                                <label for="taxType" class="form-label">Impuesto</label>
                                 <select class="form-control" aria-label="Default select example" name="taxType"
-                                    formControlName="taxType" id="taxType">
+                                    formControlName="taxType" id="taxType" >
                                     <option selected *ngFor="let taxType of taxTypeList">{{taxType}}</option>
                                 </select>
 
@@ -99,7 +100,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="mb-2">
-                                <label for="taxValue" class="form-label">RECARGO    </label>
+                                <label for="taxValue" class="form-label">Recargo    </label>
                                 <input formControlName="taxValue" type="number" class="form-control" id="taxValue"
                                     name="taxValue" required>
                                 <div
