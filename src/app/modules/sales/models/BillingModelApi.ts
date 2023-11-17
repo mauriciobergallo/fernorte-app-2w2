@@ -3,15 +3,22 @@ import { Payment } from "./PaymentModel";
 
 export class BillModel {
     idBill?: number = 0;
-    idSaleOrder?:number = 0;
+    address:string="";
+    idSaleOrder?: number = 0;
     idSeller: number = 0;
+    nameSeller: string = "";
     idClient: number = 0;
-    vatCondition:string="";
-    billType:string="";
-    cae:string="";
-    expirationDateCae: string = "";
-    createdDate: string = "";
+    firstName: string = "";
+    lasName: string="";
+    companyName:string="";
+    telephone:number=0;
+    email:string="";
+    vatCondition: string = "";
+    billType: string = "";
+    cae: string = "";
+    expirationDateCae: number[] = [];
+    createdDate: number[] = [];
     totalPrice: number = 0;
     detailBill: DetailBill[] = [];
-    payment:Payment[]=[];
+    payments: Payment[] = [];
 }

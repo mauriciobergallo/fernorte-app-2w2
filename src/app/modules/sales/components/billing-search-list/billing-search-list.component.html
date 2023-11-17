@@ -12,7 +12,7 @@
             </div>
             <div class="modal-body">
               Seleccione sus filtros
-              <form #getBillsForm="ngForm" (ngSubmit)="onSubmit(getBillsForm)">
+              <form #getBillsForm="ngForm" (ngSubmit)="onSendFilters(getBillsForm)">
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Documento de cliente</label>
                   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -66,18 +66,18 @@
               <th scope="col">Número</th>
               <th scope="col">Cliente</th>
               <th scope="col">Vendedor</th>
-              <th scope="col">Fecha</th>
+              <th scope="col">Fecha Creación</th>
               <th scope="col">Detalle</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of billList">
-              <th scope="row">{{item.idSaleOrder}}</th>
-              <td>{{item.idClient}}</td>
-              <td>{{item.idSeller}}</td>
-              <td>{{item.totalPrice| date:'short'}}</td>
-              <td>{{item.createdDate| translateStates}}</td>
+            <tr *ngFor="let item of billList">   
+              <th scope="row">{{item.idBill}}</th>
+              <td>{{item.nameSeller}}</td>
+              <td>{{item.firstName}}</td>
+              <td>{{item.createdDate| dateFormat}}</td>
+              <td>{{item.totalPrice}}</td>
               <td>
                   <ul>
                       <li *ngFor="let prod of item.detailBill">

@@ -7,6 +7,7 @@ import { ProductOk } from '../../models/ProductOk';
 import { BillServiceService } from '../../services/billing/bill-service.service';
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { CaseConverterPipe } from '../../pipes/case-converter.pipe';
 
 @Component({
   selector: 'fn-billing-search-list',
@@ -20,27 +21,42 @@ idBill:string="";
 doc:string="";
 fromDate:string="";
 toDate:string="";
+filters: Map<string, string> = new Map();
 
 private subscriptions = new Subscription();
 
-constructor(private billingService: BillServiceService) {
+constructor(private billingService: BillServiceService, private caseConverter: CaseConverterPipe) {
 }
+
+
 
 ngOnDestroy(): void {
   this.subscriptions.unsubscribe();
 }
 ngOnInit(): void {
- 
     this.billingService.getBills().subscribe(
       (response)=>{
-        this.billList=response;
+        let toCamel:BillModel[] = this.caseConverter.toCamelCase(response);
+        console.log(response);
+        console.log(this.billList)
+        this.billList=response;       
+        //response.forEach(x => this.billList.push(x))
       }
     )
-  
-  
 }
 
-onSubmit(form: NgForm){
+onSendFilters(form: NgForm){
+  if(form.valid){
+    this.filters.set("idBill", form.value.idOrder)
+      this.filters.set("clientId", form.value.doc)
+      this.filters.set("fromDate", form.value.fromDate)
+      this.filters.set("toDate", form.value.toDate)
+  }
+  this.subscriptions.add(
+    this.billingService.getBillsByFilter(this.filters).subscribe(
+
+    )
+  )
 
 }
 

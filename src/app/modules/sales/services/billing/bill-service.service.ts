@@ -11,6 +11,22 @@ export class BillServiceService {
 
   billList = new Observable<BillModel[]>();
 
+  filters : Map<string, string> = new Map<string, string>();
+
+  get idBill() {
+    return this.filters.get("idBill")
+  }
+  get clientId() {
+    return this.filters.get("clientId")
+  } 
+  get fromDate() {
+    return this.filters.get("fromDate")
+  } 
+  get toDate() {
+    return this.filters.get("toDate")
+  } 
+
+
   urlBase:string="http://localhost:8088/bills";
 
 
@@ -22,23 +38,19 @@ export class BillServiceService {
       return this.billList;
     }
 
-    getBillsByFilter(idBill?: string, clientId?: string, fromDate?: string, toDate?: string): Observable<BillModel[]> {
-      let params = new HttpParams();
+    getBillsByFilter(filters : Map<string, string>): Observable<BillModel[]> {
 
-      if (idBill) {
-        params = params.append('idBill', idBill);
-      }
-      if (clientId) {
-        params = params.append('clientId', clientId);
-      }
-      if (fromDate) {
-        params = params.append('fromDate', fromDate);
-      }
-      if (toDate) {
-        params = params.append('toDate', toDate);
-      }
-
-      return this.http.get<BillModel[]>(this.urlBase, { params: params });
+    let url:string = '';
+    this.filters = filters
+    if (this.idBill != '0' && this.idBill != undefined) {
+      url = `http://localhost:8088/bills?id=${this.idBill}`
+    } else if (this.clientId != '0' && this.clientId != null) {
+      url = `http://localhost:8088/bills?clientId=${this.clientId}`
+    } else {
+      url = `http://localhost:8088/bills?from=${this.fromDate}&to=${this.toDate}`;
+    }
+    this.billList = this.http.get<BillModel[]>(url);
+    return this.billList
     }
 
     checkOrder(orderId: number): boolean{

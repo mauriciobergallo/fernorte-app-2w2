@@ -10,6 +10,8 @@ import { SaleOrderProvider } from './services/salesOrder/SaleOrderProvider';
 import { ProductProvider } from './services/products/productProvider';
 import { SaleOrderComponent } from './components/sale_order/sale-order.component';
 import { CalcularTotalPipe } from './pipes/calcular-total.pipe';
+import { DateFormatPipe } from './pipes/date-format.pipe';
+import { CaseConverterPipe } from './pipes/case-converter.pipe';
 import { CalcularImpuestosPipe } from './pipes/calcular-impuestos.pipe';
 import { CalcularMontoTotalPipe } from './pipes/calcular-monto-total.pipe';
 import { BillingComponent } from './components/billing/billing.component';
@@ -30,6 +32,8 @@ import { TaxComponent } from './components/tax/tax.component';
 import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
 import { BillingProvider } from './services/billing/BillingProvider';
 
+
+
 @NgModule({
   declarations: [HomeComponent,
     SaleOrderComponent, 
@@ -48,13 +52,15 @@ import { BillingProvider } from './services/billing/BillingProvider';
     TranslateStatesPipe,
     TaxComponent,
     ReportNavComponent,
-    BillingSearchListComponent],
+    BillingSearchListComponent,
+    DateFormatPipe],
 
   providers: [SaleOrderProvider,
     ProductProvider,
     ClientProvider,
     TurnProvider,
-    BillingProvider],
+    BillingProvider,
+    CaseConverterPipe],
 
   imports: [CommonModule,
     FormsModule, 
@@ -75,6 +81,7 @@ import { BillingProvider } from './services/billing/BillingProvider';
     BillingNavComponent,
     TaxComponent,
     ReportNavComponent,
-    BillingSearchListComponent],
+    BillingSearchListComponent,
+    DateFormatPipe],
 })
 export class SalesModule {}
