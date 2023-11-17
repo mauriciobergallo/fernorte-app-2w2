@@ -9,6 +9,7 @@ import { Employee } from '../../models/employee';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 import { EmployeeResponseDTO } from '../../models/employeeResponseDTO';
+import { DocumentType } from '../../models/documentType';
 
 @Component({
   selector: 'fn-update-employee',
@@ -20,7 +21,9 @@ export class UpdateEmployeeComponent implements OnInit {
 
   formattedBirthDate: string = '';
 
-  @Input() idEmployee: number = 0;
+  idEmployee: number = 0;
+
+  lstDocumentType: DocumentType[] = [];
 
   @Input() employeeToUpdate: EmployeeResponseDTO | undefined;
 
@@ -31,15 +34,6 @@ export class UpdateEmployeeComponent implements OnInit {
   currentYear = new Date().getFullYear();
 
   dataPickerBirth: NgbDateStruct = { year: 2000, month: 1, day: 1 };
-
-  documentTypes = [
-    { label: 'DNI', value: 1 },
-    { label: 'Pasaporte', value: 2 },
-    { label: 'CUIT', value: 3 },
-    { label: 'CUIL', value: 4 },
-    { label: 'LC', value: 5 },
-    { label: 'LE', value: 6 },
-  ];
 
   employee: Employee = {
     firstName: '',
@@ -57,8 +51,7 @@ export class UpdateEmployeeComponent implements OnInit {
   constructor(
     public modalService: NgbModal,
     private employeeService: EmployeeService,
-    private conversion: CaseConversionPipe,
-    private ngbDateParserFormatter: NgbDateParserFormatter
+    private conversion: CaseConversionPipe
   ) {
     // Obtén la fecha actual
     const currentDate = new Date();
@@ -78,27 +71,16 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mapEmployee();
     console.log('EMPLEADO', this.employeeToUpdate);
-    
+    this.mapEmployee();
 
-    if (this.employee.birthDate != null) {
-      this.dataPickerBirth = this.birthDateFormated(this.employee.birthDate);
-    }
-  }
-
-  convertIsoStringToNgbDate(isoString: string): NgbDateStruct | null {
-    const date = new Date(isoString);
-
-    if (!isNaN(date.getTime())) {
-      return {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate(),
-      };
-    }
-
-    return null;
+    this.dataPickerBirth = this.birthDateFormated(this.employee.birthDate);
+    console.log(this.employee.idDocumentType)
+    this.employeeService.getDocumentType().subscribe(
+      (response)=>{
+        this.lstDocumentType = this.conversion.toCamelCase(response);
+      }
+    );
   }
 
   loadEmployeeData(idEmployee: number) {
@@ -118,20 +100,40 @@ export class UpdateEmployeeComponent implements OnInit {
 
   mapEmployee() {
     if (this.employeeToUpdate != null) {
+      this.idEmployee = this.employeeToUpdate.idEmployee;
       this.employee.firstName = this.employeeToUpdate.firstName;
       this.employee.lastName = this.employeeToUpdate.lastName;
-      this.employee.idDocumentType = this.employeeToUpdate.documentType;
+      this.employee.idDocumentType = this.setIdDocumentType(this.employeeToUpdate.documentType);
       this.employee.personalEmail = this.employeeToUpdate.personalEmail;
       this.employee.phoneNumber = this.employeeToUpdate.phoneNumber;
-      this.employee.birthDate = this.employeeToUpdate.birthDate.toISOString();
+      this.employee.birthDate = this.employeeToUpdate.birthDate;
       this.employee.idDocumentNumber = this.employeeToUpdate.documentNumber;
       this.employee.address = this.employeeToUpdate.address;
     }
   }
 
+  setIdDocumentType(documentType: string | number): number{
+    switch(documentType){
+      case 'DNI':
+        return 1;
+      case 'Pasaporte':
+        return 2;
+      case 'CUIT':
+        return 3;
+      case 'CUIL':
+        return 4;
+      case 'LC':
+        return 5;
+      case 'LE':
+        return 6;
+      default:
+        return 0;
+    }
+  }
+  
   open(content: any) {
     console.log('PRUEBA PRUEBA PRUEBA');
-   // this.loadEmployeeData(this.idEmployee);
+    // this.loadEmployeeData(this.idEmployee);
     this.modalService
       .open(content, {
         ariaLabelledBy: 'modal-basic-title',
@@ -150,7 +152,7 @@ export class UpdateEmployeeComponent implements OnInit {
             firstName: this.employee.firstName,
             lastName: this.employee.lastName,
             birthDate: this.formattedBirthDate,
-            idDocumentType: this.employee.idDocumentType,
+            idDocumentType:  this.employee.idDocumentType,
             idDocumentNumber: this.employee.idDocumentNumber,
             address: this.employee.address,
             phoneNumber: this.employee.phoneNumber,
@@ -192,8 +194,7 @@ export class UpdateEmployeeComponent implements OnInit {
       phoneNumber: this.employee.phoneNumber,
       personalEmail: this.employee.personalEmail,
     };
-    let employeeInSnake: Employee =
-      this.conversion.toSnakeCase(newEmployee);
+    let employeeInSnake: Employee = this.conversion.toSnakeCase(newEmployee);
     console.log('EMPLOYEE EN SNAKE', employeeInSnake);
     this.employeeService
       .putEmployee(employeeInSnake, this.idEmployee)
@@ -222,14 +223,13 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   birthDateFormated(date: string): NgbDateStruct {
-    const datePart = date.split('T')[0];
-    const dateComponents = datePart.split('-').map(Number);
+    const dateComponents = date.split('-').map(Number);
 
     if (dateComponents.length === 3) {
       return {
-        year: dateComponents[0],
+        year: dateComponents[2],
         month: dateComponents[1],
-        day: dateComponents[2],
+        day: dateComponents[0],
       };
     } else {
       return { year: 2000, month: 1, day: 1 };

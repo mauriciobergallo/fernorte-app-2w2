@@ -32,9 +32,10 @@
 					<div class="flex-grow-1 me-2">
 						<label for="documentType">Tipo de documento</label>
 						<select [(ngModel)]="employee.idDocumentType" [disabled]="onlyForRead" name="documentType" id="documentType" class="form-select">
-							<option *ngFor="let type of documentTypes" [value]="type.value" [selected]="employee.idDocumentType === type.value">
-								{{ type.label }}
-							  </option>							
+							{{employee.idDocumentType}}
+							<option *ngFor="let type of lstDocumentType" [value]="type.idDocumentType">
+								{{ type.description }}
+							</option>
 						</select>
 					</div>
 					<div class="flex-grow-1">
