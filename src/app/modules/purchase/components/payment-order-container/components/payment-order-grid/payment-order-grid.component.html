@@ -1,13 +1,27 @@
 <div class="container">
   <h2 class="text-center">ORDENES DE PAGO</h2>
-  <!-- <div class="row">
-    <div class="col-md-4">
-      <label for="supplierSelect">Seleccionar un proveedor:</label>
-      <select id="supplierSelect" class="form-control" [(ngModel)]="selectedSupplierId" (change)="onSupplierSelected()">
+  <section class="container-fluid">
+    <div class="row" *ngIf="showDropDown">
+      <h5 class="col-sm-4 col-form-label">
+        Seleccione un proveedor:
+      </h5>
+      <div class="col-sm-6">
+        <select id="supplierSelect" class="form-control" [(ngModel)]="selectedSupplierId" (change)="onSupplierSelected()">
         <option *ngFor="let supplier of allSupplierList" [value]="supplier.id">{{supplier.socialReason}}</option>
-      </select>
+        </select>
+      </div>
+      <div class="col-sm-2">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="showSelectSupplier()"
+        >
+          Seleccionar
+        </button>
+      </div>
     </div>
-  </div> -->
+</section>
+<hr />
   <table class="table table-bordered table-striped mt-4">
     <thead>
       <tr>
