@@ -55,7 +55,7 @@
             <div class="modal-footer">
                 <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"  
                     [disabled]="this.remarksControl?.invalid ">Sigiente</button>
-                <button type="button" class="btn-danger " data-bs-dismiss="modal" aria-label="Cerrar" (click)="resetForms()">Cerrar</button>
+                <button type="button" class="btn btn-danger " data-bs-dismiss="modal" aria-label="Cerrar" (click)="resetForms()">Cerrar</button>
 
             </div>
         </div>
@@ -209,7 +209,7 @@
                     data-bs-toggle="modal">Atras</button>
                 <button class="btn btn-primary" data-bs-target="#exampleModalToggle3" [disabled]="detailForm.invalid && movementDetailsArray.length === 0  || movementDetailsArray.length === 0"
                     data-bs-toggle="modal" (click)="resetDetailForm()">Siguiente</button>
-                <button type="button" class="btn-danger " data-bs-dismiss="modal" aria-label="Cerrar" (click)="resetForms()">Cerrar</button>
+                <button type="button" class="btn btn-danger " data-bs-dismiss="modal" aria-label="Cerrar" (click)="resetForms()">Cerrar</button>
             </div>
         </div>
     </div>
@@ -269,7 +269,7 @@
                     data-bs-toggle="modal">Atras</button>
                 <button class="btn btn-primary" data-bs-dismiss="modal " [disabled]="movementForm.value.movementDetailsArray.length <= 0" (click)="submitForm()"
                     data-bs-toggle="close">Confirmar</button>
-                <button type="button" class="btn-danger " data-bs-dismiss="modal" aria-label="Cerrar" (click)="resetForms()">Cerrar</button>
+                <button type="button" class="btn btn-danger " data-bs-dismiss="modal" aria-label="Cerrar" (click)="resetForms()">Cerrar</button>
 
 
             </div>

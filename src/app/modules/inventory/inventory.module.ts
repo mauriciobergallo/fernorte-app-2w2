@@ -22,6 +22,7 @@ import { RouterModule } from '@angular/router';
 import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
 import { CreateMovementComponent } from './components/create-movement/create-movement.component';
 
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -38,7 +39,7 @@ import { CreateMovementComponent } from './components/create-movement/create-mov
     DeliveryOrderDetailsComponent,
     ConsultReceptionOrdersComponent,
     ReceptionOrderDetailsComponent,
-    CreateMovementComponent,
+    CreateMovementComponent
   ],
 
   providers: [],

@@ -7,6 +7,7 @@ import { MovementType } from '../../models/IMovementTypeEnum';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ValidationError } from 'json-schema';
 import { MovementsService, NewDetailMovementDto, ReqNewMovementDto } from '../../services/movements-service/movements.service';
+import Swal from 'sweetalert2';
 
 
 export function destinationValidator(): ValidatorFn {
@@ -108,30 +109,30 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
     this.serviceMovement.newMovement(mov).subscribe({
       next: (result) => {
         if (result) {
-          alert('succes')
-      //    Swal.fire(
-      //      '¡Creado!',
-      //      'El movimiento ha sido creado con éxito.',
-      //      'success'
-      //    );
+          //alert('succes')
+          Swal.fire(
+            '¡Creado!',
+            'El movimiento ha sido creado con éxito.',
+            'success'
+          );
         } else {
-          alert('error')
+         // alert('error')
 
-      //    Swal.fire(
-      //      'Error',
-      //      'No se pudo crear el movimiento.',
-      //      'error'
-      //    );
+          Swal.fire(
+            'Error',
+            'No se pudo crear el movimiento.',
+            'error'
+          );
         }
       },
       error: (error: any) => {
-        alert('error')
+       // alert('error')
 
-        // Swal.fire(
-        //   'Error',
-        //   'Ocurrió un error al crear el movimiento: ' + error.message,
-        //   'error'
-        // );
+         Swal.fire(
+           'Error',
+           'Ocurrió un error al crear el movimiento: ' + error.message,
+           'error'
+         );
       }
     });    
   }
