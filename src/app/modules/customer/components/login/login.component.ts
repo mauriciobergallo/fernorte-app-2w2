@@ -35,7 +35,7 @@ export class LoginComponent {
               })
               setTimeout(() => {
                 this.router.navigate([respuesta.document_number ,'first-login', true]);
-              }, 3000)
+              }, 3000);
             }
             else{
               Swal.fire({
