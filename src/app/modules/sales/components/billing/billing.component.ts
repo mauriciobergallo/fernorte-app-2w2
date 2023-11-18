@@ -48,7 +48,7 @@ export class BillingComponent {
   }
   finishPayment() {
     // confirm or save something
-    if(this.amountPayed == this.realAmount){Swal.fire({
+    if(this.amountPayed >= this.realAmount){Swal.fire({
       title: "Pagado exitosamente!",
       text: "Se pago correctamente!",
       icon: "success"
@@ -56,6 +56,12 @@ export class BillingComponent {
       this.order.paymentList = this.paymentList;
       this.billService.addBill(this.order);
       this.paymentList = [];
+      this.order=[];
+      this.name= "Cargue una orden para continuar";
+      this.realAmount=0
+      this.totalAmount=0
+      this.subCharges=0
+      this.amountPayed=0
       this.paymentModal.hide();
       return
     }
@@ -89,7 +95,7 @@ export class BillingComponent {
 
   addPayment() {
     if (this.selectedPaymentMethod != -1 && this.amount != null){
-      if((Number(this.amount) + Number(this.amountPayed)) > Number(this.realAmount)){
+      if((Number(this.amount) + Number(this.amountPayed)) > (Number(this.realAmount)+1)){
         Swal.fire({
           title: "Monto superado!",
           text: "Ingrese una monto valido!",

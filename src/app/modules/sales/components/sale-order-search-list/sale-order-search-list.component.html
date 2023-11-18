@@ -69,7 +69,7 @@
           <tr>
             <th scope="col">Número</th>
             <th scope="col">Cliente</th>
-            <th scope="col">Vendedor</th>
+            <th scope="col">Codigo Vendedor</th>
             <th scope="col">Fecha</th>
             <th scope="col">Estado</th>
             <th scope="col">Detalle</th>
@@ -79,14 +79,14 @@
         <tbody>
           <tr *ngFor="let item of saleOrdersListOk">
             <th scope="row">{{item.idSaleOrder}}</th>
-            <td>{{item.idClient}}</td>
+            <td>{{item.nameClient}}</td>
             <td>{{item.idSeller}}</td>
             <td>{{item.dateOfIssue | date:'short'}}</td>
             <td>{{item.stateSaleOrder | translateStates}}</td>
             <td>
                 <ul>
                     <li *ngFor="let prod of item.details">
-                        {{prod.idProduct}}
+                        {{prod.name}}
                     </li>
                 </ul>
             </td>

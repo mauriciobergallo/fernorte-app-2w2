@@ -58,7 +58,7 @@ export class SaleOrderServiceService {
     // }
   }
   getSaleOrders(): Observable<SaleOrderApi[]> {
-    this.saleOrderList = this.http.get<SaleOrderApi[]>("http://localhost:8087/sales-orders?from_date=2023-10-23&to_date=2023-10-31");
+    this.saleOrderList = this.http.get<SaleOrderApi[]>("http://localhost:8087/sales-orders");
     return this.saleOrderList;
   }
 

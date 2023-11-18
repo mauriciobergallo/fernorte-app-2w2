@@ -45,7 +45,7 @@
               <p>Subtotal: ${{realAmount}}</p>
             </div>
             <div class="col-6">
-              <p>Total a pagar: ${{Number(realAmount)+Number(subCharges)}}</p>
+              <p>Total a pagar: ${{(Number(realAmount)+Number(subCharges)).toFixed(2)}}</p>
             </div>
           </div>
         </form>

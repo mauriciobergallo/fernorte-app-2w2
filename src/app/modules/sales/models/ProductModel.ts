@@ -8,10 +8,12 @@ export class ProductModel {
   category = {
     idCategory: 0,
     name: "",
-    description: ""
+    description: "",
+    isDeleted: false
   };
   urlImage: string = ""
   priceProduct: number = 0;
   discount: number = 0;
+  isDeleted:boolean = false;
   cantidadSeleccionado?: number
 }

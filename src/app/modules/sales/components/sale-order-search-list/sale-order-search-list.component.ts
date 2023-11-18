@@ -78,7 +78,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   }
 
   mapSaleOrder(saleOrder: SaleOrderApi): SaleOrderOk {
-    const { id_sale_order, id_seller, id_client, date_of_issue, date_of_expiration, state_sale_order, detail_sales_order } = saleOrder;
+    const { id_sale_order, id_seller, id_client, date_of_issue, date_of_expiration, state_sale_order, detail_sales_order, first_name_client, last_name_client } = saleOrder;
     const productList: ProductOk[]=[];
     for(let prod of detail_sales_order){
       productList.push(this.mapProduct(prod))
@@ -87,6 +87,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
       idSaleOrder: id_sale_order,
       idSeller: id_seller,
       idClient: id_client,
+      nameClient: first_name_client+" "+last_name_client,
       dateOfIssue: new Date(date_of_issue[0], date_of_issue[1]-1, date_of_issue[2], date_of_issue[3], date_of_issue[4]),
       dateOfExpiration: new Date(date_of_expiration[0], date_of_expiration[1]-1, date_of_expiration[2], date_of_expiration[3], date_of_expiration[4]),
       stateSaleOrder: state_sale_order,
@@ -96,8 +97,9 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   }
 
   mapProduct(product : ProductApi) : ProductOk {
-    const { id_product, id_sale_order_details, price, quantity, state_sale_order_detail } = product;
+    const { id_product, id_sale_order_details, price, quantity, state_sale_order_detail, name } = product;
     const productOk : ProductOk = {
+      name: name,
       idProduct : id_product,
       idSaleOrderDetails:id_sale_order_details,
       price : price,
@@ -106,7 +108,6 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     } 
     return productOk
   }
-
   onShowDetails() {
 
   }

@@ -48,10 +48,12 @@ export class ProductService {
       category: {
         idCategory: 0,
         name: "",
-        description: ""
+        description: "",
+        isDeleted:false
       },
       urlImage: "",
       priceProduct: 0,
+      isDeleted:false,
       discount: 0,
       cantidadSeleccionado: 1
     }

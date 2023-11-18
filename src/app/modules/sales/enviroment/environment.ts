@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  urlBase: "http://localhost:8007",
+  urlBase: "http://localhost:8087",
   urlProductBase: "http://localhost:8086",
   urlClientsBase: "http://localhost:8089",
   urlTurnBase: "http://localhost:8081",

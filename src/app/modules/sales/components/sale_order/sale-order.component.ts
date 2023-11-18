@@ -106,6 +106,7 @@ export class SaleOrderComponent implements OnInit {
 
     this.saleOrderProvider.createSaleOrder(this.saleOrder!).subscribe((res) => {
       this.saleOrder = res.data
+      
     });
     this.listProduct = this.productService.restarCantidad(this.productoSeleccionado)
     this.loader = this.loadingService.loading();
