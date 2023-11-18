@@ -29,6 +29,6 @@ export class BookingServiceService {
   updateReceptionOrder(
     orderData: IUpdateReceptionOrder
   ): Observable<IUpdatedOrderDto> {
-    return this.http.post<IUpdatedOrderDto>(this.baseUrl, orderData);
+    return this.http.put<IUpdatedOrderDto>(this.baseUrl, orderData);
   }
 }

@@ -1,6 +1,13 @@
 <div class="container mt-3 ">
   <div>
-    <h2>Movimientos de Inventario</h2>
+    <div class="row">
+      <div class="col-md-6">
+          <h2>Movimientos de Inventario</h2>
+      </div>
+      <div class="col-md-6  justify-content-end ">
+          <fn-create-movement href="new-movement"></fn-create-movement>
+      </div>
+  </div>
     <fn-datepicker-range-popup (onFilter)="filterByDate($event)"
       (onClearFilter)="clearFilters()"></fn-datepicker-range-popup>
     <div class="alert alert-warning alert-dismissible fade show" role="alert"
@@ -98,5 +105,11 @@
       </li>
     </ul>
 
+
+   
   </div>
+  <div class="container">
+    <button class="btn btn-primary"(click)="downloadPDF()" >Exportar PDF</button>
+  </div>
+  <canvas id="myChart" style="position: absolute; left: -9999px;"></canvas>
 </div>

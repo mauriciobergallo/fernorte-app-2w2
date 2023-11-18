@@ -42,6 +42,7 @@ export class MovementsService {
       }),
       catchError(error => {
         if (error.status === 400) {
+          console.log('error',error)
           return of(false);
         }
         return throwError(() => new Error('Algo salió mal al crear el movimiento'));

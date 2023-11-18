@@ -5,6 +5,8 @@ import { MovementType } from '../../models/IMovementTypeEnum';
 import { MovementsService } from '../../services/movements-service/movements.service';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Pagination } from '../../models/pagination';
+import jsPDF from 'jspdf';
+import { Chart } from 'chart.js/auto';
 
 @Component({
   selector: 'fn-search-inventory-movements',
@@ -23,24 +25,24 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   mostrarDetalleMovimiento: number | null = null;
   mostrarDetalle: boolean = false;
 
-  showDetail(i: number){
-    if(i === this.mostrarDetalleMovimiento) {
+  showDetail(i: number) {
+    if (i === this.mostrarDetalleMovimiento) {
       this.mostrarDetalle = false;
       this.mostrarDetalleMovimiento = null;
       return;
     }
-    this.mostrarDetalle=true;
+    this.mostrarDetalle = true;
     this.mostrarDetalleMovimiento = i;
   }
 
-  getMovementTypeTranslate(mov : MovementType | null): string  {
-    if(mov == null) return '-'
-    if(mov == MovementType.INBOUND) return 'Entrada'
-    if(mov == MovementType.OUTBOUND) return 'Salida'
+  getMovementTypeTranslate(mov: MovementType | null): string {
+    if (mov == null) return '-'
+    if (mov == MovementType.INBOUND) return 'Entrada'
+    if (mov == MovementType.OUTBOUND) return 'Salida'
     return '-'
   }
 
-  orderDetail(idx: number){
+  orderDetail(idx: number) {
     //this.movimientos[idx].movement_details.
   }
 
@@ -136,14 +138,15 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   getMovementsPage(page: number) {
     this.isLoading = true;
     this.subscripciones.add(
-      this.movementService.getPaginationMovements(this.currentPage - 1).subscribe({
+      this.movementService.getPaginationMovements(page-1).subscribe({
         next: (response: Pagination) => {
           if (response != null) {
+            this.totalPages = response.totalPages;
             response.items.forEach(movement => {
               this.movimientosOriginales.push(new IMovementDto(movement))
             })
             this.movimientos = this.movimientosOriginales;
-    this.isLoading = false;
+            this.isLoading = false;
           } else {
             console.log("No content")
           }
@@ -154,130 +157,114 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
       })
     )
 
-    // Simula una espera
-   // timer(3000).subscribe(() => {
-      this.isLoading = true;
-     // this.movimientosOriginales = this.movimientosData;
-     // this.movimientos = this.movimientosData;
-   // });
-
   }
 
-/*
-  private movimientosData: IMovementDto[] = [
-    {
-      operator: 'John Doe',
-      movement_type: null,
-      is_internal: true,
-      movement_details: [
-        {
-          location_origin: {
-            id: 1,
-            zone: 'Zone A',
-            section: 'Section 1',
-            space: 'Space X',
+
+  generateChart() {
+    const labels = ['Productos Salientes', 'Productos Ingresantes'];
+  
+    const canvas = document.getElementById('myChart') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d');
+    Chart.getChart(canvas)?.destroy();
+  
+    const outboundMovements = this.movimientos.filter(movement => movement.movement_type === MovementType.OUTBOUND);
+    const productsSalientes = outboundMovements.reduce((total, movement) => {
+      movement.movement_details.forEach(detail => {
+        total += detail.quantity;
+      });
+      return total;
+    }, 0);
+  
+    const inboundMovements = this.movimientos.filter(movement => movement.movement_type === MovementType.INBOUND);
+    const productsIngresantes = inboundMovements.reduce((total, movement) => {
+      // Iterar sobre los detalles del movimiento y sumar las cantidades
+      movement.movement_details.forEach(detail => {
+        total += detail.quantity;
+      });
+      return total;
+    }, 0);
+  
+    const backgroundColors = [
+      'rgba(255, 99, 132, 0.2)', // Color para productos salientes
+      'rgba(54, 162, 235, 0.2)', // Color para productos ingresantes
+    ];
+  
+    const borderColors = [
+      'rgba(255, 99, 132, 1)', // Borde para productos salientes
+      'rgba(54, 162, 235, 1)', // Borde para productos ingresantes
+    ];
+  
+    const chartData = {
+      labels,
+      datasets: [{
+        data: [productsSalientes, productsIngresantes],
+        backgroundColor: backgroundColors,
+        borderColor: borderColors,
+        borderWidth: 1,
+      }],
+    };
+  
+    if (ctx) {
+      // Crear el gráfico
+      new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: {
+          animation: {
+            duration: 0,
           },
-          location_destination: {
-            id: 2,
-            zone: 'Zone B',
-            section: 'Section 2',
-            space: 'Space Y',
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Cantidad de Productos',
+              },
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Tipo de Producto',
+              },
+            },
           },
-          quantity: 10,
-          product: 'Product A',
+          plugins:{
+            legend: {
+              display: false,
+            }
+          }
         },
-        {
-          location_origin: {
-            id: 1,
-            zone: 'Zone A',
-            section: 'Section 1',
-            space: 'Space X',
-          },
-          location_destination: {
-            id: 2,
-            zone: 'Zone B',
-            section: 'Section 2',
-            space: 'Space Y',
-          },
-          quantity: 100,
-          product: 'Product A',
-        },
-        {
-          location_origin: {
-            id: 1,
-            zone: 'Zone A',
-            section: 'Section 1',
-            space: 'Space X',
-          },
-          location_destination: {
-            id: 2,
-            zone: 'Zone B',
-            section: 'Section 2',
-            space: 'Space Y',
-          },
-          quantity: 5,
-          product: 'Product A',
-        }
-      ],
-      date: '08-11-2023 23:07:11',
-    },
-    {
-      operator: 'Jane Smith',
-      movement_type: null,
-      is_internal: true,
-      movement_details: [
-        {
-          location_origin: {
-            id: 3,
-            zone: 'Zone C',
-            section: 'Section 3',
-            space: 'Space Z',
-          },
-          location_destination: null,
-          quantity: 5,
-          product: 'Product B',
-        },
-      ],
-      date: '10-11-2023 15:30:45',
-    },
-    {
-      operator: 'Alice Johnson',
-      movement_type: MovementType.INBOUND,
-      is_internal: false,
-      movement_details: [
-        {
-          location_origin: null,
-          location_destination: {
-            id: 4,
-            zone: 'Zone D',
-            section: 'Section 4',
-            space: 'Space W',
-          },
-          quantity: 8,
-          product: 'Product C',
-        },
-      ],
-      date: '12-11-2023 09:15:20',
-    },
-    {
-      operator: 'Pepe',
-      movement_type: MovementType.OUTBOUND,
-      is_internal: false,
-      movement_details: [
-        {
-          location_destination: null,
-          location_origin: {
-            id: 4,
-            zone: 'Zone D',
-            section: 'Section 4',
-            space: 'Space W',
-          },
-          quantity: 8,
-          product: 'Product C',
-        },
-      ],
-      date: '12-11-2023 09:15:20',
+      });
+  
+      return new Promise<string>((resolve) => {
+        setTimeout(() => {
+          const chartImage = canvas.toDataURL('image/png');
+          resolve(chartImage);
+        }, 1000);
+      });
     }
-  ];
-*/
+    return Promise.resolve('');
+  }
+
+  async downloadPDF() {
+    const dataTable = this.movimientos;
+    const pdf = new jsPDF('landscape', 'px', 'a4') as any;
+  
+    pdf.text('Reporte de Inventario Actual', 10, 10);
+  
+    // Renderizar el gráfico en el PDF
+    const chartImage = await this.generateChart();
+    if (chartImage) {
+      const imageWidth = pdf.internal.pageSize.getWidth() - 20; // Ancho del gráfico igual al ancho del PDF
+      const imageHeight = pdf.internal.pageSize.getHeight() - 100; // Alto del gráfico menor que el alto del PDF
+  
+      pdf.addImage(chartImage, 'PNG', 10, 80, imageWidth, imageHeight);
+    }
+  
+    pdf.save('reporte_inventario.pdf');
+  }
+  
+
+
 }
+

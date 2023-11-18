@@ -3,5 +3,6 @@ export interface IUpdatedDetailDto {
   product_name: string;
   agreed_quantity: number;
   received_quantity: number;
+  is_broken: boolean;
   remarks: string;
 }

@@ -34,12 +34,12 @@ export class WarehouseService {
     return this.http.get<StorageTicket[]>(this.storageTicketBaseUrl);
   }
 
-  asignTicket(ticketId: number, operatorId: number): Observable<StorageTicket> {
-    //a confirmar
+  asignTicket(ticketId: number, operator: string): Observable<StorageTicket> {
     const body = {
       ticket_id: ticketId,
-      operator_id: operatorId,
+      operator: operator,
     };
+    console.log(`LLEGUE ${body.ticket_id}`);
     return this.http.put<StorageTicket>(this.storageTicketBaseUrl, body);
   }
 

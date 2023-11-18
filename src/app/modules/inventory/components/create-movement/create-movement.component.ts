@@ -104,6 +104,7 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
   submitForm() {
       // Aquí manejarías la lógica para enviar los datos a tu API
     let mov = this.prepareMovement()
+    console.log('mov prepr',mov)
     this.serviceMovement.newMovement(mov).subscribe({
       next: (result) => {
         if (result) {
@@ -170,7 +171,6 @@ addDetail(detailForm: FormGroup){
   const origin = detailForm.get('origin')?.value as LocationInfoDto;
   const destiny = detailForm.get('destiny')?.value as LocationInfoDto;
   const quantity = detailForm.get('quantity')?.value as number;
-  console.log({origin,destiny,quantity})
   this.movementDetailsArray.push(this.initFormDetail(origin,destiny,quantity))
 
     // Imprimir los valores de los controles en la consola
@@ -272,8 +272,6 @@ removeDetail(i: number){
     return (control: AbstractControl): ValidationErrors | null => {
       const origin = control.get('origin')?.value;
       const destiny = control.get('destiny')?.value;
-      console.log(origin,'oruigin')
-      console.log(destiny,'destonyy')
 
         // Utilizar 'some' para comprobar si algún detalle ya tiene el mismo origen o destino
     const duplicate = movementDetailsArray.controls.some(ctrl => {
@@ -282,7 +280,6 @@ removeDetail(i: number){
       return (ctrlOrigin === origin || ctrlOrigin === destiny) || 
              (ctrlDestiny === origin || ctrlDestiny === destiny);
     });
-    console.log(duplicate)
     // Si se encuentra un duplicado, retornar el objeto de error, de lo contrario retornar null
     return duplicate ? { 'duplicateMovement': true } : null;
     };
