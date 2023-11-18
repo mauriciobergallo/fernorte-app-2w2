@@ -27,7 +27,7 @@ export class ForgotPasswordComponent {
             icon: 'success',
           })
           setTimeout(() => {
-            this.router.navigate(['customers/login']);
+            this.router.navigate(['login']);
           }, 3000); 
           
         }

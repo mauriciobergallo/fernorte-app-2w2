@@ -46,8 +46,8 @@ import { InfoEmployeeComponent } from './components/info-employee/info-employee.
 
 @NgModule({
   declarations: [HomeComponent, TurnsComponentComponent, EmployeeRegistrationComponent,CategoryComponent, UserRootComponent, UserFormComponent,
-    LoginComponent, CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent, EmployeeListComponent, CustomersSidebarComponent,FirstLoginComponent,
-    ModifyUserComponent,UpdateEmployeeComponent, ForgotPasswordComponent,ModifyUserRolComponent, UserListComponent, CustomerListComponent, InfoEmployeeComponent
+     CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent, EmployeeListComponent, CustomersSidebarComponent,
+    ModifyUserComponent,UpdateEmployeeComponent,ModifyUserRolComponent, UserListComponent, CustomerListComponent, InfoEmployeeComponent
   ],
   providers: [CategoryService,  
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }, EmployeeService,

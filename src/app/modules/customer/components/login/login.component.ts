@@ -34,7 +34,7 @@ export class LoginComponent {
                 icon: 'success',
               })
               setTimeout(() => {
-                this.router.navigate(['customers',respuesta.document_number ,'first-login', true]);
+                this.router.navigate([respuesta.document_number ,'first-login', true]);
               }, 3000)
             }
             else{
@@ -42,7 +42,8 @@ export class LoginComponent {
                 title: '¡Éxito!',
                 text: 'Bienvenido ' + respuesta.username,
                 icon: 'success',
-              })
+              });
+              this.router.navigate(["customers"]);
             }
           },
           (error: any) => {
@@ -68,7 +69,7 @@ export class LoginComponent {
 
 
   goToForgotPassword() {
-    this.router.navigate(['customers/forgot-password/']);
+    this.router.navigate(['forgot-password/']);
   }
 }
 

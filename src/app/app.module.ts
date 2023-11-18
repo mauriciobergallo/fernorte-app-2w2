@@ -16,9 +16,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgChartsModule } from 'ng2-charts';
 import { RoleListComponent } from './role-list/role-list.component';
+import { LoginComponent } from './modules/customer/components/login/login.component';
+import { FirstLoginComponent } from './modules/customer/components/first-login/first-login.component';
+import { ForgotPasswordComponent } from './modules/customer/components/forgot-password/forgot-password.component';
 
 @NgModule({
-  declarations: [AppComponent, RoleListComponent],
+  declarations: [AppComponent, RoleListComponent, LoginComponent, FirstLoginComponent, ForgotPasswordComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

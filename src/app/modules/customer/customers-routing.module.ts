@@ -24,13 +24,9 @@ import { CustomerListComponent } from "./components/customer-list/customer-list.
         {path: 'employees', component: EmployeeListComponent },
         {path: 'create-rol', component: CreateRolComponent},
         {path: 'role', component: RoleListComponent},
-        {path: 'turns', component: TurnsComponentComponent},
-        {path: "login", component: LoginComponent},
         {path: 'users', component: UserListComponent },
         {path: 'customers', component: CustomerListComponent },
         {path: "update-costumer", component: UpdateCustomerComponent},
-        {path: 'forgot-password', component: ForgotPasswordComponent },
-        {path: ':document-number/first-login/:true', component: FirstLoginComponent },
       ]
     }]
 

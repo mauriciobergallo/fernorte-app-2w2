@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -16,7 +16,7 @@ export class FirstLoginComponent {
     password: ''
   };
 
-  constructor(private route: ActivatedRoute, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private userService: UserService, private router: Router) {
     this.route.params.subscribe(params => {
        this.forgot = params['forgot'] === 'true';
        this.document_number = params['document-number']
@@ -41,7 +41,8 @@ export class FirstLoginComponent {
             title: '¡Éxito!',
             text: 'Se cambió la contraseña correctamente',
             icon: 'success',
-          })
+          });
+          this.router.navigate(['customers'])
         //si fue un exito, no llevarlo al login sino que ya esta logeado
         },
         (error: any) => {
