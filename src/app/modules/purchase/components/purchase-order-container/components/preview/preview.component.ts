@@ -11,6 +11,7 @@ import {
 import { PaymentOrderDetailResponse } from 'src/app/modules/purchase/models/IPaymentOrder';
 import { ClaimOrderDetailResponse } from 'src/app/modules/purchase/models/IClaimOrder';
 import { PurchaseOrderServiceService } from '../../services/purchase-order-service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-preview',
@@ -28,13 +29,13 @@ export class PreviewComponent {
   billUrl: string = '';
   cardProducts: ISupplierProduct[] = [];
   purchaseDetails: PurchaseOrderDetailResponse[] = [];
-  supplier: ISupplier = {
+  supplier!: ISupplier; /* = {
     id: 1,
     socialReason: 'Proveedor',
     fantasyName: 'Cachito',
     cuit: '20323730019',
     adress: 'Alberdi 342',
-  };
+  }; */
   currentDate: Date = new Date();
 
   constructor(private purchaseOrderService: PurchaseOrderServiceService) {}
@@ -43,7 +44,7 @@ export class PreviewComponent {
     this.purchaseOrderService
       .getSupplierSelected()
       .subscribe((data: ISupplier) => {
-        // this.supplier = data;
+        this.supplier = data;
       });
 
     this.purchaseOrderService
@@ -69,5 +70,9 @@ export class PreviewComponent {
 
   onEdit(): void {
     this.purchaseOrderService.setPurchaseOrderFlow();
+  }
+
+  onSubmit(): void {
+    Swal.fire({title: 'Success!', text: "Orden de compra creada", icon: 'success', confirmButtonText: 'ok'})
   }
 }

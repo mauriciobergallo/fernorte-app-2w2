@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-payment-preview',
@@ -19,5 +20,9 @@ supplier:any = {
 }
 
 products: any[] = [];
+
+onSubmit(): void {
+  Swal.fire({title: 'Success!', text: "Orden de pago creada", icon: 'success', confirmButtonText: 'ok'})
+} 
 
 }
