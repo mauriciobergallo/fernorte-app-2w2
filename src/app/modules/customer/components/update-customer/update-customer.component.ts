@@ -20,9 +20,13 @@ export class UpdateCustomerComponent implements OnInit {
 
   formattedBirthDate: string = '';
 
-  @Input() idCustomer: number = 0;
+   idCustomer: number = 0;
 
   @Input() customerToUpdate: Customer | undefined;
+
+  @Input() onlyForRead: boolean = false;
+
+
 
   minDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
   maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
@@ -93,6 +97,7 @@ export class UpdateCustomerComponent implements OnInit {
 
   mapCustomer(){
 	if(this.customerToUpdate != null){
+    this.idCustomer = this.customerToUpdate.id_customer;
 	  this.customer.firstName = this.customerToUpdate.first_name;
 	  this.customer.lastName = this.customerToUpdate.last_name;
 	  this.customer.idDocumentType = parseInt(this.customerToUpdate.document_type);
@@ -195,6 +200,38 @@ export class UpdateCustomerComponent implements OnInit {
 
 
 onSubmit(clientForm: any){
+
+
+  console.log(this.formattedBirthDate);
+  this.customer.birthDate = this.formattedBirthDate;
+  console.log('NEW CUSTOMER', this.customer);
+  let newCustomer: CustomerRequest = {
+    firstName: this.customer.firstName,
+    lastName: this.customer.lastName,
+    companyName: this.customer.companyName,
+    ivaCondition: this.customer.ivaCondition,
+    birthDate: this.formattedBirthDate,
+    idDocumentType: this.customer.idDocumentType,
+    documentNumber: this.customer.documentNumber,
+    address: this.customer.address,
+    phoneNumber: this.customer.phoneNumber,
+    email: this.customer.email,
+    customerType: this.customer.customerType,
+  };
+  let customerEnSnake: CustomerRequest =
+    this.conversion.toSnakeCase(newCustomer);
+  console.log('CUSTOMER EN SNAKE', customerEnSnake);
+  this.customerService
+    .putCustumer(customerEnSnake, this.idCustomer)
+    .subscribe(
+      (response) => {
+        alert('Se actualizo el cliente');
+      },
+      (error) => {
+        alert('Error en el servidor');
+      }
+    );
+
 
 }
 

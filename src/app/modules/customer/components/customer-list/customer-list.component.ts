@@ -18,7 +18,7 @@ export class CustomerListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUser();
-//    this.customerList = this.customers;
+ //   this.customerList = this.customers;
   }
 
    customers: Customer[] = [
@@ -58,8 +58,12 @@ export class CustomerListComponent implements OnInit {
     });
   }
 
-  onOptionClick(selectedOption: string) {
-    console.log('Opción seleccionada:', selectedOption);
+  onOptionClick(customer: Customer) {
+
+    const modalRef = this.modalService.open(UpdateCustomerComponent, { ariaLabelledBy: 'modal-basic-title' });
+    modalRef.componentInstance.customerToUpdate = customer; // Pasar el ID del cliente al componente de actualización
+    modalRef.componentInstance.onlyForRead = true;
+
   }
 
   openUpdateCustomerModal(customer: Customer) {
