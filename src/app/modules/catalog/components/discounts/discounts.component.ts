@@ -171,4 +171,8 @@ export class DiscountsComponent implements OnInit {
     })
   }
 
+  isActivo(discount:IDiscount){
+    return new Date(discount.startDate) <= new Date() && new Date(discount.endDate) >= new Date(); 
+  }
+
 }

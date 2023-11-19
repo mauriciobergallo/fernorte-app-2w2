@@ -18,14 +18,14 @@
             <li class="list-group-item" *ngIf="discount != null">
                 <p class="d-flex aling-items-center">Estado:
                     <strong>
-                        <div class="ms-2" *ngIf="isDiscountActive(discount)">
+                        <div class="ms-2 d-flex aling-items-center" *ngIf="isDiscountActive(discount)">
                             <p>Activo
                                 <span class="material-symbols-outlined" style="color: rgb(3, 139, 3); font-size: 18px;">
                                     check_circle
                                 </span>
                             </p>
                         </div>
-                        <div class="ms-2" *ngIf="!isDiscountActive(discount)">
+                        <div class="ms-2 d-flex aling-items-center" *ngIf="!isDiscountActive(discount)">
                             <p>Inactivo
                                 <span style="color: rgb(202, 0, 0); font-size: 18px;"
                                     class="material-symbols-outlined">

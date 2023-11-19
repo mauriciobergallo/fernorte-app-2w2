@@ -2,7 +2,7 @@
 
 <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-<div class="d-block col-12 mt-4" style="height: 38px;">
+<div class="d-block container col-12 mt-4" style="height: 38px;">
     <button class="btn btn-primary" (click)="openCreateModal()">Agregar</button>
 </div>
 <div class="container mt-4">
@@ -66,6 +66,7 @@
                 <th>Descuento</th>
                 <th>Fecha Inicio</th>
                 <th>Fecha Fin</th>
+                <th>Activo</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
@@ -84,6 +85,20 @@
                 </td>
                 <td>
                     <strong>
+                        <div class="ms-2" *ngIf="isActivo(discount)">
+                            <span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">
+                                check_circle
+                            </span>
+                        </div>
+                        <div class="ms-2" *ngIf="!isActivo(discount)">
+                            <span style="color: rgb(202, 0, 0);" class="material-symbols-outlined">
+                                cancel
+                            </span>
+                        </div>
+                    </strong>
+                </td>
+                <td>
+                    <strong>
                         <div class="ms-2" *ngIf="!discount.isDeleted">
                             <span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">
                                 check_circle
@@ -97,7 +112,7 @@
                     </strong>
                 </td>
                 <td>
-                    <div ngbDropdown container="body">
+                    <div ngbDropdown container="body" class="center">
                         <button type="button" class="btn btn-sm btnDropdown btn-light" ngbDropdownToggle>
                             <i class="bi bi-three-dots-vertical"></i>
                         </button>

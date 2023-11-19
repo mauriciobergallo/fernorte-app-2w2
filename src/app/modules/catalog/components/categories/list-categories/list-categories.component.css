@@ -4,3 +4,7 @@
 .nameColumn{
    cursor: pointer !important;
  }
+ .center{
+   display: flex;
+   justify-content: start;
+  }
