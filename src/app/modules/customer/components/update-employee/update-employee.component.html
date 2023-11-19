@@ -83,12 +83,12 @@
 					/>
 				  </div>
 	
-				<div class="mb-3 d-flex">
+				<div class="my-3 d-flex">
 					<div class="flex-grow-1 me-2">
 					  <label for="address">Domicilio</label>
 					  <input [(ngModel)]="employee.address" [disabled]="onlyForRead" type="text" name="address" id="address" class="form-control" />
 					</div>
-					<div class="flex-grow-1">
+					<div class="flex-grow-1 ">
 					  <label for="phoneNumber">Número de teléfono</label>
 					  <input [(ngModel)]="employee.phoneNumber" [disabled]="onlyForRead" type="text" name="phoneNumber" id="phoneNumber" class="form-control" />
 					</div>
@@ -97,7 +97,11 @@
 			</form>
 		</div>
 		<div class="modal-footer">
-			<button  *ngIf="!onlyForRead" type="submit" class="btn btn-outline-dark"  (click)="onSubmit(employeeForm)">Actualizar</button>
+			<button  *ngIf="!onlyForRead" type="submit" class="btn btn-outline-secondary"  (click)="showCancelConfirmation()">Cancelar</button>
+
+			<button *ngIf="onlyForRead"  type="submit" class="btn btn-outline-secondary"  (click)="modalService.dismissAll()">Cancelar</button>
+
+			<button  *ngIf="!onlyForRead" type="submit" class="btn btn-outline-primary"  (click)="showConfirmation(employeeForm)">Actualizar</button>
 		</div>
 	</div>
 	

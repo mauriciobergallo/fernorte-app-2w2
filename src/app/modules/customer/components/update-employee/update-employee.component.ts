@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 import { EmployeeResponseDTO } from '../../models/employeeResponseDTO';
 import { DocumentType } from '../../models/documentType';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-update-employee',
@@ -56,7 +57,7 @@ export class UpdateEmployeeComponent implements OnInit {
     // Obtén la fecha actual
     const currentDate = new Date();
     // Resta 16 años de la fecha actual
-    const minYear = currentDate.getFullYear() - 5;
+    const minYear = currentDate.getFullYear() - 16;
     const minMonth = currentDate.getMonth() + 1; // Los meses en JavaScript son de 0 a 11, ng-bootstrap es de 1 a 12
     const minDay = currentDate.getDate();
 
@@ -64,7 +65,7 @@ export class UpdateEmployeeComponent implements OnInit {
     this.minDate = { year: minYear, month: minMonth, day: minDay };
 
     this.maxDate = {
-      year: currentDate.getFullYear() - 150, //Cambiar este numero si se quiere bajar la edad
+      year: currentDate.getFullYear() - 100, //Cambiar este numero si se quiere bajar la edad
       month: currentDate.getMonth() + 1,
       day: currentDate.getDate(),
     };
@@ -132,8 +133,7 @@ export class UpdateEmployeeComponent implements OnInit {
   }
   
   open(content: any) {
-    console.log('PRUEBA PRUEBA PRUEBA');
-    // this.loadEmployeeData(this.idEmployee);
+   
     this.modalService
       .open(content, {
         ariaLabelledBy: 'modal-basic-title',
@@ -165,10 +165,12 @@ export class UpdateEmployeeComponent implements OnInit {
             .putEmployee(employeeInSnake, this.idEmployee)
             .subscribe(
               (response) => {
-                alert('Se actualizo el empleado');
+                this.showInfoUpdateResult();
+                this.modalService.dismissAll();
               },
               (error) => {
-                alert('Error en el servidor');
+                this.showInfoErrorResult();
+                this.modalService.dismissAll();
               }
             );
           this.employeeService.clearFields(this.employee);
@@ -200,10 +202,14 @@ export class UpdateEmployeeComponent implements OnInit {
       .putEmployee(employeeInSnake, this.idEmployee)
       .subscribe(
         (response) => {
-          alert('Se actualizo el empleado');
+          this.showInfoUpdateResult();
+          this.employeeService.notifyEmployeeUpdated();
+          this.modalService.dismissAll();
         },
         (error) => {
-          alert('Error en el servidor');
+         this.showInfoErrorResult();
+         this.modalService.dismissAll();
+         
         }
       );
   }
@@ -236,7 +242,65 @@ export class UpdateEmployeeComponent implements OnInit {
     }
   }
 
-  onSubmitForm(employeeForm: NgForm) {
-    console.log('Employee', employeeForm);
-  }
+
+  showConfirmation(employeeForm: any) {
+		Swal.fire({
+		  title: '¿Estás seguro?',
+		  text: '¿Quieres actualizar el empleado?',
+		  icon: 'question',
+		  showCancelButton: true,
+		  confirmButtonText: 'Sí, actualizar',
+		  cancelButtonText: 'Cancelar'
+		}).then((result) => {
+		  if (result.isConfirmed) {	
+			this.onSubmit(employeeForm);
+		  }
+		});
+	  }
+
+
+
+    closeForm() {
+      this.modalService.dismissAll();
+      }
+    
+	  showCancelConfirmation() {
+      Swal.fire({
+        title: '¿Está seguro?',
+        text: 'Si cancela, perderá los datos ingresados. ¿Desea continuar?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, cancelar',
+        cancelButtonText: 'No, seguir editando'
+      }).then((result) => {
+        if (result.isConfirmed) {
+        // Acción a realizar si el usuario confirma la cancelación
+        this.closeForm();
+        }
+      });
+      }
+
+      showInfoUpdateResult(){
+        Swal.fire({
+          title: 'Resultado',
+          text: 'Se actualizó el empleado',
+          icon: 'success',
+          showConfirmButton: true,
+          confirmButtonText: 'ok',
+        });
+      }
+
+      showInfoErrorResult(){
+        Swal.fire({
+          title: 'Resultado',
+          text: 'Error en el servidor',
+          icon: 'error',
+          showConfirmButton: true,
+          confirmButtonText: 'ok',
+        });
+      }
+    
+   onSubmitForm(employeeForm: NgForm) {
+     console.log('Employee', employeeForm);
+   }
 }

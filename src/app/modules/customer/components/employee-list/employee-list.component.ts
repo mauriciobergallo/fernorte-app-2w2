@@ -5,6 +5,7 @@ import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 import { EmployeeResponseDTO } from '../../models/employeeResponseDTO';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEmployeeComponent } from '../update-employee/update-employee.component';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -55,6 +56,9 @@ export class EmployeeListComponent implements OnInit {
     
     this.onLoad()
     this.employeeList = this.employeesHardCoded;
+    this.employeeService.getEmployeeUpdatedObservable().subscribe(() => {
+      this.onLoad();
+    });
   }
 
   onLoad(){
@@ -84,33 +88,33 @@ export class EmployeeListComponent implements OnInit {
   }
 
   onClickInfo(employee: EmployeeResponseDTO){
-alert("Test");
-const modalRef = this.modalService.open(UpdateEmployeeComponent, { ariaLabelledBy: 'modal-basic-title' });
-modalRef.componentInstance.employeeToUpdate = employee; // Pasar el ID del empleado al componente de actualización
-modalRef.componentInstance.onlyForRead = true;
+
+    const modalRef = this.modalService.open(UpdateEmployeeComponent, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' });
+    modalRef.componentInstance.employeeToUpdate = employee; // Pasar el ID del empleado al componente de actualización
+    modalRef.componentInstance.onlyForRead = true;
 
   }
 
   onDelete(employee: EmployeeResponseDTO){
-    //Confirmacion
-
+  
     this.employeeService.delete(employee).subscribe(
       (response) => {
-        alert("Se dio de baja el empleado")
+        this.showInfoDesactivedResult();
         this.onLoad()
+   
       },
       (error) => (
         console.log(error)
+        
       )
     )
   }
 
   onActive(employee: EmployeeResponseDTO){
-    //Confirmacion
-
+  
     this.employeeService.active(employee).subscribe(
       (response) => {
-        alert("Se dio de alta el empleado")
+        this.showInfoActivedResult();
         this.onLoad()
       },
       (error) => (
@@ -119,4 +123,56 @@ modalRef.componentInstance.onlyForRead = true;
     )
   }
 
+
+
+showInfoActivedResult(){
+  Swal.fire({
+    title: 'Resultado',
+    text: 'Se dio de alta el empleado',
+    icon: 'success',
+    showConfirmButton: true,
+    confirmButtonText: 'ok',
+  });
+}
+
+
+showInfoDesactivedResult(){
+  Swal.fire({
+    title: 'Resultado',
+    text: 'Se dio de baja el empleado',
+    icon: 'success',
+    showConfirmButton: true,
+    confirmButtonText: 'ok',
+  });
+}
+
+  showConfirmationReactivate(employee: EmployeeResponseDTO) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Quieres reactivar el empleado?',
+      icon: 'question',     
+      confirmButtonText: 'Sí, reactivar',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {	
+      this.onActive(employee);
+      }
+    });
+    }
+
+    showConfirmationDelete(employee: EmployeeResponseDTO) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: '¿Quieres eliminar el empleado?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {	
+        this.onDelete(employee);
+        }
+      });
+      }
 }

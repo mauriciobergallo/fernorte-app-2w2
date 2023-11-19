@@ -35,8 +35,8 @@
                <a (click)="onClickInfo(e)">Más Información</a> 
               <a (click)="openUpdateEmployeeModal(e)">Actualizar</a>
 
-              <a *ngIf="e.isActive" (click)="onDelete(e)">Eliminar</a>
-              <a *ngIf="!e.isActive" (click)="onActive(e)">Activar</a>
+              <a *ngIf="e.isActive" (click)="showConfirmationDelete(e)">Eliminar</a>
+              <a *ngIf="!e.isActive" (click)="showConfirmationReactivate(e)">Activar</a>
             </div>
           </div>
         </td>
@@ -45,8 +45,7 @@
   </table>
 </div>
 <br>
-<br><br><br><br><br><br><br><br><br><br>
-
+<br>
 
 
 
