@@ -29,10 +29,10 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let item of paymentList">
-                  <td>{{item.paymentMethod.payment_method}}</td>
-                  <td>${{item.amount}}</td>
-                  <td>${{(Number(item.paymentMethod.surcharge)/100 * Number(item.amount)).toFixed(2)}}</td>
-                  <td>${{(Number(item.paymentMethod.surcharge)/100 * Number(item.amount) + Number(item.amount)).toFixed(2)}}</td>
+                  <td>{{item.paymentMethod.paymentMethod}}</td>
+                  <td>${{item.payment}}</td>
+                  <td>${{(Number(item.paymentMethod.surcharge)/100 * Number(item.payment)).toFixed(2)}}</td>
+                  <td>${{(Number(item.paymentMethod.surcharge)/100 * Number(item.payment) + Number(item.payment)).toFixed(2)}}</td>
                 </tr>
                 </tbody>
               </table>
@@ -97,12 +97,12 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of order.detail_sales_order">
+          <tr *ngFor="let item of order.detail_bill">
             <td>{{item.id_product}}</td>
-            <td>{{item.name}}</td>
-            <td>${{item.price}}</td>
+            <td>{{item.name_product}}</td>
+            <td>${{item.unitary_price}}</td>
             <td>{{item.quantity}}</td>
-            <td>${{item.price * item.quantity}}</td>
+            <td>${{item.unitary_price * item.quantity}}</td>
           </tr>
           </tbody>
         </table>
@@ -126,7 +126,7 @@
       <div class=" card p-2 m-1">
         <div class="col-12 d-flex justify-content-around">
           <button class="btn btn-primary" >
-            <p class="m-0" (click)="printOrder()">Imprimir</p>
+            <p class="m-0" (click)="printOrder()" disabled="true">Imprimir</p>
           </button>
           <button class="btn btn-secondary" >
             <p class="m-0" (click)="cancelOrder()">Cancelar</p>

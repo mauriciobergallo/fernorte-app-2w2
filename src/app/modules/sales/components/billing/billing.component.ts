@@ -7,6 +7,9 @@ import {SaleOrderServiceService} from "../../services/salesOrder/sale-order-serv
 import Swal from "sweetalert2";
 import _default from "chart.js/dist/plugins/plugin.tooltip";
 import numbers = _default.defaults.animations.numbers;
+import {BillModel} from "../../models/BillingModelApi";
+import {SaleOrderApi} from "../../models/SaleModelApi";
+import {Payment} from "../../models/PaymentModel";
 declare var window: any;
 
 @Component({
@@ -16,13 +19,13 @@ declare var window: any;
 })
 export class BillingComponent {
   paymentMethods: any[] = [];
-  paymentList: any = [];
+  paymentList: Payment[] = [];
   amount: number | null = null;
   totalAmount: number = 0;
   orderId: number | null = null;
   paymentModal: any;
   selectedPaymentMethod: any = -1;
-  order: any = {};
+  order: BillModel = new BillModel();
   name: string = "Cargue una orden para continuar";
   amountPayed:number =  0;
   subCharges:number =  0;
@@ -53,15 +56,10 @@ export class BillingComponent {
       text: "Se pago correctamente!",
       icon: "success"
     });
-      this.order.paymentList = this.paymentList;
+      this.order.payments = this.paymentList;
+
       this.billService.addBill(this.order);
-      this.paymentList = [];
-      this.order=[];
-      this.name= "Cargue una orden para continuar";
-      this.realAmount=0
-      this.totalAmount=0
-      this.subCharges=0
-      this.amountPayed=0
+      this.cancelOrder();
       this.paymentModal.hide();
       return
     }
@@ -77,9 +75,14 @@ export class BillingComponent {
   }
 
   cancelOrder() {
-
+    this.paymentList = [];
+    this.order = new BillModel();
+    this.name= "Cargue una orden para continuar";
+    this.realAmount=0;
+    this.totalAmount=0;
+    this.subCharges=0;
+    this.amountPayed=0;
   }
-
   checkOrder() {
     if (this.orderId == null || !this.billService.checkOrder(Number(this.orderId))) {
       Swal.fire({
@@ -104,11 +107,17 @@ export class BillingComponent {
         return
       }
       this.paymentList.push({
-        paymentMethod:this.selectedPaymentMethod,
-        amount:this.amount
+        id:this.selectedPaymentMethod.id,
+        surcharge:this.selectedPaymentMethod.surcharge,
+        paymentMethod: {
+          idPaymentMethod: this.selectedPaymentMethod.id,
+          paymentMethod: this.selectedPaymentMethod.payment,
+          surcharge: this.selectedPaymentMethod.surcharge
+        },
+        payment: this.amount
       });
-      let lastPaymentMethod = this.paymentList.at(this.paymentList.length-1);
-      this.subCharges += Number(lastPaymentMethod.paymentMethod.surcharge)/100 * Number(lastPaymentMethod.amount);
+      let lastPaymentMethod = this.paymentList.at(this.paymentList.length-1)!;
+      this.subCharges += Number(lastPaymentMethod.paymentMethod.surcharge)/100 * Number(lastPaymentMethod.payment);
       this.subCharges = Number(this.subCharges.toFixed(2));
       this.amountPayed += Number(this.amount);
       this.amountPayed = Number(this.amountPayed.toFixed(2));
@@ -122,10 +131,11 @@ export class BillingComponent {
   searchBill() {
       if(this.orderId!=null){
         this.filters.set("idOrder", this.orderId.toString())
-        this.saleOrderService.getSaleOrdesByFilter(this.filters).subscribe((order) => {
-          this.order = order[0];
-          this.name = this.order.first_name_client + ' ' + this.order.last_name_client;
-          this.order.detail_sales_order.forEach((item: any) => {
+        this.saleOrderService.getSaleOrdesByFilter(this.filters).subscribe((saleOrderList) => {
+          let saleOrder : SaleOrderApi =  saleOrderList[0];
+          this.order = this.billService.mapSaleOrderToBill(saleOrder);
+          this.name = this.order.first_name + ' ' + this.order.las_name;
+          this.order.detail_bill.forEach((item: any) => {
             this.totalAmount += (item.price * item.quantity);
             this.realAmount = this.totalAmount;
           })
@@ -134,9 +144,6 @@ export class BillingComponent {
           }
         )
       }
-
-
-
     }
     protected readonly Number = Number;
   }
