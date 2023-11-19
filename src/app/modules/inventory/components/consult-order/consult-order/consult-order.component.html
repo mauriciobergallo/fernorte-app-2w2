@@ -7,7 +7,7 @@
       </div>
       <div>
         <fn-datepicker-range-popup (onFilter)="filterByDate($event)"
-        (onClearFilter)="clearFilters()"></fn-datepicker-range-popup>      </div>
+        (onClearFilter)="ClearFilter()"></fn-datepicker-range-popup>      </div>
 
       <div class="table">
         <table class="table table-striped">
@@ -22,10 +22,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of deliveryOrder?.items">
+            <tr *ngFor="let item of deliveryOrder.splitList(this.currentPage)">
               <td class="text-center">{{ item.sale_order_id }}</td>
-              <td class="text-center">{{ item.client.first_name }} {{ item.client.last_name }}</td>
-              <td class="text-center">{{ item.client.document_number }}</td>
+              <td class="text-center">{{ item.client?.first_name }} {{ item.client?.last_name }}</td>
+              <td class="text-center">{{ item.client?.document_number }}</td>
               <td class="text-center">{{ item.created_at }}</td>
               <td class="text-center" style="font-size: 20px;">
                 <i [class]="item.state | stateIconPipe" [ngbTooltip]="getTooltipText(item.state)"></i>

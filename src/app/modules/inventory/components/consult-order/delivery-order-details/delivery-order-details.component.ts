@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { DeliverOrderService } from '../../../services/deliver-order.service';
 import { DeilveryOrder } from '../../../models/deilvery-order';
 import { Observable, switchMap } from 'rxjs';
 import { DeliveryOrderPut } from '../../../models/delivery-order-put';
 import { DeliveryOrderDetailPut } from '../../../models/delivery-order-detail-put';
 import { DeilveryOrderDetails } from '../../../models/deilvery-order-details';
+import { DeliveryOrdersMockService } from '../../../services/Mocks/delivery-orders-mock.service';
 
 @Component({
   selector: 'fn-delivery-order-details',
@@ -19,7 +20,8 @@ export class DeliveryOrderDetailsComponent {
   constructor(
     private route: ActivatedRoute,
     private deliveryorderService: DeliverOrderService,
-    private router: Router
+    private router: Router,
+    private mockservice :DeliveryOrdersMockService
   ) {}
 
   save() {
@@ -59,10 +61,19 @@ export class DeliveryOrderDetailsComponent {
 
     return deliveryOrderPut;
   }
-
+  private getIdFromRouteSnapshot(routeSnapshot: ActivatedRouteSnapshot): string | null {
+    return routeSnapshot.paramMap.get('id');
+  }
   ngOnInit() {
-    this.loading = true;
-    this.route.paramMap.subscribe((params) => {
+    this.loading = false;
+    const id = this.getIdFromRouteSnapshot(this.route.snapshot);
+    var order = this.mockservice.getById(Number(id));
+    if(order)
+    {
+      this.order = order;
+    }
+    console.log(this.order);
+    /*this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id !== null) {
         this.orderId = +id;
@@ -74,7 +85,7 @@ export class DeliveryOrderDetailsComponent {
             this.loading = false;
           });
       }
-    });
+    });*/
   }
 
   getStatusText(state: string): string {
