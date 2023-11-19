@@ -57,10 +57,11 @@ export class BillingComponent {
       icon: "success"
     });
       this.order.payments = this.paymentList;
-
-      this.billService.addBill(this.order);
-      this.cancelOrder();
-      this.paymentModal.hide();
+      delete this.order['id_bill'];
+      this.billService.addBill(this.order).subscribe((response) => {
+        this.cancelOrder();
+        this.paymentModal.hide();
+      });
       return
     }
     Swal.fire({
@@ -81,6 +82,7 @@ export class BillingComponent {
     this.realAmount=0;
     this.totalAmount=0;
     this.subCharges=0;
+    this.orderId = null;
     this.amountPayed=0;
   }
   checkOrder() {
@@ -88,6 +90,23 @@ export class BillingComponent {
       Swal.fire({
         title: "Orden invalida!",
         text: "Ingrese una orden valida!",
+        icon: "error"
+      });
+      return
+    }
+    if (this.order.bill_type == "") {
+      Swal.fire({
+        title: "Orden invalida!",
+        text: "Recuerde ingresar tipo de factura!",
+        icon: "error"
+      });
+      return
+    }
+
+    if (this.order.vat_condition == "") {
+      Swal.fire({
+        title: "Orden invalida!",
+        text: "Recuerde ingresar condicion de iva!",
         icon: "error"
       });
       return
@@ -107,44 +126,52 @@ export class BillingComponent {
         return
       }
       this.paymentList.push({
-        id:this.selectedPaymentMethod.id,
+        id:this.selectedPaymentMethod.id_payment_method,
         surcharge:this.selectedPaymentMethod.surcharge,
-        paymentMethod: {
-          idPaymentMethod: this.selectedPaymentMethod.id,
-          paymentMethod: this.selectedPaymentMethod.payment,
+        payment_method: {
+          id_payment_method: this.selectedPaymentMethod.id_payment_method,
+          payment_method: this.selectedPaymentMethod.payment_method,
           surcharge: this.selectedPaymentMethod.surcharge
         },
         payment: this.amount
       });
       let lastPaymentMethod = this.paymentList.at(this.paymentList.length-1)!;
-      this.subCharges += Number(lastPaymentMethod.paymentMethod.surcharge)/100 * Number(lastPaymentMethod.payment);
+      this.subCharges += Number(lastPaymentMethod.payment_method.surcharge)/100 * Number(lastPaymentMethod.payment);
       this.subCharges = Number(this.subCharges.toFixed(2));
       this.amountPayed += Number(this.amount);
       this.amountPayed = Number(this.amountPayed.toFixed(2));
       this.selectedPaymentMethod = -1;
       this.amount = null;
+      return;
     }
+    Swal.fire({
+      title: "Metodo de pago invalido!",
+      text: "Ingrese una metodo de pago valido!",
+      icon: "error"
+    });
   }
   cleanPayment(){
     this.paymentList = [];
   }
   searchBill() {
       if(this.orderId!=null){
+        this.totalAmount = 0;
         this.filters.set("idOrder", this.orderId.toString())
         this.saleOrderService.getSaleOrdesByFilter(this.filters).subscribe((saleOrderList) => {
           let saleOrder : SaleOrderApi =  saleOrderList[0];
+          console.log(saleOrder);
           this.order = this.billService.mapSaleOrderToBill(saleOrder);
+          console.log(this.order);
           this.name = this.order.first_name + ' ' + this.order.las_name;
           this.order.detail_bill.forEach((item: any) => {
-            this.totalAmount += (item.price * item.quantity);
-            this.realAmount = this.totalAmount;
+            this.totalAmount += (item.unitary_price * item.quantity);
           })
           this.totalAmount = Number(this.totalAmount.toFixed(2));
-          this.realAmount = this.totalAmount;
+          this.realAmount = this.totalAmount * 1.21;
           }
         )
       }
     }
     protected readonly Number = Number;
-  }
+}
 

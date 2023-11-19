@@ -7,17 +7,26 @@
       </div>
       <div class="modal-body">
         <form #f="ngForm">
-          <div class="row">
-            <div class="col-4 pt-2">
-              <select class="form-select" aria-label="paymentSelect" id="paymentMethodSelect"  [(ngModel)]="selectedPaymentMethod" name="selectedPaymentMethod">
-                <option selected disabled value="-1">Seleccionar Metodo</option>
-                <option *ngFor="let payment of paymentMethods" [ngValue]="payment">{{payment.payment_method}}</option>
-              </select>
-              <label for="ammount" class="form-label mt-3" >Monto:</label>
-              <input id="ammount" class="form-control" [(ngModel)]="amount" name="amount">
-              <button type="submit" class="btn btn-primary mt-3" (click)="addPayment()">Agregar</button>
+          <div class="row justify-content-around">
+            <div class="col-4">
+              <div class="row card p-2 mx-2">
+                <label>Metodo de pago: </label>
+                <select class="form-select" aria-label="paymentSelect" id="paymentMethodSelect"  [(ngModel)]="selectedPaymentMethod" name="selectedPaymentMethod">
+                  <option selected disabled value="-1">Seleccionar Metodo</option>
+                  <option *ngFor="let payment of paymentMethods" [ngValue]="payment">{{payment.payment_method}}</option>
+                </select>
+
+                <label for="ammount" class="form-label mt-3" >Monto:</label>
+                <input id="ammount" class="form-control" [(ngModel)]="amount" name="amount">
+                <button type="submit" class="btn btn-primary mt-3" (click)="addPayment()">Agregar</button>
+              </div>
+              <div class="row card p-2 mt-3 mx-2">
+                <h6>Restante: ${{(Number(realAmount)-Number(amountPayed)).toFixed(2)}}</h6>
+                <h6>Subtotal: ${{Number(realAmount).toFixed(2)}}</h6>
+                <h5>Total a pagar: ${{(Number(realAmount)+Number(subCharges)).toFixed(2)}}</h5>
+              </div>
             </div>
-            <div class="col-8">
+            <div class="col-7 card">
               <table class="table">
                 <thead>
                 <tr>
@@ -29,24 +38,15 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let item of paymentList">
-                  <td>{{item.paymentMethod.paymentMethod}}</td>
+                  <td>{{item.payment_method.payment_method}}</td>
                   <td>${{item.payment}}</td>
-                  <td>${{(Number(item.paymentMethod.surcharge)/100 * Number(item.payment)).toFixed(2)}}</td>
-                  <td>${{(Number(item.paymentMethod.surcharge)/100 * Number(item.payment) + Number(item.payment)).toFixed(2)}}</td>
+                  <td>${{(Number(item.payment_method.surcharge)/100 * Number(item.payment)).toFixed(2)}}</td>
+                  <td>${{(Number(item.payment_method.surcharge)/100 * Number(item.payment) + Number(item.payment)).toFixed(2)}}</td>
                 </tr>
                 </tbody>
               </table>
             </div>
 
-          </div>
-          <div class="row">
-            <div class="col-6">
-              <p>Restante: ${{(Number(realAmount)-Number(amountPayed)).toFixed(2)}}</p>
-              <p>Subtotal: ${{realAmount}}</p>
-            </div>
-            <div class="col-6">
-              <p>Total a pagar: ${{(Number(realAmount)+Number(subCharges)).toFixed(2)}}</p>
-            </div>
           </div>
         </form>
       </div>
@@ -108,16 +108,28 @@
         </table>
       </div>
     </div>
-    <div class="col-12" style="display: flex;flex-direction: row-reverse;">
-      <div class="col-md-3" id="totalDetalle">
-        <div class=" card p-2 m-1">
-          <!-- Resumen de la venta -->
-          <div class="text-center">
-            <p>Subtotal: ${{totalAmount}}</p>
-            <p>Impuestos: ${{totalAmount | calcularImpuestos:10}}</p>
-            <p class="mb-0">Total: ${{ totalAmount | calcularMontoTotal:10}}</p>
-          </div>
-        </div>
+    <div class="col-12 d-flex justify-content-around align-content-center">
+      <div class="col-md-3 card p-3 m-1 d-flex align-content-around">
+            <label>Condicion de IVA: </label>
+            <select class="form-select" aria-label="vatSelect" id="vatSelect"
+                    [(ngModel)]="order.vat_condition" name="selectVatCondition">
+              <option selected disabled value="">Seleccionar Condicion</option>
+              <option [ngValue]="'FINAL_CUSTOMER'">Consumidor Final</option>
+              <option [ngValue]="'MONOTRIBUTIST'">Monotributista</option>
+              <option [ngValue]="'REGISTERED_RESPONSIBLE'">Responsable Inscripto</option>
+            </select>
+            <label class="mt-2">Tipo de factura: </label>
+            <select class="form-select" aria-label="conditionSelect" id="conditionSelect"
+                    [(ngModel)]="order.bill_type" name="selectConditionSelect">
+              <option selected disabled value="">Seleccionar Tipo</option>
+              <option [ngValue]="'A'">A</option>
+              <option [ngValue]="'B'">B</option>
+            </select>
+      </div>
+      <div class="col-md-3 card p-2 m-1 text-center d-flex justify-content-around flex-column" id="totalDetalle">
+          <h6>Subtotal: ${{totalAmount}}</h6>
+          <h6>IVA: ${{totalAmount | calcularImpuestos:21}}</h6>
+          <h5 class="mb-0">Total: ${{ totalAmount | calcularMontoTotal:21}}</h5>
       </div>
     </div>
   </div>

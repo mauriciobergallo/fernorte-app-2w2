@@ -4,10 +4,9 @@ import { Observable } from 'rxjs';
 import { BillingProvider } from './BillingProvider';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {SaleOrderApi} from "../../models/SaleModelApi";
-import {Payment} from "../../models/PaymentModel";
-import {PaymentMethod} from "../../models/PaymentMethodModel";
 import {ProductApi} from "../../models/ProductApi";
 import {DetailBill} from "../../models/DetailBillModel";
+import {Tax} from "../../models/TaxModel";
 
 @Injectable({
   providedIn: 'root'
@@ -89,6 +88,8 @@ export class BillServiceService {
       detailBill.name_product = productApi.name || "";
       detailBill.quantity = productApi.quantity || 0;
       detailBill.unit = "";
+      detailBill.tax = new Tax();
+      detailBill.tax.tax_type = "VAT";
       detailBill.tax_value = productApi.price || 0;
       detailBill.unitary_price = productApi.price || 0;
       detailBill.discount_amount = 0;

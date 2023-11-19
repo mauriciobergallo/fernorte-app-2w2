@@ -4,5 +4,5 @@ export class Payment {
     id?: number = 0;
     payment: number = 0;
     surcharge:number=0;
-    paymentMethod : PaymentMethod= new PaymentMethod;
+    payment_method : PaymentMethod= new PaymentMethod;
 }
