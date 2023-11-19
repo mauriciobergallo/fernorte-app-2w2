@@ -209,6 +209,7 @@ export class UpdateEmployeeComponent implements OnInit {
         (error) => {
          this.showInfoErrorResult();
          this.modalService.dismissAll();
+         
         }
       );
   }
