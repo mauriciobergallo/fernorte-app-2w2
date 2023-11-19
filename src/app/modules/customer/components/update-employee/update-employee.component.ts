@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 import { EmployeeResponseDTO } from '../../models/employeeResponseDTO';
 import { DocumentType } from '../../models/documentType';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-update-employee',
@@ -56,7 +57,7 @@ export class UpdateEmployeeComponent implements OnInit {
     // Obtén la fecha actual
     const currentDate = new Date();
     // Resta 16 años de la fecha actual
-    const minYear = currentDate.getFullYear() - 5;
+    const minYear = currentDate.getFullYear() - 16;
     const minMonth = currentDate.getMonth() + 1; // Los meses en JavaScript son de 0 a 11, ng-bootstrap es de 1 a 12
     const minDay = currentDate.getDate();
 
@@ -64,7 +65,7 @@ export class UpdateEmployeeComponent implements OnInit {
     this.minDate = { year: minYear, month: minMonth, day: minDay };
 
     this.maxDate = {
-      year: currentDate.getFullYear() - 150, //Cambiar este numero si se quiere bajar la edad
+      year: currentDate.getFullYear() - 100, //Cambiar este numero si se quiere bajar la edad
       month: currentDate.getMonth() + 1,
       day: currentDate.getDate(),
     };
@@ -236,7 +237,72 @@ export class UpdateEmployeeComponent implements OnInit {
     }
   }
 
-  onSubmitForm(employeeForm: NgForm) {
-    console.log('Employee', employeeForm);
-  }
+
+  showConfirmation(employeeForm: any) {
+		Swal.fire({
+		  title: '¿Estás seguro?',
+		  text: '¿Quieres actualizar el empleado?',
+		  icon: 'question',
+		  showCancelButton: true,
+		  confirmButtonText: 'Sí, actualizar',
+		  cancelButtonText: 'Cancelar'
+		}).then((result) => {
+		  if (result.isConfirmed) {	
+			this.onSubmit(employeeForm);
+		  }
+		});
+	  }
+
+    closeForm() {
+      this.modalService.dismissAll();
+      }
+    
+	  showCancelConfirmation() {
+      Swal.fire({
+        title: '¿Está seguro?',
+        text: 'Si cancela, perderá los datos ingresados. ¿Desea continuar?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, cancelar',
+        cancelButtonText: 'No, seguir editando'
+      }).then((result) => {
+        if (result.isConfirmed) {
+        // Acción a realizar si el usuario confirma la cancelación
+        this.closeForm();
+        }
+      });
+      }
+    
+   onSubmitForm(employeeForm: NgForm) {
+     console.log('Employee', employeeForm);
+   }
 }
+
+
+/*   ejemplo de create rol:
+
+
+onSubmitForm() {
+		if (this.roleForm.valid) {
+		  this.roleService.createRole(this.roleForm.value).subscribe(
+			(newRole: Role) => {
+			  this.modalService.dismissAll(newRole);
+			  console.log(this.roleForm.value);
+			  Swal.fire('Éxito', 'Rol creado correctamente', 'success');
+			  this.roleService.notifyRolesUpdated();
+			},
+			(error) => {
+			  Swal.fire('Error', 'No se pudo crear el rol', 'error');
+			}
+		  );
+		} else {
+		  // El formulario no es válido, puedes mostrar un mensaje de error o hacer algo más
+		}
+	  }
+
+
+
+
+    
+	  
+*/
