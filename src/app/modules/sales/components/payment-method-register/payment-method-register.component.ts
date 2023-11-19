@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IPaymentMethod } from '../../interfaces/ipayment-method';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PaymentMethodService } from '../../services/payment-method.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-payment-method-register',
@@ -32,9 +33,15 @@ export class PaymentMethodRegisterComponent implements OnInit {
       this.registerForm.get('paymentMethod')?.setValue('');
       this.registerForm.get('surcharge')?.setValue(0);
 
+
       this.paymentMethodService.createPaymentMethod(this.payment).subscribe({
         next:(methods) => {
           this.registerForm.reset();
+          Swal.fire({
+            title: "Agregado exitoso!",
+            text: "El metodo de pago fue agregado exitosamente!",
+            icon: "success"
+          });
         },
         error:(err)=>{
           alert("error")

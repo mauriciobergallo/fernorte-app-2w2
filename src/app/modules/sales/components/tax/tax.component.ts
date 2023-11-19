@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaxService } from '../../services/tax/tax.service';
 import { BootstrapOptions } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -19,25 +20,9 @@ export class TaxComponent implements OnInit {
   isFormDisabled: boolean = true;
 
   taxTypeList: string[] = ["VAT", "IIBB"];
-myModalEl = document.getElementById('NewMethodModal')
-
-openModal() {
-  const modalRef = this.modalService.open('NewMethodModal', { size: 'lg' });  // Ajusta el nombre y tamaño según corresponda
-  // Puedes realizar acciones adicionales después de abrir el modal si es necesario
-  modalRef.result.then(
-    (result) => {
-      console.log(`Modal cerrado con resultado: ${result}`);
-      // Aquí puedes manejar el resultado después de cerrar el modal
-    },
-    (reason) => {
-      console.log(`Modal cerrado con motivo: ${reason}`);
-      // Aquí puedes manejar la razón por la que se cerró el modal
-    }
-  );
-}
 
 
-  constructor(private taxService: TaxService, private formBuilder: FormBuilder,private modalService: NgbModal) {
+  constructor(private taxService: TaxService, private formBuilder: FormBuilder) {
 
     this.taxEditForm = this.formBuilder.group({
       taxType: ['', Validators.required],
@@ -49,28 +34,6 @@ openModal() {
     this.loadTax();
   }
 
-saveNewTax() {
-  if (this.taxEditForm && this.taxEditForm.valid) {
-    this.tax = {
-      id: 0,
-      tax_type: this.taxEditForm.get('taxType')?.value || '',
-      tax_value: this.taxEditForm.get('taxValue')?.value || 0
-    };
-
-    console.log('Nueva tax a crear:', this.tax);
-
-    this.taxService.createTax(this.tax).subscribe({
-      next: (methods) => {
-        console.log('Nueva tax creada:', methods);
-        this.loadTax();
-        this.taxEditForm.reset(); // Esto restablecerá el formulario
-      },
-      error: (err) => {
-        alert("error");
-      }
-    });
-  }
-}
 
 
   loadTax() {
@@ -95,9 +58,18 @@ saveNewTax() {
         this.taxEditForm.get('taxType')?.setValue('');
         this.taxEditForm.get('taxValue')?.setValue(0);
         this.taxEdit = { id: 0, tax_type: '', tax_value: 0 };
+        Swal.fire({
+          title: "Actualización exitosa!",
+          text: "El impuesto fue actualizado exitosamente!",
+          icon: "success"
+        });
       },
       error:(err)=>{
-        alert("error")
+        Swal.fire({
+          title: "Error!",
+          text: "Debe contactarse con soporte",
+          icon: "success"
+        });
       }
     })
   }

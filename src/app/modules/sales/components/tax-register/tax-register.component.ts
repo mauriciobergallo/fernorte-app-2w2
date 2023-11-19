@@ -4,6 +4,7 @@ import { TaxService } from '../../services/tax/tax.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Tax } from '../../models/Tax';
 import { TaxEmpty } from '../../models/Tax';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-tax-register',
@@ -46,7 +47,11 @@ export class TaxRegisterComponent implements OnInit {
       this.taxService.createTax(newTax).subscribe({
         next: (methods) => {
           this.taxForm.reset();
-
+          Swal.fire({
+            title: "Agregado exitoso!",
+            text: "El impuesto fue agregado exitosamente!",
+            icon: "success"
+          });
         },
         error: (err) => {
           alert("error");
