@@ -1,9 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { BillOk } from '../../models/BillingOk';
 import { BillModel } from '../../models/BillingModelApi';
-import { ProductApi } from '../../models/ProductApi';
-import { ProductOk } from '../../models/ProductOk';
 import { BillServiceService } from '../../services/billing/bill-service.service';
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -17,14 +14,17 @@ import { MockService } from '../../services/mocks/mock.service';
 })
 export class BillingSearchListComponent implements OnInit, OnDestroy {
 billList:BillModel[]=[];
-
+counter:number=0;
 billListMock:BillModel[]=[];
+
+billFiltro1:BillModel[]=[];
 
 idBill:string="";
 doc:string="";
 fromDate:string="";
 toDate:string="";
 filters: Map<string, string> = new Map();
+
 
 private subscriptions = new Subscription();
 
@@ -36,31 +36,27 @@ ngOnDestroy(): void {
   this.subscriptions.unsubscribe();
 }
 ngOnInit(): void {
-    this.billingService.getBills().subscribe(
-      (response)=>{
-        let toCamel:BillModel[] = this.caseConverter.toCamelCase(response);
-        console.log(response);
-        console.log(this.billList)
-        this.billList=response;       
-        //response.forEach(x => this.billList.push(x))
-      }
-    )
-
-    this.billListMock = this.mockService.getMocks();
+    //this.billListMock = this.mockService.getMocks();
 }
 
-onSendFilters(form: NgForm){
-  if(form.valid){
-    this.filters.set("idBill", form.value.idOrder)
-      this.filters.set("clientId", form.value.doc)
-      this.filters.set("fromDate", form.value.fromDate)
-      this.filters.set("toDate", form.value.toDate)
-
-      const filteredBills= this.mockService.getMocksByFilter(this.filters);
-      console.log(filteredBills)
-      this.billListMock = filteredBills;
+onSendFilters(){
+  console.log(this.counter)
+  if(this.idBill != ""){
+    this.billListMock = this.mockService.getFiltrada1();
+    this.counter++;
+    
   }
-  
+  if(this.fromDate != ""){
+    this.billListMock = this.mockService.getFiltrada2();
+    this.counter++;
+  }
+  if(this.idBill === "" && this.fromDate ===""){
+    this.billListMock = this.mockService.getMocks();
+    this.counter++;
+  }  
+  this.idBill="";
+  this.fromDate = "";
+  this.toDate = ""
 }
 
 onShowDetails(){

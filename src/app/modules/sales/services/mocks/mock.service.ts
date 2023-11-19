@@ -13,23 +13,295 @@ export class MockService {
       return this.mockBills;
     };
 
-    getMocksByFilter(filters: Map<string, any>): BillModel[] {
-      const filteredBills: BillModel[] = [];
-  
-      // Tu lógica de filtrado aquí
-      const idBillFilter = filters.get('idBill');
-      if (idBillFilter !== undefined) {
-        const idBill = Number(idBillFilter); // Convierte el filtro a número si es necesario
-        const bill = this.mockBills.find(b => b.id_bill === idBill);
-        if (bill) {
-          filteredBills.push(bill);
+  getFiltrada1(): BillModel[] {
+    return this.billFiltro1;
+  };
+
+  getFiltrada2(): BillModel[] {
+    return this.billFiltro2;
+  };
+
+  billFiltro2: BillModel[]=[
+    {
+      id_bill: 1,
+      address: "Av. de Mayo 123",
+      id_sale_order: 101,
+      id_seller: 1,
+      name_seller: "Prado Ignacio",
+      id_client: 201,
+      first_name: "María",
+      las_name: "González",
+      company_name: "Tienda XYZ",
+      telephone: 3515605117,
+      email: "maria.gonzalez@hotmail.com",
+      vat_condition: "Responsable Inscripto",
+      bill_type: "A",
+      cae: "12345678901234",
+      expiration_date_cae: [2023, 11, 30],
+      created_date: [2023, 11, 15],
+      total_price: 1500,
+      detail_bill: [
+        {
+          id: 1,
+          tax: { id: 1, tax_type: "IVA", tax_value: 21 },
+          id_product: 301,
+          name_product: "Martillo cabeza grande",
+          quantity: 2,
+          unit: "unidad",
+          tax_value: 0,
+          unitary_price: 500,
+          discount_amount: 0,
+        },
+      ],
+      payments: [
+        {
+          id: 1,
+          payment: 1500,
+          surcharge: 0,
+          payment_method: { id_payment_method: 1, payment_method: "Efectivo", surcharge: 0 },
+        },
+      ],
+    },
+    //FACTURA 2
+    {
+      id_bill: 2,
+      address: "Calle Corrientes 456",
+      id_sale_order: 102,
+      id_seller: 1,
+      name_seller: "Prado Ignacio",
+      id_client: 202,
+      first_name: "Juan",
+      las_name: "López",
+      company_name: "",
+      telephone: 3516709245,
+      email: "juan.lopez@gmail.com",
+      vat_condition: "Monotributista",
+      bill_type: "B",
+      cae: "98765432109876",
+      expiration_date_cae: [2023, 12, 15],
+      created_date: [2023, 11, 20],
+      total_price: 2500,
+      detail_bill: [
+        {
+          id: 2,
+          tax: { id: 2, tax_type: "IVA", tax_value: 21 },
+          id_product: 302,
+          name_product: "Destornillador Phillips",
+          quantity: 3,
+          unit: "unidad",
+          tax_value: 0,
+          unitary_price: 400,
+          discount_amount: 50
+        },
+        {
+          id: 3,
+          tax: { id: 3, tax_type: "IVA", tax_value: 21 },
+          id_product: 303,
+          name_product: "Llave inglesa ajustable",
+          quantity: 1,
+          unit: "unidad",
+          tax_value: 0,
+          unitary_price: 700,
+          discount_amount: 25
         }
-      } else {
-        // Agregar más lógica de filtrado aquí según otros parámetros si es necesario
-      }
-  
-      return filteredBills; // Devuelve el resultado directamente
+      ],
+      payments: [
+        {
+          id: 2,
+          payment: 2500,
+          surcharge: 100,
+          payment_method: { id_payment_method: 2, payment_method: "Tarjeta de Crédito", surcharge: 10 }
+        },
+        {
+          id: 3,
+          payment: 100,
+          surcharge: 0,
+          payment_method: { id_payment_method: 1, payment_method: "Efectivo", surcharge: 0 }
+        }
+      ]
+    },
+    //FACTURA 3
+    {
+      id_bill: 3,
+      address: "Avenida Santa Fe 789",
+      id_sale_order: 103,
+      id_seller: 2,
+      name_seller: "Macarena Caridad",
+      id_client: 203,
+      first_name: "Carlos",
+      las_name: "Rodríguez",
+      company_name: "",
+      telephone: 3517803366,
+      email: "carlos.rodriguez@outlook.com",
+      vat_condition: "Monotributista",
+      bill_type: "C",
+      cae: "87654321098765",
+      expiration_date_cae: [2023, 12, 31],
+      created_date: [2023, 11, 25],
+      total_price: 1800,
+      detail_bill: [
+        {
+          id: 4,
+          tax: { id: 4, tax_type: "IVA", tax_value: 21 },
+          id_product: 304,
+          name_product: "Sierra eléctrica",
+          quantity: 1,
+          unit: "unidad",
+          tax_value: 0,
+          unitary_price: 1200,
+          discount_amount: 50
+        },
+        {
+          id: 5,
+          tax: { id: 5, tax_type: "IVA", tax_value: 21 },
+          id_product: 305,
+          name_product: "Destornillador plano",
+          quantity: 2,
+          unit: "unidad",
+          tax_value: 0,
+          unitary_price: 150,
+          discount_amount: 0
+        }
+      ],
+      payments: [
+        {
+          id: 4,
+          payment: 1800,
+          surcharge: 0,
+          payment_method: { id_payment_method: 1, payment_method: "Efectivo", surcharge: 0 }
+        },
+        {
+          id: 5,
+          payment: 0,
+          surcharge: 0,
+          payment_method: { id_payment_method: 2, payment_method: "Tarjeta de Crédito", surcharge: 10 }
+        }
+      ]
+    },
+    //FACTURA 4
+    {
+      id_bill: 4,
+      address: "Calle Entre Ríos 234",
+      id_sale_order: 104,
+      id_seller: 2,
+      name_seller: "Macarena Caridad",
+      id_client: 204,
+      first_name: "Laura",
+      las_name: "Martínez",
+      company_name: "",
+      telephone: 3519123456,
+      email: "laura.martinez@gmail.com",
+      vat_condition: "Responsable Inscripto",
+      bill_type: "A",
+      cae: "54321098765432",
+      expiration_date_cae: [2023, 12, 20],
+      created_date: [2023, 11, 28],
+      total_price: 2200,
+      detail_bill: [
+        {
+          id: 6,
+          tax: { id: 6, tax_type: "IVA", tax_value: 21 },
+          id_product: 306,
+          name_product: "Cinta métrica",
+          quantity: 2,
+          unit: "unidad",
+          tax_value: 0,
+          unitary_price: 800,
+          discount_amount: 30
+        },
+        {
+          id: 7,
+          tax: { id: 7, tax_type: "IVA", tax_value: 21 },
+          id_product: 307,
+          name_product: "Alicate de corte",
+          quantity: 1,
+          unit: "unidad",
+          tax_value: 0,
+          unitary_price: 350,
+          discount_amount: 10
+        }
+      ],
+      payments: [
+        {
+          id: 8,
+          payment: 2200,
+          surcharge: 0,
+          payment_method: { id_payment_method: 1, payment_method: "Efectivo", surcharge: 0 }
+        },
+        {
+          id: 9,
+          payment: 0,
+          surcharge: 0,
+          payment_method: { id_payment_method: 2, payment_method: "Tarjeta de Crédito", surcharge: 10 }
+        }
+      ]
     }
+  ]
+
+  billFiltro1: BillModel[] = [
+    {
+      id_bill: 7,
+      address: "Avenida Belgrano 456",
+      id_sale_order: 107,
+      id_seller: 1,
+      name_seller: "Prado Ignacio",
+      id_client: 207,
+      first_name: "Ana",
+      las_name: "Gómez",
+      company_name: "",
+      telephone: 3517777777,
+      email: "ana.gomez@yahoo.com",
+      vat_condition: "Monotributista",
+      bill_type: "C",
+      cae: "87654321012345",
+      expiration_date_cae: [2023, 12, 15],
+      created_date: [2023, 12, 6],
+      total_price: 3200,
+      detail_bill: [
+        {
+          id: 14,
+          tax: { id: 12, tax_type: "IVA", tax_value: 21 },
+          id_product: 312,
+          name_product: "Destornillador eléctrico",
+          quantity: 2,
+          unit: "unidad",
+          tax_value: 0,
+          unitary_price: 1000,
+          discount_amount: 40
+        },
+        {
+          id: 15,
+          tax: { id: 13, tax_type: "IVA", tax_value: 21 },
+          id_product: 313,
+          name_product: "Llave de impacto",
+          quantity: 1,
+          unit: "unidad",
+          tax_value: 0,
+          unitary_price: 1200,
+          discount_amount: 0
+        },
+        {
+          id: 16,
+          tax: { id: 14, tax_type: "IVA", tax_value: 21 },
+          id_product: 314,
+          name_product: "Taladro inalámbrico",
+          quantity: 1,
+          unit: "unidad",
+          tax_value: 0,
+          unitary_price: 1500,
+          discount_amount: 60
+        }
+      ],
+      payments: [
+        {
+          id: 17,
+          payment: 3200,
+          surcharge: 0,
+          payment_method: { id_payment_method: 1, payment_method: "Efectivo", surcharge: 0 }
+        }
+      ]
+    }
+  ]
 
     mockBills: BillModel[] = [
     {

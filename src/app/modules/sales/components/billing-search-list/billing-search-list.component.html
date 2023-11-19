@@ -12,7 +12,7 @@
             </div>
             <div class="modal-body">
               Seleccione sus filtros
-              <form #getBillsForm="ngForm" (ngSubmit)="onSendFilters(getBillsForm)">
+              <form #getBillsForm="ngForm">
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Documento de cliente</label>
                   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -22,7 +22,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">Número de factura</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1"
+                  <input type="number" class="form-control" id="exampleInputPassword1"
                   name="idBill"
                 #idBillControl="ngModel"
                 [(ngModel)]="idBill">
@@ -52,7 +52,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Aplicar</button>
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="onSendFilters()">Aplicar</button>
                 </div>
               </form>
             </div>
