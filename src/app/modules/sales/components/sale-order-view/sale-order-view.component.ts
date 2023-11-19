@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SaleOrderServiceService } from '../../services/salesOrder/sale-order-service.service';
 import { SaleOrderView } from '../../models/SaleOrderView';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PrintDocumentsService } from '../../services/print/print-documents-service';
+import { PdfInstance } from 'jspdf-html2canvas/dist/types';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -9,11 +12,14 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './sale-order-view.component.html',
   styleUrls: ['./sale-order-view.component.css']
 })
-export class SaleOrderViewComponent implements OnInit {
-  listSaleOrder!: SaleOrderView
+export class SaleOrderViewComponent implements OnInit, OnDestroy {
+  listSaleOrder!: SaleOrderView;
+  saleOrder!: SaleOrderView;
+  subscription!: Subscription;
+
 
   
-  saleOrder: SaleOrderView = {
+/*   saleOrder: SaleOrderView = {
     id_sale_order: 10000,
     id_seller: 2,
     first_name_seller:  "Ignacio",
@@ -50,14 +56,20 @@ export class SaleOrderViewComponent implements OnInit {
     price: 100,
     state_sale_order_detail: "DELIVERED"  
   }]
-  }
+  } */
   
   subtotal:number = 0;
   iva: number = 0;
   saleOrderId: number = 0;
 
   constructor(private saleOrderService : SaleOrderServiceService, private activatedRoute: ActivatedRoute, 
-    private router: Router,) {}
+    private router: Router, private printService: PrintDocumentsService) {}
+
+  
+    ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.printService.clear();
+  }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(s => {
@@ -66,17 +78,33 @@ export class SaleOrderViewComponent implements OnInit {
       this.listSaleOrder = x;
       });   
 
-      this.calculateSub();
+  
+        this.subscription = this.printService.getSaleOrder$.subscribe((saleOrder) => {
+          this.saleOrder = saleOrder;
+        });
+    
+
+      // this.printService.print().subscribe(x =>{
+      //       this.saleOrderNew = x;
+      // })
+
+    //this.calculateSub();
     this.calculateIva();
 
   }
-  calculateSub(){
+/*   calculateSub(){
     this.saleOrder.detail_sales_order.forEach(detail=>{
       this.subtotal+= detail.quantity*detail.price;
     })
-  }
+  } */
   calculateIva(){
     this.iva = this.subtotal * 0.21;
   }
+
+
+
   
+
 }
+
+
