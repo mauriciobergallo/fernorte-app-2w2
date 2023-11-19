@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgForm} from "@angular/forms";
-import {BillServiceService} from "../../services/billing/bill-service.service";
+import { BillServiceService } from '../../services/billing/bill-service.service';
 import {PaymentMethodService} from "../../services/payment-method.service";
 import {IPaymentMethod} from "../../interfaces/ipayment-method";
 import {SaleOrderServiceService} from "../../services/salesOrder/sale-order-service.service";
@@ -37,10 +37,10 @@ export class BillingComponent {
   }
 
   ngOnInit(): void {
-   this.paymentMethodService.getPaymentMethods().subscribe(
-     (methods: any[]) =>
-       this.paymentMethods = methods
-   );
+    this.paymentMethodService.getPaymentMethods().subscribe(
+      (methods: any[]) =>
+        this.paymentMethods = methods
+    );
     this.paymentModal = new window.bootstrap.Modal(
       document.getElementById('paymentModal')
     );
