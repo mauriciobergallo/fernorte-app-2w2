@@ -9,7 +9,7 @@ export class SaleOrderNavComponent implements OnInit {
 
   activeTab:string="buscar"
   regist:boolean=false
-  search:boolean=false
+  search:boolean=true
 
 
   constructor() { }

@@ -1,1 +1,153 @@
-<p>billing works!</p>
+<div class="modal fade modal-xl" id="paymentModal" tabindex="-1"  aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="paymentModalLabel">Payments</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm">
+          <div class="row justify-content-around">
+            <div class="col-4">
+              <div class="row card p-2 mx-2">
+                <label>Metodo de pago: </label>
+                <select class="form-select" aria-label="paymentSelect" id="paymentMethodSelect"  [(ngModel)]="selectedPaymentMethod" name="selectedPaymentMethod">
+                  <option selected disabled value="-1">Seleccionar Metodo</option>
+                  <option *ngFor="let payment of paymentMethods" [ngValue]="payment">{{payment.payment_method}}</option>
+                </select>
+
+                <label for="ammount" class="form-label mt-3" >Monto:</label>
+                <input id="ammount" class="form-control" [(ngModel)]="amount" name="amount">
+                <button type="submit" class="btn btn-primary mt-3" (click)="addPayment()">Agregar</button>
+              </div>
+              <div class="row card p-2 mt-3 mx-2">
+                <h6>Restante: ${{(Number(realAmount)-Number(amountPayed)).toFixed(2)}}</h6>
+                <h6>Subtotal: ${{Number(realAmount).toFixed(2)}}</h6>
+                <h5>Total a pagar: ${{(Number(realAmount)+Number(subCharges)).toFixed(2)}}</h5>
+              </div>
+            </div>
+            <div class="col-7 card">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>Metodo de Pago</th>
+                  <th>Subtotal</th>
+                  <th>Recargo</th>
+                  <th>Precio Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of paymentList">
+                  <td>{{item.payment_method.payment_method}}</td>
+                  <td>${{item.payment}}</td>
+                  <td>${{(Number(item.payment_method.surcharge)/100 * Number(item.payment)).toFixed(2)}}</td>
+                  <td>${{(Number(item.payment_method.surcharge)/100 * Number(item.payment) + Number(item.payment)).toFixed(2)}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cleanPayment()">Cancelar</button>
+        <button type="submit" class="btn btn-primary" (click)="finishPayment()">Pagar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <h4 class="m-2">Cliente</h4>
+      <div class=" card p-2 m-1">
+        <div class="text-center p-2 pb-0">
+            <h5>{{name}}</h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <h4 class="m-2">Cargar Orden/Presupuesto</h4>
+      <div class="card p-2 m-1">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Nro de orden" aria-label="orden" name="orderNumber" [(ngModel)]="orderId">
+          <button class="btn btn-primary" id="btn-search" (click)="searchBill()">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4" id="saleOrderDetail">
+    <div class="col-md-12">
+      <h4 class="m-2">Detalle</h4>
+      <div class=" card p-2 m-1">
+        <!-- Tabla de productos -->
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Código</th>
+            <th>Producto</th>
+            <th>Precio Unitario</th>
+            <th>Cantidad</th>
+            <th>Precio Total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of order.detail_bill">
+            <td>{{item.id_product}}</td>
+            <td>{{item.name_product}}</td>
+            <td>${{item.unitary_price}}</td>
+            <td>{{item.quantity}}</td>
+            <td>${{item.unitary_price * item.quantity}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-around align-content-center">
+      <div class="col-md-3 card p-3 m-1 d-flex align-content-around">
+            <label>Condicion de IVA: </label>
+            <select class="form-select" aria-label="vatSelect" id="vatSelect"
+                    [(ngModel)]="order.vat_condition" name="selectVatCondition">
+              <option selected disabled value="">Seleccionar Condicion</option>
+              <option [ngValue]="'FINAL_CUSTOMER'">Consumidor Final</option>
+              <option [ngValue]="'MONOTRIBUTIST'">Monotributista</option>
+              <option [ngValue]="'REGISTERED_RESPONSIBLE'">Responsable Inscripto</option>
+            </select>
+            <label class="mt-2">Tipo de factura: </label>
+            <select class="form-select" aria-label="conditionSelect" id="conditionSelect"
+                    [(ngModel)]="order.bill_type" name="selectConditionSelect">
+              <option selected disabled value="">Seleccionar Tipo</option>
+              <option [ngValue]="'A'">A</option>
+              <option [ngValue]="'B'">B</option>
+            </select>
+      </div>
+      <div class="col-md-3 card p-2 m-1 text-center d-flex justify-content-around flex-column" id="totalDetalle">
+          <h6>Subtotal: ${{totalAmount}}</h6>
+          <h6>IVA: ${{totalAmount | calcularImpuestos:21}}</h6>
+          <h5 class="mb-0">Total: ${{ totalAmount | calcularMontoTotal:21}}</h5>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4 justify-content-end align-items-center">
+    <div class="col-12">
+      <div class=" card p-2 m-1">
+        <div class="col-12 d-flex justify-content-around">
+          <button class="btn btn-primary" >
+            <p class="m-0" (click)="printOrder()" disabled="true">Imprimir</p>
+          </button>
+          <button class="btn btn-secondary" >
+            <p class="m-0" (click)="cancelOrder()">Cancelar</p>
+          </button>
+          <button class="btn btn-primary" >
+            <p class="m-0" (click)="checkOrder()">Pagar</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

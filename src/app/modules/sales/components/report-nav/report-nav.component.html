@@ -9,24 +9,19 @@
       <div class="">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" [class.active]="activeTab === 'buscar'" (click)="toSearch('buscar')" aria-current="page" href="#">Anual</a>
+            <a class="nav-link active" [class.active]="activeTab === 'buscar'" (click)="toSales('ventas')">Ventas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [class.active]="activeTab === 'Registrar'" (click)="toRegist('Registrar')">Mensual</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="activeTab === 'Modificar'" (click)="toUpdate('Modificar')" href="#">Diario</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="activeTab === 'Eliminar'" (click)="toDelete('Eliminar')" >Por filtro</a>
+            <a class="nav-link" [class.active]="activeTab === 'Registrar'" (click)="toProducts('productos')">Productos</a>
           </li>
         </ul>
       </div>
-      
+
     </div>
-  </div>  
-  <div class="">
-    <fn-payment-method *ngIf="regist"></fn-payment-method>
   </div>
-  
+  <div class="">
+    <fn-view-payment *ngIf="products"></fn-view-payment>
+    <fn-sale-order-view *ngIf="sales"></fn-sale-order-view>
+  </div>
+
 </section>

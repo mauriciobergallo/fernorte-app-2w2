@@ -7,33 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReportNavComponent implements OnInit {
 
-  activeTab:string="buscar"
-  regist:boolean=false
-  search:boolean=false
-  update:boolean=false
-  delete:boolean=false
-
+  activeTab:string="sales"
+  products:boolean=false
+  sales:boolean=false
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  toRegist(tab:string){
+  toSales(tab:string){
     this.activeTab=tab;
-    this.regist=true;
+    this.products=false;
+    this.sales=true;
   }
-  toSearch(tab:string){
+  toProducts(tab:string){
     this.activeTab=tab;
-    this.search=true;
-  }
-  toUpdate(tab:string){
-    this.activeTab=tab;
-    this.update=true;
-  }
-  toDelete(tab:string){
-    this.activeTab=tab;
-    this.delete=true;
+    this.products=true;
+    this.sales=false;
   }
 
 }

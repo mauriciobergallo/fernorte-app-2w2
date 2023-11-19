@@ -5,13 +5,14 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { HomeComponent } from './components/home/home.component';
 
-import { SaleOrderSearchHandlerComponent } from './components/sale-order-search-handler/sale-order-search-handler.component';
-import { SaleOrderSearchFilterComponent } from './components/sale-order-search-filter/sale-order-search-filter.component';
 import { SaleOrderSearchListComponent } from './components/sale-order-search-list/sale-order-search-list.component';
 import { SaleOrderProvider } from './services/salesOrder/SaleOrderProvider';
 import { ProductProvider } from './services/products/productProvider';
 import { SaleOrderComponent } from './components/sale_order/sale-order.component';
+import { SaleOrderViewComponent } from './components/sale-order-view/sale-order-view.component';
 import { CalcularTotalPipe } from './pipes/calcular-total.pipe';
+import { DateFormatPipe } from './pipes/date-format.pipe';
+import { CaseConverterPipe } from './pipes/case-converter.pipe';
 import { CalcularImpuestosPipe } from './pipes/calcular-impuestos.pipe';
 import { CalcularMontoTotalPipe } from './pipes/calcular-monto-total.pipe';
 import { BillingComponent } from './components/billing/billing.component';
@@ -26,56 +27,77 @@ import { SaleOrderNavComponent } from './components/sale-order-nav/sale-order-na
 import { BillingNavComponent } from './components/billing-nav/billing-nav.component';
 import { ReportNavComponent } from './components/report-nav/report-nav.component';
 import { TurnProvider } from './services/turns/TurnProvider';
+import { TranslateStatesPipe } from './pipes/translateStates.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaxComponent } from './components/tax/tax.component';
 import { TaxNavComponent } from './components/tax-nav/tax-nav.component';
 
+import { ViewPaymentComponent } from './components/view-payment/view-payment.component';
+
+import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
+import { BillingProvider } from './services/billing/BillingProvider';
+
+
+
 @NgModule({
   declarations: [HomeComponent,
-    SaleOrderComponent, 
-    CalcularTotalPipe, 
-    CalcularImpuestosPipe, 
-    CalcularMontoTotalPipe, 
-    SaleOrderSearchHandlerComponent,
-    SaleOrderSearchFilterComponent, 
-    SaleOrderSearchListComponent, 
-    BillingComponent, 
+    SaleOrderComponent,
+    CalcularTotalPipe,
+    CalcularImpuestosPipe,
+    CalcularMontoTotalPipe,
+    SaleOrderSearchListComponent,
+    BillingComponent,
     PaymentMethodComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
+    ReportNavComponent,
+    SaleOrderViewComponent,
+    TranslateStatesPipe,
     TaxComponent,
     TaxNavComponent,
-    ReportNavComponent],
+    ReportNavComponent,
+    ReportNavComponent,
+    ViewPaymentComponent,
+    BillingSearchListComponent,
+    DateFormatPipe],
+
 
   providers: [SaleOrderProvider,
     ProductProvider,
     ClientProvider,
-    TurnProvider],
+    TurnProvider,
+    BillingProvider,
+    CaseConverterPipe],
 
   imports: [CommonModule,
-    FormsModule, 
-    RouterModule, 
+    FormsModule,
+    RouterModule,
     RouterChildModule,
     ReactiveFormsModule],
 
   exports: [HomeComponent,
-    SaleOrderComponent, 
-    CalcularTotalPipe, 
-    SaleOrderSearchHandlerComponent,
-    SaleOrderSearchFilterComponent, 
-    SaleOrderSearchListComponent, 
-    BillingComponent, 
+    SaleOrderComponent,
+    CalcularTotalPipe,
+    SaleOrderSearchListComponent,
+    BillingComponent,
     PaymentMethodComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
     SaleOrderNavComponent,
     BillingNavComponent,
+    ReportNavComponent,
+    SaleOrderViewComponent,
     TaxComponent,
     TaxNavComponent,
-    ReportNavComponent],
+    ReportNavComponent,
+    ReportNavComponent,
+    ViewPaymentComponent,
+    BillingSearchListComponent,
+    DateFormatPipe],
+
 })
 export class SalesModule {}
