@@ -8,6 +8,7 @@ import { BillServiceService } from '../../services/billing/bill-service.service'
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { CaseConverterPipe } from '../../pipes/case-converter.pipe';
+import { MockService } from '../../services/mocks/mock.service';
 
 @Component({
   selector: 'fn-billing-search-list',
@@ -17,6 +18,8 @@ import { CaseConverterPipe } from '../../pipes/case-converter.pipe';
 export class BillingSearchListComponent implements OnInit, OnDestroy {
 billList:BillModel[]=[];
 
+billListMock:BillModel[]=[];
+
 idBill:string="";
 doc:string="";
 fromDate:string="";
@@ -25,10 +28,9 @@ filters: Map<string, string> = new Map();
 
 private subscriptions = new Subscription();
 
-constructor(private billingService: BillServiceService, private caseConverter: CaseConverterPipe) {
+constructor(private billingService: BillServiceService, private caseConverter: CaseConverterPipe, 
+  private mockService: MockService) {
 }
-
-
 
 ngOnDestroy(): void {
   this.subscriptions.unsubscribe();
@@ -43,6 +45,8 @@ ngOnInit(): void {
         //response.forEach(x => this.billList.push(x))
       }
     )
+
+    this.billListMock = this.mockService.getMocks();
 }
 
 onSendFilters(form: NgForm){
@@ -51,13 +55,12 @@ onSendFilters(form: NgForm){
       this.filters.set("clientId", form.value.doc)
       this.filters.set("fromDate", form.value.fromDate)
       this.filters.set("toDate", form.value.toDate)
+
+      const filteredBills= this.mockService.getMocksByFilter(this.filters);
+      console.log(filteredBills)
+      this.billListMock = filteredBills;
   }
-  this.subscriptions.add(
-    this.billingService.getBillsByFilter(this.filters).subscribe(
-
-    )
-  )
-
+  
 }
 
 onShowDetails(){

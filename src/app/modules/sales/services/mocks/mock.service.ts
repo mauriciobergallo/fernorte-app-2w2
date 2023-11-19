@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BillModel } from '../../models/BillingModelApi';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +9,27 @@ export class MockService {
 
   constructor() { }
 
-  getlistProduct(): BillModel[] {
+  getMocks(): BillModel[] {
       return this.mockBills;
     };
+
+    getMocksByFilter(filters: Map<string, any>): BillModel[] {
+      const filteredBills: BillModel[] = [];
+  
+      // Tu lógica de filtrado aquí
+      const idBillFilter = filters.get('idBill');
+      if (idBillFilter !== undefined) {
+        const idBill = Number(idBillFilter); // Convierte el filtro a número si es necesario
+        const bill = this.mockBills.find(b => b.id_bill === idBill);
+        if (bill) {
+          filteredBills.push(bill);
+        }
+      } else {
+        // Agregar más lógica de filtrado aquí según otros parámetros si es necesario
+      }
+  
+      return filteredBills; // Devuelve el resultado directamente
+    }
 
     mockBills: BillModel[] = [
     {
