@@ -36,6 +36,8 @@ import { ViewPaymentComponent } from './components/view-payment/view-payment.com
 
 import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
 import { BillingProvider } from './services/billing/BillingProvider';
+import { TaxRegisterComponent } from './components/tax-register/tax-register.component';
+import { PaymentMethodRegisterComponent } from './components/payment-method-register/payment-method-register.component';
 
 
 
@@ -48,6 +50,7 @@ import { BillingProvider } from './services/billing/BillingProvider';
     SaleOrderSearchListComponent,
     BillingComponent,
     PaymentMethodComponent,
+    PaymentMethodRegisterComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
@@ -58,6 +61,7 @@ import { BillingProvider } from './services/billing/BillingProvider';
     TranslateStatesPipe,
     TaxComponent,
     TaxNavComponent,
+    TaxRegisterComponent,
     ReportNavComponent,
     ReportNavComponent,
     ViewPaymentComponent,
@@ -84,6 +88,7 @@ import { BillingProvider } from './services/billing/BillingProvider';
     SaleOrderSearchListComponent,
     BillingComponent,
     PaymentMethodComponent,
+    PaymentMethodRegisterComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
@@ -93,6 +98,7 @@ import { BillingProvider } from './services/billing/BillingProvider';
     SaleOrderViewComponent,
     TaxComponent,
     TaxNavComponent,
+    TaxRegisterComponent,
     ReportNavComponent,
     ReportNavComponent,
     ViewPaymentComponent,

@@ -6,21 +6,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./tax-nav.component.css']
 })
 export class TaxNavComponent {
-  activeTab:string="taxes"
-  regist:boolean=false
-  search:boolean=false
-  update:boolean=false
-  delete:boolean=false
-
+  activeTab: string = 'taxes';
+  regist: boolean = false;
 
   constructor() { }
 
-  ngOnInit() {
+  toTaxes(tab: string) {
+    this.activeTab = tab;
+    this.regist = false;
   }
 
-  toTaxes(tab:string){
-    this.activeTab=tab;
-    this.regist=true;
+  toRegisterTax(tab: string) {
+    this.activeTab = tab;
+    this.regist = true;
   }
-
 }

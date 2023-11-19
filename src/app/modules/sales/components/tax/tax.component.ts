@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Tax, TaxEmpty } from '../../models/Tax';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaxService } from '../../services/tax/tax.service';
+import { BootstrapOptions } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'fn-tax',
@@ -12,23 +15,33 @@ export class TaxComponent implements OnInit {
   tax: Tax = TaxEmpty;
   taxEdit: Tax = TaxEmpty;
   taxList: Tax[] = [];
-  taxForm: FormGroup;
   taxEditForm: FormGroup;
   isFormDisabled: boolean = true;
 
   taxTypeList: string[] = ["VAT", "IIBB"];
+myModalEl = document.getElementById('NewMethodModal')
+
+openModal() {
+  const modalRef = this.modalService.open('NewMethodModal', { size: 'lg' });  // Ajusta el nombre y tamaño según corresponda
+  // Puedes realizar acciones adicionales después de abrir el modal si es necesario
+  modalRef.result.then(
+    (result) => {
+      console.log(`Modal cerrado con resultado: ${result}`);
+      // Aquí puedes manejar el resultado después de cerrar el modal
+    },
+    (reason) => {
+      console.log(`Modal cerrado con motivo: ${reason}`);
+      // Aquí puedes manejar la razón por la que se cerró el modal
+    }
+  );
+}
 
 
-
-  constructor(private taxService: TaxService, private formBuilder: FormBuilder) {
-    this.taxForm = this.formBuilder.group({
-      taxType: ['', Validators.required],
-      taxValue: [0, Validators.required],
-    });
+  constructor(private taxService: TaxService, private formBuilder: FormBuilder,private modalService: NgbModal) {
 
     this.taxEditForm = this.formBuilder.group({
       taxType: ['', Validators.required],
-      taxValue: [0, Validators.required],
+      taxValue: [0, [Validators.required, Validators.min(0)]],
     });
   }
 

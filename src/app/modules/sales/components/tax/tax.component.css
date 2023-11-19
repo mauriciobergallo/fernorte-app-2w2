@@ -1,0 +1,10 @@
+.form-group {
+    margin-bottom: 1rem;
+}
+.input-not-valid {
+    border-color: red;
+}
+
+.error-message {
+    color: red !important;
+}

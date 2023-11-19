@@ -16,25 +16,15 @@
                         <td>{{ method.payment_method }}</td>
                         <td>{{ method.surcharge }}% </td>
                         <td class="d-flex align-items-center justify-content-center">
-                            <button 
-                            type="button" 
-                            class="btn btn-sm btn-primary "
-
-                            data-bs-toggle="modal"
-                            data-bs-target="#editModal" 
-                            data-bs-whatever="@mdo" 
-                            (click)="loadEditarForm(method)">
-                            <i class="bi bi-pencil"></i></button>
+                            <button type="button" class="btn btn-sm btn-primary " data-bs-toggle="modal"
+                                data-bs-target="#editModal" data-bs-whatever="@mdo" (click)="loadEditarForm(method)">
+                                <i class="bi bi-pencil"></i></button>
                         </td>
                     </tr>
-                    <tr class="text-center"> 
+                    <tr class="text-center">
                         <td colspan="3">
-                            <button 
-                                type="button" 
-                                class="btn btn-primary" 
-                                data-bs-toggle="modal"
-                                data-bs-target="#NewMethodModal" 
-                                data-bs-whatever="@mdo">Agregar</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#NewMethodModal" data-bs-whatever="@mdo">Agregar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -97,10 +87,13 @@
                             <div class="mb-2">
                                 <label for="paymentMethod" class="form-label">Método de Pago</label>
                                 <input formControlName="paymentMethod" type="text" class="form-control"
-                                    id="paymentMethod"required>
-                                <div
-                                    *ngIf="editForm.get('paymentMethod')!.touched && editForm.get('paymentMethod')!.hasError('required')">
-                                    El método de pago es obligatorio.</div>
+                                    id="paymentMethod" required>
+                                <small id="paymentMethod" class="form-text text-muted error-message" *ngIf="       
+                                    !editForm.controls['paymentMethod'].valid &&
+                                    editForm.controls['paymentMethod'].touched &&
+                                    editForm.get('paymentMethod')?.hasError('required')">
+                                    El método de pago es obligatorio.
+                                </small>
                             </div>
                         </div>
                         <div class="col-md-4">

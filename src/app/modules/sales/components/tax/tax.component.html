@@ -20,12 +20,6 @@
                                 <i class="bi bi-pencil"></i></button>
                         </td>
                     </tr>
-                    <tr class="text-center">
-                        <td colspan="3">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#NewMethodModal" data-bs-whatever="@mdo">Agregar</button>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -46,7 +40,7 @@
                             <div class="mb-2">
                                 <label for="taxType" class="form-label">Impuesto</label>
                                 <select class="form-control" aria-label="Default select example" name="taxType"
-                                    formControlName="taxType" id="taxType" >
+                                    formControlName="taxType" id="taxType">
                                     <option selected *ngFor="let taxType of taxTypeList" disabled>{{taxType}}</option>
                                 </select>
                             </div>
@@ -55,63 +49,26 @@
                                     <label for="taxValue" class="form-label">Recargo</label>
                                     <input formControlName="taxValue" type="number" class="form-control" id="taxValue"
                                         name="taxValue" [(ngModel)]="taxEdit.tax_value" required>
-                                    <div
-                                        *ngIf="taxEditForm.get('taxValue')!.touched && taxEditForm.get('taxValue')!.hasError('required')">
-                                        El recargo es obligatorio.</div>
+                                    <small id="taxValue" class="form-text text-muted error-message" *ngIf="       
+                        !taxEditForm.controls['taxValue'].valid &&
+                        taxEditForm.controls['taxValue'].touched &&
+                        taxEditForm.get('taxValue')?.hasError('required')">
+                                        El valor del impuesto es requerido
+                                    </small>
+                                    <small id="taxValue" class="form-text text-muted error-message" *ngIf="
+                        !taxEditForm.controls['taxValue'].valid &&
+                        taxEditForm.controls['taxValue'].touched &&
+                        taxEditForm.controls['taxValue'].getError('min')
+                        ">
+                                        El valor minimo es 0
+                                    </small>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="submit" class="btn btn-primary" (click)="taxEditForm.markAllAsTouched()">Guardar</button>
                         </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="NewMethodModal" tabindex="-1" aria-labelledby="NewMethodModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="NewMethodModalLabel">Registrar nuevo impuesto</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="taxEditForm" (ngSubmit)="saveNewTax()">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="mb-2">
-                                <label for="taxType" class="form-label">Impuesto</label>
-                                <select class="form-control" aria-label="Default select example" name="taxType"
-                                    formControlName="taxType" id="taxType" >
-                                    <option selected *ngFor="let taxType of taxTypeList">{{taxType}}</option>
-                                </select>
-
-
-                                <!-- <label for="taxType" class="form-label">Método de Pago</label>
-                                <input formControlName="taxType" type="text" class="form-control"
-                                    id="taxType"required>
-                                <div
-                                    *ngIf="taxEditForm.get('taxType')!.touched && taxEditForm.get('taxType')!.hasError('required')">
-                                    El método de pago es obligatorio.</div> -->
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-2">
-                                <label for="taxValue" class="form-label">Recargo    </label>
-                                <input formControlName="taxValue" type="number" class="form-control" id="taxValue"
-                                    name="taxValue" required>
-                                <div
-                                    *ngIf="taxEditForm.get('taxValue')!.touched && taxEditForm.get('taxValue')!.hasError('required')">
-                                    El recargo es obligatorio.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
