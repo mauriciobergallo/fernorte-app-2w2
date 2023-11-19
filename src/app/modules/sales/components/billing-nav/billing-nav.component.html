@@ -16,11 +16,12 @@
           </li>
         </ul>
       </div>
-      
+
     </div>
-  </div>  
-  <div class="">
-    <fn-sale-order *ngIf="regist"></fn-sale-order>
   </div>
-  
+  <div class="">
+    <fn-billing *ngIf="regist"></fn-billing>
+    <fn-billing-search-list *ngIf="search"></fn-billing-search-list>
+  </div>
+
 </section>

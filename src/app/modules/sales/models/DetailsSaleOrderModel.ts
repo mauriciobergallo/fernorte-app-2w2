@@ -3,7 +3,7 @@ import { SaleOrderStates } from "./SalesOrderState";
 
 export class DetailsSaleOrderModel {
     id_sale_order_details?: number = 0;
-    id_sale_order?: number = 0;
+    name: string = "";
     id_product: number = 0;
     quantity: number = 0;
     price: number = 0;

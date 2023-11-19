@@ -1,5 +1,3 @@
-
-
 <div class="spinner-overlay" *ngIf="loader">
     <div class="spinner">
         <!-- Aquí puedes personalizar tu spinner, por ejemplo, usando una animación CSS o una biblioteca de iconos -->
@@ -8,8 +6,8 @@
 </div>
 <!-- Orden de venta
     En esta pantalla podemos visualizar el turno en el que estamos, si ya lo atendimos le damos al botón
-    "Atender Turno". Le pedimos el nombre al cliente para buscarlo y/o cargarlo.
-    Usamos el botón "Consultar Productos" el cual abrirá un popup donde buscaremos un producto, elegimos los que
+    "Atender Turno". Le pedimos el nome al cliente para buscarlo y/o cargarlo.
+    Usamos el botón "Consultar Productos" el cual airá un popup donde buscaremos un producto, elegimos los que
     queremos agregando también la cantidad solicitada por el cliente. A medida que vamos seleccionando productos se
     va a ir modificando el subtotal en relación a los precios. Si se decide no seguir con la compra podemos eliminar
     la selección de productos. Así como también al pulsar el botón "Cargar Productos", dichos productos seleccionados
@@ -19,168 +17,100 @@
     facturación.
     Por otro lado, al usar el botón "Cargar Presupuesto" podemos visualizar todos los datos cargados anteriormente
     y guardados en el sistema al momento de generar el presupuesto para poder continuar con el proceso de venta.
-    Si recibimos alguna sugerencia del cliente, abrimos el pop up de sugerencias al clickear el boton "Sugerencias"-->
+    Si recibimos alguna sugerencia del cliente, aimos el pop up de sugerencias al clickear el boton "Sugerencias"-->
 
-    <div class="container">
-        <div class="row mt-4 justify-content-center">
-            <div class="col-md-6">
-                <div class=" card p-2 m-1" style="background-color: #54cbec;">
-                    <div class="row p-0">
-                        <div class="col-3 d-flex align-items-center" style="display: -webkit-inline-box;">
-                            <img src="MicrotechLogo.png" style="width: 100px;">
-                            <h5 class="ps-2">Ventas</h5>
-                        </div>
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h4 class="m-2">Cliente</h4>
+            <div class=" card p-2 m-1">
+                <div class="row justify-content-around">
+                    <div class="col-3 pt-2" style="display: -webkit-inline-box;">
+                        <h5>Exequiel Santoro</h5>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class=" card p-2 m-1">
-                    <div class="row justify-content-around">
-                        <div class="col-3 pt-3" style="display: -webkit-inline-box;">
-                            <i class="fa-sharp fa-solid fa-ticket fa-lg pe-2"></i>
-                            <h5>Turno actual: 5</h5>
-                        </div>
-                        <div class="col-4">
-                            <button class="btn btn-warning">
-                                <i class="fa-solid fa-arrow-right fa-xl"></i>
-                                <br>
-                                <p class="m-0">Atender Turno</p>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class=" card p-2 m-1">
-                    <div class="row justify-content-around">
-                        <div class="col-3 pt-2" style="display: -webkit-inline-box;">
-                            <i class="fa-solid fa-user me-2"></i>
-                            <h5>Cliente actual: Lionel Messi</h5>
-                        </div>
-                        <div class="col-6 d-flex justify-content-around">
-                            <button class="btn btn-primary">
-                                <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-                                <br>
-                                <p class="m-0" style="size: 2px;">Buscar cliente</p>
-                            </button><button class="btn btn-success">
-                                <i class="fa-solid fa-user-plus fa-lg"></i>
-                                <br>
-                                <p class="m-0">Cargar cliente</p>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <!-- Selector y buscador de productos -->
-                <div class=" card p-2 m-1">
-                    <div class="input-group">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">ver productos</button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" *ngFor="let item of listProductfiltrada"
-                                    (click)="selectProduct(item)">{{item.name}}</a>
-                            </li>
-                        </ul>
-                        <input type="text" class="form-control" aria-label="Text input with dropdown button"
-                            (change)="filtrarProductos($event)" [(ngModel)]="productoSeleccionado.name">
-                        <div class="input-group-append">
-                            <button class="btn btn-info" (click)="agregarProducto()">
-                                <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-                                <br>
-                                <p class="m-0">Agregar Productos</p>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class=" card p-2 m-1">
-                    <!-- Selector de clientes y botón para cargar presupuesto -->
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Ingresar numero de presupuesto...">
-                        <div class="input-group-append">
-                            <button class="btn btn-success">
-                                <i class="fa-solid fa-file-import fa-lg"></i>
-                                <br>
-                                <p class="m-0">Cargar Presupuesto</p>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <div class=" card p-2 m-1">
-                    <!-- Tabla de productos -->
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Producto</th>
-                                <th>Precio Unitario</th>
-                                <th>Cantidad</th>
-                                <th>Precio Total</th>
-                                <th>Quitar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Aquí se agregarán las filas de la tabla dinámicamente -->
-
-                            <tr *ngFor="let item of carrito">
-                                    <td>{{item.idProduct}}</td>
-                                    <td>{{item.name}}</td>
-                                    <td>${{item.unitPrice}}</td>
-                                    <td>                                       
-                                        <input #controlCantidad="ngModel" [(ngModel)]="item.cantidadSeleccionado == undefined ? 1 : item.cantidadSeleccionado" [ngModelOptions]="{standalone: true}" type="number"
-                                            class="form-control" id="cantidad" placeholder="cantidad" required
-                                            [maxlength]="item.stockQuantity"
-                                            max-length-message="La cantidad no puede exceder el valor máximo" 
-                                            autocomplete="off" (change)="ActualizarTotal()">                                            
-                                        <div  *ngIf="controlCantidad.value > item.stockQuantity" style="color: red" >
-                                            no puede superar al stock
-                                        </div>
-                                    </td>
-                                    <td>${{controlCantidad.value | calcularTotal:item.unitPrice}}
-                                    </td>
-                                    <td><button class="btn btn-outline-danger" type="button" (click)="deleteProduct(item.idProduct)">❌</button></td>
-                                <th><i class="fa-solid fa-xmark fa-xl"></i></th>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4 justify-content-end align-items-center">
-
-            <div class="col-7">
-                <div class=" card p-2 m-1">
-                    <div class="col-12 d-flex justify-content-around">
-                        <button class="btn btn-success" onclick="openSugerencias()">
-                            <i class="fa-solid fa-message fa-xl"></i>
-                            <br>
-                            <p class="m-0">Sugerencias</p>
+                    <div class="col-6 d-flex justify-content-around">
+                        <button class="btn btn-primary">
+                            <p class="m-0" style="size: 2px;">Buscar</p>
                         </button>
-                        <button class="btn btn-primary" (click)="generateSaleOrder(typePresupuesto)">
-                            <i class="fa-solid fa-file-circle-plus fa-xl"></i>
-                            <br>
-                            <p class="m-0">Generar Presupuesto</p>
-                        </button>
-                        <button class="btn btn-danger" (click)="generateSaleOrder(typeSalesOrder)">
-                            <i class="fa-solid fa-file-invoice fa-xl"></i>
-                            <br>
-                            <p class="m-0">Generar Orden</p>
+                        <button class="btn btn-primary">
+                            <p class="m-0">Cargar</p>
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h4 class="m-2">Productos</h4>
+            <!-- Selector y buscador de productos -->
+            <div class=" card p-2 m-1">
+                <div class="input-group">
+                    <input type="text" class="form-control" aria-label="Text input with dropdown button"
+                        (input)="filtrarProductos($event)" [(ngModel)]="productoSeleccionado.name">
+                    <div style="
+                            position: absolute;
+                            width: 70%;
+                            z-index: 1;background: white;border-radius: 10px;top: 100%;left: 0%;
+                        " *ngIf="listProductfiltrada.length > 0">
+                        <li class="list-group-item p-1" style="cursor: pointer;"
+                            *ngFor="let item of listProductfiltrada" (click)="selectProduct(item)">{{item.name}}
+                        </li>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" (click)="agregarProducto()">
+                            <p class="m-0">Agregar</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4" #detalleOrdenVenta id="detalleOrdenVenta">
+        <div class="col-md-12">
+            <h4 class="m-2">Detalle</h4>
+            <div class=" card p-2 m-1">
+                <!-- Tabla de productos -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Precio Unitario</th>
+                            <th>Cantidad</th>
+                            <th>Precio Total</th>
+                            <th>Quitar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aquí se agregarán las filas de la tabla dinámicamente -->
+                        <tr *ngFor="let item of carrito">
+                            <td>{{item.idProduct}}</td>
+                            <td>{{item.name}}</td>
+                            <td>${{item.unitPrice}}</td>
+                            <td>
+                                <input #controlCantidad="ngModel"
+                                    [(ngModel)]="item.cantidadSeleccionado == undefined ? 1 : item.cantidadSeleccionado"
+                                    [ngModelOptions]="{standalone: true}" type="number" class="form-control"
+                                    id="cantidad" placeholder="cantidad" required [maxlength]="item.stockQuantity"
+                                    max-length-message="La cantidad no puede exceder el valor máximo" autocomplete="off"
+                                    (change)="ActualizarTotal()">
+                                <div *ngIf="controlCantidad.value > item.stockQuantity" style="color: red">
+                                    no puede superar al stock
+                                </div>
+                            </td>
+                            <td>${{controlCantidad.value | calcularTotal:item.unitPrice}}
+                            </td>
+                            <td><button class="btn btn-outline-danger" type="button"
+                                    (click)="deleteProduct(item.idProduct)">❌</button></td>
+                            <th><i class="fa-solid fa-xmark fa-xl"></i></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-12" style="display: flex;flex-direction: row-reverse;">
+            <div class="col-md-3" id="totalDetalle">
                 <div class=" card p-2 m-1">
                     <!-- Resumen de la venta -->
                     <div class="text-center">
@@ -192,3 +122,20 @@
             </div>
         </div>
     </div>
+    <div class="row mt-4 justify-content-end align-items-center">
+        <div class="col-12">
+            <div class=" card p-2 m-1">
+                <div class="col-12 d-flex justify-content-around">
+                    <button class="btn btn-primary" (click)="generatePdf()">
+                        <p class="m-0">Descargar</p>
+                    </button> <button class="btn btn-secondary" (click)="cancelOrderSale()">
+                        <p class="m-0">cancelar</p>
+                    </button>
+                    <button class="btn btn-primary" (click)="generateSaleOrder(typePresupuesto)" >
+                        <p class="m-0">Guardar</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

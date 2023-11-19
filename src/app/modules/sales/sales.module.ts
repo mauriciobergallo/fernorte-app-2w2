@@ -11,6 +11,8 @@ import { ProductProvider } from './services/products/productProvider';
 import { SaleOrderComponent } from './components/sale_order/sale-order.component';
 import { SaleOrderViewComponent } from './components/sale-order-view/sale-order-view.component';
 import { CalcularTotalPipe } from './pipes/calcular-total.pipe';
+import { DateFormatPipe } from './pipes/date-format.pipe';
+import { CaseConverterPipe } from './pipes/case-converter.pipe';
 import { CalcularImpuestosPipe } from './pipes/calcular-impuestos.pipe';
 import { CalcularMontoTotalPipe } from './pipes/calcular-monto-total.pipe';
 import { BillingComponent } from './components/billing/billing.component';
@@ -28,7 +30,12 @@ import { TurnProvider } from './services/turns/TurnProvider';
 import { TranslateStatesPipe } from './pipes/translateStates.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaxComponent } from './components/tax/tax.component';
+
 import { ViewPaymentComponent } from './components/view-payment/view-payment.component';
+
+import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
+import { BillingProvider } from './services/billing/BillingProvider';
+
 
 
 @NgModule({
@@ -50,14 +57,19 @@ import { ViewPaymentComponent } from './components/view-payment/view-payment.com
     TranslateStatesPipe,
     TaxComponent,
     ReportNavComponent,
-    ViewPaymentComponent
-    ],
+
+    ViewPaymentComponent,
+
+    BillingSearchListComponent,
+    DateFormatPipe],
 
 
   providers: [SaleOrderProvider,
     ProductProvider,
     ClientProvider,
-    TurnProvider],
+    TurnProvider,
+    BillingProvider,
+    CaseConverterPipe],
 
   imports: [CommonModule,
     FormsModule,
@@ -80,8 +92,9 @@ import { ViewPaymentComponent } from './components/view-payment/view-payment.com
     SaleOrderViewComponent,
     TaxComponent,
     ReportNavComponent,
-    ViewPaymentComponent
-    ]
+    ViewPaymentComponent,
+    BillingSearchListComponent,
+    DateFormatPipe],
 
 })
 export class SalesModule {}
