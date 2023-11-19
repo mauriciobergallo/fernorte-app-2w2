@@ -39,7 +39,7 @@ export class MockService {
           name_product: "Martillo cabeza grande",
           quantity: 2,
           unit: "unidad",
-          tax_value: 315,
+          tax_value: 0,
           unitary_price: 500,
           discount_amount: 0,
         },
@@ -48,7 +48,7 @@ export class MockService {
         {
           id: 1,
           payment: 1500,
-          surcharge: 50,
+          surcharge: 0,
           payment_method: { id_payment_method: 1, payment_method: "Efectivo", surcharge: 0 },
         },
       ],
@@ -75,12 +75,12 @@ export class MockService {
       detail_bill: [
         {
           id: 2,
-          tax: { id: 2, tax_type: "IVA", tax_value: 10.5 },
+          tax: { id: 2, tax_type: "IVA", tax_value: 21 },
           id_product: 302,
           name_product: "Destornillador Phillips",
           quantity: 3,
           unit: "unidad",
-          tax_value: 315,
+          tax_value: 0,
           unitary_price: 400,
           discount_amount: 50
         },
@@ -91,7 +91,7 @@ export class MockService {
           name_product: "Llave inglesa ajustable",
           quantity: 1,
           unit: "unidad",
-          tax_value: 105,
+          tax_value: 0,
           unitary_price: 700,
           discount_amount: 25
         }
@@ -101,13 +101,13 @@ export class MockService {
           id: 2,
           payment: 2500,
           surcharge: 100,
-          payment_method: { id_payment_method: 2, payment_method: "Tarjeta de Crédito", surcharge: 5 }
+          payment_method: { id_payment_method: 2, payment_method: "Tarjeta de Crédito", surcharge: 10 }
         },
         {
           id: 3,
           payment: 100,
           surcharge: 0,
-          payment_method: { id_payment_method: 3, payment_method: "Transferencia Bancaria", surcharge: 0 }
+          payment_method: { id_payment_method: 1, payment_method: "Efectivo", surcharge: 0 }
         }
       ]
     },
@@ -138,18 +138,18 @@ export class MockService {
           name_product: "Sierra eléctrica",
           quantity: 1,
           unit: "unidad",
-          tax_value: 378,
+          tax_value: 0,
           unitary_price: 1200,
           discount_amount: 50
         },
         {
           id: 5,
-          tax: { id: 5, tax_type: "IVA", tax_value: 10.5 },
+          tax: { id: 5, tax_type: "IVA", tax_value: 21 },
           id_product: 305,
           name_product: "Destornillador plano",
           quantity: 2,
           unit: "unidad",
-          tax_value: 220.5,
+          tax_value: 0,
           unitary_price: 150,
           discount_amount: 0
         }
@@ -158,14 +158,14 @@ export class MockService {
         {
           id: 4,
           payment: 1800,
-          surcharge: 75,
+          surcharge: 0,
           payment_method: { id_payment_method: 1, payment_method: "Efectivo", surcharge: 0 }
         },
         {
           id: 5,
           payment: 0,
           surcharge: 0,
-          payment_method: { id_payment_method: 2, payment_method: "Tarjeta de Crédito", surcharge: 3 }
+          payment_method: { id_payment_method: 2, payment_method: "Tarjeta de Crédito", surcharge: 10 }
         }
       ]
     },
@@ -196,18 +196,18 @@ export class MockService {
           name_product: "Cinta métrica",
           quantity: 2,
           unit: "unidad",
-          tax_value: 462,
+          tax_value: 0,
           unitary_price: 800,
           discount_amount: 30
         },
         {
           id: 7,
-          tax: { id: 7, tax_type: "IVA", tax_value: 10.5 },
+          tax: { id: 7, tax_type: "IVA", tax_value: 21 },
           id_product: 307,
           name_product: "Alicate de corte",
           quantity: 1,
           unit: "unidad",
-          tax_value: 52.5,
+          tax_value: 0,
           unitary_price: 350,
           discount_amount: 10
         }
@@ -223,7 +223,7 @@ export class MockService {
           id: 9,
           payment: 0,
           surcharge: 0,
-          payment_method: { id_payment_method: 2, payment_method: "Tarjeta de Crédito", surcharge: 0 }
+          payment_method: { id_payment_method: 2, payment_method: "Tarjeta de Crédito", surcharge: 10 }
         }
       ]
     },
@@ -254,18 +254,18 @@ export class MockService {
           name_product: "Destornillador de estrella",
           quantity: 3,
           unit: "unidad",
-          tax_value: 273,
+          tax_value: 0,
           unitary_price: 300,
           discount_amount: 20
         },
         {
           id: 11,
-          tax: { id: 9, tax_type: "IVA", tax_value: 10.5 },
+          tax: { id: 9, tax_type: "IVA", tax_value: 21 },
           id_product: 309,
           name_product: "Llave de tubo",
           quantity: 1,
           unit: "unidad",
-          tax_value: 52.5,
+          tax_value: 0,
           unitary_price: 500,
           discount_amount: 0
         }
@@ -281,7 +281,7 @@ export class MockService {
           id: 11,
           payment: 0,
           surcharge: 0,
-          payment_method: { id_payment_method: 2, payment_method: "Tarjeta de Crédito", surcharge: 0 }
+          payment_method: { id_payment_method: 2, payment_method: "Tarjeta de Crédito", surcharge: 10 }
         }
       ]
     },
@@ -312,18 +312,18 @@ export class MockService {
           name_product: "Martillo de carpintero",
           quantity: 2,
           unit: "unidad",
-          tax_value: 588,
+          tax_value: 0,
           unitary_price: 1200,
           discount_amount: 50
         },
         {
           id: 13,
-          tax: { id: 11, tax_type: "IVA", tax_value: 10.5 },
+          tax: { id: 11, tax_type: "IVA", tax_value: 21 },
           id_product: 311,
           name_product: "Sierra circular",
           quantity: 1,
           unit: "unidad",
-          tax_value: 63,
+          tax_value: 0,
           unitary_price: 1600,
           discount_amount: 0
         }
@@ -364,18 +364,18 @@ export class MockService {
           name_product: "Destornillador eléctrico",
           quantity: 2,
           unit: "unidad",
-          tax_value: 672,
+          tax_value: 0,
           unitary_price: 1000,
           discount_amount: 40
         },
         {
           id: 15,
-          tax: { id: 13, tax_type: "IVA", tax_value: 10.5 },
+          tax: { id: 13, tax_type: "IVA", tax_value: 21 },
           id_product: 313,
           name_product: "Llave de impacto",
           quantity: 1,
           unit: "unidad",
-          tax_value: 52.5,
+          tax_value: 0,
           unitary_price: 1200,
           discount_amount: 0
         },
@@ -386,7 +386,7 @@ export class MockService {
           name_product: "Taladro inalámbrico",
           quantity: 1,
           unit: "unidad",
-          tax_value: 294,
+          tax_value: 0,
           unitary_price: 1500,
           discount_amount: 60
         }
@@ -427,7 +427,7 @@ export class MockService {
           name_product: "Destornillador de precisión",
           quantity: 3,
           unit: "unidad",
-          tax_value: 315,
+          tax_value: 0,
           unitary_price: 400,
           discount_amount: 0
         }
@@ -468,7 +468,7 @@ export class MockService {
           name_product: "Destornillador de precisión",
           quantity: 3,
           unit: "unidad",
-          tax_value: 315,
+          tax_value: 0,
           unitary_price: 400,
           discount_amount: 0
         }
@@ -509,18 +509,18 @@ export class MockService {
           name_product: "Sierra de mano",
           quantity: 2,
           unit: "unidad",
-          tax_value: 882,
+          tax_value: 0,
           unitary_price: 1200,
           discount_amount: 50
         },
         {
           id: 21,
-          tax: { id: 17, tax_type: "IVA", tax_value: 10.5 },
+          tax: { id: 17, tax_type: "IVA", tax_value: 21 },
           id_product: 317,
           name_product: "Martillo de goma",
           quantity: 1,
           unit: "unidad",
-          tax_value: 52.5,
+          tax_value: 0,
           unitary_price: 800,
           discount_amount: 20
         },
@@ -531,18 +531,18 @@ export class MockService {
           name_product: "Destornillador de punta plana",
           quantity: 3,
           unit: "unidad",
-          tax_value: 661.5,
+          tax_value: 0,
           unitary_price: 450,
           discount_amount: 15
         },
         {
           id: 23,
-          tax: { id: 19, tax_type: "IVA", tax_value: 10.5 },
+          tax: { id: 19, tax_type: "IVA", tax_value: 21 },
           id_product: 319,
           name_product: "Alicate de presión",
           quantity: 1,
           unit: "unidad",
-          tax_value: 52.5,
+          tax_value: 0,
           unitary_price: 1200,
           discount_amount: 0
         }
