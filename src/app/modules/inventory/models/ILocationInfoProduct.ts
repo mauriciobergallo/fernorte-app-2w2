@@ -1,7 +1,7 @@
 import {ILocationDto} from "./ILocationDto";
 
 export interface ILocationInfoProduct {
-    code: number;
+    location_id: number;
     category_name: string;
     product_name: string;
     capacityRemaining?: number;

@@ -19,7 +19,6 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   private subscripciones = new Subscription();
 
-  deliveryOrder: Pagination | null = null;
   currentPage = 1;
   totalPages = 1;
 
@@ -137,15 +136,17 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   }
 
   getMovementsPage(page: number) {
-    this.isLoading = false;
+    this.isLoading = true;
     this.subscripciones.add(
-      this.movementService.getPaginationMovements(this.currentPage - 1).subscribe({
+      this.movementService.getPaginationMovements(page-1).subscribe({
         next: (response: Pagination) => {
           if (response != null) {
+            this.totalPages = response.totalPages;
             response.items.forEach(movement => {
-              this.movimientosOriginales.push(movement)
+              this.movimientosOriginales.push(new IMovementDto(movement))
             })
             this.movimientos = this.movimientosOriginales;
+            this.isLoading = false;
           } else {
             console.log("No content")
           }
@@ -156,14 +157,8 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
       })
     )
 
-    // Simula una espera de 2 segundos antes de establecer isLoading en true
-    timer(3000).subscribe(() => {
-      this.isLoading = true;
-      this.movimientosOriginales = this.movimientosData;
-      this.movimientos = this.movimientosData;
-    });
-
   }
+
 
   generateChart() {
     const labels = ['Productos Salientes', 'Productos Ingresantes'];
@@ -270,87 +265,6 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   }
   
 
-  private movimientosData: IMovementDto[] = [
-    {
-      operator: 'John Doe',
-      movement_type: MovementType.INBOUND,
-      is_internal: true,
-      movement_details: [
-        {
-          location_origin: {
-            id: 1,
-            zone: 'Zone A',
-            section: 'Section 1',
-            space: 'Space X',
-          },
-          location_destination: {
-            id: 2,
-            zone: 'Zone B',
-            section: 'Section 2',
-            space: 'Space Y',
-          },
-          quantity: 10,
-          product: 'Product A',
-        },
-      ],
-      date: '08-11-2023 23:07:11',
-    },
-    {
-      operator: 'Jane Smith',
-      movement_type: null,
-      is_internal: true,
-      movement_details: [
-        {
-          location_origin: {
-            id: 3,
-            zone: 'Zone C',
-            section: 'Section 3',
-            space: 'Space Z',
-          },
-          location_destination: null,
-          quantity: 5,
-          product: 'Product B',
-        },
-      ],
-      date: '10-11-2023 15:30:45',
-    },
-    {
-      operator: 'Alice Johnson',
-      movement_type: MovementType.INBOUND,
-      is_internal: false,
-      movement_details: [
-        {
-          location_origin: null,
-          location_destination: {
-            id: 4,
-            zone: 'Zone D',
-            section: 'Section 4',
-            space: 'Space W',
-          },
-          quantity: 8,
-          product: 'Product C',
-        },
-      ],
-      date: '12-11-2023 09:15:20',
-    },
-    {
-      operator: 'Pepe',
-      movement_type: MovementType.OUTBOUND,
-      is_internal: false,
-      movement_details: [
-        {
-          location_destination: null,
-          location_origin: {
-            id: 4,
-            zone: 'Zone D',
-            section: 'Section 4',
-            space: 'Space W',
-          },
-          quantity: 17,
-          product: 'Product C',
-        },
-      ],
-      date: '12-11-2023 09:15:20',
-    }
-  ];
+
 }
+

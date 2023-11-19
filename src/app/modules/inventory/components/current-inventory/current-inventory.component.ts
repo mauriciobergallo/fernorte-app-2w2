@@ -3,7 +3,7 @@ import { WarehouseService } from '../../services/warehouse-service/warehouse.ser
 import { LocationInfoDto } from '../../models/location-info.interface';
 import { Subscription } from 'rxjs';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+//import 'jspdf-autotable';
 import { Chart } from 'chart.js';
 
 @Component({
@@ -189,8 +189,9 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
       location: {
         zone: 'Zone A',
         section: 'Section 1',
-        space: 'Space 101',
+        space: 'Space 101'
       },
+      location_id:1,
       category_name: 'Category X',
       product_name: 'Product Alpha',
       quantity: 3,
@@ -203,6 +204,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
         section: 'Section 2',
         space: 'Space 202',
       },
+      location_id:2,
       category_name: 'Category Y',
       product_name: 'Product Beta',
       quantity: 5,
@@ -215,6 +217,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
         section: 'Section 2',
         space: 'Space 201',
       },
+      location_id:3,
       category_name: 'Category Z',
       product_name: 'Product Gamma',
       quantity: 8,
@@ -227,6 +230,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
         section: 'Section 1',
         space: 'Space 102',
       },
+      location_id:4,
       category_name: 'Category W',
       product_name: 'Product Delta',
       quantity: 15,
@@ -239,6 +243,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
         section: 'Section 1',
         space: 'Space 201',
       },
+      location_id:5,
       category_name: 'Category A',
       product_name: 'Product Epsilon',
       quantity: 20,
@@ -251,6 +256,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
         section: 'Section 2',
         space: 'Space 202',
       },
+      location_id:6,
       category_name: 'Category B',
       product_name: 'Product Zeta',
       quantity: 7,

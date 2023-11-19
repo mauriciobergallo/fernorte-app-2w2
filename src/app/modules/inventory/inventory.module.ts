@@ -13,7 +13,6 @@ import { SearchStorageTicketComponent } from './components/search-storage-ticket
 import { CurrentInventoryComponent } from './components/current-inventory/current-inventory.component';
 import { ConsultOrderComponent } from './components/consult-order/consult-order/consult-order.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-
 import { StateIconPipePipe } from './pipes/state-icon-pipe.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeliveryOrderDetailsComponent } from './components/consult-order/delivery-order-details/delivery-order-details.component';
@@ -21,6 +20,8 @@ import { DeliveryOrderDetailsComponent } from './components/consult-order/delive
 import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
 import { RouterModule } from '@angular/router';
 import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
+import { CreateMovementComponent } from './components/create-movement/create-movement.component';
+
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ReceptionOrderDetailsComponent } from './components/reception-order-det
     DeliveryOrderDetailsComponent,
     ConsultReceptionOrdersComponent,
     ReceptionOrderDetailsComponent,
+    CreateMovementComponent
   ],
 
   providers: [],
@@ -49,7 +51,7 @@ import { ReceptionOrderDetailsComponent } from './components/reception-order-det
     InventoryRoutingModule,
     NgbModule,
     RouterModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   exports: [HomeComponent],
 })
