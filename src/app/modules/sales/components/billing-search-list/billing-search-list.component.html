@@ -92,7 +92,7 @@
                     <i class="bi bi-three-dots-vertical"></i>
                   </button>
                   <div class="dropdown-content">
-                    <a (click)="onShowDetails()">Ver detalles</a>
+                    <a (click)="onShowDetails(item,modalDetalle)">Ver detalles</a>
                     <a (click)="onPrint()">Imprimir</a>
                   </div>
                 </div>
@@ -100,5 +100,28 @@
             </tr>
           </tbody>
         </table>
-
+        <ng-template #modalDetalle>
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Detalles de la Factura Nro° {{ selectedBill?.id_bill! + 1000 }}</h5>
+                <button type="button" class="btn-close" (click)="onCloseDetails()" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p><strong> Cliente:</strong> {{ selectedBill?.las_name }}</p>
+                <p><strong> Vendedor:</strong> {{ selectedBill?.name_seller }}</p>
+                <p><strong> Fecha Creación:</strong> {{ selectedBill?.created_date | dateFormat }}</p>
+                <p><strong> Total:</strong> {{ selectedBill?.total_price }}</p>
+                <p><strong> Detalles:</strong></p>
+                <ul>
+                  <li *ngFor="let prod of selectedBill?.detail_bill">
+                    {{ prod.name_product }} x {{prod.quantity}} - <strong>Precio:</strong>  {{ prod.unitary_price }}
+                  </li>
+                </ul>
+                <p><strong> Total:</strong> {{ calculateTotal(selectedBill) }}</p>
+              </div>
+            </div>
+          </div>    
+        </ng-template>
+      
   </div> 

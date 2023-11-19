@@ -321,7 +321,7 @@ export class MockService {
       cae: "12345678901234",
       expiration_date_cae: [2023, 11, 30],
       created_date: [2023, 11, 15],
-      total_price: 1500,
+      total_price: 1000,
       detail_bill: [
         {
           id: 1,
@@ -338,7 +338,7 @@ export class MockService {
       payments: [
         {
           id: 1,
-          payment: 1500,
+          payment: 1000,
           surcharge: 0,
           payment_method: { id_payment_method: 1, payment_method: "Efectivo", surcharge: 0 },
         },
@@ -362,7 +362,7 @@ export class MockService {
       cae: "98765432109876",
       expiration_date_cae: [2023, 12, 15],
       created_date: [2023, 11, 20],
-      total_price: 2500,
+      total_price: 1900,
       detail_bill: [
         {
           id: 2,
@@ -420,7 +420,7 @@ export class MockService {
       cae: "87654321098765",
       expiration_date_cae: [2023, 12, 31],
       created_date: [2023, 11, 25],
-      total_price: 1800,
+      total_price: 1500,
       detail_bill: [
         {
           id: 4,
@@ -478,7 +478,7 @@ export class MockService {
       cae: "54321098765432",
       expiration_date_cae: [2023, 12, 20],
       created_date: [2023, 11, 28],
-      total_price: 2200,
+      total_price: 1950,
       detail_bill: [
         {
           id: 6,

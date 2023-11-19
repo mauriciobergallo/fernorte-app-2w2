@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { CaseConverterPipe } from '../../pipes/case-converter.pipe';
 import { MockService } from '../../services/mocks/mock.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'fn-billing-search-list',
@@ -19,6 +20,8 @@ billListMock:BillModel[]=[];
 
 billFiltro1:BillModel[]=[];
 
+selectedBill:any;
+
 idBill:string="";
 doc:string="";
 fromDate:string="";
@@ -29,7 +32,10 @@ filters: Map<string, string> = new Map();
 private subscriptions = new Subscription();
 
 constructor(private billingService: BillServiceService, private caseConverter: CaseConverterPipe, 
-  private mockService: MockService) {
+  private mockService: MockService, private modalService:NgbModal) {
+}
+openModal(content: any) {
+  this.modalService.open(content, { centered: true });
 }
 
 ngOnDestroy(): void {
@@ -59,10 +65,27 @@ onSendFilters(){
   this.toDate = ""
 }
 
-onShowDetails(){
-
+onShowDetails(item:any, content: any){
+  this.selectedBill = item;
+  console.log(this.selectedBill)
+  this.openModal(content);
 }
 
+calculateTotal(bill: any): number {
+  let total = 0;
+
+  if (bill && bill.detail_bill) {
+    for (const prod of bill.detail_bill) {
+      total += prod.quantity * prod.unitary_price;
+    }
+  }
+
+  return total;
+}
+
+onCloseDetails() {
+  this.modalService.dismissAll();
+}
 onPrint(){
 
 }}
