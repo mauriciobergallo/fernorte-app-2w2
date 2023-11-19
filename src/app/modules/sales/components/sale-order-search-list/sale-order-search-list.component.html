@@ -1,5 +1,6 @@
 <div class="container-fluid">
   <div>
+    <br>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
       Filtros
     </button>
@@ -33,14 +34,18 @@
                 name="stateOrder"
                 #stateOrderControl="ngModel"
                 [(ngModel)]="stateOrder">
-                  <option selected
-                  *ngFor="let state of saleOrderStates" [value]="state">{{state | translateStates}}</option>
+                  <option value="">Creada</option>
+                  <option value="Pendiente de entrega" selected>Pendiente de entrega</option>
+                  <option value="">Entregada</option>
+                  <option value="">Impaga</option>
+                  <option value="">Cancelada</option>
                 </select>
                 <div class="row">
                   <div class="mb-3 col">
                     <p>Desde</p>
                     <input type="date" class="form-control" id="fromDate" 
                     placeholder=""
+                    value="2023-10-10"
                     name="fromDate"
                     #fromDateControl="ngModel"
                     [(ngModel)]="fromDate">
@@ -48,7 +53,8 @@
                   <div class="mb-3 col">
                     <p>Hasta</p>
                     <input type="date" class="form-control" id="toDate" 
-                    placeholder=""
+                    placeholder="10/10/2023"
+                    value="2023-10-10"
                     name="toDate"
                     #toDateControl="ngModel"
                     [(ngModel)]="toDate">
@@ -69,7 +75,6 @@
           <tr>
             <th scope="col">Número</th>
             <th scope="col">Cliente</th>
-            <th scope="col">Codigo Vendedor</th>
             <th scope="col">Fecha</th>
             <th scope="col">Estado</th>
             <th scope="col">Detalle</th>
@@ -80,7 +85,6 @@
           <tr *ngFor="let item of saleOrdersListOk">
             <th scope="row">{{item.idSaleOrder}}</th>
             <td>{{item.nameClient}}</td>
-            <td>{{item.idSeller}}</td>
             <td>{{item.dateOfIssue | date:'short'}}</td>
             <td>{{item.stateSaleOrder | translateStates}}</td>
             <td>
@@ -96,7 +100,7 @@
                   <i class="bi bi-three-dots-vertical"></i>
                 </button>
                 <div class="dropdown-content">
-                  <a (click)="onShowDetails()">Ver detalles</a>
+                  <a (click)="onShowDetails(item,modalDetalle)">Ver detalles</a>
                   <a (click)="onPrint()">Imprimir</a>
                 </div>
               </div>
@@ -104,4 +108,25 @@
           </tr>
         </tbody>
       </table>
+      <ng-template #modalDetalle>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Detalles del presupuesto Nro° {{ selectedOrder?.idSaleOrder}}</h5>
+              <button type="button" class="btn-close" (click)="onCloseDetails()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p><strong> Cliente:</strong> {{ selectedOrder?.nameClient }}</p>
+              <p><strong> Fecha Creación:</strong> {{ selectedOrder?.dateOfIssue | date:'short' }}</p>
+              <p><strong> Detalles:</strong></p>
+              <ul>
+                <li *ngFor="let prod of selectedOrder?.details">
+                  {{ prod.name }} x {{prod.quantity}} - <strong>Precio:</strong>  {{ prod.price | currency}} 
+                </li>
+              </ul>
+              <p><strong> Total:</strong> {{ calculateTotal(selectedOrder) | currency }}</p>
+            </div>
+          </div>
+        </div>    
+      </ng-template>
 </div>
