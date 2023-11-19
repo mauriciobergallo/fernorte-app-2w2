@@ -146,13 +146,17 @@
               Proveedores
             </a>
           </li>
-          <li class="nav-item">
-            <a  class="nav-link link-dark d-block" routerLink="/purchase-order">
+          <li class="nav-item dropdown" [ngClass]="{'show': dropdownOpen}">
+            <a class="nav-link dropdown-toggle link-dark d-block" href="#" id="purchaseOrderDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="dropdownOpen = !dropdownOpen">
               <svg class="bi pe-none me-2" width="16" height="16">
-                <use xlink:href="#table"></use>
+                <use xlink:href="#grid"></use>
               </svg>
               Ordenes de compra
             </a>
+            <div class="dropdown-menu" [ngClass]="{'show': dropdownOpen}" aria-labelledby="purchaseOrderDropdown">
+              <a class="dropdown-item" routerLink="/purchase-order">Realizar orden de compra</a>
+              <a class="dropdown-item" routerLink="/purchase-order-list">Listar de ordenes de compra</a>
+            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link link-dark d-block" routerLink="/payment-order">

@@ -6,6 +6,7 @@ import { PurchaseOrderContainerComponent } from './components/purchase-order-con
 import { PaymentOrderContainerComponent } from './components/payment-order-container/payment-order-container.component';
 import { ClaimOrderContainerComponent } from './components/claim-order-container/claim-order-container.component';
 import { ProductsSupplierComponent } from './components/supplier/products-supplier/products-supplier.component';
+import { ListComponent } from './components/purchase-order-container/components/list/list.component';
 
 
 const childRoutes: Routes = [
@@ -14,6 +15,7 @@ const childRoutes: Routes = [
   {path: 'supplier', component: ListSuplierComponent},
   {path: 'supplier/products', component: ProductsSupplierComponent},
   {path: 'purchase-order', component: PurchaseOrderContainerComponent},
+  {path: 'purchase-order-list', component: ListComponent},
   {path: 'payment-order', component: PaymentOrderContainerComponent},
   {path: 'claim-order', component: ClaimOrderContainerComponent}];
 

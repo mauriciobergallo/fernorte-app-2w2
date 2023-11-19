@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent {
+  dropdownOpen = false;
 
   constructor(private router:Router){
 
