@@ -1,27 +1,41 @@
 <spinner *ngIf="isLoading"></spinner>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
-<div class="container mt-4">
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<div class="d-block col-12 mt-4" style="height: 38px;">
     <button class="btn btn-primary" (click)="openCreateModal()">Agregar</button>
+</div>
+<div class="container mt-4">
     <form [formGroup]="filterForm">
-        <div class="row mb-3">
-
+        <div class="row m-2">
             <div class="col-md-6">
                 <div class="form-group">
-                    <input type="date" class="form-control" placeholder="Fecha de inicio inicial"
-                        formControlName="initStartDate">
+                    <label for="initStartDate">Fecha de inicio desde:</label>
+                    <input type="date" class="form-control" id="initStartDate" formControlName="initStartDate">
                 </div>
             </div>
-
             <div class="col-md-6">
                 <div class="form-group">
-                    <input type="date" class="form-control" placeholder="Fecha de fin final"
-                        formControlName="finalEndDate">
+                    <label for="initEndDate">Fecha de inicio hasta:</label>
+                    <input type="date" class="form-control" id="initEndDate" formControlName="finalStartDate">
                 </div>
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row m-2">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="finalStartDate">Fecha de fin desde:</label>
+                    <input type="date" class="form-control" id="finalStartDate" formControlName="initEndDate">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="finalEndDate">Fecha de fin hasta:</label>
+                    <input type="date" class="form-control" id="finalEndDate" formControlName="finalEndDate">
+                </div>
+            </div>
+        </div>
+        <div class="row m-2">
             <div class="col-md-6">
                 <div class="form-group">
                     <select class="form-select form-control" formControlName="idProduct">
@@ -31,11 +45,13 @@
                     </select>
                 </div>
             </div>
-            <div class="form-check col-md-6 mt-2">
-                <input class="form-check-input" type="checkbox" id="showDeleted" formControlName="isDeleted">
-                <label class="form-check-label" for="showDeleted">
-                    Descuentos caducados
-                </label>
+            <div class="form-group col-md-6">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="showDeleted" formControlName="isDeleted">
+                    <label class="form-check-label" for="showDeleted">
+                        Inactivos
+                    </label>
+                </div>
             </div>
         </div>
     </form>
@@ -87,7 +103,7 @@
                         </button>
                         <div ngbDropdownMenu>
                             <button ngbDropdownItem type="button" (click)="openEditModal(discount)">Editar</button>
-                            <button ngbDropdownItem type="submit" (click)="openDeleteModal(discount)">Eliminar</button>
+                            <button *ngIf="!discount.isDeleted" ngbDropdownItem type="submit" (click)="openDeleteModal(discount)">Eliminar</button>
                             <button ngbDropdownItem type="submit" (click)="openViewModal(discount)">Ver mas</button>
                         </div>
                     </div>

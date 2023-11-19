@@ -23,5 +23,6 @@ export class HomeComponent {
     this.isCollapsedCharts = !this.isCollapsedCharts;
     this.isCollapsedReports = false;
   }
+  isActive:boolean = false;
 
 }

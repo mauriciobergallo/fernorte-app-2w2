@@ -3,32 +3,40 @@
   <div *ngIf="showMessage" [ngClass]="messageClass" class="alert mb-3" role="alert">
     <strong>{{ message }}</strong>
   </div>
+  
   <div class="modal-header">
-    <h3>{{isEdit?'Editar categoria':'Nueva categoria'}} </h3>
+    <h3>{{isEdit ? 'Editar categoría' : 'Nueva categoría'}} </h3>
     <button type="button" class="btn-close" aria-label="Close" (click)="ngbModal.dismissAll()"></button>
-</div>
+  </div>
 
   <div class="modal-body">
-  <form [formGroup]="formGroup">
+    <form [formGroup]="formGroup">
       <div class="row">
         <div class="mb-3 col-md-6">
           <label for="inputCategoryName" class="form-label">Nombre</label>
-          <input [class.is-invalid]="controlName.invalid && (controlName.dirty || controlName.touched)" type="text" class="form-control" id="inputCategoryName" formControlName="name">
+          <input [class.is-invalid]="controlName.invalid && (controlName.dirty || controlName.touched)" 
+                 type="text" class="form-control" id="inputCategoryName" formControlName="name">
+          <div *ngIf="controlName.invalid && (controlName.dirty || controlName.touched)">
+            <small class="text-danger">Por favor, ingrese un nombre válido.</small>
+          </div>
         </div>
         <div class="mb-3 col-md-6">
           <label for="inputCategoryDescription" class="form-label">Descripción</label>
-          <textarea [class.is-invalid]="controlDescription.invalid && (controlDescription.dirty || controlDescription.touched)" class="form-control" id="inputCategoryDescription" formControlName="description"></textarea>
+          <textarea [class.is-invalid]="controlDescription.invalid && (controlDescription.dirty || controlDescription.touched)" 
+                    class="form-control" id="inputCategoryDescription" formControlName="description"></textarea>
+          <div *ngIf="controlDescription.invalid && (controlDescription.dirty || controlDescription.touched)">
+            <small class="text-danger">Por favor, ingrese una descripción válida.</small>
+          </div>
         </div>
       </div>
       <div class="row">
-        <div class="offset-6 col-md-6 col-lg-6 text-end">
+        <div class="col-md-6 col-lg-6 buttons-container">
           <button type="button" class="btn btn-secondary m-1" (click)="close()">Cancelar</button>
           <button type="button" class="btn btn-primary" (click)="onSubmit()">Guardar</button>
         </div>
       </div>
     </form>
   </div>
-
+  
+  <spinner *ngIf="isLoading"></spinner>
 </div>
-
-<spinner *ngIf="isLoading"></spinner>

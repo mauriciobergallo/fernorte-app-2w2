@@ -6,29 +6,37 @@
     <h1 class="text-center">Detalle del Producto</h1>
     <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
   </div>
+  
   <div class="modal-body">
-    <div class="img-fluid" *ngIf="product.urlImage != null; else noImageProduct">
-      <img [src]="product.urlImage" alt="Imagen del producto" class="img-responsive" />
+    <div class="img-container" *ngIf="product.urlImage; else noImageProduct">
+      <img class="img-fluid" [src]="product.urlImage" alt="Imagen del producto" />
     </div>
+  
     <ng-template #noImageProduct>
-      <div class="text-center">
-        <span class="material-symbols-outlined">
-          block
-        </span> No posee imagen
+      <div class="no-image-text">
+        <span class="material-symbols-outlined">block</span> No posee imagen
       </div>
     </ng-template>
+  
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">{{ product.name }}</h5>
         <p class="card-text">{{ product.description }}</p>
       </div>
+  
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Precio Unitario: {{ product.unitPrice | currency : 'ARS' : 'symbol' }}</li>
         <li class="list-group-item">Cantidad en Stock: {{ product.stockQuantity }}</li>
-        <li class="list-group-item">Unidad de Medida: {{ product.unitOfMeasure }}</li>
+        <li class="list-group-item">Unidad de Medida: {{ product.unitOfMeasure || 'N/A' }}</li>
         <li class="list-group-item">Categoría: {{ product.category.name }}</li>
-        <li class="list-group-item" *ngIf="product.priceProduct != null">Precio con Descuento: {{ product.priceProduct | currency : 'ARS' : 'symbol' }}</li>
-        <li class="list-group-item" *ngIf="product.discount != null">Descuento: {{ product.discount }}%</li>
+  
+        <ng-container *ngIf="product.priceProduct != null">
+          <li class="list-group-item">Precio con Descuento: {{ product.priceProduct | currency : 'ARS' : 'symbol' }}</li>
+        </ng-container>
+  
+        <ng-container *ngIf="product.discount != null">
+          <li class="list-group-item">Descuento: {{ product.discount }}%</li>
+        </ng-container>
       </ul>
     </div>
   </div>

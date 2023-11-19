@@ -7,8 +7,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IProductCategory } from '../../../models/IProductCategory';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
-
-
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'fn-add-discount',
@@ -36,11 +35,14 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
   category = 0;
   today = new Date().toISOString().split('T')[0];
 
-  constructor(private fb: FormBuilder,
-    _ngbModal: NgbModal,
-    private prodService: ProductService,
-    private disService: DiscountsService,
-    @Optional() private modalService: NgbActiveModal) {
+  constructor(private fb: FormBuilder, _ngbModal: NgbModal, private prodService: ProductService, private disService: DiscountsService, @Optional() private modalService: NgbActiveModal, private activeRoute:ActivatedRoute) {
+    this.formGroup = this.fb.group({
+      idDiscount: [null],
+      idProduct: [null, [Validators.required]],
+      discountRate: [null, [Validators.required, Validators.min(0.1),Validators.max(100) ]],
+      startDate: [null, [Validators.required]],
+      endDate: [null, [Validators.required]]
+    });
     this.ngbModal = _ngbModal;
     this.subscription = new Subscription();
   }
@@ -56,8 +58,12 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
 
   getProducts() {
     this.isLoading = true;
-    this.prodService.get(undefined, undefined, this.sortBy, this.sortDir, false).subscribe((res: any) => {
+    this.prodService.get(null,null,this.sortBy,this.sortDir,false).subscribe((res: any) => {
       this.listProducts = res.products
+      if(this.isEdit){
+        this.formGroup.patchValue(this.discount!)
+        this.formGroup.get('idProduct')?.setValue(this.discount?.product.idProduct)
+      }
       this.isLoading = false;
     })
   }
@@ -91,8 +97,18 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
     request.user = 'prueba';
 
     if (this.isEdit) {
-      this.disService.updateDiscounts(request).subscribe({
-        next: (res) => {
+      let request = this.formGroup.value;
+      request.idProduct = Number(request.idProduct)
+      request.startDate = new Date(request.startDate)
+      request.endDate = new Date(request.endDate)
+      request.user = 'prueba';
+      request.name = this.listProducts?.filter(p => p.idProduct == request.idProduct)[0].name;
+
+      console.log(request)
+
+      this.disService.updateDiscounts([request]).subscribe(
+      {
+        next:(res) => {
           this.isLoading = false;
           Swal.fire({
             title: "¡Éxito!",
@@ -101,10 +117,11 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
             confirmButtonText: 'Cerrar',
             confirmButtonColor: '#6c757d'
           });
-          setTimeout(() => this.modalService.close(res), 1500);
+          this.modalService.close(res)
         },
-        error: (error) => {
+        error: (err)=>{
           this.isLoading = false;
+          this.modalService.close()
           Swal.fire({
             icon: "error",
             title: "¡Error!",
@@ -112,8 +129,9 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
             confirmButtonText: 'Cerrar',
             confirmButtonColor: '#6c757d'
           });
-        },
-      });
+        }
+      } 
+      )
     } else {
       if (request.idProduct != 0) {
         request.idDiscount = 0;
