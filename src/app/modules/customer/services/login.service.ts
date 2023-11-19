@@ -8,6 +8,7 @@ import { UserCheckLogin } from '../models/user-check-login';
 @Injectable()
 export class LoginService {
   BaseURL: string = 'http://localhost:8092';
+  isLogin: boolean = false;
 
   constructor(private http: HttpClient) {}
 
@@ -22,7 +23,7 @@ export class LoginService {
       switchMap((response: any) => {
         const username = response.username;
         const passwordReset = response.passwordReset;
-
+        this.isLogin = true
         return this.getUserDetails(username, passwordReset);
       })
     );
@@ -57,5 +58,9 @@ export class LoginService {
   public onLoginChequear(login: Login): Observable<any> {
     const url = this.BaseURL + '/login/';
     return this.http.post(url, login);
+  }
+
+  public isLogged(){
+    return this.isLogin
   }
 }
