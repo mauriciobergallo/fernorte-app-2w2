@@ -18,6 +18,6 @@ import { CustomersRoutingModule } from './customers-routing.module';
   providers: [LoginService],
   imports: [ CommonModule, BrowserModule, ReactiveFormsModule, 
     NgbModule, FormsModule, HttpClientModule, ReactiveFormsModule, CustomersRoutingModule],
-  exports: [HomeComponent,RouterModule ],
+  exports: [HomeComponent, RouterModule],
 })
 export class CustomerModule {}
