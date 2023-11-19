@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DeilveryOrder } from '../../models/deilvery-order';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { DeliveryOrderPut } from '../../models/delivery-order-put';
 
 @Injectable({
   providedIn: 'root'
@@ -672,4 +673,41 @@ getById(id: number) {
   return deliveryOrder;
 }
 
+updateOrder(order :DeliveryOrderPut)
+{
+  var orderService = this.originallist.find(p => p.delivery_order_id == order.delivery_order_id);
+
+  if (orderService) {
+      for (let i = 0; i < order.details.length; i++) {
+          const orderDetail = orderService.details.find(p => p.product_id == order.details[i].product_id);
+  
+          if (orderDetail) {
+              orderDetail.delivered_quantity += order.details[i].quantity;
+              orderDetail.quantity_delivery = orderDetail.quantity - orderDetail.delivered_quantity;
+              if(orderDetail.delivered_quantity == orderDetail.quantity)
+              {
+                orderDetail.state = "DELIVERED"
+              }else
+              {
+                orderDetail.state = "PARTIALLY_DELIVERED"
+              }
+          }
+      }
+
+      if (orderService.details.every(detail => detail.state === 'DELIVERED')) 
+      {
+                orderService.state= "DELIVERED";
+
+      }else
+      {
+        orderService.state= "PARTIALLY_DELIVERED";
+
+      }
+  }
+  
+
+  
+  
+
+}
 }

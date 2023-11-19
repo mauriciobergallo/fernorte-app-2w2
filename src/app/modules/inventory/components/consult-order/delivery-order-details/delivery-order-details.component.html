@@ -57,7 +57,7 @@
       </div>
       <div style="float: right;">
         <button class="btn btn-secondary" style="margin-right: 10px;" (click)="confirmCancellation()">Volver</button>
-        <button class="btn btn-primary" (click)="save()">Guardar</button>
+        <button class="btn btn-primary" [hidden]="order.state == 'DELIVERED'" (click)="confirmSave()">Guardar</button>
       </div>
     </div>
   </div>

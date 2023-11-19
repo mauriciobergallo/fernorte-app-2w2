@@ -6,7 +6,6 @@ import { SearchStorageTicketComponent } from './components/search-storage-ticket
 import { CurrentInventoryComponent } from './components/current-inventory/current-inventory.component';
 import { ConsultOrderComponent } from './components/consult-order/consult-order/consult-order.component';
 import { DeliveryOrderDetailsComponent } from './components/consult-order/delivery-order-details/delivery-order-details.component';
-import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
 import { HomeComponent } from './components/home/home.component';
 import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
 import { CreateMovementComponent } from './components/create-movement/create-movement.component';
@@ -46,13 +45,7 @@ const routes: Routes = [
           },
         ],
       },
-      {
-        path: 'reception-orders',
-        children: [
-          { path: '', component: ConsultReceptionOrdersComponent },
-          { path: ':id/details', component: ReceptionOrderDetailsComponent },
-        ],
-      },
+      
     ],
   },
 ];

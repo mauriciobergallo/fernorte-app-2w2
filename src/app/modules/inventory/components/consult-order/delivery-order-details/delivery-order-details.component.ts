@@ -7,6 +7,7 @@ import { DeliveryOrderPut } from '../../../models/delivery-order-put';
 import { DeliveryOrderDetailPut } from '../../../models/delivery-order-detail-put';
 import { DeilveryOrderDetails } from '../../../models/deilvery-order-details';
 import { DeliveryOrdersMockService } from '../../../services/Mocks/delivery-orders-mock.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-delivery-order-details',
@@ -21,15 +22,25 @@ export class DeliveryOrderDetailsComponent {
     private route: ActivatedRoute,
     private deliveryorderService: DeliverOrderService,
     private router: Router,
-    private mockservice :DeliveryOrdersMockService
+    private mockservice :DeliveryOrdersMockService,
   ) {}
 
   save() {
-    if (confirm('¿Desea guardar la información?')) {
       this.loading = true;
       const deliveryOrderPut = this.mapToDeliveryOrderPut();
       console.log('ORDEN');
       console.log(deliveryOrderPut);
+      setTimeout(() => {
+        this.mockservice.updateOrder(deliveryOrderPut);
+        this.loading = false;
+        
+        Swal.fire({
+            icon: 'success',
+            title: '¡Carga completada!',
+            text: 'La orden se ha actualizado correctamente.',
+        });
+    }, 2000);
+      /*
       this.deliveryorderService
         .updateDeliveryOrderDetails(deliveryOrderPut)
         .pipe(
@@ -42,8 +53,8 @@ export class DeliveryOrderDetailsComponent {
           console.log('DELIVERY ORDER UPDATED');
           console.log(orderData);
           this.loading = false;
-        });
-    }
+        });*/
+    
   }
 
   mapToDeliveryOrderPut(): DeliveryOrderPut {
@@ -52,10 +63,8 @@ export class DeliveryOrderDetailsComponent {
 
     deliveryOrderPut.details = this.order.details.map((detail) => {
       const detailPut = new DeliveryOrderDetailPut();
-      detailPut.quantity = detail.delivered_quantity;
+      detailPut.quantity =  detail.quantity_delivery;
       detailPut.product_id = detail.product_id;
-      console.log('DETALLE ');
-      console.log(detailPut);
       return detailPut;
     });
 
@@ -110,10 +119,21 @@ export class DeliveryOrderDetailsComponent {
     }
   }
 
-  confirmCancellation() {
-    if (confirm('¿Desea volver?')) {
-      this.router.navigate(['inventory', 'orders']);
-    }
+  confirmCancellation(): void {
+    Swal.fire({
+        title: '¿Desea volver?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#6C757D',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Sí',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            this.router.navigate(['inventory', 'orders']);
+        }
+    });
   }
 
   navigate() {
@@ -133,4 +153,22 @@ export class DeliveryOrderDetailsComponent {
         return '';
     }
   }
+
+  confirmSave(): void {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción guardará la orden. ¿Estás seguro de continuar?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#6C757D',
+        confirmButtonText: 'Sí, guardar',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            this.save();
+        }
+    });
+}
 }

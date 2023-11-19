@@ -17,7 +17,6 @@ import { StateIconPipePipe } from './pipes/state-icon-pipe.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeliveryOrderDetailsComponent } from './components/consult-order/delivery-order-details/delivery-order-details.component';
 
-import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
 import { RouterModule } from '@angular/router';
 import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
 import { CreateMovementComponent } from './components/create-movement/create-movement.component';
@@ -38,7 +37,6 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 
     StateIconPipePipe,
     DeliveryOrderDetailsComponent,
-    ConsultReceptionOrdersComponent,
     ReceptionOrderDetailsComponent,
     CreateMovementComponent
   ],
