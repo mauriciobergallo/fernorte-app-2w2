@@ -58,7 +58,7 @@ export class AddProductComponent implements OnInit {
         validators: [Validators.required, Validators.minLength(5)],
         asyncValidators: [this.productNameValidator.bind(this)],
         updateOn: 'change'
-      }], description: [null],
+      }], description: [null, Validators.maxLength(255)],
       unitPrice: [null, Validators.required],
       stockQuantity: [null, Validators.required],
       unitOfMeasure: [null],
@@ -103,14 +103,10 @@ export class AddProductComponent implements OnInit {
     }
   }
   productNameValidator(control: AbstractControl): Observable<ValidationErrors | null> {
+    console.log(this.product)
     return this.prodService.get(1, 0, "name", "asc", true).pipe(
       map((products: any) => {
-        const isProductNameExists = products.products.some((product: any) => {
-          if (this.isEdit && this.product?.name.toLowerCase() === product.name.toLowerCase()) {
-            return false;
-          }
-          return product.name.toLowerCase() === control.value.toLowerCase();
-        });
+        const isProductNameExists = products.products.some((product: any) => product.name.toLowerCase() === control.value.toLowerCase() && product.idProduct != this.product?.idProduct);
         return isProductNameExists ? { productNameExists: true } : null;
       }),
       catchError(() => of(null))

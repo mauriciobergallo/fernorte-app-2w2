@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PriceHistory } from '../../../models/priceHistory';
-import { ProductService } from '../../../services/product.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { jsPDF } from "jspdf";
-import "jspdf-autotable";
 import { IProductCategory } from '../../../models/IProductCategory';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-report',

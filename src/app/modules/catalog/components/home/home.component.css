@@ -65,11 +65,10 @@ body {
 
 .router-sidebar{
     margin-left: 280px;
+    width: 100%;
+    padding: 25px;
 }
 
-.nav-link.active{
-    background-color: #e5e5e5 !important;
-}
 
 .nav-item{
     margin: 3px 0

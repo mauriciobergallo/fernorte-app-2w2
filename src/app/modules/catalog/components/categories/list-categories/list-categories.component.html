@@ -57,7 +57,7 @@
                         </button>
                         <div ngbDropdownMenu>
                             <button ngbDropdownItem type="button" (click)="openEditModal(category)">Editar</button>
-                            <button ngbDropdownItem type="submit" (click)="openDeleteModal(category)">Eliminar</button>
+                            <button ngbDropdownItem type="submit" (click)="openDeleteModal(category)" *ngIf="!category.isDeleted">Eliminar</button>
                         </div>
                     </div>
                 </td>

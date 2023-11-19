@@ -9,3 +9,7 @@
 .btn {
   float: right;
 }
+
+.nameColumn{
+  cursor: pointer !important;
+}

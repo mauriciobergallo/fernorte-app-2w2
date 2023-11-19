@@ -17,8 +17,8 @@ export class ProductService {
    constructor(private requestResponseService: RequestResponseService) { }
 
    get(
-      page?: number,
-      size?: number,
+      page?: number | null,
+      size?: number | null,
       sortBy?: string,
       sortDir?: string,
       isDeleted?: boolean,
