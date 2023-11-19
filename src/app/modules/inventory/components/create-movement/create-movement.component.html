@@ -1,0 +1,278 @@
+<!-- ... -->
+<!-- Botón para abrir el primer modal -->
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalToggle"><i class="bi bi-file-earmark-plus"></i></button>
+
+<!-- Primer Modal -->
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" #myModal
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Nuevo movimiento</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForms()"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí comienza el contenido de la tarjeta -->
+                <div class="card text-center">
+                    <div class="card-header">
+                        Paso 1
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Tipo de movimiento</h5>
+                        <div class="container p-4">
+
+                            <form [formGroup]="movementForm" >
+
+                                <h5 class="card-title ">Motivo</h5>
+
+                                <!--CREAR UN SELECT CON COMENTARIOS PRESETEADOS DE MOVIMIENTOS-->
+                                <!--CREAR UN SELECT CON COMENTARIOS PRESETEADOS DE MOVIMIENTOS-->
+                                
+                                <!-- Campo de texto para comentarios -->
+                                <h5 class="card-title ">Comentarios</h5>
+                                <div class="mb-3">
+                                    <textarea formControlName="remarks" class="form-control"
+                                        placeholder="Descripción acerca del movimiento"
+                                        [ngClass]="{'is-invalid': this.movementForm.get('remarks')?.invalid && this.movementForm.get('remarks')?.dirty}">
+                                    </textarea>
+                                    <div class="invalid-feedback mt-2 "
+                                        [hidden]="remarksControl?.valid || remarksControl?.pristine">
+                                        <span *ngIf="remarksControl?.hasError('required') && remarksControl?.dirty">
+                                            El comentario es requerido
+                                        </span>
+                                        <span *ngIf="remarksControl?.hasError('minlength') && remarksControl?.dirty">
+                                            Minimo 15 caracters
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Aquí termina el contenido de la tarjeta -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"  
+                    [disabled]="this.remarksControl?.invalid ">Sigiente</button>
+                <button type="button" class="btn btn-danger " data-bs-dismiss="modal" aria-label="Cerrar" (click)="resetForms()">Cerrar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Segundo modal -->
+<div class="modal  fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" #myModal2
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-xl ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Nuevo movimiento</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForms()"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí comienza el contenido de la tarjeta -->
+                <div class="card text-center">
+                    <div class="card-header">
+                        Paso 2
+                    </div>
+                    <div class="card-body">
+
+                        <form [formGroup]="detailForm">
+                            <h5 class="card-title">Seleccione un producto</h5>
+                            <div
+                                *ngIf="detailForm.get('origin')?.invalid && (detailForm.get('origin')?.dirty || detailForm.get('origin')?.touched)">
+                                <span class="text-danger" *ngIf="detailForm.get('origin')?.hasError('required')">Origen
+                                    es requerido.</span>
+                            </div>
+                            <div class="container ">
+                                <div class="search-container my-3">
+                                    <input type="text" class="form-control" placeholder="Ingrese el nombre del producto"
+                                        (input)="onSearch($event)" />
+                                </div>
+
+                                <table class="table table-responsive  table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th></th>
+                                            <th>Nombre del Producto</th>
+                                            <th>Cantidad Actual</th>
+                                            <th>Zona</th>
+                                            <th>Sección</th>
+                                            <th>Espacio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let info of filteredLocationsInfo$ | async"
+                                            (click)="onProductSelect(info)"
+                                            [class.table-active]="info === selectedOriginInfo">
+                                            <td [class]="(info  === selectedOriginInfo) ? 'bi bi-check-circle' : '  '"></td>
+                                            <td>{{ info.product_name }}</td>
+                                            <td>{{ info.quantity }}</td>
+                                            <td>{{ info.location.zone }}</td>
+                                            <td>{{ info.location.section }}</td>
+                                            <td>{{ info.location.space }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <hr>
+                                <h5>Ingrese cantidad</h5>
+                                <!-- Mensajes de Error para Quantity -->
+                                <div
+                                    *ngIf="(detailForm.get('quantity')?.invalid  || detailForm.hasError('quantityInsufficient')) && (detailForm.get('quantity')?.dirty || detailForm.get('quantity')?.touched)">
+                                    <span class="text-danger"
+                                        *ngIf="detailForm.get('quantity')?.hasError('required')">La cantidad es
+                                        requerida.</span>
+                                    <span class="text-danger" *ngIf="detailForm.hasError('quantityInsufficient')">La
+                                        cantidad actual es insuficiente.</span>
+                                    <span class="text-danger" *ngIf="detailForm.get('quantity')?.hasError('min')">La
+                                        cantidad debe ser al menos 1.</span>
+                                </div>
+
+                                <div class="container my-3">
+                                    <!-- Usa el sistema de grid de Bootstrap para controlar el ancho del input -->
+                                    <div class="row ">
+                                        <div class="col-4"></div>
+                                        <div class="col-4"> <!-- Ajusta el número 4 para cambiar el tamaño -->
+                                            <input type="number" class="form-control" formControlName="quantity"
+                                                min="0" />
+                                        </div>
+                                        <div class="col-4"></div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h5>Seleccione locacion de destino</h5>
+                                <!-- Mensajes de Error para Destiny -->
+                                <div
+                                    *ngIf="(detailForm.get('destiny')?.invalid || detailForm.hasError('destinationInvalid')) && detailForm.get('quantity')?.dirty">
+                                    <span class="text-danger"
+                                        *ngIf="detailForm.get('destiny')?.hasError('required')">Destino es
+                                        requerido.</span>
+                                    <span class="text-danger" *ngIf="detailForm.hasError('destinationInvalid')">El
+                                        destino no
+                                        es válido para la cantidad requerida.</span>
+                                </div>
+                                <table class="table table-responsive  table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th></th>
+                                            <th>Nombre del Producto</th>
+                                            <th>Cantidad libre</th>
+                                            <th>Zona</th>
+                                            <th>Sección</th>
+                                            <th>Espacio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let info of filteredLocationsInfoDestinity$ | async"
+                                            (click)="onDestinySelect(info)"
+                                            [class.table-active]="info === selectedDestinityInfo">
+                                            <td [class]="(info  === selectedDestinityInfo) ? 'bi bi-check-circle' : ''">
+                                            </td>
+                                            <td>{{ info.product_name }}</td>
+                                            <td>{{ info.max_capacity - info.quantity }}</td>
+                                            <td>{{ info.location.zone }}</td>
+                                            <td>{{ info.location.section }}</td>
+                                            <td>{{ info.location.space }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="text-danger  mt-2" [hidden]="!detailForm.errors?.['duplicateMovement']">
+                                <span *ngIf="detailForm.errors?.['duplicateMovement']">
+                                  No puede seleccionar más de una vez un producto en un movimiento.
+                                </span>
+                              </div>
+                            <hr>
+                            <button type="button" (click)="addDetail(detailForm)" [disabled]="this.detailForm.invalid"
+                                class="m-3 btn btn-primary position-relative">
+                                Agregar
+                                <span *ngIf="movementDetailsArray.length > 0  "
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{movementDetailsArray.length}}
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Aquí termina el contenido de la tarjeta -->
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle"
+                    data-bs-toggle="modal">Atras</button>
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle3" [disabled]="detailForm.invalid && movementDetailsArray.length === 0  || movementDetailsArray.length === 0"
+                    data-bs-toggle="modal" (click)="resetDetailForm()">Siguiente</button>
+                <button type="button" class="btn btn-danger " data-bs-dismiss="modal" aria-label="Cerrar" (click)="resetForms()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tercer modal -->
+<div class="modal  fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" #myModal3
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-xl ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel3">Nuevo movimiento</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="resetForms()"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí comienza el contenido de la tarjeta -->
+                <div class="card text-center">
+                    <div class="card-header">
+                        Confirmar
+                    </div>
+                    <div class="card-body">
+                        <div class="text-danger  mt-2" [hidden]="movementForm.value.movementDetailsArray.length > 0">
+                            <span >
+                              No puede crear un movimiento sin productos.
+                            </span>
+                          </div>
+
+                        <table class="table table-responsive  table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Nombre del Producto</th>
+                                    <th>Cantidad a mover</th>
+                                    <th>Origen</th>
+                                    <th>Locacion</th>
+                                    <th>Accion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let detail of movementForm.value.movementDetailsArray; let i = index">
+                                    <td>{{ detail.origin.product_name }}</td>
+                                    <td>{{ detail.quantity }}</td>
+                                    <td>{{ detail.origin.location.zone }} - {{ detail.origin.location.section }} - {{
+                                        detail.origin.location.space }}</td>
+                                    <td>{{ detail.destiny.location.zone }} - {{ detail.destiny.location.section }} - {{
+                                        detail.destiny.location.space }}</td>
+                                    <td (click)="removeDetail(i)"><i class="bi bi-trash"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Aquí termina el contenido de la tarjeta -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2"
+                    data-bs-toggle="modal">Atras</button>
+                <button class="btn btn-primary" data-bs-dismiss="modal " [disabled]="movementForm.value.movementDetailsArray.length <= 0" (click)="submitForm()"
+                    data-bs-toggle="close">Confirmar</button>
+                <button type="button" class="btn btn-danger " data-bs-dismiss="modal" aria-label="Cerrar" (click)="resetForms()">Cerrar</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
