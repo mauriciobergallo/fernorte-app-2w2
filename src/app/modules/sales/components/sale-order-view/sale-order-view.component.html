@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
-    <title>Factura</title>
+    <title>Orden de venta</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
 
@@ -34,9 +34,9 @@
                                 <div class="col-sm-6">
                                     <div class="invoice-id">
                                         <div class="info">
-                                            <h1 class="inv-header-1">Factura</h1>
-                                            <p class="mb-1">Orden de Venta: <span>#{{bill.idBill}}</span></p>
-                                            <p class="mb-0">Fecha: <span>{{bill.createdDate}}</span></p>
+                                            <h1 class="inv-header-1">Orden de Venta</h1>
+                                            <p class="mb-1">Orden de Venta: <span>#{{saleOrder.id_sale_order}}</span></p>
+                                            <p class="mb-0">Fecha: <span>{{saleOrder.date_of_issue}}</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -47,11 +47,11 @@
                                 <div class="col-sm-6">
                                     <div class="invoice-number mb-30">
                                         <h4 class="inv-title-1">Cliente</h4>
-                                        <h2 class="name">{{bill.firstNameClient}} {{bill.lastNameClient}}</h2>
+                                        <h2 class="name">{{saleOrder.first_name_client}} {{saleOrder.last_name_client}}</h2>
                                         <p class="invo-addr-1">
-                                            {{bill.telephone}} <br/>
-                                                {{bill.email}}<br/>
-                                            {{bill.address}} <br/>
+                                            {{saleOrder.telephone}} <br/>
+                                                {{saleOrder.email}}<br/>
+                                            {{saleOrder.address}} <br/>
                                         </p>
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@
                                     <div class="invoice-number mb-30">
                                         <div class="invoice-number-inner">
                                             <h4 class="inv-title-1">Vendedor</h4>
-                                            <h2 class="name">{{bill.firstNameSeller}} {{bill.lastNameSeller}} </h2>
+                                            <h2 class="name">{{saleOrder.first_name_seller}} {{saleOrder.last_name_seller}} </h2>
                                             <p class="invo-addr-1">
                                             
                                             </p>
@@ -81,16 +81,16 @@
                                     </tr>
                                     </thead>
                                     <tbody >
-                                    <tr class="tr" *ngFor="let item of bill.detailBill">
+                                    <tr class="tr" *ngFor="let item of saleOrder.detail_sales_order">
                                         <td>
                                             <div class="item-desc-1">
-                                                <span>{{item.id}}</span>
+                                                <span>{{item.id_sale_order_details}}</span>
                                             </div>
                                         </td>
-                                        <td class="pl0">{{item.nameProduct}}</td>
-                                        <td class="text-center">${{item.unitaryPrice}}</td>
+                                        <td class="pl0">{{item.name}}</td>
+                                        <td class="text-center">${{item.price}}</td>
                                         <td class="text-center">{{item.quantity}}</td>
-                                        <td class="text-end">${{item.unitaryPrice * item.quantity}}</td>
+                                        <td class="text-end">${{item.price * item.quantity}}</td>
                                     </tr>
                                     
                                     <tr class="tr2">
@@ -122,9 +122,9 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-5 col-sm-5">
                                     <div class="payment-method mb-30">
-                                        <h3 class="inv-title-1">Metodo de Pago</h3>
+                                        <h3 class="inv-title-1">Vencimiento</h3>
                                         <ul class="payment-method-list-1 text-14">
-                                            <li><strong></strong>{{bill.payment.paymenMetod.paymentMethod}}</li>
+                                            <li><strong>Fecha: </strong>{{saleOrder.date_of_expiration}}</li>
                                         
                                         </ul>
                                     </div>
@@ -160,4 +160,3 @@
 
 </body>
 </html>
-

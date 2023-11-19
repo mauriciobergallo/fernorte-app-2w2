@@ -10,7 +10,10 @@ import { DetailsState } from '../../models/DetailsState';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SaleOrderApi } from '../../models/SaleModelApi';
+
+import { SaleOrderView } from '../../models/SaleOrderView';
 //import html2PDF from 'jspdf-html2canvas/dist/js-pdf';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +21,8 @@ import { SaleOrderApi } from '../../models/SaleModelApi';
 export class SaleOrderServiceService {
 
   saleOrderList = new Observable<SaleOrderApi[]>();
+
+  saleOrderListView = new Observable<SaleOrderView[]>();
 
   saleOrderStates = new Observable<string[]>();
 
@@ -254,4 +259,8 @@ export class SaleOrderServiceService {
   }
 
 
+    getSaleOrdersById(id:number) : Observable<SaleOrderView> {
+    return this.http.get<SaleOrderView>(`http://localhost:8080/sales-orders?id_order=${id}`)
+
+    }
 }
