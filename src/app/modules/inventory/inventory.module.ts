@@ -21,6 +21,7 @@ import { ConsultReceptionOrdersComponent } from './components/consult-reception-
 import { RouterModule } from '@angular/router';
 import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
 import { CreateMovementComponent } from './components/create-movement/create-movement.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import { CreateMovementComponent } from './components/create-movement/create-mov
     DatepickerRangePopupComponent,
     SearchStorageTicketComponent,
     ConsultOrderComponent,
-
+    SpinnerComponent,
     SidebarComponent,
 
     StateIconPipePipe,

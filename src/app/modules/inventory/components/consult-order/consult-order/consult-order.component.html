@@ -3,11 +3,11 @@
     <div class="card-body">
       <h2 class="card-title  text-center">Órdenes de entrega</h2>
       <div class=" input-group mb-3 custom-search" style="max-width: 30%; margin-top: 20px;">
-        <input class="form-control col-1" [(ngModel)]="orderId" placeholder="">
-        <div class="input-group-append">
-          <button class="btn btn-primary search-button" (click)="search()">Buscar</button>
-        </div>
+        <input class="form-control col-1" [ngModel]="orderId" (ngModelChange)="onOrderIdChange($event)" placeholder="Documento,Nombre del Cliente, Orden de Compra">
       </div>
+      <div>
+        <fn-datepicker-range-popup (onFilter)="filterByDate($event)"
+        (onClearFilter)="clearFilters()"></fn-datepicker-range-popup>      </div>
 
       <div class="table">
         <table class="table table-striped">
