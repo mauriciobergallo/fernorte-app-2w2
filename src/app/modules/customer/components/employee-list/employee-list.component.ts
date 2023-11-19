@@ -56,6 +56,9 @@ export class EmployeeListComponent implements OnInit {
     
     this.onLoad()
     this.employeeList = this.employeesHardCoded;
+    this.employeeService.getEmployeeUpdatedObservable().subscribe(() => {
+      this.onLoad();
+    });
   }
 
   onLoad(){
@@ -93,26 +96,25 @@ export class EmployeeListComponent implements OnInit {
   }
 
   onDelete(employee: EmployeeResponseDTO){
-    //Confirmacion
-
+  
     this.employeeService.delete(employee).subscribe(
       (response) => {
         this.showInfoDesactivedResult();
         this.onLoad()
+   
       },
       (error) => (
         console.log(error)
+        
       )
     )
   }
 
   onActive(employee: EmployeeResponseDTO){
-    //Confirmacion
-
+  
     this.employeeService.active(employee).subscribe(
       (response) => {
         this.showInfoActivedResult();
-        // alert("Se dio de alta el empleado")
         this.onLoad()
       },
       (error) => (

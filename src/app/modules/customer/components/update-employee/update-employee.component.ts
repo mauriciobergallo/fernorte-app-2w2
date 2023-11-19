@@ -133,8 +133,7 @@ export class UpdateEmployeeComponent implements OnInit {
   }
   
   open(content: any) {
-    console.log('PRUEBA PRUEBA PRUEBA');
-    // this.loadEmployeeData(this.idEmployee);
+   
     this.modalService
       .open(content, {
         ariaLabelledBy: 'modal-basic-title',
@@ -166,10 +165,12 @@ export class UpdateEmployeeComponent implements OnInit {
             .putEmployee(employeeInSnake, this.idEmployee)
             .subscribe(
               (response) => {
-                alert('Se actualizo el empleado');
+                this.showInfoUpdateResult();
+                this.modalService.dismissAll();
               },
               (error) => {
-                alert('Error en el servidor');
+                this.showInfoErrorResult();
+                this.modalService.dismissAll();
               }
             );
           this.employeeService.clearFields(this.employee);
@@ -201,10 +202,13 @@ export class UpdateEmployeeComponent implements OnInit {
       .putEmployee(employeeInSnake, this.idEmployee)
       .subscribe(
         (response) => {
-          alert('Se actualizo el empleado');
+          this.showInfoUpdateResult();
+          this.employeeService.notifyEmployeeUpdated();
+          this.modalService.dismissAll();
         },
         (error) => {
-          alert('Error en el servidor');
+         this.showInfoErrorResult();
+         this.modalService.dismissAll();
         }
       );
   }
@@ -273,6 +277,26 @@ export class UpdateEmployeeComponent implements OnInit {
         this.closeForm();
         }
       });
+      }
+
+      showInfoUpdateResult(){
+        Swal.fire({
+          title: 'Resultado',
+          text: 'Se actualizó el empleado',
+          icon: 'success',
+          showConfirmButton: true,
+          confirmButtonText: 'ok',
+        });
+      }
+
+      showInfoErrorResult(){
+        Swal.fire({
+          title: 'Resultado',
+          text: 'Error en el servidor',
+          icon: 'error',
+          showConfirmButton: true,
+          confirmButtonText: 'ok',
+        });
       }
     
    onSubmitForm(employeeForm: NgForm) {

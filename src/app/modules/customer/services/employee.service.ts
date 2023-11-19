@@ -1,11 +1,13 @@
 import { Employee } from './../models/employee';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EmployeeResponseDTO } from '../models/employeeResponseDTO';
 
 @Injectable()
 export class EmployeeService {
+
+  private employeeUpdatedSubject = new BehaviorSubject<void>(undefined);
 
   private apiUrl = 'http://localhost:8090/employees';
 
@@ -59,4 +61,16 @@ active(employee: EmployeeResponseDTO): Observable<any>{
       }
     }
   }
+
+
+
+
+  getEmployeeUpdatedObservable(): Observable<void> {
+    return this.employeeUpdatedSubject.asObservable();
+  }
+
+  notifyEmployeeUpdated() {
+    this.employeeUpdatedSubject.next();
+  }
+
 }
