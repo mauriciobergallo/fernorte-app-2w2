@@ -21,12 +21,6 @@
                                 <i class="bi bi-pencil"></i></button>
                         </td>
                     </tr>
-                    <tr class="text-center">
-                        <td colspan="3">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#NewMethodModal" data-bs-whatever="@mdo">Agregar</button>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -47,10 +41,27 @@
                             <div class="mb-2">
                                 <label for="paymentMethod" class="form-label">Método de Pago</label>
                                 <input formControlName="paymentMethod" type="text" class="form-control"
-                                    id="paymentMethod" [(ngModel)]="editPayment.payment_method" required>
-                                <div
-                                    *ngIf="editForm.get('paymentMethod')!.touched && editForm.get('paymentMethod')!.hasError('required')">
-                                    El método de pago es obligatorio.</div>
+                                id="paymentMethod" [(ngModel)]="editPayment.payment_method" required name="paymentMethod">
+                            
+                                    <small id="paymentMethod" class="form-text text-muted error-message" *ngIf="       
+                                    !editForm.controls['paymentMethod'].valid &&
+                                    editForm.controls['paymentMethod'].touched &&
+                                    editForm.get('paymentMethod')?.getError('required')">
+                                    El método de pago es requerido
+                                </small>
+                                <!-- <small id="paymentMethod" class="form-text text-muted error-message" *ngIf="       
+                                    !editForm.controls['paymentMethod'].valid &&
+                                    editForm.controls['paymentMethod'].touched &&
+                                    editForm.controls['paymentMethod']?.getError('maxLength')">
+                                    El método debe tener máximo 30 caracteres
+                                </small>
+                                <small id="paymentMethod" class="form-text text-muted error-message" *ngIf="       
+                                    !editForm.controls['paymentMethod'].valid &&
+                                    editForm.controls['paymentMethod'].touched &&
+                                    editForm.controls['paymentMethod']?.getError('minLength')">
+                                    El método debe tener mínimo 3 caracteres.
+                                </small> -->
+                                
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -58,52 +69,19 @@
                                 <label for="surcharge" class="form-label">Recargo</label>
                                 <input formControlName="surcharge" type="number" class="form-control" id="surcharge"
                                     name="surcharge" [(ngModel)]="editPayment.surcharge" required>
-                                <div
-                                    *ngIf="editForm.get('surcharge')!.touched && editForm.get('surcharge')!.hasError('required')">
-                                    El recargo es obligatorio.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="NewMethodModal" tabindex="-1" aria-labelledby="NewMethodModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="NewMethodModalLabel">Registrar método de pago</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="editForm" (ngSubmit)="saveNewPaymentMethod()">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="mb-2">
-                                <label for="paymentMethod" class="form-label">Método de Pago</label>
-                                <input formControlName="paymentMethod" type="text" class="form-control"
-                                    id="paymentMethod" required>
-                                <small id="paymentMethod" class="form-text text-muted error-message" *ngIf="       
-                                    !editForm.controls['paymentMethod'].valid &&
-                                    editForm.controls['paymentMethod'].touched &&
-                                    editForm.get('paymentMethod')?.hasError('required')">
-                                    El método de pago es obligatorio.
+                                <small id="surcharge" class="form-text text-muted error-message" *ngIf="       
+                                    !editForm.controls['surcharge'].valid &&
+                                    editForm.controls['surcharge'].touched &&
+                                    editForm.get('surcharge')?.hasError('required')">
+                                    El método de pago es requerido
                                 </small>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-2">
-                                <label for="surcharge" class="form-label">Recargo</label>
-                                <input formControlName="surcharge" type="number" class="form-control" id="surcharge"
-                                    name="surcharge" required>
-                                <div
-                                    *ngIf="editForm.get('surcharge')!.touched && editForm.get('surcharge')!.hasError('required')">
-                                    El recargo es obligatorio.</div>
+                                <small id="taxValue" class="form-text text-muted error-message" *ngIf="
+                                !editForm.controls['surcharge'].valid &&
+                                editForm.controls['surcharge'].touched &&
+                                editForm.controls['surcharge'].getError('min')
+                                ">
+                                    El valor minimo es 0
+                                </small>
                             </div>
                         </div>
                     </div>

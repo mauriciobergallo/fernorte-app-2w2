@@ -16,7 +16,7 @@ export class PaymentMethodRegisterComponent implements OnInit {
   constructor(private paymentMethodService: PaymentMethodService, private formBuilder: FormBuilder) {
     this.registerForm = this.formBuilder.group({
       paymentMethod: ['', Validators.required],
-      surcharge: [0, Validators.required],
+      surcharge: [0, [Validators.required,Validators.min(0)]],
     });
   }
 
@@ -34,7 +34,7 @@ export class PaymentMethodRegisterComponent implements OnInit {
 
       this.paymentMethodService.createPaymentMethod(this.payment).subscribe({
         next:(methods) => {
-          console.log('Nuevo método de pago creado:', methods);
+          this.registerForm.reset();
         },
         error:(err)=>{
           alert("error")

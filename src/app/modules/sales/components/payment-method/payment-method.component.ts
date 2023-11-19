@@ -12,19 +12,13 @@ export class PaymentMethodComponent implements OnInit {
   payment: IPaymentMethod = { id_payment_method: 0, payment_method: '', surcharge: 0 };
   editPayment: IPaymentMethod = { id_payment_method: 0, payment_method: '', surcharge: 0 };
   paymentMethods: IPaymentMethod[] = [];
-  methodForm: FormGroup;
   editForm: FormGroup;
 
 
   constructor(private paymentMethodService: PaymentMethodService, private formBuilder: FormBuilder) {
-    this.methodForm = this.formBuilder.group({
-      paymentMethod: ['', Validators.required],
-      surcharge: [0, Validators.required],
-    });
-
     this.editForm = this.formBuilder.group({
-      paymentMethod: ['', Validators.required],
-      surcharge: [0, Validators.required],
+      paymentMethod: ['', [Validators.required]],
+      surcharge: [0, [Validators.required,Validators.min(0)]],
     });
   }
 
@@ -32,26 +26,6 @@ export class PaymentMethodComponent implements OnInit {
     this.loadPaymentMethods();
   }
 
-  saveNewPaymentMethod() {
-
-    if (this.editForm && this.editForm.valid) {
-      this.payment.id_payment_method = 0;
-      this.payment.payment_method = this.editForm.get('paymentMethod')?.value || '';
-      this.payment.surcharge = this.editForm.get('surcharge')?.value || 0;
-      this.editForm.get('paymentMethod')?.setValue('');
-      this.editForm.get('surcharge')?.setValue(0);
-
-      this.paymentMethodService.createPaymentMethod(this.payment).subscribe({
-        next:(methods) => {
-          console.log('Nuevo método de pago creado:', methods);
-          this.loadPaymentMethods();  
-        },
-        error:(err)=>{
-          alert("error")
-        }
-      })
-    }
-  }
 
   loadPaymentMethods() {
     this.paymentMethodService.getPaymentMethods().subscribe({
@@ -72,9 +46,9 @@ export class PaymentMethodComponent implements OnInit {
       next:(method) => {
         console.log('Método de pago actualizado:', method);
         this.loadPaymentMethods();
-        this.editForm.get('paymentMethod')?.setValue('');
-        this.editForm.get('surcharge')?.setValue(0);
+        this.editForm.reset();
         this.editPayment = { id_payment_method: 0, payment_method: '', surcharge: 0 };
+        
       },
       error:(err)=>{
         alert("error")
