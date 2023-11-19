@@ -60,6 +60,10 @@ export class LoginService {
     return this.http.post(url, login);
   }
 
+  logOut(){
+    this.isLogin = false;
+  }
+
   public isLogged(){
     return this.isLogin
   }
