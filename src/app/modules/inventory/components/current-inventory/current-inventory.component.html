@@ -10,12 +10,16 @@
     <div class="col-md-4">
       <input type="text" class="form-control" placeholder="Sección" [(ngModel)]="filterSection">
     </div>
-    <div class="col-md-4">
-      <button class="btn btn-primary" (click)="applyFilters()">Aplicar Filtros</button>
+    <div class="col-md-2">
+      <button class="btn btn-primary" (click)="applyFilters()">Filtrar</button>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" (click)="downloadPDF()">Exportar PDF</button>
+      <canvas id="myChart" style="position: absolute; left: -9999px;"></canvas>
     </div>
   </div>
-
-  <table class="table table-hover">
+  <fn-spinner *ngIf="loading"></fn-spinner>
+  <table class="table table-hover  my-4">
     <thead>
       <tr>
         <th scope="col">Producto</th>
@@ -38,7 +42,22 @@
     </tbody>
   </table>
 
-  <button class="btn btn-primary" (click)="downloadPDF()">Exportar PDF</button>
-  <canvas id="myChart" style="position: absolute; left: -9999px;"></canvas>
 
+</div>
+<div class="d-flex justify-content-center" style="margin-top: 5%;">
+  <ul class="pagination">
+    <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === 1" (click)="previousPage()">
+      <a class="page-link" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link">{{ currentPage }}</a>
+    </li>
+    <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === totalPages" (click)="nextPage()">
+      <a class="page-link" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
 </div>

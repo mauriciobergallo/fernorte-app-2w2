@@ -15,7 +15,7 @@ import {
 import { IUpdateDetailDto } from '../../models/receptions-orders/UpdateDetailDto.interface';
 import { IUpdateReceptionOrder } from '../../models/receptions-orders/UpdateReceptionOrderDto.interface';
 import { IUpdatedOrderDto } from '../../models/receptions-orders/UpdatedOrderDto.interface';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'fn-reception-order-details',
   templateUrl: './reception-order-details.component.html',
@@ -26,6 +26,9 @@ export class ReceptionOrderDetailsComponent implements OnInit, OnDestroy {
   // details: IUpdatedDetailDto[] = [];
   subscriptions: Subscription = new Subscription();
   detailsForm: FormGroup = new FormGroup({});
+  newComment: number = -1;
+  comment: string = '';
+  loading: boolean = false;
   constructor(
     private bookingService: BookingServiceService,
     private activatedRoute: ActivatedRoute,
@@ -36,6 +39,7 @@ export class ReceptionOrderDetailsComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
   ngOnInit(): void {
+    this.loading = true;
     const authData = {
       username: 'aabordon',
       roles: ['ENCARGADO'],
@@ -70,7 +74,7 @@ export class ReceptionOrderDetailsComponent implements OnInit, OnDestroy {
                         agreed_quantity: [d.agreed_quantity],
                         product_name: [d.product_name],
                         received_quantity: [
-                          d.received_quantity,
+                          d.agreed_quantity,
                           [
                             Validators.max(d.agreed_quantity),
                             Validators.min(0),
@@ -81,9 +85,11 @@ export class ReceptionOrderDetailsComponent implements OnInit, OnDestroy {
                         remarks: [d.remarks || ''],
                       })
                     );
+                    this.loading = false;
                   });
                 },
                 error: (error: Error) => {
+                  this.loading = false;
                   alert(error);
                 },
               });
@@ -98,7 +104,47 @@ export class ReceptionOrderDetailsComponent implements OnInit, OnDestroy {
   get details() {
     return this.detailsForm.get('details') as FormArray;
   }
-  addComment(detailId: number) {}
+  addComment(detailIndex: number) {
+    this.newComment = detailIndex;
+    this.comment = this.details
+      .get(this.newComment.toString())
+      ?.get('remarks')?.value;
+
+    console.log(this.details.get(detailIndex.toString()));
+  }
+  UpdateComment(commentForm: NgForm) {
+    if (commentForm.valid) {
+      Swal.fire({
+        title: `¿Estás seguro que desea agregar el comentario?`,
+        icon: 'question',
+        showCancelButton: true,
+        cancelButtonColor: '#6c757d',
+        confirmButtonColor: '#0d6efd',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.details
+            .get(this.newComment.toString())
+            ?.get('remarks')
+            ?.setValue(commentForm.value.comment);
+          Swal.fire({
+            title: '¡Comentario agregado!',
+            icon: 'success',
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#0d6efd',
+          });
+        }
+      });
+    } else {
+      Swal.fire({
+        title: `Debe agregar un comentario`,
+        icon: 'info',
+        confirmButtonColor: '#0d6efd',
+        confirmButtonText: 'Volver',
+      });
+    }
+  }
   getStatusText(state: string | undefined): string {
     switch (state) {
       case 'CREATED':
@@ -113,6 +159,21 @@ export class ReceptionOrderDetailsComponent implements OnInit, OnDestroy {
         return '';
     }
   }
+  backHome() {
+    Swal.fire({
+      title: `¿Desea volver a la lista de órdenes?`,
+      icon: 'question',
+      showCancelButton: true,
+      cancelButtonColor: '#6c757d',
+      confirmButtonColor: '#0d6efd',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['inventory', 'reception-orders']);
+      }
+    });
+  }
   updateOrder() {
     let updateReceptionOrderDetails = this.createUpdateReceptionOrder(
       this.detailsForm.value as IUpdateReceptionOrder
@@ -123,11 +184,23 @@ export class ReceptionOrderDetailsComponent implements OnInit, OnDestroy {
         .updateReceptionOrder(updateReceptionOrderDetails)
         .subscribe({
           next: (response: IUpdatedOrderDto) => {
-            alert('Operación exitosa');
+            Swal.fire({
+              title: '¡Operación exitosa!',
+              text: 'La orden ha sido actualizada con exito',
+              icon: 'success',
+              confirmButtonColor: '#0d6efd',
+              confirmButtonText: 'Aceptar',
+            });
+
             this.router.navigate(['inventory', 'reception-orders']);
           },
           error: (error: Error) => {
-            alert(error.message);
+            Swal.fire({
+              title: '¡Error!',
+              text: error.message,
+              icon: 'error',
+              confirmButtonColor: '#0d6efd',
+            });
           },
         })
     );

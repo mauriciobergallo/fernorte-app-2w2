@@ -1,18 +1,25 @@
 <div class="container mt-3 ">
   <div>
     <div class="row">
-      <div class="col-md-6">
-          <h2>Movimientos de Inventario</h2>
-      </div>
-      <div class="col-md-6  justify-content-end ">
-          <fn-create-movement href="new-movement"></fn-create-movement>
-      </div>
-  </div>
+
+      <h2 class="text-center">Movimientos de Inventario</h2>
+
+
+    </div>
+
     <fn-datepicker-range-popup (onFilter)="filterByDate($event)"
       (onClearFilter)="clearFilters()"></fn-datepicker-range-popup>
+    <div class="container my-2">
+      <fn-create-movement href="new-movement"></fn-create-movement>
+      <button class="btn btn-primary mx-2" (click)="downloadPDF()">Exportar PDF</button>
+    </div>
+
     <div class="alert alert-warning alert-dismissible fade show" role="alert"
       *ngIf="!isLoading && this.movimientos.length == 0">
       <strong class="text-danger">Movements no localizados</strong>
+      <div class="">
+
+      </div>
     </div>
   </div>
   <div>
@@ -83,10 +90,7 @@
       </tbody>
     </table>
   </div>
-  <div class="container mt-5 d-flex flex-column align-items-center">
-    <div *ngIf="isLoading" class="spinner-border" style="margin-top: 5%;"></div>
-  </div>
-
+  <fn-spinner *ngIf="isLoading"></fn-spinner>
   <div class="d-flex justify-content-center  " style="margin-top: 5%;">
 
     <ul class="pagination">
@@ -106,10 +110,10 @@
     </ul>
 
 
-   
+
   </div>
   <div class="container">
-    <button class="btn btn-primary"(click)="downloadPDF()" >Exportar PDF</button>
+    <button class="btn btn-primary" (click)="downloadPDF()">Exportar PDF</button>
   </div>
   <canvas id="myChart" style="position: absolute; left: -9999px;"></canvas>
 </div>
