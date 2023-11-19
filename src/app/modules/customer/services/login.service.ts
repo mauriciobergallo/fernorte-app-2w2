@@ -7,34 +7,40 @@ import { USER_LIST } from '../data/user-data';
 
 @Injectable()
 export class LoginService {
-  isLogin: boolean = false;
   users: User[] = USER_LIST;
-  role: String = '';
+  user: User | null = null;
 
   constructor() {}
 
   public onLogin(login: Login): User | null {
     for (const user of this.users) {
       if ((user.username === login.identity || user.email === login.identity) && user.password === login.password) {
-        this.isLogin = true;
-        this.role = user.role;
+        this.user = user;
         return user;
       }
     }
-    // Si no se encuentra un usuario que cumpla las condiciones, retornar null
     return null;
+  }
+
+  getEmail(){
+    if(this.user != null){
+      return this.user.email;
+    }
+    return '';
   }
   
   getRole(){
-    return this.role;
+    if(this.user != null){
+      return this.user.role;
+    }
+    return '';
   }
 
   logOut(){
-    this.isLogin = false;
-    this.role = '';
+    this.user = null;
   }
 
   public isLogged(){
-    return this.isLogin
+    return this.user != null
   }
 }
