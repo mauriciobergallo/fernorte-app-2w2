@@ -20,14 +20,16 @@
   justify-content: start;
  }
 
+ .acciones-col{
+  width: auto !important;
+ }
 
+ .nameColumn{
+   cursor: pointer !important;
+ }
 @media (max-width: 767px) {
    .table-header .form-group {
      margin-bottom: 10px;
    }
  }
  
-
- .nameColumn{
-   cursor: pointer !important;
- }

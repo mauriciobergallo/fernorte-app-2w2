@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { jsPDF } from "jspdf";
 import { IProductCategory } from '../../../models/IProductCategory';
 import { ProductService } from '../../../services/product.service';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-report',

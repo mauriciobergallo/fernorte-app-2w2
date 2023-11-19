@@ -1,9 +1,30 @@
 .tooltip {
-    position: absolute;
-    background-color: #333;
-    color: #fff;
-    padding: 8px;
-    border-radius: 4px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* Asegúrate de que esté en capa superior */
-  }
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  /* Asegúrate de que esté en capa superior */
+}
+
+.item-report {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  font-weight: 600;
+  cursor: pointer;
+}
+.item-report:hover {
+  background: #f8f9fa;
+}
+
+.item-report>i{
+  width: auto !important;
+}
+.cont-download{
+  display: flex;
+  justify-content: end;
+  padding: 10px;
+}

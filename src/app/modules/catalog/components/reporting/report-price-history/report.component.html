@@ -21,6 +21,23 @@
       </div>
     </div>
   </form>
+  <div class="container cont-download">
+    <div ngbDropdown container="body">
+      <button type="button" class="btn btn-sm btnDropdown btn-success" ngbDropdownToggle>
+        <i class="bi bi-three-dots-vertical"></i>
+      </button>
+      <div ngbDropdownMenu>
+        <div class="item-report" (click)="downloadPDF()">
+          <i ngbDropdownItem class="bi bi-file-earmark-pdf-fill"  style="color: red;"></i>
+          PDF
+        </div>
+        <div class="item-report" (click)="downloadCSV()">
+          <i ngbDropdownItem class="bi bi-file-earmark-excel-fill" (click)="downloadCSV()" style="color: green;"></i>
+          CSV
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Resto del código -->
   <div class="row">
     <div class="col-md-11">
@@ -40,7 +57,7 @@
           <!-- <tr *ngFor="let report of reports; index as i"> -->
           <tr *ngFor="let item of listPriceHistory">
             <td style="max-width: 15ch; word-wrap: break-word;">{{item.name}}</td>
-            <td>{{item.unitPrice}}</td>
+            <td>{{item.unitPrice  | currency : 'ARS' : 'symbol'}}</td>
             <td>{{item.startDate | date:'dd/MM/yyyy'}}</td>
             <td>
               <ng-container *ngIf="item.endDate!=null;else noContent"> {{item.endDate | date:'dd/MM/yyyy'}}
@@ -56,17 +73,6 @@
         <ngb-pagination class="d-flex justify-content-center" [(page)]="currentPage" [pageSize]="itemsPerPage"
           [collectionSize]="totalItems" [maxSize]="5" [rotate]="true" (pageChange)="handlePagination($event)">
         </ngb-pagination>
-      </div>
-    </div>
-    <div class="col-md-1">
-      <div ngbDropdown container="body">
-        <button type="button" class="btn btn-sm btnDropdown btn-success" ngbDropdownToggle>
-          <i class="bi bi-three-dots-vertical"></i>
-        </button>
-        <div ngbDropdownMenu>
-          <i ngbDropdownItem class="bi bi-file-earmark-pdf-fill" (click)="downloadPDF()" style="color: red;"></i>
-          <i ngbDropdownItem class="bi bi-file-earmark-excel-fill" (click)="downloadCSV()" style="color: green;"></i>
-        </div>
       </div>
     </div>
   </div>
