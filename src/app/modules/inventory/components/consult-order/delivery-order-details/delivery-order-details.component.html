@@ -9,6 +9,7 @@
                 <td>
                   <h5 class="card-title">Orden de entrega</h5>
                   <p>N#: {{ orderData.delivery_order_id}}</p>
+                  <p>Orden de Venta N#: {{ orderData.sale_order_id}}</p>
                   <p>Estado: {{ getStatusText(orderData.state) }}</p>
                   <p>Fecha de creación: {{ orderData.created_at }}</p>
                 </td>
