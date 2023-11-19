@@ -74,7 +74,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of billListMock">   
-              <th scope="row">{{item.id_bill!}}</th>
+              <th scope="row">{{item.id_bill! + 1000}}</th>
               <td>{{item.las_name}}</td>
               <td>{{item.name_seller}}</td>
               <td>{{item.created_date | dateFormat}}</td>
