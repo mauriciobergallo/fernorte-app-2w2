@@ -253,6 +253,8 @@ export class UpdateEmployeeComponent implements OnInit {
 		});
 	  }
 
+
+
     closeForm() {
       this.modalService.dismissAll();
       }
@@ -277,32 +279,3 @@ export class UpdateEmployeeComponent implements OnInit {
      console.log('Employee', employeeForm);
    }
 }
-
-
-/*   ejemplo de create rol:
-
-
-onSubmitForm() {
-		if (this.roleForm.valid) {
-		  this.roleService.createRole(this.roleForm.value).subscribe(
-			(newRole: Role) => {
-			  this.modalService.dismissAll(newRole);
-			  console.log(this.roleForm.value);
-			  Swal.fire('Éxito', 'Rol creado correctamente', 'success');
-			  this.roleService.notifyRolesUpdated();
-			},
-			(error) => {
-			  Swal.fire('Error', 'No se pudo crear el rol', 'error');
-			}
-		  );
-		} else {
-		  // El formulario no es válido, puedes mostrar un mensaje de error o hacer algo más
-		}
-	  }
-
-
-
-
-    
-	  
-*/

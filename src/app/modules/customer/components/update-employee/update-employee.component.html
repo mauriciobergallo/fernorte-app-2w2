@@ -99,6 +99,8 @@
 		<div class="modal-footer">
 			<button  *ngIf="!onlyForRead" type="submit" class="btn btn-outline-secondary"  (click)="showCancelConfirmation()">Cancelar</button>
 
+			<button *ngIf="onlyForRead"  type="submit" class="btn btn-outline-secondary"  (click)="modalService.dismissAll()">Cancelar</button>
+
 			<button  *ngIf="!onlyForRead" type="submit" class="btn btn-outline-primary"  (click)="showConfirmation(employeeForm)">Actualizar</button>
 		</div>
 	</div>

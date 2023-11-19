@@ -5,6 +5,7 @@ import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 import { EmployeeResponseDTO } from '../../models/employeeResponseDTO';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEmployeeComponent } from '../update-employee/update-employee.component';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -96,7 +97,7 @@ export class EmployeeListComponent implements OnInit {
 
     this.employeeService.delete(employee).subscribe(
       (response) => {
-        alert("Se dio de baja el empleado")
+        this.showInfoDesactivedResult();
         this.onLoad()
       },
       (error) => (
@@ -110,7 +111,8 @@ export class EmployeeListComponent implements OnInit {
 
     this.employeeService.active(employee).subscribe(
       (response) => {
-        alert("Se dio de alta el empleado")
+        this.showInfoActivedResult();
+        // alert("Se dio de alta el empleado")
         this.onLoad()
       },
       (error) => (
@@ -119,4 +121,56 @@ export class EmployeeListComponent implements OnInit {
     )
   }
 
+
+
+showInfoActivedResult(){
+  Swal.fire({
+    title: 'Resultado',
+    text: 'Se dio de alta el empleado',
+    icon: 'success',
+    showConfirmButton: true,
+    confirmButtonText: 'ok',
+  });
+}
+
+
+showInfoDesactivedResult(){
+  Swal.fire({
+    title: 'Resultado',
+    text: 'Se dio de baja el empleado',
+    icon: 'success',
+    showConfirmButton: true,
+    confirmButtonText: 'ok',
+  });
+}
+
+  showConfirmationReactivate(employee: EmployeeResponseDTO) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Quieres reactivar el empleado?',
+      icon: 'question',     
+      confirmButtonText: 'Sí, reactivar',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {	
+      this.onActive(employee);
+      }
+    });
+    }
+
+    showConfirmationDelete(employee: EmployeeResponseDTO) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: '¿Quieres eliminar el empleado?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {	
+        this.onDelete(employee);
+        }
+      });
+      }
 }
