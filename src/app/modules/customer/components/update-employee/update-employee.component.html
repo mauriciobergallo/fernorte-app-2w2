@@ -1,8 +1,14 @@
 
 			<div class="modal-header">
-			<h4 class="modal-title" id="modal-basic-title" *ngIf="!onlyForRead">Actualizar Empleado</h4>
-			<h4 class="modal-title" id="modal-basic-title" *ngIf="onlyForRead">Información de Empleado</h4>
-	
+				<div class="row"><h4 class="modal-title" id="modal-basic-title" *ngIf="!onlyForRead">Actualizar Empleado</h4>
+					<h4 class="modal-title" id="modal-basic-title" *ngIf="onlyForRead">Información de Empleado</h4>
+				</div>
+				<div class="row">
+					<small>Fecha de creación: traer campo created_at</small>	
+				</div>
+			
+			
+		
 			<button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
 		</div>
 	
