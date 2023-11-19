@@ -1,4 +1,7 @@
 /* CSS personalizado para la barra de búsqueda */
+.card-container {
+  padding: 1rem;
+}
 .custom-search {
   background-color: #f8f9fa;
   border: 1px solid #ced4da;
@@ -31,7 +34,6 @@
 .form-container {
   width: 100%;
 }
-
 
 .dropdown {
   position: relative;
