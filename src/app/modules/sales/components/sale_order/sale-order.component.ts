@@ -122,6 +122,7 @@ export class SaleOrderComponent implements OnInit {
     this.client = "";
     this.productoSeleccionado = new ProductModel;
     this.carrito = [];
+    this.montoTotal = new MontoTotalModel;
   }
 
   deleteProduct(id: number) {
