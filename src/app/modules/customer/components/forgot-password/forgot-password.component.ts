@@ -31,23 +31,40 @@ export class ForgotPasswordComponent {
           setTimeout(() => {
             this.router.navigate(['login']);
           }, 3000); 
-          
         }
-        else{
+      },
+      (error: any) => {
+        this.isLoading = false;
+        if(error.status === 404){
           Swal.fire({
             title: '¡Error!',
             text: 'No se pudo validar correctamente su email.',
             icon: 'error',
           });
+        }else {
+          Swal.fire({
+            title: '¡Error!',
+            text: 'Error al enviar el correo electrónico.',
+            icon: 'error',
+          });
         }
-      },
-      (error: any) => {
-        Swal.fire({
-          title: '¡Error!',
-          text: 'Error al enviar el correo electrónico.',
-          icon: 'error',
-        });
       }
     );
+  }
+
+  onCancelar(){
+    Swal.fire({
+      title: `¿Estás seguro que desea volver al login?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc3545",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "¡Sí, volver!",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['login'])
+      }
+    });
   }
 }
