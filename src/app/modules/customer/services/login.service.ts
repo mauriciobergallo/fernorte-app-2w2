@@ -9,6 +9,7 @@ import { UserCheckLogin } from '../models/user-check-login';
 export class LoginService {
   BaseURL: string = 'http://localhost:8092';
   isLogin: boolean = false;
+  user: User | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -24,6 +25,7 @@ export class LoginService {
         const username = response.username;
         const passwordReset = response.passwordReset;
         this.isLogin = true
+        this.user = response;
         return this.getUserDetails(username, passwordReset);
       })
     );
@@ -39,7 +41,7 @@ export class LoginService {
       map((userDetails: any) => {
         const user: UserCheckLogin = {
           username: userDetails.username,
-
+          
           document_number: userDetails.document_number,
           roles: userDetails.roles.map((role: any) => {
             return {
@@ -60,11 +62,25 @@ export class LoginService {
     return this.http.post(url, login);
   }
 
+  getEmail(){
+    if(this.user != null){
+      return this.user.email;
+    }
+    return '';
+  }
+  
+  getRole(){
+    if(this.user != null){
+      return this.user.roles;
+    }
+    return '';
+  }
+
   logOut(){
-    this.isLogin = false;
+    this.user = null;
   }
 
   public isLogged(){
-    return this.isLogin
+    return this.user != null;
   }
 }
