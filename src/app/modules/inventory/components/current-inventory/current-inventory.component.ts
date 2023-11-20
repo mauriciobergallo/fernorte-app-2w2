@@ -3,7 +3,7 @@ import { WarehouseService } from '../../services/warehouse-service/warehouse.ser
 import { LocationInfoDto } from '../../models/location-info.interface';
 import { Subscription } from 'rxjs';
 import jsPDF from 'jspdf';
-//import 'jspdf-autotable';
+import 'jspdf-autotable';
 import { Chart } from 'chart.js';
 import { Pagination } from '../../models/pagination';
 
@@ -134,6 +134,16 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
           animation: {
             duration: 0,
           },
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                font: {
+                  size: 50
+                }
+              }
+            }
+          }
         },
       });
 
@@ -177,15 +187,16 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     const chartImage = await this.generateChart();
 
     if (chartImage) {
-      const imageWidth = 100;
-      const imageHeight = 100;
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
+    const imageWidth = 120; 
+    const imageHeight = 120; 
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
 
-      const x = (pdfWidth - imageWidth) / 2;
-      const y = 120;
+    const x = (pdfWidth - imageWidth) / 2;
+    const y = 100; 
 
-      pdf.addImage(chartImage, 'PNG', x, y, imageWidth, imageHeight);
+    pdf.addImage(chartImage, 'PNG', x, y, imageWidth, imageHeight);
+
     }
 
     pdf.save('reporte_inventario.pdf');
