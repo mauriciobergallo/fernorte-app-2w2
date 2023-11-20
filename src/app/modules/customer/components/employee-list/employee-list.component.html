@@ -1,0 +1,52 @@
+<div class="container">
+  
+<link rel="stylesheet"
+href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<div class="container">
+<h1 class="h1">Empleados</h1>
+<table class="table container">
+  <thead>
+    <tr>
+      <th scope="col" class="text-center col-2">Nombre</th>
+      <th scope="col" class="text-center col-2">Apellido</th>
+      <th scope="col" class="text-center col-2">Documento</th>
+      <th scope="col" class="text-center col-2">Estado</th>
+      <th scope="col" class="text-left col-2">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of employeeList">
+      <td class="text-center">{{ e.firstName }}</td>
+      <td class="text-center">{{ e.lastName }}</td>
+      <td class="text-center">{{ e.documentNumber }}</td>
+      <td *ngIf="e.isActive" class="text-center"><span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">
+          check_circle
+        </span></td>
+      <td *ngIf="!e.isActive" class="text-center"><span style="color: rgb(202, 0, 0);" class="material-symbols-outlined">
+          cancel
+      </span></td>  
+      <td class="text-left">
+        <div class="dropdown">
+          <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
+          <div class="dropdown-content">
+             <a>Más Información</a> 
+            <a>Actualizar</a>
+
+            <a *ngIf="e.isActive">Eliminar</a>
+            <a *ngIf="!e.isActive">Activar</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br>
+</div>
+
+
+
+
+
