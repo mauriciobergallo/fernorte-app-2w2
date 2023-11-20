@@ -1,0 +1,7 @@
+.disabled-link {
+    pointer-events: none; /* Evita que el enlace sea interactivo */
+    color: gray; /* Cambia el color para indicar visualmente que está deshabilitado */
+    text-decoration: none; /* Opcional: elimina la subrayado para un aspecto más deshabilitado */
+    cursor: not-allowed; /* Cambia el cursor para indicar que el enlace no es interactivo */
+  }
+  
