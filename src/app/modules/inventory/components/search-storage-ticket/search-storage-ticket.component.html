@@ -1,6 +1,7 @@
 <div class="container mt-5">
-  <h2>Tickets de almacenamiento</h2>
+  <h2 class="text-center">Tickets de almacenamiento</h2>
   <hr>
+  <fn-spinner *ngIf=" loading"></fn-spinner>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -115,4 +116,21 @@
       </div>
     </div>
   </div>
+</div>
+<div class="d-flex justify-content-center" style="margin-top: 5%;">
+  <ul class="pagination">
+    <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === 1" (click)="previousPage()">
+      <a class="page-link" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link">{{ currentPage }}</a>
+    </li>
+    <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === totalPages" (click)="nextPage()">
+      <a class="page-link" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
 </div>

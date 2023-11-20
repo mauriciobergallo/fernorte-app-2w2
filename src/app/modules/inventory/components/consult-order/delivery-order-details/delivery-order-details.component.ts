@@ -15,7 +15,7 @@ import { DeilveryOrderDetails } from '../../../models/deilvery-order-details';
 export class DeliveryOrderDetailsComponent {
   orderId: number = 0;
   order: DeilveryOrder = new DeilveryOrder();
-
+  loading: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private deliveryorderService: DeliverOrderService,
@@ -24,6 +24,7 @@ export class DeliveryOrderDetailsComponent {
 
   save() {
     if (confirm('¿Desea guardar la información?')) {
+      this.loading = true;
       const deliveryOrderPut = this.mapToDeliveryOrderPut();
       console.log('ORDEN');
       console.log(deliveryOrderPut);
@@ -38,6 +39,7 @@ export class DeliveryOrderDetailsComponent {
           this.order = orderData;
           console.log('DELIVERY ORDER UPDATED');
           console.log(orderData);
+          this.loading = false;
         });
     }
   }
@@ -59,6 +61,7 @@ export class DeliveryOrderDetailsComponent {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id !== null) {
@@ -68,6 +71,7 @@ export class DeliveryOrderDetailsComponent {
           .subscribe((orderData) => {
             this.order = orderData;
             console.log(this.order);
+            this.loading = false;
           });
       }
     });

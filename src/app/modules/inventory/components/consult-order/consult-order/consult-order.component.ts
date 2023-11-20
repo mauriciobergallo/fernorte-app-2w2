@@ -16,7 +16,7 @@ export class ConsultOrderComponent {
   itemsPerPage = 10;
   totalPages = 1;
   pagesToShow: number[] = [];
-
+  loading: boolean = false;
   constructor(
     private deliveryorderService: DeliverOrderService,
     private router: Router
@@ -27,6 +27,7 @@ export class ConsultOrderComponent {
   }
 
   search() {
+    this.loading = true;
     this.deliveryorderService
       .getDeliveryOrder(this.orderId, this.currentPage - 1)
       .subscribe(
@@ -42,8 +43,10 @@ export class ConsultOrderComponent {
           });
           this.deliveryOrder = result;
           this.totalPages = result.totalPages;
+          this.loading = false;
         },
         (error) => {
+          this.loading = false;
           alert('Orden No encontrada');
           this.deliveryOrder = null;
         }

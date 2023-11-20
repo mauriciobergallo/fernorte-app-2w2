@@ -38,3 +38,6 @@
 .modal-backdrop {
   background-color: rgba(0, 0, 0, 0.2) !important;
 }
+.card-container {
+  padding: 1rem;
+}

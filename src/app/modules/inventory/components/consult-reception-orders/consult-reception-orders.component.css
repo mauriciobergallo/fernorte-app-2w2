@@ -35,3 +35,18 @@
 .dropdown:hover .dropdown-content {
   display: block;
 }
+.filter-form {
+  display: flex;
+  justify-content: flex-start;
+}
+.filter-form .input-value,
+.filter-form .select-value {
+  margin-right: 1rem;
+}
+.filter-form .input-value {
+  flex-basis: 20rem;
+}
+.check-container {
+  display: flex;
+  justify-content: flex-start;
+}

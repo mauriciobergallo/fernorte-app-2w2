@@ -15,9 +15,10 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
   locationInfoList: LocationInfoDto[] = [];
   originalList: LocationInfoDto[] = [];
   filteredList: LocationInfoDto[] = [];
-
+  loading: boolean = false;
   private subscripciones = new Subscription();
-
+  currentPage: number = 1;
+  totalPages: number = 1;
   constructor(private warehouseService: WarehouseService) {}
   ngOnDestroy(): void {
     this.subscripciones.unsubscribe();
@@ -28,13 +29,16 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
   }
 
   private fillTable() {
+    this.loading = true;
     this.warehouseService.getLocationsInfo().subscribe({
       next: (resp) => {
         this.locationInfoList = resp;
         this.filteredList = [...this.locationInfoList];
         this.originalList = [...this.locationInfoList];
+        this.loading = false;
       },
       error: (error) => {
+        this.loading = false;
         console.log(error);
         this.locationInfoList = this.locationInfoListMock;
         this.originalList = [...this.locationInfoList];
@@ -183,15 +187,16 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
 
     pdf.save('reporte_inventario.pdf');
   }
-
+  previousPage() {}
+  nextPage() {}
   locationInfoListMock: LocationInfoDto[] = [
     {
       location: {
         zone: 'Zone A',
         section: 'Section 1',
-        space: 'Space 101'
+        space: 'Space 101',
       },
-      location_id:1,
+      location_id: 1,
       category_name: 'Category X',
       product_name: 'Product Alpha',
       quantity: 3,
@@ -204,7 +209,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
         section: 'Section 2',
         space: 'Space 202',
       },
-      location_id:2,
+      location_id: 2,
       category_name: 'Category Y',
       product_name: 'Product Beta',
       quantity: 5,
@@ -217,7 +222,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
         section: 'Section 2',
         space: 'Space 201',
       },
-      location_id:3,
+      location_id: 3,
       category_name: 'Category Z',
       product_name: 'Product Gamma',
       quantity: 8,
@@ -230,7 +235,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
         section: 'Section 1',
         space: 'Space 102',
       },
-      location_id:4,
+      location_id: 4,
       category_name: 'Category W',
       product_name: 'Product Delta',
       quantity: 15,
@@ -243,7 +248,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
         section: 'Section 1',
         space: 'Space 201',
       },
-      location_id:5,
+      location_id: 5,
       category_name: 'Category A',
       product_name: 'Product Epsilon',
       quantity: 20,
@@ -256,7 +261,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
         section: 'Section 2',
         space: 'Space 202',
       },
-      location_id:6,
+      location_id: 6,
       category_name: 'Category B',
       product_name: 'Product Zeta',
       quantity: 7,

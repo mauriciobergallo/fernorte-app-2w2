@@ -13,7 +13,9 @@ export class SearchStorageTicketComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
   stateFinish: StorageTicketState = StorageTicketState.FINALIZED;
   storageTickets: StorageTicket[] = [];
-
+  currentPage: number = 1;
+  totalPages: number = 1;
+  loading: boolean = false;
   constructor(private warehouseService: WarehouseService) {}
 
   ngOnInit(): void {
@@ -29,12 +31,15 @@ export class SearchStorageTicketComponent implements OnInit, OnDestroy {
   }
 
   fillTable() {
+    this.loading = true;
     this.warehouseService.getStorageTickets().subscribe({
       next: (resp: StorageTicket[]) => {
         this.storageTickets = resp;
         console.log(this.storageTickets);
+        this.loading = false;
       },
       error: (error) => {
+        this.loading = false;
         console.log(error);
         console.log('eeeeeeoo');
       },
@@ -87,6 +92,8 @@ export class SearchStorageTicketComponent implements OnInit, OnDestroy {
         return '';
     }
   }
+  previousPage() {}
+  nextPage() {}
 
   /*
   data: StorageTicket[] = [
