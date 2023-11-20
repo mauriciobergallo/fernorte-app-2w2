@@ -6,15 +6,13 @@ import { TurnModel } from '../../models/TurnModel';
   providedIn: 'root'
 })
 export class TurnServicesService {
-actualTurn:TurnModel=new TurnModel
+actualTurn:TurnModel={number:1,created_at:new Date,id_customer:0};
 constructor(private tunrProvider:TurnProvider) { }
 
 nextTurn():TurnModel{
   this.actualTurn=this.clearTurn()
-  this.tunrProvider.getNextTurn().subscribe((turn)=>{
-    this.actualTurn=turn    
-    return this.actualTurn
-  })
+  this.actualTurn.id_customer = 1;
+  this.actualTurn.number+=1
   console.log(this.actualTurn)  
   return this.actualTurn
 }

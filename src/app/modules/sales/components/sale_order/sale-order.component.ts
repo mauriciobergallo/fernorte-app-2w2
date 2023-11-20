@@ -12,6 +12,7 @@ import { MontoTotalModel } from '../../models/ModelTotalModel';
 import { SaleOrderProvider } from '../../services/salesOrder/SaleOrderProvider';
 import { ICustomer } from '../../interfaces/iCustomer';
 import { ClientService } from '../../services/clients/client.service';
+import { TurnServicesService } from '../../services/turns/turnServices.service';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class SaleOrderComponent implements OnInit {
     private productService: ProductService,
     private carritoService: CarritoService,
     private saleOrderProvider: SaleOrderProvider,
-    private clientsService: ClientService) { }
+    private clientsService: ClientService,
+    private turnService: TurnServicesService) { }
 
   salesOrderLoad: SaleOrderModel | undefined
   loader = this.loadingService.viewLoader();
@@ -38,6 +40,7 @@ export class SaleOrderComponent implements OnInit {
   saleOrder: SaleOrderModel = new SaleOrderModel();
   permiteGenerar: boolean = true;
   listClients: ICustomer[] = []
+  client:string = "Tomás Aranda"
   listClientsfiltrada: ICustomer[] = [];
   productoSeleccionado = this.productService.cleanProduct();
   readonly typeSalesOrder = TypeSalesOrder.ORDEN_VENTA;
