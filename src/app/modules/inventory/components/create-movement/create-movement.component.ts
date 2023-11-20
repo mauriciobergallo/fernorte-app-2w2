@@ -43,7 +43,7 @@ export function quantityValidator(): ValidatorFn {
 export class CreateMovementComponent implements OnInit, OnDestroy  {
 
 
-  private searchQuery = new BehaviorSubject<string>('');
+  private searchQuery = new BehaviorSubject<string>('..');
   locationsInfo$!: Observable<LocationInfoDto[]>;
   private selectedInfoSubject = new BehaviorSubject<LocationInfoDto | null>(null);
   filteredLocationsInfo$!: Observable<LocationInfoDto[]>;
@@ -58,6 +58,8 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
   MovementType = MovementType
 
   serviceMovement = inject(MovementsService);
+  isLoadingS:boolean = false;
+  showRemark: boolean = false;
 
   get isInternalControl() {
     return this.movementForm.get('isInternal');
@@ -79,6 +81,40 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
     this.locationsInfo$ = this.service.getLocationsInfo();
   }
   
+
+  ngOnInit(): void {
+
+   // Crear un Observable filtrado que combine los datos de la API con la búsqueda
+   this.filteredLocationsInfo$ = combineLatest([
+    this.locationsInfo$,
+    this.searchQuery.pipe(debounceTime(300), distinctUntilChanged(), map(query => query.toLowerCase()))
+  ]).pipe(
+    map(([locations, query]) => locations.filter(location => location.product_name.toLowerCase().includes(query))),
+    takeUntil(this.destroy$)
+  );
+
+
+
+  // Filtrar locationsInfo$ en base a la selección actual (selectedInfo)
+  this.filteredLocationsInfoDestinity$ = combineLatest([
+    this.locationsInfo$,
+    this.selectedInfoSubject.asObservable()
+  ]).pipe(
+    map(([locations, selectedInfo]) => 
+      locations.filter(location => 
+        location.product_name === selectedInfo?.product_name && location.location_id !== selectedInfo?.location_id
+      )
+    ),
+    takeUntil(this.destroy$)
+  );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(); // Emite un valor para desencadenar la desuscripción
+    this.destroy$.complete(); // Cierra el Subject
+  }
+
+
 
   prepareMovement(): ReqNewMovementDto{
     let dets = this.movementForm.value.movementDetailsArray.map((det:any)=> {
@@ -103,11 +139,13 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
 
 
   submitForm() {
+    this.isLoadingS = true;
       // Aquí manejarías la lógica para enviar los datos a tu API
     let mov = this.prepareMovement()
     console.log('mov prepr',mov)
     this.serviceMovement.newMovement(mov).subscribe({
       next: (result) => {
+    this.isLoadingS = false;
         if (result) {
           //alert('succes')
           Swal.fire(
@@ -135,10 +173,20 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
          );
       }
     });    
+    this.isLoadingS = false;
+
   }
   setUpValueChanges(){
       // Habilitar o deshabilitar el control de movementType basado en la selección de isInternal
-
+      this.movementForm.get('motivo')?.valueChanges.subscribe((value) =>{
+        if (value === 'Otros') {
+          this.showRemark = true;
+          this.movementForm.get('remarks')?.setValue('')
+        } else {
+          this.showRemark = false;
+          this.movementForm.get('remarks')?.setValue(value)
+        }
+      } )
       this.detailForm.get('origin')?.valueChanges.subscribe((value) => {
 
       })
@@ -147,6 +195,7 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
 
   initFormMovement() {
     this.movementForm = this.fb.group({
+      motivo: ['', [Validators.required]],
       remarks: ['', [Validators.required, Validators.minLength(15)]],
       movementDetailsArray: this.fb.array([],[Validators.required])
     })
@@ -183,50 +232,22 @@ addDetail(detailForm: FormGroup){
   this.resetDetailForm()
 }
 
-removeDetail(i: number){
+ removeDetail(i: number){
   (this.movementDetailsArray.removeAt(i))
 
-}
+ }
 
-
-
-
-  ngOnInit(): void {
-
-   // Crear un Observable filtrado que combine los datos de la API con la búsqueda
-   this.filteredLocationsInfo$ = combineLatest([
-    this.locationsInfo$,
-    this.searchQuery.pipe(debounceTime(300), distinctUntilChanged(), map(query => query.toLowerCase()))
-  ]).pipe(
-    map(([locations, query]) => locations.filter(location => location.product_name.toLowerCase().includes(query))),
-    takeUntil(this.destroy$)
-  );
-
-
-
-  // Filtrar locationsInfo$ en base a la selección actual (selectedInfo)
-  this.filteredLocationsInfoDestinity$ = combineLatest([
-    this.locationsInfo$,
-    this.selectedInfoSubject.asObservable()
-  ]).pipe(
-    map(([locations, selectedInfo]) => 
-      locations.filter(location => 
-        location.product_name === selectedInfo?.product_name && location.location_id !== selectedInfo?.location_id
-      )
-    ),
-    takeUntil(this.destroy$)
-  );
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next(); // Emite un valor para desencadenar la desuscripción
-    this.destroy$.complete(); // Cierra el Subject
-  }
 
   onSearch(event: Event): void {
     // Actualizar la cadena de búsqueda cada vez que cambie el input
     const query = (event.target as HTMLInputElement).value;
-    this.searchQuery.next(query); // Emitir el nuevo valor de búsqueda
+    if(query=== ''){
+    this.searchQuery.next(".."); // Emitir el nuevo valor de búsqueda
+
+    } else {
+
+      this.searchQuery.next(query); // Emitir el nuevo valor de búsqueda
+    }
   }
 
   onProductSelect(product: LocationInfoDto): void {

@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-md-6">
           <h2>Movimientos de Inventario</h2>
+        
       </div>
       <div class="col-md-6  justify-content-end ">
           <fn-create-movement href="new-movement"></fn-create-movement>
@@ -31,13 +32,16 @@
 
       <tbody *ngFor="let movimiento of this.movimientos;let i = index">
         <tr>
-          <td>{{ i+1 }}</td>
+          <td>{{ i+1 }}<i class="bi bi-info"
+            data-bs-toggle="tooltip" data-bs-placement="top" title="{{movimiento.remarks}}yu"
+            style="cursor: pointer; font-size: 20px; margin-right: 5px;"></i></td>
           <td>{{ movimiento.operator }}</td>
           <td>{{ movimiento.date }}</td>
           <td>{{ getMovementTypeTranslate(movimiento.movement_type ) }}</td>
           <td>{{ (movimiento.is_internal)? 'Interno' : 'Externo' }}</td>
           <td (click)="showDetail(i)"><i
-              [class]="(mostrarDetalleMovimiento ===i && mostrarDetalle) ? 'bi bi-eye-slash' : 'bi bi-eye'"></i></td>
+              [class]="(mostrarDetalleMovimiento ===i && mostrarDetalle) ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            </td>
         </tr>
         <tr *ngIf="this.mostrarDetalleMovimiento === i">
           <td colspan="5">
@@ -87,8 +91,7 @@
     <div *ngIf="isLoading" class="spinner-border" style="margin-top: 5%;"></div>
   </div>
 
-  <div class="d-flex justify-content-center  " style="margin-top: 5%;">
-
+  <div class="d-flex justify-content-center  " style="margin-top: 1%;">
     <ul class="pagination">
       <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === 1" (click)="previousPage()">
         <a class="page-link" aria-label="Previous">
@@ -104,9 +107,6 @@
         </a>
       </li>
     </ul>
-
-
-   
   </div>
   <div class="container">
     <button class="btn btn-primary"(click)="downloadPDF()" >Exportar PDF</button>
