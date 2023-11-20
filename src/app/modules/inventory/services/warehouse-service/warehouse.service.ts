@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, shareReplay } from 'rxjs';
 import { StorageTicket } from '../../models/StorageTicket.interface';
 import { LocationInfoDto } from '../../models/location-info.interface';
+import { Pagination } from '../../models/pagination';
 
 @Injectable({
   providedIn: 'root',
@@ -44,9 +45,15 @@ export class WarehouseService {
   }
 
   public getLocationsInfo(): Observable<LocationInfoDto[]> {
-    return this.http.get<LocationInfoDto[]>(this.locationBaseUrl).pipe(shareReplay(1))
+    return this.http
+      .get<LocationInfoDto[]>(this.locationBaseUrl)
+      .pipe(shareReplay(1));
   }
-
+  public getLocationsInfoFiltered(page: number): Observable<Pagination> {
+    return this.http.get<Pagination>(
+      this.locationBaseUrl + '/paginated?page=' + page
+    );
+  }
   private formatStringToTitleCase(inputString: string): string {
     if (!inputString) {
       return '';

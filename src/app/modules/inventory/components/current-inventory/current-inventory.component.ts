@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import jsPDF from 'jspdf';
 //import 'jspdf-autotable';
 import { Chart } from 'chart.js';
+import { Pagination } from '../../models/pagination';
 
 @Component({
   selector: 'fn-current-inventory',
@@ -12,6 +13,7 @@ import { Chart } from 'chart.js';
   styleUrls: ['./current-inventory.component.css'],
 })
 export class CurrentInventoryComponent implements OnInit, OnDestroy {
+  locations: Pagination | undefined;
   locationInfoList: LocationInfoDto[] = [];
   originalList: LocationInfoDto[] = [];
   filteredList: LocationInfoDto[] = [];
@@ -30,11 +32,12 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
 
   private fillTable() {
     this.loading = true;
-    this.warehouseService.getLocationsInfo().subscribe({
-      next: (resp) => {
-        this.locationInfoList = resp;
-        this.filteredList = [...this.locationInfoList];
-        this.originalList = [...this.locationInfoList];
+    this.warehouseService.getLocationsInfoFiltered(0).subscribe({
+      next: (resp: Pagination) => {
+        this.locations = resp;
+        this.locationInfoList = resp.items;
+        this.filteredList = [...this.locations.items];
+        this.originalList = [...this.locations.items];
         this.loading = false;
       },
       error: (error) => {
