@@ -1,0 +1,46 @@
+<div class="container">
+    <br>
+    <h4 class="title" id="NewMethodModalLabel">Registrar método de pago</h4>
+    <br>
+    <form [formGroup]="registerForm" (ngSubmit)="saveNewPaymentMethod()">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label for="paymentMethod" class="form-label">Método de Pago</label>
+                    <input formControlName="paymentMethod" type="text" class="form-control" id="paymentMethod" required>
+                    <small id="paymentMethod" class="form-text text-muted error-message" *ngIf="       
+                        !registerForm.controls['paymentMethod'].valid &&
+                        registerForm.controls['paymentMethod'].touched &&
+                        registerForm.get('paymentMethod')?.hasError('required')">
+                        El método de pago es requerido
+                    </small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-2">
+                    <label for="surcharge" class="form-label">Recargo</label>
+                    <input formControlName="surcharge" type="number" class="form-control" id="surcharge" name="surcharge"
+                        required>
+                    <small id="surcharge" class="form-text text-muted error-message" *ngIf="       
+                        !registerForm.controls['surcharge'].valid &&
+                        registerForm.controls['surcharge'].touched &&
+                        registerForm.get('surcharge')?.hasError('required')">
+                        El recargo es requerido
+                    </small>
+                    <small id="taxValue" class="form-text text-muted error-message" *ngIf="
+                    !registerForm.controls['surcharge'].valid &&
+                    registerForm.controls['surcharge'].touched &&
+                    registerForm.controls['surcharge'].getError('min')
+                    ">
+                        El valor minimo es 0
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-end">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary"(click)="registerForm.markAllAsTouched()" >Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>
