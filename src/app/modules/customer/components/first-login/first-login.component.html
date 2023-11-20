@@ -15,7 +15,7 @@
                         </p>
                     </div>
                     <div class="card-body py-0">
-                        <form (ngSubmit)="onFirstLogin()" [formGroup]="form">
+                        <form [formGroup]="form">
                             <div class="form-group">
                                 <label for="password">Contraseña</label>
                                 <input type="password" id="password" class="form-control" formControlName="password"
@@ -75,7 +75,11 @@
                               </small>
                             </div>
                             <br>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                              <button type="button" class="btn btn-secondary">Cancelar</button>
+                              <button class="btn btn-primary me-md-2" type="button" (click)="onFirstLogin()">Guardar</button>
+                            </div>
+                            <br>
                         </form>
                     </div>
                 </div>
