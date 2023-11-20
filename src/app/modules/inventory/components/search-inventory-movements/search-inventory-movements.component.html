@@ -13,12 +13,13 @@
       (onClearFilter)="clearFilters()"></fn-datepicker-range-popup>
     <div class="container my-2">
       <fn-create-movement href="new-movement"></fn-create-movement>
-      <button class="btn btn-primary mx-2" (click)="downloadPDF()">Exportar PDF</button>
+      <button class="btn btn-primary mx-2" (click)="downloadPDF()" [disabled]="movimientos.length === 0">Exportar PDF</button>
+
     </div>
 
     <div class="alert alert-warning alert-dismissible fade show" role="alert"
       *ngIf="!isLoading && this.movimientos.length == 0">
-      <strong class="text-danger">Movements no localizados</strong>
+      <strong class="text-danger">No existen movimientos registrados</strong>
       <div class="">
 
       </div>
