@@ -278,9 +278,15 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   async downloadPDF() {
     const dataTable = this.movimientos;
     const pdf = new jsPDF('landscape', 'px', 'a4') as any;
+
+    const logoUrl = '/assets/logo.png'; 
+
+    const logoImage = await this.getImageData(logoUrl);
   
-    pdf.text('Reporte de Inventario Actual', 10, 10);
-  
+    pdf.addImage(logoImage, 'PNG', 550, 0, 70, 30);
+
+    pdf.text('Reporte de movimientos del inventario', 10, 10);
+
     // Renderizar el gráfico en el PDF
     const chartImage = await this.generateChart();
     if (chartImage) {
@@ -292,4 +298,26 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   
     pdf.save('reporte_inventario.pdf');
   }
+  
+  
+  async getImageData(url: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject('Could not create canvas context');
+          return;
+        }
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      img.onerror = (error) => reject(error);
+      img.src = url;
+    });
+  }
 }
+

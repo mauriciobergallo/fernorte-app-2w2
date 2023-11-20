@@ -3,7 +3,7 @@ import { WarehouseService } from '../../services/warehouse-service/warehouse.ser
 import { LocationInfoDto } from '../../models/location-info.interface';
 import { Subscription } from 'rxjs';
 import jsPDF from 'jspdf';
-//import 'jspdf-autotable';
+import 'jspdf-autotable';
 import { Chart } from 'chart.js';
 import { Pagination } from '../../models/pagination';
 
@@ -134,6 +134,16 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
           animation: {
             duration: 0,
           },
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                font: {
+                  size: 25
+                }
+              }
+            }
+          }
         },
       });
 
@@ -148,8 +158,14 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
   }
 
   async downloadPDF() {
-    const dataTable = this.filteredList;
     const pdf = new jsPDF() as any;
+
+    const logoUrl = '/assets/logo.png'; 
+    const dataTable = this.filteredList;
+
+    const logoImage = await this.getImageData(logoUrl);
+  
+    pdf.addImage(logoImage, 'PNG', 150, 0, 50, 15);
     const headers = [
       'Producto',
       'Zona',
@@ -177,19 +193,41 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     const chartImage = await this.generateChart();
 
     if (chartImage) {
-      const imageWidth = 100;
-      const imageHeight = 100;
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
+    const imageWidth = 120; 
+    const imageHeight = 120; 
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
 
-      const x = (pdfWidth - imageWidth) / 2;
-      const y = 120;
+    const x = (pdfWidth - imageWidth) / 2;
+    const y = 100; 
 
-      pdf.addImage(chartImage, 'PNG', x, y, imageWidth, imageHeight);
+    pdf.addImage(chartImage, 'PNG', x, y, imageWidth, imageHeight);
+
     }
 
     pdf.save('reporte_inventario.pdf');
   }
+
+  async getImageData(url: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject('Could not create canvas context');
+          return;
+        }
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      img.onerror = (error) => reject(error);
+      img.src = url;
+    });
+  }
+
   previousPage() {}
   nextPage() {}
   locationInfoListMock: LocationInfoDto[] = [
