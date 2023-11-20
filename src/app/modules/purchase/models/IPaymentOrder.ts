@@ -22,7 +22,7 @@ export interface PaymentOrderDetailsRequest {
     purchaseOrderId: number;
     paymentOrderId: number;
     amount: number;
-    paymentMethod: PaymentMethod;
+    paymentMethod: PaymentMethod | null;
     observation: string;
 }
 

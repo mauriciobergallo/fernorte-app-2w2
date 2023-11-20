@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
+import { PaymentOrderDetailResponse, PaymentOrderDetailsRequest, PaymentOrderRequest } from 'src/app/modules/purchase/models/IPaymentOrder';
 import Swal from 'sweetalert2';
+import { PaymentOrderServiceService } from '../../services/payment-order-service.service';
+import { IPurchaseOrder } from '../payment-order-grid/models/PurchaseOrder';
+import { PurchaseOrderService } from '../payment-order-grid/services/purchase-order.service';
 
 @Component({
   selector: 'fn-payment-preview',
@@ -7,9 +11,15 @@ import Swal from 'sweetalert2';
   styleUrls: ['./payment-preview.component.css']
 })
 export class PaymentPreviewComponent {
+  currentDate: Date = new Date();
+
 onEdit() {
 throw new Error('Method not implemented.');
 }
+
+selectedPurchase: IPurchaseOrder[]=[];
+paymentOrderDetails: PaymentOrderDetailsRequest[] = [];
+constructor(private _paymentOrderService: PaymentOrderServiceService,private _purchaseOrdersService:PurchaseOrderService){}
 supplier:any = {
    
     socialReason: "ABC Corporation",
@@ -19,10 +29,40 @@ supplier:any = {
     
 }
 
-products: any[] = [];
+ngOnInit(){
+  this.paymentOrderDetails = this._paymentOrderService.getPaymentOrderDetails();
+  this.selectedPurchase = this._purchaseOrdersService.getSelectedPurchaseOrders();
+}
+
+
+
 
 onSubmit(): void {
-  Swal.fire({title: 'Success!', text: "Orden de pago creada", icon: 'success', confirmButtonText: 'ok'})
+  const paymentOrderRequest: PaymentOrderRequest = {
+    date: this.currentDate,
+    paymentDetails: this.paymentOrderDetails,
+    employeeId: 1, // Set the employeeId as per your requirement
+    observation: "Observation to go to database",
+     // Set the observation as per your requirement
+  };
+  console.log(this.paymentOrderDetails);
+  this._paymentOrderService.createPaymentOrder(paymentOrderRequest).subscribe(
+    response => {
+      // Handle success
+      Swal.fire('Éxito', 'La orden de pago se creó correctamente', 'success');
+      console.log(response);
+      console.log(this.paymentOrderDetails);
+      // Reset the payment details after submission if needed
+      this._paymentOrderService.clearPaymentOrderDetails();
+      // Update the payment flow to GRID
+      
+    },
+    error => {
+      // Handle error
+      Swal.fire('Error', 'Hubo un problema al crear la orden de pago', 'error');
+    }
+  );
+  this.paymentOrderDetails = [];
 } 
 
 }

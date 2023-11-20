@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 })
 export class PurchaseOrderService {
 
-  url: string = 'http://localhost:8084/purchaseOrder/';
+  url: string = 'http://localhost:8004/purchase-orders';
 
   constructor(private _http: HttpClient) {}
 
@@ -42,6 +42,13 @@ export class PurchaseOrderService {
     // Agregar una orden de compra a la lista de seleccionadas
     addSelectedPurchaseOrder(order: IPurchaseOrder) {
       this.selectedPurchaseOrders.push(order);
+    }
+    removeSelectedPurchaseOrder(order: IPurchaseOrder): void {
+      const index = this.selectedPurchaseOrders.findIndex(o => o.id === order.id);
+
+      if (index !== -1) {
+        this.selectedPurchaseOrders.splice(index, 1);
+      }
     }
   
     // obtiene las ordenes de compra seleccionadas para pagar. esto deberian usar me parece el resto que utilice estas ordenes

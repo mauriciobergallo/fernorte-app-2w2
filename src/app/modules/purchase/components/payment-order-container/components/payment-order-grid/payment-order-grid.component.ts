@@ -11,6 +11,7 @@ import { ISupplier } from 'src/app/modules/purchase/models/ISuppliers';
   styleUrls: ['./payment-order-grid.component.css']
 })
 export class PaymentOrderGridComponent implements OnInit{
+
   //aca se cargarian todos las ordenes de compra que no estan pagas, es decir que itsPaid=false.
   allPurchaseOrder: IPurchaseOrder[]=[];
   // aca se carga el total del precio de las ordenes de compra seleccionadas.
@@ -28,17 +29,34 @@ export class PaymentOrderGridComponent implements OnInit{
 
 ngOnInit(): void {
     // Cargar la lista de proveedores al iniciar el componente
-    this._suppliersService.getSupliers().subscribe({
+   /* this._suppliersService.getSupliers().subscribe({
       next: (data: ISupplier[]) => {
         this.allSupplierList = data;
       },
       error: (error: any) => {
         console.log(error);
       },
-    });
+    });*/
+    const newSupplier: ISupplier = {
+      id: 1,
+      socialReason: 'Your Social Reason',
+      fantasyName: 'Your Fantasy Name',
+      cuit: 'Your CUIT',
+      adress: 'Your Address',
+      active: true // Set it to true or false based on your requirement
+    };
+
+    // Add the new supplier to the list
+    this.allSupplierList.push(newSupplier);
+
   }
 
+  bandera:Number = 0;
   enviarOrdenDeCompraSeleccionada() {
+
+    this.bandera = this.bandera.valueOf() + 1; 
+
+
     // Filtra las órdenes de compra seleccionadas
     const ordenesSeleccionadas = this.allPurchaseOrder.filter((order) => order.selected);
 
@@ -49,8 +67,15 @@ ngOnInit(): void {
       // aca deberia enviar las ordenes de compra cuando me digan como las mando y a donde xddd
       console.log('Órdenes de compra seleccionadas:', ordenesSeleccionadas);
       //envio las ordenes seleccionadas al service para que lo pidan por ahi.
-      ordenesSeleccionadas.forEach((order) => this._purchaseOrdersService.addSelectedPurchaseOrder(order));
+      if(this.bandera == 1){
+        ordenesSeleccionadas.forEach((order) => this._purchaseOrdersService.addSelectedPurchaseOrder(order));
+      }
+      
     }
+  }
+  onCheckboxChange(order: IPurchaseOrder): void {
+    order.selected ? this._purchaseOrdersService.addSelectedPurchaseOrder(order) : this._purchaseOrdersService.removeSelectedPurchaseOrder(order);
+    this.actualizarTotal();
   }
   // enviarOrdenDeCompraSeleccionada() {
   //   const ordenesSeleccionadas = this.allPurchaseOrder.filter((order) => order.selected);
@@ -82,6 +107,7 @@ ngOnInit(): void {
     // Calcula el total de las órdenes seleccionadas
     this.totalSeleccionado = ordenesSeleccionadas.reduce((total, order) => total + order.total, 0);
   }
+ 
 
   onSupplierSelected() {
     // Cuando se selecciona un proveedor, filtra las órdenes de compra por su ID y por el estado, que tiene que ser ACCEPTED

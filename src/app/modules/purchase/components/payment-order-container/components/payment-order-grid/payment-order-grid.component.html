@@ -29,7 +29,7 @@
         <th class="w-25">Observación</th>
         <th>Total</th>
         <th class="w-25">Factura</th>
-        <th>Acciones</th>
+        <th>Seleccionar</th>
       </tr>
     </thead>
     <tbody>
@@ -40,9 +40,11 @@
         <td>
           <a [href]="order.billUrl" target="_blank">Link</a>
         </td>
-        <td>
-          <input type="checkbox" class="form-check-input" [(ngModel)]="order.selected" (change)="actualizarTotal()" />
-        </td>
+       <!-- Your existing checkbox column -->
+<td>
+  <input type="checkbox" class="form-check-input" [(ngModel)]="order.selected" (change)="onCheckboxChange(order)" />
+</td>
+
       </tr>
     </tbody>
     <tfoot>
@@ -50,10 +52,8 @@
         <td></td>
         <td></td>
         <td><strong>Total:</strong></td>
-        <td>{{ totalSeleccionado }}</td>
-        <td>
-          <button class="btn btn-success btn-sm" (click)="enviarOrdenDeCompraSeleccionada()">Pagar</button>
-        </td>
+        <td>${{ totalSeleccionado }}</td>
+       
       </tr>
     </tfoot>
   </table>
