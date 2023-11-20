@@ -17,7 +17,9 @@ export class EmployeeListComponent implements OnInit {
 
   @ViewChild('employeeForm') updateEmployeeModal: TemplateRef<any> | undefined;
   employeeList: EmployeeResponseDTO[] = [];
+  localEmployeeList: EmployeeResponseDTO[] = [];
   selectedEmployeeId: number | null = null;
+  activo: boolean = true;
   
 
   constructor(private employeeService: EmployeeService, private conversion: CaseConversionPipe, private modalService: NgbModal){}
@@ -59,6 +61,8 @@ export class EmployeeListComponent implements OnInit {
     this.employeeService.getEmployeeUpdatedObservable().subscribe(() => {
       this.onLoad();
     });
+    this.localEmployeeList = this.employeeList;
+    this.employeeList = this.buscarActivo(this.activo)
   }
 
   onLoad(){
@@ -174,5 +178,55 @@ showInfoDesactivedResult(){
         this.onDelete(employee);
         }
       });
-      }
+    }
+
+    onFiltrarNombre(event: any){
+      this.employeeList = this.localEmployeeList;
+      let filtro = event.target.value;
+      let filtroNombre: EmployeeResponseDTO[] = this.buscarNombre(filtro);
+      let filtroApellido: EmployeeResponseDTO[] = this.buscarApellido(filtro);
+      let filtroDocumento: EmployeeResponseDTO[] = this.buscarDocumento(filtro);
+
+      let listaFiltrada: EmployeeResponseDTO[] = filtroNombre
+      .concat(filtroApellido, filtroDocumento)
+      .filter((item, index, array) => array.indexOf(item) === index);
+      this.employeeList = listaFiltrada;
+      this.employeeList = this.buscarActivo(this.activo);
+    }
+
+    buscarNombre(palabraIncompleta: string): EmployeeResponseDTO[] {
+      palabraIncompleta = palabraIncompleta.toLowerCase(); // Convierte a minúsculas para hacer la búsqueda no sensible a mayúsculas
+  
+      return this.employeeList.filter(palabra => {
+        const palabraEnMinusculas = palabra.firstName.toLowerCase();
+        return palabraEnMinusculas.startsWith(palabraIncompleta);
+      });
+    }
+
+    buscarApellido(palabraIncompleta: string): EmployeeResponseDTO[] {
+      palabraIncompleta = palabraIncompleta.toLowerCase(); // Convierte a minúsculas para hacer la búsqueda no sensible a mayúsculas
+  
+      return this.employeeList.filter(palabra => {
+        const palabraEnMinusculas = palabra.lastName.toLowerCase();
+        return palabraEnMinusculas.startsWith(palabraIncompleta);
+      });
+    }
+
+    buscarDocumento(palabraIncompleta: string): EmployeeResponseDTO[] {
+      palabraIncompleta = palabraIncompleta.toLowerCase(); // Convierte a minúsculas para hacer la búsqueda no sensible a mayúsculas
+  
+      return this.employeeList.filter(palabra => {
+        const palabraEnMinusculas = palabra.documentNumber.toLowerCase();
+        return palabraEnMinusculas.startsWith(palabraIncompleta);
+      });
+    }
+
+    filtrarActivo(){
+      this.employeeList = this.localEmployeeList;
+      this.employeeList = this.buscarActivo(!this.activo);
+    }
+
+    buscarActivo(activo: boolean){
+      return this.employeeList.filter(empleado => empleado.isActive === activo);
+    }
 }
