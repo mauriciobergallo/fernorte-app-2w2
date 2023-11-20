@@ -18,7 +18,7 @@
                     <div class="card-body py-0">
                         <form [formGroup]="form">
                             <div class="form-group">
-                                <label for="password">Contraseña</label>
+                                <label class="mb-2" for="password">Contraseña:</label>
                                 <input type="password" id="password" class="form-control" formControlName="password"
                                     [ngClass]="{ 'is-invalid': form.get('password')?.invalid && form.get('password')?.touched }">
                                     <small
@@ -44,7 +44,7 @@
                             </div>
                             <br>
                             <div class="form-group">
-                                <label for="confirmPassword"> Confirmar Contraseña</label>
+                                <label class="mb-2" for="confirmPassword"> Confirmar Contraseña:</label>
                                 <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword"
                                     [ngClass]="{ 'is-invalid': form.get('confirmPassword')?.invalid && form.get('confirmPassword')?.touched }">
                                     <small

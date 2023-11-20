@@ -14,6 +14,9 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent {
 
+  showPassword: boolean = false;
+  passwordFieldType: string = 'password';
+
   login: Login = {
     identity: '',
     password: ''
@@ -67,6 +70,10 @@ export class LoginComponent {
     }
   }
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+    this.passwordFieldType = this.showPassword ? 'text' : 'password';
+  }
 
   goToForgotPassword() {
     this.router.navigate(['forgot-password/']);
