@@ -31,17 +31,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TaxComponent } from './components/tax/tax.component';
 import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
 import { BillingProvider } from './services/billing/BillingProvider';
+import {AppModule} from "../../app.module";
+import {ReportTabComponent} from "./components/report-tab/report-tab.component";
 
 
 
 @NgModule({
   declarations: [HomeComponent,
-    SaleOrderComponent, 
-    CalcularTotalPipe, 
-    CalcularImpuestosPipe, 
+    SaleOrderComponent,
+    CalcularTotalPipe,
+    CalcularImpuestosPipe,
     CalcularMontoTotalPipe,
-    SaleOrderSearchListComponent, 
-    BillingComponent, 
+    SaleOrderSearchListComponent,
+    BillingComponent,
     PaymentMethodComponent,
     CreatePaymentComponent,
     SidenavComponent,
@@ -53,7 +55,8 @@ import { BillingProvider } from './services/billing/BillingProvider';
     TaxComponent,
     ReportNavComponent,
     BillingSearchListComponent,
-    DateFormatPipe],
+    DateFormatPipe,
+  ReportTabComponent],
 
   providers: [SaleOrderProvider,
     ProductProvider,
@@ -62,17 +65,17 @@ import { BillingProvider } from './services/billing/BillingProvider';
     BillingProvider,
     CaseConverterPipe],
 
-  imports: [CommonModule,
-    FormsModule, 
-    RouterModule, 
-    RouterChildModule,
-    ReactiveFormsModule],
+    imports: [CommonModule,
+        FormsModule,
+        RouterModule,
+        RouterChildModule,
+        ReactiveFormsModule],
 
   exports: [HomeComponent,
-    SaleOrderComponent, 
-    CalcularTotalPipe, 
-    SaleOrderSearchListComponent, 
-    BillingComponent, 
+    SaleOrderComponent,
+    CalcularTotalPipe,
+    SaleOrderSearchListComponent,
+    BillingComponent,
     PaymentMethodComponent,
     CreatePaymentComponent,
     SidenavComponent,
@@ -82,6 +85,7 @@ import { BillingProvider } from './services/billing/BillingProvider';
     TaxComponent,
     ReportNavComponent,
     BillingSearchListComponent,
-    DateFormatPipe],
+    DateFormatPipe,
+    ReportTabComponent],
 })
 export class SalesModule {}
