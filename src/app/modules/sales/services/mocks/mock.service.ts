@@ -21,6 +21,14 @@ export class MockService {
     return this.billFiltro2;
   };
 
+  addBill(bill :BillModel){
+    console.log(this.mockBills)
+    this.mockBills.push(bill);
+    console.log(this.mockBills)
+  }
+
+  
+
   billFiltro2: BillModel[]=[
     {
       id_bill: 1,
@@ -38,7 +46,7 @@ export class MockService {
       bill_type: "A",
       cae: "12345678901234",
       expiration_date_cae: [2023, 11, 30],
-      created_date: [2023, 11, 15],
+      created_date: [2023, 8, 15],
       total_price: 1500,
       detail_bill: [
         {
@@ -79,7 +87,7 @@ export class MockService {
       bill_type: "B",
       cae: "98765432109876",
       expiration_date_cae: [2023, 12, 15],
-      created_date: [2023, 11, 20],
+      created_date: [2023, 8, 20],
       total_price: 2500,
       detail_bill: [
         {
@@ -137,7 +145,7 @@ export class MockService {
       bill_type: "C",
       cae: "87654321098765",
       expiration_date_cae: [2023, 12, 31],
-      created_date: [2023, 11, 25],
+      created_date: [2023, 8, 25],
       total_price: 1800,
       detail_bill: [
         {
@@ -195,7 +203,7 @@ export class MockService {
       bill_type: "A",
       cae: "54321098765432",
       expiration_date_cae: [2023, 12, 20],
-      created_date: [2023, 11, 28],
+      created_date: [2023, 8, 28],
       total_price: 2200,
       detail_bill: [
         {
@@ -255,7 +263,7 @@ export class MockService {
       bill_type: "C",
       cae: "87654321012345",
       expiration_date_cae: [2023, 12, 15],
-      created_date: [2023, 12, 6],
+      created_date: [2023, 9, 6],
       total_price: 3200,
       detail_bill: [
         {
@@ -303,7 +311,7 @@ export class MockService {
     }
   ]
 
-    mockBills: BillModel[] = [
+  mockBills: BillModel[] = [
     {
       id_bill: 1,
       address: "Av. de Mayo 123",
@@ -320,7 +328,7 @@ export class MockService {
       bill_type: "A",
       cae: "12345678901234",
       expiration_date_cae: [2023, 11, 30],
-      created_date: [2023, 11, 15],
+      created_date: [2023, 8, 15],
       total_price: 1000,
       detail_bill: [
         {
@@ -361,7 +369,7 @@ export class MockService {
       bill_type: "B",
       cae: "98765432109876",
       expiration_date_cae: [2023, 12, 15],
-      created_date: [2023, 11, 20],
+      created_date: [2023, 8, 20],
       total_price: 1900,
       detail_bill: [
         {
@@ -419,7 +427,7 @@ export class MockService {
       bill_type: "C",
       cae: "87654321098765",
       expiration_date_cae: [2023, 12, 31],
-      created_date: [2023, 11, 25],
+      created_date: [2023, 8, 25],
       total_price: 1500,
       detail_bill: [
         {
@@ -477,7 +485,7 @@ export class MockService {
       bill_type: "A",
       cae: "54321098765432",
       expiration_date_cae: [2023, 12, 20],
-      created_date: [2023, 11, 28],
+      created_date: [2023, 8, 28],
       total_price: 1950,
       detail_bill: [
         {
@@ -535,7 +543,7 @@ export class MockService {
       bill_type: "C",
       cae: "98765432101234",
       expiration_date_cae: [2023, 12, 10],
-      created_date: [2023, 12, 1],
+      created_date: [2023, 9, 1],
       total_price: 1300,
       detail_bill: [
         {
@@ -593,7 +601,7 @@ export class MockService {
       bill_type: "A",
       cae: "12345098765432",
       expiration_date_cae: [2023, 12, 5],
-      created_date: [2023, 12, 3],
+      created_date: [2023, 9, 3],
       total_price: 2800,
       detail_bill: [
         {
@@ -645,7 +653,7 @@ export class MockService {
       bill_type: "C",
       cae: "87654321012345",
       expiration_date_cae: [2023, 12, 15],
-      created_date: [2023, 12, 6],
+      created_date: [2023, 9, 6],
       total_price: 3200,
       detail_bill: [
         {
@@ -708,7 +716,7 @@ export class MockService {
       bill_type: "A",
       cae: "98765432101234",
       expiration_date_cae: [2023, 12, 10],
-      created_date: [2023, 12, 8],
+      created_date: [2023, 9, 8],
       total_price: 1500,
       detail_bill: [
         {
@@ -749,7 +757,7 @@ export class MockService {
       bill_type: "A",
       cae: "98765432101234",
       expiration_date_cae: [2023, 12, 10],
-      created_date: [2023, 12, 8],
+      created_date: [2023, 9, 8],
       total_price: 1500,
       detail_bill: [
         {
@@ -790,7 +798,7 @@ export class MockService {
       bill_type: "C",
       cae: "54321098765432",
       expiration_date_cae: [2023, 12, 25],
-      created_date: [2023, 12, 12],
+      created_date: [2023, 9, 12],
       total_price: 4200,
       detail_bill: [
         {
@@ -846,6 +854,62 @@ export class MockService {
           payment_method: { id_payment_method: 1, payment_method: "Efectivo", surcharge: 0 }
         }
       ]
-    }
+    },
+    {id_bill: 11,
+    address: "Avenida Cochabamba 789",
+    id_sale_order: 103,
+    id_seller: 2,
+    name_seller: "Macarena Caridad",
+    id_client: 399,
+    first_name: "Roman",
+    las_name: "Rodríguez",
+    company_name: "",
+    telephone: 3517803366,
+    email: "roman.rodriguez@outlook.com",
+    vat_condition: "Monotributista",
+    bill_type: "C",
+    cae: "87654321098776",
+    expiration_date_cae: [2023, 12, 31],
+    created_date: [2023, 9, 13],
+    total_price: 1800,
+    detail_bill: [
+      {
+        id: 4,
+        tax: { id: 4, tax_type: "IVA", tax_value: 21 },
+        id_product: 304,
+        name_product: "Sierra eléctrica",
+        quantity: 1,
+        unit: "unidad",
+        tax_value: 0,
+        unitary_price: 1200,
+        discount_amount: 50
+      },
+      {
+        id: 5,
+        tax: { id: 5, tax_type: "IVA", tax_value: 21 },
+        id_product: 305,
+        name_product: "Destornillador plano",
+        quantity: 2,
+        unit: "unidad",
+        tax_value: 0,
+        unitary_price: 150,
+        discount_amount: 0
+      }
+    ],
+    payments: [
+      {
+        id: 4,
+        payment: 1800,
+        surcharge: 0,
+        payment_method: { id_payment_method: 1, payment_method: "Efectivo", surcharge: 0 }
+      },
+      {
+        id: 5,
+        payment: 0,
+        surcharge: 0,
+        payment_method: { id_payment_method: 2, payment_method: "Tarjeta de Crédito", surcharge: 10 }
+      }
+    ]
+    }  
   ];
 }

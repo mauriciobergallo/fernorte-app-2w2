@@ -12,6 +12,7 @@ import {SaleOrderApi} from "../../models/SaleModelApi";
 import {Payment} from "../../models/PaymentModel";
 import { MockSalesService } from '../../services/salesOrder/mock-sales.service';
 import { SaleOrderOk } from '../../models/SaleOrderOk';
+import { MockService } from '../../services/mocks/mock.service';
 declare var window: any;
 
 @Component({
@@ -35,8 +36,52 @@ export class BillingComponent {
   realAmount : number = 0;
   filters: Map<string, string> = new Map();
 
+
+  billCargada:BillModel=
+    {
+      id_bill: 12,
+      address: "Uritorco 4813",
+      id_sale_order: 1561549904,
+      id_seller: 1,
+      name_seller: "Prado Ignacio",
+      id_client: 2,
+      first_name: "Tomás",
+      las_name: "Aranda",
+      company_name: "",
+      telephone: 3515605118,
+      email: "tomiaranda@gmail.com",
+      vat_condition: "Responsable Inscripto",
+      bill_type: "A",
+      cae: "12345678901234",
+      expiration_date_cae: [2023, 11, 30],
+      created_date: [2023, 11, 20],
+      total_price: 16395.5,
+      detail_bill: [
+        {
+          id: 20,
+          tax: { id: 1, tax_type: "IVA", tax_value: 21 },
+          id_product: 47,
+          name_product: "Amoladora Angular Versa Pro 2400 W 230 Mm Ferreteria Express",
+          quantity: 1,
+          unit: "unidad",
+          tax_value: 2845.5,
+          unitary_price: 13550,
+          discount_amount: 0,
+        },
+      ],
+      payments: [
+        {
+          id: 1,
+          payment: 16395.5,
+          surcharge: 0,
+          payment_method: { id_payment_method: 1, payment_method: "Efectivo", surcharge: 0 },
+        },
+      ],
+    }
+  
+
   constructor(private billService: BillServiceService, private paymentMethodService: PaymentMethodService,
-    private saleOrderService:SaleOrderServiceService,private saleServiceMock : MockSalesService) {
+    private saleOrderService:SaleOrderServiceService,private saleServiceMock : MockSalesService,private billMockService:MockService) {
   }
 
   ngOnInit(): void {
@@ -98,6 +143,7 @@ export class BillingComponent {
           this.cancelOrder();
           this.paymentModal.hide();
           this.saleServiceMock.addOrder(this.orderOk);
+          this.billMockService.addBill(this.billCargada);
         } else {
           this.openPaymentModal();
         }
@@ -114,6 +160,7 @@ export class BillingComponent {
       this.cancelOrder();
       this.paymentModal.hide();
       this.saleServiceMock.addOrder(this.orderOk);
+      this.billMockService.addBill(this.billCargada)
     }
     return
   }
@@ -206,7 +253,7 @@ export class BillingComponent {
     if(this.orderId!=null){
       this.totalAmount = 0;
 
-      let saleOrder : SaleOrderApi = this.saleServiceMock.onSaleToBill(); //aca traeria el caminito felih
+      let saleOrder : SaleOrderApi = this.saleServiceMock.onSaleToBill();
       this.order = this.billService.mapSaleOrderToBill(saleOrder);
       this.order.vat_condition = "FINAL_CUSTOMER";
       this.order.bill_type = "B";
@@ -243,7 +290,7 @@ export class BillingComponent {
   orderOk : SaleOrderOk =
     {
       idSaleOrder: 1561549904,
-      idSeller: 4,
+      idSeller: 1,
       nameSeller: "Ignacio Prado",
       idClient: 2,
       nameClient: "Tomás Aranda",

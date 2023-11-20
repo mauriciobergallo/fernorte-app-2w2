@@ -48,7 +48,7 @@ ngOnDestroy(): void {
   this.subscriptions.unsubscribe();
 }
 ngOnInit(): void {
-    //this.billListMock = this.mockService.getMocks();
+    console.log(this.mockService.getMocks());
    this.onLoadPage(1)
 }
 
@@ -79,11 +79,7 @@ onSendFilters(){
     this.toDate = "";
     return;
   } 
-
-  //this.showPagination = false; 
   console.log(this.showPagination)
-  
-  
 }
 
 onShowDetails(item:any, content: any){
