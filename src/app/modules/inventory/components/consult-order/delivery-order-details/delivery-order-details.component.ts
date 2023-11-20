@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { DeliverOrderService } from '../../../services/deliver-order.service';
 import { DeilveryOrder } from '../../../models/deilvery-order';
@@ -8,6 +8,8 @@ import { DeliveryOrderDetailPut } from '../../../models/delivery-order-detail-pu
 import { DeilveryOrderDetails } from '../../../models/deilvery-order-details';
 import { DeliveryOrdersMockService } from '../../../services/Mocks/delivery-orders-mock.service';
 import Swal from 'sweetalert2';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ILocationInfoProduct } from '../../../models/ILocationInfoProduct';
 
 @Component({
   selector: 'fn-delivery-order-details',
@@ -18,11 +20,28 @@ export class DeliveryOrderDetailsComponent {
   orderId: number = 0;
   order: DeilveryOrder = new DeilveryOrder();
   loading: boolean = false;
+  locationInfo: ILocationInfoProduct = {
+    location_id: 0,
+    category_name: '',
+    product_name: '',
+    capacityRemaining: 0,
+    measure_unit: '',
+    max_capacity: 0,
+    location: {
+        id: 0,
+        zone: '',
+        section: '',
+        space: '',
+    },
+    quantity: 0,
+};
+  @ViewChild('myModal') myModal: any;
   constructor(
     private route: ActivatedRoute,
     private deliveryorderService: DeliverOrderService,
     private router: Router,
     private mockservice :DeliveryOrdersMockService,
+    private modalService: NgbModal
   ) {}
 
   save() {
@@ -96,6 +115,15 @@ export class DeliveryOrderDetailsComponent {
       }
     });*/
   }
+
+  cargarModal(productNmae: string)
+  {
+    const foundLocation = this.mockservice.getLocationByProductName(productNmae);
+    console.log(foundLocation);
+    if (foundLocation !== undefined) {
+        this.locationInfo = foundLocation;
+    }
+}
 
   getStatusText(state: string): string {
     switch (state) {

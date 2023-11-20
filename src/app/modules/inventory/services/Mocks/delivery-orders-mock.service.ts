@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { DeilveryOrder } from '../../models/deilvery-order';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { DeliveryOrderPut } from '../../models/delivery-order-put';
+import { ILocationInfoProduct } from '../../models/ILocationInfoProduct';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class DeliveryOrdersMockService {
   listFiltered: DeilveryOrder[] = [];
   listFilteredDate: DeilveryOrder[] = [];
 
+  locationsList : ILocationInfoProduct[] = this.locations();
   constructor() { }
 
   originalItems(): DeilveryOrder[]
@@ -65,7 +67,7 @@ export class DeliveryOrdersMockService {
           {
             "quantity": 4,
             "state": "PARTIALLY_DELIVERED",
-            "product_name": "Product 91",
+            "product_name": "Cinta metrica",
             "delivered_quantity": 3,
             "product_id": 987,
             "quantity_delivery": 1
@@ -612,6 +614,90 @@ export class DeliveryOrdersMockService {
     return deliveryOrders;
   }
 
+  locations() : ILocationInfoProduct[]
+  {
+    const locationInfoProductsMock: ILocationInfoProduct[] = [
+      {
+          location_id: 789,
+          category_name: 'Categoría A',
+          product_name: 'Destornillador Philips',
+          capacityRemaining: 50,
+          measure_unit: 'Unidad',
+          max_capacity: 100,
+          location: {
+              id: 1,
+              zone: 'Zona A',
+              section: 'Sección 1',
+              space: 'Espacio 1',
+          },
+          quantity: 10,
+      },
+      {
+          location_id: 456,
+          category_name: 'Categoría B',
+          product_name: 'Taladro Electrico',
+          capacityRemaining: 30,
+          measure_unit: 'Unidad',
+          max_capacity: 50,
+          location: {
+              id: 2,
+              zone: 'Zona B',
+              section: 'Sección 2',
+              space: 'Espacio 2',
+          },
+          quantity: 5,
+      },
+      {
+          location_id: 123,
+          category_name: 'Categoría C',
+          product_name: 'Enduido Plastico',
+          capacityRemaining: 20,
+          measure_unit: 'Unidad',
+          max_capacity: 40,
+          location: {
+              id: 3,
+              zone: 'Zona C',
+              section: 'Sección 3',
+              space: 'Espacio 3',
+          },
+          quantity: 8,
+      },
+      {
+          location_id: 654,
+          category_name: 'Categoría A',
+          product_name: 'Ceramica',
+          capacityRemaining: 40,
+          measure_unit: 'Unidad',
+          max_capacity: 60,
+          location: {
+              id: 4,
+              zone: 'Zona A',
+              section: 'Sección 1',
+              space: 'Espacio 1',
+          },
+          quantity: 12,
+      },
+      {
+          location_id: 987,
+          category_name: 'Categoría B',
+          product_name: 'Cinta metrica',
+          capacityRemaining: 10,
+          measure_unit: 'Unidad',
+          max_capacity: 30,
+          location: {
+              id: 5,
+              zone: 'Zona B',
+              section: 'Sección 2',
+              space: 'Espacio 2',
+          },
+          quantity: 3,
+      },
+  ];
+
+  return locationInfoProductsMock;
+  
+  }
+
   filterByString(filterstr : string)
   {
     if(this.listFilteredDate.length > 0)
@@ -705,9 +791,11 @@ updateOrder(order :DeliveryOrderPut)
       }
   }
   
+}
 
-  
-  
-
+getLocationByProductName(id: string)
+{
+  var location = this.locationsList.find(loc => loc.product_name == id);
+  return location;
 }
 }
