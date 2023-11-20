@@ -1,0 +1,85 @@
+<section>
+  <div class="row d-flex justify-content-between mb-3">
+      <div class="col-lg-10">
+        <form class="row row-cols-sm-auto" [formGroup]="formGroup">
+          <h6
+            class="d-flex text-center justify-content-center align-items-center"
+          >
+            Filtrar por rango de fechas:
+          </h6>
+          <div class="col-12">
+            <div class="input-group">
+              <input
+                type="date"
+                #dpFromDate
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                name="dpFromDate"
+                [value]="formatDateToString(fromDate)"
+                (input)="onInputChange(dpFromDate.value, 'from')"
+              />
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="input-group">
+              <input
+                type="date"
+                #dpToDate
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                name="dpToDate"
+                [value]="formatDateToString(toDate)"
+                (input)="onInputChange(dpToDate.value, 'to')"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div
+        class="col-lg-2 d-flex justify-content-around"
+      >
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm"
+          (click)="applyFilters()"
+        >
+          Filtrar
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-danger btn-sm"
+          (click)="clearFilter()"
+        >
+          Limpiar
+        </button>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-lg-2 d-flex align-items-center">
+        <label for="supplierName" class="form-label">Filtrar por proveedor: </label>
+      </div>
+      <div class="col-lg-10">
+        <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Buscar por proveedor" 
+        [(ngModel)]="supplierName"
+        id="supplierName"
+        >
+      </div>
+      <!-- <div class="col-md-4">
+        <button class="btn btn-outline-primary" (click)="applyFilters()">Buscar</button>
+      </div> -->
+    </div>
+    <div class="row mt-4 mb-3">
+      <div class="col-lg-12">
+        <form class="range w75 d-flex justify-content-between align-items-center" [formGroup]="rangeForm">
+            <label for="customRange" class="form-label">Filtrar por importe: </label>
+            <span class="range-value"><strong>{{1 | currency}}</strong></span>
+            <input type="range" class="multi-range form-range-track" min="1" max="500" step="0.5" id="customRange" formControlName="rangeInput">
+            <span class="range-value"><strong>{{rangeValue | currency}}</strong></span>
+        </form>
+      </div>
+      <hr class="mt-3">
+    </div>
+</section>
