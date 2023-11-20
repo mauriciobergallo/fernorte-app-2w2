@@ -5,14 +5,11 @@
           <h2>Movimientos de Inventario</h2>
         
       </div>
-      <div class="col-md-6  justify-content-end ">
-          <fn-create-movement href="new-movement"></fn-create-movement>
-      </div>
   </div>
     <fn-datepicker-range-popup (onFilter)="filterByDate($event)"
       (onClearFilter)="clearFilters()"></fn-datepicker-range-popup>
     <div class="container my-2">
-      <fn-create-movement href="new-movement"></fn-create-movement>
+      <fn-create-movement (onSubmitMov)="reload()" href="new-movement"></fn-create-movement>
       <button class="btn btn-primary mx-2" (click)="downloadPDF()">Exportar PDF</button>
     </div>
 
@@ -34,6 +31,7 @@
           <th>Entrada/Salida</th>
           <th>Interno/Externo</th>
           <th>Detalles</th>
+          <th>Accion</th>
 
         </tr>
       </thead>
@@ -49,7 +47,8 @@
           <td>{{ (movimiento.is_internal)? 'Interno' : 'Externo' }}</td>
           <td (click)="showDetail(i)"><i
               [class]="(mostrarDetalleMovimiento ===i && mostrarDetalle) ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
-            </td>
+          </td>
+          <td><i (click)="removeMov(i)" class="bi bi-trash"></i></td>
         </tr>
         <tr *ngIf="this.mostrarDetalleMovimiento === i">
           <td colspan="5">

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy ,ViewChild, ElementRef, AfterViewInit, TemplateRef, inject} from '@angular/core';
+import { Component, OnInit, OnDestroy ,ViewChild, ElementRef, AfterViewInit, TemplateRef, inject, EventEmitter, Output} from '@angular/core';
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchAll, switchMap, takeUntil } from 'rxjs/operators';
 import { LocationInfoDto } from '../../models/location-info.interface';
@@ -42,7 +42,7 @@ export function quantityValidator(): ValidatorFn {
 })
 export class CreateMovementComponent implements OnInit, OnDestroy  {
 
-
+  @Output() onSubmitMov = new EventEmitter<void>();
   private searchQuery = new BehaviorSubject<string>('..');
   locationsInfo$!: Observable<LocationInfoDto[]>;
   private selectedInfoSubject = new BehaviorSubject<LocationInfoDto | null>(null);
@@ -129,7 +129,7 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
     })
     let mov : ReqNewMovementDto = {
       remarks: this.remarksControl?.value,
-      operator_id : 1,
+      operator_name : localStorage.getItem('username')?.toString() ?? 'Default',
       movement_type: null,
       is_internal : true,
       movement_details : dets
@@ -147,7 +147,7 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
       next: (result) => {
     this.isLoadingS = false;
         if (result) {
-          //alert('succes')
+          this.onSubmitMov.emit()
           Swal.fire(
             '¡Creado!',
             'El movimiento ha sido creado con éxito.',
@@ -286,7 +286,7 @@ addDetail(detailForm: FormGroup){
 
     this.selectedOriginInfo = null;
     this.selectedDestinityInfo = null;
-    this.searchQuery.next('')
+    this.searchQuery.next('..')
   }
 
 

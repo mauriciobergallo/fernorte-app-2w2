@@ -6,7 +6,7 @@ import { Pagination } from '../../models/pagination';
 import { MovementType } from '../../models/IMovementTypeEnum';
 
 export interface ReqNewMovementDto {
-  operator_id: number; // Long in Java is typically represented as a number in TypeScript
+  operator_name: string; // Long in Java is typically represented as a number in TypeScript
   movement_type:MovementType | null; // Assuming MovementType is defined elsewhere
   is_internal: boolean;
   movement_details: NewDetailMovementDto[];
