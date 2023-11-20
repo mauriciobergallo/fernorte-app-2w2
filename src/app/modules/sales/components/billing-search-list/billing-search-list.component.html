@@ -1,127 +1,139 @@
-<div class="container">
-    <div>
-      <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Filtros
-      </button>
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Filtros</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              Seleccione sus filtros
-              <form #getBillsForm="ngForm">
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Documento de cliente</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                  name="doc"
-                #docControl="ngModel"
-                [(ngModel)]="doc">
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label">Número de factura</label>
-                  <input type="number" class="form-control" id="exampleInputPassword1"
-                  name="idBill"
-                #idBillControl="ngModel"
-                [(ngModel)]="idBill">
-                </div>
-                <div class="mb-3">
-                  <div class="row">
-                    <div class="mb-3 col">
-                      <p>Desde</p>
-                      <input type="date" class="form-control" id="fromDate" 
-                      placeholder=""
-                      name="fromDate"
-                      required
-                      name="fromDate"
-                    #fromDateControl="ngModel"
-                    [(ngModel)]="fromDate">
-                    </div>
-                    <div class="mb-3 col">
-                      <p>Hasta</p>
-                      <input type="date" class="form-control" id="toDate" 
-                      placeholder=""
-                      name="toDate"
-                      required
-                      name="toDate"
-                    #toDateControl="ngModel"
-                    [(ngModel)]="toDate">
-                    </div>
+<div class="container-fluid">
+  <div>
+    <br>
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Filtros
+    </button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+      data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Filtros</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Seleccione sus filtros
+            <form #getBillsForm="ngForm">
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Documento de cliente</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="doc"
+                  #docControl="ngModel" [(ngModel)]="doc">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Número de factura</label>
+                <input type="number" class="form-control" id="exampleInputPassword1" name="idBill"
+                  #idBillControl="ngModel" [(ngModel)]="idBill">
+              </div>
+              <div class="mb-3">
+                <div class="row">
+                  <div class="mb-3 col">
+                    <p>Desde</p>
+                    <input type="date" class="form-control" id="fromDate" placeholder="" name="fromDate" required
+                      name="fromDate" #fromDateControl="ngModel" [(ngModel)]="fromDate">
+                  </div>
+                  <div class="mb-3 col">
+                    <p>Hasta</p>
+                    <input type="date" class="form-control" id="toDate" placeholder="" name="toDate" required
+                      name="toDate" #toDateControl="ngModel" [(ngModel)]="toDate">
                   </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="onSendFilters()">Aplicar</button>
-                </div>
-              </form>
-            </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                  (click)="onSendFilters()">Aplicar</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
-      <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Número</th>
-              <th scope="col">Cliente</th>
-              <th scope="col">Vendedor</th>
-              <th scope="col">Fecha Creación</th>
-              <th scope="col">Total</th>
-              <th scope="col">Detalle</th>
-              <th scope="col">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of billListMock">   
-              <th scope="row">{{item.id_bill! + 1000}}</th>
-              <td>{{item.las_name}}</td>
-              <td>{{item.name_seller}}</td>
-              <td>{{item.created_date | dateFormat}}</td>
-              <td>{{item.total_price}}</td>
-              <td>
-                  <ul>
-                      <li *ngFor="let prod of item.detail_bill">
-                          {{prod.name_product}}
-                      </li>
-                  </ul>
-              </td>
-              <td class="text-center">
-                <div class="dropdown">
-                  <button type="button" class="btn btn-light dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-three-dots-vertical"></i>
-                  </button>
-                  <div class="dropdown-content">
-                    <a (click)="onShowDetails(item,modalDetalle)">Ver detalles</a>
-                    <a (click)="onPrint()">Imprimir</a>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <ng-template #modalDetalle>
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Detalles de la Factura Nro° {{ selectedBill?.id_bill! + 1000 }}</h5>
-                <button type="button" class="btn-close" (click)="onCloseDetails()" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <p><strong> Cliente:</strong> {{ selectedBill?.las_name }}</p>
-                <p><strong> Vendedor:</strong> {{ selectedBill?.name_seller }}</p>
-                <p><strong> Fecha Creación:</strong> {{ selectedBill?.created_date | dateFormat }}</p>
-                <p><strong> Total:</strong> {{ selectedBill?.total_price }}</p>
-                <p><strong> Detalles:</strong></p>
-                <ul>
-                  <li *ngFor="let prod of selectedBill?.detail_bill">
-                    {{ prod.name_product }} x {{prod.quantity}} - <strong>Precio:</strong>  {{ prod.unitary_price }}
-                  </li>
-                </ul>
-                <p><strong> Total:</strong> {{ calculateTotal(selectedBill) }}</p>
-              </div>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Número</th>
+        <th scope="col">Cliente</th>
+        <th scope="col">Vendedor</th>
+        <th scope="col">Fecha Creación</th>
+        <th scope="col">Total</th>
+        <th scope="col">Detalle</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of billListMock">
+        <th scope="row">{{item.id_bill! + 1000}}</th>
+        <td>{{ item.first_name}} {{item.las_name}}</td>
+        <td>{{item.name_seller}}</td>
+        <td>{{item.created_date | dateFormat}}</td>
+        <td>{{item.total_price}}</td>
+        <td>
+          <ul>
+            <li *ngFor="let prod of item.detail_bill">
+              {{prod.name_product}}
+            </li>
+          </ul>
+        </td>
+        <td class="text-center">
+          <div class="dropdown">
+            <button type="button" class="btn btn-light dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <div class="dropdown-content">
+              <a (click)="onShowDetails(item,modalDetalle)">Ver detalles</a>
+              <a (click)="onPrint(item)">Imprimir</a>
             </div>
-          </div>    
-        </ng-template>
-      
-  </div> 
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-container *ngIf="showPagination">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination pagination-lg justify-content-center">
+        <li class="page-item" aria-current="page">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" [class.active]="currentPage === 1">
+          <a class="page-link" (click)="onLoadPage(1)">1</a>
+        </li>
+        <li class="page-item" [class.active]="currentPage === 2">
+          <a class="page-link" (click)="onLoadPage(2)">2</a>
+        </li>
+        <!-- <li class="page-item"><a class="page-link" (click)="onLoadPage(3)">3</a></li> -->
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </ng-container>
+  <ng-template #modalDetalle>
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Detalles de la Factura Nro° {{ selectedBill?.id_bill! + 1000 }}</h5>
+          <button type="button" class="btn-close" (click)="onCloseDetails()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong> Cliente:</strong> {{ selectedBill?.first_name}} {{selectedBill?.las_name}}</p>
+          <p><strong> Vendedor:</strong> {{ selectedBill?.name_seller }}</p>
+          <p><strong> Fecha Creación:</strong> {{ selectedBill?.created_date | dateFormat }}</p>
+          <p><strong> Total:</strong> {{ selectedBill?.total_price }}</p>
+          <p><strong> Detalles:</strong></p>
+          <ul>
+            <li *ngFor="let prod of selectedBill?.detail_bill">
+              {{ prod.name_product }} x {{prod.quantity}} - <strong>Precio:</strong> {{ prod.unitary_price }}
+            </li>
+          </ul>
+          <p><strong> Total:</strong> {{ calculateTotal(selectedBill) }}</p>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+</div>

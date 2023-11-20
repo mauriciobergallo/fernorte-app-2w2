@@ -7,6 +7,8 @@ import { BillingNavComponent } from './components/billing-nav/billing-nav.compon
 import { ReportNavComponent } from './components/report-nav/report-nav.component';
 import { TaxComponent } from './components/tax/tax.component';
 import { TaxNavComponent } from './components/tax-nav/tax-nav.component';
+import { SaleOrderViewComponent } from './components/sale-order-view/sale-order-view.component';
+
 
 
 const childRoutes: Routes = [
@@ -22,6 +24,7 @@ const childRoutes: Routes = [
       { path: 'tax', component: TaxNavComponent}
     ],
   },
+  { path: 'printOrder', component: SaleOrderViewComponent }
 ];
 
 

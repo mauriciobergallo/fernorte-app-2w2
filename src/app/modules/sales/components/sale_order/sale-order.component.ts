@@ -12,6 +12,8 @@ import { MontoTotalModel } from '../../models/ModelTotalModel';
 import { SaleOrderProvider } from '../../services/salesOrder/SaleOrderProvider';
 import { ICustomer } from '../../interfaces/iCustomer';
 import { ClientService } from '../../services/clients/client.service';
+import { TurnServicesService } from '../../services/turns/turnServices.service';
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -27,7 +29,8 @@ export class SaleOrderComponent implements OnInit {
     private productService: ProductService,
     private carritoService: CarritoService,
     private saleOrderProvider: SaleOrderProvider,
-    private clientsService: ClientService) { }
+    private clientsService: ClientService,
+    private turnService: TurnServicesService) { }
 
   salesOrderLoad: SaleOrderModel | undefined
   loader = this.loadingService.viewLoader();
@@ -38,6 +41,7 @@ export class SaleOrderComponent implements OnInit {
   saleOrder: SaleOrderModel = new SaleOrderModel();
   permiteGenerar: boolean = true;
   listClients: ICustomer[] = []
+  client:string = "Tomás Aranda"
   listClientsfiltrada: ICustomer[] = [];
   productoSeleccionado = this.productService.cleanProduct();
   readonly typeSalesOrder = TypeSalesOrder.ORDEN_VENTA;
@@ -105,11 +109,20 @@ export class SaleOrderComponent implements OnInit {
     }
 
     this.saleOrderProvider.createSaleOrder(this.saleOrder!).subscribe((res) => {
-      this.saleOrder = res.data
+      this.saleOrder = res.data;
       
     });
     this.listProduct = this.productService.restarCantidad(this.productoSeleccionado)
     this.loader = this.loadingService.loading();
+    Swal.fire({
+      title: "¡Presupuesto registrado!",
+      text: "Presupuesto registrado correctamente",
+      icon: "success"
+    });
+    this.client = "";
+    this.productoSeleccionado = new ProductModel;
+    this.carrito = [];
+    this.montoTotal = new MontoTotalModel;
   }
 
   deleteProduct(id: number) {

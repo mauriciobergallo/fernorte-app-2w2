@@ -7,9 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SaleOrderNavComponent implements OnInit {
 
-  activeTab:string="buscar"
-  regist:boolean=false
-  search:boolean=true
+  activeTab:string="registrar"
+  regist:boolean=true
+  search:boolean=false
 
 
   constructor() { }

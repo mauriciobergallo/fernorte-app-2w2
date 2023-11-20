@@ -35,3 +35,12 @@
   .dropdown:hover .dropdown-content {
     display: block;
   }
+  .btn-close:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  .page-item.active {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #ffffff;
+  }

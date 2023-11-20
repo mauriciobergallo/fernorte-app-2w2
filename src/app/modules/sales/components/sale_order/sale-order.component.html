@@ -23,23 +23,22 @@
     <div class="row mt-4">
         <div class="col-md-6">
             <h4 class="m-2">Cliente</h4>
+            <!-- Selector y buscador de productos -->
             <div class=" card p-2 m-1">
-                <div class="row justify-content-around">
-                    <div class="col-3 pt-2" style="display: -webkit-inline-box;">
-                        <h5>Exequiel Santoro</h5>
-                    </div>
-                    <div class="col-6 d-flex justify-content-around">
-                        <button class="btn btn-primary">
-                            <p class="m-0" style="size: 2px;">Buscar</p>
-                        </button>
-                        <button class="btn btn-primary">
-                            <p class="m-0">Cargar</p>
+                <div class="input-group">
+                    <input type="text" class="form-control" aria-label="Text input with dropdown button"
+                        [value]="client">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" (click)="agregarProducto()">
+                            <p class="m-0">Agregar</p>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
     <div class="row mt-4">
         <div class="col-md-6">
             <h4 class="m-2">Productos</h4>
@@ -114,8 +113,6 @@
                 <div class=" card p-2 m-1">
                     <!-- Resumen de la venta -->
                     <div class="text-center">
-                        <p>Subtotal: ${{montoTotal.subTotal}}</p>
-                        <p>Impuestos: ${{montoTotal.subTotal | calcularImpuestos:montoTotal.impuesto}}</p>
                         <p class="mb-0">Total: ${{montoTotal.subTotal | calcularMontoTotal:montoTotal.impuesto}}</p>
                     </div>
                 </div>
@@ -129,7 +126,7 @@
                     <button class="btn btn-primary" (click)="generatePdf()">
                         <p class="m-0">Descargar</p>
                     </button> <button class="btn btn-secondary" (click)="cancelOrderSale()">
-                        <p class="m-0">cancelar</p>
+                        <p class="m-0">Cancelar</p>
                     </button>
                     <button class="btn btn-primary" (click)="generateSaleOrder(typePresupuesto)" >
                         <p class="m-0">Guardar</p>

@@ -9,6 +9,9 @@ import { NgModel, NgForm } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { MockSalesService } from '../../services/salesOrder/mock-sales.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SaleOrderView } from '../../models/SaleOrderView';
+import { PrintDocumentsService } from '../../services/print/print-documents-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'fn-sale-order-search-list',
@@ -18,77 +21,64 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   saleOrdersList: SaleOrderApi[] = [];
   saleOrdersListOk: SaleOrderOk[]=[];
-  counter : number = 0;
-
-  selectedOrder : any;
 
   saleOrderStates: string[] = [];
+  saleOrderOk!: SaleOrderOk;
+  salePick:boolean= false;
+
+  currentPage: number = 1;
+
+  showPagination: boolean = true;
+
+  selectedOrder : any;
 
 
   idOrder:string="";
   doc:string="";
-  fromDate:string="2023-11-19";
-  toDate:string="2023-11-19";
+  fromDate:string="";
+  toDate:string="";
   stateOrder:string="";
   filters: Map<string, string> = new Map();
 
+  pageQuantity : number = 0;
+
   private subscriptions = new Subscription();
 
-  constructor(private saleOrderServiceService: SaleOrderServiceService,
-    private mockService : MockSalesService, private modalService:NgbModal) {
+  constructor(private saleOrderServiceService: SaleOrderServiceService, 
+    private mockService : MockSalesService, private modalService:NgbModal,
+    private print : PrintDocumentsService, private route : Router) {
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
   ngOnInit(): void {
-    this.saleOrdersListOk = this.mockService.onShowList();
+    this.onLoadPage(1);
   }
 
   onSendFilters(form : NgForm) {
-    console.log(this.counter)
     if(this.doc !== ""){
       this.saleOrdersListOk = this.mockService.onShowByDoc();
+      this.doc="";
+      this.stateOrder = "";
+      this.showPagination=false;
+      return;
+
     } else if(this.stateOrder !== ""){
       this.saleOrdersListOk = this.mockService.onShowByState();
+      this.doc="";
+      this.stateOrder = "";
+      this.showPagination=false;
+      return;
     } else {
-      this.saleOrdersListOk = this.mockService.onShowList();
-    }
-    this.doc="";
-    this.stateOrder = "";
-  }
-
-  mapSaleOrder(saleOrder: SaleOrderApi): SaleOrderOk {
-    const { id_sale_order, id_seller, id_client, date_of_issue, date_of_expiration, state_sale_order, detail_sales_order, first_name_client, last_name_client } = saleOrder;
-    const productList: ProductOk[]=[];
-    for(let prod of detail_sales_order){
-      productList.push(this.mapProduct(prod))
-    }
-    const saleOrderOk: SaleOrderOk = {
-      idSaleOrder: id_sale_order,
-      idSeller: id_seller,
-      idClient: id_client,
-      nameClient: first_name_client+" "+last_name_client,
-      dateOfIssue: new Date(date_of_issue[0], date_of_issue[1]-1, date_of_issue[2], date_of_issue[3], date_of_issue[4]),
-      dateOfExpiration: new Date(date_of_expiration[0], date_of_expiration[1]-1, date_of_expiration[2], date_of_expiration[3], date_of_expiration[4]),
-      stateSaleOrder: state_sale_order,
-      details: productList
-    };
-    return saleOrderOk;
-  }
-
-  mapProduct(product : ProductApi) : ProductOk {
-    const { id_product, id_sale_order_details, price, quantity, state_sale_order_detail, name } = product;
-    const productOk : ProductOk = {
-      name: name,
-      idProduct : id_product,
-      idSaleOrderDetails:id_sale_order_details,
-      price : price,
-      quantity : quantity,
-      stateSaleOrderDetail : state_sale_order_detail
+      this.onLoadPage(1);
+      this.showPagination=true;
+      this.doc="";
+      this.stateOrder = "";
+      return;
     } 
-    return productOk
   }
+
   onShowDetails(item:any, content: any){
     this.selectedOrder = item;
     console.log(this.selectedOrder)
@@ -115,7 +105,25 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     return total;
   }
 
-  onPrint() {
-    
+  onCalculatePages(list : SaleOrderOk[]) {
+    this.pageQuantity = list.length/10;
+  }
+
+  onLoadPage(page : number) {
+    if(page === 1) {
+      this.saleOrdersListOk = this.mockService.onShowList().slice(page-1,(page*10));
+      this.currentPage = page;
+    } else {
+      this.saleOrdersListOk = this.mockService.onShowList().slice((page-1)*10,(page*10));
+      this.currentPage = page;
+    }
+  }
+
+
+  onPrint(saleOrder:SaleOrderOk) {
+    this.saleOrderOk = saleOrder;
+    alert("click on Print")
+    this.print.sendOrder(this.saleOrderOk);
+    this.route.navigateByUrl('printOrder')
   }
 }

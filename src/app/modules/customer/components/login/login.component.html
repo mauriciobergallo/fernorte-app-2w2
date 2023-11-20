@@ -1,0 +1,48 @@
+
+<div class="container my-5 mx-auto col-4">
+    <form #miFormulario="ngForm" (ngSubmit)="onAdd(miFormulario)">
+
+        <div style="text-align: center;">
+            <!-- cambiar por el logo original -->
+            <img class="mb-4" src="assets/logo.png" alt="" [height]="75" width="220" height="57">
+            <h1 class="h3 mb-3 fw-normal"><b>Iniciar Sesión</b></h1>
+        </div>
+
+        <label for="username" class="form-label">Usuario:</label>
+        <div class="mb-3">
+            <input id="username" type="text" class="form-control custom-input" aria-describedby="basic-addon1"
+                name="username" #username="ngModel" [(ngModel)]="login.identity"
+                [ngClass]="{ 'is-invalid': username.invalid && miFormulario.submitted}" required>
+            <div class="invalid-feedback">
+                Ingrese un usuario
+            </div>
+        </div>
+
+        <label for="password" class="form-label">Contraseña:</label>
+        <div class="input-group mb-3">
+            <input id="password" [type]="passwordFieldType" class="form-control custom-input" aria-describedby="basic-addon2"
+                name="password" #password="ngModel" [(ngModel)]="login.password"
+                [ngClass]="{ 'is-invalid': password.invalid && miFormulario.submitted}" required>
+            <span class="input-group-text" id="basic-addon2" (click)="togglePasswordVisibility()" style="cursor: pointer;">
+                <i class="bi" [ngClass]="{ 'bi-eye': !showPassword, 'bi-eye-slash': showPassword }"></i>
+            </span>
+            <div class="invalid-feedback">
+                Ingrese una contraseña
+            </div>
+        </div>
+
+        <div class="form-check text-start my-3">
+            <a class="form-check-label" style="cursor: pointer;">
+                Olvidé mi contraseña
+            </a>
+        </div>
+        <button class="btn btn-primary w-100 py-2" type="submit">Iniciar Sesión</button>
+
+    </form>
+</div>
+
+
+<div>
+    <router-outlet></router-outlet>
+</div>
+

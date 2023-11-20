@@ -34,6 +34,7 @@
                 name="stateOrder"
                 #stateOrderControl="ngModel"
                 [(ngModel)]="stateOrder">
+                  <option value="" disabled selected hidden>Selecciona un estado</option>
                   <option value="">Creada</option>
                   <option value="Pendiente de entrega" selected>Pendiente de entrega</option>
                   <option value="">Entregada</option>
@@ -97,17 +98,42 @@
             <td class="text-center">
               <div class="dropdown">
                 <button type="button" class="btn btn-light dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="bi bi-three-dots-vertical"></i>
+                  <i class="bi bi-three-dots-vertical" id="saleOrderId" ></i>
                 </button>
                 <div class="dropdown-content">
                   <a (click)="onShowDetails(item,modalDetalle)">Ver detalles</a>
-                  <a (click)="onPrint()">Imprimir</a>
+                  <a (click)="onPrint(item)" routerLink="printOrder">Imprimir</a>
                 </div>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
+      <ng-container  *ngIf="showPagination">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination pagination-lg justify-content-center">
+            <li class="page-item" aria-current="page">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item" [class.active]="currentPage === 1">
+              <a class="page-link" (click)="onLoadPage(1)">1</a>
+            </li>
+            <li class="page-item" [class.active]="currentPage === 2">
+              <a class="page-link" (click)="onLoadPage(2)">2</a>
+            </li>
+            <li class="page-item" [class.active]="currentPage === 3">
+              <a class="page-link" (click)="onLoadPage(3)">3</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </ng-container>
       <ng-template #modalDetalle>
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
@@ -129,4 +155,7 @@
           </div>
         </div>    
       </ng-template>
+</div>
+<div>
+  <router-outlet></router-outlet>
 </div>

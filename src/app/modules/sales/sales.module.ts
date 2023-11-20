@@ -31,6 +31,7 @@ import { TranslateStatesPipe } from './pipes/translateStates.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaxComponent } from './components/tax/tax.component';
 import { TaxNavComponent } from './components/tax-nav/tax-nav.component';
+import { PriceFormatPipe} from './pipes/price-format.pipe';
 
 import { ViewPaymentComponent } from './components/view-payment/view-payment.component';
 
@@ -38,6 +39,8 @@ import { BillingSearchListComponent } from './components/billing-search-list/bil
 import { BillingProvider } from './services/billing/BillingProvider';
 import { TaxRegisterComponent } from './components/tax-register/tax-register.component';
 import { PaymentMethodRegisterComponent } from './components/payment-method-register/payment-method-register.component';
+import {ReportTabComponent} from "./components/report-tab/report-tab.component";
+
 
 
 
@@ -64,9 +67,13 @@ import { PaymentMethodRegisterComponent } from './components/payment-method-regi
     TaxRegisterComponent,
     ReportNavComponent,
     ReportNavComponent,
+    ReportTabComponent,
+
     ViewPaymentComponent,
     BillingSearchListComponent,
-    DateFormatPipe],
+    DateFormatPipe,
+    PriceFormatPipe
+    ],
 
 
   providers: [SaleOrderProvider,
@@ -88,6 +95,7 @@ import { PaymentMethodRegisterComponent } from './components/payment-method-regi
     CalcularTotalPipe,
     SaleOrderSearchListComponent,
     BillingComponent,
+    ReportTabComponent,
     PaymentMethodComponent,
     PaymentMethodRegisterComponent,
     CreatePaymentComponent,
@@ -104,7 +112,8 @@ import { PaymentMethodRegisterComponent } from './components/payment-method-regi
     ReportNavComponent,
     ViewPaymentComponent,
     BillingSearchListComponent,
-    DateFormatPipe],
+    DateFormatPipe,
+    PriceFormatPipe],
 
 })
 export class SalesModule {}
