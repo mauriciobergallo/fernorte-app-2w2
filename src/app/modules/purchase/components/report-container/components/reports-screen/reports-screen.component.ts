@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ReportsServiceService } from '../../service/reports-service.service';
 import { PurchaseOrderResponse } from 'src/app/modules/purchase/models/IPurchaseOrder';
 import { PaymentOrderDetailResponse, PaymentOrderResponse } from 'src/app/modules/purchase/models/IPaymentOrder';
+import Swal from 'sweetalert2';
 
 // import jsPDF from 'jspdf';
 // import 'jspdf-autotable';
@@ -38,9 +39,17 @@ export class ReportsScreenComponent implements OnInit{
   }
  
 
-  async downloadPDF() {
+  downloadPDF(): void {
+    Swal.fire({
+      title: 'Success!', 
+      text: "Falta instalar la dependencia en el proyecto", 
+      icon: 'success', 
+      confirmButtonText: 'ok'
+    })
+    return;
+    
     let dataTable = [];
-    const pdf = new jsPDF() as any;
+    // const pdf = new jsPDF() as any;
     const headers = ['N°', 'Proveedor', 'Total', 'Fecha', 'Observación', 'Status'];
     let rows = [];
     if (this.activeTab$.getValue() === 'COMPRA'){
@@ -68,13 +77,13 @@ export class ReportsScreenComponent implements OnInit{
         ]
       });
     }
-    pdf.text(`Reporte de Compras: ${'ordenes de compra'}`, 10, 10);
+    /* pdf.text(`Reporte de Compras: ${'ordenes de compra'}`, 10, 10);
     pdf.autoTable({
       startY: 20,
       head: [headers],
       body: rows,
     }); 
-    pdf.save('reporte_compras.pdf');
+    pdf.save('reporte_compras.pdf'); */
   }
 
   fillPurchaseDataTable(): PurchaseOrderResponse[] {

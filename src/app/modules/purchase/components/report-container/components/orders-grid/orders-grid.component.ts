@@ -17,7 +17,7 @@ export class OrdersGridComponent implements OnInit{
   purchaseOrders!: Observable<PurchaseOrderResponse[]>;
   paymentOrders!:  Observable< PaymentOrderResponse[]>;
   paymentTotal!: number;
-  suppliers: ISupplier[] = [{
+  suppliers: ISupplier[] = [/* {
     id: 1,
     socialReason: "Razon social 1",
     fantasyName: "Fantasia 1",
@@ -56,7 +56,7 @@ export class OrdersGridComponent implements OnInit{
     cuit: "20323730009",
     adress: "Direccion 5",
     active: true,
-  }]
+  } */]
 
   constructor(private reportsService: ReportsServiceService,
     private suppliersService: SupliersService){}
@@ -65,7 +65,7 @@ export class OrdersGridComponent implements OnInit{
     this.tab.subscribe(newTabValue => {
       this.fillGrid();
     });
-    // this.suppliersService.getSupliers().subscribe((suppliers: ISupplier[]) => this.suppliers = suppliers);
+    this.suppliersService.getSupliers().subscribe((suppliers: ISupplier[]) => this.suppliers = suppliers);
   }
 
   fillGrid(): void {

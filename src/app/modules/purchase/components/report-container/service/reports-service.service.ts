@@ -86,7 +86,7 @@ export class ReportsServiceService {
     }
     if (supplierId) {
       filteredPurchaseOrders = filteredPurchaseOrders
-        .filter((purchase: PurchaseOrderResponse) => purchase.supplierId <= supplierId);
+        .filter((purchase: PurchaseOrderResponse) => purchase.supplierId = supplierId);
     }
     if (fromDate) {
       filteredPurchaseOrders = filteredPurchaseOrders
@@ -116,7 +116,7 @@ export class ReportsServiceService {
     }
     if (supplierId) {
       filteredPaymentsOrders = filteredPaymentsOrders
-        .filter((payment: PaymentOrderResponse) => payment.supplierId <= supplierId);
+        .filter((payment: PaymentOrderResponse) => payment.supplierId = supplierId);
     }
     if (fromDate) {
       filteredPaymentsOrders = filteredPaymentsOrders

@@ -31,7 +31,7 @@ export class DatePickerComponent implements OnInit {
   formGroup!: FormGroup;
   fromDate!: Date | null;
   toDate!: Date | null;
-  suppliers: ISupplier[] = [{
+  suppliers: ISupplier[] = [/* {
     id: 1,
     socialReason: "Razon social 1",
     fantasyName: "Fantasia 1",
@@ -70,7 +70,7 @@ export class DatePickerComponent implements OnInit {
     cuit: "20323730009",
     adress: "Direccion 5",
     active: true,
-  }]
+  } */]
 
   constructor(
     private calendar: NgbCalendar,
@@ -88,7 +88,7 @@ export class DatePickerComponent implements OnInit {
       this.rangeValue = value;
     });
 
-    //this.suppliersService.getSupliers().subscribe((suppliers: ISupplier[]) => this.suppliers = suppliers);
+    this.suppliersService.getSupliers().subscribe((suppliers: ISupplier[]) => this.suppliers = suppliers);
 
     this.formGroup = this.formBuilder.group({
       dpToDate: [null, [Validators.required]],
@@ -107,6 +107,7 @@ export class DatePickerComponent implements OnInit {
     let supplierId = 0;
     if (this.supplierName) {
       supplierId = this.suppliers.filter(supplier => supplier.fantasyName === this.supplierName)[0].id;
+      console.log('SUPPLIERS->', this.suppliers, supplierId)
     }
     if (this.fromDate && this.toDate) {
       if (this.fromDate.getTime() > this.toDate.getTime()) {
