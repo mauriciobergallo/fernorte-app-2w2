@@ -7,6 +7,7 @@ import { ProductApi } from '../../models/ProductApi';
 import { ProductOk } from '../../models/ProductOk';
 import { NgModel, NgForm } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'fn-sale-order-search-list',
@@ -16,6 +17,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   saleOrdersList: SaleOrderApi[] = [];
   saleOrdersListOk: SaleOrderOk[]=[];
+
+  selectedOrder : any;
 
   saleOrderStates: string[] = [];
 
@@ -29,7 +32,8 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  constructor(private saleOrderServiceService: SaleOrderServiceService) {
+  constructor(private saleOrderServiceService: SaleOrderServiceService,
+    private modalService:NgbModal) {
   }
 
   ngOnDestroy(): void {
@@ -108,8 +112,37 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     } 
     return productOk
   }
-  onShowDetails() {
+  onShowDetails(item:any, content: any){
+    this.selectedOrder = item;
+    console.log(this.selectedOrder)
+    this.openModal(content);
+  }
 
+  openModal(content: any) {
+    this.modalService.open(content, { centered: true });
+  }
+
+  onCloseDetails() {
+    this.modalService.dismissAll();
+  }
+
+  onCalculateTotal(saleOrder: any): number {
+    let total = 0;
+  
+    if (saleOrder && saleOrder.details) {
+      for (const prod of saleOrder.details) {
+        total += prod.quantity * prod.price;
+      }
+    }
+  
+    return total;
+  }
+  onLoadPage(page : number) {
+    if(page === 1) {
+      this.saleOrdersListOk = this.saleOrdersListOk.slice(page-1,(page*10));
+    } else {
+      this.saleOrdersListOk = this.saleOrdersListOk.slice((page-1)*10,(page*10));
+    }
   }
 
   onPrint() {

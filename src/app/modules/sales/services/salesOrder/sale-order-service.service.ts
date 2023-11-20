@@ -47,9 +47,6 @@ export class SaleOrderServiceService {
   constructor(private saleOrderProvider: SaleOrderProvider,
     private http: HttpClient) { }
 
-  // getSaleOrders(): SaleOrderModel[] {
-  //   return this.saleOrderProvider.getSaleOrders();
-  // }
 
   generatePdf(detalleOrdenVenta: any) {
     // if (detalleOrdenVenta) {
@@ -72,96 +69,6 @@ export class SaleOrderServiceService {
     return this.saleOrderStates;
   }
 
-  // getSaleOrdersByIdOrder(filterSent:any) : Observable<SaleOrderApi[]> {
-  //   this.idOrder=filterSent;
-  //   this.saleOrderList = this.http.get<SaleOrderModel[]>(`http://localhost:8080/sales-orders?id_order=${this.idOrder}`)
-  //   return this.saleOrderList;
-  // }
-
-  // getSaleOrdersByDoc(filterSent:any) : Observable<SaleOrderModel[]> {
-  //   this.doc=filterSent;
-  //   this.saleOrderList = this.http.get<SaleOrderModel[]>(`http://localhost:8080/sales-orders?doc_client=${this.doc}`)
-  //   return this.saleOrderList;
-  // }
-
-  // getSaleOrdersByDate(filterSent:any) : Observable<SaleOrderModel[]> {
-  //   if(filterSent.includes('-')){
-  //     const index = filterSent.indexOf('/')
-  //     this.fromDate = filterSent.slice(0,index)
-  //     this.toDate = filterSent.slice(index+1, filterSent.length)
-  //   }
-  //   this.saleOrderList = this.http.get<SaleOrderModel[]>(`http://localhost:8080/sales-orders?from_date=${this.fromDate}&to_date=${this.toDate}`)
-  //   console.log(this.saleOrderList);
-  //   return this.saleOrderList;
-  // }
-
-  // getSaleOrdersByDate(filterSent:any) : Observable<SaleOrderModel[]> {
-  //   if(filterSent.includes('-')){
-  //     const index = filterSent.indexOf('/')
-  //     this.fromDate = filterSent.slice(0,index)
-  //     this.toDate = filterSent.slice(index+1, filterSent.length)
-  //   }
-  //   this.saleOrderList = this.http.get<SaleOrderModel[]>(`http://localhost:8080/sales-orders?from_date=${this.fromDate}&to_date=${this.toDate}`)
-  //   console.log(this.saleOrderList);
-  //   return this.saleOrderList;
-  // }
-
-  // getSaleOrdersByFilter(filter: string): SaleOrderModel[] {
-  //   const saleOrdersList: SaleOrderModel[] = [];
-  //   this.saleOrderProvider.getSaleOrdesByFilter(filter).subscribe((response) => {
-  //     if (response.ok) {
-  //       for (let sale of response.data) {
-  //         saleOrdersList.push(sale)
-  //         return saleOrdersList;
-  //       }
-  //     }
-  //     return null
-  //   });
-  //   return saleOrdersList;
-  // }
-
-  // getSaleOrdersByFilter(idOrder?:string, doc?:string, fromDate?:string, toDate?:string) : SaleOrderModel[] {
-  //   const saleOrdersList : SaleOrderModel[] = [];
-  //   if(idOrder != "" && idOrder != null) {
-  //     this.saleOrderProvider.getSaleOrdesByFilter(idOrder, '', '', '').subscribe((response) => {
-  //       if(response.ok) {
-  //         for(let sale of response.data) {
-  //           saleOrdersList.push(sale)
-  //           console.log(saleOrdersList)
-  //         }
-  //         return saleOrdersList
-  //       } else {
-  //         alert('No fue posible recuperar los datos')
-  //       }
-  //       return null
-  //     })
-  //   } else if(doc != "" && doc != null) {
-  //     this.saleOrderProvider.getSaleOrdesByFilter('', doc, '', '').subscribe((response) => {
-  //       if(response.ok) {
-  //         for(let sale of response.data) {
-  //           saleOrdersList.push(sale)
-  //           console.log(saleOrdersList)
-  //         }
-  //         return saleOrdersList
-  //       }
-  //       return null
-  //     })
-  //   } else {
-  //     this.saleOrderProvider.getSaleOrdesByFilter('', '', fromDate, toDate).subscribe((response) => {
-  //       if(response.ok) {
-  //         for(let sale of response.data) {
-  //           saleOrdersList.push(sale)
-  //           console.log(saleOrdersList)
-  //         }
-  //         return saleOrdersList
-  //       }
-  //       return null
-  //     })
-  //   }
-
-  //   return saleOrdersList;
-  // }
-
   getSaleOrdesByFilter(filters: Map<string, string>): Observable<SaleOrderApi[]> {
     let url: string = '';
     this.filters = filters
@@ -178,13 +85,6 @@ export class SaleOrderServiceService {
     return this.saleOrderList
   }
 
-  // onReceiveFilters(filters : Map<string, string>) {
-  //   this.doc = filters.get("doc")!
-  //   this.idOrder = filters.get("idOrder")!
-  //   this.fromDate = filters.get("fromDate")!
-  //   this.toDate = filters.get("toDate")!
-  //   this.stateOrder = filters.get("state")!
-  // }
 
   ValidarPresupuestoOOrdenVenta(saleOrder: SaleOrderModel, carrito: ProductModel[]): boolean {
     return saleOrder.detailSalesOrder!.some(x => x.quantity > carrito.find(y => y.idProduct == x.id_product)!.stockQuantity)
