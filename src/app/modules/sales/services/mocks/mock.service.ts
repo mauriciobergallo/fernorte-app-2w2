@@ -10,7 +10,7 @@ export class MockService {
   constructor() { }
 
   getMocks(): BillModel[] {
-      return this.mockBills;
+      return this.mockBills.sort((a,b)=>b.id_bill! - a.id_bill!);
     };
 
   getFiltrada1(): BillModel[] {

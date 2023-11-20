@@ -2,30 +2,18 @@
   <div class="container">
     <div class="row">
       <div class="col-12 p-3">
-        <h2>Reportes</h2>
+        <h2>Reporte de Ventas</h2>
       </div>
       <br>
       <br>
       <div class="">
-        <ul class="nav nav-tabs">
-          <li class="nav-item">
-            <a class="nav-link active" [class.active]="activeTab === 'buscar'" (click)="toSales('ventas')">Ventas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="activeTab === 'Registrar'" (click)="toProducts('productos')">Productos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="activeTab === 'Reporte'" (click)="toReport('report')">Productos</a>
-          </li>
-        </ul>
+        
       </div>
 
     </div>
   </div>
   <div class="">
-    <fn-view-payment *ngIf="products"></fn-view-payment>
-    <fn-sale-order-view *ngIf="sales"></fn-sale-order-view>
-    <fn-report-tab *ngIf="report"></fn-report-tab>
+    <fn-report-tab></fn-report-tab>
   </div>
 
 </section>
