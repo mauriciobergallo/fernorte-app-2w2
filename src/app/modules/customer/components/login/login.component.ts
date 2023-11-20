@@ -18,32 +18,32 @@ export class LoginComponent {
     password: ''
   }
 
-  constructor(private loginService: LoginService, private router: Router){}
+  constructor(private loginService: LoginService, private router: Router) { }
 
   public onAdd(form: NgForm) {
     if (form.valid) {
 
       let respuesta = this.loginService.onLogin(this.login);
-        if(respuesta != null) {
-              Swal.fire({
-                title: '¡Éxito!',
-                text: 'Bienvenido ' + respuesta.username,
-                icon: 'success',
-              });
-              this.navigate(respuesta);
-          }
-          else {
-            Swal.fire({
-              title: '¡Error!',
-              text: 'Credenciales incorrectas. Verifica tus credenciales e intenta nuevamente.',
-              icon: 'error',
-            });
-          }
+      if (respuesta != null) {
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Bienvenido ' + respuesta.username,
+          icon: 'success',
+        });
+        this.navigate(respuesta);
+      }
+      else {
+        Swal.fire({
+          title: '¡Error!',
+          text: 'Credenciales incorrectas. Verifica tus credenciales e intenta nuevamente.',
+          icon: 'error',
+        });
+      }
     }
   }
 
-  navigate(user: User){
-    switch(user.role){
+  navigate(user: User) {
+    switch (user.role) {
       case "Catalogo":
         this.router.navigate(['catalog']);
         break;

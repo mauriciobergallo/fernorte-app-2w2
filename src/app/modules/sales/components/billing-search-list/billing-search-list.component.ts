@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { BillView } from '../../models/BillView';
 import { PrintDocumentsService } from '../../services/print/print-documents-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'fn-billing-search-list',
@@ -17,111 +18,116 @@ import { PrintDocumentsService } from '../../services/print/print-documents-serv
   styleUrls: ['./billing-search-list.component.css']
 })
 export class BillingSearchListComponent implements OnInit, OnDestroy {
-billList:BillModel[]=[];
-bill!:BillView;
-billList1:BillView[]=[];
+  billList: BillModel[] = [];
+  bill!: BillView;
+  billList1: BillView[] = [];
 
-billListMock:BillModel[]=[];
+  billListMock: BillModel[] = [];
 
-billFiltro1:BillModel[]=[];
-currentPage: number = 1;
+  billFiltro1: BillModel[] = [];
+  currentPage: number = 1;
 
-showPagination: boolean = true;
+  showPagination: boolean = true;
 
-selectedBill:any;
+  selectedBill: any;
 
-idBill:string="";
-doc:string="";
-fromDate:string="";
-toDate:string="";
-filters: Map<string, string> = new Map();
+  idBill: string = "";
+  doc: string = "";
+  fromDate: string = "";
+  toDate: string = "";
+  filters: Map<string, string> = new Map();
 
 
-private subscriptions = new Subscription();
+  private subscriptions = new Subscription();
 
-constructor(private billingService: BillServiceService, private caseConverter: CaseConverterPipe, 
-  private mockService: MockService, private modalService:NgbModal,
-  private printService :PrintDocumentsService) {
-}
+  constructor(private billingService: BillServiceService, private caseConverter: CaseConverterPipe,
+    private mockService: MockService, private modalService: NgbModal,
+    private printService: PrintDocumentsService, private route: Router) {
+  }
 
-ngOnDestroy(): void {
-  this.subscriptions.unsubscribe();
-}
-ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+  ngOnInit(): void {
     console.log(this.mockService.getMocks());
-   this.onLoadPage(1)
-}
-
-
-onSendFilters(){
-  if(this.idBill != ""){
-    this.billListMock = this.mockService.getFiltrada1();
-    this.showPagination=false;
-    this.idBill="";
-  this.fromDate = "";
-  this.toDate = ""
-    return;
-  
+    this.onLoadPage(1)
   }
-  if(this.fromDate != ""){
-    this.billListMock = this.mockService.getFiltrada2();
-    this.showPagination = false; 
-    this.idBill="";
-    this.fromDate = "";
-    this.toDate = "";
-    return;
+
+
+  onSendFilters() {
+    if (this.idBill != "") {
+      this.billListMock = this.mockService.getFiltrada1();
+      this.showPagination = false;
+      this.idBill = "";
+      this.fromDate = "";
+      this.toDate = ""
+      return;
+
+    }
+    if (this.fromDate != "") {
+      this.billListMock = this.mockService.getFiltrada2();
+      this.showPagination = false;
+      this.idBill = "";
+      this.fromDate = "";
+      this.toDate = "";
+      return;
+    }
+    if (this.idBill === "" && this.fromDate === "") {
+      this.onLoadPage(1);
+      this.showPagination = true;
+      this.idBill = "";
+      this.fromDate = "";
+      this.toDate = "";
+      return;
+    }
+
+    //this.showPagination = false; 
+    console.log(this.showPagination)
+
+
   }
-  if(this.idBill === "" && this.fromDate ===""){
-    this.onLoadPage(1);
-    this.showPagination = true;
-    this.idBill="";
-    this.fromDate = "";
-    this.toDate = "";
-    return;
-  } 
-  console.log(this.showPagination)
-}
 
-onShowDetails(item:any, content: any){
-  this.selectedBill = item;
-  console.log(this.selectedBill)
-  this.openModal(content);
-}
+  onShowDetails(item: any, content: any) {
+    this.selectedBill = item;
+    console.log(this.selectedBill)
+    this.openModal(content);
+  }
 
-openModal(content: any) {
-  this.modalService.open(content, { centered: true });
-}
+  openModal(content: any) {
+    this.modalService.open(content, { centered: true });
+  }
 
-calculateTotal(bill: any): number {
-  let total = 0;
+  calculateTotal(bill: any): number {
+    let total = 0;
 
-  if (bill && bill.detail_bill) {
-    for (const prod of bill.detail_bill) {
-      total += prod.quantity * prod.unitary_price;
+    if (bill && bill.detail_bill) {
+      for (const prod of bill.detail_bill) {
+        total += prod.quantity * prod.unitary_price;
+      }
+    }
+
+    return total;
+  }
+
+  onCloseDetails() {
+    this.modalService.dismissAll();
+  }
+
+  onLoadPage(page: number) {
+    if (page === 1) {
+      this.billListMock = this.mockService.getMocks().slice(page - 1, (page * 5));
+      this.currentPage = page;
+    } else {
+      this.currentPage = page;
+      this.billListMock = this.mockService.getMocks().slice((page - 1) * 5, (page * 5));
     }
   }
 
-  return total;
-}
-
-onCloseDetails() {
-  this.modalService.dismissAll();
-}
-
-onLoadPage(page : number) {
-  if(page === 1) {
-    this.billListMock = this.mockService.getMocks().slice(page-1,(page*5));
-    this.currentPage = page;
-  } else {
-    this.currentPage = page;
-    this.billListMock = this.mockService.getMocks().slice((page-1)*5,(page*5));
+  onPrint(bill: any) {
+    this.bill = bill;
+    alert("click on Print")
+    this.printService.sendBill(this.bill);
+    this.route.navigateByUrl('printOrder')
   }
 }
 
-onPrint(){//bill:BillView) {
-   /*  this.bill = bill;
-    alert("click on Print")
-    this.printService.sendBill(this.bill);
-  } */
-}
-}

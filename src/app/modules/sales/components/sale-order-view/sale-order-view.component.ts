@@ -15,43 +15,57 @@ import { SaleOrderOk } from '../../models/SaleOrderOk';
 })
 export class SaleOrderViewComponent implements OnInit, OnDestroy {
   listSaleOrder!: SaleOrderView;
-  saleOrder!: SaleOrderOk;
+  saleOrder!: any;
   subscription!: Subscription;
 
-  subtotal:number = 0;
+  subtotal: number = 0;
   iva: number = 0;
   saleOrderId: number = 0;
+  type: String = "Order"
+  constructor(private saleOrderService: SaleOrderServiceService, private activatedRoute: ActivatedRoute,
+    private router: Router, private printService: PrintDocumentsService) { }
 
-  constructor(private saleOrderService : SaleOrderServiceService, private activatedRoute: ActivatedRoute, 
-    private router: Router, private printService: PrintDocumentsService) {}
 
-  
-    ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.printService.clear();
   }
 
   ngOnInit(): void {
-  
+
     this.subscription = this.printService.getSaleOrder$.subscribe((saleOrder) => {
-          this.saleOrder = saleOrder;
-        });
-    
+      this.saleOrder = saleOrder;
+    });
+
+    if (this.saleOrder.idSaleOrder == undefined) {
+      this.calculateSubBill();
+      this.calculateIvaBill();
+      this.type = "Sale"
+      return
+    }
+
     this.calculateSub();
     this.calculateIva();
 
   }
-
-  
-  calculateSub(){
-    this.saleOrder.details.forEach(detail=>{
-      this.subtotal+= detail.quantity*detail.price;
+  calculateSubBill() {
+    this.saleOrder.detail_bill.forEach((detail: any) => {
+      this.subtotal += detail.quantity * detail.unitary_price;
     })
-  
   }
-  calculateIva(){
-  this.iva = this.subtotal * 0.21;
+  calculateIvaBill() {
+    this.iva = this.subtotal * 0.21;
+  }
+
+
+  calculateSub() {
+    this.saleOrder.details.forEach((detail: any) => {
+      this.subtotal += detail.quantity * detail.price;
+    })
+
+  }
+  calculateIva() {
+    this.iva = this.subtotal * 0.21;
   }
 }
-
 
