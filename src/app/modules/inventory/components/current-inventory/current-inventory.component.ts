@@ -139,7 +139,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
               display: true,
               labels: {
                 font: {
-                  size: 50
+                  size: 25
                 }
               }
             }
@@ -158,8 +158,14 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
   }
 
   async downloadPDF() {
-    const dataTable = this.filteredList;
     const pdf = new jsPDF() as any;
+
+    const logoUrl = '/assets/logo.png'; 
+    const dataTable = this.filteredList;
+
+    const logoImage = await this.getImageData(logoUrl);
+  
+    pdf.addImage(logoImage, 'PNG', 150, 0, 50, 15);
     const headers = [
       'Producto',
       'Zona',
@@ -201,6 +207,27 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
 
     pdf.save('reporte_inventario.pdf');
   }
+
+  async getImageData(url: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject('Could not create canvas context');
+          return;
+        }
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      img.onerror = (error) => reject(error);
+      img.src = url;
+    });
+  }
+
   previousPage() {}
   nextPage() {}
   locationInfoListMock: LocationInfoDto[] = [
