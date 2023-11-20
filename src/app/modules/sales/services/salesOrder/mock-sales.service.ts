@@ -693,6 +693,25 @@ export class MockSalesService {
           stateSaleOrderDetail : "RESERVED",
         }
       ]
+    },
+    {
+      idSaleOrder: 1561549904,
+      idSeller: 4,
+      idClient: 2,
+      nameClient: "Tomás Aranda",
+      dateOfIssue: new Date(2023,11,20,12,16),
+      dateOfExpiration: new Date(2023,11,20,12,16),
+      stateSaleOrder: "CREATED",
+      details : [
+        {
+          idProduct : 47,
+          name: "Amoladora Angular Versa Pro 2400 W 230 Mm Ferreteria Express",
+          idSaleOrderDetails:154561900,
+          price : 13550,
+          quantity : 1,
+          stateSaleOrderDetail : "RESERVED",
+        }
+      ]
     }
   ];
 

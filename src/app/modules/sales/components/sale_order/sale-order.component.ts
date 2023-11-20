@@ -13,6 +13,7 @@ import { SaleOrderProvider } from '../../services/salesOrder/SaleOrderProvider';
 import { ICustomer } from '../../interfaces/iCustomer';
 import { ClientService } from '../../services/clients/client.service';
 import { TurnServicesService } from '../../services/turns/turnServices.service';
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -108,11 +109,19 @@ export class SaleOrderComponent implements OnInit {
     }
 
     this.saleOrderProvider.createSaleOrder(this.saleOrder!).subscribe((res) => {
-      this.saleOrder = res.data
+      this.saleOrder = res.data;
       
     });
     this.listProduct = this.productService.restarCantidad(this.productoSeleccionado)
     this.loader = this.loadingService.loading();
+    Swal.fire({
+      title: "¡Presupuesto registrado!",
+      text: "Presupuesto registrado correctamente",
+      icon: "success"
+    });
+    this.client = "";
+    this.productoSeleccionado = new ProductModel;
+    this.carrito = [];
   }
 
   deleteProduct(id: number) {

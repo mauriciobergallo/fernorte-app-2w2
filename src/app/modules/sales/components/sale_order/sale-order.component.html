@@ -113,8 +113,6 @@
                 <div class=" card p-2 m-1">
                     <!-- Resumen de la venta -->
                     <div class="text-center">
-                        <p>Subtotal: ${{montoTotal.subTotal}}</p>
-                        <p>Impuestos: ${{montoTotal.subTotal | calcularImpuestos:montoTotal.impuesto}}</p>
                         <p class="mb-0">Total: ${{montoTotal.subTotal | calcularMontoTotal:montoTotal.impuesto}}</p>
                     </div>
                 </div>

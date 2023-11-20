@@ -8,7 +8,7 @@ export class CalcularMontoTotalPipe implements PipeTransform {
   transform(subTotal:number, impuesto:number): number {
     if(subTotal == 0)
       impuesto = 0;
-    return Number((subTotal + (subTotal * (impuesto/100))).toFixed(2))
+    return Number(subTotal)
   }
 
 }
