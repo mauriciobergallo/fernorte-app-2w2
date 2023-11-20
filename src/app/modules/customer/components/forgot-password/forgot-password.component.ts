@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./forgot-password.component.css'],
 })
 export class ForgotPasswordComponent {
+  isLoading: boolean = false;
   user = {
     email: '',
   };
@@ -17,9 +18,10 @@ export class ForgotPasswordComponent {
 
   onSubmit() {
     console.log('Correo Electrónico:', this.user.email);
-
+    this.isLoading = true;
     this.userService.sendResetEmail(this.user.email).subscribe(
       (response: any) => {
+        this.isLoading = false;
         if(response.success == true){
           Swal.fire({
             title: '¡Éxito!',

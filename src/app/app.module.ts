@@ -19,9 +19,10 @@ import { RoleListComponent } from './role-list/role-list.component';
 import { LoginComponent } from './modules/customer/components/login/login.component';
 import { FirstLoginComponent } from './modules/customer/components/first-login/first-login.component';
 import { ForgotPasswordComponent } from './modules/customer/components/forgot-password/forgot-password.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
-  declarations: [AppComponent, RoleListComponent, LoginComponent, FirstLoginComponent, ForgotPasswordComponent],
+  declarations: [AppComponent, RoleListComponent, LoginComponent, FirstLoginComponent, ForgotPasswordComponent, SpinnerComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
