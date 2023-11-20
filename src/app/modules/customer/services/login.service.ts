@@ -76,11 +76,17 @@ export class LoginService {
     return '';
   }
 
+  setPasswordReset(){
+    if(this.user){
+      this.user.password_reset = false;
+    }
+  }
+
   logOut(){
     this.user = null;
   }
 
   public isLogged(){
-    return this.user != null && this.user.first_login;
+    return this.user != null && !this.user.password_reset;
   }
 }

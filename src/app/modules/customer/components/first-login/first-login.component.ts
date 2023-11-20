@@ -1,22 +1,48 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { NgForm } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { LoginService } from '../../services/login.service';
+
+function matchPasswordValidator(
+  c: AbstractControl
+): { [key: string]: boolean } | null {
+  const password = c.get('password');
+  const passwordConfirm = c.get('confirmPassword');
+  
+  if (password!.value !== passwordConfirm!.value) {
+    return { 'match-password': true };
+  }
+
+  return null;
+}
+
+function markFormGroupTouched(formGroup: FormGroup) {
+  Object.values(formGroup.controls).forEach((control: AbstractControl) => {
+    control.markAsTouched();
+
+    if (control instanceof FormGroup) {
+      markFormGroupTouched(control);
+    }
+  });
+}
 
 @Component({
   selector: 'fn-first-login',
   templateUrl: './first-login.component.html',
   styleUrls: ['./first-login.component.css']
 })
-export class FirstLoginComponent {
+export class FirstLoginComponent implements OnInit {
   forgot: boolean = false;
   document_number = "";
+  form: FormGroup = new FormGroup({});
   user = {
-    password: ''
+    password: '',
+    confirmPassword: '',
   };
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private router: Router) {
+  constructor(private route: ActivatedRoute, private userService: UserService, private router: Router, private fb: FormBuilder, private auth: LoginService) {
     this.route.params.subscribe(params => {
        this.forgot = params['forgot'] === 'true';
        this.document_number = params['document-number']
@@ -24,17 +50,21 @@ export class FirstLoginComponent {
 
     console.log(this.forgot);
   }
-
-  onFirstLogin(form: NgForm) {
-    this.changePassword(form);
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      password: ["", [Validators.required, Validators.minLength(8),]],
+      confirmPassword: ["", [Validators.required, Validators.minLength(8),]]
+    }, { validators: [matchPasswordValidator] })
   }
 
-  onResetPassword(form: NgForm) {
-    this.changePassword(form);
+  onFirstLogin() {
+    this.changePassword();
   }
 
-  changePassword(form: NgForm){
-    if(form.valid){
+  changePassword(){
+    markFormGroupTouched(this.form);
+    if(this.form.valid){
+      this.user = this.form.value;
       this.userService.changePassword(this.user.password, this.document_number).subscribe(
         (response: any) => {
           Swal.fire({
@@ -42,6 +72,7 @@ export class FirstLoginComponent {
             text: 'Se cambió la contraseña correctamente',
             icon: 'success',
           });
+          this.auth.setPasswordReset();
           this.router.navigate(['customers'])
         //si fue un exito, no llevarlo al login sino que ya esta logeado
         },
