@@ -1,1 +1,77 @@
-<p>tax works!</p>
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Impuesto</th>
+                        <th>Valor</th>
+                        <th class="d-flex align-items-center justify-content-center">Editar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let tax of taxList">
+                        <td>{{ tax.tax_type }}</td>
+                        <td>{{ tax.tax_value }}% </td>
+                        <td class="d-flex align-items-center justify-content-center">
+                            <button type="button" class="btn btn-sm btn-primary " data-bs-toggle="modal"
+                                data-bs-target="#editModal" data-bs-whatever="@mdo" (click)="loadTaxList(tax)">
+                                <i class="bi bi-pencil"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="editModalLabel">Editar impuesto</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="taxEditForm" (ngSubmit)="updateTax()">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="mb-2">
+                                <label for="taxType" class="form-label">Impuesto</label>
+                                <select class="form-control" aria-label="Default select example" name="taxType"
+                                    formControlName="taxType" id="taxType">
+                                    <option selected *ngFor="let taxType of taxTypeList" disabled>{{taxType}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-2">
+                                    <label for="taxValue" class="form-label">Recargo</label>
+                                    <input formControlName="taxValue" type="number" class="form-control" id="taxValue"
+                                        name="taxValue" [(ngModel)]="taxEdit.tax_value" required>
+                                    <small id="taxValue" class="form-text text-muted error-message" *ngIf="       
+                        !taxEditForm.controls['taxValue'].valid &&
+                        taxEditForm.controls['taxValue'].touched &&
+                        taxEditForm.get('taxValue')?.hasError('required')">
+                                        El valor del impuesto es requerido
+                                    </small>
+                                    <small id="taxValue" class="form-text text-muted error-message" *ngIf="
+                        !taxEditForm.controls['taxValue'].valid &&
+                        taxEditForm.controls['taxValue'].touched &&
+                        taxEditForm.controls['taxValue'].getError('min')
+                        ">
+                                        El valor minimo es 0
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" (click)="taxEditForm.markAllAsTouched()">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

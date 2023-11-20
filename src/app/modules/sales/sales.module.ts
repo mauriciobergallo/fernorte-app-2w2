@@ -30,13 +30,17 @@ import { TurnProvider } from './services/turns/TurnProvider';
 import { TranslateStatesPipe } from './pipes/translateStates.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaxComponent } from './components/tax/tax.component';
+import { TaxNavComponent } from './components/tax-nav/tax-nav.component';
 import { PriceFormatPipe} from './pipes/price-format.pipe';
 
 import { ViewPaymentComponent } from './components/view-payment/view-payment.component';
 
 import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
 import { BillingProvider } from './services/billing/BillingProvider';
+import { TaxRegisterComponent } from './components/tax-register/tax-register.component';
+import { PaymentMethodRegisterComponent } from './components/payment-method-register/payment-method-register.component';
 import {ReportTabComponent} from "./components/report-tab/report-tab.component";
+
 
 
 
@@ -49,6 +53,7 @@ import {ReportTabComponent} from "./components/report-tab/report-tab.component";
     SaleOrderSearchListComponent,
     BillingComponent,
     PaymentMethodComponent,
+    PaymentMethodRegisterComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
@@ -58,8 +63,12 @@ import {ReportTabComponent} from "./components/report-tab/report-tab.component";
     SaleOrderViewComponent,
     TranslateStatesPipe,
     TaxComponent,
+    TaxNavComponent,
+    TaxRegisterComponent,
+    ReportNavComponent,
     ReportNavComponent,
     ReportTabComponent,
+
     ViewPaymentComponent,
     BillingSearchListComponent,
     DateFormatPipe,
@@ -88,6 +97,7 @@ import {ReportTabComponent} from "./components/report-tab/report-tab.component";
     BillingComponent,
     ReportTabComponent,
     PaymentMethodComponent,
+    PaymentMethodRegisterComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
@@ -96,6 +106,9 @@ import {ReportTabComponent} from "./components/report-tab/report-tab.component";
     ReportNavComponent,
     SaleOrderViewComponent,
     TaxComponent,
+    TaxNavComponent,
+    TaxRegisterComponent,
+    ReportNavComponent,
     ReportNavComponent,
     ViewPaymentComponent,
     BillingSearchListComponent,
