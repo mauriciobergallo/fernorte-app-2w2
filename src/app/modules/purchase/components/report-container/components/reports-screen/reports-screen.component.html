@@ -1,0 +1,42 @@
+<nav class="content">
+  <div class="container">
+    <div class="row">
+      <fn-date-picker [tab]="activeTab$"></fn-date-picker>
+    </div>
+    <div class="row">
+      <div class="">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              [class.active]="activeTab$.getValue() === 'COMPRA'"
+              (click)="tab('COMPRA')"
+            >
+              Ordenes de Compra</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [class.active]="activeTab$.getValue() === 'PAGO'"
+              (click)="tab('PAGO')"
+            >
+              Ordenes de pago</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section>
+  <fn-orders-grid [tab]="activeTab$"></fn-orders-grid>
+  <div class="row mt-3 mb-2">
+    <div class="offset-lg-10 col-lg-2">
+      <button class="btn btn-primary btn-sm" (click)="downloadPDF()">
+        Exportar PDF
+      </button>
+    </div>
+  </div>
+</section>
