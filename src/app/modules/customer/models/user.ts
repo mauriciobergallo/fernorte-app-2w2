@@ -6,7 +6,7 @@ export interface User {
     first_login: boolean;
     password_reset: boolean;
     document_number: string;
-    email?: Email;
+    email: string;
     username: string;
     user_password: string;
     is_active?: boolean;

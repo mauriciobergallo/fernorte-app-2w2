@@ -25,7 +25,6 @@ export class LoginService {
         const username = response.username;
         const passwordReset = response.passwordReset;
         this.isLogin = true
-        this.user = response;
         return this.getUserDetails(username, passwordReset);
       })
     );
@@ -39,6 +38,7 @@ export class LoginService {
 
     return this.http.get(userDetailsUrl).pipe(
       map((userDetails: any) => {
+        this.user = userDetails;
         const user: UserCheckLogin = {
           username: userDetails.username,
           
@@ -81,6 +81,6 @@ export class LoginService {
   }
 
   public isLogged(){
-    return this.user != null;
+    return this.user != null && this.user.first_login;
   }
 }
