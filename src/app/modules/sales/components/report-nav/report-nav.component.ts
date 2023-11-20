@@ -10,6 +10,7 @@ export class ReportNavComponent implements OnInit {
   activeTab:string="sales"
   products:boolean=false
   sales:boolean=false
+  report:boolean=false
 
   constructor() { }
 
@@ -25,6 +26,12 @@ export class ReportNavComponent implements OnInit {
     this.activeTab=tab;
     this.products=true;
     this.sales=false;
+  }
+  toReport(tab:string){
+    this.activeTab=tab;
+    this.products=false;
+    this.sales=false;
+    this.report=true;
   }
 
 }
