@@ -35,6 +35,7 @@ import { ViewPaymentComponent } from './components/view-payment/view-payment.com
 
 import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
 import { BillingProvider } from './services/billing/BillingProvider';
+import {ReportTabComponent} from "./components/report-tab/report-tab.component";
 
 
 
@@ -57,7 +58,7 @@ import { BillingProvider } from './services/billing/BillingProvider';
     TranslateStatesPipe,
     TaxComponent,
     ReportNavComponent,
-
+    ReportTabComponent,
     ViewPaymentComponent,
 
     BillingSearchListComponent,
@@ -83,6 +84,7 @@ import { BillingProvider } from './services/billing/BillingProvider';
     CalcularTotalPipe,
     SaleOrderSearchListComponent,
     BillingComponent,
+    ReportTabComponent,
     PaymentMethodComponent,
     CreatePaymentComponent,
     SidenavComponent,
