@@ -7,6 +7,8 @@ import { ProductApi } from '../../models/ProductApi';
 import { ProductOk } from '../../models/ProductOk';
 import { NgModel, NgForm } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { MockSalesService } from '../../services/salesOrder/mock-sales.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'fn-sale-order-search-list',
@@ -16,65 +18,44 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   saleOrdersList: SaleOrderApi[] = [];
   saleOrdersListOk: SaleOrderOk[]=[];
+  counter : number = 0;
+
+  selectedOrder : any;
 
   saleOrderStates: string[] = [];
 
 
-  idOrder:string="0";
-  doc:string="0";
-  fromDate:string="";
-  toDate:string="";
+  idOrder:string="";
+  doc:string="";
+  fromDate:string="2023-11-19";
+  toDate:string="2023-11-19";
   stateOrder:string="";
   filters: Map<string, string> = new Map();
 
   private subscriptions = new Subscription();
 
-  constructor(private saleOrderServiceService: SaleOrderServiceService) {
+  constructor(private saleOrderServiceService: SaleOrderServiceService,
+    private mockService : MockSalesService, private modalService:NgbModal) {
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
   ngOnInit(): void {
-    this.subscriptions.add(
-      this.saleOrderServiceService.getSaleOrders().subscribe(
-        ( response : SaleOrderApi[]) => {
-          this.saleOrdersList = response;
-          for(let item of this.saleOrdersList) {
-            this.saleOrdersListOk.push(this.mapSaleOrder(item))
-          }
-        }
-      )
-    )
-    this.subscriptions.add(
-      this.saleOrderServiceService.getSaleOrderStates().subscribe(
-        (response : string[]) => {
-          this.saleOrderStates = response;
-        }
-      )
-    )
+    this.saleOrdersListOk = this.mockService.onShowList();
   }
 
   onSendFilters(form : NgForm) {
-    if(form.valid) {
-      this.filters.set("idOrder", form.value.idOrder)
-      this.filters.set("doc", form.value.doc)
-      this.filters.set("fromDate", form.value.fromDate)
-      this.filters.set("toDate", form.value.toDate)
-      this.filters.set("stateOrder", form.value.stateOrder)
+    console.log(this.counter)
+    if(this.doc !== ""){
+      this.saleOrdersListOk = this.mockService.onShowByDoc();
+    } else if(this.stateOrder !== ""){
+      this.saleOrdersListOk = this.mockService.onShowByState();
+    } else {
+      this.saleOrdersListOk = this.mockService.onShowList();
     }
-    this.saleOrdersListOk = [];
-    this.subscriptions.add(
-      this.saleOrderServiceService.getSaleOrdesByFilter(this.filters).subscribe(
-        ( response : SaleOrderApi[]) => {
-          this.saleOrdersList = response;
-          for(let item of this.saleOrdersList) {
-            this.saleOrdersListOk.push(this.mapSaleOrder(item))
-          }
-          console.log(this.saleOrdersList);
-        }
-      )
-    )
+    this.doc="";
+    this.stateOrder = "";
   }
 
   mapSaleOrder(saleOrder: SaleOrderApi): SaleOrderOk {
@@ -108,8 +89,30 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     } 
     return productOk
   }
-  onShowDetails() {
+  onShowDetails(item:any, content: any){
+    this.selectedOrder = item;
+    console.log(this.selectedOrder)
+    this.openModal(content);
+  }
 
+  openModal(content: any) {
+    this.modalService.open(content, { centered: true });
+  }
+
+  onCloseDetails() {
+    this.modalService.dismissAll();
+  }
+
+  calculateTotal(saleOrder: any): number {
+    let total = 0;
+  
+    if (saleOrder && saleOrder.details) {
+      for (const prod of saleOrder.details) {
+        total += prod.quantity * prod.price;
+      }
+    }
+  
+    return total;
   }
 
   onPrint() {
