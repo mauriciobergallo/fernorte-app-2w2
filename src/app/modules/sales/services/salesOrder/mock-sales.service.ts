@@ -1136,7 +1136,7 @@ export class MockSalesService {
   ];
 
   saleToBill : SaleOrderApi = {
-    
+
     id_sale_order: 1561549904,
     id_seller: 4,
     id_client: 2,
@@ -1162,7 +1162,11 @@ export class MockSalesService {
       }
     ]
   }
-  
+  addOrder(order :SaleOrderOk){
+    console.log(this.salesOrderList.length)
+    this.salesOrderList.push(order);
+    console.log(this.salesOrderList.length)
+  }
 
   constructor() { }
 

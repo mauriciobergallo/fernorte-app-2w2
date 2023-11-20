@@ -40,10 +40,23 @@ export class BillingComponent {
   }
 
   ngOnInit(): void {
-    this.paymentMethodService.getPaymentMethods().subscribe(
-      (methods: any[]) =>
-        this.paymentMethods = methods
-    );
+    /*this.paymentMethodService.getPaymentMethods().subscribe(
+      (methods: any[]) =>{
+        this.paymentMethods = methods;
+      });*/
+    this.paymentMethods = [
+      {
+        "surcharge": 0,
+        "id_payment_method": 2,
+        "payment_method": "Efectivo"
+      },
+      {
+        "surcharge": 10,
+        "id_payment_method": 1,
+        "payment_method": "Credito"
+      }
+    ]
+    this.selectedPaymentMethod = this.paymentMethods[0];
     this.paymentModal = new window.bootstrap.Modal(
       document.getElementById('paymentModal')
     );
@@ -54,24 +67,55 @@ export class BillingComponent {
   }
   finishPayment() {
     // confirm or save something
-    if(this.amountPayed >= this.realAmount){Swal.fire({
-      title: "Pagado exitosamente!",
-      text: "Se pago correctamente!",
-      icon: "success"
-    });
+    if(this.amountPayed != 0 && this.amountPayed < this.realAmount){
+        Swal.fire({
+          title: "Falta pagar!",
+          text: "Monto restante a pagar!",
+          icon: "error"
+        });
+        return;
+    }
+    if(this.amountPayed == 0) {
+      Swal.fire({
+        title: "Quieres pagar el monto total en efectivo?",
+        text: "El monto a pagar es de $" + this.realAmount,
+        icon: "warning",
+        reverseButtons: true,
+        showCancelButton: false,
+        showDenyButton: true,
+        denyButtonText: `Cancelar`,
+        confirmButtonText: "Pagar"
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Pagado exitosamente!",
+            text: "Se pago correctamente!",
+            icon: "success"
+          });
+          this.order.payments = this.paymentList;
+          delete this.order['id_bill'];
+          this.cancelOrder();
+          this.paymentModal.hide();
+          this.saleServiceMock.addOrder(this.orderOk);
+        } else {
+          this.openPaymentModal();
+        }
+      });
+    }
+    else{
+      Swal.fire({
+        title: "Pagado exitosamente!",
+        text: "Se pago correctamente!",
+        icon: "success"
+      });
       this.order.payments = this.paymentList;
       delete this.order['id_bill'];
-      this.billService.addBill(this.order).subscribe((response) => {
-        this.cancelOrder();
-        this.paymentModal.hide();
-      });
-      return
+      this.cancelOrder();
+      this.paymentModal.hide();
+      this.saleServiceMock.addOrder(this.orderOk);
     }
-    Swal.fire({
-      title: "Falta pagar!",
-      text: "Monto restante a pagar!",
-      icon: "error"
-    });
+    return
   }
 
   printOrder() {
@@ -114,6 +158,7 @@ export class BillingComponent {
       });
       return
     }
+    this.amount = this.realAmount;
     this.openPaymentModal()
   }
 
@@ -160,16 +205,18 @@ export class BillingComponent {
   searchMockBill() {
     if(this.orderId!=null){
       this.totalAmount = 0;
-      
+
       let saleOrder : SaleOrderApi = this.saleServiceMock.onSaleToBill(); //aca traeria el caminito felih
       this.order = this.billService.mapSaleOrderToBill(saleOrder);
+      this.order.vat_condition = "FINAL_CUSTOMER";
+      this.order.bill_type = "B";
       this.name = this.order.first_name + ' ' + this.order.las_name;
       this.order.detail_bill.forEach((item: any) => {
         this.totalAmount += (item.unitary_price * item.quantity);
       })
       this.totalAmount = Number(this.totalAmount.toFixed(2));
           this.realAmount = this.totalAmount * 1.21;
-      
+
     }
   }
 
@@ -193,5 +240,30 @@ export class BillingComponent {
       }
     }
     protected readonly Number = Number;
+  orderOk : SaleOrderOk =
+    {
+      idSaleOrder: 1561549904,
+      idSeller: 4,
+      nameSeller: "Ignacio Prado",
+      idClient: 2,
+      nameClient: "Tomás Aranda",
+      address: "Uritorco 4813",
+      telephone: "3515605118",
+      companyName: "",
+      email: "tomiaranda@gmail.com",
+      dateOfIssue: new Date(2023,11,20,10,11),
+      dateOfExpiration: new Date(2023,11,30,10,11),
+      stateSaleOrder: "PENDING_DELIVERY",
+      details : [
+        {
+          idProduct : 47,
+          name: "Amoladora Angular Versa Pro 2400 W 230 Mm Ferreteria Express",
+          idSaleOrderDetails:154561900,
+          price : 13550,
+          quantity : 1,
+          stateSaleOrderDetail : "RESERVED", //RESERVED, DELIVERED, CANCELLED, CREATED
+        }
+      ]
+    }
 }
 
