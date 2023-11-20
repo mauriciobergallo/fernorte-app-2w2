@@ -1,5 +1,6 @@
-<div class="container">
+<div class="container-fluid">
     <div>
+      <br>
       <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Filtros
       </button>
@@ -75,7 +76,7 @@
           <tbody>
             <tr *ngFor="let item of billListMock">   
               <th scope="row">{{item.id_bill! + 1000}}</th>
-              <td>{{item.las_name}}</td>
+              <td>{{ item.first_name}} {{item.las_name}}</td>
               <td>{{item.name_seller}}</td>
               <td>{{item.created_date | dateFormat}}</td>
               <td>{{item.total_price}}</td>
@@ -100,6 +101,29 @@
             </tr>
           </tbody>
         </table>
+        <ng-container *ngIf="showPagination">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-lg justify-content-center">
+              <li class="page-item" aria-current="page">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item" [class.active]="currentPage === 1">
+                <a class="page-link" (click)="onLoadPage(1)">1</a>
+              </li>
+              <li class="page-item" [class.active]="currentPage === 2">
+                <a class="page-link" (click)="onLoadPage(2)">2</a>
+              </li>
+              <!-- <li class="page-item"><a class="page-link" (click)="onLoadPage(3)">3</a></li> -->
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </ng-container>
         <ng-template #modalDetalle>
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -108,7 +132,7 @@
                 <button type="button" class="btn-close" (click)="onCloseDetails()" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <p><strong> Cliente:</strong> {{ selectedBill?.las_name }}</p>
+                <p><strong> Cliente:</strong> {{ selectedBill?.first_name}} {{selectedBill?.las_name}}</p>
                 <p><strong> Vendedor:</strong> {{ selectedBill?.name_seller }}</p>
                 <p><strong> Fecha Creación:</strong> {{ selectedBill?.created_date | dateFormat }}</p>
                 <p><strong> Total:</strong> {{ selectedBill?.total_price }}</p>

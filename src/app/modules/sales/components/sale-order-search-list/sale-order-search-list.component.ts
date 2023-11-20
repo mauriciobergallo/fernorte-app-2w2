@@ -19,6 +19,9 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   saleOrdersList: SaleOrderApi[] = [];
   saleOrdersListOk: SaleOrderOk[]=[];
   counter : number = 0;
+  currentPage: number = 1;
+
+  showPagination: boolean = true;
 
   selectedOrder : any;
 
@@ -27,8 +30,8 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
 
   idOrder:string="";
   doc:string="";
-  fromDate:string="2023-11-19";
-  toDate:string="2023-11-19";
+  fromDate:string="";
+  toDate:string="";
   stateOrder:string="";
   filters: Map<string, string> = new Map();
 
@@ -51,13 +54,25 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     console.log(this.counter)
     if(this.doc !== ""){
       this.saleOrdersListOk = this.mockService.onShowByDoc();
+      this.doc="";
+      this.stateOrder = "";
+      this.showPagination=false;
+      return;
+
     } else if(this.stateOrder !== ""){
       this.saleOrdersListOk = this.mockService.onShowByState();
+      this.doc="";
+      this.stateOrder = "";
+      this.showPagination=false;
+      return;
     } else {
-      this.saleOrdersListOk = this.mockService.onShowList();
+      this.onLoadPage(1);
+      this.showPagination=true;
+      this.doc="";
+      this.stateOrder = "";
+      return;
     }
-    this.doc="";
-    this.stateOrder = "";
+    
   }
 
   
@@ -94,8 +109,10 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   onLoadPage(page : number) {
     if(page === 1) {
       this.saleOrdersListOk = this.mockService.onShowList().slice(page-1,(page*10));
+      this.currentPage = page;
     } else {
       this.saleOrdersListOk = this.mockService.onShowList().slice((page-1)*10,(page*10));
+      this.currentPage = page;
     }
   }
 

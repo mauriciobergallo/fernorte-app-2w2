@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { CaseConverterPipe } from '../../pipes/case-converter.pipe';
 import { MockService } from '../../services/mocks/mock.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-billing-search-list',
@@ -15,10 +16,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class BillingSearchListComponent implements OnInit, OnDestroy {
 billList:BillModel[]=[];
-counter:number=0;
+
 billListMock:BillModel[]=[];
 
 billFiltro1:BillModel[]=[];
+currentPage: number = 1;
+
+showPagination: boolean = true;
 
 selectedBill:any;
 
@@ -43,26 +47,40 @@ ngOnDestroy(): void {
 }
 ngOnInit(): void {
     //this.billListMock = this.mockService.getMocks();
+   this.onLoadPage(1)
 }
 
 onSendFilters(){
-  console.log(this.counter)
   if(this.idBill != ""){
     this.billListMock = this.mockService.getFiltrada1();
-    this.counter++;
-    
+    this.showPagination=false;
+    this.idBill="";
+  this.fromDate = "";
+  this.toDate = ""
+    return;
+  
   }
   if(this.fromDate != ""){
     this.billListMock = this.mockService.getFiltrada2();
-    this.counter++;
+    this.showPagination = false; 
+    this.idBill="";
+    this.fromDate = "";
+    this.toDate = "";
+    return;
   }
   if(this.idBill === "" && this.fromDate ===""){
-    this.billListMock = this.mockService.getMocks();
-    this.counter++;
-  }  
-  this.idBill="";
-  this.fromDate = "";
-  this.toDate = ""
+    this.onLoadPage(1);
+    this.showPagination = true;
+    this.idBill="";
+    this.fromDate = "";
+    this.toDate = "";
+    return;
+  } 
+
+  //this.showPagination = false; 
+  console.log(this.showPagination)
+  
+  
 }
 
 onShowDetails(item:any, content: any){
@@ -86,6 +104,17 @@ calculateTotal(bill: any): number {
 onCloseDetails() {
   this.modalService.dismissAll();
 }
+
+onLoadPage(page : number) {
+  if(page === 1) {
+    this.billListMock = this.mockService.getMocks().slice(page-1,(page*5));
+    this.currentPage = page;
+  } else {
+    this.currentPage = page;
+    this.billListMock = this.mockService.getMocks().slice((page-1)*5,(page*5));
+  }
+}
+
 onPrint(){
 
 }}
