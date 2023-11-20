@@ -10,6 +10,8 @@ import numbers = _default.defaults.animations.numbers;
 import {BillModel} from "../../models/BillingModelApi";
 import {SaleOrderApi} from "../../models/SaleModelApi";
 import {Payment} from "../../models/PaymentModel";
+import { MockSalesService } from '../../services/salesOrder/mock-sales.service';
+import { SaleOrderOk } from '../../models/SaleOrderOk';
 declare var window: any;
 
 @Component({
@@ -26,6 +28,7 @@ export class BillingComponent {
   paymentModal: any;
   selectedPaymentMethod: any = -1;
   order: BillModel = new BillModel();
+  orderMock: BillModel = new BillModel();
   name: string = "Cargue una orden para continuar";
   amountPayed:number =  0;
   subCharges:number =  0;
@@ -33,7 +36,7 @@ export class BillingComponent {
   filters: Map<string, string> = new Map();
 
   constructor(private billService: BillServiceService, private paymentMethodService: PaymentMethodService,
-    private saleOrderService:SaleOrderServiceService) {
+    private saleOrderService:SaleOrderServiceService,private saleServiceMock : MockSalesService) {
   }
 
   ngOnInit(): void {
@@ -153,6 +156,23 @@ export class BillingComponent {
   cleanPayment(){
     this.paymentList = [];
   }
+
+  searchMockBill() {
+    if(this.orderId!=null){
+      this.totalAmount = 0;
+      
+      let saleOrder : SaleOrderApi = this.saleServiceMock.onSaleToBill(); //aca traeria el caminito felih
+      this.order = this.billService.mapSaleOrderToBill(saleOrder);
+      this.name = this.order.first_name + ' ' + this.order.las_name;
+      this.order.detail_bill.forEach((item: any) => {
+        this.totalAmount += (item.unitary_price * item.quantity);
+      })
+      this.totalAmount = Number(this.totalAmount.toFixed(2));
+          this.realAmount = this.totalAmount * 1.21;
+      
+    }
+  }
+
   searchBill() {
       if(this.orderId!=null){
         this.totalAmount = 0;

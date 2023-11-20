@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SaleOrderOk } from '../../models/SaleOrderOk';
+import { SaleOrderApi } from '../../models/SaleModelApi';
 
 @Injectable({
   providedIn: 'root'
@@ -924,23 +925,30 @@ export class MockSalesService {
     }
   ];
 
-  saleToBill : SaleOrderOk = {
+  saleToBill : SaleOrderApi = {
     
-    idSaleOrder: 1561549904,
-    idSeller: 4,
-    idClient: 2,
-    nameClient: "Tomás Aranda",
-    dateOfIssue: new Date(2023,11,20,12,16),
-    dateOfExpiration: new Date(2023,11,20,12,16),
-    stateSaleOrder: "CREATED",
-    details : [
+    id_sale_order: 1561549904,
+    id_seller: 4,
+    id_client: 2,
+    company_name : "",
+    telephone:"3515605118",
+    email:"tomiaranda@gmail.com",
+    address:"Uritorco 4813",
+    first_name_seller:"Ignacio",
+    last_name_seller:"Prado",
+    first_name_client: "Tomás",
+    last_name_client:"Aranda",
+    date_of_issue: [2023,11,20],
+    date_of_expiration: [2023,11,20],
+    state_sale_order: "CREATED",
+    detail_sales_order : [
       {
-        idProduct : 47,
+        id_product : 47,
         name: "Amoladora Angular Versa Pro 2400 W 230 Mm Ferreteria Express",
-        idSaleOrderDetails:154561900,
+        id_sale_order_details:154561900,
         price : 13550,
         quantity : 1,
-        stateSaleOrderDetail : "RESERVED",
+        state_sale_order_detail : "RESERVED",
       }
     ]
   }
