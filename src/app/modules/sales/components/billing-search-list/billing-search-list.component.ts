@@ -8,6 +8,8 @@ import { CaseConverterPipe } from '../../pipes/case-converter.pipe';
 import { MockService } from '../../services/mocks/mock.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { BillView } from '../../models/BillView';
+import { PrintDocumentsService } from '../../services/print/print-documents-service';
 
 @Component({
   selector: 'fn-billing-search-list',
@@ -16,6 +18,8 @@ import Swal from 'sweetalert2';
 })
 export class BillingSearchListComponent implements OnInit, OnDestroy {
 billList:BillModel[]=[];
+bill!:BillView;
+billList1:BillView[]=[];
 
 billListMock:BillModel[]=[];
 
@@ -36,10 +40,8 @@ filters: Map<string, string> = new Map();
 private subscriptions = new Subscription();
 
 constructor(private billingService: BillServiceService, private caseConverter: CaseConverterPipe, 
-  private mockService: MockService, private modalService:NgbModal) {
-}
-openModal(content: any) {
-  this.modalService.open(content, { centered: true });
+  private mockService: MockService, private modalService:NgbModal,
+  private printService :PrintDocumentsService) {
 }
 
 ngOnDestroy(): void {
@@ -49,6 +51,7 @@ ngOnInit(): void {
     //this.billListMock = this.mockService.getMocks();
    this.onLoadPage(1)
 }
+
 
 onSendFilters(){
   if(this.idBill != ""){
@@ -89,6 +92,10 @@ onShowDetails(item:any, content: any){
   this.openModal(content);
 }
 
+openModal(content: any) {
+  this.modalService.open(content, { centered: true });
+}
+
 calculateTotal(bill: any): number {
   let total = 0;
 
@@ -115,6 +122,10 @@ onLoadPage(page : number) {
   }
 }
 
-onPrint(){
-
-}}
+onPrint(){//bill:BillView) {
+   /*  this.bill = bill;
+    alert("click on Print")
+    this.printService.sendBill(this.bill);
+  } */
+}
+}

@@ -9,6 +9,8 @@ import { NgModel, NgForm } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { MockSalesService } from '../../services/salesOrder/mock-sales.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SaleOrderView } from '../../models/SaleOrderView';
+import { PrintDocumentsService } from '../../services/print/print-documents-service';
 
 @Component({
   selector: 'fn-sale-order-search-list',
@@ -18,14 +20,16 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   saleOrdersList: SaleOrderApi[] = [];
   saleOrdersListOk: SaleOrderOk[]=[];
-  counter : number = 0;
+
+  saleOrderStates: string[] = [];
+  saleOrderOk!: SaleOrderOk;
+  salePick:boolean= false;
+
   currentPage: number = 1;
 
   showPagination: boolean = true;
 
   selectedOrder : any;
-
-  saleOrderStates: string[] = [];
 
 
   idOrder:string="";
@@ -39,8 +43,9 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  constructor(private saleOrderServiceService: SaleOrderServiceService,
-    private mockService : MockSalesService, private modalService:NgbModal) {
+  constructor(private saleOrderServiceService: SaleOrderServiceService, 
+    private mockService : MockSalesService, private modalService:NgbModal,
+    private print : PrintDocumentsService) {
   }
 
   ngOnDestroy(): void {
@@ -51,7 +56,6 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   }
 
   onSendFilters(form : NgForm) {
-    console.log(this.counter)
     if(this.doc !== ""){
       this.saleOrdersListOk = this.mockService.onShowByDoc();
       this.doc="";
@@ -71,11 +75,9 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
       this.doc="";
       this.stateOrder = "";
       return;
-    }
-    
+    } 
   }
 
-  
   onShowDetails(item:any, content: any){
     this.selectedOrder = item;
     console.log(this.selectedOrder)
@@ -116,7 +118,10 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     }
   }
 
-  onPrint() {
-    
+
+  onPrint(saleOrder:SaleOrderOk) {
+    this.saleOrderOk = saleOrder;
+    alert("click on Print")
+    this.print.sendOrder(this.saleOrderOk);
   }
 }
