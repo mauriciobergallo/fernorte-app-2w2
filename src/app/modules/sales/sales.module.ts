@@ -30,6 +30,7 @@ import { TurnProvider } from './services/turns/TurnProvider';
 import { TranslateStatesPipe } from './pipes/translateStates.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaxComponent } from './components/tax/tax.component';
+import { PriceFormatPipe} from './pipes/price-format.pipe';
 
 import { ViewPaymentComponent } from './components/view-payment/view-payment.component';
 
@@ -57,11 +58,11 @@ import { BillingProvider } from './services/billing/BillingProvider';
     TranslateStatesPipe,
     TaxComponent,
     ReportNavComponent,
-
     ViewPaymentComponent,
-
     BillingSearchListComponent,
-    DateFormatPipe],
+    DateFormatPipe,
+    PriceFormatPipe
+    ],
 
 
   providers: [SaleOrderProvider,
@@ -94,7 +95,8 @@ import { BillingProvider } from './services/billing/BillingProvider';
     ReportNavComponent,
     ViewPaymentComponent,
     BillingSearchListComponent,
-    DateFormatPipe],
+    DateFormatPipe,
+    PriceFormatPipe],
 
 })
 export class SalesModule {}

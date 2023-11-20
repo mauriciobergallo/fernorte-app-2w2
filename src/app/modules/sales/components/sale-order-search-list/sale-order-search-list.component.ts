@@ -19,8 +19,8 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   saleOrdersList: SaleOrderApi[] = [];
   saleOrdersListOk: SaleOrderOk[]=[];
   saleOrderStates: string[] = [];
-
-
+  saleOrderOk!: SaleOrderOk;
+  salePick:boolean= false;
 
 
   idOrder:string="0";
@@ -60,7 +60,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   }
 
   onShowDetails() {
-   
+  
 
   }
 
@@ -88,7 +88,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   }
 
   mapSaleOrder(saleOrder: SaleOrderApi): SaleOrderOk {
-    const { id_sale_order, id_seller, id_client, date_of_issue, date_of_expiration, state_sale_order, detail_sales_order, first_name_client, last_name_client } = saleOrder;
+    const { id_sale_order, id_seller, id_client,last_name_seller,first_name_seller,address,telephone,email ,date_of_issue, date_of_expiration, state_sale_order, detail_sales_order, first_name_client, last_name_client,company_name } = saleOrder;
     const productList: ProductOk[]=[];
     for(let prod of detail_sales_order){
       productList.push(this.mapProduct(prod))
@@ -97,6 +97,11 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
       idSaleOrder: id_sale_order,
       idSeller: id_seller,
       idClient: id_client,
+      companyName:company_name,
+      address,
+      email,
+      telephone,
+      nameSeller:first_name_seller+" "+last_name_seller,
       nameClient: first_name_client+" "+last_name_client,
       dateOfIssue: new Date(date_of_issue[0], date_of_issue[1]-1, date_of_issue[2], date_of_issue[3], date_of_issue[4]),
       dateOfExpiration: new Date(date_of_expiration[0], date_of_expiration[1]-1, date_of_expiration[2], date_of_expiration[3], date_of_expiration[4]),
@@ -119,48 +124,10 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     return productOk
   }
 
-  saleOrderView: SaleOrderView = {
-    id_sale_order: 10000,
-    id_seller: 2,
-    first_name_seller:  "Papas",
-    last_name_seller: "Papaassssss o no............",
-    id_client: 1,
-    first_name_client: "Robertinnnnn",
-    last_name_client: "Angeloni",
-    company_name:  "",
-    address: "Rodriguez Busto 1640",
-    telephone:3513064323,
-    email: "juani@hotmail.com",
-    date_of_issue: "13/10/23",
-    date_of_expiration: "23/10/23",
-    state_sale_order: "CREATED",
-    detail_sales_order: [
-      {  name: "Martillo",
-      id_sale_order_details: 1,
-      id_product: 24,
-      quantity:  3,
-      price: 5500,
-      state_sale_order_detail: "PENDING_DELIVERY"
-    },
-    {  name: "Serrucho",
-    id_sale_order_details: 2,
-    id_product: 23,
-    quantity:  4,
-    price: 2000,
-    state_sale_order_detail: "DELIVERED"
-  },
-    {  name: "Clavo",
-    id_sale_order_details: 3,
-    id_product:43,
-    quantity:  2,
-    price: 100,
-    state_sale_order_detail: "DELIVERED"  
-  }]
-  }
-  
- 
-  onPrint() {
+
+  onPrint(saleOrder:SaleOrderOk) {
+    this.saleOrderOk = saleOrder;
     alert("click on Print")
-    this.print.sendOrder(this.saleOrderView);
+    this.print.sendOrder(this.saleOrderOk);
   }
 }

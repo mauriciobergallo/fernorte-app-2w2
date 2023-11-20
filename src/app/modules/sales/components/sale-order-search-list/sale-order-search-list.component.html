@@ -93,11 +93,11 @@
             <td class="text-center">
               <div class="dropdown">
                 <button type="button" class="btn btn-light dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="bi bi-three-dots-vertical"></i>
+                  <i class="bi bi-three-dots-vertical" id="saleOrderId" ></i>
                 </button>
                 <div class="dropdown-content">
                   <a (click)="onShowDetails()">Ver detalles</a>
-                  <a (click)="onPrint()">Imprimir</a>
+                  <a (click)="onPrint(item)">Imprimir</a>
                 </div>
               </div>
             </td>

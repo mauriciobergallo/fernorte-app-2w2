@@ -8,6 +8,8 @@ import { BillServiceService } from '../../services/billing/bill-service.service'
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { CaseConverterPipe } from '../../pipes/case-converter.pipe';
+import { BillView } from '../../models/BillView';
+import { PrintDocumentsService } from '../../services/print/print-documents-service';
 
 @Component({
   selector: 'fn-billing-search-list',
@@ -16,6 +18,8 @@ import { CaseConverterPipe } from '../../pipes/case-converter.pipe';
 })
 export class BillingSearchListComponent implements OnInit, OnDestroy {
 billList:BillModel[]=[];
+bill!:BillView;
+billList1:BillView[]=[];
 
 idBill:string="";
 doc:string="";
@@ -25,7 +29,7 @@ filters: Map<string, string> = new Map();
 
 private subscriptions = new Subscription();
 
-constructor(private billingService: BillServiceService, private caseConverter: CaseConverterPipe) {
+constructor(private billingService: BillServiceService, private caseConverter: CaseConverterPipe,private printService :PrintDocumentsService) {
 }
 
 
@@ -64,6 +68,10 @@ onShowDetails(){
 
 }
 
-onPrint(){
-
-}}
+onPrint(){//bill:BillView) {
+   /*  this.bill = bill;
+    alert("click on Print")
+    this.printService.sendBill(this.bill);
+  } */
+}
+}

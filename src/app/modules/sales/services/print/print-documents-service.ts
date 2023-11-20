@@ -2,22 +2,36 @@ import { Injectable } from '@angular/core';
 import { SaleOrderView } from '../../models/SaleOrderView';
 import { SaleOrderServiceService } from '../salesOrder/sale-order-service.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { SaleOrderOk } from '../../models/SaleOrderOk';
+import { BillModel } from '../../models/BillingModelApi';
+import { BillOk } from '../../models/BillingOk';
+import { BillView, Payment } from '../../models/BillView';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrintDocumentsService {
 
-  saleOrderView:SaleOrderView = new SaleOrderView;
+  saleOrderOk:SaleOrderOk = new SaleOrderOk;
+  bill!:BillView;
 
   constructor() { }
 
   saleOrderNewSnaptshot = new BehaviorSubject<any>(null);
   getSaleOrder$ = this.saleOrderNewSnaptshot.asObservable();
+
+billSnapshot = new BehaviorSubject<any>(null);
+getBillOrder$ = this.billSnapshot.asObservable();
+
   
-  sendOrder(saleOrder: SaleOrderView) {
+  sendOrder(saleOrder: SaleOrderOk) {
       this.saleOrderNewSnaptshot.next(saleOrder);
       }
+
+      
+  sendBill(bill: BillView) {
+    this.saleOrderNewSnaptshot.next(bill);
+    }
 
       //this.printService.senOrder(saleOrder);
 
@@ -29,23 +43,42 @@ export class PrintDocumentsService {
   // }
 
 
-  clear():SaleOrderView{
-    this.saleOrderView.address = ""
-    this.saleOrderView.company_name=""
-    this.saleOrderView.date_of_expiration =""
-    this.saleOrderView.date_of_issue =""
-    this.saleOrderView.detail_sales_order= []
-    this.saleOrderView.email = ""
-    this.saleOrderView.first_name_client=""
-    this.saleOrderView.first_name_seller=""
-    this.saleOrderView.id_client=0
-    this.saleOrderView.id_sale_order = 0
-    this.saleOrderView.id_seller = 0
-    this.saleOrderView.last_name_client =""
-    this.saleOrderView.state_sale_order = ""
-    this.saleOrderView.telephone =0
-    return this.saleOrderView
+  clear():SaleOrderOk{
+    this.saleOrderOk.address = ""
+    this.saleOrderOk.companyName=""
+    this.saleOrderOk.dateOfExpiration!
+    this.saleOrderOk.dateOfIssue = new Date()
+    this.saleOrderOk.details= []
+    this.saleOrderOk.email = ""
+    this.saleOrderOk.nameClient=""
+    this.saleOrderOk.nameSeller=""
+    this.saleOrderOk.idClient=0
+    this.saleOrderOk.idSaleOrder = 0
+    this.saleOrderOk.idSeller = 0
+    this.saleOrderOk.stateSaleOrder= ""
+    this.saleOrderOk.telephone =""
+    return this.saleOrderOk
   }
-
+  clearBill():BillView{
+    this.bill.address = ""
+    this.bill.companyName=""
+    this.bill.expirationDateCae!
+    this.bill.createdDate = ""
+    this.bill.detailBill= []
+    this.bill.email = ""
+    this.bill.firstNameClient=""
+    this.bill.lastNameClient=""
+    this.bill.idClient=0
+    this.bill.idSaleOrder = 0
+    this.bill.idSeller = 0
+    this.bill.billType= ""
+    this.bill.telephone = 0
+    this.bill.cae = ""
+    this.bill.idBill=0
+    this.bill.totalPrice =0
+    this.bill.payment!
+    this.bill.totalPrice=0
+    return this.bill
+  }
 
 }
