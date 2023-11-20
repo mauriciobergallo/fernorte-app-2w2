@@ -254,7 +254,7 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   
     pdf.addImage(logoImage, 'PNG', 550, 0, 70, 30);
 
-    pdf.text('Reporte de Inventario Actual', 10, 10);
+    pdf.text('Reporte de movimientos del inventario', 10, 10);
 
     // Renderizar el gráfico en el PDF
     const chartImage = await this.generateChart();
