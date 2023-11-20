@@ -102,7 +102,7 @@
                 </button>
                 <div class="dropdown-content">
                   <a (click)="onShowDetails(item,modalDetalle)">Ver detalles</a>
-                  <a (click)="onPrint(item)">Imprimir</a>
+                  <a (click)="onPrint(item)" routerLink="printOrder">Imprimir</a>
                 </div>
               </div>
             </td>
@@ -155,4 +155,7 @@
           </div>
         </div>    
       </ng-template>
+</div>
+<div>
+  <router-outlet></router-outlet>
 </div>

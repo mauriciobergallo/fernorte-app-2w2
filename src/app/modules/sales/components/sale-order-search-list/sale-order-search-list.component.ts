@@ -11,6 +11,7 @@ import { MockSalesService } from '../../services/salesOrder/mock-sales.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SaleOrderView } from '../../models/SaleOrderView';
 import { PrintDocumentsService } from '../../services/print/print-documents-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'fn-sale-order-search-list',
@@ -45,7 +46,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
 
   constructor(private saleOrderServiceService: SaleOrderServiceService, 
     private mockService : MockSalesService, private modalService:NgbModal,
-    private print : PrintDocumentsService) {
+    private print : PrintDocumentsService, private route : Router) {
   }
 
   ngOnDestroy(): void {
@@ -123,5 +124,6 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     this.saleOrderOk = saleOrder;
     alert("click on Print")
     this.print.sendOrder(this.saleOrderOk);
+    this.route.navigateByUrl('printOrder')
   }
 }
