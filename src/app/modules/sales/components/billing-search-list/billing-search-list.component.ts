@@ -125,9 +125,22 @@ export class BillingSearchListComponent implements OnInit, OnDestroy {
 
   onPrint(bill: any) {
     this.bill = bill;
-    alert("click on Print")
-    this.printService.sendBill(this.bill);
-    this.route.navigateByUrl('printOrder')
+    Swal.fire({
+      title: 'Imprimir',
+      text: '¿Estás seguro de que deseas imprimir?',
+      icon: 'info', // Puedes cambiar 'info' por el icono que desees, por ejemplo, 'printer'
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#808080',
+      confirmButtonText: 'Imprimir',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Lógica para imprimir
+        this.printService.sendBill(this.bill);
+        this.route.navigateByUrl('printOrder')
+      }
+    });
   }
 }
 

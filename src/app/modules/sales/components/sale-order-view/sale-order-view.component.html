@@ -2,11 +2,11 @@
 <html lang="zxx">
 
 <head>
-    <div *ngIf="type == 'Order';else templateName">
+    <ng-container *ngIf="type == 'Order';else title">
         <title>Orden de Venta</title>
 
-    </div>
-    <ng-template #templateName>
+    </ng-container>
+    <ng-template #title>
 
         <title>Factura</title>
     </ng-template>
@@ -44,19 +44,19 @@
                                     <div class="col-sm-6">
                                         <div class="invoice-id">
                                             <div class="info">
-                                                <div *ngIf="type == 'Order';else templateName">
+                                                <ng-container *ngIf="type == 'Order';else typeTitle">
                                                     <h1 class="inv-header-1">Orden de Venta</h1>
                                                     <p class="mb-1">Orden de Venta:
                                                         <span>#{{saleOrder.idSaleOrder}}</span>
                                                     </p>
                                                     <p class="mb-0">Fecha: <span>{{saleOrder.dateOfIssue |
                                                             date:'short'}}</span></p>
-                                                </div>
-                                                <div #templateName>
+                                                </ng-container>
+                                                <ng-template #typeTitle>
                                                     <h1 class="inv-header-1">Factura</h1>
                                                     <p class="mb-1">Factura: <span>#{{saleOrder.id_bill}}</span>
                                                     </p>
-                                                </div>
+                                                </ng-template>
                                             </div>
                                         </div>
                                     </div>
@@ -67,11 +67,11 @@
                                     <div class="col-sm-6">
                                         <div class="invoice-number mb-30">
                                             <h4 class="inv-title-1">Cliente</h4>
-                                            <ng-container *ngIf="type == 'Order';else templateName">
+                                            <ng-container *ngIf="type == 'Order';else nameClient">
                                                 <h2 class="name">
                                                     {{saleOrder.nameClient}}</h2>
                                             </ng-container>
-                                            <ng-template #templateName>
+                                            <ng-template #nameClient>
                                                 <h2 class="name">{{saleOrder.first_name + ' '+
                                                     saleOrder.las_name}}</h2>
                                             </ng-template>
@@ -89,7 +89,13 @@
 
                                             <div class="invoice-number-inner">
                                                 <h4 class="inv-title-1">Vendedor</h4>
-                                                <h2 class="name">{{saleOrder.nameSeller}} </h2>
+                                                <ng-container *ngIf="type == 'Order';else nameClient">
+                                                    <h2 class="name">{{saleOrder.nameSeller}} </h2>
+                                                </ng-container>
+                                                <ng-template #nameClient>
+                                                    <h2 class="name">{{saleOrder.name_seller}} </h2>
+                                                </ng-template>
+
                                                 <p class="invo-addr-1">
 
                                                 </p>
@@ -129,7 +135,7 @@
                                                 <tr class="tr" *ngFor="let item of saleOrder.detail_bill">
                                                     <td>
                                                         <div class="item-desc-1">
-                                                            <span>{{item.idProduct}}</span>
+                                                            <span>{{item.id_product}}</span>
                                                         </div>
                                                     </td>
                                                     <td class="pl0">{{item.name_product}}</td>
@@ -165,7 +171,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <div *ngIf="type == 'Order'" class="invoice-bottom">
+                            <div *ngIf="type == 'Order';else caeDetail" class="invoice-bottom">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-5 col-sm-5">
                                         <div class="payment-method mb-30">
@@ -186,6 +192,22 @@
 
                                 </div>
                             </div>
+                            <ng-template #caeDetail>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-5 col-sm-5"></div>
+                                    <div class="col-lg-6 col-md-5 col-sm-5">
+                                        <div class="payment-method mb-30" style="
+                                        display: flex;
+                                        justify-content: flex-end;
+                                        margin-right: 20%;
+                                    ">
+                                            <h3 class="inv-title-1">CAE N° : </h3>
+                                            <strong> {{saleOrder.cae
+                                                }}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
                             <div class="invoice-contact clearfix">
                                 <div class="row g-0">
                                     <div class="col-sm-12">
@@ -205,7 +227,7 @@
                                 <i class="bi bi-printer"></i> Imprimir
                             </a>
                             <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme" (click)="salir()">
-                                 Salir
+                                Salir
                             </a>
                         </div>
                     </div>

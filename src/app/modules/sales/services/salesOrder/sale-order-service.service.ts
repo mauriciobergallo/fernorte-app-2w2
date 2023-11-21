@@ -161,8 +161,10 @@ export class SaleOrderServiceService {
   }
 
 
-    getSaleOrdersById(id:number) : Observable<SaleOrderView> {
+  getSaleOrdersById(id: number): Observable<SaleOrderView> {
     return this.http.get<SaleOrderView>(`http://localhost:8080/sales-orders?id_order=${id}`)
 
-    }
+  }
+
+
 }
