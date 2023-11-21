@@ -43,9 +43,6 @@ export class ReportPriceHistoryComponent implements OnInit {
     this.productService.get().subscribe({
       next: (res) => {
         this.listProduct = res.products;
-        if (this.listProduct.length > 0) {
-          this.filterForm.get('idProduct')?.setValue(this.listProduct[0].idProduct);
-        }
       }
     });
   }

@@ -61,7 +61,7 @@ export class GraphsPriceHistoryComponent implements OnInit {
   }
 
   getPriceHistory() {
-    this.productService.getPriceHistory().subscribe({
+    this.productService.getPriceHistoryAll().subscribe({
       next: (res) => {
         this.listPriceHistory = res.priceHistory;
       }
