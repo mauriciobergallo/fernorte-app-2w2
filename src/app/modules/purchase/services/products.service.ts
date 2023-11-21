@@ -16,7 +16,7 @@ export class ProductsService {
     return this._http.get<IProduct[]>(this.url);
   }
 
-  getProductsBySupplier(id: number): Observable<IProduct2[]> {
+  getProductsBySupplier(id: number): Observable<IProduct[]> {
     const params = new HttpParams().set('id_supplier', id.toString());
     return this._http.get<IProduct[]>(this.urlSupplier, { params });
   }
