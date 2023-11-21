@@ -229,4 +229,8 @@ showInfoDesactivedResult(){
     buscarActivo(activo: boolean){
       return this.employeeList.filter(empleado => empleado.isActive === activo);
     }
+
+    openNewEmployeeModal(){
+      
+    }
 }
