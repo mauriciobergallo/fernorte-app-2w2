@@ -1,101 +1,108 @@
-<ng-template #content let-modal id="modalWindow">
-	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Registrar Empleado</h4>		
-		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+
+<div class="modal-header">
+	<div class="row"><h4 class="modal-title" id="modal-basic-title" *ngIf="!onlyForRead">Actualizar Empleado</h4>
+		<h4 class="modal-title" id="modal-basic-title" *ngIf="onlyForRead">Información de Empleado</h4>
 	</div>
-	<div class="modal-body">
-		<form [formGroup]="employeeForm"   (ngSubmit)="onSubmitForm(employeeForm)">
-			<div class="mb-3 d-flex">
-				<div class="flex-grow-1 me-2">
-					<label for="name">Nombre</label>
-					<input formControlName="firstName"
-						type="text"  id="name" class="form-control" placeholder="Nombre"/>
-						
-										
-					<!-- <div *ngIf="firstNameControl?.invalid && firstNameControl?.touched" class="text-danger">
-						Ingrese un nombre valido.
-					</div> -->
-				</div> 
-				<div class="flex-grow-1">
-					<label for="lastName">Apellido</label>
-					<input formControlName="lastName"
-						type="text"  id="lastName" class="form-control" placeholder="Apellido"/>
-						
-							
-					<!-- <div *ngIf="lastNameControl?.invalid && lastNameControl?.touched" class="text-danger">
-						Ingrese un apellido valido.
-					</div> -->
-				</div>
-			</div>
-			<div class="mb-3 d-flex">
-				<div class="flex-grow-1 me-2">
-					<label for="documentType">Tipo de documento</label>
-					<select  formControlName="documentType"  id="documentType" class="form-select" (change)="onDocumentTypeChange()">
-						<option value=0 selected disabled>Seleccione una opcion</option>
-						<option value=2>DNI</option>
-						<option value=3>CUIT</option>
-						<option value=4>CUIL</option>
-						<option value=5>LC</option>
-						<option value=6>LE</option>
-						<option value=7>Pasaporte</option>
-					</select>
-				</div>
-				<div class="flex-grow-1">
-					<label for="documentNumber">Documento</label>
-					<input  
-						type="text" formControlName="documentNumber" id="documentNumber" class="form-control" [attr.maxlength]="maxLengthDocument" placeholder="Documento"
-						/>
-						<!-- (input)="onDocumentNumberInput()"/> -->
-					<div *ngIf="documentNumberControl?.invalid && documentNumberControl?.touched" class="text-danger">
-						{{ getDocumentNumberErrorMessage() }}
-		  			</div>
-				</div>
-			</div>
-			<div class="mb-3">
-				<label for="dateOfBirth">Fecha de nacimiento</label>
-				<div class="input-group">
-					<input
-						id="dateOfBirth" class="form-control" placeholder="DD/MM/AAAA" [minDate]="maxDate" [maxDate]="minDate" formControlName="birthDate" ngbDatepicker
-						#dp="ngbDatepicker"
-					
-								/>
-					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button><br>
-                </div>
+	<div class="row">
+		<small>Fecha de creación: traer campo created_at</small>	
+	</div>
+
+
+
+<button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
+</div>
+
+<div  class="modal-body">
+
+<div class="modal-body">
+<form #employeeForm="ngForm"  (ngSubmit)="onSubmitForm(employeeForm)">
+
+	
+	
+
+		<div class="mb-3 d-flex">
+			<div class="flex-grow-1 me-2">
+				<label for="name">Nombre</label>
+				<input required [(ngModel)]="employee.firstName" [disabled]="onlyForRead" type="text" name="name" id="name" class="form-control"/>
 			</div>
 			<div class="flex-grow-1">
-				<label for="personalEmail">Correo electronico</label>
-				<input 
-					   type="email" formControlName="personalEmail" id="personalEmail" class="form-control" placeholder="Correo electronico"
-					   
-							/>
-				<div *ngIf="personalEmailControl?.invalid && personalEmailControl?.touched" class="text-danger">
-					Ingresa una dirección de correo electrónico válida.
-				</div>
+				<label for="lastName">Apellido</label>
+				<input required [(ngModel)]="employee.lastName" [disabled]="onlyForRead"  type="text" name="lastName" id="lastName" class="form-control"/>
 			</div>
-			<div class="mb-3 d-flex">
-				<div class="flex-grow-1 me-2">
-					<label for="address">Domicilio</label>
-					<input required 
-						type="text" formControlName="address" id="address" class="form-control" placeholder="Domicilio"/>
-				</div>
-				<div class="flex-grow-1">
-					<label for="phoneNumber">Número de teléfono</label>
-					<input required 
-						type="text" formControlName="phoneNumber" id="phoneNumber" class="form-control" placeholder="Numero de telefono"
-						
-							/>
-					<div *ngIf="false" class="invalid-feedback">
-				    	Ingrese un número de teléfono válido.
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-	<div class="modal-footer">
-		<button type="submit" class="btn btn-outline-dark" [disabled]="!employeeForm.valid || employee.idDocumentType === 2" (click)="modal.close(employeeForm)">Registrar</button>
-	</div>
-</ng-template>
+		</div>
+	
 
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Registrar empleado</button>
-<hr />
+	
+
+	<div class="mb-3 d-flex">
+		<div class="flex-grow-1 me-2">
+			<label for="documentType">Tipo de documento</label>
+			<select [(ngModel)]="employee.idDocumentType" [disabled]="onlyForRead" name="documentType" id="documentType" class="form-select">
+				{{employee.idDocumentType}}
+				<option *ngFor="let type of listDocumentType" [value]="type.idDocumentType">
+					{{ type.description }}
+				</option>
+			</select>
+		</div>
+		<div class="flex-grow-1">
+			<label for="documentNumber">Documento</label>
+			<input required [(ngModel)]="employee.idDocumentNumber" [disabled]="onlyForRead"  type="text" name="documentNumber" id="documentNumber" class="form-control" />
+		</div>
+	</div>
+
+	
+
+	<div class="mb-3">
+		<label for="dateOfBirth">Fecha de nacimiento</label>
+		<div class="input-group">
+			<input
+			[disabled]="onlyForRead"
+			required
+			[(ngModel)]="dataPickerBirth"
+			(ngModelChange)="onBirthDateChange($event)"
+			id="dateOfBirth"
+			class="form-control"
+			placeholder="dd/mm/yyyy"
+			name="dp"
+			ngbDatepicker
+			#dp="ngbDatepicker"
+			[minDate]="maxDate" [maxDate]="minDate"
+		  />
+			<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button><br>
+		</div>
+	</div>
+
+	<div class="flex-grow-1">
+		<label for="personalEmail">Email Personal</label>
+		<input [(ngModel)]="employee.personalEmail" 
+		[disabled]="onlyForRead"
+			   type="personalEmail" 
+			   name="personalEmail" 
+			   id="personalEmail" 
+			   class="form-control" 
+		/>
+	  </div>
+
+	<div class="my-3 d-flex">
+		<div class="flex-grow-1 me-2">
+		  <label for="address">Domicilio</label>
+		  <input [(ngModel)]="employee.address" [disabled]="onlyForRead" type="text" name="address" id="address" class="form-control" />
+		</div>
+		<div class="flex-grow-1 ">
+		  <label for="phoneNumber">Número de teléfono</label>
+		  <input [(ngModel)]="employee.phoneNumber" [disabled]="onlyForRead" type="text" name="phoneNumber" id="phoneNumber" class="form-control" />
+		</div>
+	  </div>
+
+</form>
+</div>
+<div class="modal-footer">
+<button  *ngIf="!onlyForRead" type="submit" class="btn btn-outline-secondary"  (click)="showCancelConfirmation()">Cancelar</button>
+
+<button *ngIf="onlyForRead"  type="submit" class="btn btn-outline-secondary"  (click)="modalService.dismissAll()">Cancelar</button>
+
+<button  *ngIf="!onlyForRead" type="submit" class="btn btn-outline-primary"  (click)="showConfirmation(employeeForm)">Actualizar</button>
+</div>
+</div>
+
 

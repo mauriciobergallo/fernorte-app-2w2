@@ -1,237 +1,303 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, Input } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Employee } from '../../models/employee';
 import { EmployeeService } from '../../services/employee.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
-import { FormBuilder, FormGroup, FormsModule, Validators, AbstractControl  } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators, AbstractControl, NgForm } from '@angular/forms';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
+import Swal from 'sweetalert2';
+import { EmployeeResponseDTO } from '../../models/employeeResponseDTO';
 @Component({
-  selector: 'fn-employee-registration',
-  templateUrl: './employee-registration.component.html',
-  styleUrls: ['./employee-registration.component.css']
+	selector: 'fn-employee-registration',
+	templateUrl: './employee-registration.component.html',
+	styleUrls: ['./employee-registration.component.css']
 })
-export class EmployeeRegistrationComponent  {
-	
-	
+export class EmployeeRegistrationComponent {
+	employeeForm!: NgForm;
+
+	formattedBirthDate: string = '';
+  
+	idEmployee: number = 0;
+  
+	listDocumentType: DocumentType[] = [];
+  
+	@Input() employeeToUpdate: EmployeeResponseDTO | undefined;
+  
+	@Input() onlyForRead: boolean = false;
+  
 	minDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
 	maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
 	currentYear = new Date().getFullYear();
-
-	maxLengthDocument : number = 0;
-
-	formattedBirthDate: string = '';
-
-	employeeForm: FormGroup;
-	constructor(private modalService: NgbModal, private employeeService: EmployeeService, private fb: FormBuilder, private conversion: CaseConversionPipe) {
-
-		this.employeeForm = this.fb.group({
-			firstName: ['', [Validators.required, Validators.pattern('^[^0-9]+$')]],
-			lastName: ['', [Validators.required, Validators.pattern('^[^0-9]+$')]],	
-			documentType: ['', Validators.required],
-			documentNumber: ['', [Validators.required, Validators.maxLength(this.maxLengthDocument)]],
-			birthDate:['', Validators.required],
-			personalEmail:['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}')]] ,
-			address:['', Validators.required],
-			phoneNumber:['', Validators.required]});
-
-
-    // Obtén la fecha actual
-    const currentDate = new Date();
-    // Resta 16 años de la fecha actual
-    const minYear = currentDate.getFullYear() - 16;
-    const minMonth = currentDate.getMonth() + 1; // Los meses en JavaScript son de 0 a 11, ng-bootstrap es de 1 a 12
-    const minDay = currentDate.getDate();
-
-    // Asigna la fecha calculada a minDate
-    this.minDate = { year: minYear, month: minMonth, day: minDay };
-
-
-    this.maxDate = {
-		year: currentDate.getFullYear() - 150, //Cambiar este numero si se quiere bajar la edad
-		month: currentDate.getMonth() + 1,
-		day: currentDate.getDate()
-	  };
-
-
-	}
-
-	@ViewChild('content') contentModal: any;
-
-employee: Employee = {
-firstName:"",
-lastName:"",
-birthDate: new Date().toISOString(),
-idDocumentType: 1,
-idDocumentNumber:"",
-address:"",
-phoneNumber:"",
-personalEmail:""
-
-};
+  
+	dataPickerBirth: NgbDateStruct = { year: 2000, month: 1, day: 1 };
+  
+	employee: Employee = {
+	  firstName: '',
+	  lastName: '',
+	  birthDate: new Date().toISOString(),
+	  idDocumentType: 1,
+	  idDocumentNumber: '',
+	  address: '',
+	  phoneNumber: '',
+	  personalEmail: '',
+	};
+  
 	closeResult = '';
-	nameTouched = false;
-	lastNameTouched = false;
-	phoneNumberTouched = false;
-	emailTouched = false;
-	documentPattern = '';
-	documentNumberTouched = false;
-
-	get firstNameControl(): AbstractControl | null {
-		return this.employeeForm.get('firstName');
-	  }
-
-	  get lastNameControl(): AbstractControl | null {
-		return this.employeeForm.get('lastName');
-	  }
-
-	  get documentNumberControl(): AbstractControl | null {
-		return this.employeeForm.get('documentNumber');
-	  }
-
-	  get personalEmailControl(): AbstractControl | null{
-		return this.employeeForm.get('personalEmail');
-	  }
-
-	onDocumentTypeChange() {
-
-		console.log("FORM", this.employeeForm);
-
-
-		const documentNumberControl = this.employeeForm.get('documentNumber');
-
-		console.log("DOCUMENT NUMBER", documentNumberControl);
-		const selectedDocumentType = this.employeeForm.value.idDocumentType;
-		// Restablecer el valor del campo de documento
-		this.employee.idDocumentNumber = '';
-
-
-
-
-		
-		// Aplicar las reglas de formato según el tipo de documento
-		switch (Number(selectedDocumentType)) {
-		  case 2: // DNI
-			// Permite solo números
-			documentNumberControl?.setValidators([Validators.required, Validators.pattern('^[0-9]+$')]);
-			this.maxLengthDocument = 10;
-		//	this.documentPattern = '^[0-9]+$';
-			break;
-	
-		  case 3: // CUIT 
-		  case 4: // CUIL
-			// Permite números y formato XX-XXXXXXXX-X
-			documentNumberControl?.setValidators([Validators.required, Validators.pattern('^[0-9]{2}-[0-9]{8}-[0-9]$')]);
-			this.maxLengthDocument = 12;
-			break;
-	
-		  case 5: // LC
-		  case 6: // LE
-			// Permite solo números
-			documentNumberControl?.setValidators([Validators.required, Validators.pattern('^[0-9]+$')]);
-			this.maxLengthDocument = 12;
-			break;
-	
-		  case 7: // Pasaporte
-			// Permite letras y números en formato AAA-000000
-			documentNumberControl?.setValidators([Validators.required, Validators.pattern( '^[A-Za-z]{3}-[0-9]{6}$')]);
-			this.maxLengthDocument = 10;
-			break;
-	
-		  default:
-			// Para otras opciones o cuando se restablezca a "Seleccione una opción"
-			this.documentPattern = '';
-			break;
-		}
-	  }
-
-	  onDocumentNumberInput() {
-		if (Number(this.employee.idDocumentType) === 5 || Number(this.employee.idDocumentType === 4)) {
-		  // Aplicar el formato XX-XXXXXXXX-X mientras el usuario escribe
-		  const input = this.employee.idDocumentNumber.replace(/\D/g, '').substring(0, 11);
-		  this.employee.idDocumentNumber = input.replace(/^(\d{2})(\d{8})(\d{1})$/, '$1-$2-$3');
-		}
-	  }
-
-	  
-	getDocumentNumberErrorMessage() {
-		switch (Number(this.employee.idDocumentType)) {
-		case 2:
-			this.documentNumberTouched = false;
-			return 'Ingresa solo números para DNI.';
-		case 5:
-		case 6:
-			this.documentNumberTouched = false;
-			return 'Ingresa solo números para LC o LE.';
-		case 3:
-		case 4:
-			this.documentNumberTouched = false;
-			return 'Ingresa un formato válido (00-00000000-0).';
-		case 7:
-			this.documentNumberTouched = false;
-			return 'Ingresa un formato válido (AAA-000000).';
-		default:
-			this.documentNumberTouched = false;
-			return 'Ingresa un formato válido.';
-		}
+  
+	constructor(
+	  public modalService: NgbModal,
+	  private employeeService: EmployeeService,
+	  private conversion: CaseConversionPipe
+	) {
+	  // Obtén la fecha actual
+	  const currentDate = new Date();
+	  // Resta 16 años de la fecha actual
+	  const minYear = currentDate.getFullYear() - 16;
+	  const minMonth = currentDate.getMonth() + 1; // Los meses en JavaScript son de 0 a 11, ng-bootstrap es de 1 a 12
+	  const minDay = currentDate.getDate();
+  
+	  // Asigna la fecha calculada a minDate
+	  this.minDate = { year: minYear, month: minMonth, day: minDay };
+  
+	  this.maxDate = {
+		year: currentDate.getFullYear() - 100, //Cambiar este numero si se quiere bajar la edad
+		month: currentDate.getMonth() + 1,
+		day: currentDate.getDate(),
+	  };
 	}
-		
-
-
+  
+	ngOnInit(): void {
+	  console.log('EMPLEADO', this.employeeToUpdate);
+	  this.mapEmployee();
+  
+	  this.dataPickerBirth = this.birthDateFormated(this.employee.birthDate);
+	  console.log(this.employee.idDocumentType)
+	  this.employeeService.getDocumentType().subscribe(
+		(response)=>{
+		  this.lstDocumentType = this.conversion.toCamelCase(response);
+		}
+	  );
+	}
+  
+	loadEmployeeData(idEmployee: number) {
+	  this.employeeService.getEmployeeById(idEmployee).subscribe(
+		(employeeData) => {
+		  console.log('carga empleado', employeeData);
+  
+		  let transformData = this.conversion.toCamelCase(employeeData);
+		  this.employee = transformData;
+		  console.log('Employee', this.employee);
+		},
+		(error) => {
+		  console.error('Error al obtener los datos del Empleado', error);
+		}
+	  );
+	}
+  
+	mapEmployee() {
+	  if (this.employeeToUpdate != null) {
+		this.idEmployee = this.employeeToUpdate.idEmployee;
+		this.employee.firstName = this.employeeToUpdate.firstName;
+		this.employee.lastName = this.employeeToUpdate.lastName;
+		this.employee.idDocumentType = this.setIdDocumentType(this.employeeToUpdate.documentType);
+		this.employee.personalEmail = this.employeeToUpdate.personalEmail;
+		this.employee.phoneNumber = this.employeeToUpdate.phoneNumber;
+		this.employee.birthDate = this.employeeToUpdate.birthDate;
+		this.employee.idDocumentNumber = this.employeeToUpdate.documentNumber;
+		this.employee.address = this.employeeToUpdate.address;
+	  }
+	}
+  
+	setIdDocumentType(documentType: string | number): number{
+	  switch(documentType){
+		case 'DNI':
+		  return 1;
+		case 'Pasaporte':
+		  return 2;
+		case 'CUIT':
+		  return 3;
+		case 'CUIL':
+		  return 4;
+		case 'LC':
+		  return 5;
+		case 'LE':
+		  return 6;
+		default:
+		  return 0;
+	  }
+	}
+	
 	open(content: any) {
-		console.log("THIS", this);
-		console.log("content", content);
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static'  }).result.then(
-			(result) => {
-
-				console.log("CONTENT", content);
-				console.log("RESULT", result);
-				console.log("EMPLOYEE FORM",this.employeeForm);
-
-
-				const ngbDate: NgbDateStruct = this.employeeForm.value.birthDate;
-				const jsDate = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day);
-				this.formattedBirthDate = jsDate.toISOString();
-
-
-
-				let newemployee: any = {
-					firstName: this.employeeForm.value.firstName,
-					lastName: this.employeeForm.value.lastName,
-					birthDate: this.formattedBirthDate,
-					documentType: this.employeeForm.value.documentType,
-					address: this.employeeForm.value.address,
-					phoneNumber: this.employeeForm.value.phoneNumber,
-					documentNumber: this.employeeForm.value.documentNumber,
-					personalEmail: this.employeeForm.value.personalEmail
+	 
+	  this.modalService
+		.open(content, {
+		  ariaLabelledBy: 'modal-basic-title',
+		  backdrop: 'static',
+		})
+		.result.then(
+		  (result) => {
+			console.log('CONTENT', content);
+			console.log('RESULT', result);
+			console.log('employee FORM', this.employeeForm);
+  
+			console.log(this.formattedBirthDate);
+			this.employee.birthDate = this.formattedBirthDate;
+			console.log('NEW Employee', this.employee);
+			let newEmployee: Employee = {
+			  firstName: this.employee.firstName,
+			  lastName: this.employee.lastName,
+			  birthDate: this.formattedBirthDate,
+			  idDocumentType:  this.employee.idDocumentType,
+			  idDocumentNumber: this.employee.idDocumentNumber,
+			  address: this.employee.address,
+			  phoneNumber: this.employee.phoneNumber,
+			  personalEmail: this.employee.personalEmail,
+			};
+			let employeeInSnake: Employee =
+			  this.conversion.toSnakeCase(newEmployee);
+			console.log('EMPLOYEE EN SNAKE', employeeInSnake);
+			this.employeeService
+			  .putEmployee(employeeInSnake, this.idEmployee)
+			  .subscribe(
+				(response) => {
+				  this.showInfoUpdateResult();
+				  this.modalService.dismissAll();
+				},
+				(error) => {
+				  this.showInfoErrorResult();
+				  this.modalService.dismissAll();
 				}
-
-				let employeeEnSnake = this.conversion.toSnakeCase(newemployee);
-				this.employeeService.postEmployee(employeeEnSnake).subscribe(
-
-					(response) => {
-						alert("Se creo el empleado")
-					},
-					(error) => {
-						alert("Error en el servidor")
-					}
-				)
-
-				this.employeeForm.reset();
-
-			},
-			(reason) => {
-				this.employeeForm.reset();
-			},
+			  );
+			this.employeeService.clearFields(this.employee);
+			this.closeResult = `Closed with: ${result}`;
+		  },
+		  (reason) => {}
 		);
 	}
-
-
-
-	onSubmitForm(employeeForm: FormGroup){
-		console.log("EMPLOYEEEE", employeeForm);
+  
+	onSubmit(employeeForm: any) {
+	  console.log('FORMULARIO DE EMPLEADOS', employeeForm);
+  
+	  console.log(this.formattedBirthDate);
+	  this.employee.birthDate = this.formattedBirthDate;
+	  console.log('NEW Employee', this.employee);
+	  let newEmployee: Employee = {
+		firstName: this.employee.firstName,
+		lastName: this.employee.lastName,
+		birthDate: this.formattedBirthDate,
+		idDocumentType: this.employee.idDocumentType,
+		idDocumentNumber: this.employee.idDocumentNumber,
+		address: this.employee.address,
+		phoneNumber: this.employee.phoneNumber,
+		personalEmail: this.employee.personalEmail,
+	  };
+	  let employeeInSnake: Employee = this.conversion.toSnakeCase(newEmployee);
+	  console.log('EMPLOYEE EN SNAKE', employeeInSnake);
+	  this.employeeService
+		.putEmployee(employeeInSnake, this.idEmployee)
+		.subscribe(
+		  (response) => {
+			this.showInfoUpdateResult();
+			this.employeeService.notifyEmployeeUpdated();
+			this.modalService.dismissAll();
+		  },
+		  (error) => {
+		   this.showInfoErrorResult();
+		   this.modalService.dismissAll();
+		   
+		  }
+		);
 	}
-
+  
+	onBirthDateChange(event: NgbDateStruct) {
+	  if (event) {
+		// Obtén el año, mes y día de ngbDatepicker
+		const year = event.year || 0;
+		const month = event.month || 1;
+		const day = event.day || 1;
+  
+		const selectedDate = new Date(year, month - 1, day);
+		this.formattedBirthDate = selectedDate.toISOString();
+	  } else {
+		this.formattedBirthDate = '';
+	  }
+	}
+  
+	birthDateFormated(date: string): NgbDateStruct {
+	  const dateComponents = date.split('-').map(Number);
+  
+	  if (dateComponents.length === 3) {
+		return {
+		  year: dateComponents[2],
+		  month: dateComponents[1],
+		  day: dateComponents[0],
+		};
+	  } else {
+		return { year: 2000, month: 1, day: 1 };
+	  }
+	}
   
   
-}
+	showConfirmation(employeeForm: any) {
+		  Swal.fire({
+			title: '¿Estás seguro?',
+			text: '¿Quieres actualizar el empleado?',
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonText: 'Sí, actualizar',
+			cancelButtonText: 'Cancelar'
+		  }).then((result) => {
+			if (result.isConfirmed) {	
+			  this.onSubmit(employeeForm);
+			}
+		  });
+		}
+  
+  
+  
+	  closeForm() {
+		this.modalService.dismissAll();
+		}
+	  
+		showCancelConfirmation() {
+		Swal.fire({
+		  title: '¿Está seguro?',
+		  text: 'Si cancela, perderá los datos ingresados. ¿Desea continuar?',
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonText: 'Sí, cancelar',
+		  cancelButtonText: 'No, seguir editando'
+		}).then((result) => {
+		  if (result.isConfirmed) {
+		  // Acción a realizar si el usuario confirma la cancelación
+		  this.closeForm();
+		  }
+		});
+		}
+  
+		showInfoUpdateResult(){
+		  Swal.fire({
+			title: 'Resultado',
+			text: 'Se actualizó el empleado',
+			icon: 'success',
+			showConfirmButton: true,
+			confirmButtonText: 'ok',
+		  });
+		}
+  
+		showInfoErrorResult(){
+		  Swal.fire({
+			title: 'Resultado',
+			text: 'Error en el servidor',
+			icon: 'error',
+			showConfirmButton: true,
+			confirmButtonText: 'ok',
+		  });
+		}
+	  
+	 onSubmitForm(employeeForm: NgForm) {
+	   console.log('Employee', employeeForm);
+	 }
+  }
+  
