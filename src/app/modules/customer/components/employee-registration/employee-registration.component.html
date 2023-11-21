@@ -1,10 +1,10 @@
-<ng-template #content let-modal id="modalWindow">
+<!-- <ng-template #content let-modal id="modalWindow"> -->
 	<div class="modal-header">
 		<h4 class="modal-title" id="modal-basic-title">Registrar Empleado</h4>		
-		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+		<button type="button" class="btn-close" aria-label="Close" (click)="closeForm()"></button>
 	</div>
 	<div class="modal-body">
-		<form [formGroup]="employeeForm"   (ngSubmit)="onSubmitForm(employeeForm)">
+		<form [formGroup]="employeeForm" (ngSubmit)="onSubmitForm()">
 			<div class="mb-3 d-flex">
 				<div class="flex-grow-1 me-2">
 					<label for="name">Nombre</label>
@@ -43,11 +43,17 @@
 				<div class="flex-grow-1">
 					<label for="documentNumber">Documento</label>
 					<input  
-						type="text" formControlName="documentNumber" id="documentNumber" class="form-control" [attr.maxlength]="maxLengthDocument" placeholder="Documento"
+						type="text" formControlName="documentNumber" id="documentNumber" class="form-control" placeholder="Documento"
 						/>
 						<!-- (input)="onDocumentNumberInput()"/> -->
-					<div *ngIf="documentNumberControl?.invalid && documentNumberControl?.touched" class="text-danger">
-						{{ getDocumentNumberErrorMessage() }}
+					<div *ngIf="documentNumberControl?.hasError('required') && documentNumberControl?.touched" class="text-danger">
+						El número de documento es requerido
+		  			</div>
+					<div *ngIf="documentNumberControl?.hasError('minlength') && documentNumberControl?.touched" class="text-danger">
+						El número de documento debe tener al menos 7 caracteres
+		  			</div>
+					<div *ngIf="documentNumberControl?.hasError('maxlength') && documentNumberControl?.touched" class="text-danger">
+						El número de documento debe tener hasta 8 caracteres
 		  			</div>
 				</div>
 			</div>
@@ -89,13 +95,15 @@
 					</div>
 				</div>
 			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-secondary mt-3" (click)="showCancelConfirmation()">Cancelar</button>
+				<button type="button" class="btn btn-outline-primary mt-3" (click)="showConfirmation()">Registrar</button>
+			</div>
 		</form>
 	</div>
-	<div class="modal-footer">
-		<button type="submit" class="btn btn-outline-dark" [disabled]="!employeeForm.valid || employee.idDocumentType === 2" (click)="modal.close(employeeForm)">Registrar</button>
-	</div>
-</ng-template>
+	
+<!-- </ng-template>
 
 <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Registrar empleado</button>
-<hr />
+<hr /> -->
 

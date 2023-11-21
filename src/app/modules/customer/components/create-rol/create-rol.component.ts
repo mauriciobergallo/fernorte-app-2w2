@@ -85,6 +85,7 @@ export class CreateRolComponent implements OnInit {
 
 	onSubmitForm() {
 		if (this.roleForm.valid) {
+			
 		  this.roleService.createRole(this.roleForm.value).subscribe(
 			(newRole: Role) => {
 			  this.modalService.dismissAll(newRole);
