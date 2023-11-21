@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 })
 export class PurchaseOrderService {
 
-  url: string = 'http://localhost:8004/purchase-orders';
+  url: string = 'http://localhost:5433/purchaseOrder/';
 
   constructor(private _http: HttpClient) {}
 

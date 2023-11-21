@@ -13,7 +13,8 @@ import Swal from 'sweetalert2';
 export class PaymentOrderContainerComponent {
 
 
-  constructor(private _paymentOrderService: PaymentOrderServiceService,private _purchaseOrdersService:PurchaseOrderService){}
+  constructor(private _paymentOrderService: PaymentOrderServiceService, 
+    private _purchaseOrdersService:PurchaseOrderService){}
 
   paymentOrderFlow: PaymentFlow = 'GRID';
 
@@ -34,7 +35,6 @@ export class PaymentOrderContainerComponent {
         title: 'Error',
         text: 'No seleccionaste ninguna orden',
       });
-
     }else{
       this.setPaymentOrderFlow();
     }
@@ -59,7 +59,6 @@ export class PaymentOrderContainerComponent {
     } else {
       // If all payment details have a valid paymentMethod, proceed with saving
       this.setPaymentOrderFlow();
-
       // Perform the logic to save paymentOrderDetails
     }
   }

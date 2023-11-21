@@ -91,7 +91,7 @@ ngOnInit(): void {
 
   onSupplierSelected() {
     // Cuando se selecciona un proveedor, filtra las órdenes de compra por su ID y por el estado, que tiene que ser ACCEPTED
-    // console.log('Selected Supplier ID:', this.selectedSupplierId);
+    console.log('Selected Supplier ID:', this.selectedSupplierId);
     if (this.selectedSupplierId !== null) {
       this._purchaseOrdersService.getUnpaidPurchaseOrdersBySupplier(this.selectedSupplierId).subscribe({
         next: (data: IPurchaseOrder[]) => {
