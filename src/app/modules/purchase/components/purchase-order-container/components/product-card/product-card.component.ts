@@ -8,6 +8,9 @@ import { PurchaseOrderServiceService } from '../../../purchase-order-container/s
 import { SupliersService } from '../../../supplier/services/supliers.service';
 import { NgModel } from '@angular/forms';
 import { ProductsService } from '../../../supplier/services/products.service';
+import { QuantityByProductIdService } from '../../services/quantity-by-product-id.service';
+import { IResponseQuantityByProductId } from 'src/app/modules/purchase/models/IResponseQuantityByProductId';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-product-card',
@@ -17,7 +20,8 @@ import { ProductsService } from '../../../supplier/services/products.service';
 export class ProductCardComponent implements OnInit, OnDestroy {
   constructor(
     private _purchaseOrderSer: PurchaseOrderServiceService,
-    private _productService: ProductsService
+    private _productService: ProductsService,
+    private _quantityProduct: QuantityByProductIdService
   ) {}
   quantity: number = 0;
   productQuantities: { [productId: number]: number } = {};
@@ -81,21 +85,34 @@ export class ProductCardComponent implements OnInit, OnDestroy {
 
   addToCart(product: IProduct2) {
     const quantity = this.productQuantities[product.productId];
-    if (quantity > 0) {
-      const productSupplier: ISupplierProduct = {
-        idSupplier: this.idSupplier,
-        idProduct: product.productId,
-        name: product.name,
-        price: product.price,
-        quantity: quantity
-      };
-      this.cartProducts.push(productSupplier)
-      this._purchaseOrderSer.setCardProductList2(this.cartProducts);
-      this.isButtonDisabled[product.productId] = true;
-      console.log('PROD->', this._purchaseOrderSer.getCardProductList());
-    } else {
-      this.mostrarToastAddProduct[product.productId] = true;
-    }
+    this._quantityProduct.getQuantityResponse(product.productId, quantity).subscribe(
+      (response) => {
+        if (response.available) {
+          if (quantity > 0) {
+            const productSupplier: ISupplierProduct = {
+              idSupplier: this.idSupplier,
+              idProduct: product.productId,
+              name: product.name,
+              price: product.price,
+              quantity: quantity
+            };
+            this.cartProducts.push(productSupplier)
+            this._purchaseOrderSer.setCardProductList2(this.cartProducts);
+            this.isButtonDisabled[product.productId] = true;
+            console.log('PROD->', this._purchaseOrderSer.getCardProductList());
+          } else {
+            this.mostrarToastAddProduct[product.productId] = true;
+          }
+        } else {
+          Swal.fire({title: 'Error!', text: `No hay suficiente espacio en inventario.\nCantidad actual: ${response.currentCapacity}.`, icon: 'info', confirmButtonText: 'ok'})
+        }
+      },
+      (error) => {
+        console.error('Error al obtener la cantidad por producto:', error);
+      }
+    );
+    this._quantityProduct.getQuantityResponse(product.productId,quantity);
+    
   }
 
   onKeyPress(event: KeyboardEvent) {
