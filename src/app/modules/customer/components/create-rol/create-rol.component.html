@@ -11,7 +11,7 @@
 
 	<div class="mb-3 d-flex">
 	  <div class="flex-grow-2 me-2">
-		<label for="name" class="mt-3">Nombre del Rol</label>
+		<label for="name" class="mt-3">Nombre</label>
 		<input formControlName="name" type="text" id="name" class="form-control mt-1" required />
 		<div *ngIf="roleForm.get('name')?.hasError('required') && roleForm.get('name')?.touched"
 		  class="text-danger">Por favor ingrese el nombre del Rol</div>
@@ -22,9 +22,9 @@
 	  </div>
   
 	  <div class="flex-grow-1">
-		<label for="area" class="mt-3">Área del Rol</label>
+		<label for="area" class="mt-3">Departamento</label>
 		<select formControlName="area" class="form-select mt-1" aria-label="Default select example">
-		  <option value="" disabled>Selecciona un área</option>
+		  <option value="" disabled>Selecciona un departamento</option>
 		  <option value='Compras'>Compras</option>
 		  <option value='Ventas'>Ventas</option>
 		  <option value='Inventario'>Inventario</option>
@@ -32,7 +32,7 @@
 		  <option value='Sistemas'>Sistemas</option>
 		</select>
 		<div *ngIf="roleForm.get('area')?.hasError('required') && roleForm.get('area')?.touched"
-		  class="text-danger">Por favor selecciona un área</div>
+		  class="text-danger">Por favor selecciona un departamento</div>
 	  </div>
 	</div>	
   

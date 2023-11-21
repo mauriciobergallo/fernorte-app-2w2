@@ -50,8 +50,8 @@ export class LoginComponent {
             }
           },
           (error: any) => {
-            if (error.status === 500) {
-              // Error interno del servidor (500) - Usuario o contraseña incorrecta
+            if (error.status === 400) {
+              // Not Found (400) - Usuario o contraseña incorrecta
               Swal.fire({
                 title: '¡Error!',
                 text: 'Usuario o contraseña incorrecta. Verifica tus credenciales e intenta nuevamente.',

@@ -55,12 +55,12 @@ export class CreateRolComponent implements OnInit {
 	
 	  showCancelConfirmation() {
 		Swal.fire({
-		  title: '¿Está seguro?',
-		  text: 'Si cancela, perderá los datos ingresados. ¿Desea continuar?',
+		  title: '¿Está seguro que desea cancelar la operacion?',
+		  text: 'Si cancela, perderá los datos ingresados.',
 		  icon: 'warning',
 		  showCancelButton: true,
 		  confirmButtonText: 'Sí, cancelar',
-		  cancelButtonText: 'No, seguir editando'
+		  cancelButtonText: 'No, continuar'
 		}).then((result) => {
 		  if (result.isConfirmed) {
 			// Acción a realizar si el usuario confirma la cancelación
@@ -98,6 +98,8 @@ export class CreateRolComponent implements OnInit {
 		  );
 		} else {
 		  // El formulario no es válido, puedes mostrar un mensaje de error o hacer algo más
+		  Swal.fire('Error', 'El formulario no es válido', 'error');
+		  this.roleForm.markAllAsTouched();
 		}
 	  }
 }
