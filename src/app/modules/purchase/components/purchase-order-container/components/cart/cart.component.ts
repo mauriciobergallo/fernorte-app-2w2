@@ -35,6 +35,16 @@ export class CartComponent implements OnInit{
   }
 
   onSubmit() {
-    this.purchaseOrderService.setPurchaseOrderFlow();
+    this.purchaseOrderService.setPurchaseHeaderFlow(false);
+    this.purchaseOrderService.setPurchaseProductCardFlow(false);
+    this.purchaseOrderService.setPurchaseCartFlow(false);
+    this.purchaseOrderService.setPurchasePreviewFlow(false);
+    this.purchaseOrderService.setPurchaseBookingFlow(true);
+    // this.purchaseOrderService.setPurchaseOrderFlow();
+    console.log('Purchase Order Flow: ', this.purchaseOrderService.getPurchaseOrderFlow());
+  }
+
+  openBooking(){
+    alert('Booking');
   }
 }

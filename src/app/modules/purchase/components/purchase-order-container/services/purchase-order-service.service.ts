@@ -4,16 +4,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { IProduct, IProduct2, ISupplierProduct } from '../../../models/ISuppliers';
 import { ISupplier } from '../../../models/ISuppliers';
 import { PurchaseOrderBack } from '../../../models/IPurchaseOrder';
+import { IBooking, Order } from '../../../models/ibooking';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PurchaseOrderServiceService {
 
-  /*
-   * variable to share with diferent components
-   * must be suscribed to get the changes of the value from the components
-   */
   idSupplier = new BehaviorSubject<number>(0);
   suplierSelected = new BehaviorSubject<ISupplier>({
     id: 0,
@@ -24,7 +21,24 @@ export class PurchaseOrderServiceService {
   });
   listProductSelected = new BehaviorSubject<ISupplierProduct[]>([]);
   cartProductList: ISupplierProduct[] = [];
+  private booking = new BehaviorSubject<IBooking>({} as IBooking);
+  
+  //banderas para mostrar ocultar componentes
+  purchaseBookingFlow = new BehaviorSubject<boolean>(false);
+  purchaseHeaderFlow = new BehaviorSubject<boolean>(true);
+  purchaseProductCardFlow = new BehaviorSubject<boolean>(true);
+  purchaseCartFlow = new BehaviorSubject<boolean>(true);
+  purchasePreviewFlow = new BehaviorSubject<boolean>(false);
   purchaseOrderFlow = new BehaviorSubject<boolean>(true);
+
+
+  listProductSelectedToBooking = new BehaviorSubject<any[]>([]);
+  listProductOriginalToBooking = new BehaviorSubject<any[]>([ 
+    { idSupplier:0, idProduct:1, name:"mi producto", price: 100, quantity: 1, isSelected: false},
+    { idSupplier:0, idProduct:2, name:"mi producto 2", price: 200, quantity: 1, isSelected: false},
+    { idSupplier:0, idProduct:3, name:"mi producto 3", price: 300, quantity: 1, isSelected: false}
+  ]);
+
   ListMockPurchase: PurchaseOrderBack[] = [{
     supplierName: 'Supplier A',
     date: new Date('2023-01-01'),
@@ -83,11 +97,80 @@ export class PurchaseOrderServiceService {
   setProductSelected(productsList: ISupplierProduct[]): void { this.listProductSelected.next(productsList); }
   getListProductSelected(): Observable<ISupplierProduct[]> { return this.listProductSelected.asObservable(); }
 
-  /* Purchase order navigation between screens */
+  /* Navegacion general*/
   getPurchaseOrderFlow(): Observable<boolean> { return this.purchaseOrderFlow.asObservable(); }
   setPurchaseOrderFlow(): void {
     let flow;
     this.getPurchaseOrderFlow().subscribe(purchaseFlow => flow = purchaseFlow)
     this.purchaseOrderFlow.next(!flow); }
+
+  /*Navegacion del Booking */  
+  getPurchaseBookingFlow(): Observable<boolean> { return this.purchaseBookingFlow.asObservable(); }
+  setPurchaseBookingFlow(value: boolean): void {
+    let flow;
+    this.getPurchaseBookingFlow().subscribe(bookingFlow => flow = bookingFlow)
+    this.purchaseBookingFlow.next(value); }
+
+
+  /*Navegacion del Header */
+  getPurchaseHeaderFlow(): Observable<boolean> { return this.purchaseHeaderFlow.asObservable(); }
+  setPurchaseHeaderFlow(value: boolean): void {
+    let flow;
+    this.getPurchaseHeaderFlow().subscribe(headerFlow => flow = headerFlow)
+    this.purchaseHeaderFlow.next(value); }
+
+  /*Navegacion del Product Card */
+  getPurchaseProductCardFlow(): Observable<boolean> { return this.purchaseProductCardFlow.asObservable(); }
+  setPurchaseProductCardFlow(value: boolean): void {
+    let flow;
+    this.getPurchaseProductCardFlow().subscribe(productCardFlow => flow = productCardFlow)
+    this.purchaseProductCardFlow.next(value); }
+
+  /*Navegacion del Cart */
+  getPurchaseCartFlow(): Observable<boolean> { return this.purchaseCartFlow.asObservable(); }
+  setPurchaseCartFlow(value: boolean): void {
+    let flow;
+    this.getPurchaseCartFlow().subscribe(cartFlow => flow = cartFlow)
+    this.purchaseCartFlow.next(value); }
+
+  /*Navegacion del Preview */
+  getPurchasePreviewFlow(): Observable<boolean> { return this.purchasePreviewFlow.asObservable(); }
+  setPurchasePreviewFlow(value: boolean): void {
+    let flow;
+    this.getPurchasePreviewFlow().subscribe(previewFlow => flow = previewFlow)
+    this.purchasePreviewFlow.next(value); }
+  
+
+  /* metodo para obtener los productos del carrito */
+  getListProductToBooking(): Observable<any[]> { return this.listProductOriginalToBooking.asObservable(); }
+  
+  //metodo para borrar un producto de la lista del carrito
+  deleteProductToBooking(idProduct: number): void {
+    const listProduct = this.listProductOriginalToBooking
+
+
+    // const listProduct = this.listProductOriginalToBooking.getValue();
+    // const newListProduct = listProduct.filter(product => product.idProduct !== idProduct);
+    // this.listProductOriginalToBooking.next(newListProduct);
+  }  
+
+  /* method to get the list of products selected to change date and hour (booking) */
+  getListProductSelectedToBooking(): Observable<any[]> { return this.listProductSelectedToBooking.asObservable(); }
+  setListProductSelectedToBooking(productsList: any[]): void { this.listProductSelectedToBooking.next(productsList); }
+  
+  //setear una orden de compra
+  setPurchaseOrder(purchaseOrder: any): void {
+    this.purchaseOrderFlow.next(purchaseOrder);
+  }
+  
+
+  setBooking(orders: Order[]): void {
+    this.booking.value.orders = orders;
+  }
+
+  getBooking(): BehaviorSubject<IBooking> {
+    return this.booking;
+  }
+ 
 
 }

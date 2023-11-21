@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <div class="col-lg-9">
+    <h2>Booking de Ordenes de Compra</h2>   
+    
+    <button class="btn btn-primary" (click)="openModalNewSupplier()" >  Agregar </button>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <!-- <th scope="col">Id Supplier</th>
+                <th scope="col">Id Product</th> -->
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Agregar Fecha</th>
+                <th scope="col">Agregar Hora</th>
+                <th scope="col">Cambiar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of listBooking.orders">
+                <!-- <td>{{item.idSupplier}}</td>
+                <td>{{item.idProduct}}</td> -->
+                <!-- <td>{{item.name}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.quantity}}</td> -->
+                <td> {{item | json}}</td>
+
+                <td>
+                  <!-- <input type="text" name="name" id="name" [(ngModel)]="item.name"> -->
+                </td>
+
+                <td>
+                  <!-- <input type="date" name="date" id="date" [(ngModel)]="item.date"> -->
+                </td>
+                
+                <td>
+                  <!-- <input type="time" name="time" id="time" [(ngModel)]="item.time"> -->
+                </td>
+
+                <td>
+                  <button class="btn btn-primary" (click)="agregarFecha(item)" >Agregar Fecha</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary" (click)="irOrdenPago()" >generar orden de pago</button>
+    
+  </div>
+</div>
