@@ -100,3 +100,7 @@ body {
 .bd-mode-toggle .dropdown-menu .active .bi {
   display: block !important;
 }
+
+.custom-input {
+  height: 45px;
+}

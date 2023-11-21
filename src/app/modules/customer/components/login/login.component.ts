@@ -13,6 +13,9 @@ import { User } from '../../models/user';
 })
 export class LoginComponent {
 
+  showPassword: boolean = false;
+  passwordFieldType: string = 'password';
+
   login: Login = {
     identity: '',
     password: ''
@@ -59,6 +62,11 @@ export class LoginComponent {
       case "Administración":
         this.router.navigate(['customer']);
     }
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+    this.passwordFieldType = this.showPassword ? 'text' : 'password';
   }
 }
 
