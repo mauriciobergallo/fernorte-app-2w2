@@ -69,14 +69,14 @@ export class SaleOrderComponent implements OnInit {
     idSeller: 4,
     nameSeller: "Prado ignacio",
     idClient: 2,
-    nameClient: "Aranda Tomás",
+    nameClient: "Tomás Aranda",
     address: "Uritorco 4813",
     telephone: "3515605118",
     companyName: "",
     email: "tomiaranda@gmail.com",
-    dateOfIssue: new Date(2023,20,12,15,28),
-    dateOfExpiration: new Date(2023,20,12,15,28),
-    stateSaleOrder: "CREATED",
+    dateOfIssue: new Date(2023,11,20,15,28),
+    dateOfExpiration: new Date(2023,11,20,15,28),
+    stateSaleOrder: "CREATE",
     details : [
       {
         idProduct : 47,
