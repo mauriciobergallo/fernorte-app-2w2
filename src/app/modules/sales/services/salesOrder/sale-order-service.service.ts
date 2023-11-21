@@ -66,11 +66,11 @@ export class SaleOrderServiceService {
     if (this.idOrder != '0' && this.idOrder != undefined) {
       url = `http://localhost:8087/sales-orders/${this.idOrder}`
     } else if (this.doc != '0' && this.doc != null) {
-      url = `http://localhost:8087/sales-orders?doc_client=${this.doc}`
+      url = `http://localhost:8087/sales-orders?page=0&doc_client=${this.doc}`
     } else if (this.stateOrder != '' && this.stateOrder != null) {
-      url = `http://localhost:8087/sales-orders?state_sale_order=${this.stateOrder}`
+      url = `http://localhost:8087/sales-orders?page=0&state_sale_order=${this.stateOrder}`
     } else {
-      url = `http://localhost:8087/sales-orders?from_date=${this.fromDate}&to_date=${this.toDate}`;
+      url = `http://localhost:8087/sales-orders?page=0&from_date=${this.fromDate}&to_date=${this.toDate}`;
     }
     this.saleOrderList = this.http.get<SaleOrderApi[]>(url);
     return this.saleOrderList
