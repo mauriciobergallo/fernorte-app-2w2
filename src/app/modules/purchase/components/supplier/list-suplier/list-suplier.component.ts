@@ -1,11 +1,15 @@
 import {
   Component,
+  EventEmitter,
+  OnDestroy,
   OnInit,
+  Output,
 } from '@angular/core';
-import { ISupplier } from '../../../../models/ISuppliers';
-import { SupliersService } from '../../services/supliers.service';
+import { IProduct, ISupplier } from '../models/ISuppliers';
+import { PurchaseModule } from '../../../purchase.module';
+import { SupliersService } from '../services/supliers.service';
 import { Subscription } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ContactsComponent } from '../contacts/contacts.component';
 import { AddSupplierComponent } from '../add-supplier/add-supplier.component';
 import Swal from 'sweetalert2';
@@ -38,7 +42,6 @@ export class ListSuplierComponent implements OnInit {
   }
 
   filterSuppliers(searchText: string) {
-    // Update the filteredSuppliers based on the search text
     this.filteredSuppliers = this.suppliers.filter((supplier) => {
       const cuitStr = supplier.cuit.toString(); // Convert cuit to a string
       return (

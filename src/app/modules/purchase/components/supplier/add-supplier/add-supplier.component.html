@@ -8,6 +8,7 @@
       <div class="col-lg-6 col-md-12 col-sm-12">
         <label for="razon_social" class="form-label">Razon social</label>
         <input
+          (keypress)="preventFunc($event)"
           type="text"
           class="form-control"
           name="razonSocial"
@@ -21,6 +22,7 @@
       <div class="col-lg-6 col-md-12 col-sm-12">
         <label for="nombre_fantasia" class="form-label">Nombre Fantasia</label>
         <input
+          (keypress)="preventFunc($event)"
           type="text"
           class="form-control"
           name="nombre_fantasia"
@@ -38,11 +40,14 @@
       <div class="col-lg-6 col-md-12 col-sm-12">
         <label for="cuit" class="form-label">Cuit</label>
         <input
+          (keypress)="preventFunc($event)"
           type="number"
           class="form-control"
           name="cuit"
           [(ngModel)]="suplier.cuit"
           #cuitInput="ngModel"
+          maxlength="11"
+          
           [ngClass]="{ 'border-red': !cuitInput.valid && cuitInput.touched }"
           required
         />
@@ -51,6 +56,7 @@
       <div class="col-lg-6 col-md-12 col-sm-12">
         <label for="domicilio" class="form-label">Domicilio</label>
         <input
+          (keypress)="preventFunc($event)"
           type="text"
           class="form-control"
           name="domicilio"
@@ -66,21 +72,15 @@
     <div class="d-flex justify-content-center gap-2">
       <button
         type="submit"
-        class="btn btn-secondary my-4"
         (click)="closeModal()"
+        class="btn btn-secondary my-4"
       >
         Volver
       </button>
       <button
         type="submit"
         class="btn btn-primary my-4"
-        [disabled]="miForm.invalid"
         (click)="addSupplier()"
-        [swal]="[
-          'Transaccion Completada!',
-          'Proveedor Cargado con Exito!',
-          'success'
-        ]"
       >
         Confirmar
       </button>

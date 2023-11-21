@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsService } from '../../services/products.service';
-import { SupliersService } from '../../services/supliers.service';
-import { ISupplier } from '../../../../models/ISuppliers';
+import { ProductsService } from '../services/products.service';
+import { SupliersService } from '../services/supliers.service';
+import { ISupplier } from '../models/ISuppliers';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-add-product-modal',
@@ -45,6 +46,10 @@ export class AddProductModalComponent implements OnInit {
       .subscribe(() => {
         this._productService.notifyProductCreated();
         this.closeModal();
+        Swal.fire({
+          title: 'Producto agregado',
+          icon: 'success',
+        });
       });
   }
 }

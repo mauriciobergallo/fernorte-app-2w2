@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ISupplier } from '../../../models/ISuppliers';
+import { ISupplier } from '../models/ISuppliers';
 
 @Pipe({
   name: 'buscar'
