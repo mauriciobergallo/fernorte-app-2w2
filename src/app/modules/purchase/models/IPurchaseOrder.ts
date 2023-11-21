@@ -4,6 +4,7 @@ import { PaymentOrderDetailResponse } from './IPaymentOrder';
 // ------------------------------------------------ PURCHASE ORDER
 export interface PurchaseOrderRequest {
     supplierId: number;
+    date: Date;
     total: number;
     employeeId: number;
     observation: string;

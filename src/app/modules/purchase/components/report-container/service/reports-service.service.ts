@@ -22,7 +22,7 @@ export class ReportsServiceService {
 
   getPurchaseOrders(): void {
     this.http
-      .get<PurchaseOrderResponse[]>(`${this.url}purchaseOrder/`)
+      .get<PurchaseOrderResponse[]>(`${this.url}purchase-orders`)
       .pipe(
         tap((purchaseOrders: PurchaseOrderResponse[]) => {
           this.purchaseOrdersList.next(purchaseOrders);
@@ -33,7 +33,7 @@ export class ReportsServiceService {
   }
   getPaymentOrders(): void {
     this.http
-      .get<PaymentOrderResponse[]>(`${this.url}paymentOrder/`)
+      .get<PaymentOrderResponse[]>(`${this.url}payment-orders`)
       .pipe(
         tap((paymentOrders: PaymentOrderResponse[]) => {
           this.paymentOrdersList.next(paymentOrders);

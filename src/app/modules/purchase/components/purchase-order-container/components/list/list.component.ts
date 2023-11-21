@@ -18,7 +18,7 @@ export class ListComponent implements OnInit {
   suppliers: ISupplier[] = []
   collectionSize!: number;
   page: number = 1;
-  pageSize: number = 2;
+  pageSize: number = 4;
 
   constructor(private servicePurchase:PurchaseOrderServiceService,
     private suppliersService: SupliersService){}
@@ -28,7 +28,7 @@ export class ListComponent implements OnInit {
     this.suppliersService.getSupliers().subscribe((suppliers: ISupplier[]) => this.suppliers = suppliers);
     this.servicePurchase.getFilteredPurchaseOrdersList().subscribe((purchaseOrders: PurchaseOrderResponse[]) => {
       this.purchaseOrdersList = of(purchaseOrders);
-    })
+    });
   }
 
   filterPurchaseOrder(value: string): void {

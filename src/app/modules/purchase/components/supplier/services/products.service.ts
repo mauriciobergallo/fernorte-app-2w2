@@ -9,8 +9,8 @@ import { Observable, Subject } from 'rxjs';
 export class ProductsService {
   url: string =
     'https://my-json-server.typicode.com/114537-Bothner-Eric/firma-productos/productos';
-  urlSupplier: string = 'http://localhost:8085/product-by-supplier';
-  urlall:string='http://localhost:8080/product_by_supplier/all';
+  urlSupplier: string = 'http://localhost:5434/product-by-supplier';
+  urlall:string='http://localhost:5434/product_by_supplier/all';
 
   products: IProduct[] = [];
 

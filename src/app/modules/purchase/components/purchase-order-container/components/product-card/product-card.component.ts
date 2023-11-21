@@ -44,7 +44,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.suscription.unsubscribe();
   }
-  getProductsBySupplier(id: number) {
+  getProductsBySupplier(id: number):void {
     if (id != 0) {
       this.suscription.add(
         this._productService.getProductsBySupplier(id).subscribe({

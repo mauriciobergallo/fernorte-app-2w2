@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 import { ISupplierProduct } from '../../../models/ISuppliers';
 import { ISupplier } from '../../../models/ISuppliers';
-import { PurchaseOrderBack, PurchaseOrderResponse } from '../../../models/IPurchaseOrder';
+import { PurchaseOrderBack, PurchaseOrderRequest, PurchaseOrderResponse } from '../../../models/IPurchaseOrder';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PurchaseOrderServiceService {
-  url: string = 'http://localhost:5433/purchaseOrder/';
+  url: string = 'http://localhost:5433/purchase-orders';
   idSupplier = new BehaviorSubject<number>(0);
   suplierSelected = new BehaviorSubject<ISupplier>({
     id: 0,
@@ -54,6 +54,11 @@ export class PurchaseOrderServiceService {
   constructor(private http: HttpClient) {}
 
   // PURCHASES
+  postPurchaseOrders(purchase: PurchaseOrderRequest): Observable<PurchaseOrderRequest> {
+    return this.http
+      .post<PurchaseOrderRequest>(this.url, purchase);
+  }
+
   getPurchaseOrders(): void {
     this.http
       .get<PurchaseOrderResponse[]>(this.url)
@@ -65,6 +70,7 @@ export class PurchaseOrderServiceService {
       )
       .subscribe();
   }
+
   getFilteredPurchaseOrdersList() {
     return this.filteredPurchaseOrdersList.asObservable();
   }
