@@ -31,10 +31,12 @@ import { RouterModule } from '@angular/router';
 
 import { RouterChildModule } from './router-child.module';
 import { AddProductModalComponent } from './components/supplier/add-product-modal/add-product-modal.component';
+import { FilterComponent } from './components/supplier/filter/filter.component';
+import { PricesModalComponent } from './components/supplier/prices-modal/prices-modal.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, TotalSidebarComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent, AddProductModalComponent],
+  declarations: [HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, TotalSidebarComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent, AddProductModalComponent, FilterComponent, PricesModalComponent],
   providers: [],
   imports: [CommonModule, FormsModule,NgbModule, NgbPaginationModule, NgbDropdownModule, NgbToastModule,RouterModule, RouterChildModule, NgbModalModule, SweetAlert2Module.forRoot({
     provideSwal: () => import('sweetalert2').then(({ default: swal }) => swal.mixin({

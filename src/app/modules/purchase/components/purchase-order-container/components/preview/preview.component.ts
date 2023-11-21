@@ -31,7 +31,7 @@ export class PreviewComponent {
     socialReason: "",
     fantasyName: "",
     cuit: "",
-    adress: ""
+    address: ""
   };
    currentDate: Date = new Date();
 

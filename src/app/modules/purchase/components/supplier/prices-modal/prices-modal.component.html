@@ -1,0 +1,17 @@
+<div class="modal-body">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Proveedor</th>
+        <th scope="col">Precio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prod of suppliers">
+        <td>{{prod.socialReason}}</td>
+        <td>{{prod.price}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="closeModal()" class="btn btn-secondary">Volver</button>
+</div>

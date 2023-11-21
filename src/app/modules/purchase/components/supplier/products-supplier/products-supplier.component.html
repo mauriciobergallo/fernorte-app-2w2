@@ -1,6 +1,6 @@
 <div class="content">
   <div class="d-flex justify-content-center align-items-center">
-    <h1>Agregar products a {{ selectedSupplier.socialReason }}</h1>
+    <h1>Agregar productos a {{ selectedSupplier.socialReason }}</h1>
   </div>
   <div class="container">
     <table class="table">
@@ -12,32 +12,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          *ngFor="let item of products; let i = index"
-          [ngClass]="{ 'red-text': isProductInBothLists(item) }"
-        >
+        <tr *ngFor="let item of products; let i = index" >
           <td>{{ item.name }}</td>
-          <td *ngIf="isProductInBothLists(item)">
-            $ {{ getProductPrice(item.id).toFixed(2) }}
-          </td>
-          <td *ngIf="!isProductInBothLists(item)">-</td>
           <td>
-            <button
-              class="btn btn-primary"
-              *ngIf="!isProductInBothLists(item)"
-              (click)="openModal(item.id)"
-            >
+            $ {{item.price || '0'}}
+          </td>
+          <td>
+            <button class="btn btn-primary" *ngIf="!item.price" (click)="openModal(item.id_product)">
               Agregar
             </button>
-            <button
-              class="btn btn-danger"
-              *ngIf="isProductInBothLists(item)"
-              [swal]="{
-                title: '¿Estas seguro?',
-                showCancelButton: true
-              }"
-              (confirm)="deleteProduct(item.id)"
-            >
+            <button *ngIf="item.price" class="btn btn-danger"  [swal]="{ title: '¿Estás seguro?', reverseButtons: true ,showCancelButton: true }"
+              (confirm)="deleteProduct(item.id_product)">
               Eliminar
             </button>
           </td>

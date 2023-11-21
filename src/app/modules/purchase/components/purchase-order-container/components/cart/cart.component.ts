@@ -9,6 +9,7 @@ import { ISupplierProduct } from 'src/app/modules/purchase/models/ISuppliers';
 })
 export class CartComponent {
   cardProducts: ISupplierProduct[] = [];
+  isOpened: boolean = false;
 
   constructor(private purchaseOrderService: PurchaseOrderServiceService) {
     this.cardProducts = this.purchaseOrderService.getCardProductList();
@@ -29,5 +30,9 @@ export class CartComponent {
 
   purchaseOrderFlow() {
     this.purchaseOrderService.setPurchaseOrderFlow();
+  }
+
+  open(){
+    this.isOpened = !this.isOpened;
   }
 }

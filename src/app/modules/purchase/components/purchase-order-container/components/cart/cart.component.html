@@ -1,4 +1,8 @@
-<aside class="right-sidebar">
+<button (click)="open()">Open SIdebar</button>
+<aside
+  class="right-sidebar"
+  [ngClass]="{ 'right-sidebar2': isOpened }"
+>
   <div class="header">
     <h2>Carrito</h2>
     <hr class="separator" />
@@ -14,6 +18,8 @@
       </div>
     </div>
     <hr class="separator" />
-    <button class="final-button" (click)="logToConsole(); purchaseOrderFlow()">Click Me</button>
+    <button class="final-button" (click)="logToConsole(); purchaseOrderFlow()">
+      Click Me
+    </button>
   </div>
 </aside>

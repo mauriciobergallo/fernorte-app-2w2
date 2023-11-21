@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IProduct, IProduct2, ISupplierProduct } from '../../../models/ISuppliers';
+import { IProduct, ISupplierProduct } from '../../../models/ISuppliers';
 import { ISupplier } from '../../../models/ISuppliers';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class PurchaseOrderServiceService {
   suplierSelected = new BehaviorSubject<ISupplier>({
     id: 0,
     socialReason: '',
-    adress: '',
+    address: '',
     fantasyName: '',
     cuit: '',
   });

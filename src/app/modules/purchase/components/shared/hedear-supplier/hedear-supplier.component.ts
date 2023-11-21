@@ -21,7 +21,7 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
 
   idSelected: number = 0
   supplierList: ISupplier[] = []
-  public supplierSelected : ISupplier = {id: 0, socialReason:"", cuit:"" ,adress:"", fantasyName:""} 
+  public supplierSelected : ISupplier = {id: 0, socialReason:"", cuit:"" ,address:"", fantasyName:""} 
   showDropDown: boolean = true
 
   suscription = new Subscription()
@@ -58,7 +58,7 @@ export class HedearSupplierComponent implements OnInit, OnDestroy {
     //changing the value of the supplier selected and the id of the supplier to 0 to sure that the value
     // is changed when go to the service
     this.idSelected= 0
-    this.supplierSelected = {id: 0, socialReason:"", cuit:"" ,adress:"", fantasyName:""}
+    this.supplierSelected = {id: 0, socialReason:"", cuit:"" ,address:"", fantasyName:""}
 
     //getting the value of the supplier selected and the id of the supplier from service
     this.getSupplierSelectedFromService()

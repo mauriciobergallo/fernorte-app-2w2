@@ -50,14 +50,14 @@
           <td>{{ item.socialReason }}</td>
           <td>{{ item.fantasyName }}</td>
           <td>{{ item.cuit }}</td>
-          <td>{{ item.adress }}</td>
+          <td>{{ item.address }}</td>
           <td>
             <svg
               *ngIf="item.active"
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
-              fill="currentColor"
+              fill="#008000"
               class="bi bi-check2-circle"
               viewBox="0 0 16 16"
             >
@@ -73,7 +73,7 @@
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
-              fill="currentColor"
+              fill="#FF0000"
               class="bi bi-x-circle"
               viewBox="0 0 16 16"
             >
@@ -96,19 +96,25 @@
                 ⋮
               </button>
               <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button ngbDropdownItem (click)="openModal(item.id)">
+                <button
+                  ngbDropdownItem
+                  (click)="openModal(item.id)"
+                  *ngIf="item.active"
+                >
                   Contacto
                 </button>
                 <button
                   ngbDropdownItem
                   routerLink="/supplier/products"
                   (click)="openProducts(item.id)"
+                  *ngIf="item.active"
                 >
                   Productos
                 </button>
-                <button ngbDropdownItem>Editar</button>
+                <button ngbDropdownItem *ngIf="item.active">Editar</button>
                 <button
                   ngbDropdownItem
+                  *ngIf="item.active"
                   [swal]="{
                     title: '¿Estas seguro?',
                     showCancelButton: true,
@@ -117,6 +123,12 @@
                   (confirm)="deleteSupplier(item.id)"
                 >
                   Eliminar
+                </button>
+                <button
+                  ngbDropdownItem
+                  *ngIf="!item.active"
+                >
+                  Recuperar
                 </button>
               </div>
             </div>

@@ -1,14 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IProduct, IProduct2 } from '../models/ISuppliers';
+import { IProduct } from '../models/ISuppliers';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
-  url: string = 'https://my-json-server.typicode.com/114537-Bothner-Eric/firma-productos/productos';
-  urlSupplier: string = 'http://localhost:8080/product-by-supplier';
+  url: string = 'localhost:8085/products';
+  urlSupplier: string = 'http://localhost:8085/product-by-supplier';
 
   constructor(private _http: HttpClient) {}
 
@@ -16,9 +16,9 @@ export class ProductsService {
     return this._http.get<IProduct[]>(this.url);
   }
 
-  getProductsBySupplier(id: number): Observable<IProduct2[]> {
+  getProductsBySupplier(id: number): Observable<IProduct[]> {
     const params = new HttpParams().set('id_supplier', id.toString());
-    return this._http.get<IProduct2[]>(this.urlSupplier, { params });
+    return this._http.get<IProduct[]>(this.urlSupplier, { params });
   }
 
   addProduct(
@@ -42,3 +42,5 @@ export class ProductsService {
     return this._http.delete<any>(this.urlSupplier, { params });
   }
 }
+
+//

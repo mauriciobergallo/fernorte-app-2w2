@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SupliersService } from '../services/supliers.service';
-import { Contact, IContacts } from '../../../models/ISuppliers';
 import { Subscription } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { IContact } from '../../../models/ISuppliers';
 
 @Component({
   selector: 'fn-contacts',
@@ -13,15 +13,16 @@ import Swal from 'sweetalert2';
 export class ContactsComponent implements OnInit {
   showingList: boolean = true;
 
-  contact: Contact = {} as Contact;
+  contact: IContact = {} as IContact;
 
-  contacts: IContacts = this._serviceSuplier.contacts;
+  contacts: IContact[] = this._serviceSuplier.contacts;
 
   getContacts() {
     this._serviceSuplier
       .getContacts(this._serviceSuplier.selectedSupplier)
       .subscribe({
         next: (data: any) => {
+          console.log(data)
           this.contacts = data;
         },
         error: (error: any) => {
@@ -68,7 +69,7 @@ export class ContactsComponent implements OnInit {
     );
   }
 
-  deleteContact(contact: Contact) {
+  deleteContact(contact: IContact) {
     this.suscription.add(
       this._serviceSuplier
         .deleteContact(this._serviceSuplier.selectedSupplier, contact)

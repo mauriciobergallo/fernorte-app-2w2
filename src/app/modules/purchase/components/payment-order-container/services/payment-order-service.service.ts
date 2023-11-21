@@ -10,7 +10,7 @@ import { PaymentFlow } from '../../../models/IPaymentOrder';
 export class PaymentOrderServiceService {
 
   supplier: Isupplier[] = [];
-  url: string = 'http://localhost:8080/suppliers';
+  url: string = 'http://localhost:8085/suppliers';
   paymentOrderFlow: BehaviorSubject<PaymentFlow> = new BehaviorSubject<PaymentFlow>('GRID');
 
 

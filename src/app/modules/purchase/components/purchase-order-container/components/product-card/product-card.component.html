@@ -12,7 +12,7 @@
           <div class="card-body">
             <h5 class="card-title" style="height: 80px">{{ item.name }}</h5>
             <p class="card-text" style="height: 30px">
-              {{ item.price | currency }}
+              {{ 0 | currency }}
             </p>
             <div class="btn-toolbar justify-content-between">
               <div class="btn-group" role="group" aria-label="Basic example">
@@ -27,7 +27,7 @@
                   #controlInput="ngModel"
                   type="text"
                   style="width: 52px; text-align: center"
-                  [(ngModel)]="productQuantities[item.id]"
+                  [(ngModel)]="productQuantities[item.id_product]"
                   required
                   minlength="1"
                   maxlength="5"
@@ -47,14 +47,14 @@
                   type="button"
                   class="btn btn-success"
                   (click)="addToCart(item)"
-                  [disabled]="isButtonDisabled[item.id]"
+                  [disabled]="isButtonDisabled[item.id_product]"
                 >
                   Agregar
                 </button>
               </div>
               <ngb-toast
                 style="margin: 8% 0% 0% 0%"
-                *ngIf="mostrarToastAddProduct[item.id]"
+                *ngIf="mostrarToastAddProduct[item.id_product]"
                 class="toast bg-danger text-light"
                 [autohide]="true"
                 (hidden)="(false)"

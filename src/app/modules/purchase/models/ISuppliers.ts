@@ -4,30 +4,26 @@ export interface ISupplier {
   socialReason: string;
   fantasyName: string;
   cuit: string;
-  adress: string;
+  address: string;
   active?: boolean;
 }
-export interface IContacts {
-  id: number;
-  contacts: Contact[]; // An array of Contact objects
-}
-export interface Contact {
+
+export interface IContact {
   id: number;
   contactType: string;
   contactValue: string;
 }
 
-// ---------------------------------------------------- PRODUCTS
 export interface IProduct {
-  id: number;
+  id_product: number;
   name: string;
+  description: string;
+  unit_price: number;
+  stock_quantity: number;
+  unit_of_Measure: string;
+  id_category: number;
+  url_image: string;
   price: number;
-}
-export interface IProduct2 {
-  id: number;
-  name: string;
-  price: number;
-  blocked: boolean;
 }
 
 export interface ISupplierProduct {
@@ -38,3 +34,16 @@ export interface ISupplierProduct {
   quantity: number;
 }
 
+export interface ISupplierPrice {
+  id: number;
+  socialReason: string;
+  fantasyName: string;
+  cuit: string;
+  address: string;
+  active: boolean;
+  price: number;
+}
+
+export interface IProductSupplierResponse {
+  suppliers: ISupplierPrice[]
+}
