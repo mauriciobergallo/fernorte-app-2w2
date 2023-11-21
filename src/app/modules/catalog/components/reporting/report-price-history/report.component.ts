@@ -23,18 +23,18 @@ export class ReportPriceHistoryComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 15;
   sortBy = 'unitPrice';
-  sortDir = 'desc';
+  sortDir = 'asc';
   totalItems: number = 0;
   constructor(private productService: ProductService, private fb: FormBuilder, private datePipe: DatePipe) {
 
   }
   ngOnInit() {
-    this.getProducts();
     this.filterForm = this.fb.group({
       startDate: [''],
       endDate: [''],
       idProduct: [''],
     });
+    this.getProducts();
     this.getpriceHistory();
     this.filterForm.valueChanges.subscribe(() => this.getpriceHistory());
   }
@@ -47,13 +47,13 @@ export class ReportPriceHistoryComponent implements OnInit {
     });
   }
   public handlePagination(event: any) {
-    this.currentPage = event.page;
+    this.currentPage = event;
     this.getpriceHistory();
   }
   getpriceHistory() {
     this.isLoading = true;
     this.productService.getPriceHistory(this.currentPage, this.itemsPerPage, this.sortBy, this.sortDir,
-      this.filterForm.value.idProduct, this.filterForm.value.starDate, this.filterForm.value.endDate).subscribe({
+      this.filterForm.value.idProduct, this.filterForm.value.startDate, this.filterForm.value.endDate).subscribe({
         next: (res) => {
           this.listPriceHistory = res.priceHistory;
           this.totalItems = res.totalItems;

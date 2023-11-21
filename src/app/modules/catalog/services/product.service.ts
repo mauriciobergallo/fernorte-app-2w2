@@ -109,7 +109,7 @@ export class ProductService {
          productApi
       );
    }
-   
+
    delete(id: number, username: string): Observable<any> {
       return this.requestResponseService.makeDeleteRequest<any>(
          this.products + '/' + id + '?username=' + username
@@ -135,8 +135,8 @@ export class ProductService {
       if (sortBy) params = params.append('sortBy', sortBy);
       if (sortDir) params = params.append('sortDir', sortDir);
       if (idProduct) params = params.append('idProduct', idProduct.toString());
-      if (initStartDate) params = params.append('initStartDate', new Date(initStartDate).toISOString().slice(0, -1));
-      if (finalStartDate) params = params.append('finalEndDate', new Date(finalStartDate).toISOString().slice(0, -1));
+      if (initStartDate) params = params.append('initStartDate', new Date(initStartDate).toISOString().split('T')[0]);
+      if (finalStartDate) params = params.append('finalEndDate', new Date(finalStartDate).toISOString().split('T')[0]);
       return this.requestResponseService.makeGetRequest<{ products: PriceHistory[]; totalItems: number; }>
          (`${this.priceHistory}product`, { params: params })
          .pipe(
