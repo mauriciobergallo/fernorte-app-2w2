@@ -76,9 +76,9 @@ export class BillServiceService {
     order.address = saleOrder.address || "";
     order.name_seller = saleOrder.first_name_seller || "";
     order.total_price = 0;
-    order.vat_condition = "";
-    order.bill_type = "";
-    order.cae = "";
+    order.vat_condition = "FINAL_CUSTOMER";
+    order.bill_type = "B";
+    order.cae = "526351485968";
     order.expiration_date_cae = saleOrder.date_of_expiration || [];
     order.created_date = saleOrder.date_of_issue || [];
 
