@@ -204,8 +204,8 @@
                             <a href="javascript:window.print()" class="btn btn-lg btn-print">
                                 <i class="bi bi-printer"></i> Imprimir
                             </a>
-                            <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme">
-                                <i class="bi bi-download"></i> Descargar
+                            <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme" (click)="salir()">
+                                 Salir
                             </a>
                         </div>
                     </div>
@@ -217,3 +217,4 @@
 </body>
 
 </html>
+<router-outlet></router-outlet>

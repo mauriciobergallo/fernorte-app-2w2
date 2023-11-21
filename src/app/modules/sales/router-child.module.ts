@@ -8,6 +8,7 @@ import { ReportNavComponent } from './components/report-nav/report-nav.component
 import { TaxComponent } from './components/tax/tax.component';
 import { TaxNavComponent } from './components/tax-nav/tax-nav.component';
 import { SaleOrderViewComponent } from './components/sale-order-view/sale-order-view.component';
+import { SaleOrderSearchListComponent } from './components/sale-order-search-list/sale-order-search-list.component';
 
 
 
@@ -18,13 +19,15 @@ const childRoutes: Routes = [
     children: [
       { path: '', redirectTo: 'report', pathMatch: 'full' }, 
       { path: 'report', component: ReportNavComponent },
-      { path: 'sale-order', component: SaleOrderNavComponent },
+      { path: 'sale-order', component: SaleOrderNavComponent, children: [
+        { path: 'list', component:SaleOrderSearchListComponent}
+      ] },
       { path: 'billing', component: BillingNavComponent },
       { path: 'payment-method', component: PaymentMethodNavComponent },
       { path: 'tax', component: TaxNavComponent}
     ],
   },
-  { path: 'printOrder', component: SaleOrderViewComponent }
+  { path: 'printOrder', component: SaleOrderViewComponent },
 ];
 
 
