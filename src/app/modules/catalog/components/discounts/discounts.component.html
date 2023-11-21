@@ -1,0 +1,36 @@
+<div class="container mt-4">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Descuento</th>
+                <th>Fecha inicio</th>
+                <th>Fecha final</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let discount of pagedDiscounts">
+                <!-- traer el producto a traves del servicio, momentaneamente dejo el ID -->
+                <td>{{ discount.id }}</td>
+                <td>
+                    {{discount.discountRate}}
+                </td>
+                <td>{{ discount.start_date| date: 'dd/MM/yyyy' }}</td>
+                <td>{{ discount.end_date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{ isDiscountActive(discount) ? 'Sí' : 'No' }}</td>
+                <td>
+                    <button type="submit" class="btn btn-primary mx-2">Editar</button>
+                    <button type="submit" class="btn btn-danger mx-2">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container mt-4">
+    <ngb-pagination [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="products.length" [maxSize]="5"
+        [rotate]="true">
+    </ngb-pagination>
+</div>
