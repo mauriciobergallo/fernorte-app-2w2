@@ -51,19 +51,17 @@ export class GraphsPriceHistoryComponent implements OnInit {
     this.getProducts();
     this.getPriceHistory();
     this.filterFom = this.fb.group({
-      name: ['', [Validators.required]],
+      name: [0, [Validators.required]],
       startDate: ['', [Validators.required]],
       endDate: [''],
-      chart: [this.myChart, Validators.required]
+      chart: [0, Validators.required]
     });
-
-
   }
 
   getPriceHistory() {
     this.productService.getPriceHistoryAll().subscribe({
       next: (res) => {
-        this.listPriceHistory = res.priceHistory;
+        this.listPriceHistory = res.productsPrices;
       }
     });
   }
@@ -72,53 +70,49 @@ export class GraphsPriceHistoryComponent implements OnInit {
     this.productService.get().subscribe({
       next: (res) => {
         this.listProduct = res.products;
-        if (this.listProduct.length > 0) {
-          this.filterFom.get('name')?.setValue(this.listProduct[0].name);
-        }
       }
     });
   }
 
   async showGraphs() {
-    if (this.filterFom.valid) {
+    if (this.filterFom.valid && this.listPriceHistory) {
       const chartType = this.filterFom.get('chart')?.value;
-
-
+  
       this.isLoading = true;
       setTimeout(async () => {
         const productName = this.filterFom.get('name')?.value;
         const startDate = this.filterFom.get('startDate')?.value;
         const endDate = this.filterFom.get('endDate')?.value;
-
+  
         const data = this.listPriceHistory.filter(item =>
-          item.name === productName &&
-          new Date(item.startDate) >= new Date(startDate) ||
-          new Date(item.startDate) <= new Date(endDate)
+          item.product.name === productName &&
+          (new Date(item.start_date) >= new Date(startDate) ||
+            new Date(item.end_date) <= new Date(endDate))
         );
-
-
+  
         if (data.length === 0) {
           return;
         }
-
+  
         const ctx = document.getElementById('myChart') as HTMLCanvasElement;
-
+  
         if (!ctx) {
           return;
         }
-
-        data.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
-
-        const labels = data.map(item => this.datePipe.transform(item.startDate, 'dd/MM/yyyy'));
-        const dataset = data.map(item => item.unitPrice);
-
+  
+        data.sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime());
+  
+        const labels = data.map(item => this.datePipe.transform(item.start_date, 'dd/MM/yyyy'));
+        const dataset = data.map(item => item.unit_price);
+  
         const minPrice = Math.min(...dataset);
         const maxPrice = Math.max(...dataset);
         const datasetLabel = `${productName} (Precio: ${minPrice} - ${maxPrice}, Fechas: ${labels[0]} - ${labels[labels.length - 1]})`;
-
+  
         if (this.myChart) {
           this.myChart.destroy();
         }
+  
         this.myChart = new Chart(ctx, {
           type: chartType,
           data: {
@@ -143,6 +137,7 @@ export class GraphsPriceHistoryComponent implements OnInit {
             }
           } as ChartOptions<'bar'>
         });
+  
         this.isLoading = false;
       }, 1500);
     } else {
@@ -167,4 +162,5 @@ export class GraphsPriceHistoryComponent implements OnInit {
     });
     this.myChart?.destroy();
   }
+
 }

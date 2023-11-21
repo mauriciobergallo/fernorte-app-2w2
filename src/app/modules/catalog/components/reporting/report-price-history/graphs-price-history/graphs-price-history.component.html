@@ -6,12 +6,14 @@
       <div class="col-md-6">
         <label for="productName" class="form-label">Nombre:</label>
         <select class="form-select" id="selectProduct" formControlName="name">
+          <option value="0">Seleccionar producto</option>
           <option *ngFor="let prod of listProduct" [value]="prod.name">{{prod.name}}</option>
         </select>
       </div>
       <div class="col-md-6">
         <label for="chart" class="form-label">Tipo:</label>
         <select class="form-select" id="selectProduct" formControlName="chart">
+          <option value="0">Seleccionar tipo de gráfico</option>
           <option *ngFor="let chart of listCharts" [value]="chart.value"> {{chart.name}} </option>
         </select>
       </div>
@@ -28,7 +30,7 @@
         <input type="date" id="endDate" formControlName="endDate" class="form-control">
       </div>
     </div>
-    <div class="col-md-12 d-flex justify-content-center">
+    <div class="col-md-12 d-flex justify-content-center mt-2">
       <button type="submit" class="btn btn-primary  m-2 " (click)="showGraphs()">Generar</button>
       <button type="button" class="btn btn-secondary  m-2 " (click)="clean()">Limpiar</button>
     </div>

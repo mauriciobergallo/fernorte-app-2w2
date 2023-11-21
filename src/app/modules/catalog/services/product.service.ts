@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IProductCategory } from '../models/IProductCategory';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../environments/environment';
 import { RequestResponseService } from './requestResponse.service';
 import { IProduct } from '../models/IProduct';
@@ -109,14 +109,17 @@ export class ProductService {
          productApi
       );
    }
+   
    delete(id: number, username: string): Observable<any> {
       return this.requestResponseService.makeDeleteRequest<any>(
          this.products + '/' + id + '?username=' + username
       );
    }
+
    getPriceHistoryAll() {
-      return this.requestResponseService.makeGetRequest<PriceHistory>(this.priceHistory);
+      return this.requestResponseService.makeGetRequest<PriceHistory>(`${this.priceHistory}product`);
    }
+
    getPriceHistory(
       page?: number,
       size?: number,
@@ -138,7 +141,7 @@ export class ProductService {
          (`${this.priceHistory}product`, { params: params })
          .pipe(
             map((response: any) => ({
-               priceHistory: response.map((item: any) => ({
+               priceHistory: response.productsPrices.map((item: any) => ({
                   name: item.product.name,
                   unitPrice: item.unit_price,
                   endDate: item.end_date,
