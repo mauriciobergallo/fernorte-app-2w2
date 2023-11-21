@@ -1,0 +1,7 @@
+export enum SaleOrderStates {
+    CREATE = 'CREATE',
+    UNBILLED = 'UNBILLED',
+    CANCELLED = 'CANCELLED',
+    PENDING_DELIVERY = 'PENDING_DELIVERY',
+    DELIVERED = 'DELIVERED'
+}
