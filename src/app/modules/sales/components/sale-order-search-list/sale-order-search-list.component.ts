@@ -122,7 +122,6 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
 
   onPrint(saleOrder:SaleOrderOk) {
     this.saleOrderOk = saleOrder;
-    alert("click on Print")
     this.print.sendOrder(this.saleOrderOk);
     this.route.navigateByUrl('printOrder')
   }

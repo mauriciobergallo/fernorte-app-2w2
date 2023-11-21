@@ -86,7 +86,7 @@
           <tr *ngFor="let item of saleOrdersListOk">
             <th scope="row">{{item.idSaleOrder}}</th>
             <td>{{item.nameClient}}</td>
-            <td>{{item.dateOfIssue | date:'short'}}</td>
+            <td>{{item.dateOfIssue | date:'dd/MM/yyyy'}}</td>
             <td>{{item.stateSaleOrder | translateStates}}</td>
             <td>
                 <ul>
@@ -146,7 +146,7 @@
             </div>
             <div class="modal-body">
               <p><strong> Cliente:</strong> {{ selectedOrder?.nameClient }}</p>
-              <p><strong> Fecha Creación:</strong> {{ selectedOrder?.dateOfIssue | date:'short' }}</p>
+              <p><strong> Fecha Creación:</strong> {{ selectedOrder?.dateOfIssue | date:'dd/MM/yyyy' }}</p>
               <p><strong> Detalles:</strong></p>
               <ul>
                 <li *ngFor="let prod of selectedOrder?.details">
