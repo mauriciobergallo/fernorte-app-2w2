@@ -34,6 +34,7 @@ export class EmployeeListComponent implements OnInit {
       phoneNumber: '555-1234',
       personalEmail: 'john.doe@example.com',
       isActive: true,
+      createdAt: '01-01-2000'
     },
     {
       idEmployee: 2,
@@ -46,6 +47,7 @@ export class EmployeeListComponent implements OnInit {
       phoneNumber: '555-5678',
       personalEmail: 'jane.smith@example.com',
       isActive: false,
+      createdAt: '01-01-2000'
     },
     // Agrega más datos según sea necesario
   ];

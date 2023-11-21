@@ -9,4 +9,5 @@ export interface EmployeeResponseDTO{
     phoneNumber:string;
     personalEmail: string; //Test
     isActive: boolean;
+    createdAt: string;
 }
