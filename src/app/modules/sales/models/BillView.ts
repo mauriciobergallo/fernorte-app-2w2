@@ -1,4 +1,5 @@
 import {DetailBillView} from '../models/DetailBillView';
+import { Payment } from './PaymentModel';
 
 export class BillView{    
     idBill: number = 0;
@@ -18,23 +19,11 @@ export class BillView{
     createdDate: string = "";
     expirationDateCae: string = "";
     totalPrice: number = 0;
-    payment!: Payment;
+    payment: Payment [] = [];
     idSaleOrder: number = 0;
     detailBill: DetailBillView [] = [];
 
 
 
 
-}
-export class Payment{
-    id:number = 0;
-    paymenMetod!: PaymentMethod;
-    surcharge: number = 0;
-    payment: number = 0;
-} 
-
-export class PaymentMethod{
-    idPaymentMethod: number = 0;
-    paymentMethod: string = "";
-    surcharge: number = 0;
 }

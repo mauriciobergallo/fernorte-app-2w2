@@ -1,14 +1,14 @@
 export interface ICustomer {
-    firstName: string;
-    lastName: string;
-    companyName?: string;
-    ivaCondition: string;
+    first_name: string;
+    last_name: string;
+    company_name?: string;
+    iva_condition: string;
     email: string;
-    phoneNumber: string;
+    phone_number: string;
     address: string;
-    documentNumber: string;
-    documentType: string;
-    customerType: string;
-    discountFactor: number;
-    customerCategory?: string;
+    document_number: string;
+    document_type: string;
+    customer_type: string;
+    discount_factor: number;
+    customer_category?: string;
   }

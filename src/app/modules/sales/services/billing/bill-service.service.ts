@@ -38,7 +38,7 @@ export class BillServiceService {
 
 
     getBills() : Observable<BillModel[]> {
-      this.billList = this.http.get<BillModel[]>(this.urlBase);
+      this.billList = this.http.get<BillModel[]>(this.urlBase+ `?pageNumber=0`);
       return this.billList;
     }
 
@@ -47,11 +47,11 @@ export class BillServiceService {
     let url:string = '';
     this.filters = filters
     if (this.idBill != '0' && this.idBill != undefined) {
-      url = this.urlBase + `?id=${this.idBill}`
+      url = this.urlBase + `?pageNumber=0&id=${this.idBill}`
     } else if (this.clientId != '0' && this.clientId != null) {
-      url = this.urlBase + `?clientId=${this.clientId}`
+      url = this.urlBase + `?pageNumber=0&clientId=${this.clientId}`
     } else {
-      url = this.urlBase + `?from=${this.fromDate}&to=${this.toDate}`;
+      url = this.urlBase + `?pageNumber=0&from=${this.fromDate}&to=${this.toDate}`;
     }
     this.billList = this.http.get<BillModel[]>(url);
     return this.billList
@@ -76,9 +76,9 @@ export class BillServiceService {
     order.address = saleOrder.address || "";
     order.name_seller = saleOrder.first_name_seller || "";
     order.total_price = 0;
-    order.vat_condition = "";
-    order.bill_type = "";
-    order.cae = "";
+    order.vat_condition = "FINAL_CUSTOMER";
+    order.bill_type = "B";
+    order.cae = "526351485968";
     order.expiration_date_cae = saleOrder.date_of_expiration || [];
     order.created_date = saleOrder.date_of_issue || [];
 

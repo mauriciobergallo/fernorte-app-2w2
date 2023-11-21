@@ -12,8 +12,8 @@ export class ClientProvider {
   constructor(private http: HttpClient) {
   }
 
-    getlistClients(): Observable<ICustomer[]> {
-      const url = this.urlClientsBase + `/clients/all`;
-      return this.http.get<ICustomer[]>(url);
+    getlistClients(): Observable<ICustomer> {
+      const url = this.urlClientsBase + `/customers/3`;
+      return this.http.get<ICustomer>(url);
     }
   }

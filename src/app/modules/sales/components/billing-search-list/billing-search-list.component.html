@@ -74,15 +74,15 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of billList">   
-              <th scope="row">{{item.id_bill}}</th>
-              <td>{{item.id_seller}}</td>
-              <td>{{item.id_client}}</td>
+              <th scope="row">{{item.id_bill!+1000}}</th>
+              <td>{{item.las_name + " " +item.first_name + " " + item.company_name}}</td>
+              <td>{{item.name_seller}}</td>
               <td>{{item.created_date| dateFormat}}</td>
               <td>{{item.total_price}}</td>
               <td>
                   <ul>
                       <li *ngFor="let prod of item.detail_bill">
-                          {{prod.id_product}}
+                          {{prod.name_product}}
                       </li>
                   </ul>
               </td>
@@ -93,7 +93,7 @@
                   </button>
                   <div class="dropdown-content">
                     <a (click)="onShowDetails()">Ver detalles</a>
-                    <a (click)="onPrint()">Imprimir</a>
+                    <a (click)="onPrint(item)">Imprimir</a>
                   </div>
                 </div>
               </td>

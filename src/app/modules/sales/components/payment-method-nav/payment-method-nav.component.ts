@@ -1,3 +1,4 @@
+// payment-method-nav.component.ts
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,21 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentMethodNavComponent implements OnInit {
 
-  activeTab:string="Metodos"
-  regist:boolean=false
-  search:boolean=false
-  update:boolean=false
-  delete:boolean=false
-
+  activeTab: string = 'Metodos';
+  regist: boolean = false;
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  toMethods(tab:string){
-    this.activeTab=tab;
-    this.regist=true;
+  toMethods(tab: string) {
+    this.activeTab = tab;
+    this.regist = false;
   }
 
+  toRegisterMethod(tab: string) {
+    this.activeTab = tab;
+    this.regist = true;
+  }
 }
