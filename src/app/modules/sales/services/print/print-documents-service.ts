@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { SaleOrderOk } from '../../models/SaleOrderOk';
 import { BillModel } from '../../models/BillingModelApi';
 import { BillOk } from '../../models/BillingOk';
-import { BillView, Payment } from '../../models/BillView';
+import { BillView } from '../../models/BillView';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ getBillOrder$ = this.billSnapshot.asObservable();
 
       
   sendBill(bill: BillView) {
-    this.saleOrderNewSnaptshot.next(bill);
+    this.billSnapshot.next(bill);
     }
 
       //this.printService.senOrder(saleOrder);
@@ -47,7 +47,7 @@ getBillOrder$ = this.billSnapshot.asObservable();
     this.saleOrderOk.address = ""
     this.saleOrderOk.companyName=""
     this.saleOrderOk.dateOfExpiration!
-    this.saleOrderOk.dateOfIssue = new Date()
+    this.saleOrderOk.dateOfIssue = []
     this.saleOrderOk.details= []
     this.saleOrderOk.email = ""
     this.saleOrderOk.nameClient=""

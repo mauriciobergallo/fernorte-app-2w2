@@ -7,8 +7,8 @@ import { ProductApi } from '../../models/ProductApi';
 import { ProductOk } from '../../models/ProductOk';
 import { NgModel, NgForm } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
-import { SaleOrderView } from '../../models/SaleOrderView';
 import { PrintDocumentsService } from '../../services/print/print-documents-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'fn-sale-order-search-list',
@@ -18,13 +18,12 @@ import { PrintDocumentsService } from '../../services/print/print-documents-serv
 export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   saleOrdersList: SaleOrderApi[] = [];
   saleOrdersListOk: SaleOrderOk[]=[];
+
   saleOrderStates: string[] = [];
-  saleOrderOk!: SaleOrderOk;
-  salePick:boolean= false;
 
 
   idOrder:string="0";
-  doc:string="0";       
+  doc:string="0";
   fromDate:string="";
   toDate:string="";
   stateOrder:string="";
@@ -32,8 +31,9 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  constructor(private saleOrderServiceService: SaleOrderServiceService, private print 
-    : PrintDocumentsService) {
+  constructor(private saleOrderServiceService: SaleOrderServiceService,
+    private print:PrintDocumentsService,
+    private route:Router) {
   }
 
   ngOnDestroy(): void {
@@ -43,7 +43,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.saleOrderServiceService.getSaleOrders().subscribe(
         ( response : SaleOrderApi[]) => {
-          this.saleOrdersList = response;
+          this.saleOrdersList = response.sort((a,b)=>b.id_sale_order! - a.id_sale_order!);
           for(let item of this.saleOrdersList) {
             this.saleOrdersListOk.push(this.mapSaleOrder(item))
           }
@@ -58,12 +58,6 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
       )
     )
   }
-
-  onShowDetails() {
-  
-
-  }
-
 
   onSendFilters(form : NgForm) {
     if(form.valid) {
@@ -89,7 +83,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   }
 
   mapSaleOrder(saleOrder: SaleOrderApi): SaleOrderOk {
-    const { id_sale_order, id_seller, id_client,last_name_seller,first_name_seller,address,telephone,email ,date_of_issue, date_of_expiration, state_sale_order, detail_sales_order, first_name_client, last_name_client,company_name } = saleOrder;
+    const { id_sale_order, id_seller, id_client, date_of_issue, date_of_expiration, state_sale_order, detail_sales_order, first_name_client, last_name_client, first_name_seller,last_name_seller, address, email, company_name, telephone } = saleOrder;
     const productList: ProductOk[]=[];
     for(let prod of detail_sales_order){
       productList.push(this.mapProduct(prod))
@@ -97,15 +91,15 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     const saleOrderOk: SaleOrderOk = {
       idSaleOrder: id_sale_order,
       idSeller: id_seller,
+      nameSeller: first_name_seller+" "+last_name_seller,
+      address: address,
+      telephone: telephone,
+      email: email,
+      companyName: company_name,
       idClient: id_client,
-      companyName:company_name,
-      address,
-      email,
-      telephone,
-      nameSeller:first_name_seller+" "+last_name_seller,
       nameClient: first_name_client+" "+last_name_client,
-      dateOfIssue: new Date(date_of_issue[0], date_of_issue[1]-1, date_of_issue[2], date_of_issue[3], date_of_issue[4]),
-      dateOfExpiration: new Date(date_of_expiration[0], date_of_expiration[1]-1, date_of_expiration[2], date_of_expiration[3], date_of_expiration[4]),
+      dateOfIssue: date_of_issue,
+      dateOfExpiration: date_of_expiration,
       stateSaleOrder: state_sale_order,
       details: productList
     };
@@ -124,11 +118,13 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     } 
     return productOk
   }
+  onShowDetails() {
 
+  }
 
-  onPrint(saleOrder:SaleOrderOk) {
-    this.saleOrderOk = saleOrder;
-    alert("click on Print")
-    this.print.sendOrder(this.saleOrderOk);
+  onPrint(item:SaleOrderOk) {
+    this.print.sendOrder(item);
+    this.route.navigateByUrl('printOrder')
+
   }
 }

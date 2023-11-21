@@ -39,6 +39,7 @@ import { BillingSearchListComponent } from './components/billing-search-list/bil
 import { BillingProvider } from './services/billing/BillingProvider';
 import { TaxRegisterComponent } from './components/tax-register/tax-register.component';
 import { PaymentMethodRegisterComponent } from './components/payment-method-register/payment-method-register.component';
+import { DateFormat2Pipe } from './pipes/date-format2.pipe';
 
 
 
@@ -68,7 +69,8 @@ import { PaymentMethodRegisterComponent } from './components/payment-method-regi
     ViewPaymentComponent,
     BillingSearchListComponent,
     DateFormatPipe,
-    PriceFormatPipe
+    PriceFormatPipe,
+    DateFormat2Pipe
     ],
 
 
@@ -107,7 +109,8 @@ import { PaymentMethodRegisterComponent } from './components/payment-method-regi
     ViewPaymentComponent,
     BillingSearchListComponent,
     DateFormatPipe,
-    PriceFormatPipe],
+    PriceFormatPipe,
+    DateFormat2Pipe],
 
 })
 export class SalesModule {}

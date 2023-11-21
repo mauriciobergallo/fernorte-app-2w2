@@ -6,13 +6,15 @@ import { ClientProvider } from './clientProvider';
   providedIn: 'root'
 })
 export class ClientService {
-  private listClient: ICustomer[] = []
-  constructor(private clientsProvide:ClientProvider) { }
-  getListClients(): ICustomer[] {
+  private client!: ICustomer;
+  
+  constructor(private clientsProvide:ClientProvider) { }  
+  
+  getClient(): ICustomer {
     this.clientsProvide.getlistClients().subscribe((res) => {
-      this.listClient = res;
-      return this.listClient;
+      this.client = res;
+      return this.client;
     });
-    return this.listClient;
+    return this.client;
   }
 }

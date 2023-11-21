@@ -36,7 +36,7 @@
                                         <div class="info">
                                             <h1 class="inv-header-1">Orden de Venta</h1>
                                             <p class="mb-1">Orden de Venta: <span>#{{saleOrder.idSaleOrder}}</span></p>
-                                            <p class="mb-0">Fecha: <span>{{saleOrder.dateOfIssue | date:'short'}}</span></p>
+                                            <p class="mb-0">Fecha: <span>{{saleOrder.dateOfIssue | dateFormat}}</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -47,7 +47,7 @@
                                 <div class="col-sm-6">
                                     <div class="invoice-number mb-30">
                                         <h4 class="inv-title-1">Cliente</h4>
-                                        <h2 class="name">{{saleOrder.nameClient}}</h2>
+                                        <h2 class="name">{{saleOrder.nameClient}}{{saleOrder.companyName}}</h2>
                                         <p class="invo-addr-1">
                                             {{saleOrder.telephone}} <br/>
                                                 {{saleOrder.email}}<br/>
@@ -124,7 +124,7 @@
                                     <div class="payment-method mb-30">
                                         <h3 class="inv-title-1">Vencimiento</h3>
                                         <ul class="payment-method-list-1 text-14">
-                                            <li><strong>Fecha: </strong>{{saleOrder.dateOfExpiration| date:'short' }}</li>
+                                            <li><strong>Fecha: </strong>{{saleOrder.dateOfExpiration| dateFormat }}</li>
                                         
                                         </ul>
                                     </div>

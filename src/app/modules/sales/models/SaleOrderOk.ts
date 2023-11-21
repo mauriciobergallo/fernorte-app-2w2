@@ -10,8 +10,8 @@ export class SaleOrderOk {
     telephone:string = "";
     companyName:string ="";
     email: string = "";
-    dateOfIssue: Date = new Date();
-    dateOfExpiration!: Date;// de Date a String
+    dateOfIssue: number[]=[];
+    dateOfExpiration!: number[];// de Date a String
     stateSaleOrder: string = "";
     details : ProductOk[]=[];
 }

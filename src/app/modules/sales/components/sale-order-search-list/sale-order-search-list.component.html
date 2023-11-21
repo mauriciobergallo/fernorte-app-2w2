@@ -78,10 +78,10 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of saleOrdersListOk">
-            <th scope="row">{{item.idSaleOrder}}</th>
-            <td>{{item.nameClient}}</td>
-            <td>{{item.idSeller}}</td>
-            <td>{{item.dateOfIssue | date:'short'}}</td>
+            <th scope="row">{{item.idSaleOrder!+1000}}</th>
+            <td>{{item.nameClient}}{{item.companyName}}</td>
+            <td>{{item.nameSeller}}</td>
+            <td>{{item.dateOfIssue | dateFormat}}</td>
             <td>{{item.stateSaleOrder | translateStates}}</td>
             <td>
                 <ul>

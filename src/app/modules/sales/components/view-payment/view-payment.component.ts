@@ -4,6 +4,7 @@ import { BillOk } from '../../models/BillingOk';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PrintDocumentsService } from '../../services/print/print-documents-service';
+import { Payment } from '../../models/PaymentModel';
 @Component({
   selector: 'fn-view-payment',
   templateUrl: './view-payment.component.html',
@@ -24,7 +25,7 @@ export class ViewPaymentComponent implements OnInit{
     
   
 
-  
+  /* 
     bill1: BillView = {
     idBill: 100,
     idSeller: 2,
@@ -45,9 +46,9 @@ export class ViewPaymentComponent implements OnInit{
     totalPrice:2000,
     payment:{
       id:2,
-    paymenMetod:{
-      idPaymentMethod: 2,
-      paymentMethod: "Credit Card",
+      payment_method:{
+      id_payment_method: 2,
+       payment_method: "Credit Card",
       surcharge: 80
     },
     surcharge: 2,
@@ -95,15 +96,9 @@ export class ViewPaymentComponent implements OnInit{
       taxType: "Iva"
     }
   }]
-  }
+  } */
 
   ngOnInit(): void {
-  /*  this.activatedRoute.paramMap.subscribe(s => {
-      this.saleOrderId = +s.get('id')!});
-      this.saleOrderService.getSaleOrdersById(this.saleOrderId).subscribe((x)=>{
-      this.listSaleOrder = x;
-      });    */
-
       this.subscription = this.printService.getBillOrder$.subscribe((bill) => {
         this.bill = bill;
       });

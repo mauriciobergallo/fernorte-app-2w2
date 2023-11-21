@@ -7,6 +7,10 @@ import { BillingNavComponent } from './components/billing-nav/billing-nav.compon
 import { ReportNavComponent } from './components/report-nav/report-nav.component';
 import { TaxComponent } from './components/tax/tax.component';
 import { TaxNavComponent } from './components/tax-nav/tax-nav.component';
+import { SaleOrderSearchListComponent } from './components/sale-order-search-list/sale-order-search-list.component';
+import { SaleOrderViewComponent } from './components/sale-order-view/sale-order-view.component';
+import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
+import { ViewPaymentComponent } from './components/view-payment/view-payment.component';
 
 
 const childRoutes: Routes = [
@@ -15,13 +19,19 @@ const childRoutes: Routes = [
     component: HomeComponent,
     children: [
       { path: '', redirectTo: 'report', pathMatch: 'full' }, 
-      { path: 'report', component: ReportNavComponent },
-      { path: 'sale-order', component: SaleOrderNavComponent },
-      { path: 'billing', component: BillingNavComponent },
+      { path: 'report', component: ReportNavComponent},
+      { path: 'sale-order', component: SaleOrderNavComponent, children: [
+        {path: 'list', component: SaleOrderSearchListComponent}
+      ]  },
+      { path: 'billing', component: BillingNavComponent , children: [
+        {path: 'listB', component: BillingSearchListComponent}
+      ]  },
       { path: 'payment-method', component: PaymentMethodNavComponent },
       { path: 'tax', component: TaxNavComponent}
     ],
   },
+  {path: 'printOrder', component: SaleOrderViewComponent},
+  {path: 'printBill', component: ViewPaymentComponent},
 ];
 
 

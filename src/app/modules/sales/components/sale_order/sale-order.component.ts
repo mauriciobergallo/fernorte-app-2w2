@@ -12,6 +12,9 @@ import { MontoTotalModel } from '../../models/ModelTotalModel';
 import { SaleOrderProvider } from '../../services/salesOrder/SaleOrderProvider';
 import { ICustomer } from '../../interfaces/iCustomer';
 import { ClientService } from '../../services/clients/client.service';
+import Swal from 'sweetalert2';
+import { ClientProvider } from '../../services/clients/clientProvider';
+import { ProductProvider } from '../../services/products/productProvider';
 
 
 @Component({
@@ -27,7 +30,9 @@ export class SaleOrderComponent implements OnInit {
     private productService: ProductService,
     private carritoService: CarritoService,
     private saleOrderProvider: SaleOrderProvider,
-    private clientsService: ClientService) { }
+    private clientsService: ClientService,
+    private clientp:ClientProvider,
+    private prod:ProductProvider) { }
 
   salesOrderLoad: SaleOrderModel | undefined
   loader = this.loadingService.viewLoader();
@@ -37,7 +42,7 @@ export class SaleOrderComponent implements OnInit {
   listDetailSaleOrder: DetailsSaleOrderModel[] = [];
   saleOrder: SaleOrderModel = new SaleOrderModel();
   permiteGenerar: boolean = true;
-  listClients: ICustomer[] = []
+  listClients!: ICustomer;
   listClientsfiltrada: ICustomer[] = [];
   productoSeleccionado = this.productService.cleanProduct();
   readonly typeSalesOrder = TypeSalesOrder.ORDEN_VENTA;
@@ -56,8 +61,10 @@ export class SaleOrderComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.listProduct = this.productService.getlistProduct();
-    this.listClients = this.clientsService.getListClients();
+    this.listProduct = this.productService.getlistProduct();    
+    this.clientp.getlistClients().subscribe(x=>{
+      this.listClients=x;
+    })
   }
   ActualizarTotal() {
     this.montoTotal = this.saleOrderServiceService.calcularTotal(this.carrito)
@@ -89,27 +96,40 @@ export class SaleOrderComponent implements OnInit {
   }
 
   async generateSaleOrder(type: TypeSalesOrder) {
-    this.loader = this.loadingService.loading();
-
-    if (type == this.typeSalesOrder) {
-      this.saleOrder = this.buildSaleOrder(SaleOrderStates.UNBILLED, type, this.carrito);
-    } else if (type == this.typePresupuesto) {
-      this.saleOrder = this.buildSaleOrder(SaleOrderStates.CREATE, type, this.carrito);
-    }
-    let validateCantidad = this.saleOrderServiceService.ValidarPresupuestoOOrdenVenta(this.saleOrder!, this.carrito)
-    if (validateCantidad) {
-      alert("existen productos que la cantidad superan el stock")
+    if(this.carrito.length>0){
+      Swal.fire({
+        title: "¿Seguro que quieres guardar la orden?",
+        showCancelButton: true,
+        confirmButtonText: "Guardar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Orden de venta guardada exitosamente!");
+          this.loader = this.loadingService.loading();
+  
+      if (type == this.typeSalesOrder) {
+        this.saleOrder = this.buildSaleOrder(SaleOrderStates.UNBILLED, type, this.carrito);
+      } else if (type == this.typePresupuesto) {
+        this.saleOrder = this.buildSaleOrder(SaleOrderStates.CREATE, type, this.carrito);
+      }
+      let validateCantidad = this.saleOrderServiceService.ValidarPresupuestoOOrdenVenta(this.saleOrder!, this.carrito)
+      if (validateCantidad) {
+        alert("existen productos que la cantidad superan el stock")
+        this.loader = this.loadingService.loading();
+        return;
+  
+      }
+  
+      this.saleOrderProvider.createSaleOrder(this.saleOrder!).subscribe((res) => {
+        this.saleOrder = res.data
+        
+      });
+      this.listProduct = this.productService.restarCantidad(this.productoSeleccionado)
       this.loader = this.loadingService.loading();
-      return;
-
+        } 
+      });
     }
-
-    this.saleOrderProvider.createSaleOrder(this.saleOrder!).subscribe((res) => {
-      this.saleOrder = res.data
-      
-    });
-    this.listProduct = this.productService.restarCantidad(this.productoSeleccionado)
-    this.loader = this.loadingService.loading();
+    
+    
   }
 
   deleteProduct(id: number) {
@@ -123,5 +143,14 @@ export class SaleOrderComponent implements OnInit {
   cancelOrderSale() {
     this.productoSeleccionado = this.productService.cleanProduct();
     this.carrito = [];
-  }
+    Swal.fire({
+      title: "¿Seguro que quieres cancelar la orden?",
+      showCancelButton: true,
+      confirmButtonText: "Ok"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Cancelado");
+      } 
+    });
+}
 }

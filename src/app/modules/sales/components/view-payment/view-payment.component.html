@@ -47,7 +47,7 @@
                                 <div class="col-sm-6">
                                     <div class="invoice-number mb-30">
                                         <h4 class="inv-title-1">Cliente</h4>
-                                        <h2 class="name">{{bill.firstNameClient}} {{bill.lastNameClient}}</h2>
+                                        <h2 class="name">{{bill.firstNameClient}} {{bill.lastNameClient}} {{bill.companyName}}</h2>
                                         <p class="invo-addr-1">
                                             {{bill.telephone}} <br/>
                                                 {{bill.email}}<br/>
@@ -98,21 +98,21 @@
                                         <td></td>
                                         <td></td>
                                         <td class="text-center">SubTotal</td>
-                                        <td class="text-end">${{subtotal}}</td>
+                                        <td class="text-end">${{subtotal | priceFormat}}</td>
                                     </tr>
                                     <tr class="tr2">
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td class="text-center">Impuestos</td>
-                                        <td class="text-end">${{iva}}</td>
+                                        <td class="text-end">${{iva | priceFormat}}</td>
                                     </tr>
                                     <tr class="tr2">
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td class="text-center f-w-600 active-color">Total</td>
-                                        <td class="f-w-600 text-end active-color">${{subtotal+iva}}</td>
+                                        <td class="f-w-600 text-end active-color">${{subtotal+iva | priceFormat}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -123,8 +123,8 @@
                                 <div class="col-lg-6 col-md-5 col-sm-5">
                                     <div class="payment-method mb-30">
                                         <h3 class="inv-title-1">Metodo de Pago</h3>
-                                        <ul class="payment-method-list-1 text-14">
-                                            <li><strong></strong>{{bill.payment.paymenMetod.paymentMethod}}</li>
+                                        <ul class="payment-method-list-1 text-14"*ngFor="let item of bill.payment" >
+                                            <li><strong></strong>{{item.payment_method.payment_method + " Recargo" + (item.payment_method.surcharge-1)*100 + "%" }}</li>
                                         
                                         </ul>
                                     </div>
