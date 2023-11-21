@@ -185,7 +185,7 @@ export class ProductService {
     },
     {
       idProduct: 10,
-      name: "Amoladora Angular Versa Pro 2400 W 230 Mm Ferreteria Express",
+      name: "Amoladora Angular Versa Pro 2400 W 230 Mm",
       description: "Amoladora Angular Versa Pro 2400 W 230 Mm Ferreteria Express",
       unitPrice: 13550,
       stockQuantity: 20,
@@ -198,6 +198,101 @@ export class ProductService {
       },
       urlImage: "",
       priceProduct: 13550,
+      discount: 0,
+      isDeleted: false,
+      cantidadSeleccionado: 0
+    },
+    {
+      idProduct: 11,
+      name: "Alicate de corte",
+      description: "Alicate resistente para cortar cables y alambres.",
+      unitPrice: 12.99,
+      stockQuantity: 15,
+      unitOfMeasure: "unidad",
+      category: {
+        idCategory: 110,
+        name: "Herramientas manuales",
+        description: "Herramientas que funcionan con energía humana.",
+        isDeleted: false
+      },
+      urlImage: "https://example.com/alicate_corte.jpg",
+      priceProduct: 12.99,
+      discount: 0,
+      isDeleted: false,
+      cantidadSeleccionado: 0
+    },
+    {
+      idProduct: 12,
+      name: "Sierra de calar",
+      description: "Sierra eléctrica para cortes curvos y precisos.",
+      unitPrice: 65.50,
+      stockQuantity: 18,
+      unitOfMeasure: "unidad",
+      category: {
+        idCategory: 111,
+        name: "Herramientas eléctricas",
+        description: "Herramientas que funcionan con energía eléctrica.",
+        isDeleted: false
+      },
+      urlImage: "https://example.com/sierra_calar.jpg",
+      priceProduct: 65.50,
+      discount: 0,
+      isDeleted: false,
+      cantidadSeleccionado: 0
+    },
+    {
+      idProduct: 13,
+      name: "Nivel láser",
+      description: "Instrumento de medición láser para determinar niveles con precisión.",
+      unitPrice: 45.75,
+      stockQuantity: 22,
+      unitOfMeasure: "unidad",
+      category: {
+        idCategory: 112,
+        name: "Instrumentos de medición",
+        description: "Instrumentos para medir diversas magnitudes.",
+        isDeleted: false
+      },
+      urlImage: "https://example.com/nivel_laser.jpg",
+      priceProduct: 45.75,
+      discount: 0,
+      isDeleted: false,
+      cantidadSeleccionado: 0
+    },
+    {
+      idProduct: 14,
+      name: "Llave inglesa",
+      description: "Llave ajustable para tuercas y tornillos de diferentes tamaños.",
+      unitPrice: 9.25,
+      stockQuantity: 28,
+      unitOfMeasure: "unidad",
+      category: {
+        idCategory: 113,
+        name: "Herramientas manuales",
+        description: "Herramientas que funcionan con energía humana.",
+        isDeleted: false
+      },
+      urlImage: "https://example.com/llave_inglesa.jpg",
+      priceProduct: 9.25,
+      discount: 0,
+      isDeleted: false,
+      cantidadSeleccionado: 0
+    },
+    {
+      idProduct: 15,
+      name: "Cautín eléctrico",
+      description: "Herramienta para soldadura eléctrica de precisión.",
+      unitPrice: 18.99,
+      stockQuantity: 25,
+      unitOfMeasure: "unidad",
+      category: {
+        idCategory: 114,
+        name: "Herramientas eléctricas",
+        description: "Herramientas que funcionan con energía eléctrica.",
+        isDeleted: false
+      },
+      urlImage: "https://example.com/cautin.jpg",
+      priceProduct: 18.99,
       discount: 0,
       isDeleted: false,
       cantidadSeleccionado: 0

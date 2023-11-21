@@ -20,10 +20,6 @@ export class ViewPaymentComponent implements OnInit{
     
     subtotal:number = 0;
     iva: number = 0;
-
-    
-  
-
   
     bill1: BillView = {
     idBill: 100,

@@ -67,7 +67,7 @@
         <td>{{ item.first_name}} {{item.las_name}}</td>
         <td>{{item.name_seller}}</td>
         <td>{{item.created_date | dateFormat}}</td>
-        <td>{{item.total_price}}</td>
+        <td>{{calculateTotal(item) | currency}}</td>
         <td>
           <ul>
             <li *ngFor="let prod of item.detail_bill">
@@ -103,7 +103,7 @@
         <li class="page-item" [class.active]="currentPage === 2">
           <a class="page-link" (click)="onLoadPage(2)">2</a>
         </li>
-        <li class="page-item" [class.active]="currentPage === 2">
+        <li class="page-item" [class.active]="currentPage === 3">
           <a class="page-link" (click)="onLoadPage(3)">3</a>
         </li>
         <!-- <li class="page-item"><a class="page-link" (click)="onLoadPage(3)">3</a></li> -->
@@ -126,14 +126,13 @@
           <p><strong> Cliente:</strong> {{ selectedBill?.first_name}} {{selectedBill?.las_name}}</p>
           <p><strong> Vendedor:</strong> {{ selectedBill?.name_seller }}</p>
           <p><strong> Fecha Creación:</strong> {{ selectedBill?.created_date | dateFormat }}</p>
-          <p><strong> Total:</strong> {{ selectedBill?.total_price }}</p>
           <p><strong> Detalles:</strong></p>
           <ul>
             <li *ngFor="let prod of selectedBill?.detail_bill">
-              {{ prod.name_product }} x {{prod.quantity}} - <strong>Precio:</strong> {{ prod.unitary_price }}
+              {{ prod.name_product }} x {{prod.quantity}} - <strong>Precio:</strong> {{ prod.unitary_price | currency}}
             </li>
           </ul>
-          <p><strong> Total:</strong> {{ calculateTotal(selectedBill) }}</p>
+          <p><strong> Total:</strong> {{ calculateTotal(selectedBill) | currency }}</p>
         </div>
       </div>
     </div>
