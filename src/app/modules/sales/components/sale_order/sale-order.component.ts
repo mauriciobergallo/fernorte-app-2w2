@@ -118,10 +118,6 @@ export class SaleOrderComponent implements OnInit {
   }
 
 
-  generatePdf() {
-    this.saleOrderServiceService.generatePdf(this.detalleOrdenVenta)
-  }
-
 
 
   cancelOrderSale() {

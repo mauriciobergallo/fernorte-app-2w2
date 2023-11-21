@@ -62,6 +62,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
       this.filters.set("fromDate", form.value.fromDate)
       this.filters.set("toDate", form.value.toDate)
       this.filters.set("stateOrder", form.value.stateOrder)
+      this.filters.set("page","0");
     }
     this.saleOrdersListOk = [];
     this.subscriptions.add(
