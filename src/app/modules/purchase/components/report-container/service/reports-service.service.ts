@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ReportsServiceService {
-  url: string = 'http://localhost:5433/purchaseOrder/';
+  url: string = 'http://localhost:5433/';
   purchaseOrdersList = new BehaviorSubject<PurchaseOrderResponse[]>([]);
   paymentOrdersList = new BehaviorSubject<PaymentOrderResponse[]>([]);
   filteredPurchaseOrdersList = new BehaviorSubject<PurchaseOrderResponse[]>([]);
@@ -22,7 +22,7 @@ export class ReportsServiceService {
 
   getPurchaseOrders(): void {
     this.http
-      .get<PurchaseOrderResponse[]>(this.url)
+      .get<PurchaseOrderResponse[]>(`${this.url}purchaseOrder/`)
       .pipe(
         tap((purchaseOrders: PurchaseOrderResponse[]) => {
           this.purchaseOrdersList.next(purchaseOrders);
@@ -33,7 +33,7 @@ export class ReportsServiceService {
   }
   getPaymentOrders(): void {
     this.http
-      .get<PaymentOrderResponse[]>(this.url)
+      .get<PaymentOrderResponse[]>(`${this.url}paymentOrder/`)
       .pipe(
         tap((paymentOrders: PaymentOrderResponse[]) => {
           this.paymentOrdersList.next(paymentOrders);

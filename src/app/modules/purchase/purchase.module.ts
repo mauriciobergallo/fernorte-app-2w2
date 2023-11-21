@@ -35,11 +35,12 @@ import { ListComponent } from './components/purchase-order-container/components/
 import { ReportsScreenComponent } from './components/report-container/components/reports-screen/reports-screen.component';
 import { DatePickerComponent } from './components/report-container/components/date-picker/date-picker.component';
 import { OrdersGridComponent } from './components/report-container/components/orders-grid/orders-grid.component';
+import { PaymentListComponent } from './components/payment-order-container/components/payment-list/payment-list.component';
 
 
 
 @NgModule({
-  declarations: [ListComponent, HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent, AddProductModalComponent, PaymentPreviewComponent, ReportsScreenComponent, DatePickerComponent, OrdersGridComponent],
+  declarations: [ListComponent, HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent, AddProductModalComponent, PaymentPreviewComponent, ReportsScreenComponent, DatePickerComponent, OrdersGridComponent, PaymentListComponent],
   providers: [],
   imports: [CommonModule, FormsModule, NgbModule, NgbPaginationModule, NgbDropdownModule, NgbToastModule,RouterModule, RouterChildModule, NgbModalModule, SweetAlert2Module.forRoot({
     provideSwal: () => import('sweetalert2').then(({ default: swal }) => swal.mixin({

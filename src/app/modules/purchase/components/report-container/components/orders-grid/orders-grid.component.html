@@ -24,11 +24,11 @@
       <tbody *ngIf="tab.getValue() === 'PAGO'">
         <tr *ngFor="let order of paymentOrders | async">
           <td>{{ order.id }}</td>
-          <td>{{ setSupplierName(order.supplierId) }}</td>
+          <td>{{ setSupplierName(order.supplierId) ?  setSupplierName(order.supplierId) : 'Proveedor' }}</td>
           <td class="text-center">{{ setPaymentTotal(order.paymentDetails) | currency }}</td>
           <td class="text-center">{{ order.date| date }}</td>
           <td>{{ order.observation }}</td>
-          <td class="text-center">{{ order.paymentState }}</td>
+          <td class="text-center">{{ order.paymentState ? order.paymentState : 'ACEPTADA' }}</td>
         </tr>
       </tbody>
     </table>

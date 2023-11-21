@@ -46,7 +46,8 @@ export class OrdersGridComponent implements OnInit{
     return total;
   }
 
-  setSupplierName(supplierId: number): string {
+  setSupplierName(supplierId: number): string | undefined {
+    if (!supplierId) return;
     const name = this.suppliers.filter(supplier => supplier.id === supplierId)[0].fantasyName;
     return name;
   }
