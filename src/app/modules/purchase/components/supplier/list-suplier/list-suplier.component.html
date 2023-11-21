@@ -2,9 +2,12 @@
   <div class="container">
     <div class="d-flex justify-content-between align-items-center">
       <h2 class="mb-0 mt-2">Proveedores</h2>
-      <button class="btn btn-primary" (click)="openModalNewSupplier()">
-        Agregar
-      </button>
+      <div class="flex mx-2">
+        <button class="btn btn-primary" (click)="openModalNewSupplier()">
+          Agregar
+        </button>
+        <button routerLink="/filter" class="mx-2 btn btn-primary">Listado</button>
+      </div>
     </div>
     <hr />
     <div class="d-flex align-items-center gap-4">
@@ -57,7 +60,7 @@
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
-              fill="currentColor"
+              fill="#008000"
               class="bi bi-check2-circle"
               viewBox="0 0 16 16"
             >
@@ -73,7 +76,7 @@
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
-              fill="currentColor"
+              fill="#FF0000"
               class="bi bi-x-circle"
               viewBox="0 0 16 16"
             >
@@ -96,19 +99,25 @@
                 ⋮
               </button>
               <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button ngbDropdownItem (click)="openModal(item.id)">
+                <button
+                  ngbDropdownItem
+                  (click)="openModal(item.id)"
+                  *ngIf="item.active"
+                >
                   Contacto
                 </button>
                 <button
                   ngbDropdownItem
                   routerLink="/supplier/products"
                   (click)="openProducts(item.id)"
+                  *ngIf="item.active"
                 >
                   Productos
                 </button>
-                <button ngbDropdownItem>Editar</button>
+                <button ngbDropdownItem *ngIf="item.active">Editar</button>
                 <button
                   ngbDropdownItem
+                  *ngIf="item.active"
                   [swal]="{
                     title: '¿Estas seguro?',
                     showCancelButton: true,
@@ -118,6 +127,7 @@
                 >
                   Eliminar
                 </button>
+                <button ngbDropdownItem *ngIf="!item.active">Recuperar</button>
               </div>
             </div>
           </td>
