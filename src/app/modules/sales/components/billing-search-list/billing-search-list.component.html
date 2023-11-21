@@ -75,8 +75,8 @@
           <tbody>
             <tr *ngFor="let item of billList">   
               <th scope="row">{{item.id_bill}}</th>
-              <td>{{item.id_seller}}</td>
-              <td>{{item.id_client}}</td>
+              <td>{{item.name_seller}}</td>
+              <td>{{item.las_name + " " +item.first_name + " " + item.company_name}}</td>
               <td>{{item.created_date| dateFormat}}</td>
               <td>{{item.total_price}}</td>
               <td>

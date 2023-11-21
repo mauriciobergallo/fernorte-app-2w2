@@ -1,0 +1,23 @@
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 p-3">
+                <h2>Impuestos</h2>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" [class.active]="activeTab === 'taxes'" (click)="toTaxes('taxes')"
+                        aria-current="page">Impuestos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [class.active]="activeTab === 'register'" (click)="toRegisterTax('register')"
+                        aria-current="page">Registrar</a>
+                </li>
+            </ul>
+        </div>
+        <div class="centered-content">
+            <fn-tax *ngIf="activeTab === 'taxes'"></fn-tax>
+            <fn-tax-register *ngIf="activeTab === 'register'"></fn-tax-register>
+        </div>
+    </div>
+</section>

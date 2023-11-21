@@ -1,3 +1,4 @@
+<!-- payment-method-nav.component.html -->
 <section class="content">
   <div class="container">
     <div class="row">
@@ -6,15 +7,19 @@
       </div>
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" [class.active]="activeTab === 'Metodos'" (click)="toMethods('Metodos')"
-            aria-current="page" >Métodos</a>
+          <a class="nav-link" [class.active]="activeTab === 'Metodos'" (click)="toMethods('Metodos')"
+            aria-current="page">Métodos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="activeTab === 'Register'" (click)="toRegisterMethod('Register')"
+            aria-current="page">Registrar</a>
         </li>
       </ul>
     </div>
 
-
     <div class="centered-content">
-      <fn-payment-method></fn-payment-method>
+      <fn-payment-method *ngIf="activeTab === 'Metodos'"></fn-payment-method>
+      <fn-payment-method-register *ngIf="activeTab === 'Register'"></fn-payment-method-register>
     </div>
   </div>
 </section>

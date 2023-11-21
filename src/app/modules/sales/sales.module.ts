@@ -31,11 +31,14 @@ import { TranslateStatesPipe } from './pipes/translateStates.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaxComponent } from './components/tax/tax.component';
 import { PriceFormatPipe} from './pipes/price-format.pipe';
+import { TaxNavComponent } from './components/tax-nav/tax-nav.component';
 
 import { ViewPaymentComponent } from './components/view-payment/view-payment.component';
 
 import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
 import { BillingProvider } from './services/billing/BillingProvider';
+import { TaxRegisterComponent } from './components/tax-register/tax-register.component';
+import { PaymentMethodRegisterComponent } from './components/payment-method-register/payment-method-register.component';
 
 
 
@@ -48,6 +51,7 @@ import { BillingProvider } from './services/billing/BillingProvider';
     SaleOrderSearchListComponent,
     BillingComponent,
     PaymentMethodComponent,
+    PaymentMethodRegisterComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
@@ -57,6 +61,9 @@ import { BillingProvider } from './services/billing/BillingProvider';
     SaleOrderViewComponent,
     TranslateStatesPipe,
     TaxComponent,
+    TaxNavComponent,
+    TaxRegisterComponent,
+    ReportNavComponent,
     ReportNavComponent,
     ViewPaymentComponent,
     BillingSearchListComponent,
@@ -84,6 +91,7 @@ import { BillingProvider } from './services/billing/BillingProvider';
     SaleOrderSearchListComponent,
     BillingComponent,
     PaymentMethodComponent,
+    PaymentMethodRegisterComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
@@ -92,6 +100,9 @@ import { BillingProvider } from './services/billing/BillingProvider';
     ReportNavComponent,
     SaleOrderViewComponent,
     TaxComponent,
+    TaxNavComponent,
+    TaxRegisterComponent,
+    ReportNavComponent,
     ReportNavComponent,
     ViewPaymentComponent,
     BillingSearchListComponent,
