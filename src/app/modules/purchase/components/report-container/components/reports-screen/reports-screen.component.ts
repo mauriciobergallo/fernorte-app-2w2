@@ -4,14 +4,12 @@ import { ReportsServiceService } from '../../service/reports-service.service';
 import { PurchaseOrderResponse } from 'src/app/modules/purchase/models/IPurchaseOrder';
 import { PaymentOrderDetailResponse, PaymentOrderResponse } from 'src/app/modules/purchase/models/IPaymentOrder';
 import Swal from 'sweetalert2';
+import { ISupplier } from 'src/app/modules/purchase/models/ISuppliers';
+import { SupliersService } from '../../../supplier/services/supliers.service';
 
 // import jsPDF from 'jspdf';
 // import 'jspdf-autotable';
 
-type DataTable = {
-  response: string;
-  data: PurchaseOrderResponse[] | PaymentOrderResponse[];
-}
 
 @Component({
   selector: 'fn-reports-screen',
@@ -21,9 +19,9 @@ type DataTable = {
 export class ReportsScreenComponent implements OnInit{
 
   activeTab$ = new BehaviorSubject<string>("COMPRA");
-
-
-  constructor(private reportsService: ReportsServiceService) { }
+  suppliers: ISupplier[] = []
+  constructor(private reportsService: ReportsServiceService, 
+    private suppliersService: SupliersService) { }
 
   ngOnInit(): void {
     this.fillLists();
@@ -36,6 +34,7 @@ export class ReportsScreenComponent implements OnInit{
   fillLists(): void {
     this.reportsService.getPurchaseOrders();
     this.reportsService.getPaymentOrders();
+    this.suppliersService.getSupliers().subscribe((suppliers: ISupplier[]) => this.suppliers = suppliers);
   }
  
 
@@ -69,7 +68,7 @@ export class ReportsScreenComponent implements OnInit{
       rows = dataTable.map((order: PaymentOrderResponse) => {
         return [
           order.id,
-          order.supplierId,
+          this.setSupplierName( order.supplierId),
           this.setPaymentTotal(order.paymentDetails),
           order.date,
           order.observation,
@@ -105,6 +104,11 @@ export class ReportsScreenComponent implements OnInit{
   setPaymentTotal(details: PaymentOrderDetailResponse[]) : number {
     const total = details.reduce((total: number, detail: PaymentOrderDetailResponse) => total + detail.amount, 0);
     return total;
+  }
+
+  setSupplierName(supplierId: number): string {
+    const name = this.suppliers.filter(supplier => supplier.id === supplierId)[0].fantasyName;
+    return name;
   }
 
 }

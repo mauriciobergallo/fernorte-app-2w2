@@ -25,22 +25,28 @@
               <th>Empleado</th>
               <th>Observación</th>
               <th>Link</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr
               *ngFor="
-                let order of (buscar.value ? listOrdersFiltered : listOrders)
+                let order of (buscar.value ? listOrdersFiltered : (purchaseOrdersList | async))
                   | slice : (page - 1) * pageSize : page * pageSize
               "
             >
-              <td>{{ order.supplierName }}</td>
+              <td>{{ setSupplierName(order.supplierId) }}</td>
               <td>{{ order.date | date }}</td>
               <td>{{ order.purchaseStatus }}</td>
               <td>{{ order.total | currency }}</td>
-              <td>{{ order.employeeName }}</td>
+              <td>{{ setEmployeeName(order.employeeId) }}</td>
               <td>{{ order.observation }}</td>
-              <td>a desarrollar este link</td>
+              <td>{{'http://linkOrder.png'}}</td>
+              <td class="text-center">
+                <button class="btn btn-outline-danger btn-sm" (click)="onDelete(order.id)">
+                  Eliminar
+                </button>
+              </td>
               <!-- <td><a [href]="order.billUrl" target="_blank">View Bill</a></td> -->
             </tr>
           </tbody>
@@ -53,7 +59,7 @@
           <ngb-pagination
             [(page)]="page"
             [pageSize]="pageSize"
-            [collectionSize]="listOrders.length"
+            [collectionSize]="collectionSize"
             (pageChange)="onPageChange($event)"
             aria-label="Default pagination"
           ></ngb-pagination>
