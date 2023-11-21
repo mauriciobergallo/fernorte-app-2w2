@@ -35,8 +35,8 @@
                                     <div class="invoice-id">
                                         <div class="info">
                                             <h1 class="inv-header-1">Orden de Venta</h1>
-                                            <p class="mb-1">Orden de Venta: <span>#{{saleOrder.id_sale_order}}</span></p>
-                                            <p class="mb-0">Fecha: <span>{{saleOrder.date_of_issue}}</span></p>
+                                            <p class="mb-1">Orden de Venta: <span>#{{saleOrder.idSaleOrder}}</span></p>
+                                            <p class="mb-0">Fecha: <span>{{saleOrder.dateOfIssue | dateFormat}}</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -47,7 +47,7 @@
                                 <div class="col-sm-6">
                                     <div class="invoice-number mb-30">
                                         <h4 class="inv-title-1">Cliente</h4>
-                                        <h2 class="name">{{saleOrder.first_name_client}} {{saleOrder.last_name_client}}</h2>
+                                        <h2 class="name">{{saleOrder.nameClient}}{{saleOrder.companyName}}</h2>
                                         <p class="invo-addr-1">
                                             {{saleOrder.telephone}} <br/>
                                                 {{saleOrder.email}}<br/>
@@ -59,7 +59,7 @@
                                     <div class="invoice-number mb-30">
                                         <div class="invoice-number-inner">
                                             <h4 class="inv-title-1">Vendedor</h4>
-                                            <h2 class="name">{{saleOrder.first_name_seller}} {{saleOrder.last_name_seller}} </h2>
+                                            <h2 class="name">{{saleOrder.nameSeller}} </h2>
                                             <p class="invo-addr-1">
                                             
                                             </p>
@@ -81,10 +81,10 @@
                                     </tr>
                                     </thead>
                                     <tbody >
-                                    <tr class="tr" *ngFor="let item of saleOrder.detail_sales_order">
+                                    <tr class="tr" *ngFor="let item of saleOrder.details">
                                         <td>
                                             <div class="item-desc-1">
-                                                <span>{{item.id_sale_order_details}}</span>
+                                                <span>{{item.idProduct}}</span>
                                             </div>
                                         </td>
                                         <td class="pl0">{{item.name}}</td>
@@ -105,14 +105,14 @@
                                         <td></td>
                                         <td></td>
                                         <td class="text-center">Impuestos</td>
-                                        <td class="text-end">${{iva}}</td>
+                                        <td class="text-end">${{iva|priceFormat}}</td>
                                     </tr>
                                     <tr class="tr2">
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td class="text-center f-w-600 active-color">Total</td>
-                                        <td class="f-w-600 text-end active-color">${{subtotal+iva}}</td>
+                                        <td class="f-w-600 text-end active-color">${{subtotal+iva|priceFormat}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -124,9 +124,15 @@
                                     <div class="payment-method mb-30">
                                         <h3 class="inv-title-1">Vencimiento</h3>
                                         <ul class="payment-method-list-1 text-14">
-                                            <li><strong>Fecha: </strong>{{saleOrder.date_of_expiration}}</li>
+                                            <li><strong>Fecha: </strong>{{saleOrder.dateOfExpiration| dateFormat }}</li>
                                         
                                         </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-7 col-sm-7" style="text-align: right ;">
+                                    <div class="terms-conditions mb-30">
+                                        <h3 class="inv-title-1">Estado</h3>
+                                        <p>{{saleOrder.stateSaleOrder|translateStates}}</p>
                                     </div>
                                 </div>
                                 

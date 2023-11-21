@@ -26,7 +26,7 @@
             <div class=" card p-2 m-1">
                 <div class="row justify-content-around">
                     <div class="col-3 pt-2" style="display: -webkit-inline-box;">
-                        <h5>Exequiel Santoro</h5>
+                        <h5>{{listClients.first_name}} {{listClients.last_name}}</h5>
                     </div>
                     <div class="col-6 d-flex justify-content-around">
                         <button class="btn btn-primary">
@@ -126,10 +126,8 @@
         <div class="col-12">
             <div class=" card p-2 m-1">
                 <div class="col-12 d-flex justify-content-around">
-                    <button class="btn btn-primary" >
-                        <p class="m-0">Descargar</p>
-                    </button> <button class="btn btn-secondary" (click)="cancelOrderSale()">
-                        <p class="m-0">cancelar</p>
+                    <button class="btn btn-secondary" (click)="cancelOrderSale()">
+                        <p class="m-0">Cancelar</p>
                     </button>
                     <button class="btn btn-primary" (click)="generateSaleOrder(typePresupuesto)" >
                         <p class="m-0">Guardar</p>

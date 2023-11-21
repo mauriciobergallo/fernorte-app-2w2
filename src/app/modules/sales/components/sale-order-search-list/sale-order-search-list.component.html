@@ -78,10 +78,10 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of saleOrdersListOk">
-            <th scope="row">{{item.idSaleOrder}}</th>
-            <td>{{item.nameClient}}</td>
-            <td>{{item.idSeller}}</td>
-            <td>{{item.dateOfIssue | date:'short'}}</td>
+            <th scope="row">{{item.idSaleOrder!+1000}}</th>
+            <td>{{item.nameClient}}{{item.companyName}}</td>
+            <td>{{item.nameSeller}}</td>
+            <td>{{item.dateOfIssue | dateFormat}}</td>
             <td>{{item.stateSaleOrder | translateStates}}</td>
             <td>
                 <ul>
@@ -93,11 +93,11 @@
             <td class="text-center">
               <div class="dropdown">
                 <button type="button" class="btn btn-light dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="bi bi-three-dots-vertical"></i>
+                  <i class="bi bi-three-dots-vertical" id="saleOrderId" ></i>
                 </button>
                 <div class="dropdown-content">
                   <a (click)="onShowDetails()">Ver detalles</a>
-                  <a (click)="onPrint()">Imprimir</a>
+                  <a (click)="onPrint(item)">Imprimir</a>
                 </div>
               </div>
             </td>

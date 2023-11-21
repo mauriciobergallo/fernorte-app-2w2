@@ -5,8 +5,13 @@ export class SaleOrderOk {
     idSeller: number = 0;
     idClient: number = 0;
     nameClient: string = "";
-    dateOfIssue: Date = new Date();
-    dateOfExpiration: Date = new Date();
+    nameSeller: string ="";
+    address: string ="";
+    telephone:string = "";
+    companyName:string ="";
+    email: string = "";
+    dateOfIssue: number[]=[];
+    dateOfExpiration!: number[];// de Date a String
     stateSaleOrder: string = "";
     details : ProductOk[]=[];
 }

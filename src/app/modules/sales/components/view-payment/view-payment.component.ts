@@ -1,5 +1,10 @@
 import { Component,OnInit } from '@angular/core';
 import { BillView } from '../../models/BillView';
+import { BillOk } from '../../models/BillingOk';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PrintDocumentsService } from '../../services/print/print-documents-service';
+import { Payment } from '../../models/PaymentModel';
 @Component({
   selector: 'fn-view-payment',
   templateUrl: './view-payment.component.html',
@@ -7,9 +12,21 @@ import { BillView } from '../../models/BillView';
 })
 export class ViewPaymentComponent implements OnInit{ 
 
+  bill!: BillView;
+  subscription!: Subscription;
 
+  constructor(private activatedRoute: ActivatedRoute, 
+    private router: Router, private printService: PrintDocumentsService) {}
+
+    
+    subtotal:number = 0;
+    iva: number = 0;
+
+    
   
-    bill: BillView = {
+
+  /* 
+    bill1: BillView = {
     idBill: 100,
     idSeller: 2,
     firstNameSeller:  "Nicolas",
@@ -29,9 +46,9 @@ export class ViewPaymentComponent implements OnInit{
     totalPrice:2000,
     payment:{
       id:2,
-    paymenMetod:{
-      idPaymentMethod: 2,
-      paymentMethod: "Credit Card",
+      payment_method:{
+      id_payment_method: 2,
+       payment_method: "Credit Card",
       surcharge: 80
     },
     surcharge: 2,
@@ -79,20 +96,12 @@ export class ViewPaymentComponent implements OnInit{
       taxType: "Iva"
     }
   }]
-  }
-  subtotal:number = 0;
-  iva: number = 0;
-  saleOrderId: number = 0;
-
-  constructor() {}
+  } */
 
   ngOnInit(): void {
-  /*  this.activatedRoute.paramMap.subscribe(s => {
-      this.saleOrderId = +s.get('id')!});
-      this.saleOrderService.getSaleOrdersById(this.saleOrderId).subscribe((x)=>{
-      this.listSaleOrder = x;
-      });    */
-
+      this.subscription = this.printService.getBillOrder$.subscribe((bill) => {
+        this.bill = bill;
+      });
       this.calculateSub();
     this.calculateIva();
 
@@ -107,3 +116,7 @@ export class ViewPaymentComponent implements OnInit{
   }
   
 }
+
+
+
+
