@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IProduct, IProductSupplierResponse, ISupplier, ISupplierPrice } from '../../../models/ISuppliers';
+import { IProduct, IProductSupplierResponse, ISupplier, ISupplierAndProduct, ISupplierPrice } from '../../../models/ISuppliers';
 import { Observable, Subject } from 'rxjs';
 
 interface IProductSupplier {
@@ -45,7 +45,9 @@ export class ProductsService {
     const params = new HttpParams().set('id_producto', id.toString());
     return this._http.get<IProductSupplierResponse>(this.urlSupplierPrice, { params });
   }
-
+  getProductsAndSupplier(): Observable<ISupplierAndProduct[]> {
+    return this._http.get<ISupplierAndProduct[]>(this.urlall);
+  }
   addProduct(
     supplierId: number,
     productId: number,

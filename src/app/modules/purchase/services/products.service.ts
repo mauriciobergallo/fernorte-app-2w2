@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductsService {
-  url: string = 'localhost:8085/products';
-  urlSupplier: string = 'http://localhost:8085/product-by-supplier';
+  url: string = 'https://my-json-server.typicode.com/114537-Bothner-Eric/firma-productos/productos';
+  urlSupplier: string = 'http://localhost:8080/product-by-supplier';
 
   constructor(private _http: HttpClient) {}
 
@@ -16,7 +16,7 @@ export class ProductsService {
     return this._http.get<IProduct[]>(this.url);
   }
 
-  getProductsBySupplier(id: number): Observable<IProduct[]> {
+  getProductsBySupplier(id: number): Observable<IProduct2[]> {
     const params = new HttpParams().set('id_supplier', id.toString());
     return this._http.get<IProduct[]>(this.urlSupplier, { params });
   }

@@ -47,3 +47,9 @@ export interface ISupplierPrice {
 export interface IProductSupplierResponse {
   suppliers: ISupplierPrice[]
 }
+
+export interface ISupplierAndProduct {
+  supplierName: string;
+  productName: string;
+  price: number;
+}
