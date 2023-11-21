@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Isupplier } from '../../shared/interfaces/isupplier';
+import { ISupplier } from '../../../models/ISuppliers';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { PaymentFlow, PaymentOrderDetailResponse, PaymentOrderDetailsRequest, PaymentOrderRequest } from '../../../models/IPaymentOrder';
 
@@ -9,7 +9,7 @@ import { PaymentFlow, PaymentOrderDetailResponse, PaymentOrderDetailsRequest, Pa
 })
 export class PaymentOrderServiceService {
 
-  supplier: Isupplier[] = [];
+  supplier: ISupplier[] = [];
   url: string = 'http://localhost:8005/suppliers';
   urlPurchases:string ='http://localhost:8004/payment-orders';
   paymentOrderFlow: BehaviorSubject<PaymentFlow> = new BehaviorSubject<PaymentFlow>('GRID');
@@ -21,8 +21,8 @@ export class PaymentOrderServiceService {
     
   }
 
-  getSupplier(id: number):Observable<Isupplier>{
-    return this._http.get<Isupplier>(`${this.url}/${id}`)
+  getSupplier(id: number):Observable<ISupplier>{
+    return this._http.get<ISupplier>(`${this.url}/${id}`)
   }
 
   getPaymentOrderFlow() {

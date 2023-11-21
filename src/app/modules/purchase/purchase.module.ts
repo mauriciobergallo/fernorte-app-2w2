@@ -2,16 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HomeComponent } from './components/home/home.component';
-import { ListSuplierComponent } from './components/supplier/list-suplier/list-suplier.component';
+import { ListSuplierComponent } from './components/supplier/components/list-suplier/list-suplier.component';
 import { FormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ReactiveFormsModule } from '@angular/forms';
 import {NgbDropdownMenu, NgbDropdownModule, NgbModalModule, NgbModule, NgbToastModule} from "@ng-bootstrap/ng-bootstrap"
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { BuscarPipe } from './components/supplier/pipes/buscar.pipe';
-import { AddSupplierComponent } from './components/supplier/add-supplier/add-supplier.component';
-import { ContactsComponent } from './components/supplier/contacts/contacts.component';
-import { ProductsSupplierComponent } from './components/supplier/products-supplier/products-supplier.component';
+import { AddSupplierComponent } from './components/supplier/components/add-supplier/add-supplier.component';
+import { ContactsComponent } from './components/supplier/components/contacts/contacts.component';
+import { ProductsSupplierComponent } from './components/supplier/components/products-supplier/products-supplier.component';
 import { SidenavComponent } from './components/shared/sidenav/sidenav.component';
 
 import { PurchaseOrderContainerComponent } from './components/purchase-order-container/purchase-order-container.component';
@@ -22,7 +22,6 @@ import { CartComponent } from './components/purchase-order-container/components/
 import { ProductCardComponent } from './components/purchase-order-container/components/product-card/product-card.component';
 import { PreviewComponent } from './components/purchase-order-container/components/preview/preview.component';
 import { PaymentOrderGridComponent } from './components/payment-order-container/components/payment-order-grid/payment-order-grid.component';
-import { TotalSidebarComponent } from './components/payment-order-container/components/total-sidebar/total-sidebar.component';
 import { PaymentMethodComponent } from './components/payment-order-container/components/payment-method/payment-method.component';
 import { TotalResumeComponent } from './components/payment-order-container/components/total-resume/total-resume.component';
 import { HedearSupplierComponent } from './components/shared/hedear-supplier/hedear-supplier.component';
@@ -31,7 +30,7 @@ import { PaymentPreviewComponent } from './components/payment-order-container/co
 import { RouterModule } from '@angular/router';
 
 import { RouterChildModule } from './router-child.module';
-import { AddProductModalComponent } from './components/supplier/add-product-modal/add-product-modal.component';
+import { AddProductModalComponent } from './components/supplier/components/add-product-modal/add-product-modal.component';
 import { ListComponent } from './components/purchase-order-container/components/list/list.component';
 import { ReportsScreenComponent } from './components/report-container/components/reports-screen/reports-screen.component';
 import { DatePickerComponent } from './components/report-container/components/date-picker/date-picker.component';
@@ -40,7 +39,7 @@ import { OrdersGridComponent } from './components/report-container/components/or
 
 
 @NgModule({
-  declarations: [ListComponent, HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, TotalSidebarComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent, AddProductModalComponent, PaymentPreviewComponent, ReportsScreenComponent, DatePickerComponent, OrdersGridComponent],
+  declarations: [ListComponent, HomeComponent, ListSuplierComponent, BuscarPipe, AddSupplierComponent, ContactsComponent, ProductsSupplierComponent, SidenavComponent, PurchaseOrderContainerComponent, PaymentOrderContainerComponent, ClaimOrderContainerComponent, ReportContainerComponent, CartComponent, ProductCardComponent, PreviewComponent, PaymentOrderGridComponent, PaymentMethodComponent, TotalResumeComponent, HedearSupplierComponent, OrderButtonsComponent, AddProductModalComponent, PaymentPreviewComponent, ReportsScreenComponent, DatePickerComponent, OrdersGridComponent],
   providers: [],
   imports: [CommonModule, FormsModule, NgbModule, NgbPaginationModule, NgbDropdownModule, NgbToastModule,RouterModule, RouterChildModule, NgbModalModule, SweetAlert2Module.forRoot({
     provideSwal: () => import('sweetalert2').then(({ default: swal }) => swal.mixin({

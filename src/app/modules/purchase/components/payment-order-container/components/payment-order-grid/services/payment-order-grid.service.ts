@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { IPurchaseOrder } from '../models/PurchaseOrder';
+import { IPurchaseOrder } from '../models-payment-order-grid/IPurchaseOrderForGrid';
 import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'

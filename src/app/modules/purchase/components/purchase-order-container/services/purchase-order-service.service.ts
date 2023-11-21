@@ -18,7 +18,7 @@ export class PurchaseOrderServiceService {
   suplierSelected = new BehaviorSubject<ISupplier>({
     id: 0,
     socialReason: '',
-    adress: '',
+    address: '',
     fantasyName: '',
     cuit: '',
   });

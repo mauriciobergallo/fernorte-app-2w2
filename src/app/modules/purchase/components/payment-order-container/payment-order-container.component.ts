@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PaymentFlow, PaymentOrderDetailsRequest } from '../../models/IPaymentOrder';
 import { PaymentOrderServiceService } from './services/payment-order-service.service';
-import { PurchaseOrderService } from './components/payment-order-grid/services/purchase-order.service';
+import { PurchaseOrderService } from './components/payment-order-grid/services/payment-order-grid.service';
 import Swal from 'sweetalert2';
 
 

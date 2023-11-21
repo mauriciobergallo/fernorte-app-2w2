@@ -1,15 +1,11 @@
 import {
   Component,
-  EventEmitter,
-  OnDestroy,
   OnInit,
-  Output,
 } from '@angular/core';
-import { IContacts, IProduct, ISupplier } from '../../../models/ISuppliers';
-import { PurchaseModule } from '../../../purchase.module';
-import { SupliersService } from '../services/supliers.service';
+import { ISupplier } from '../../../../models/ISuppliers';
+import { SupliersService } from '../../services/supliers.service';
 import { Subscription } from 'rxjs';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ContactsComponent } from '../contacts/contacts.component';
 import { AddSupplierComponent } from '../add-supplier/add-supplier.component';
 import Swal from 'sweetalert2';
@@ -51,7 +47,7 @@ export class ListSuplierComponent implements OnInit {
           .includes(searchText.toLowerCase()) ||
         supplier.fantasyName.toLowerCase().includes(searchText.toLowerCase()) ||
         cuitStr.includes(searchText) || // Compare as a string
-        supplier.adress.toLowerCase().includes(searchText.toLowerCase())
+        supplier.address.toLowerCase().includes(searchText.toLowerCase())
       );
     });
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentOrderDetailsRequest, PaymentOrderRequest } from 'src/app/modules/purchase/models/IPaymentOrder';
-import { PurchaseOrderService } from '../payment-order-grid/services/purchase-order.service';
-import { IPurchaseOrder } from '../payment-order-grid/models/PurchaseOrder';
+import { PurchaseOrderService } from '../payment-order-grid/services/payment-order-grid.service';
+import { IPurchaseOrder } from '../payment-order-grid/models-payment-order-grid/IPurchaseOrderForGrid';
 import { PaymentMethod } from 'src/app/modules/purchase/models/IPaymentOrder';
 import { PaymentOrderServiceService } from '../../services/payment-order-service.service';
 

@@ -24,7 +24,6 @@ export interface PurchaseOrderResponse {
     paymentDetails: PaymentOrderDetailResponse[];
     claimOrder: ClaimOrderDetailResponse[];
 }
-
 export interface PurchaseOrderBack{
   supplierName: string;
   date: Date;

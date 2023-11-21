@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Contact, IContacts, ISupplier } from '../../../models/ISuppliers';
+import { IContact, ISupplier } from '../../../models/ISuppliers';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,7 @@ import { Contact, IContacts, ISupplier } from '../../../models/ISuppliers';
 export class SupliersService {
   url: string = 'http://localhost:8085/suppliers';
   selectedSupplier: number = 0;
-  contacts: IContacts = {} as IContacts;
+  contacts: IContact = {} as IContact;
   suppliers: ISupplier[] = [];
 
   private productCreated = new Subject<void>();
@@ -37,21 +37,21 @@ export class SupliersService {
     return this._http.get<ISupplier>(this.url + '/' + id);
   }
 
-  getContacts(id: number): Observable<IContacts> {
-    return this._http.get<IContacts>(this.url + '/' + id + '/contacts');
+  getContacts(id: number): Observable<IContact> {
+    return this._http.get<IContact>(this.url + '/' + id + '/contacts');
   }
 
-  addContact(contact: Contact): Observable<Contact> {
+  /* addContact(contact: Contact): Observable<Contact> {
     console.log(this.selectedSupplier);
     return this._http.post<Contact>(
       this.url + '/' + this.selectedSupplier + '/contacts',
       contact
     );
-  }
+  } */
 
-  deleteContact(id: number, contact: Contact): any {
+  /* deleteContact(id: number, contact: Contact): any {
     return this._http.delete(this.url + '/' + id + '/contacts/' + contact.id);
-  }
+  } */
 
   addSuplier(suplier: ISupplier): Observable<ISupplier> {
     return this._http.post<ISupplier>(this.url, suplier);

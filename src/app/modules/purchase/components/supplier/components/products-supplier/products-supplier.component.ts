@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IProduct, IProduct2, ISupplier } from '../../../models/ISuppliers';
-import { ProductsService } from '../services/products.service';
+import { IProduct, IProduct2, ISupplier } from '../../../../models/ISuppliers';
+import { ProductsService } from '../../services/products.service';
 import { Subscription } from 'rxjs';
-import { SupliersService } from '../services/supliers.service';
+import { SupliersService } from '../../services/supliers.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddProductModalComponent } from '../add-product-modal/add-product-modal.component';
 import Swal from 'sweetalert2';

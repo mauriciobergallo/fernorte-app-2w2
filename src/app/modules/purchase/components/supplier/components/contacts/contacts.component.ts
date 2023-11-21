@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SupliersService } from '../services/supliers.service';
-import { Contact, IContacts } from '../../../models/ISuppliers';
+import { SupliersService } from '../../services/supliers.service';
+import { IContact } from 'src/app/modules/purchase/models/ISuppliers';
 import { Subscription } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
@@ -13,9 +13,9 @@ import Swal from 'sweetalert2';
 export class ContactsComponent implements OnInit {
   showingList: boolean = true;
 
-  contact: Contact = {} as Contact;
+  contact: any = {}
 
-  contacts: IContacts = this._serviceSuplier.contacts;
+  contacts: IContact = this._serviceSuplier.contacts;
 
   getContacts() {
     this._serviceSuplier
@@ -50,7 +50,7 @@ export class ContactsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.suscription.add(
+    /* this.suscription.add(
       this._serviceSuplier.addContact(this.contact).subscribe({
         next: (data: any) => {
           this.contact.contactType = '';
@@ -65,11 +65,11 @@ export class ContactsComponent implements OnInit {
         },
         error: (error) => alert('error al cargar: ' + error),
       })
-    );
+    ); */
   }
 
-  deleteContact(contact: Contact) {
-    this.suscription.add(
+  deleteContact(contact: any) {
+    /* this.suscription.add(
       this._serviceSuplier
         .deleteContact(this._serviceSuplier.selectedSupplier, contact)
         .subscribe({
@@ -83,6 +83,6 @@ export class ContactsComponent implements OnInit {
           },
           error: (error: any) => alert('error al cargar: ' + error),
         })
-    );
+    ); */
   }
 }
