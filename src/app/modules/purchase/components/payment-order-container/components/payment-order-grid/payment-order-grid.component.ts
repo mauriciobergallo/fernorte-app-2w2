@@ -4,6 +4,7 @@ import { IPurchaseOrder } from './models-payment-order-grid/IPurchaseOrderForGri
 import { PurchaseOrderService } from './services/payment-order-grid.service';
 import { SupliersService } from 'src/app/modules/purchase/services/supliers.service';
 import { ISupplier } from 'src/app/modules/purchase/models/ISuppliers';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-payment-order-grid',
@@ -96,6 +97,15 @@ ngOnInit(): void {
       this._purchaseOrdersService.getUnpaidPurchaseOrdersBySupplier(this.selectedSupplierId).subscribe({
         next: (data: IPurchaseOrder[]) => {
           this.allPurchaseOrder = data;
+          if(this.allPurchaseOrder.length === 0){
+            Swal.fire({
+              title: 'Advertencia',
+              text: 'El proveedor seleccionado no tiene órdenes de compra activas.',
+              icon: 'warning',
+              confirmButtonText: 'OK',
+              confirmButtonColor: '#ffc107', // Puedes personalizar el color del botón
+            });
+          }
           // console.log('Purchase Orders after filtering:', this.allPurchaseOrder);
         },
         error: (error: any) => {

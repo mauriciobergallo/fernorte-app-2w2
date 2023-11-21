@@ -34,13 +34,15 @@ export class PaymentPreviewComponent {
   onSubmit(): void {
     const paymentOrderRequest: PaymentOrderRequest = {
       date: this.currentDate,
-      paymentDetails: this.paymentOrderDetails,
+      paymentDetails: [...this.paymentOrderDetails],
       employeeId: 1, // TODO
       observation: 'Observation to go to database',
+     
     };
-    console.log(this.paymentOrderDetails);
+    console.log(paymentOrderRequest);
     this._paymentOrderService.createPaymentOrder(paymentOrderRequest).subscribe(
       (response) => {
+        console.log(response);
         // Handle success
         Swal.fire('Éxito', 'La orden de pago se creó correctamente', 'success');
         // Reset the payment details after submission if needed
@@ -56,6 +58,7 @@ export class PaymentPreviewComponent {
           'Hubo un problema al crear la orden de pago',
           'error'
         );
+        this._paymentOrderService.clearPaymentOrderDetails();
       }
     );
     this.paymentOrderDetails = [];
@@ -68,6 +71,7 @@ export class PaymentPreviewComponent {
   }
 
   onEdit() {
+    this._paymentOrderService.clearPaymentOrderDetails();
     this.setPaymentOrderFlow();
   }
 

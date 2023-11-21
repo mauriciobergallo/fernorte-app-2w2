@@ -10,8 +10,8 @@ import { PaymentFlow, PaymentOrderDetailResponse, PaymentOrderDetailsRequest, Pa
 export class PaymentOrderServiceService {
 
   supplier: ISupplier[] = [];
-  url: string = 'http://localhost:8085/suppliers';
-  urlPurchases: string ='http://localhost:5433/paymentOrder/';
+  url: string = 'http://localhost:5433/suppliers';
+  urlPurchases: string ='http://localhost:5434/paymentOrder';
   paymentOrderFlow: BehaviorSubject<PaymentFlow> = new BehaviorSubject<PaymentFlow>('GRID');
   PaymentOrderDetails:PaymentOrderDetailsRequest[]=[];
 
@@ -23,7 +23,7 @@ export class PaymentOrderServiceService {
   // PAYMENT ORDER
   getPaymentOrders(): void {
     this._http
-      .get<PaymentOrderResponse[]>(`${this.urlPurchases}`)
+      .get<PaymentOrderResponse[]>(`${this.urlPurchases}/`)
       .pipe(
         tap((paymentOrders: PaymentOrderResponse[]) => {
           this.paymentOrdersList.next(paymentOrders);
