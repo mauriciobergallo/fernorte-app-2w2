@@ -11,12 +11,13 @@
       <div class="mb-3 col-md-8" style="display: flex; flex-direction: column; justify-content: end;">
         <label for="selectProduct" class="form-label">Producto</label>
         <select class="form-select" id="selectProduct" formControlName="idProduct">
+          <option value="0">Seleccionar producto</option>
           <option *ngFor="let prod of listProducts" [value]="prod.idProduct">{{prod.name}}</option>
         </select>
       </div>
 
       <div class="mb-3 col-md-4">
-        <label for="inputDiscountRate" class="form-label">Porcentaje de descuento (%)</label>
+        <label for="inputDiscountRate" class="form-label">Porcentaje de descuento</label>
         <div class="input-group">
           <input type="text" class="form-control" id="inputDiscountRate" formControlName="discountRate">
           <span class="input-group-text">%</span>
@@ -27,17 +28,17 @@
     <div class="row">
       <div class="mb-3 col-md-6 col-lg-6">
         <label for="inputDiscountStartDate" class="form-label">Inicio del descuento</label>
-        <input type="date" class="form-control" id="inputDiscountStartDate" formControlName="startDate">
+        <input type="date" class="form-control" id="inputDiscountStartDate" formControlName="startDate" [min]="today">
       </div>
 
       <div class="mb-3 col-md-6 col-lg-6">
         <label for="inputDiscountEndDate" class="form-label">Fin del descuento</label>
-        <input type="date" class="form-control" id="inputDiscountEndDate" formControlName="endDate">
+        <input type="date" class="form-control" id="inputDiscountEndDate" formControlName="endDate" [min]="today">
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-6 col-lg-6 buttons-container">
+      <div class="col-12 buttons-container text-end">
         <button type="button" class="btn btn-secondary m-1" (click)="close()">Cancelar</button>
         <button type="button" class="btn btn-primary" (click)="onSubmit()" [disabled]="formGroup.invalid">Guardar</button>
       </div>

@@ -147,14 +147,15 @@ export class ReportPriceHistoryComponent implements OnInit {
     });
     pdf.save('report.pdf');
   }
+
   downloadCSV() {
     const data = this.dataForPDF
 
-    let csvContent = 'Nro Nombre Precio Fecha de inicio Fecha de fin\n';
+    let csvContent = 'Nro,Nombre,Precio,Fecha de inicio,Fecha de fin\n';
 
     data.forEach((item, index) => {
       const endDate = item.endDate ? this.formatDateWithTime(new Date(item.endDate,)) : '----';
-      csvContent += `${index + 1} ${item.name} ${item.unitPrice} ${this.formatDateWithTime(new Date(item.startDate))},${endDate}\n`;
+      csvContent += `${index + 1},${item.name},${item.unitPrice},${this.formatDateWithTime(new Date(item.startDate))},${endDate}\n`;
     });
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -167,6 +168,5 @@ export class ReportPriceHistoryComponent implements OnInit {
     link.click();
     document.body.removeChild(link);
   }
-
 
 }

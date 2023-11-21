@@ -72,7 +72,7 @@ export class AddDiscountComponent implements OnInit, OnDestroy {
     if (!this.isEdit) {
       return this.formGroup = this.fb.group({
         idDiscount: [0],
-        idProduct: ["0", Validators.required],
+        idProduct: [0, Validators.required],
         discountRate: [0, Validators.required],
         startDate: [this.today, Validators.required],
         endDate: [null]

@@ -1,35 +1,37 @@
 .material-symbols-outlined {
-   font-variation-settings:
-      'FILL' 0,
-      'wght' 400,
-      'GRAD' 0,
-      'opsz' 24
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
 }
 
 .btn {
-   float: right;
+  float: right;
 }
+
 .name-column {
-   max-width: 200px;
-   overflow: hidden;
-   text-overflow: ellipsis;
-   white-space: nowrap;
- }
- .center{
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.center {
   display: flex;
   justify-content: start;
- }
+}
 
- .acciones-col{
+.acciones-col {
   width: auto !important;
- }
+}
 
- .nameColumn{
-   cursor: pointer !important;
- }
+.nameColumn {
+  cursor: pointer !important;
+}
+
 @media (max-width: 767px) {
-   .table-header .form-group {
-     margin-bottom: 10px;
-   }
- }
- 
+  .table-header .form-group {
+    margin-bottom: 10px;
+  }
+}

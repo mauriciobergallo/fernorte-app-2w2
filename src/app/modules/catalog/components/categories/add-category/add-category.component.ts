@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { CategoryService } from '../../../services/category.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-add-category',
@@ -62,19 +63,44 @@ export class AddCategoryComponent implements OnDestroy, OnInit {
       this.subscription.add(this.catService.put(request).subscribe({
         next: (res) => {
           this.isLoading = false;
-          const message = this.isEdit
-            ? 'La categoría se actualizó correctamente.'
-            : 'La categoría se registró correctamente.';
-          this.showSuccessAlert(message);
+          if(this.isEdit){
+            Swal.fire({
+              title: "¡Éxito!",
+              text: "Categoría editada con éxito.",
+              icon: "success",
+              confirmButtonText: 'Cerrar',
+              confirmButtonColor: '#6c757d'
+            });
+          } else {
+            Swal.fire({
+              title: "¡Éxito!",
+              text: "Categoría agregada con éxito.",
+              icon: "success",
+              confirmButtonText: 'Cerrar',
+              confirmButtonColor: '#6c757d'
+            });
+          }
           setTimeout(() => this.modalService.close(res), 1500);
         },
         error: (error) => {
           this.isLoading = false;
-          this.showErrorAlert('Error al registrar la categoría.');
+          Swal.fire({
+            icon: "error",
+            title: "¡Error!",
+            text: "Error al intentar actualizar el categoría.",
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#6c757d'
+          });
         }
       }));
     } else {
-      this.showErrorAlert('Por favor completa todos los campos requeridos.');
+      Swal.fire({
+        icon: "warning",
+        title: "¡Error!",
+        text: "Todos los campos son requeridos.",
+        confirmButtonText: 'Cerrar',
+        confirmButtonColor: '#6c757d'
+      });
     }
   }
 
@@ -88,31 +114,5 @@ export class AddCategoryComponent implements OnDestroy, OnInit {
 
   get controlDescription(): FormControl {
     return this.formGroup.controls['description'] as FormControl;
-  }
-
-  showSuccessAlert(message: string) {
-    this.showMessage = true;
-    this.messageClass = 'alert-success';
-    this.message = message;
-
-    setTimeout(() => {
-      this.hideAlert();
-    }, 1500);
-  }
-
-  showErrorAlert(message: string) {
-    this.showMessage = true;
-    this.messageClass = 'alert-danger';
-    this.message = message;
-
-    setTimeout(() => {
-      this.hideAlert();
-    }, 1500);
-  }
-
-  hideAlert() {
-    this.showMessage = false;
-    this.messageClass = '';
-    this.message = '';
   }
 }

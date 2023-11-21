@@ -7,7 +7,7 @@ body {
 }
 
 .sidebar {
-    width: 200px;
+    width: 230px;
     height: 100vh;
     position: fixed;
     top: 56px;
@@ -24,11 +24,11 @@ body {
 }
 
 .sidebar a:hover {
-    background-color: #e5e5e5;
+    background-color: #e5e5e5 !important;
 }
 
 .sidebar a:active {
-    background-color: #e5e5e5;
+    background-color: #e5e5e5 !important;
 }
 
 .content {
@@ -45,7 +45,11 @@ body {
 }
 
 .sidebar .nav-link.dropdown-toggle:hover {
-    background-color: #f5f5f5;
+    background-color: #f5f5f5 !important;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    color: #fff !important;
 }
 
 .sidebar .dropdown-menu {
@@ -64,20 +68,19 @@ body {
 }
 
 .router-sidebar{
-    margin-left: 280px;
+    margin-left: 250px;
     width: 100%;
     padding: 25px;
 }
-
 
 .nav-item{
     margin: 3px 0
 }
 
 .sub-nav{
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .dropdown-icons{
-    margin-left: 10px;
+    margin-left: 15px;
 }

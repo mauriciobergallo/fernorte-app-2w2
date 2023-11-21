@@ -5,7 +5,7 @@
                 <a href="/catalog"
                     class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                     <i class="bi bi-tools"></i>
-                    <span class="fs-4">Catálogo</span>
+                    <span class="fs-4 m-2">Catálogo</span>
                 </a>
                 <hr />
                 <ul class="nav nav-pills flex-column mb-auto list-unstyled">
@@ -44,7 +44,18 @@
                                     Precios históricos
                                 </a>
                             </li>
-
+                            <!-- <li class="nav-item">
+                                <a class="nav-link link-dark d-block">
+                                    <i class="bi bi-coin"></i>
+                                    Productos bajo stock
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-dark d-block">
+                                    <i class="bi bi-coin"></i>
+                                    Productos mas vendidos
+                                </a>
+                            </li> -->
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -59,47 +70,29 @@
                         <ul class="nav nav-pills flex-column mb-auto list-unstyled sub-nav" [ngbCollapse]="!isCollapsedCharts">
                             <li class="nav-item">
                                 <a class="nav-link link-dark d-block" routerLink="/reporting/grahps-price-history"
-                                    [routerLinkActive]="'active'">
+                                [routerLinkActive]="'active'">
                                     <i class="bi bi-coin"></i>
                                     Precios históricos
                                 </a>
                             </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link link-dark d-block">
+                                    <i class="bi bi-coin"></i>
+                                    Productos bajo stock
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-dark d-block">
+                                    <i class="bi bi-coin"></i>
+                                    Productos mas vendidos
+                                </a>
+                            </li> -->
                         </ul>
                     </li>
                 </ul>
                 <hr />
             </div>
         </div>
-        <!-- <nav class="sidebar card py-2 mb-4" #sidebar>
-            <ul class="nav flex-column" id="nav_accordion">
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> Link name </a>
-                </li>
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" (click)="toggleCollapse()"> Submenu linkssssssssss </a>
-                    <ul class="submenu collapse" [ngbCollapse]="isCollapsed">
-                        <li><a class="nav-link" href="#">Submenu item 1 </a></li>
-                        <li><a class="nav-link" href="#">Submenu item 2 </a></li>
-                        <li><a class="nav-link" href="#">Submenu item 3 </a> </li>
-                    </ul>
-                </li>
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#"> More menus </a>
-                    <ul class="submenu collapse">
-                        <li><a class="nav-link" href="#">Submenu item 4 </a></li>
-                        <li><a class="nav-link" href="#">Submenu item 5 </a></li>
-                        <li><a class="nav-link" href="#">Submenu item 6 </a></li>
-                        <li><a class="nav-link" href="#">Submenu item 7 </a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> Something </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> Other link </a>
-                </li>
-            </ul>
-        </nav> -->
         <div class="router-sidebar" [ngClass]="isActive?'active':''">
             <router-outlet></router-outlet>
         </div>
