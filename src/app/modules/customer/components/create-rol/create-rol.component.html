@@ -1,0 +1,34 @@
+<ng-template #contentRole let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Registrar nuevo Rol</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form #roleForm="ngForm">
+			
+			<div class="mb-3 d-flex">
+				<div class="flex-grow-1 me-2">
+					<label for="name">Nombre del rol</label>
+					<input [(ngModel)]="role.name" type="text" name="name" id="name" class="form-control" />
+				</div>
+				<div class="flex-grow-1">
+					<label for="name">Area del rol</label>
+					<select class="form-select" [(ngModel)]="role.area" name="area" aria-label="Default select example">
+						<option value=1>Compra</option>
+						<option value=2>Venta</option>
+						<option value=3>Inventario</option>
+						<option value=4>Stock</option>
+					  </select>
+				</div>
+			</div>
+			<div class="mb-3 d-flex">
+				
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close($event)">Save</button>
+	</div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(contentRole)">Crear Nuevo Rol</button>
