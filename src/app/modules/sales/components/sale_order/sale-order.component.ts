@@ -14,6 +14,9 @@ import { ICustomer } from '../../interfaces/iCustomer';
 import { ClientService } from '../../services/clients/client.service';
 import { TurnServicesService } from '../../services/turns/turnServices.service';
 import Swal from "sweetalert2";
+import { SaleOrderApi } from '../../models/SaleModelApi';
+import { MockSalesService } from '../../services/salesOrder/mock-sales.service';
+import { SaleOrderOk } from '../../models/SaleOrderOk';
 
 
 @Component({
@@ -30,7 +33,8 @@ export class SaleOrderComponent implements OnInit {
     private carritoService: CarritoService,
     private saleOrderProvider: SaleOrderProvider,
     private clientsService: ClientService,
-    private turnService: TurnServicesService) { }
+    private turnService: TurnServicesService,
+    private mockOrderService: MockSalesService) { }
 
   salesOrderLoad: SaleOrderModel | undefined
   loader = this.loadingService.viewLoader();
@@ -59,8 +63,35 @@ export class SaleOrderComponent implements OnInit {
     // Agrega más funcionalidades si es necesario
   ];
 
+  saleToListOrder : SaleOrderOk =
+  {
+    idSaleOrder: 1561549904,
+    idSeller: 4,
+    nameSeller: "Prado ignacio",
+    idClient: 2,
+    nameClient: "Aranda Tomás",
+    address: "Uritorco 4813",
+    telephone: "3515605118",
+    companyName: "",
+    email: "tomiaranda@gmail.com",
+    dateOfIssue: new Date(2023,20,12,15,28),
+    dateOfExpiration: new Date(2023,20,12,15,28),
+    stateSaleOrder: "CREATED",
+    details : [
+      {
+        idProduct : 47,
+        name: "Amoladora Angular Versa Pro 2400 W 230 Mm Ferreteria Express",
+        idSaleOrderDetails:154561900,
+        price : 13550,
+        quantity : 1,
+        stateSaleOrderDetail : "RESERVED",
+      }
+    ]
+  }
+
   ngOnInit(): void {
-    this.listProduct = this.productService.getlistProduct();
+    //this.listProduct = this.productService.getlistProduct();
+    this.listProduct = this.productService.getlistProductMocks();
     this.listClients = this.clientsService.getListClients();
   }
   ActualizarTotal() {
@@ -119,6 +150,7 @@ export class SaleOrderComponent implements OnInit {
       text: "Presupuesto registrado correctamente",
       icon: "success"
     });
+    this.mockOrderService.addOrder(this.saleToListOrder)
     this.client = "";
     this.productoSeleccionado = new ProductModel;
     this.carrito = [];

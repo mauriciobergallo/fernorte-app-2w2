@@ -1135,6 +1135,7 @@ export class MockSalesService {
     }
   ];
 
+  
   saleToBill : SaleOrderApi = {
 
     id_sale_order: 1561549904,
@@ -1171,7 +1172,7 @@ export class MockSalesService {
   constructor() { }
 
   onShowList() {
-    return this.salesOrderList;
+    return this.salesOrderList.sort((a,b)=>b.idSaleOrder! - a.idSaleOrder!);
   }
   onShowByDoc() {
     return this.listByDoc;
