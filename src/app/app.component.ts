@@ -9,34 +9,33 @@ import Swal from 'sweetalert2';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-
   constructor(private auth: LoginService, private route: Router) {}
 
-  isLogged(){
+  isLogged() {
     return this.auth.isLogged();
   }
 
-  getRole(){
-    return this.auth.getRole();
+  getRole() {
+    return this.auth.getRole()[0];
   }
 
-  getEmail(){
+  getEmail() {
     return this.auth.getEmail();
   }
 
-  logOut(){
+  logOut() {
     Swal.fire({
       title: `¿Estás seguro que desea cerrar sesión?`,
-      icon: "warning",
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#dc3545",
-      cancelButtonColor: "#6c757d",
-      confirmButtonText: "¡Sí, cerrar sesión!",
-      cancelButtonText: "Cancelar"
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: '¡Sí, cerrar sesión!',
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
         this.auth.logOut();
-        this.route.navigate(['login'])
+        this.route.navigate(['login']);
       }
     });
   }
