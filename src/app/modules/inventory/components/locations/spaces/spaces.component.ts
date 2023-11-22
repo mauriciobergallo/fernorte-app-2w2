@@ -303,6 +303,9 @@ export class SpacesComponent {
       });
     }, 100);
   }
+  backToSections() {
+    this.router.navigate(['inventory', 'locations', this.zone.Id, 'section']);
+  }
 }
 export class Product {
   name: string = '';

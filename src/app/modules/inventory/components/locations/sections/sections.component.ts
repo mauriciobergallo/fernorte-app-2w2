@@ -186,4 +186,7 @@ export class SectionsComponent {
       });
     }, 100);
   }
+  backToSections() {
+    this.router.navigate(['inventory', 'locations']);
+  }
 }

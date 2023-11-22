@@ -13,7 +13,7 @@ export class LocationsComponent implements OnInit {
   nuevaZona: any = {};
   zoneName = '';
   zoneCapacity: number = 0;
-  totalCapacity: number = 10000;
+  totalCapacity: number = 100000;
   zone: Zone = {
     Id: 0,
     name: '',
