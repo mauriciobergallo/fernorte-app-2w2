@@ -16,8 +16,48 @@ export class AppComponent {
     return this.auth.isLogged();
   }
 
+  isAuthorized(role: String){
+    let rolesUser = this.getRoles();
+    if(rolesUser == null){
+      return
+    }
+    if(rolesUser.findIndex(x => x.area == role) != -1){
+      this.navigate(role)
+    } else{
+      Swal.fire({
+        title: '¡Error!',
+        text: 'Acceso no autorizado.',
+        icon: 'error',
+      });
+    }
+  }
+
+  navigate(role: String){
+    switch(role){
+      case 'Catalogo':
+        this.route.navigate(["/catalog"])
+        return;
+      case 'Compras':
+        this.route.navigate(['purchase'])
+        return;
+      case 'Inventario':
+        this.route.navigate(['inventory'])
+        return;
+      case 'Ventas':
+        this.route.navigate(['sales'])
+        return;
+      case 'Sistemas':
+        this.route.navigate(['customers'])
+        return;
+    }
+  }
+
   getEmail(){
     return this.auth.getEmail();
+  }
+
+  getRoles(){
+    return this.auth.getRole();
   }
 
   logOut(){

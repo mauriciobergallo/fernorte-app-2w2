@@ -46,7 +46,7 @@ export class LoginComponent {
                 text: 'Bienvenido ' + respuesta.username,
                 icon: 'success',
               });
-              this.router.navigate(["customers"]);
+              this.navigate(respuesta.roles[0].area)
             }
           },
           (error: any) => {
@@ -78,6 +78,26 @@ export class LoginComponent {
 
   goToForgotPassword() {
     this.router.navigate(['forgot-password/']);
+  }
+
+  navigate(role: String){
+    switch(role){
+      case 'Catalogo':
+        this.router.navigate(["/catalog"])
+        return;
+      case 'Compras':
+        this.router.navigate(['purchase'])
+        return;
+      case 'Inventario':
+        this.router.navigate(['inventory'])
+        return;
+      case 'Ventas':
+        this.router.navigate(['sales'])
+        return;
+      case 'Sistemas':
+        this.router.navigate(['customers'])
+        return;
+    }
   }
 }
 

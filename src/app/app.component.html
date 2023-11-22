@@ -1,16 +1,16 @@
 <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">FerNorte</a>
+    <a class="navbar-brand">FerNorte</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav" *ngIf="isLogged()" style="width: 100%;">
-        <a class="nav-link" href="#" routerLink="/catalog" routerLinkActive="active" [ngClass]="{ 'disabled-link': true }">Catálogo</a>
-        <a class="nav-link" href="#" routerLink="/customer" routerLinkActive="active" [ngClass]="{ 'disabled-link': false }">Clientes</a>
-        <a class="nav-link" href="#" routerLink="/purchase" routerLinkActive="active" [ngClass]="{ 'disabled-link': true }">Compras</a>
-        <a class="nav-link" href="#" routerLink="/inventory" routerLinkActive="active" [ngClass]="{ 'disabled-link': true }">Inventario</a>
-        <a class="nav-link" href="#" routerLink="/sales" routerLinkActive="active" [ngClass]="{ 'disabled-link': true }">Ventas</a>
+        <a class="nav-link" (click)="isAuthorized('Catalogo')" [ngClass]="{ 'disabled-link': false }">Catálogo</a>
+        <a class="nav-link" (click)="isAuthorized('Sistemas')" [ngClass]="{ 'disabled-link': false }">Clientes</a>
+        <a class="nav-link" (click)="isAuthorized('Compras')" [ngClass]="{ 'disabled-link': false }">Compras</a>
+        <a class="nav-link" (click)="isAuthorized('Inventario')" [ngClass]="{ 'disabled-link': false }">Inventario</a>
+        <a class="nav-link" (click)="isAuthorized('Ventas')" [ngClass]="{ 'disabled-link': false }">Ventas</a>
         <div class="flex-grow-1"></div>
         <a class="nav-link" style="pointer-events: none">{{getEmail()}}</a>
         <a class="nav-link" (click)="logOut()" style="cursor: pointer;">Cerrar Sesión</a>
