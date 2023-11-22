@@ -1,7 +1,7 @@
-<div class="container text-center mt-4">
+<div class="container px-4  py-4 my-2">
   <h2>Órdenes de recepción</h2>
 </div>
-<div class="container mt-5 text-center">
+<div class="container text-center  my-2">
   <div class="row">
     <form #filterForm="ngForm" class="filter-form">
       <div class="input-value">
@@ -29,7 +29,7 @@
     </label>
   </div>
 
-  <span>{{ filterForm.value | json}}</span>
+  <!-- <span>{{ filterForm.value | json}}</span> -->
   <fn-spinner *ngIf="loading"></fn-spinner>
   <table class="table table-hover">
     <thead>

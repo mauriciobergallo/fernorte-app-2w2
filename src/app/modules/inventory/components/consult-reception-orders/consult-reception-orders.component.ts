@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Pagination } from '../../models/pagination';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { GetPaginatedData } from '../../models/receptions-orders/GetPaginatedData';
 @Component({
   selector: 'fn-consult-reception-orders',
   templateUrl: './consult-reception-orders.component.html',
@@ -20,6 +21,12 @@ export class ConsultReceptionOrdersComponent implements OnInit {
   totalPages: number = 1;
   onlyConfirmedOrders: boolean = false;
   loading: boolean = false;
+  paginationData: GetPaginatedData = {
+    page: 0,
+    confirmed_orders_only: false,
+    filter_type: '',
+    filter_value: '',
+  };
   constructor(
     private bookingService: BookingServiceService,
     private router: Router
@@ -33,7 +40,7 @@ export class ConsultReceptionOrdersComponent implements OnInit {
     this.loading = true;
     this.subscripciones.add(
       this.bookingService
-        .getFilteredReceptionOrders(0, true, '', '')
+        .getFilteredReceptionOrders(this.paginationData)
         .subscribe({
           next: (response: Pagination) => {
             this.receptionOrderList = response;
@@ -51,7 +58,7 @@ export class ConsultReceptionOrdersComponent implements OnInit {
     if (this.onlyConfirmedOrders) {
       this.subscripciones.add(
         this.bookingService
-          .getFilteredReceptionOrders(0, this.onlyConfirmedOrders, '', '')
+          .getFilteredReceptionOrders(this.paginationData)
           .subscribe({
             next: (response: Pagination) => {
               this.receptionOrderList = response;
@@ -67,7 +74,7 @@ export class ConsultReceptionOrdersComponent implements OnInit {
     } else {
       this.subscripciones.add(
         this.bookingService
-          .getFilteredReceptionOrders(0, this.onlyConfirmedOrders, '', '')
+          .getFilteredReceptionOrders(this.paginationData)
           .subscribe({
             next: (response: Pagination) => {
               this.receptionOrderList = response;
@@ -90,12 +97,7 @@ export class ConsultReceptionOrdersComponent implements OnInit {
       console.log(form.value.filterValue);
       this.subscripciones.add(
         this.bookingService
-          .getFilteredReceptionOrders(
-            this.currentPage - 1,
-            this.onlyConfirmedOrders,
-            form.value.filterType,
-            form.value.filterValue
-          )
+          .getFilteredReceptionOrders(this.paginationData)
           .subscribe({
             next: (response: Pagination) => {
               this.receptionOrderList = response;
@@ -118,12 +120,7 @@ export class ConsultReceptionOrdersComponent implements OnInit {
     this.loading = true;
     this.subscripciones.add(
       this.bookingService
-        .getFilteredReceptionOrders(
-          this.currentPage - 1,
-          this.onlyConfirmedOrders,
-          form.value.filterType,
-          form.value.filterValue
-        )
+        .getFilteredReceptionOrders(this.paginationData)
         .subscribe({
           next: (response: Pagination) => {
             this.receptionOrderList = response;
@@ -147,12 +144,7 @@ export class ConsultReceptionOrdersComponent implements OnInit {
     this.loading = true;
     this.subscripciones.add(
       this.bookingService
-        .getFilteredReceptionOrders(
-          this.currentPage - 1,
-          this.onlyConfirmedOrders,
-          form.value.filterType,
-          form.value.filterValue
-        )
+        .getFilteredReceptionOrders(this.paginationData)
         .subscribe({
           next: (response: Pagination) => {
             this.receptionOrderList = response;

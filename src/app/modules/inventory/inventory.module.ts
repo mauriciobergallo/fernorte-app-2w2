@@ -22,6 +22,10 @@ import { RouterModule } from '@angular/router';
 import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
 import { CreateMovementComponent } from './components/create-movement/create-movement.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { LocationsComponent } from './components/locations/locations/locations.component';
+import { SectionsComponent } from './components/locations/sections/sections.component';
+import { SpacesComponent } from './components/locations/spaces/spaces.component';
 
 
 @NgModule({
@@ -41,7 +45,11 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     ConsultReceptionOrdersComponent,
     ReceptionOrderDetailsComponent,
     CreateMovementComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    WelcomeComponent,
+    LocationsComponent,
+    SectionsComponent,
+    SpacesComponent
   ],
 
   providers: [],

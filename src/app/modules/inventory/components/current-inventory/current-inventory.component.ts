@@ -6,6 +6,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { Chart } from 'chart.js';
 import { Pagination } from '../../models/pagination';
+import { LocationService } from '../../services/location.service';
 
 @Component({
   selector: 'fn-current-inventory',
@@ -21,7 +22,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
   private subscripciones = new Subscription();
   currentPage: number = 1;
   totalPages: number = 1;
-  constructor(private warehouseService: WarehouseService) {}
+  constructor(private warehouseService: WarehouseService, private locationService:LocationService) {}
   ngOnDestroy(): void {
     this.subscripciones.unsubscribe();
   }
@@ -43,9 +44,9 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
       error: (error) => {
         this.loading = false;
         console.log(error);
-        this.locationInfoList = this.locationInfoListMock;
+        this.locationInfoList = this.locationService.locationInfoListMock;
         this.originalList = [...this.locationInfoList];
-        this.filteredList = [...this.locationInfoListMock];
+        this.filteredList = [...this.locationService.locationInfoListMock];
       },
     });
   }
@@ -139,7 +140,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
               display: true,
               labels: {
                 font: {
-                  size: 25
+                  size: 50
                 }
               }
             }
