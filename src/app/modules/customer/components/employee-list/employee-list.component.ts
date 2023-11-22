@@ -6,6 +6,7 @@ import { EmployeeResponseDTO } from '../../models/employeeResponseDTO';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEmployeeComponent } from '../update-employee/update-employee.component';
 import Swal from 'sweetalert2';
+import { EmployeeRegistrationComponent } from '../employee-registration/employee-registration.component';
 
 
 @Component({
@@ -16,49 +17,41 @@ import Swal from 'sweetalert2';
 export class EmployeeListComponent implements OnInit {
 
   @ViewChild('employeeForm') updateEmployeeModal: TemplateRef<any> | undefined;
+  @ViewChild('newEmployeeForm') newEmployeeModal: TemplateRef<any> | undefined;
+  
   employeeList: EmployeeResponseDTO[] = [];
   localEmployeeList: EmployeeResponseDTO[] = [];
   selectedEmployeeId: number | null = null;
+
   showInactivos: boolean = true;
+
+  isCreateEmployeeModalOpen = false;
+
   
 
   constructor(private employeeService: EmployeeService, private conversion: CaseConversionPipe, private modalService: NgbModal){}
   
-   employeesHardCoded: EmployeeResponseDTO[] = [
+   newEmployee: EmployeeResponseDTO = 
     {
-      idEmployee: 1,
-      firstName: 'John',
-      lastName: 'Doe',
-      birthDate: '01-01-1985',
+      idEmployee: 0,
+      firstName: '',
+      lastName: '',
+      birthDate: '',
       documentType: 1, // Puedes cambiar esto según tus necesidades
-      documentNumber: '123456789',
-      address: '123 Main St',
-      phoneNumber: '555-1234',
-      personalEmail: 'john.doe@example.com',
+      documentNumber: '',
+      address: '',
+      phoneNumber: '',
+      personalEmail: '',
       isActive: true,
       createdAt: '01-01-2000'
-    },
-    {
-      idEmployee: 2,
-      firstName: 'Jane',
-      lastName: 'Smith',
-      birthDate: '15-05-1985',
-      documentType: 2, // Puedes cambiar esto según tus necesidades
-      documentNumber: '987654321',
-      address: '456 Oak St',
-      phoneNumber: '555-5678',
-      personalEmail: 'jane.smith@example.com',
-      isActive: false,
-      createdAt: '01-01-2000'
-    },
-    // Agrega más datos según sea necesario
-  ];
-  
+    }
+    
+
   
 
   ngOnInit(): void{
     this.onLoad()
-    this.employeeList = this.employeesHardCoded;
+   
     this.employeeService.getEmployeeUpdatedObservable().subscribe(() => {
       this.onLoad();
     });
@@ -229,10 +222,33 @@ showInfoDesactivedResult(){
       if(showInactivos){
         return this.employeeList;
       }
+
       return this.employeeList.filter(empleado => empleado.isActive);
     }
 
     openNewEmployeeModal(){
       
     }
+
+
+
+//       openNewRoleModal() {
+//         const modalRef = this.modalService.open(EmployeeRegistrationComponent, { ariaLabelledBy: 'modal-basic-title' ,backdrop: 'static'});
+//         modalRef.componentInstance.newEmployeeForm = this.newEmployee;
+    
+//         modalRef.result.then(
+//           (newEmp: EmployeeResponseDTO) => {
+//             if (newEmp) {
+//               this.employeeList.push(newEmp);
+//               console.log('Roles después de agregar:', this.employeeList);
+              
+            
+//               this.isCreateEmployeeModalOpen = false;
+//             }
+//           },
+//           (reason) => {
+//           }
+//         );
+//       }
+
 }
