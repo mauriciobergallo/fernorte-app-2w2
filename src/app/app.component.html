@@ -5,14 +5,17 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="#" routerLink="/catalog" routerLinkActive="active">Catálogo</a>
-        <a class="nav-link" href="#" routerLink="/customer" routerLinkActive="active">Clientes</a>
-        <a class="nav-link" href="#" routerLink="/purchase" routerLinkActive="active">Compras</a>
-        <a class="nav-link" href="#" routerLink="/inventory" routerLinkActive="active">Inventario</a>
-        <a class="nav-link" href="#" routerLink="/sales" routerLinkActive="active">Ventas</a>
+      <div class="navbar-nav" *ngIf="isLogged()" style="width: 100%;">
+        <a class="nav-link" href="#" routerLink="/catalog" routerLinkActive="active" [ngClass]="{ 'disabled-link': getRole() !== 'Catalogo' }">Catálogo</a>
+        <a class="nav-link" href="#" routerLink="/customer" routerLinkActive="active" [ngClass]="{ 'disabled-link': getRole() !== 'Administración' }">Clientes</a>
+        <a class="nav-link" href="#" routerLink="/purchase" routerLinkActive="active" [ngClass]="{ 'disabled-link': getRole() !== 'Compras' }">Compras</a>
+        <a class="nav-link" href="#" routerLink="/inventory" routerLinkActive="active" [ngClass]="{ 'disabled-link': getRole() !== 'Inventario' }">Inventario</a>
+        <a class="nav-link" href="#" routerLink="/sales" routerLinkActive="active" [ngClass]="{ 'disabled-link': getRole() !== 'Ventas' }">Ventas</a>
+        <div class="flex-grow-1"></div>
+        <a class="nav-link" style="pointer-events: none">{{getEmail()}}</a>
+        <a class="nav-link" (click)="logOut()" style="cursor: pointer;">Cerrar Sesión</a>
       </div>
-    </div>
+    </div>       
   </div>
 </nav>
 <router-outlet></router-outlet>

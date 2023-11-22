@@ -1,0 +1,16 @@
+.layout-container {
+  display: flex;
+  align-items: stretch;
+}
+
+.fn-sidebar {
+  flex: 0 0 21%; /* Ancho fijo de 250px para el sidebar */
+  background-color: #f0f0f0; /* Color de fondo del sidebar */
+}
+
+.router-container {
+  flex: 1; /* El contenido del router ocupa todo el espacio restante */
+  justify-content: center; /* Centra horizontalmente el contenido */
+  align-items: center; /* Centra verticalmente el contenido */
+  /* Otros estilos del contenido cargado por el router, si es necesario */
+}

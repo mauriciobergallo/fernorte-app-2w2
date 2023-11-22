@@ -1,28 +1,94 @@
-<div class="text-center">
-    <h1>Current Inventory list :</h1>
+<div class="px-4 py-4 my-2">
+  <h1>Inventario actual</h1>
 </div>
 
 <div class="container mt-4">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Zone</th>
-                <th scope="col">Section</th>
-                <th scope="col">Space</th>
-                <th scope="col">Current quantity</th>
-                <th scope="col">Max Capacity</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let locationInfo of locationInfoList">
-                <td>{{ locationInfo.productName }}</td>
-                <td>{{ locationInfo.location.zone }}</td>
-                <td>{{ locationInfo.location.section }}</td>
-                <td>{{ locationInfo.location.space }}</td>
-                <td>{{ locationInfo.quantity }}</td>
-                <td>{{ locationInfo.maxCapacity }}</td>
-            </tr>
-        </tbody>
-    </table>
+  <div class="row">
+    <div class="col-md-4">
+      <input type="text" class="form-control" placeholder="Zona" [(ngModel)]="filterZone">
+    </div>
+    <div class="col-md-4">
+      <input type="text" class="form-control" placeholder="Sección" [(ngModel)]="filterSection">
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" (click)="applyFilters()">Filtrar</button>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" (click)="downloadPDF()">Exportar PDF</button>
+    </div>
+  </div>
+  <fn-spinner *ngIf="loading"></fn-spinner>
+  <table class="table table-hover  my-4">
+    <thead>
+      <tr>
+        <th scope="col" (click)="sortData('product_name')" class="sortable-column">
+          Producto
+          <span *ngIf="currentSort.column === 'product_name'" class="sort-icon">
+            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
+          </span>
+        </th>
+        <th scope="col" (click)="sortData('location.zone')" class="sortable-column">
+          Zona
+          <span *ngIf="(currentSort.column)?.toString() === 'location.zone'" class="sort-icon">
+            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
+          </span>
+        </th>
+        <th scope="col" (click)="sortData('location.section')" class="sortable-column">
+          Seccion
+          <span *ngIf="(currentSort.column)?.toString() === 'location.section'" class="sort-icon">
+            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
+          </span>
+        </th>
+        <th scope="col" (click)="sortData('location.space')" class="sortable-column">
+          Espacio
+          <span *ngIf="(currentSort.column)?.toString() === 'location.space'" class="sort-icon">
+            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
+          </span>
+        </th>
+        <th scope="col" (click)="sortData('quantity')" class="sortable-column">
+          Cantidad actual
+          <span *ngIf="currentSort.column === 'quantity'" class="sort-icon">
+            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
+          </span>
+        </th>
+        <th scope="col" (click)="sortData('max_capacity')" class="sortable-column">
+          Maxima capacidad
+          <span *ngIf="currentSort.column === 'max_capacity'" class="sort-icon">
+            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
+          </span>
+        </th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr *ngFor="let locationInfo of filteredList">
+        <td>{{ locationInfo.product_name }}</td>
+        <td>{{ locationInfo.location.zone }}</td>
+        <td>{{ locationInfo.location.section }}</td>
+        <td>{{ locationInfo.location.space }}</td>
+        <td>{{ locationInfo.quantity }}</td>
+        <td>{{ locationInfo.max_capacity }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
 </div>
+<div class="d-flex justify-content-center" style="margin-top: 5%;">
+  <ul class="pagination">
+    <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === 1" (click)="previousPage()">
+      <a class="page-link" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link">{{ currentPage }}</a>
+    </li>
+    <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === totalPages" (click)="nextPage()">
+      <a class="page-link" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</div>
+<canvas id="myChart" style="position: absolute; left: -9999px;"></canvas>

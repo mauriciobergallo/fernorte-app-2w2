@@ -1,0 +1,128 @@
+<div class="container">
+  <div class="card-container">
+    <div class="card-body">
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <table class="w-100">
+              <tr>
+                <td>
+                  <h5 class="card-title">Orden de recepcion</h5>
+                  <p>N#: {{ orderData?.id_reception_order}}</p>
+                  <p>Nro de orden de compra: {{ orderData?.purchase_order_number}}</p>
+                  <p>Estado: {{ getStatusText(orderData?.state) }}</p>
+                  <p>Fecha de Creación: {{ orderData?.reception_date }}</p>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-md-6 text-right">
+            <table class="w-100">
+              <tr>
+                <td class="info-cliente">
+                  <h5>Información del proveedor</h5>
+                  <p>Nombre: {{ orderData?.supplier_name }}</p>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <fn-spinner *ngIf="loading"></fn-spinner>
+
+        <h5>Detalles del producto</h5>
+        <form [formGroup]="detailsForm">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="text-center mx-4">Nombre del producto</th>
+                <th class="text-center mx-4">Cantidad acordada</th>
+                <th class="text-center mx-4">Cantidad recibida</th>
+                <th class="text-center mx-4">Estado de productos</th>
+                <th class="text-center mx-4">Acciones</th>
+
+              </tr>
+            </thead>
+
+            <tbody formArrayName="details">
+              <tr [formGroupName]="i" *ngFor="let detail of details.controls;let i = index">
+                <td class="text-center">{{ detail.get('product_name')?.value }}</td>
+                <td class="text-center">{{ detail.get('agreed_quantity')?.value }}</td>
+                <td class="text-center">
+                  <input class="form-control mx-auto" style="width: 50%;" type="number" min="0" name="received_quantity"
+                    formControlName="received_quantity">
+                </td>
+                <td class="text-center">
+                  <div class="d-flex justify-content-center">
+                    <div class="form-check form-switch  d-flex">
+                      <input class="form-check-input" type="checkbox" role="switch" id="is_broken" name="is_broken"
+                        formControlName="is_broken">
+                      <label class="form-check-label  mx-2" for="is_broken">
+                        {{ detail.get('is_broken')?.value ? "Producto roto" : "Buen estado"}}</label>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div class="dropdown">
+                    <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <div class="dropdown-content">
+                      <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="addComment(i)">Agregar
+                        Observación</a>
+                    </div>
+
+                  </div>
+
+                </td>
+                <!-- Button trigger modal -->
+                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                          Launch static backdrop modal
+                        </button> -->
+
+
+              </tr>
+            </tbody>
+
+          </table>
+          <div style="float: right;">
+            <button class="btn btn-secondary" style="margin-right: 10px;" (click)="backHome()">Volver</button>
+            <button class="btn btn-primary" [disabled]="detailsForm.invalid || orderData?.state === 'RECEIVED'"
+              (click)="updateOrder()">Guardar</button>
+          </div>
+        </form>
+
+
+        <!-- <span>{{ detailsForm.value | json}}</span> -->
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-100"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Observaciones</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form #commentForm="ngForm">
+                <div class="modal-body">
+                  <div class="form-floating">
+                    <textarea class="form-control" placeholder="Deje sus obervaciones" id="comment" name="comment"
+                      required minlength="5" [(ngModel)]="comment" #commentField="ngModel"
+                      [ngClass]="{'is-invalid': commentField.invalid && commentField.touched}"></textarea>
+                    <label for="comment">Observaciones</label>
+                  </div>
+                </div>
+                <span>{{commentForm.value | json}}</span>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                  <button type="button" class="btn btn-primary" (click)="UpdateComment(commentForm)">Guardar</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+.prueba {
+    height: 200px;
+    overflow-y: hidden; 
+    border: 1px solid #ccc;
+  }

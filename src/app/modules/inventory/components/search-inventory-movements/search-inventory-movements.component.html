@@ -1,0 +1,118 @@
+<div class="container mt-3 ">
+  <div>
+    <div class="row  px-4 py-4 my-2">
+      <h2>Movimientos de Inventario</h2>
+    </div>
+    <fn-datepicker-range-popup (onFilter)="filterByDate($event)"
+      (onClearFilter)="clearFilters()"></fn-datepicker-range-popup>
+    <div class="container my-2">
+      <fn-create-movement href="new-movement"></fn-create-movement>
+      <button class="btn btn-primary mx-2" (click)="downloadPDF()" [disabled]="movimientos.length === 0">Exportar PDF</button>
+
+    </div>
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert"
+      *ngIf="!isLoading && this.movimientos.length == 0">
+      <strong class="text-danger">No existen movimientos registrados</strong>
+      <div class="">
+
+      </div>
+    </div>
+  </div>
+  <div>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Movimiento N#</th>
+          <th>Operador</th>
+          <th>Fecha</th>
+          <th>Entrada/Salida</th>
+          <th>Interno/Externo</th>
+          <th>Detalles</th>
+
+        </tr>
+      </thead>
+
+      <tbody *ngFor="let movimiento of this.movimientos;let i = index">
+        <tr>
+          <td>{{ i+1 }}<i class="bi bi-info" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="{{movimiento.remarks}}yu" style="cursor: pointer; font-size: 20px; margin-right: 5px;"></i></td>
+          <td>{{ movimiento.operator }}</td>
+          <td>{{ movimiento.date }}</td>
+          <td>{{ getMovementTypeTranslate(movimiento.movement_type ) }}</td>
+          <td>{{ (movimiento.is_internal)? 'Interno' : 'Externo' }}</td>
+          <td (click)="showDetail(i)"><i
+              [class]="(mostrarDetalleMovimiento ===i && mostrarDetalle) ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+          </td>
+        </tr>
+        <tr *ngIf="this.mostrarDetalleMovimiento === i">
+          <td colspan="5">
+            <div class="table-responsive">
+              <table class="table mb-0 table-bordered table-hover ">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cantidad <i (click)="orderDetail(i)" class="bi bi-caret-down"></i></th>
+                    <th colspan="3">Origen</th>
+                    <th colspan="3">Destino</th>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Zona</th>
+                    <th>Sección</th>
+                    <th>Espacio</th>
+                    <th>Zona</th>
+                    <th>Sección</th>
+                    <th>Espacio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let detail of movimiento.movement_details">
+                    <td>{{ detail.product }}</td>
+                    <td>{{ detail.quantity }}</td>
+                    <td>{{ detail.location_origin ? detail.location_origin.zone : '' }}</td>
+                    <td>{{ detail.location_origin ? detail.location_origin.section : '' }}</td>
+                    <td>{{ detail.location_origin ? detail.location_origin.space : '' }}</td>
+                    <td>{{ detail.location_destination? detail.location_destination.zone : '' }}
+                    </td>
+                    <td>{{ detail.location_destination ? detail.location_destination.section : '' }}
+                    </td>
+                    <td>{{ detail.location_destination ? detail.location_destination.space : '' }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <fn-spinner *ngIf="isLoading"></fn-spinner>
+  <div class="d-flex justify-content-center  " style="margin-top: 5%;">
+
+    <ul class="pagination">
+      <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === 1" (click)="previousPage()">
+        <a class="page-link" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link">{{ currentPage }}</a>
+      </li>
+      <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === totalPages" (click)="nextPage()">
+        <a class="page-link" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="container">
+  </div>
+  <!-- <div class="container">
+    <button class="btn btn-primary" (click)="downloadPDF()">Exportar PDF</button>
+  </div>-->
+  <canvas id="myChart" style="position: absolute; left: -9999px;"></canvas>
+</div>
