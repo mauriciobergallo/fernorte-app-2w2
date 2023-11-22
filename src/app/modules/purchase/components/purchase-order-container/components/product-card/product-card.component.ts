@@ -23,7 +23,17 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   productQuantities: { [productId: number]: number } = {};
   idSupplier: number = 0;
 
-  product_List: IProduct2[] = [];
+  product_List: IProduct2[] = [
+    {
+      name: 'Taladro',
+      price: 10,
+      active: true,
+      imageUrl: 'test',
+      productId: 0,
+      supplierId: 1,
+      observations: 'test',
+    },
+  ];
 
   cartProducts: ISupplierProduct[] = [];
   isButtonDisabled: { [productId: number]: boolean } = {};
@@ -44,12 +54,12 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.suscription.unsubscribe();
   }
-  getProductsBySupplier(id: number):void {
+  getProductsBySupplier(id: number): void {
     if (id != 0) {
       this.suscription.add(
         this._productService.getProductsBySupplier(id).subscribe({
           next: (data: any) => {
-            console.log('PRODUCTS->', data) // data.products
+            console.log('PRODUCTS->', data); // data.products
             if (data && Array.isArray(data)) {
               this.product_List = data;
               //this.productQuantities = {};
@@ -59,7 +69,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
               });
             }
           },
-          error: (error: any) => console.log(error)
+          error: (error: any) => console.log(error),
         })
       );
     }
@@ -87,9 +97,9 @@ export class ProductCardComponent implements OnInit, OnDestroy {
         idProduct: product.productId,
         name: product.name,
         price: product.price,
-        quantity: quantity
+        quantity: quantity,
       };
-      this.cartProducts.push(productSupplier)
+      this.cartProducts.push(productSupplier);
       this._purchaseOrderSer.setCardProductList2(this.cartProducts);
       this.isButtonDisabled[product.productId] = true;
       console.log('PROD->', this._purchaseOrderSer.getCardProductList());
@@ -115,12 +125,14 @@ export class ProductCardComponent implements OnInit, OnDestroy {
             this.isButtonDisabled[product.productId] = isProductInCart;
           });
         },
-        error: (error: any) => console.log(error)
+        error: (error: any) => console.log(error),
       })
     );
   }
 
   isProductInCart(product: IProduct2): boolean {
-    return this.cartProducts.some((item) => item.idProduct === product.productId);
+    return this.cartProducts.some(
+      (item) => item.idProduct === product.productId
+    );
   }
 }

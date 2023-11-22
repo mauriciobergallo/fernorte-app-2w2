@@ -12,10 +12,11 @@ interface IProductSupplier {
   providedIn: 'root',
 })
 export class ProductsService {
-  url: string ='https://my-json-server.typicode.com/114537-Bothner-Eric/firma-productos/productos';
+  url: string = 'http://localhost:5434/products';
+  // url: string ='https://my-json-server.typicode.com/114537-Bothner-Eric/firma-productos/products';
   urlSupplier: string = 'http://localhost:5434/product-by-supplier';
   urlall:string='http://localhost:5434/product_by_supplier/all';
-  urlSupplierPrice: string = "http://localhost:8085/product-by-supplier/supplier"
+  urlSupplierPrice: string = "http://localhost:5434/product-by-supplier/supplier"
 
   products: IProduct[] = [];
 
