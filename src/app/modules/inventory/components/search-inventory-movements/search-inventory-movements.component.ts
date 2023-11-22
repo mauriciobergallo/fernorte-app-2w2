@@ -143,6 +143,7 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
           } else {
             console.log('No content');
           }
+          this.isLoading = false;
         },
         error: (error: any) => {
           this.isLoading = false;
