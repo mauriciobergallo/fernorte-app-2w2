@@ -34,7 +34,8 @@
                 name="stateOrder"
                 #stateOrderControl="ngModel"
                 [(ngModel)]="stateOrder">
-                  <option selected
+                <option value=""selected>Seleccione un estado</option>
+                  <option 
                   *ngFor="let state of saleOrderStates" [value]="state">{{state | translateStates}}</option>
                 </select>
                 <div class="row">

@@ -25,8 +25,8 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   saleOrderStates: string[] = [];
 
 
-  idOrder:string="0";
-  doc:string="0";
+  idOrder:string="";
+  doc:string="";
   fromDate:string="";
   toDate:string="";
   stateOrder:string="";
@@ -122,7 +122,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     } 
     return productOk
   }
-  
+
   onShowDetails(item:any, content: any){
     this.selectedOrder = item;
     console.log(this.selectedOrder)
