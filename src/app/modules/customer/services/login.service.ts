@@ -34,7 +34,7 @@ export class LoginService {
     username: string,
     passwordReset: boolean
   ): Observable<UserCheckLogin> {
-    const userDetailsUrl = this.BaseURL + `/users/${username}`;
+    const userDetailsUrl = this.BaseURL + `/users/?username=${username}`;
 
     return this.http.get(userDetailsUrl).pipe(
       map((userDetails: any) => {

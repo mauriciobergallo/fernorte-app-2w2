@@ -45,7 +45,7 @@ export class UserService {
   }
 
   getUserByUsername(username: string): Observable<UserResponseDTO> {
-    const url = `${this.baseUrl}/${username}`;
+    const url = `${this.baseUrl}/?username=${username}`;
     return this.http.get<UserResponseDTO>(url);
   }
 

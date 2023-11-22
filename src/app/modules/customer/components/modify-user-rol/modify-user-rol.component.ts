@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import { RoleService } from '../../services/role.service';
 import { UserService } from '../../services/user.service';
 import { UserResponseDTO } from '../../models/userResponseDTO';
 import { Role } from '../../models/role';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'fn-modify-user-rol',
@@ -12,7 +13,10 @@ import { Role } from '../../models/role';
   styleUrls: ['./modify-user-rol.component.css']
 })
 
-export class ModifyUserRolComponent{
+export class ModifyUserRolComponent implements OnInit {
+onSubmit(_t9: NgForm) {
+throw new Error('Method not implemented.');
+}
 
 	userRolForm!: NgForm;
 	closeResult = '';
@@ -25,39 +29,45 @@ export class ModifyUserRolComponent{
 	unassignedRoles: Role[] = [];
 	selectedRole: Role | null = null;
 
-	constructor(private modalService: NgbModal, private userService: UserService,private roleService: RoleService) {
+	@Input() userToUpdate: User | undefined;
+
+
+	constructor(public modalService: NgbModal, private userService: UserService, private roleService: RoleService) {
 
 	}
-
-    open(content: any) {
-
-		// Obtiene todos los roles
+	ngOnInit(): void {
 		this.roleService.getAllRoles().subscribe((roles) => {
 			this.allRoles = roles;
 		});
-		
-		this.modalService.open(content, { 
-			ariaLabelledBy: 'modal-basic-title',
-			backdrop: 'static'
-
-		}).result.then(
-			(result) => {
-
-				console.log("CONTENT", content);
-				console.log("RESULT", result);
-				console.log("USERROL FORM", this.userRolForm);
-				this.closeResult = `Closed with: ${result}`;
-
-				if(this.user){
-					this.userService.modifyUserRoles(this.user).subscribe((updatedUser) => 
-					console.log(updatedUser));
-				}
-			},
-			(reason) => {
-
-			},
-		);
+		if(this.userToUpdate != null)
+		{this.userName = this.userToUpdate.username
+		this.searchUsername()}
 	}
+
+    // open(content: any) {
+
+	// 	// Obtiene todos los roles
+		
+		
+	// 	this.modalService.open(content, { 
+	// 		ariaLabelledBy: 'modal-basic-title',
+	// 		backdrop: 'static'
+
+	// 	}).result.then(
+	// 		(result) => {
+
+	// 			console.log("CONTENT", content);
+	// 			console.log("RESULT", result);
+	// 			console.log("USERROL FORM", this.userRolForm);
+	// 			this.closeResult = `Closed with: ${result}`;
+
+				
+	// 		},
+	// 		(reason) => {
+
+	// 		},
+	// 	);
+	// }
 
 	searchUsername() {
 		//Obtiene el usuario
@@ -113,5 +123,9 @@ export class ModifyUserRolComponent{
 	}
 
     onSubmitForm(userRol: NgForm) {
+		if(this.user){
+			this.userService.modifyUserRoles(this.user).subscribe((updatedUser) => 
+			console.log(updatedUser));
+		}
 	}
 }
