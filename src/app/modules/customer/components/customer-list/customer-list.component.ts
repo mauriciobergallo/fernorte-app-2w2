@@ -15,8 +15,6 @@ import 'jspdf-autotable';
 })
 export class CustomerListComponent implements OnInit {
 
-
-
 downloadPDF() {
   let data = this.customerList
   const pdf = new jsPDF() as any;
@@ -153,6 +151,16 @@ this.generatePdf(data, headers, "Listado de clientes");
     // Guardar o mostrar el PDF
     doc.save('table.pdf');
   }
+
+  downloadCSV() {
+
+
+
+
+  }
+    
+    
+    
 
 
   
