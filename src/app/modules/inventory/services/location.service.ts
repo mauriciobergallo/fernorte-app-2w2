@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Section } from '../models/locations/section';
 import { Zone } from '../models/locations/zone';
 import { Space } from '../models/locations/space';
+import { LocationInfoDto } from '../models/location-info.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -217,6 +218,87 @@ export class LocationService {
     // Agrega más zonas según sea necesario
   ];
 
+  locationInfoListMock: LocationInfoDto[] = [
+    {
+      location: {
+        zone: 'Zone A',
+        section: 'Section 1',
+        space: 'Space 101',
+      },
+      location_id: 1,
+      category_name: 'Category X',
+      product_name: 'Product Alpha',
+      quantity: 3,
+      measure_unit: 1,
+      max_capacity: 5,
+    },
+    {
+      location: {
+        zone: 'Zone B',
+        section: 'Section 2',
+        space: 'Space 202',
+      },
+      location_id: 2,
+      category_name: 'Category Y',
+      product_name: 'Product Beta',
+      quantity: 5,
+      measure_unit: 2,
+      max_capacity: 50,
+    },
+    {
+      location: {
+        zone: 'Zone A',
+        section: 'Section 2',
+        space: 'Space 201',
+      },
+      location_id: 3,
+      category_name: 'Category Z',
+      product_name: 'Product Gamma',
+      quantity: 8,
+      measure_unit: 3,
+      max_capacity: 10,
+    },
+    {
+      location: {
+        zone: 'Zone C',
+        section: 'Section 1',
+        space: 'Space 102',
+      },
+      location_id: 4,
+      category_name: 'Category W',
+      product_name: 'Product Delta',
+      quantity: 15,
+      measure_unit: 1,
+      max_capacity: 150,
+    },
+    {
+      location: {
+        zone: 'Zone B',
+        section: 'Section 1',
+        space: 'Space 201',
+      },
+      location_id: 5,
+      category_name: 'Category A',
+      product_name: 'Product Epsilon',
+      quantity: 20,
+      measure_unit: 2,
+      max_capacity: 200,
+    },
+    {
+      location: {
+        zone: 'Zone C',
+        section: 'Section 2',
+        space: 'Space 202',
+      },
+      location_id: 6,
+      category_name: 'Category B',
+      product_name: 'Product Zeta',
+      quantity: 7,
+      measure_unit: 3,
+      max_capacity: 70,
+    },
+  ];
+  
   getZones() {
     return this.mockZones;
   }
