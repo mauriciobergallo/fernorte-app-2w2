@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Login } from '../models/login';
 import { Observable, map, switchMap } from 'rxjs';
 import { UserCheckLogin } from '../models/user-check-login';
+import { Role } from '../models/role';
 
 @Injectable()
 export class LoginService {
@@ -73,7 +74,7 @@ export class LoginService {
     if(this.user != null){
       return this.user.roles;
     }
-    return '';
+    return null;
   }
 
   setPasswordReset(){
