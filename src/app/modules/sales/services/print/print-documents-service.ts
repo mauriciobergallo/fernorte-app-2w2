@@ -20,27 +20,17 @@ export class PrintDocumentsService {
   saleOrderNewSnaptshot = new BehaviorSubject<any>(null);
   getSaleOrder$ = this.saleOrderNewSnaptshot.asObservable();
 
-billSnapshot = new BehaviorSubject<any>(null);
-getBillOrder$ = this.billSnapshot.asObservable();
+  billSnapshot = new BehaviorSubject<any>(null);
+  getBillOrder$ = this.billSnapshot.asObservable();
 
-  
+    
   sendOrder(saleOrder: SaleOrderOk) {
       this.saleOrderNewSnaptshot.next(saleOrder);
       }
-
       
   sendBill(bill: BillView) {
     this.billSnapshot.next(bill);
     }
-
-      //this.printService.senOrder(saleOrder);
-
-  
-  // print(saleOrder:SaleOrderView):Observable<SaleOrderView> {
-  //   this.saleOrderView=this.clear()
-  //   this.saleOrderView = saleOrder;
-  //     return of(this.saleOrderView);
-  // }
 
 
   clear():SaleOrderOk{

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BillModel } from '../../models/BillingModelApi';
 import { Observable } from 'rxjs';
-import { BillingProvider } from './BillingProvider';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {SaleOrderApi} from "../../models/SaleModelApi";
 import {ProductApi} from "../../models/ProductApi";
 import {DetailBill} from "../../models/DetailBillModel";
 import {Tax} from "../../models/TaxModel";
+import { environment } from '../../enviroment/environment';
+import { IResponse } from '../../interfaces/IResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ import {Tax} from "../../models/TaxModel";
 export class BillServiceService {
 
   billList = new Observable<BillModel[]>();
+  cae : number = 67360085835381
 
   filters : Map<string, string> = new Map<string, string>();
 
@@ -30,28 +32,30 @@ export class BillServiceService {
     return this.filters.get("toDate")
   }
 
-
-  urlBase:string="http://localhost:8088/bills";
-
-
   constructor(private http : HttpClient) { }
 
+  private URL = environment.urlBillBase+"/bills";
+
+  createBill(bill: BillModel): Observable<IResponse> {
+    const header = { "content-type": "application/json" };
+    const body = bill;
+    return this.http.post<IResponse>(this.URL, body, { headers: header });
+  }
 
     getBills() : Observable<BillModel[]> {
-      this.billList = this.http.get<BillModel[]>(this.urlBase+ `?pageNumber=0`);
+      this.billList = this.http.get<BillModel[]>(this.URL+ `?pageNumber=0`);
       return this.billList;
     }
 
     getBillsByFilter(filters : Map<string, string>): Observable<BillModel[]> {
-
     let url:string = '';
     this.filters = filters
     if (this.idBill != '0' && this.idBill != undefined) {
-      url = this.urlBase + `?pageNumber=0&id=${this.idBill}`
+      url = this.URL + `?pageNumber=0&id=${this.idBill}`
     } else if (this.clientId != '0' && this.clientId != null) {
-      url = this.urlBase + `?pageNumber=0&clientId=${this.clientId}`
+      url = this.URL + `?pageNumber=0&clientId=${this.clientId}`
     } else {
-      url = this.urlBase + `?pageNumber=0&from=${this.fromDate}&to=${this.toDate}`;
+      url = this.URL + `?pageNumber=0&from=${this.fromDate}&to=${this.toDate}`;
     }
     this.billList = this.http.get<BillModel[]>(url);
     return this.billList
@@ -61,10 +65,13 @@ export class BillServiceService {
     return true
     }
     addBill(bill: BillModel) : Observable<BillModel[]> {
-    return this.http.post<BillModel[]>(this.urlBase, bill);
+    return this.http.post<BillModel[]>(this.URL, bill);
   }
+  
   mapSaleOrderToBill(saleOrder: SaleOrderApi): BillModel{
+    this.cae += 1
     let order = new BillModel();
+    order.id_bill=0;
     order.id_sale_order = saleOrder.id_sale_order || 0;
     order.id_seller = saleOrder.id_seller || 0;
     order.id_client = saleOrder.id_client || 0;
@@ -76,9 +83,9 @@ export class BillServiceService {
     order.address = saleOrder.address || "";
     order.name_seller = saleOrder.first_name_seller || "";
     order.total_price = 0;
-    order.vat_condition = "FINAL_CUSTOMER";
-    order.bill_type = "B";
-    order.cae = "526351485968";
+    order.vat_condition = "";
+    order.bill_type = "";
+    order.cae = this.cae.toString();
     order.expiration_date_cae = saleOrder.date_of_expiration || [];
     order.created_date = saleOrder.date_of_issue || [];
 
@@ -88,9 +95,9 @@ export class BillServiceService {
       detailBill.name_product = productApi.name || "";
       detailBill.quantity = productApi.quantity || 0;
       detailBill.unit = "";
-      detailBill.tax = new Tax();
+      detailBill.tax = {id:100,tax_type:"VAT",tax_value:1.21};
       detailBill.tax.tax_type = "VAT";
-      detailBill.tax_value = productApi.price || 0;
+      detailBill.tax_value = detailBill.tax.tax_value || 0;
       detailBill.unitary_price = productApi.price || 0;
       detailBill.discount_amount = 0;
       return detailBill;

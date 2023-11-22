@@ -1,7 +1,7 @@
 export class Tax {
-    id: number = 0;
-    tax_value: number = 0;
-    tax_type: string = '';
+    id: number = 100;
+    tax_value: number = 1.21;
+    tax_type: string = 'VAT';
 }
 
 export const TaxEmpty: Tax = {

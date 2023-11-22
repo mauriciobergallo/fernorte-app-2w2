@@ -56,8 +56,9 @@ export class BillingComponent {
       text: "Se pago correctamente!",
       icon: "success"
     });
-      this.order.payments = this.paymentList;
-      delete this.order['id_bill'];
+      this.order.payments = this.paymentList;      
+      this.order.total_price= this.realAmount;
+      //delete this.order['id_bill'];
       this.billService.addBill(this.order).subscribe((response) => {
         this.cancelOrder();
         this.paymentModal.hide();

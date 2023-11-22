@@ -25,7 +25,9 @@ export class SidenavComponent implements OnInit {
   nextTurn(){
     console.log(this.turn)
 
-    this.turn=this.turnService.nextTurn()
+    this.turnService.nextTurn().subscribe(x=>{
+      this.turn=x;
+    })
     console.log(this.turn)
     this.nextBtn=true
     this.cancelBtn=false

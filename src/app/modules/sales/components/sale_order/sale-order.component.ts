@@ -9,12 +9,9 @@ import { SaleOrderStates } from '../../models/SalesOrderState';
 import { DetailsSaleOrderModel } from '../../models/DetailsSaleOrderModel';
 import { CarritoService } from '../../services/carrito.service';
 import { MontoTotalModel } from '../../models/ModelTotalModel';
-import { SaleOrderProvider } from '../../services/salesOrder/SaleOrderProvider';
 import { ICustomer } from '../../interfaces/iCustomer';
 import { ClientService } from '../../services/clients/client.service';
 import Swal from 'sweetalert2';
-import { ClientProvider } from '../../services/clients/clientProvider';
-import { ProductProvider } from '../../services/products/productProvider';
 
 
 @Component({
@@ -29,10 +26,7 @@ export class SaleOrderComponent implements OnInit {
     private loadingService: LoadingService,
     private productService: ProductService,
     private carritoService: CarritoService,
-    private saleOrderProvider: SaleOrderProvider,
-    private clientsService: ClientService,
-    private clientp:ClientProvider,
-    private prod:ProductProvider) { }
+    private clientsService: ClientService) { }
 
   salesOrderLoad: SaleOrderModel | undefined
   loader = this.loadingService.viewLoader();
@@ -61,8 +55,10 @@ export class SaleOrderComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.listProduct = this.productService.getlistProduct();    
-    this.clientp.getlistClients().subscribe(x=>{
+    this.productService.getListProduct().subscribe(x=>{
+      this.listProduct=x;
+    })  
+    this.clientsService.getClient().subscribe(x=>{
       this.listClients=x;
     })
   }
@@ -119,7 +115,7 @@ export class SaleOrderComponent implements OnInit {
   
       }
   
-      this.saleOrderProvider.createSaleOrder(this.saleOrder!).subscribe((res) => {
+      this.saleOrderServiceService.createSaleOrder(this.saleOrder!).subscribe((res) => {
         this.saleOrder = res.data
         
       });
