@@ -25,6 +25,7 @@ downloadPDF() {
   let containsPerson = false;
   let headers = [""];
   let dataForPDF: any
+  let socialReason: string | undefined;
 
   data.forEach(element => {
     if(element.customer_type == "Fisica"){
@@ -44,7 +45,16 @@ downloadPDF() {
   "Tipo de documento", "Documento", "Tipo de cliente", ];
   
   dataForPDF = this.customerList.map((item) => {
-    return [item.company_name, item.iva_condition,
+
+    if (item.customer_type === "Fisica") {
+      socialReason = `${item.first_name} ${item.last_name}`
+    } 
+    if (item.customer_type === "Juridica") {
+      socialReason = item.company_name
+    } 
+
+
+    return [socialReason, item.iva_condition,
       item.email, item.phone_number, item.birth_date, item.address, item.document_type,
     item.document_number, item.customer_type]; // Devuelve un array con los valores deseados
   });
@@ -55,28 +65,44 @@ downloadPDF() {
 
   if(!containsCompany && containsPerson){
     
-    headers = ['Nombre', 'Apellido',  "Condición de Iva",
+    headers = ['Nombre', "Condición de Iva",
     "Email", "Telefono", "Fecha de nacimiento/fundación", "Dirección",
   "Tipo de documento", "Documento", "Tipo de cliente", ];
   
   dataForPDF = this.customerList.map((item) => {
-    return [item.first_name, item.last_name,  item.iva_condition,
+
+    if (item.customer_type === "Fisica") {
+      socialReason = `${item.first_name} ${item.last_name}`
+    } 
+    if (item.customer_type === "Juridica") {
+      socialReason = item.company_name
+    } 
+
+
+    return [socialReason, item.iva_condition,
       item.email, item.phone_number, item.birth_date, item.address, item.document_type,
     item.document_number, item.customer_type]; // Devuelve un array con los valores deseados
   });
-  
 
   }
 
 
   if(containsCompany && containsPerson){
-     headers = ['Nombre', 'Apellido', "Empresa", "Condición de Iva",
+     headers = ["Nombre/Razón social", "Condición de Iva",
   "Email", "Telefono", "Fecha de nacimiento/fundación", "Dirección",
 "Tipo de documento", "Documento", "Tipo de cliente", ];
 
 dataForPDF = this.customerList.map((item) => {
-  
-  return [item.first_name, item.last_name, item.company_name, item.iva_condition,
+
+  if (item.customer_type === "Fisica") {
+    socialReason = `${item.first_name} ${item.last_name}`
+  } 
+  if (item.customer_type === "Juridica") {
+    socialReason = item.company_name
+  } 
+
+
+  return [socialReason, item.iva_condition,
     item.email, item.phone_number, item.birth_date, item.address, item.document_type,
   item.document_number, item.customer_type]; // Devuelve un array con los valores deseados
 });
@@ -110,6 +136,7 @@ this.generatePdf(data, headers, "Listado de clientes");
     doc.autoTable({
       head: [columns],
       body: data,
+      autoSize: true,
     });
 
     // Guardar o mostrar el PDF
