@@ -6,7 +6,7 @@ import { UserService } from '../../services/user.service';
 import { UserResponseDTO } from '../../models/userResponseDTO';
 import { Role } from '../../models/role';
 import { User } from '../../models/user';
-
+import { NewRole } from '../../models/new-role';
 @Component({
   selector: 'fn-modify-user-rol',
   templateUrl: './modify-user-rol.component.html',
@@ -24,10 +24,11 @@ throw new Error('Method not implemented.');
 	userName: string = '';
 	userExist: boolean = false;
   	user: UserResponseDTO | null = null;
-	allRoles: Role[] = [];
-	assignedRoles: Role[] = [];
-	unassignedRoles: Role[] = [];
-	selectedRole: Role | null = null;
+	allRoles: NewRole[] = [];
+	assignedRoles: NewRole[] = [];
+	unassignedRoles: NewRole[] = [];
+	selectedRole: NewRole | null = null;
+	selectedRoles: NewRole[] = [];
 
 	@Input() userToUpdate: User | undefined;
 
@@ -44,44 +45,23 @@ throw new Error('Method not implemented.');
 		this.searchUsername()}
 	}
 
-    // open(content: any) {
-
-	// 	// Obtiene todos los roles
-		
-		
-	// 	this.modalService.open(content, { 
-	// 		ariaLabelledBy: 'modal-basic-title',
-	// 		backdrop: 'static'
-
-	// 	}).result.then(
-	// 		(result) => {
-
-	// 			console.log("CONTENT", content);
-	// 			console.log("RESULT", result);
-	// 			console.log("USERROL FORM", this.userRolForm);
-	// 			this.closeResult = `Closed with: ${result}`;
-
-				
-	// 		},
-	// 		(reason) => {
-
-	// 		},
-	// 	);
-	// }
-
 	searchUsername() {
 		//Obtiene el usuario
 		this.userService.getUserByUsername(this.userName).subscribe(
 			(user) => {
 				this.user = user;
 				this.userExist = true;
-
+				let role = this.allRoles.filter(itemA => user.roles.some(itemB => itemA.name === itemB.name));
+				role.forEach(element => {
+					this.selectedRoles.push(element)
+				});
 				//Obtiene los roles no asignados para el usuario
 				this.availableRoles();
 
-				console.log(this.user.roles);
-				console.log(this.allRoles);
-				console.log(this.unassignedRoles);
+				console.log(this.selectedRoles)
+				// console.log(this.user.roles);
+				// console.log(this.allRoles);
+				// console.log(this.unassignedRoles);
 			},
 			(error) => {
 				this.user = null;
@@ -109,6 +89,7 @@ throw new Error('Method not implemented.');
 		if (this.user && this.selectedRole) {
 			// Agrega el rol seleccionado al usuario
 			this.user.roles.push(this.selectedRole);
+			this.selectedRoles.push(this.selectedRole)
 			this.selectedRole = null;
 			this.availableRoles();
 		}
@@ -118,13 +99,14 @@ throw new Error('Method not implemented.');
 		if (this.user && roleToDelete) {
 		  	// Elimina el rol seleccionado del usuario
 		  	this.user.roles = this.user.roles.filter(role => role !== roleToDelete);
+			this.selectedRoles = this.selectedRoles.filter(role => role.name !== roleToDelete.name);
 			this.availableRoles();
 		}
 	}
 
     onSubmitForm(userRol: NgForm) {
 		if(this.user){
-			this.userService.modifyUserRoles(this.user).subscribe((updatedUser) => 
+			this.userService.modifyUserRoles(this.user, this.selectedRoles).subscribe((updatedUser) => 
 			console.log(updatedUser));
 		}
 	}

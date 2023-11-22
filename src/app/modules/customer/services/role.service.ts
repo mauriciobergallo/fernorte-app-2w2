@@ -26,8 +26,8 @@ export class RoleService {
     }
   }
 
-  getAllRoles(): Observable<Role[]> {
-    return this.http.get<Role[]>(`${this.apiUrl}/`);
+  getAllRoles(): Observable<NewRole[]> {
+    return this.http.get<NewRole[]>(`${this.apiUrl}/`);
   }
 
   getAllWithFormat(): Observable<NewRole[]> {
