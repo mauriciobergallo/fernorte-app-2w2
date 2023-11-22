@@ -1,0 +1,189 @@
+<div class="container mt-4">
+  <h2 class="text-center">Espacios</h2>
+  <br>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarUbicacionModal">
+      <i class="bi bi-plus"></i> Agregar Espacio
+    </button>
+
+    <div class="text-center">
+      <div class="mb-2">
+        <strong>Total:</strong> {{totalCapacity}}
+      </div>
+      <div>
+        <strong>Total Ocupado:</strong> {{getOcupacionTotal()}}
+      </div>
+    </div>
+  </div>
+  <hr>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Producto</th>
+            <th class="text-center">Capacidad Máxima</th>
+            <th class="text-center">Unidad de Medida</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Filas de ubicaciones -->
+          <tr *ngFor="let item of spaces">
+            <td class="text-center">{{ item.name }}</td>
+            <td class="text-center">{{ item.productName}}</td>
+            <td class="text-center">{{ item.maxCapacity }}</td>
+            <td class="text-center">{{ item.measureUnit }}</td>
+
+
+            <td class="text-center">
+              <div class="dropdown">
+                <button type="button" class="btn btn-light dropdown-button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a (click)="openEditarEspacioModal(item)">
+                    <i class="bi bi-eye" style="cursor: pointer; font-size: 20px; margin-right: 5px;"></i>Editar
+                  </a>
+                  <a (click)="eliminarZona(item)"><i class="bi bi-eye"
+                      style="cursor: pointer; font-size: 20px; margin-right: 5px;"></i>Eliminar</a>
+                </div>
+              </div>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="agregarUbicacionModal" tabindex="-1" aria-labelledby="agregarUbicacionModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="agregarUbicacionModalLabel">Agregar Espacio</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Contenido del formulario para agregar ubicación -->
+        <form>
+          <div class="mb-3">
+            <label for="nombreZona" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombreZona" (input)="updateZoneName($event)">
+          </div>
+          <div class="mb-3">
+            <label for="productoDropdown" class="form-label">Producto:</label>
+            <select class="form-control" id="productoDropdown" (change)="onSelectProduct($event)">
+              <option *ngFor="let product of productMock" [value]="product.name">
+                {{ product.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="nombreZona" class="form-label">Unidad de Medida:</label>
+            <input type="text" class="form-control" id="nombreZona"
+              [value]="selectedProduct ? selectedProduct.measureUnit : ''" [disabled]="true">
+          </div>
+          <div class="mb-3">
+            <label for="maxCapacidad" class="form-label">Capacidad Máxima:</label>
+            <input type="number" class="form-control" id="maxCapacidad" [max]="totalCapacity - getOcupacionTotal()"
+              (input)="updateZoneCapacity($event)">
+            <small class="text-muted">Máxima Capacidad Permitida: {{ totalCapacity - getOcupacionTotal() }}</small>
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Detalles:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" (change)="updateRemarks($event)"
+              rows="3"></textarea>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" [disabled]="excedeCapacidadMaxima()"
+          (click)="insertZone()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<div class="d-flex justify-content-center" style="margin-top: 5%;">
+    <ul class="pagination">
+      <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === 1" (click)="previousPage()">
+        <a class="page-link" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link">{{ currentPage }}</a>
+      </li>
+      <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === totalPages" (click)="nextPage()">
+        <a class="page-link" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>-->
+
+
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editarModal">Actualizar Espacio</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeEditarEspacioModal()"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Contenido del formulario para agregar ubicación -->
+        <form>
+          <div class="mb-3">
+            <label for="nombreZona" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombreZona" [value]="spaceToEdit.name"
+              (input)="updateZoneName($event)">
+          </div>
+          <div class="mb-3">
+            <label for="productoDropdown" class="form-label">Producto:</label>
+            <select class="form-control" id="productoDropdown" [value]="spaceToEdit.productName"
+              (change)="onSelectProduct($event)">
+              <option *ngFor="let product of productMock" [value]="product.name">
+                {{ product.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="nombreZona" class="form-label">Unidad de Medida:</label>
+            <input type="text" class="form-control" id="nombreZona" [value]="spaceToEdit.measureUnit" [disabled]="true">
+          </div>
+          <div class="mb-3">
+            <label for="maxCapacidad" class="form-label">Capacidad Máxima:</label>
+            <input type="number" class="form-control" id="maxCapacidad" [value]="spaceToEdit.maxCapacity"
+              [max]="totalCapacity - getOcupacionTotal() + spaceToEdit.maxCapacity"
+              (input)="updateZoneCapacity($event)">
+            <small class="text-muted">Máxima Capacidad Permitida: {{ totalCapacity - getOcupacionTotal() +
+              spaceToEdit.maxCapacity }}</small>
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Detalles:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" (change)="updateRemarks($event)"
+              [value]="spaceToEdit.remarks" rows="3"></textarea>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          (click)="closeEditarEspacioModal()">Cerrar</button>
+        <button type="button" class="btn btn-primary" [disabled]="excedeCapacidadMaximaEdit()"
+          (click)="update()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

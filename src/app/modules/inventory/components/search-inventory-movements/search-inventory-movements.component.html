@@ -2,18 +2,19 @@
   <div>
     <div class="row">
       <div class="col-md-6">
-          <h2>Movimientos de Inventario</h2>
-        
+        <h2>Movimientos de Inventario</h2>
+
       </div>
       <div class="col-md-6  justify-content-end ">
-          <fn-create-movement href="new-movement"></fn-create-movement>
+        <fn-create-movement href="new-movement"></fn-create-movement>
       </div>
-  </div>
+    </div>
     <fn-datepicker-range-popup (onFilter)="filterByDate($event)"
       (onClearFilter)="clearFilters()"></fn-datepicker-range-popup>
     <div class="container my-2">
       <fn-create-movement href="new-movement"></fn-create-movement>
-      <button class="btn btn-primary mx-2" (click)="downloadPDF()">Exportar PDF</button>
+      <button *ngIf="actualRole !== 'Operario'" class="btn btn-primary mx-2" (click)="downloadPDF()">Exportar
+        PDF</button>
     </div>
 
     <div class="alert alert-warning alert-dismissible fade show" role="alert"
@@ -40,16 +41,15 @@
 
       <tbody *ngFor="let movimiento of this.movimientos;let i = index">
         <tr>
-          <td>{{ i+1 }}<i class="bi bi-info"
-            data-bs-toggle="tooltip" data-bs-placement="top" title="{{movimiento.remarks}}yu"
-            style="cursor: pointer; font-size: 20px; margin-right: 5px;"></i></td>
+          <td>{{ i+1 }}<i class="bi bi-info" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="{{movimiento.remarks}}yu" style="cursor: pointer; font-size: 20px; margin-right: 5px;"></i></td>
           <td>{{ movimiento.operator }}</td>
           <td>{{ movimiento.date }}</td>
           <td>{{ getMovementTypeTranslate(movimiento.movement_type ) }}</td>
           <td>{{ (movimiento.is_internal)? 'Interno' : 'Externo' }}</td>
           <td (click)="showDetail(i)"><i
               [class]="(mostrarDetalleMovimiento ===i && mostrarDetalle) ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
-            </td>
+          </td>
         </tr>
         <tr *ngIf="this.mostrarDetalleMovimiento === i">
           <td colspan="5">
@@ -115,8 +115,8 @@
       </li>
     </ul>
   </div>
-  <div class="container">
+  <!-- <div class="container">
     <button class="btn btn-primary" (click)="downloadPDF()">Exportar PDF</button>
-  </div>
+  </div>-->
   <canvas id="myChart" style="position: absolute; left: -9999px;"></canvas>
 </div>

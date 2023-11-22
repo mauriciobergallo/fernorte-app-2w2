@@ -18,7 +18,7 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   movimientos: IMovementDto[] = [];
   isLoading: boolean = false;
   private subscripciones = new Subscription();
-
+  actualRole: string = '';
   currentPage = 1;
   totalPages = 1;
 
@@ -72,6 +72,9 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    let credential = JSON.parse(localStorage.getItem('credentials') || 'N/N');
+    this.actualRole = credential.role[1];
+
     this.getMovementsPage(this.currentPage);
 
     //this.fillTable();
