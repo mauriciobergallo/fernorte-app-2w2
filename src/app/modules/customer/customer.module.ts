@@ -38,6 +38,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
 import { InfoEmployeeComponent } from './components/info-employee/info-employee.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { jsPDF } from "jspdf";
 
 // const routes: Routes = [
 //   { component: LoginComponent, path: 'login' },
@@ -54,7 +55,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }, EmployeeService,
     RoleService, TurnService, LoginService, CustomerService, CaseConversionPipe, DatePipe, UserService],
   imports: [CommonModule, BrowserModule, ReactiveFormsModule, 
-    NgbModule, FormsModule, HttpClientModule, ReactiveFormsModule, CustomersRoutingModule],
+    NgbModule, FormsModule, HttpClientModule, ReactiveFormsModule, CustomersRoutingModule, ],
   exports: [HomeComponent, RouterModule],
 })
 export class CustomerModule {}

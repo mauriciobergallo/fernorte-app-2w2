@@ -5,6 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateCustomerComponent } from '../update-customer/update-customer.component';
 import { CreateCustomerComponent } from '../create-customer/create-customer.component';
 import { CustomerRequest } from '../../models/customer-request';
+import { jsPDF } from "jspdf";
+import 'jspdf-autotable';
 
 @Component({
   selector: 'fn-customer-list',
@@ -12,6 +14,109 @@ import { CustomerRequest } from '../../models/customer-request';
   styleUrls: ['./customer-list.component.css']
 })
 export class CustomerListComponent implements OnInit {
+
+
+
+downloadPDF() {
+  let data = this.customerList
+  const pdf = new jsPDF() as any;
+
+  let containsCompany = false;
+  let containsPerson = false;
+  let headers = [""];
+  let dataForPDF: any
+
+  data.forEach(element => {
+    if(element.customer_type == "Fisica"){
+      containsPerson = true;
+    }
+
+    if(element.customer_type == "Juridica"){
+      containsCompany = true
+    }
+    
+  });
+
+  if(containsCompany && !containsPerson){
+
+    headers = ["Empresa", "Condición de Iva",
+    "Email", "Telefono", "Fecha de nacimiento/fundación", "Dirección",
+  "Tipo de documento", "Documento", "Tipo de cliente", ];
+  
+  dataForPDF = this.customerList.map((item) => {
+    return [item.company_name, item.iva_condition,
+      item.email, item.phone_number, item.birth_date, item.address, item.document_type,
+    item.document_number, item.customer_type]; // Devuelve un array con los valores deseados
+  });
+  
+
+
+  }
+
+  if(!containsCompany && containsPerson){
+    
+    headers = ['Nombre', 'Apellido',  "Condición de Iva",
+    "Email", "Telefono", "Fecha de nacimiento/fundación", "Dirección",
+  "Tipo de documento", "Documento", "Tipo de cliente", ];
+  
+  dataForPDF = this.customerList.map((item) => {
+    return [item.first_name, item.last_name,  item.iva_condition,
+      item.email, item.phone_number, item.birth_date, item.address, item.document_type,
+    item.document_number, item.customer_type]; // Devuelve un array con los valores deseados
+  });
+  
+
+  }
+
+
+  if(containsCompany && containsPerson){
+     headers = ['Nombre', 'Apellido', "Empresa", "Condición de Iva",
+  "Email", "Telefono", "Fecha de nacimiento/fundación", "Dirección",
+"Tipo de documento", "Documento", "Tipo de cliente", ];
+
+dataForPDF = this.customerList.map((item) => {
+  
+  return [item.first_name, item.last_name, item.company_name, item.iva_condition,
+    item.email, item.phone_number, item.birth_date, item.address, item.document_type,
+  item.document_number, item.customer_type]; // Devuelve un array con los valores deseados
+});
+
+
+  }
+
+
+
+
+  // dataForPDF = this.customerList.map((item) => {
+  //   return [item.first_name, item.last_name]; // Devuelve un array con los valores deseados
+  // });
+  
+data = dataForPDF;
+
+
+this.generatePdf(data, headers, "Listado de clientes");
+
+}
+
+
+  generatePdf(data: any[], columns: any[], title: string): void {
+    const doc = new jsPDF() as any;
+
+    // Configurar título
+    doc.text(title, 10, 10);
+
+
+    // Configurar la tabla
+    doc.autoTable({
+      head: [columns],
+      body: data,
+    });
+
+    // Guardar o mostrar el PDF
+    doc.save('table.pdf');
+  }
+
+
 
   customerList: Customer[] = [];
   searchInput: string = "";
@@ -67,6 +172,7 @@ export class CustomerListComponent implements OnInit {
       id_customer: 2,
       first_name: "Jane",
       last_name: "Smith",
+      company_name: "ABC Inc",
       email: "jane.smith@example.com",
       phone_number: "987-654-3210",
       birth_date: new Date("1985-05-15"),
@@ -75,6 +181,20 @@ export class CustomerListComponent implements OnInit {
       customer_type: "Juridica",
       customer_category: "PLATA",
     },
+
+    {
+      id_customer: 3,
+      first_name: "",
+      last_name: "",
+      company_name: "Empresa Rodolfo",
+      email: "jane.smith@example.com",
+      phone_number: "987-654-3210",
+      birth_date: new Date("1985-05-15"),
+      document_number: "XYZ789",
+      document_type: "Passport",
+      customer_type: "Juridica",
+      customer_category: "PLATA",
+    }
     // Add more customer objects as needed
   ];
 
