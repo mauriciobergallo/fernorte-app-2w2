@@ -1,10 +1,10 @@
-<ng-template #content let-modal>
-	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Registrar Cliente</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-	</div>
+
+<div class="modal-header">
+	<h4 class="modal-title" id="modal-basic-title">Registrar Cliente</h4>		
+	<button type="button" class="btn-close" aria-label="Close" (click)="closeForm()"></button>
+</div>
 	<div class="modal-body">
-		<form #customerForm="ngForm"  (ngSubmit)="onSubmitForm(customerForm)">
+		<form #customerForm="ngForm"  (ngSubmit)="onSubmitForm()">
 
             <div>
                 <div class="form-check">
@@ -119,15 +119,14 @@
 				  <div class="text-danger" *ngIf="controlPhoneNumber.invalid && controlPhoneNumber.touched">Ingrese el numero de telefono del cliente </div>
 				</div>
 			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-outline-secondary mt-3" (click)="showCancelConfirmation()">Cancelar</button>
+				<button type="button" class="btn btn-outline-primary mt-3" (click)="showConfirmation()">Registrar</button>
+			</div>
 
 		</form>
-	</div>
-	<div class="modal-footer">
-		<button type="submit" class="btn btn-outline-dark" [disabled]="!customerForm.valid" (click)="modal.close(customerForm)">Registrar</button>
-	</div>
-</ng-template>
+	
 
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Registrar Cliente</button>
 
-<hr />
+
 

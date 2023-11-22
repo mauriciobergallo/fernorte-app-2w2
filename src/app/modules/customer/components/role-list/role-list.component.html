@@ -1,9 +1,18 @@
-<div class="row">
-  <div class="col-lg-6">
-    <h2>Roles</h2>
+<div class="container">
+  <h1 class="h1">Roles</h1>
+  <hr>
+
+  <div class="row">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <label class="mx-2">Agregar Rol</label>
+      <button class="btn btn-success" (click)="openNewRoleModal()">
+        <i class="bi bi-plus"></i>
+      </button>
+    </div>
+  </div>
     <form [formGroup]="searchForm">
-      <div class="mb-3">
-        <label for="areaFilter" class="form-label">Filtrar por Departamento:</label>
+      <div class="mb-3 col-md-4">
+        <h4 class="h4">Filtrar:</h4>
         <div class="input-group">
           <select id="areaFilter" class="form-select form-control-sm" formControlName="selectedArea">
             <option value="" selected>Todos</option>
@@ -13,15 +22,11 @@
       </div>
     </form>
   </div>
-  <div class="col-lg-6">
-    <div class="mb-3 d-flex align-items-center justify-content-center" style="height: 100%;">
-      <label class="mx-2">Agregar Rol</label>
-      <button class="btn btn-success" (click)="openNewRoleModal()">
-        <i class="bi bi-plus"></i> 
-      </button>  
-    </div>
-  </div>
-</div>
+  <br>
+ 
+
+  
+
   <table class="table container">
     <thead>
       <tr>

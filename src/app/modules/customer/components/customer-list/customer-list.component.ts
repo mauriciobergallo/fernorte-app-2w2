@@ -3,6 +3,8 @@ import { CustomerService } from '../../services/customer.service';
 import { Customer } from '../../models/customer';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateCustomerComponent } from '../update-customer/update-customer.component';
+import { CreateCustomerComponent } from '../create-customer/create-customer.component';
+import { CustomerRequest } from '../../models/customer-request';
 
 @Component({
   selector: 'fn-customer-list',
@@ -28,6 +30,21 @@ export class CustomerListComponent implements OnInit {
   //Este mock tiene que remplazarse por un getall de clientes, podría hacerse en el loadUser
   //La lista "customers" va a tener un valor inmutable, mientras que customerList va cambiando
   //Según los filtros que se apliquen
+
+  newCustomer: CustomerRequest =
+    {
+      firstName: '',
+      lastName: '',
+      companyName: '',
+      ivaCondition: '',
+      email: '',
+      birthDate: '',
+      idDocumentType:0, 
+      documentNumber: '', 
+      address: '',
+      phoneNumber: '',
+      customerType: '',
+    }
 
    customers: Customer[] = [
     {
@@ -241,6 +258,18 @@ customerTypeChange(event:any, userChange: boolean){
       this.modalService.open(this.updateCustomerModal);
       console.log('se abrio el modal del cliente');
       
+    });
+  }
+
+  openNewCustomerModal() {
+   
+    const modalRef = this.modalService.open(CreateCustomerComponent, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' });
+     
+    modalRef.componentInstance.updateClicked.subscribe(() => {
+      // Abrir el modal del formulario de actualización
+      this.modalService.open(this.newCustomer);
+      console.log('se abrio el modal del cliente');
+
     });
   }
 }

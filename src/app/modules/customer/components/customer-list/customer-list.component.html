@@ -2,6 +2,15 @@
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <div class="container">
   <h1>Clientes</h1>
+  <hr>
+  <div class="row">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <label class="mx-2">Agregar Cliente</label>
+      <button class="btn btn-success" (click)="openNewCustomerModal()">
+        <i class="bi bi-plus"></i> 
+      </button>  
+    </div>
+  </div>
   <h4 class="h4">Filtrar:</h4>
   <div class="row">
     <div class="col-md-4">
@@ -9,9 +18,9 @@
       (input)="filterName($event, true)">
     </div>
 
-    <div class="col-md-4">
-      <select (change)="categoryChange($event, true)" id="medallas">
-        <option value="todos">Todos</option>
+    <div class="col-md-4">      
+      <select (change)="categoryChange($event, true)" class="form-select form-control-sm" id="medallas">
+        <option value="todos">Categoría de Cliente</option>
         <option value="ORO">Oro</option>
         <option value="PLATA">Plata</option>
         <option value="BRONCE">Bronce</option>
@@ -19,13 +28,16 @@
     </div>
 
     <div class="col-md-4">
-      <select (change)="customerTypeChange($event, true)" id="medallas">
-        <option value="todos">Todos</option>
+      <select (change)="customerTypeChange($event, true)" id="medallas" class="form-select form-control-sm" id="medallas">
+        <option value="todos">Tipo de Cliente</option>
         <option value="Fisica">Fisica</option>
         <option value="Juridica">Juridica</option>
         
     </select>
     </div>
+    <br>
+  
+  <br>
 
   <table class="table">
     <thead>

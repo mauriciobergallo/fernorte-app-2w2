@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CustomerRequest } from '../../models/customer-request';
-import { NgForm } from '@angular/forms';
+import { FormGroup, NgForm } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from '../../services/customer.service';
 import { DatePipe } from '@angular/common';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -13,8 +14,8 @@ import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
   templateUrl: './create-customer.component.html',
   styleUrls: ['./create-customer.component.css']
 })
-export class CreateCustomerComponent {
-customerForm!: NgForm;
+export class CreateCustomerComponent implements OnInit{
+customerForm!: FormGroup;
 
 formattedBirthDate: string = '';
 
@@ -65,6 +66,14 @@ customerType: ""
 				day: currentDate.getDate()
 			  };
 	}
+	ngOnInit(): void {
+		throw new Error('Method not implemented.');
+	}
+
+	closeForm() {
+		this.modalService.dismissAll();
+	}
+
 
 	open(content: any) {
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then(
@@ -145,9 +154,74 @@ customerType: ""
 
 
  
-	onSubmitForm(customerForm: NgForm){
-		console.log("customerEE", customerForm);
+  onSubmitForm() {
+	if (this.customerForm.valid) {
+		// Realizar conversión a snake_case aquí antes de enviar al servidor
+		const customerData = this.conversion.toSnakeCase(this.customerForm.value);
+
+		let newCustomer: any = {
+			first_name: this.customerForm.value.firstName,
+			last_name: this.customerForm.value.lastName,
+			birth_date: this.formattedBirthDate,
+			document_type: this.customerForm.value.documentType,
+			address: this.customerForm.value.address,
+			phone_number: this.customerForm.value.phoneNumber,
+			document_number: this.customerForm.value.documentNumber,
+			personal_email: this.customerForm.value.personalEmail,
+		  };
+		  let customerInSnake = this.conversion.toSnakeCase(newCustomer);
+
+		this.customerService.postCustomer(customerInSnake).subscribe(
+			(newCustomer: CustomerRequest) => {
+
+				this.modalService.dismissAll(newCustomer);
+				console.log(customerData);
+				Swal.fire('Éxito', 'Cliente registrado correctamente', 'success');
+				this.customerService.notifyEmployeeUpdated();
+			},
+			(error) => {
+				Swal.fire('Error', 'No se pudo registrar al cliente', 'error');
+			}
+		);
+	} else {
+		// El formulario no es válido, puedes mostrar un mensaje de error o hacer algo más
+		Swal.fire('Error', 'El formulario no es válido', 'error');
+		this.customerForm.markAllAsTouched();
 	}
+}
+
+showCancelConfirmation() {
+	Swal.fire({
+		title: '¿Está seguro que desea cancelar la operacion?',
+		text: 'Si cancela, perderá los datos ingresados.',
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Sí',
+		cancelButtonText: 'No'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			// Acción a realizar si el usuario confirma la cancelación
+			this.closeForm();
+		}
+	});
+}
+
+showConfirmation() {
+	// Utiliza SweetAlert o el método que prefieras para mostrar una confirmación
+	Swal.fire({
+		title: '¿Estás seguro?',
+		text: '¿Quieres Registrar al nuevo cliente?',
+		icon: 'question',
+		showCancelButton: true,
+		confirmButtonText: 'Sí',
+		cancelButtonText: 'Cancelar'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			// Lógica para agregar el rol
+			this.onSubmitForm();
+		}
+	});
+}
 	
 
 }

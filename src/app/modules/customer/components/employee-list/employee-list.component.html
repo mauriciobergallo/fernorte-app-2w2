@@ -31,12 +31,14 @@
       </div>
     </div>
   </div>
+  <br>
+  
+  <br>
 
   <table class="table container">
     <thead>
       <tr>
-        <th scope="col" class="text-center col-2">Nombre</th>
-        <th scope="col" class="text-center col-2">Apellido</th>
+        <th scope="col" class="text-center col-2">Nombre Completo</th>        
         <th scope="col" class="text-center col-2">Documento</th>
         <!-- <th scope="col" class="text-center">Tipo de Documento</th> -->
         <th scope="col" class="text-center col-2">Estado</th>
@@ -45,8 +47,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let e of employeeList">
-        <td class="text-center">{{ e.firstName }}</td>
-        <td class="text-center">{{ e.lastName }}</td>
+        <td *ngIf="e.firstName != '' && e.lastName != '' " class="text-center">{{ e.firstName }} {{ e.lastName }}</td>
+        
         <td class="text-center">{{ e.documentType }} - {{ e.documentNumber }}</td>
         <!-- <td class="text-center"></td> -->
         <td *ngIf="e.isActive" class="text-center"><span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">

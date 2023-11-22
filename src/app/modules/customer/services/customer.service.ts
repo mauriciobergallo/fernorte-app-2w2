@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Customer } from '../models/customer';
 import { CustomerRequest } from '../models/customer-request';
 
@@ -9,6 +9,8 @@ export class CustomerService {
   constructor(private http: HttpClient) {}
 
   private apiUrl = 'http://localhost:8089/customers';
+
+  private customerUpdatedSubject = new BehaviorSubject<void>(undefined);
 
   //Post
   createCustomer(customer: CustomerRequest) {
@@ -42,4 +44,13 @@ export class CustomerService {
   getAllCustomer(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl +'/');
   }
+
+  getEmployeeUpdatedObservable(): Observable<void> {
+    return this.customerUpdatedSubject.asObservable();
+  }
+
+  notifyEmployeeUpdated() {
+    this.customerUpdatedSubject.next();
+  }
+  
 }

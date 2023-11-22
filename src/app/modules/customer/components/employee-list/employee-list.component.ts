@@ -226,25 +226,37 @@ export class EmployeeListComponent implements OnInit {
     return this.employeeList.filter(empleado => empleado.isActive);
   }
 
-
-
   openNewEmployeeModal() {
+   
     const modalRef = this.modalService.open(EmployeeRegistrationComponent, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' });
-    modalRef.componentInstance.newEmployeeForm = this.newEmployee;
+     
+    modalRef.componentInstance.updateClicked.subscribe(() => {
+      // Abrir el modal del formulario de actualización
+      this.modalService.open(this.newEmployeeModal);
+      console.log('se abrio el modal del empleado');
 
-    modalRef.result.then(
-      (newEmp: EmployeeResponseDTO) => {
-        if (newEmp) {
-          this.employeeList.push(newEmp);
-          console.log('Roles después de agregar:', this.employeeList);
-
-
-          this.isCreateEmployeeModalOpen = false;
-        }
-      },
-      (reason) => {
-      }
-    );
+    });
   }
+
+
+
+  // openNewEmployeeModal() {
+  //   const modalRef = this.modalService.open(EmployeeRegistrationComponent, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' });
+  //   modalRef.componentInstance.newEmployeeForm = this.newEmployee;
+
+  //   modalRef.result.then(
+  //     (newEmp: EmployeeResponseDTO) => {
+  //       if (newEmp) {
+  //         this.employeeList.push(newEmp);
+  //         console.log('Empleados después de agregar:', this.employeeList);
+
+
+  //         this.isCreateEmployeeModalOpen = false;
+  //       }
+  //     },
+  //     (reason) => {
+  //     }
+  //   );
+  // }
 
 }
