@@ -91,10 +91,13 @@ export class SectionsComponent {
     ]);
   }
 
-  updateZoneCategory(event: Event): void {
-    if (event.target instanceof HTMLInputElement) {
-      this.sectionCategory = event.target.value;
-    }
+  updateZoneCategory(event: any): void {
+    console.log('SECCION', event.target?.value);
+    this.sectionCategory = event.target.value;
+    // if (event.target instanceof HTMLInputElement) {
+    //   this.sectionCategory = event.target.value;
+    //   console.log('SECCION', this.sectionCategory);
+    // }
   }
 
   updateZoneName(event: Event): void {
@@ -111,39 +114,42 @@ export class SectionsComponent {
     setTimeout(() => {
       if (section.spaces.length > 0) {
         Swal.fire({
-          title: 'Desea eliminar la sección?',
-          text: 'Está sección contiene espacios definidos, desea eliminarla igualmente?',
+          title: `¿Está seguro que desea eliminar ${section.name}?`,
+          text: '¡No podrás revertir esto!',
           icon: 'warning',
           showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Sí',
+          confirmButtonColor: '#dc3545',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: '¡Sí, bórrar!',
+          cancelButtonText: 'Cancelar',
         }).then((result) => {
           if (result.isConfirmed) {
             this.service.removeSection(this.zone.Id, section);
 
             Swal.fire({
-              title: 'Sección Eliminada!',
-              text: '',
+              title: '¡Éxito!',
+              text: 'Operación ejecutada con éxito.',
               icon: 'success',
             });
           }
         });
       } else {
         Swal.fire({
-          title: 'Desea eliminar la sección?',
-          text: '',
+          title: `¿Está seguro que desea eliminar ${section.name}?`,
+          text: '¡No podrás revertir esto!',
           icon: 'warning',
           showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Sí',
+          confirmButtonColor: '#dc3545',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: '¡Sí, bórrar!',
+          cancelButtonText: 'Cancelar',
         }).then((result) => {
           if (result.isConfirmed) {
             this.service.removeSection(this.zone.Id, section);
+
             Swal.fire({
-              title: 'Sección Eliminada!',
-              text: '',
+              title: '¡Éxito!',
+              text: 'Operación ejecutada con éxito.',
               icon: 'success',
             });
           }

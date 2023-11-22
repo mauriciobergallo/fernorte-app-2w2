@@ -236,19 +236,20 @@ export class SpacesComponent {
   eliminarZona(space: Space): void {
     setTimeout(() => {
       Swal.fire({
-        title: 'Desea eliminar el espacio?',
-        text: '',
+        title: `¿Está seguro que desea eliminar ${space.name}?`,
+        text: '¡No podrás revertir esto!',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí',
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: '¡Sí, bórrar!',
+        cancelButtonText: 'Cancelar',
       }).then((result) => {
         if (result.isConfirmed) {
           this.service.removeSpace(this.zone.Id, this.section.Id, space);
           Swal.fire({
-            title: 'Espacio Eliminado!',
-            text: '',
+            title: '¡Éxito!',
+            text: 'Operación ejecutada con éxito.',
             icon: 'success',
           });
         }

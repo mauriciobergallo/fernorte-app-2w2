@@ -16,6 +16,27 @@ export class LocationService {
       mts2: 5000,
       sections: [
         {
+          Id: 4,
+          name: 'SALON-C',
+          categoryName: 'Construcción',
+          maxCapacity: 60,
+          spaces: [],
+        },
+        {
+          Id: 5,
+          name: 'SALON-PA',
+          categoryName: 'Pintura y Acabados',
+          maxCapacity: 40,
+          spaces: [],
+        },
+        {
+          Id: 6,
+          name: 'SALON-P',
+          categoryName: 'Plomería',
+          maxCapacity: 35,
+          spaces: [],
+        },
+        {
           Id: 2,
           name: 'SALON-HM',
           categoryName: 'Herramientas Manuales',
@@ -81,27 +102,6 @@ export class LocationService {
           spaces: [],
         },
         {
-          Id: 4,
-          name: 'SALON-C',
-          categoryName: 'Construcción',
-          maxCapacity: 60,
-          spaces: [],
-        },
-        {
-          Id: 5,
-          name: 'SALON-PA',
-          categoryName: 'Pintura y Acabados',
-          maxCapacity: 40,
-          spaces: [],
-        },
-        {
-          Id: 6,
-          name: 'SALON-P',
-          categoryName: 'Plomería',
-          maxCapacity: 35,
-          spaces: [],
-        },
-        {
           Id: 7,
           name: 'SALON-E',
           categoryName: 'Electricidad',
@@ -136,25 +136,25 @@ export class LocationService {
           maxCapacity: 30,
           spaces: [],
         },
-        {
-          Id: 101,
-          name: 'AC',
-          categoryName: 'Sección 1',
-          maxCapacity: 30,
-          spaces: [
-            {
-              Id: 1001,
-              name: 'Espacio 1-1',
-              quantity: 10,
-              measureUnit: 'metros cuadrados',
-              maxCapacity: 15,
-              productId: 201,
-              productName: 'Producto X',
-              remarks: 'Este espacio es para eventos pequeños',
-            },
-            // Agrega más espacios según sea necesario
-          ],
-        },
+        // {
+        //   Id: 101,
+        //   name: 'AC',
+        //   categoryName: 'Sección 1',
+        //   maxCapacity: 30,
+        //   spaces: [
+        //     {
+        //       Id: 1001,
+        //       name: 'Espacio 1-1',
+        //       quantity: 10,
+        //       measureUnit: 'metros cuadrados',
+        //       maxCapacity: 15,
+        //       productId: 201,
+        //       productName: 'Producto X',
+        //       remarks: 'Este espacio es para eventos pequeños',
+        //     },
+        //     // Agrega más espacios según sea necesario
+        //   ],
+        // },
         // Agrega más secciones según sea necesario
       ],
     },

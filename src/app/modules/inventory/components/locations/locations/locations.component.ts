@@ -35,12 +35,10 @@ export class LocationsComponent implements OnInit {
   }
 
   getOcupacionTotal(): number {
-    // Asegúrate de que this.zonas esté definido
     if (!this.zonas || this.zonas.length === 0) {
-      return 0; // Retorna 0 si no hay zonas definidas
+      return 0;
     }
 
-    // Calcula la ocupación total sumando los mts2 de cada zona
     const ocupacionTotal = this.zonas.reduce(
       (total, zona) => total + zona.maxCapacity,
       0
@@ -49,7 +47,6 @@ export class LocationsComponent implements OnInit {
     return ocupacionTotal;
   }
   updateZoneCapacity(event: Event): void {
-    // Verificar si el objetivo del evento es un elemento de entrada
     if (event.target instanceof HTMLInputElement) {
       this.zoneCapacity = parseInt(event.target.value, 10);
     }
@@ -68,20 +65,16 @@ export class LocationsComponent implements OnInit {
       document.body.removeChild(backdropElement);
     }
 
-    // Remove the modal-open class from the body
     document.body.classList.remove('modal-open');
   }
 
   updateZoneName(event: Event): void {
-    // Verificar si el objetivo del evento es un elemento de entrada
     if (event.target instanceof HTMLInputElement) {
       this.zoneName = event.target.value;
     }
   }
 
   cargarZona(zona: Zone): void {
-    // Verificar si el objetivo del evento es un elemento de entrada
-
     this.zone = zona;
     console.log(this.zone);
   }
@@ -90,39 +83,40 @@ export class LocationsComponent implements OnInit {
     setTimeout(() => {
       if (zona.sections.length > 0) {
         Swal.fire({
-          title: 'Desea eliminar la zona?',
-          text: 'Está zona contiene secciones definidas, desea eliminarla igualmente?',
+          title: `¿Está seguro que desea eliminar ${zona.name}?`,
+          text: '¡No podrás revertir esto!',
           icon: 'warning',
           showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Sí',
+          confirmButtonColor: '#dc3545',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: '¡Sí, bórrar!',
+          cancelButtonText: 'Cancelar',
         }).then((result) => {
           if (result.isConfirmed) {
             this.service.removeZone(zona);
-
             Swal.fire({
-              title: 'Zona Eliminada!',
-              text: '',
+              title: '¡Éxito!',
+              text: 'Operación ejecutada con éxito.',
               icon: 'success',
             });
           }
         });
       } else {
         Swal.fire({
-          title: 'Desea eliminar la zona?',
-          text: '',
+          title: `¿Está seguro que desea eliminar ${zona.name}?`,
+          text: '¡No podrás revertir esto!',
           icon: 'warning',
           showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Sí',
+          confirmButtonColor: '#dc3545',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: '¡Sí, bórrar!',
+          cancelButtonText: 'Cancelar',
         }).then((result) => {
           if (result.isConfirmed) {
             this.service.removeZone(zona);
             Swal.fire({
-              title: 'Zona Eliminada!',
-              text: '',
+              title: '¡Éxito!',
+              text: 'Operación ejecutada con éxito.',
               icon: 'success',
             });
           }

@@ -1,6 +1,7 @@
 <div class="container mt-4">
-  <h2 class="text-center">Espacios</h2>
-  <br>
+  <div class="px-4 py-4 my-2">
+    <h2 class="">Espacios</h2>
+  </div>
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
       <button type="button" class="btn btn-secondary  mx-2" (click)="backToSections()"> Volver </button>
@@ -29,6 +30,7 @@
             <th class="text-center">Nombre</th>
             <th class="text-center">Producto</th>
             <th class="text-center">Capacidad Máxima</th>
+
             <th class="text-center">Unidad de Medida</th>
             <th class="text-center">Acciones</th>
           </tr>
@@ -39,6 +41,7 @@
             <td class="text-center">{{ item.name }}</td>
             <td class="text-center">{{ item.productName}}</td>
             <td class="text-center">{{ item.maxCapacity }}</td>
+
             <td class="text-center">{{ item.measureUnit }}</td>
 
 
@@ -100,6 +103,7 @@
               (input)="updateZoneCapacity($event)">
             <small class="text-muted">Máxima Capacidad Permitida: {{ totalCapacity - getOcupacionTotal() }}</small>
           </div>
+
           <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Detalles:</label>
             <textarea class="form-control" id="exampleFormControlTextarea1" (change)="updateRemarks($event)"
