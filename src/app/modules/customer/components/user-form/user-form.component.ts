@@ -21,7 +21,7 @@ export class UserFormComponent implements OnInit {
 
   @Output() closeComponent= new EventEmitter<boolean>();
 
-  userForm: FormGroup;
+  userForm: FormGroup = new FormGroup({});
 
   @Output() userCreated = new EventEmitter<string>(); //SweetAlert?
 
@@ -29,12 +29,7 @@ export class UserFormComponent implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private roleService: RoleService
-  ) {
-    this.userForm = this.formBuilder.group({
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      selectedRole: ['', Validators.required],
-    });
-  }
+  ) {}
 
   removeRole(role: string) {
     const index = this.roles_name.indexOf(role);
@@ -54,6 +49,11 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userForm = this.formBuilder.group({
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      selectedRole: ['', Validators.required],
+    });
+
     this.roleService.getAllWithFormat().subscribe((roles: NewRole[]) => {
       console.log(roles);
       this.availableRoles = roles;

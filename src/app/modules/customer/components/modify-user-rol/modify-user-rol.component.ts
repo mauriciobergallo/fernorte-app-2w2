@@ -5,6 +5,7 @@ import { RoleService } from '../../services/role.service';
 import { UserService } from '../../services/user.service';
 import { UserResponseDTO } from '../../models/userResponseDTO';
 import { Role } from '../../models/role';
+import { NewRole } from '../../models/new-role';
 
 @Component({
   selector: 'fn-modify-user-rol',
@@ -20,10 +21,11 @@ export class ModifyUserRolComponent{
 	userName: string = '';
 	userExist: boolean = false;
   	user: UserResponseDTO | null = null;
-	allRoles: Role[] = [];
-	assignedRoles: Role[] = [];
-	unassignedRoles: Role[] = [];
-	selectedRole: Role | null = null;
+	allRoles: NewRole[] = [];
+	assignedRoles: NewRole[] = [];
+	unassignedRoles: NewRole[] = [];
+	selectedRole: NewRole | null = null;
+	selectedRoles: NewRole[] = [];
 
 	constructor(private modalService: NgbModal, private userService: UserService,private roleService: RoleService) {
 
@@ -42,14 +44,14 @@ export class ModifyUserRolComponent{
 
 		}).result.then(
 			(result) => {
-
+				
 				console.log("CONTENT", content);
 				console.log("RESULT", result);
 				console.log("USERROL FORM", this.userRolForm);
 				this.closeResult = `Closed with: ${result}`;
 
 				if(this.user){
-					this.userService.modifyUserRoles(this.user).subscribe((updatedUser) => 
+					this.userService.modifyUserRoles(this.user, this.selectedRoles).subscribe((updatedUser) => 
 					console.log(updatedUser));
 				}
 			},
@@ -65,13 +67,17 @@ export class ModifyUserRolComponent{
 			(user) => {
 				this.user = user;
 				this.userExist = true;
-
+				let role = this.allRoles.filter(itemA => user.roles.some(itemB => itemA.name === itemB.name));
+				role.forEach(element => {
+					this.selectedRoles.push(element)
+				});
 				//Obtiene los roles no asignados para el usuario
 				this.availableRoles();
 
-				console.log(this.user.roles);
-				console.log(this.allRoles);
-				console.log(this.unassignedRoles);
+				console.log(this.selectedRoles)
+				// console.log(this.user.roles);
+				// console.log(this.allRoles);
+				// console.log(this.unassignedRoles);
 			},
 			(error) => {
 				this.user = null;
@@ -99,6 +105,7 @@ export class ModifyUserRolComponent{
 		if (this.user && this.selectedRole) {
 			// Agrega el rol seleccionado al usuario
 			this.user.roles.push(this.selectedRole);
+			this.selectedRoles.push(this.selectedRole)
 			this.selectedRole = null;
 			this.availableRoles();
 		}
@@ -108,6 +115,7 @@ export class ModifyUserRolComponent{
 		if (this.user && roleToDelete) {
 		  	// Elimina el rol seleccionado del usuario
 		  	this.user.roles = this.user.roles.filter(role => role !== roleToDelete);
+			this.selectedRoles = this.selectedRoles.filter(role => role.name !== roleToDelete.name);
 			this.availableRoles();
 		}
 	}

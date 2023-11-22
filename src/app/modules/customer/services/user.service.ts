@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Role } from '../models/role';
 import { UserResponseDTO } from '../models/userResponseDTO';
 import { User } from '../models/user';
+import { NewRole } from '../models/new-role';
 
 @Injectable()
 export class UserService {
@@ -37,15 +38,19 @@ export class UserService {
     return this.http.post(this.apiUrlnewUser, user, { headers });
   }
 
-  modifyUserRoles(userResponse: UserResponseDTO): Observable<UserResponseDTO> {
+  modifyUserRoles(userResponse: any, roles: NewRole[]): Observable<UserResponseDTO> {
+    let idRoles: number[] = []
+    roles.forEach(element => {
+      idRoles.push(element.id_role);
+    });
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<UserResponseDTO>(this.baseUrl, userResponse, {
+    return this.http.put<UserResponseDTO>(this.baseUrl+"/modify-roles/"+userResponse.username, idRoles, {
       headers,
     });
   }
 
   getUserByUsername(username: string): Observable<UserResponseDTO> {
-    const url = `${this.baseUrl}/${username}`;
+    const url = `${this.baseUrl}/?username=${username}`;
     return this.http.get<UserResponseDTO>(url);
   }
 
