@@ -9,6 +9,9 @@ import { DeliveryOrderDetailsComponent } from './components/consult-order/delive
 import { HomeComponent } from './components/home/home.component';
 import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
 import { CreateMovementComponent } from './components/create-movement/create-movement.component';
+import { LocationComponent } from './components/location/location.component';
+import { SectionsComponent } from './components/sections/sections.component';
+import { SpaceComponent } from './components/space/space.component';
 
 /*
 const routes: Routes = [
@@ -35,6 +38,19 @@ const routes: Routes = [
       { path: 'new-movement', component: CreateMovementComponent },
       { path: 'storage-tickets', component: SearchStorageTicketComponent },
       { path: 'current-inventory', component: CurrentInventoryComponent },
+      { path: 'locations',
+          children: [
+            { path: '', component: LocationComponent },
+            {
+              path: ':id/section',
+              children:
+              [
+                {path: '', component: SectionsComponent},
+                {path: ':sectionId/spaces', component: SpaceComponent},
+              ]
+            },
+      ],
+      },
       {
         path: 'orders',
         children: [

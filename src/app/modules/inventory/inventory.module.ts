@@ -21,6 +21,9 @@ import { RouterModule } from '@angular/router';
 import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
 import { CreateMovementComponent } from './components/create-movement/create-movement.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { LocationComponent } from './components/location/location.component';
+import { SectionsComponent } from './components/sections/sections.component';
+import { SpaceComponent } from './components/space/space.component';
 
 
 @NgModule({
@@ -38,7 +41,10 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     StateIconPipePipe,
     DeliveryOrderDetailsComponent,
     ReceptionOrderDetailsComponent,
-    CreateMovementComponent
+    CreateMovementComponent,
+    LocationComponent,
+    SectionsComponent,
+    SpaceComponent
   ],
 
   providers: [],
