@@ -3,8 +3,9 @@ import { WarehouseService } from '../../services/warehouse-service/warehouse.ser
 import { LocationInfoDto } from '../../models/location-info.interface';
 import { Subscription } from 'rxjs';
 import jsPDF from 'jspdf';
-//import 'jspdf-autotable';
+import 'jspdf-autotable';
 import { Chart } from 'chart.js';
+import { Pagination } from '../../models/pagination';
 
 @Component({
   selector: 'fn-current-inventory',
@@ -12,6 +13,7 @@ import { Chart } from 'chart.js';
   styleUrls: ['./current-inventory.component.css'],
 })
 export class CurrentInventoryComponent implements OnInit, OnDestroy {
+  locations: Pagination | undefined;
   locationInfoList: LocationInfoDto[] = [];
   originalList: LocationInfoDto[] = [];
   filteredList: LocationInfoDto[] = [];
@@ -30,11 +32,12 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
 
   private fillTable() {
     this.loading = true;
-    this.warehouseService.getLocationsInfo().subscribe({
-      next: (resp) => {
-        this.locationInfoList = resp;
-        this.filteredList = [...this.locationInfoList];
-        this.originalList = [...this.locationInfoList];
+    this.warehouseService.getLocationsInfoFiltered(0).subscribe({
+      next: (resp: Pagination) => {
+        this.locations = resp;
+        this.locationInfoList = resp.items;
+        this.filteredList = [...this.locations.items];
+        this.originalList = [...this.locations.items];
         this.loading = false;
       },
       error: (error) => {
@@ -131,6 +134,16 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
           animation: {
             duration: 0,
           },
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                font: {
+                  size: 25
+                }
+              }
+            }
+          }
         },
       });
 
@@ -145,8 +158,14 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
   }
 
   async downloadPDF() {
-    const dataTable = this.filteredList;
     const pdf = new jsPDF() as any;
+
+    const logoUrl = '/assets/logo.png'; 
+    const dataTable = this.filteredList;
+
+    const logoImage = await this.getImageData(logoUrl);
+  
+    pdf.addImage(logoImage, 'PNG', 150, 0, 50, 15);
     const headers = [
       'Producto',
       'Zona',
@@ -174,96 +193,118 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     const chartImage = await this.generateChart();
 
     if (chartImage) {
-      const imageWidth = 100;
-      const imageHeight = 100;
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
+    const imageWidth = 120; 
+    const imageHeight = 120; 
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
 
-      const x = (pdfWidth - imageWidth) / 2;
-      const y = 120;
+    const x = (pdfWidth - imageWidth) / 2;
+    const y = 100; 
 
-      pdf.addImage(chartImage, 'PNG', x, y, imageWidth, imageHeight);
+    pdf.addImage(chartImage, 'PNG', x, y, imageWidth, imageHeight);
+
     }
 
     pdf.save('reporte_inventario.pdf');
   }
+
+  async getImageData(url: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject('Could not create canvas context');
+          return;
+        }
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      img.onerror = (error) => reject(error);
+      img.src = url;
+    });
+  }
+
   previousPage() {}
   nextPage() {}
   locationInfoListMock: LocationInfoDto[] = [
     {
       location: {
-        zone: 'Zone A',
-        section: 'Section 1',
-        space: 'Space 101',
+        zone: 'Salón',
+        section: '1',
+        space: '101',
       },
       location_id: 1,
-      category_name: 'Category X',
-      product_name: 'Product Alpha',
+      category_name: 'Herramientas manuales',
+      product_name: 'Calibre Digital 1150d',
       quantity: 3,
       measure_unit: 1,
       max_capacity: 5,
     },
     {
       location: {
-        zone: 'Zone B',
-        section: 'Section 2',
-        space: 'Space 202',
+        zone: 'Nave',
+        section: '4',
+        space: '202',
       },
       location_id: 2,
-      category_name: 'Category Y',
-      product_name: 'Product Beta',
+      category_name: 'Herramientas eléctricas',
+      product_name: 'Amoladora angular 820w',
       quantity: 5,
       measure_unit: 2,
       max_capacity: 50,
     },
     {
       location: {
-        zone: 'Zone A',
-        section: 'Section 2',
-        space: 'Space 201',
+        zone: 'Patio',
+        section: '2',
+        space: '201',
       },
       location_id: 3,
-      category_name: 'Category Z',
-      product_name: 'Product Gamma',
+      category_name: 'Pavimentación',
+      product_name: 'Trompito hormiguero',
       quantity: 8,
       measure_unit: 3,
       max_capacity: 10,
     },
     {
       location: {
-        zone: 'Zone C',
-        section: 'Section 1',
-        space: 'Space 102',
+        zone: 'Salón',
+        section: '3',
+        space: '102',
       },
       location_id: 4,
-      category_name: 'Category W',
-      product_name: 'Product Delta',
+      category_name: 'Ferretería general',
+      product_name: 'Escalera telescópica Philco 13 escalones',
       quantity: 15,
       measure_unit: 1,
       max_capacity: 150,
     },
     {
       location: {
-        zone: 'Zone B',
-        section: 'Section 1',
-        space: 'Space 201',
+        zone: 'Patio',
+        section: '1',
+        space: '201',
       },
       location_id: 5,
-      category_name: 'Category A',
-      product_name: 'Product Epsilon',
+      category_name: 'Pavimentación',
+      product_name: 'Mezclador pintura/cemento Einhell Tc-mx 1200',
       quantity: 20,
       measure_unit: 2,
       max_capacity: 200,
     },
     {
       location: {
-        zone: 'Zone C',
-        section: 'Section 2',
-        space: 'Space 202',
+        zone: 'Patio',
+        section: '2',
+        space: '202',
       },
       location_id: 6,
-      category_name: 'Category B',
-      product_name: 'Product Zeta',
+      category_name: 'Accesorioes vehiculares',
+      product_name: 'Tuercas bulones antirrobo McGard Onix Prisma Spin',
       quantity: 7,
       measure_unit: 3,
       max_capacity: 70,

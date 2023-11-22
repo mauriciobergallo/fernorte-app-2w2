@@ -26,6 +26,7 @@ import { SectionsComponent } from './components/sections/sections.component';
 import { SpaceComponent } from './components/space/space.component';
 
 
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -45,6 +46,7 @@ import { SpaceComponent } from './components/space/space.component';
     LocationComponent,
     SectionsComponent,
     SpaceComponent
+    SpinnerComponent
   ],
 
   providers: [],

@@ -27,6 +27,35 @@ export class BookingServiceService {
       this.baseUrl + '/' + orderId + '/details'
     );
   }
+  getFilteredReceptionOrders(
+    page: number,
+    confirmedOrderOnly: boolean,
+    filterType: string,
+    filterValue: string
+  ): Observable<Pagination> {
+    if (filterValue === '' || filterType === '') {
+      return this.http.get<Pagination>(
+        this.baseUrl +
+          '/paginated?page=' +
+          page +
+          '&confirmed_orders_only=' +
+          confirmedOrderOnly
+      );
+    } else {
+      console.log('SERVICIO FILTRADO');
+      return this.http.get<Pagination>(
+        this.baseUrl +
+          '/paginated?page=' +
+          page +
+          '&confirmed_orders_only=' +
+          confirmedOrderOnly +
+          '&filter_type=' +
+          filterType +
+          '&filter_value=' +
+          filterValue
+      );
+    }
+  }
   updateReceptionOrder(
     orderData: IUpdateReceptionOrder
   ): Observable<IUpdatedOrderDto> {
