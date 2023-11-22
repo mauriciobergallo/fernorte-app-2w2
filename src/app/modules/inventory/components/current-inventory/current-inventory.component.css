@@ -1,5 +1,5 @@
 .prueba {
-    height: 200px; /* Set the desired height for the container */
-    overflow-y: hidden; /* Hide the vertical scrollbar initially */
-    border: 1px solid #ccc; /* Optional: Add a border for visibility */
+    height: 200px;
+    overflow-y: hidden; 
+    border: 1px solid #ccc;
   }

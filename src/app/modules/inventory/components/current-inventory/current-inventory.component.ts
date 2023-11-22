@@ -228,6 +228,49 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     });
   }
 
+ 
+
+  currentSort: { column: keyof LocationInfoDto, order: 'asc' | 'desc' } = { column: 'product_name', order: 'asc' };
+
+  sortData(column: keyof LocationInfoDto | string): void {
+    if (this.currentSort.column === column) {
+      this.currentSort.order = this.currentSort.order === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.currentSort.column = column as keyof LocationInfoDto;
+      this.currentSort.order = 'asc';
+    }
+  
+    this.filteredList = this.locationInfoList.sort((a, b) => {
+      const valueA = this.getPropertyValue(a, this.currentSort.column);
+      const valueB = this.getPropertyValue(b, this.currentSort.column);
+  
+      if (typeof valueA === 'string' && typeof valueB === 'string') {
+        return this.currentSort.order === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+      } else if (typeof valueA === 'number' && typeof valueB === 'number') {
+        return this.currentSort.order === 'asc' ? valueA - valueB : valueB - valueA;
+      } else {
+        
+        if (valueA instanceof Date && valueB instanceof Date) {
+          return this.currentSort.order === 'asc' ? valueA.getTime() - valueB.getTime() : valueB.getTime() - valueA.getTime();
+        } else {
+          return 0;
+        }
+      }
+    });
+  }
+
+   getPropertyValue(obj: any, propPath: string): any {
+    const props = propPath.split('.');
+    let value = obj;
+  
+    for (const prop of props) {
+      value = value[prop];
+    }
+  
+    return value;
+  }
+
+
   previousPage() {}
   nextPage() {}
   locationInfoListMock: LocationInfoDto[] = [
