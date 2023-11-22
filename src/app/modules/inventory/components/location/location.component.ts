@@ -59,6 +59,23 @@ export class LocationComponent implements OnInit {
     }
   }
 
+  closeInsertEspacioModal() {
+    const modalElement = document.getElementById('agregarUbicacionModal');
+    const backdropElement = document.querySelector('.modal-backdrop');
+  
+    if (modalElement) {
+      modalElement.classList.remove('show');
+      modalElement.style.display = 'none';
+    }
+  
+    if (backdropElement) {
+      document.body.removeChild(backdropElement);
+    }
+  
+    // Remove the modal-open class from the body
+    document.body.classList.remove('modal-open');
+  }
+
   updateZoneName(event: Event): void {
     // Verificar si el objetivo del evento es un elemento de entrada
     if (event.target instanceof HTMLInputElement) {
@@ -130,6 +147,7 @@ export class LocationComponent implements OnInit {
       this.zone.maxCapacity = this.zoneCapacity;
       this.zone.name = this.zoneName;
       this.service.insertZone(this.zone);
+      this.closeInsertEspacioModal();
       Swal.fire({
         
           icon: 'success',

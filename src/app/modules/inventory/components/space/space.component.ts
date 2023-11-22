@@ -6,7 +6,6 @@ import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router'
 import Swal from 'sweetalert2';
 import { Space } from '../../models/space';
 import { NgModel } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'fn-space',
   templateUrl: './space.component.html',
@@ -63,6 +62,8 @@ export class SpaceComponent implements OnInit {
   };  nuevaZona: any = {};
   sectionName = "";
   sectioCapacity: number = 0;
+  remarks: string='';
+
   sectionCategory : string = '';
   totalCapacity : number = 0;
   section: Section = 
@@ -73,7 +74,7 @@ export class SpaceComponent implements OnInit {
     maxCapacity: 0,
     spaces :[]
   };
-  constructor(private service: LocationService,private router: Router, private route: ActivatedRoute,private modalService: NgbModal){}
+  constructor(private service: LocationService,private router: Router, private route: ActivatedRoute){}
 
   ngOnInit(): void {
     const id = this.getZoneIdFromRouteSnapshot(this.route.snapshot);
@@ -104,19 +105,42 @@ export class SpaceComponent implements OnInit {
     console.log(this.sectioCapacity);
     return (this.getOcupacionTotal() + this.sectioCapacity) >= this.totalCapacity;
   }
+
+  
+  excedeCapacidadMaximaEdit(): boolean {
+   
+    return (this.getOcupacionTotalEdit() + this.sectioCapacity) >= this.totalCapacity;
+  }
   
   getOcupacionTotal(): number {
     if (!this.spaces || this.spaces.length === 0) {
       return 0;
     }
   
-    const ocupacionTotal = this.spaces.reduce((total, zona) => total + zona.maxCapacity, 0);
+    const ocupacionTotal = this.spaces.reduce((total, zona) => total + zona.maxCapacity , 0) ;
   
+    return ocupacionTotal;
+  }
+
+  getOcupacionTotalEdit(): number {
+    if (!this.spaces || this.spaces.length === 0) {
+      return 0;
+    }
+  
+    var ocupacionTotal = this.spaces.reduce((total, zona) => total + zona.maxCapacity , 0) ;
+    ocupacionTotal = ocupacionTotal- this.spaceToEdit.maxCapacity;
     return ocupacionTotal;
   }
   updateZoneCapacity(event: Event): void {
     if (event.target instanceof HTMLInputElement) {
       this.sectioCapacity = parseInt(event.target.value, 10);
+    }
+  }
+
+  updateRemarks(event: Event): void {
+    if (event.target instanceof HTMLInputElement) {
+      console.log(event.target.value);
+      this.remarks = event.target.value;
     }
   }
 
@@ -148,12 +172,59 @@ export class SpaceComponent implements OnInit {
     remarks: ''
   }
 
-  openEditarModal() {
-    this.modalService.open('editarModal', { centered: true, size: 'lg' });
+  openEditarEspacioModal(space : Space) {
+ // Abre el modal utilizando el ID único del espacio
+ this.spaceToEdit = space;
+ console.log(this.spaceToEdit);
+ const modalElement = document.getElementById('editarModal');
+
+ if (modalElement) {
+   modalElement.classList.add('show');
+   modalElement.style.display = 'block';
+
+   // Add the modal-open class to the body to show the overlay backdrop
+   document.body.classList.add('modal-open');
+
+   // Create and append the backdrop element
+   const backdropElement = document.createElement('div');
+   backdropElement.classList.add('modal-backdrop', 'fade', 'show');
+   document.body.appendChild(backdropElement);
+ }
   }
-  cargarEspacio(space: Space)
-  {
-    this.spaceToEdit = space;
+
+  closeEditarEspacioModal() {
+    const modalElement = document.getElementById('editarModal');
+    const backdropElement = document.querySelector('.modal-backdrop');
+  
+    if (modalElement) {
+      modalElement.classList.remove('show');
+      modalElement.style.display = 'none';
+    }
+  
+    if (backdropElement) {
+      document.body.removeChild(backdropElement);
+    }
+  
+    // Remove the modal-open class from the body
+    document.body.classList.remove('modal-open');
+  }
+
+
+  closeInsertEspacioModal() {
+    const modalElement = document.getElementById('agregarUbicacionModal');
+    const backdropElement = document.querySelector('.modal-backdrop');
+  
+    if (modalElement) {
+      modalElement.classList.remove('show');
+      modalElement.style.display = 'none';
+    }
+  
+    if (backdropElement) {
+      document.body.removeChild(backdropElement);
+    }
+  
+    // Remove the modal-open class from the body
+    document.body.classList.remove('modal-open');
   }
   eliminarZona(space: Space): void {
 
@@ -183,20 +254,22 @@ export class SpaceComponent implements OnInit {
 
   insertZone()
   {
+    console.log(this.remarks);
     this.space = 
     {
-      Id: 0,
+      Id: Math.floor(Math.random() * 30),
       name : this.sectionName,
       productId:29,
       quantity:10,
       productName: this.selectedProduct.name,
       measureUnit: this.selectedProduct.measureUnit,
       maxCapacity: this.sectioCapacity,
-      remarks: '',
+      remarks: this.remarks,
     };
     console.log(this.zone.Id);
     console.log(this.section.Id);
     this.service.insertSpace(this.zone.Id, this.section.Id,this.space);
+    this.closeInsertEspacioModal();
     setTimeout(() => {
 
       Swal.fire({
@@ -209,7 +282,36 @@ export class SpaceComponent implements OnInit {
 
   }
 
+  update()
+  {
+    this.space = 
+    {
+      Id: this.spaceToEdit.Id,
+      name : this.sectionName,
+      productId:29,
+      quantity:10,
+      productName: this.selectedProduct.name,
+      measureUnit: this.selectedProduct.measureUnit,
+      maxCapacity: this.sectioCapacity,
+      remarks:this.remarks,
+    };
+
+    this.service.update(this.zone.Id, this.section.Id,this.space);
+    setTimeout(() => {
+      this.closeEditarEspacioModal();
+      Swal.fire({
+        
+          icon: 'success',
+          title: '!Espacio actualizado con éxito!',
+          text: '',
+      });
+      
+  }, 100);
+
+  }
+
 }
+
 
 
 export class Product {

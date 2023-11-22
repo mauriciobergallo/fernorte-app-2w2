@@ -143,6 +143,23 @@ export class SectionsComponent  implements OnInit {
   }, 100);
   }
 
+
+  closeInsertEspacioModal() {
+    const modalElement = document.getElementById('agregarUbicacionModal');
+    const backdropElement = document.querySelector('.modal-backdrop');
+  
+    if (modalElement) {
+      modalElement.classList.remove('show');
+      modalElement.style.display = 'none';
+    }
+  
+    if (backdropElement) {
+      document.body.removeChild(backdropElement);
+    }
+  
+    // Remove the modal-open class from the body
+    document.body.classList.remove('modal-open');
+  }
   insertZone()
   {
     this.section = 
@@ -154,6 +171,7 @@ export class SectionsComponent  implements OnInit {
       spaces :[]
     };
     this.service.insertSection(this.zone.Id, this.section);
+    this.closeInsertEspacioModal();
     setTimeout(() => {
 
       Swal.fire({

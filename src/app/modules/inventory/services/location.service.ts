@@ -129,6 +129,27 @@ export class LocationService {
       }
     }
   }
+
+  update(idZona: number, idSection: number, space: Space) {
+    const zona = this.mockZones.find(p => p.Id === idZona);
+  
+    if (zona) {
+      const section = zona.sections.find(p => p.Id === idSection);
+  
+      if (section) {
+        const index = section.spaces.findIndex(s => s.Id === space.Id);
+  
+        if (index !== -1) {
+          // Update the existing space
+          section.spaces[index] = space;
+        } else {
+          // Space not found, you may want to handle this case based on your requirements
+          console.error(`Space with ID ${space.Id} not found.`);
+        }
+      }
+    }
+  }
+
   removeZone(zona: Zone)
   {
     var myIndex = this.mockZones.indexOf(zona);
