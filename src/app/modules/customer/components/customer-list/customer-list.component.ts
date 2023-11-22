@@ -53,9 +53,11 @@ downloadPDF() {
       socialReason = item.company_name
     } 
 
+    const formattedDate = `${item.birth_date.getDate()}/${item.birth_date.getMonth() + 1}/${item.birth_date.getFullYear()}`;
+
 
     return [socialReason, item.iva_condition,
-      item.email, item.phone_number, item.birth_date, item.address, item.document_type,
+      item.email, item.phone_number, formattedDate, item.address, item.document_type,
     item.document_number, item.customer_type]; // Devuelve un array con los valores deseados
   });
   
@@ -77,10 +79,11 @@ downloadPDF() {
     if (item.customer_type === "Juridica") {
       socialReason = item.company_name
     } 
+    const formattedDate = `${item.birth_date.getDate()}/${item.birth_date.getMonth() + 1}/${item.birth_date.getFullYear()}`;
 
 
     return [socialReason, item.iva_condition,
-      item.email, item.phone_number, item.birth_date, item.address, item.document_type,
+      item.email, item.phone_number, formattedDate, item.address, item.document_type,
     item.document_number, item.customer_type]; // Devuelve un array con los valores deseados
   });
 
@@ -88,7 +91,7 @@ downloadPDF() {
 
 
   if(containsCompany && containsPerson){
-     headers = ["Nombre/Razón social", "Condición de Iva",
+     headers = ["Nombre / Razón social", "Condición de Iva",
   "Email", "Telefono", "Fecha de nacimiento/fundación", "Dirección",
 "Tipo de documento", "Documento", "Tipo de cliente", ];
 
@@ -100,10 +103,11 @@ dataForPDF = this.customerList.map((item) => {
   if (item.customer_type === "Juridica") {
     socialReason = item.company_name
   } 
+  const formattedDate = `${item.birth_date.getDate()}/${item.birth_date.getMonth() + 1}/${item.birth_date.getFullYear()}`;
 
 
   return [socialReason, item.iva_condition,
-    item.email, item.phone_number, item.birth_date, item.address, item.document_type,
+    item.email, item.phone_number, formattedDate, item.address, item.document_type,
   item.document_number, item.customer_type]; // Devuelve un array con los valores deseados
 });
 
@@ -137,12 +141,19 @@ this.generatePdf(data, headers, "Listado de clientes");
       head: [columns],
       body: data,
       autoSize: true,
+      theme: 'grid', // Otra opción de tema que puede ser útil
+      columnStyles: { 0: { cellWidth: 'wrap' }, 1: { cellWidth: 'wrap' } }, // Ajusta según tus necesidades
+      styles: { overflow: 'linebreak' }, // Permite saltos de línea
+      bodyStyles: { minCellHeight: 10 },
+      cellStyles: { text: { fontSize: 7, fontStyle: 'normal' } },
     });
 
     // Guardar o mostrar el PDF
     doc.save('table.pdf');
   }
 
+
+  
 
 
   customerList: Customer[] = [];
