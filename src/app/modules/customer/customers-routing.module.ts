@@ -26,7 +26,7 @@ import { CustomerListComponent } from "./components/customer-list/customer-list.
         {path: 'role', component: RoleListComponent},
         {path: 'users', component: UserListComponent },
         {path: 'customers', component: CustomerListComponent },
-        {path: "update-costumer", component: UpdateCustomerComponent},
+        {path: "update-costumer", component: UpdateCustomerComponent}, 
       ]
     }]
 
