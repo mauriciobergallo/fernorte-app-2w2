@@ -16,15 +16,14 @@
     <h4 class="h4">Filtrar:</h4>
     <div class="row">
       <div class="col-md-4">
-        <label for="validationServer01" class="form-label">Nombre - Apellido - Documento</label>
-        <input type="text" class="form-control" id="validationServer01"
+        <input type="text" class="form-control" id="validationServer01" placeholder="Nombre, Apellido, Documento"
         (input)="onFiltrarNombre($event)">
       </div>
       <div class="col-md-4">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="flexCheckDefault" [(ngModel)]="activo" (click)="filtrarActivo()">
+          <input class="form-check-input" type="checkbox" id="flexCheckDefault" [(ngModel)]="showInactivos" (click)="filtrarActivo()">
           <label class="form-check-label" for="flexCheckDefault">
-            Activo
+            Inactivos
           </label>
         </div>
         

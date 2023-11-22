@@ -19,7 +19,7 @@ export class EmployeeListComponent implements OnInit {
   employeeList: EmployeeResponseDTO[] = [];
   localEmployeeList: EmployeeResponseDTO[] = [];
   selectedEmployeeId: number | null = null;
-  activo: boolean = true;
+  showInactivos: boolean = true;
   
 
   constructor(private employeeService: EmployeeService, private conversion: CaseConversionPipe, private modalService: NgbModal){}
@@ -57,22 +57,19 @@ export class EmployeeListComponent implements OnInit {
   
 
   ngOnInit(): void{
-    
     this.onLoad()
     this.employeeList = this.employeesHardCoded;
     this.employeeService.getEmployeeUpdatedObservable().subscribe(() => {
       this.onLoad();
     });
-    this.localEmployeeList = this.employeeList;
-    this.employeeList = this.buscarActivo(this.activo)
   }
 
   onLoad(){
     this.employeeService.getEmployees().subscribe(
       (response) => {
-        console.log(response)
         let toCamel: EmployeeResponseDTO[] = this.conversion.toCamelCase(response);
         this.employeeList = toCamel;
+        this.localEmployeeList = toCamel;
       },
       (error) => {
         console.log(error)
@@ -193,7 +190,7 @@ showInfoDesactivedResult(){
       .concat(filtroApellido, filtroDocumento)
       .filter((item, index, array) => array.indexOf(item) === index);
       this.employeeList = listaFiltrada;
-      this.employeeList = this.buscarActivo(this.activo);
+      this.employeeList = this.buscarActivo(this.showInactivos)
     }
 
     buscarNombre(palabraIncompleta: string): EmployeeResponseDTO[] {
@@ -225,11 +222,14 @@ showInfoDesactivedResult(){
 
     filtrarActivo(){
       this.employeeList = this.localEmployeeList;
-      this.employeeList = this.buscarActivo(!this.activo);
+      this.employeeList = this.buscarActivo(!this.showInactivos)
     }
 
-    buscarActivo(activo: boolean){
-      return this.employeeList.filter(empleado => empleado.isActive === activo);
+    buscarActivo(showInactivos: boolean){
+      if(showInactivos){
+        return this.employeeList;
+      }
+      return this.employeeList.filter(empleado => empleado.isActive);
     }
 
     openNewEmployeeModal(){

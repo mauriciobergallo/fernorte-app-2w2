@@ -50,6 +50,7 @@ export class LoginComponent {
             }
           },
           (error: any) => {
+            console.log(error)
             if (error.status === 400) {
               // Not Found (400) - Usuario o contraseña incorrecta
               Swal.fire({
