@@ -41,7 +41,7 @@ downloadPDF() {
   if(containsCompany && !containsPerson){
 
     headers = ["Empresa", "Condición de Iva",
-    "Email", "Telefono", "Fecha de nacimiento/fundación", "Dirección",
+    "Telefono", "Fecha de nacimiento/fundación", "Dirección",
   "Tipo de documento", "Documento", "Tipo de cliente", ];
   
   dataForPDF = this.customerList.map((item) => {
@@ -57,7 +57,7 @@ downloadPDF() {
 
 
     return [socialReason, item.iva_condition,
-      item.email, item.phone_number, formattedDate, item.address, item.document_type,
+       item.phone_number, formattedDate, item.address, item.document_type,
     item.document_number, item.customer_type]; // Devuelve un array con los valores deseados
   });
   
@@ -68,7 +68,7 @@ downloadPDF() {
   if(!containsCompany && containsPerson){
     
     headers = ['Nombre', "Condición de Iva",
-    "Email", "Telefono", "Fecha de nacimiento/fundación", "Dirección",
+     "Telefono", "Fecha de nacimiento/fundación", "Dirección",
   "Tipo de documento", "Documento", "Tipo de cliente", ];
   
   dataForPDF = this.customerList.map((item) => {
@@ -83,7 +83,7 @@ downloadPDF() {
 
 
     return [socialReason, item.iva_condition,
-      item.email, item.phone_number, formattedDate, item.address, item.document_type,
+       item.phone_number, formattedDate, item.address, item.document_type,
     item.document_number, item.customer_type]; // Devuelve un array con los valores deseados
   });
 
@@ -92,7 +92,7 @@ downloadPDF() {
 
   if(containsCompany && containsPerson){
      headers = ["Nombre / Razón social", "Condición de Iva",
-  "Email", "Telefono", "Fecha de nacimiento/fundación", "Dirección",
+  "Telefono", "Fecha de nacimiento/fundación", "Dirección",
 "Tipo de documento", "Documento", "Tipo de cliente", ];
 
 dataForPDF = this.customerList.map((item) => {
@@ -107,7 +107,7 @@ dataForPDF = this.customerList.map((item) => {
 
 
   return [socialReason, item.iva_condition,
-    item.email, item.phone_number, formattedDate, item.address, item.document_type,
+    item.phone_number, formattedDate, item.address, item.document_type,
   item.document_number, item.customer_type]; // Devuelve un array con los valores deseados
 });
 
@@ -135,14 +135,16 @@ this.generatePdf(data, headers, "Listado de clientes");
     // Configurar título
     doc.text(title, 10, 10);
 
+    
 
     // Configurar la tabla
     doc.autoTable({
+      startY: 20,
       head: [columns],
       body: data,
       autoSize: true,
       theme: 'grid', // Otra opción de tema que puede ser útil
-      columnStyles: { 0: { cellWidth: 'wrap' }, 1: { cellWidth: 'wrap' } }, // Ajusta según tus necesidades
+      columnStyles: { 0: { cellWidth: 'auto' }, 1: { cellWidth: 'auto' } }, // Ajusta según tus necesidades
       styles: { overflow: 'linebreak' }, // Permite saltos de línea
       bodyStyles: { minCellHeight: 10 },
       cellStyles: { text: { fontSize: 7, fontStyle: 'normal' } },
