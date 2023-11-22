@@ -20,8 +20,13 @@ export class EmployeeListComponent implements OnInit {
   @ViewChild('newEmployeeForm') newEmployeeModal: TemplateRef<any> | undefined;
   
   employeeList: EmployeeResponseDTO[] = [];
+  localEmployeeList: EmployeeResponseDTO[] = [];
   selectedEmployeeId: number | null = null;
+
+  showInactivos: boolean = true;
+
   isCreateEmployeeModalOpen = false;
+
   
 
   constructor(private employeeService: EmployeeService, private conversion: CaseConversionPipe, private modalService: NgbModal){}
@@ -45,7 +50,6 @@ export class EmployeeListComponent implements OnInit {
   
 
   ngOnInit(): void{
-    
     this.onLoad()
    
     this.employeeService.getEmployeeUpdatedObservable().subscribe(() => {
@@ -56,9 +60,9 @@ export class EmployeeListComponent implements OnInit {
   onLoad(){
     this.employeeService.getEmployees().subscribe(
       (response) => {
-        console.log(response)
         let toCamel: EmployeeResponseDTO[] = this.conversion.toCamelCase(response);
         this.employeeList = toCamel;
+        this.localEmployeeList = toCamel;
       },
       (error) => {
         console.log(error)
@@ -166,25 +170,85 @@ showInfoDesactivedResult(){
         this.onDelete(employee);
         }
       });
+    }
+
+    onFiltrarNombre(event: any){
+      this.employeeList = this.localEmployeeList;
+      let filtro = event.target.value;
+      let filtroNombre: EmployeeResponseDTO[] = this.buscarNombre(filtro);
+      let filtroApellido: EmployeeResponseDTO[] = this.buscarApellido(filtro);
+      let filtroDocumento: EmployeeResponseDTO[] = this.buscarDocumento(filtro);
+
+      let listaFiltrada: EmployeeResponseDTO[] = filtroNombre
+      .concat(filtroApellido, filtroDocumento)
+      .filter((item, index, array) => array.indexOf(item) === index);
+      this.employeeList = listaFiltrada;
+      this.employeeList = this.buscarActivo(this.showInactivos)
+    }
+
+    buscarNombre(palabraIncompleta: string): EmployeeResponseDTO[] {
+      palabraIncompleta = palabraIncompleta.toLowerCase(); // Convierte a minúsculas para hacer la búsqueda no sensible a mayúsculas
+  
+      return this.employeeList.filter(palabra => {
+        const palabraEnMinusculas = palabra.firstName.toLowerCase();
+        return palabraEnMinusculas.startsWith(palabraIncompleta);
+      });
+    }
+
+    buscarApellido(palabraIncompleta: string): EmployeeResponseDTO[] {
+      palabraIncompleta = palabraIncompleta.toLowerCase(); // Convierte a minúsculas para hacer la búsqueda no sensible a mayúsculas
+  
+      return this.employeeList.filter(palabra => {
+        const palabraEnMinusculas = palabra.lastName.toLowerCase();
+        return palabraEnMinusculas.startsWith(palabraIncompleta);
+      });
+    }
+
+    buscarDocumento(palabraIncompleta: string): EmployeeResponseDTO[] {
+      palabraIncompleta = palabraIncompleta.toLowerCase(); // Convierte a minúsculas para hacer la búsqueda no sensible a mayúsculas
+  
+      return this.employeeList.filter(palabra => {
+        const palabraEnMinusculas = palabra.documentNumber.toLowerCase();
+        return palabraEnMinusculas.startsWith(palabraIncompleta);
+      });
+    }
+
+    filtrarActivo(){
+      this.employeeList = this.localEmployeeList;
+      this.employeeList = this.buscarActivo(!this.showInactivos)
+    }
+
+    buscarActivo(showInactivos: boolean){
+      if(showInactivos){
+        return this.employeeList;
       }
 
+      return this.employeeList.filter(empleado => empleado.isActive);
+    }
 
-      openNewRoleModal() {
-        const modalRef = this.modalService.open(EmployeeRegistrationComponent, { ariaLabelledBy: 'modal-basic-title' ,backdrop: 'static'});
-        modalRef.componentInstance.newEmployeeForm = this.newEmployee;
+    openNewEmployeeModal(){
+      
+    }
+
+
+
+//       openNewRoleModal() {
+//         const modalRef = this.modalService.open(EmployeeRegistrationComponent, { ariaLabelledBy: 'modal-basic-title' ,backdrop: 'static'});
+//         modalRef.componentInstance.newEmployeeForm = this.newEmployee;
     
-        modalRef.result.then(
-          (newEmp: EmployeeResponseDTO) => {
-            if (newEmp) {
-              this.employeeList.push(newEmp);
-              console.log('Roles después de agregar:', this.employeeList);
+//         modalRef.result.then(
+//           (newEmp: EmployeeResponseDTO) => {
+//             if (newEmp) {
+//               this.employeeList.push(newEmp);
+//               console.log('Roles después de agregar:', this.employeeList);
               
             
-              this.isCreateEmployeeModalOpen = false;
-            }
-          },
-          (reason) => {
-          }
-        );
-      }
+//               this.isCreateEmployeeModalOpen = false;
+//             }
+//           },
+//           (reason) => {
+//           }
+//         );
+//       }
+
 }
