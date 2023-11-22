@@ -30,7 +30,7 @@
             </button>
             <div class="dropdown-content">
               <a (click)="onOptionClick('info')">Más Información</a>
-              <a (click)="onOptionClick('actualizar')">Actualizar</a>
+              <a (click)="onUpdate(u)">Actualizar</a>
               <a *ngIf="u.is_active" (click)="onDelete(u)">Eliminar</a>
               <a *ngIf="!u.is_active" (click)="onActive(u)">Activar</a>
             </div>
