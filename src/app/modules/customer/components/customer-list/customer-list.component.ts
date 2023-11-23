@@ -260,9 +260,8 @@ export class CustomerListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.customerList = this.customers;
+    //this.customerList = this.customers;
     this.loadUser();
-    
   }
 
   //Este mock tiene que remplazarse por un getall de clientes, podría hacerse en el loadUser
@@ -283,52 +282,52 @@ export class CustomerListComponent implements OnInit {
     customerType: '',
   };
 
-  customers: Customer[] = [
-    {
-      id_customer: 1,
-      first_name: 'John',
-      last_name: 'Doe',
-      company_name: 'ABC Inc',
-      iva_condition: 'IVA Registered',
-      email: 'john.doe@example.com',
-      phone_number: '123-456-7890',
-      birth_date: new Date('1990-01-01'),
-      address: '123 Main St, City',
-      document_number: 'ABC123',
-      document_type: 'ID Card',
-      customer_type: 'Fisica',
-      discount_factor: 0.1,
-      customer_category: 'ORO',
-    },
-    {
-      id_customer: 2,
-      first_name: 'Jane',
-      last_name: 'Smith',
-      company_name: 'ABC Inc',
-      email: 'jane.smith@example.com',
-      phone_number: '987-654-3210',
-      birth_date: new Date('1985-05-15'),
-      document_number: 'XYZ789',
-      document_type: 'Passport',
-      customer_type: 'Juridica',
-      customer_category: 'PLATA',
-    },
+  // customers: Customer[] = [
+  //   {
+  //     id_customer: 1,
+  //     first_name: 'John',
+  //     last_name: 'Doe',
+  //     company_name: 'ABC Inc',
+  //     iva_condition: 'IVA Registered',
+  //     email: 'john.doe@example.com',
+  //     phone_number: '123-456-7890',
+  //     birth_date: new Date('1990-01-01'),
+  //     address: '123 Main St, City',
+  //     document_number: 'ABC123',
+  //     document_type: 'ID Card',
+  //     customer_type: 'Fisica',
+  //     discount_factor: 0.1,
+  //     customer_category: 'ORO',
+  //   },
+  //   {
+  //     id_customer: 2,
+  //     first_name: 'Jane',
+  //     last_name: 'Smith',
+  //     company_name: 'ABC Inc',
+  //     email: 'jane.smith@example.com',
+  //     phone_number: '987-654-3210',
+  //     birth_date: new Date('1985-05-15'),
+  //     document_number: 'XYZ789',
+  //     document_type: 'Passport',
+  //     customer_type: 'Juridica',
+  //     customer_category: 'PLATA',
+  //   },
 
-    {
-      id_customer: 3,
-      first_name: '',
-      last_name: '',
-      company_name: 'Empresa Rodolfo',
-      email: 'jane.smith@example.com',
-      phone_number: '987-654-3210',
-      birth_date: new Date('1985-05-15'),
-      document_number: 'XYZ789',
-      document_type: 'Passport',
-      customer_type: 'Juridica',
-      customer_category: 'PLATA',
-    },
+  //   {
+  //     id_customer: 3,
+  //     first_name: '',
+  //     last_name: '',
+  //     company_name: 'Empresa Rodolfo',
+  //     email: 'jane.smith@example.com',
+  //     phone_number: '987-654-3210',
+  //     birth_date: new Date('1985-05-15'),
+  //     document_number: 'XYZ789',
+  //     document_type: 'Passport',
+  //     customer_type: 'Juridica',
+  //     customer_category: 'PLATA',
+  //   },
     // Add more customer objects as needed
-  ];
+  //];
 
   loadUser() {
     this.customerService.getAllCustomer().subscribe((data: Customer[]) => {
