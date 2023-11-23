@@ -177,33 +177,65 @@ export class CustomerListComponent implements OnInit {
     doc.save('table.pdf');
   }
 
-  downloadCSV() {
-    let data = this.customerList;
+  // downloadCSV() {
+  //   let data = this.customerList;
 
-    let socialReason: string | undefined;
+  //   let socialReason: string | undefined;
 
-    console.log('Test');
+  //   console.log('Test');
 
-    let csvContent =
-      'Nombre/Razón social,Condición de IVA,Telefono,Fecha de nacimiento/fundación,Dirección,Tipo de documento,Documento,Tipo de cliente\n';
+  //   let csvContent =
+  //     'Nombre/Razón social,Condición de IVA,Telefono,Fecha de nacimiento/fundación,Dirección,Tipo de documento,Documento,Tipo de cliente\n';
 
    
 
 
-    data.forEach((item)=> {
+  //   data.forEach((item)=> {
 
-            if (item.customer_type === "Fisica") {
-        socialReason = `${item.first_name} ${item.last_name}`
+  //           if (item.customer_type === "Fisica") {
+  //       socialReason = `${item.first_name} ${item.last_name}`
+  //     } 
+  //     if (item.customer_type === "Juridica") {
+  //       socialReason = item.company_name
+  //     } 
+  //        const formattedDate = `${item.birth_date.getDate()}/${item.birth_date.getMonth() + 1}/${item.birth_date.getFullYear()}`;
+
+
+  //     csvContent += `${socialReason} ,${item.iva_condition},${item.phone_number},${formattedDate},${item.address},${item.document_type},${item.document_number},${item.customer_type}\n`;
+  //   });
+
+  //   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  //   const url = URL.createObjectURL(blob);
+  //   const link = document.createElement('a');
+  //   link.setAttribute('href', url);
+  //   link.setAttribute('download', 'ReportePreciosHistoricos.csv');
+  //   link.style.visibility = 'hidden';
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // }
+
+  downloadCSV() {
+    let data = this.customerList;
+  
+    let socialReason:string | undefined;
+  
+    let csvContent =
+      'Nombre/Razón social,Condición de IVA,Telefono,Fecha de nacimiento/fundación,Dirección,Tipo de documento,Documento,Tipo de cliente\n';
+  
+    data.forEach((item) => {
+      if (item.customer_type === "Fisica") {
+        socialReason = `${item.first_name} ${item.last_name}`;
       } 
       if (item.customer_type === "Juridica") {
-        socialReason = item.company_name
+        socialReason = item.company_name;
       } 
-         const formattedDate = `${item.birth_date.getDate()}/${item.birth_date.getMonth() + 1}/${item.birth_date.getFullYear()}`;
-
-
-      csvContent += `${socialReason} ,${item.iva_condition},${item.phone_number},${formattedDate},${item.address},${item.document_type},${item.document_number},${item.customer_type}\n`;
+  
+      const formattedDate = `${item.birth_date.getDate()}/${item.birth_date.getMonth() + 1}/${item.birth_date.getFullYear()}`;
+  
+      csvContent += `"${socialReason}","${item.iva_condition || ''}","${item.phone_number || ''}","${formattedDate}","${item.address || ''}","${item.document_type || ''}","${item.document_number || ''}","${item.customer_type}"\n`;
     });
-
+  
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -214,6 +246,7 @@ export class CustomerListComponent implements OnInit {
     link.click();
     document.body.removeChild(link);
   }
+  
 
   customerList: Customer[] = [];
   searchInput: string = '';
