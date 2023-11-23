@@ -27,7 +27,7 @@
                   #controlInput="ngModel"
                   type="text"
                   class="prod-q"
-                  [(ngModel)]="productQuantities[item.productId]"
+                  [(ngModel)]="productQuantities[item.id_product]"
                   required
                   minlength="1"
                   maxlength="5"
@@ -47,14 +47,14 @@
                   type="button"
                   class="btn btn-success"
                   (click)="addToCart(item)"
-                  [disabled]="isButtonDisabled[item.productId]"
+                  [disabled]="isButtonDisabled[item.id_product]"
                 >
                   Agregar
                 </button>
               </div>
               <ngb-toast
                 style="margin: 8% 0% 0% 0%"
-                *ngIf="mostrarToastAddProduct[item.productId]"
+                *ngIf="mostrarToastAddProduct[item.id_product]"
                 class="toast bg-danger text-light"
                 [autohide]="true"
                 (hidden)="(false)"
