@@ -44,7 +44,7 @@
                 [class]="(mostrarDetalleMovimiento ===i && mostrarDetalle) ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
             </td>
             <td class="text-center">
-              <div class="dropdown">
+              <div class="dropdown" *ngIf="this.movimiento.is_internal">
                 <button type="button" class="btn btn-light dropdown-button" data-bs-toggle="dropdown"
                   aria-expanded="false">
                   <i class="bi bi-three-dots-vertical"></i>
