@@ -1,9 +1,9 @@
 import { DocumentType } from "./documentType";
 
 export interface CustomerRequest {
-    firstName: string;
-    lastName: string;
-    companyName: string;
+    firstName?: string;
+    lastName?: string;
+    companyName?: string;
     ivaCondition: string;
     email: string;
     birthDate: string;

@@ -47,7 +47,7 @@ export class CreateCustomerComponent implements OnInit{
 		  companyName: [''],
 		  idDocumentType: ['', Validators.required],
 		  documentNumber: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(7)]],
-		  ivaCondition: ['Monotributo', Validators.required],
+		  ivaCondition: ['', Validators.required],
 		  birthDate: ['', Validators.required],
 		  email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')]],
 		  address: ['', Validators.required],
@@ -163,20 +163,23 @@ export class CreateCustomerComponent implements OnInit{
     if (this.customerForm.valid) {
 		// Realizar conversión a snake_case aquí antes de enviar al servidor
 		const customerData = this.conversion.toSnakeCase(this.customerForm.value);
-
+		console.log(this.customerForm.value)
 		let newCustomer: any = {
-			first_name: this.customerForm.value.firstName,
-			last_name: this.customerForm.value.lastName,
+			first_name: this.customerForm.value?.firstName,
+			last_name: this.customerForm.value?.lastName,
+			company_name: this.customerForm.value?.companyName,
 			birth_date: this.formattedBirthDate,
-			document_type: this.customerForm.value.documentType,
+			iva_condition: this.customerForm.value.ivaCondition,
+			id_document_type: this.customerForm.value.idDocumentType,
 			address: this.customerForm.value.address,
 			phone_number: this.customerForm.value.phoneNumber,
 			document_number: this.customerForm.value.documentNumber,
-			personal_email: this.customerForm.value.personalEmail,
+			customer_type: this.customerForm.value.customerType,
+			email: this.customerForm.value.email,
 		  };
 		  let customerInSnake = this.conversion.toSnakeCase(newCustomer);
 
-		  this.customerService.postCustomer(customerData).subscribe(
+		  this.customerService.postCustomer(customerInSnake).subscribe(
 			(response) => {
 			  alert("Se creo el cliente");
 			  this.closeForm();
