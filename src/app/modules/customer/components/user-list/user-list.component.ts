@@ -21,6 +21,11 @@ export class UserListComponent  implements OnInit {
   userList: User[] = [];
   localUserList: User[] = [];
 
+  currentPage: number = 1;
+  itemsPerPage: number = 15;
+  contentEmployee: any;
+  pagedUser: User[] = [];
+
   constructor(private userService: UserService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
@@ -176,6 +181,7 @@ export class UserListComponent  implements OnInit {
   loadUser() {
     this.userService.getAllUser().subscribe((data: User[]) => {
       this.userList = data;
+      this.pageChanged(1);
     });
     console.log(this.userList);
   }
@@ -286,5 +292,21 @@ export class UserListComponent  implements OnInit {
       text: 'Servicio no disponible',
       icon: 'error',
     });
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.userList.length / this.itemsPerPage);
+  }
+
+  pageChanged(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      const startIndex = (page - 1) * this.itemsPerPage;
+      this.currentPage = page;
+      this.pagedUser = this.userList.slice(startIndex, startIndex + this.itemsPerPage);
+    }
+  }
+
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 }
