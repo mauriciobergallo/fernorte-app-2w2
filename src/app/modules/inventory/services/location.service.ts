@@ -1,304 +1,166 @@
 import { Injectable } from '@angular/core';
-import { Section } from '../models/locations/section';
-import { Zone } from '../models/locations/zone';
-import { Space } from '../models/locations/space';
 import { LocationInfoDto } from '../models/location-info.interface';
-
+import { Zone } from '../models/locations/zone';
+import { Section } from '../models/locations/section';
+import { Space } from '../models/locations/space';
 @Injectable({
   providedIn: 'root',
 })
 export class LocationService {
+  locMockData: LocationInfoDto[] = [];
+  getmockloc() {
+    return this.locMockData;
+  }
   unidades: string[] = ['Unidad', 'Kg', 'Metros Cuadrados', 'Litros'];
   mockZones: Zone[] = [
     {
       Id: 1,
-      name: 'SALÓN',
-      maxCapacity: 20000,
-      mts2: 5000,
+      name: 'Salón Principal',
+      maxCapacity: 200,
+      mts2: 800,
       sections: [
         {
-          Id: 4,
-          name: 'SALON-C',
-          categoryName: 'Construcción',
-          maxCapacity: 60,
-          spaces: [],
-        },
-        {
-          Id: 5,
-          name: 'SALON-PA',
-          categoryName: 'Pintura y Acabados',
+          Id: 101,
+          name: 'Herramientas Manuales',
+          categoryName: 'Herramientas manuales',
           maxCapacity: 40,
-          spaces: [],
-        },
-        {
-          Id: 6,
-          name: 'SALON-P',
-          categoryName: 'Plomería',
-          maxCapacity: 35,
-          spaces: [],
-        },
-        {
-          Id: 2,
-          name: 'SALON-HM',
-          categoryName: 'Herramientas Manuales',
-          maxCapacity: 3000,
           spaces: [
             {
-              Id: 1,
-              name: 'SALON-HM-00001',
-              quantity: 10,
-              measureUnit: 'Unidades',
-              maxCapacity: 500,
-              productId: 101,
-              productName: 'Destornillador',
-              remarks: 'Herramienta manual básica',
-            },
-            {
-              Id: 2,
-              name: 'SALON-HM-00002',
+              Id: 1001,
+              name: 'Banco de trabajo 1',
               quantity: 15,
-              measureUnit: 'Unidades',
-              maxCapacity: 25,
-              productId: 102,
-              productName: 'Martillo',
-              remarks: 'Herramienta para golpear',
+              measureUnit: 'metros cuadrados',
+              maxCapacity: 20,
+              productId: 201,
+              productName: 'Calibre Digital 1150d',
+              remarks: 'Este espacio es para herramientas manuales pequeñas',
             },
             {
-              Id: 3,
-              name: 'SALON-HM-00003',
-              quantity: 8,
-              measureUnit: 'Unidades',
-              maxCapacity: 15,
-              productId: 103,
-              productName: 'Llave Inglesa',
-              remarks: 'Herramienta para apretar tuercas',
+              Id: 1002,
+              name: 'Área de Medición',
+              quantity: 25,
+              measureUnit: 'metros cuadrados',
+              maxCapacity: 30,
+              productId: 202,
+              productName: 'Juego de llaves Allen',
+              remarks: 'Este espacio es para herramientas de medición',
             },
-            {
-              Id: 4,
-              name: 'SALON-HM-00004',
-              quantity: 5,
-              measureUnit: 'Unidades',
-              maxCapacity: 10,
-              productId: 104,
-              productName: 'Sierra Manual',
-              remarks: 'Herramienta para cortar',
-            },
-            {
-              Id: 5,
-              name: 'SALON-HM-00005',
-              quantity: 12,
-              measureUnit: 'Unidades',
-              maxCapacity: 18,
-              productId: 105,
-              productName: 'Pinzas',
-              remarks: 'Herramienta para sujetar',
-            },
+            // Agrega más espacios según sea necesario
           ],
         },
         {
-          Id: 3,
-          name: 'SALON-HE',
-          categoryName: 'Herramientas Eléctricas',
-          maxCapacity: 30,
-          spaces: [],
+          Id: 102,
+          name: 'Herramientas Eléctricas',
+          categoryName: 'Herramientas eléctricas',
+          maxCapacity: 50,
+          spaces: [
+            {
+              Id: 1003,
+              name: 'Estación de Soldadura',
+              quantity: 30,
+              measureUnit: 'metros cuadrados',
+              maxCapacity: 35,
+              productId: 203,
+              productName: 'Soldadora MIG',
+              remarks:
+                'Este espacio es para herramientas eléctricas de soldadura',
+            },
+            {
+              Id: 1004,
+              name: 'Área de Taladros',
+              quantity: 20,
+              measureUnit: 'metros cuadrados',
+              maxCapacity: 25,
+              productId: 204,
+              productName: 'Taladro Percutor',
+              remarks:
+                'Este espacio es para herramientas eléctricas de perforación',
+            },
+            // Agrega más espacios según sea necesario
+          ],
         },
-        {
-          Id: 7,
-          name: 'SALON-E',
-          categoryName: 'Electricidad',
-          maxCapacity: 25,
-          spaces: [],
-        },
-        {
-          Id: 8,
-          name: 'SALON-J',
-          categoryName: 'Jardinería',
-          maxCapacity: 30,
-          spaces: [],
-        },
-        {
-          Id: 9,
-          name: 'SALON-A',
-          categoryName: 'Automóviles',
-          maxCapacity: 20,
-          spaces: [],
-        },
-        {
-          Id: 10,
-          name: 'SALON-SC',
-          categoryName: 'Seguridad y Cerrajería',
-          maxCapacity: 25,
-          spaces: [],
-        },
-        {
-          Id: 11,
-          name: 'SALON-AO',
-          categoryName: 'Almacenamiento y Organización',
-          maxCapacity: 30,
-          spaces: [],
-        },
-        // {
-        //   Id: 101,
-        //   name: 'AC',
-        //   categoryName: 'Sección 1',
-        //   maxCapacity: 30,
-        //   spaces: [
-        //     {
-        //       Id: 1001,
-        //       name: 'Espacio 1-1',
-        //       quantity: 10,
-        //       measureUnit: 'metros cuadrados',
-        //       maxCapacity: 15,
-        //       productId: 201,
-        //       productName: 'Producto X',
-        //       remarks: 'Este espacio es para eventos pequeños',
-        //     },
-        //     // Agrega más espacios según sea necesario
-        //   ],
-        // },
         // Agrega más secciones según sea necesario
       ],
     },
-    // {
-    //   Id: 2,
-    //   name: 'Zona B',
-    //   maxCapacity: 150,
-    //   mts2: 300,
-    //   sections: [
-    //     {
-    //       Id: 102,
-    //       name: 'AB',
-    //       categoryName: 'Sección 2',
-    //       maxCapacity: 50,
-    //       spaces: [
-    //         {
-    //           Id: 1002,
-    //           name: 'Espacio 2-1',
-    //           quantity: 20,
-    //           measureUnit: 'metros cuadrados',
-    //           maxCapacity: 25,
-    //           productId: 202,
-    //           productName: 'Producto Y',
-    //           remarks: 'Este espacio es para conferencias',
-    //         },
-    //         // Agrega más espacios según sea necesario
-    //       ],
-    //     },
-    //     // Agrega más secciones según sea necesario
-    //   ],
-    // },
-    // {
-    //   Id: 1,
-    //   name: 'Zona A',
-    //   maxCapacity: 100,
-    //   mts2: 500,
-    //   sections: [
-    //     {
-    //       Id: 101,
-    //       name: 'AG',
-    //       categoryName: 'Sección 1',
-    //       maxCapacity: 30,
-    //       spaces: [
-    //         {
-    //           Id: 1001,
-    //           name: 'Espacio 1-1',
-    //           quantity: 10,
-    //           measureUnit: 'metros cuadrados',
-    //           maxCapacity: 15,
-    //           productId: 201,
-    //           productName: 'Producto X',
-    //           remarks: 'Este espacio es para eventos pequeños',
-    //         },
-    //         // Agrega más espacios según sea necesario
-    //       ],
-    //     },
-    //     // Agrega más secciones según sea necesario
-    //   ],
-    // },
+    {
+      Id: 2,
+      name: 'Almacén',
+      maxCapacity: 300,
+      mts2: 600,
+      sections: [
+        {
+          Id: 103,
+          name: 'Materiales de Construcción',
+          categoryName: 'Materiales de construcción',
+          maxCapacity: 70,
+          spaces: [
+            {
+              Id: 1005,
+              name: 'Área de Ladrillos',
+              quantity: 50,
+              measureUnit: 'metros cuadrados',
+              maxCapacity: 60,
+              productId: 205,
+              productName: 'Ladrillo Cerámico',
+              remarks: 'Este espacio es para almacenar ladrillos',
+            },
+            {
+              Id: 1006,
+              name: 'Estantería de Cemento',
+              quantity: 20,
+              measureUnit: 'metros cuadrados',
+              maxCapacity: 30,
+              productId: 206,
+              productName: 'Cemento Portland',
+              remarks: 'Este espacio es para almacenar bolsas de cemento',
+            },
+            // Agrega más espacios según sea necesario
+          ],
+        },
+        // Agrega más secciones según sea necesario
+      ],
+    },
+    {
+      Id: 3,
+      name: 'Patio de Herramientas',
+      maxCapacity: 150,
+      mts2: 400,
+      sections: [
+        {
+          Id: 104,
+          name: 'Herramientas de Jardín',
+          categoryName: 'Herramientas de jardín',
+          maxCapacity: 30,
+          spaces: [
+            {
+              Id: 1007,
+              name: 'Área de Podadoras',
+              quantity: 15,
+              measureUnit: 'metros cuadrados',
+              maxCapacity: 20,
+              productId: 207,
+              productName: 'Podadora Eléctrica',
+              remarks: 'Este espacio es para herramientas eléctricas de poda',
+            },
+            {
+              Id: 1008,
+              name: 'Estación de Riego',
+              quantity: 15,
+              measureUnit: 'metros cuadrados',
+              maxCapacity: 20,
+              productId: 208,
+              productName: 'Manguera de Jardín',
+              remarks: 'Este espacio es para herramientas de riego',
+            },
+            // Agrega más espacios según sea necesario
+          ],
+        },
+        // Agrega más secciones según sea necesario
+      ],
+    },
     // Agrega más zonas según sea necesario
   ];
 
-  locationInfoListMock: LocationInfoDto[] = [
-    {
-      location: {
-        zone: 'Salón',
-        section: '1',
-        space: '101',
-      },
-      location_id: 1,
-      category_name: 'Herramientas manuales',
-      product_name: 'Calibre Digital 1150d',
-      quantity: 3,
-      measure_unit: 1,
-      max_capacity: 5,
-    },
-    {
-      location: {
-        zone: 'Nave',
-        section: '4',
-        space: '202',
-      },
-      location_id: 2,
-      category_name: 'Herramientas eléctricas',
-      product_name: 'Amoladora angular 820w',
-      quantity: 5,
-      measure_unit: 2,
-      max_capacity: 50,
-    },
-    {
-      location: {
-        zone: 'Patio',
-        section: '2',
-        space: '201',
-      },
-      location_id: 3,
-      category_name: 'Pavimentación',
-      product_name: 'Trompito hormiguero',
-      quantity: 8,
-      measure_unit: 3,
-      max_capacity: 10,
-    },
-    {
-      location: {
-        zone: 'Salón',
-        section: '3',
-        space: '102',
-      },
-      location_id: 4,
-      category_name: 'Ferretería general',
-      product_name: 'Escalera telescópica Philco 13 escalones',
-      quantity: 15,
-      measure_unit: 1,
-      max_capacity: 150,
-    },
-    {
-      location: {
-        zone: 'Patio',
-        section: '1',
-        space: '201',
-      },
-      location_id: 5,
-      category_name: 'Pavimentación',
-      product_name: 'Mezclador pintura/cemento Einhell Tc-mx 1200',
-      quantity: 20,
-      measure_unit: 2,
-      max_capacity: 200,
-    },
-    {
-      location: {
-        zone: 'Patio',
-        section: '2',
-        space: '202',
-      },
-      location_id: 6,
-      category_name: 'Accesorioes vehiculares',
-      product_name: 'Tuercas bulones antirrobo McGard Onix Prisma Spin',
-      quantity: 7,
-      measure_unit: 3,
-      max_capacity: 70,
-    },
-  ];
-  
   getZones() {
     return this.mockZones;
   }
@@ -314,12 +176,47 @@ export class LocationService {
     }
   }
 
+  insertDataMocked() {
+    for (const zona of this.mockZones) {
+      for (const section of zona.sections) {
+        for (const space of section.spaces) {
+          this.locMockData.push({
+            location: {
+              space: space.name,
+              zone: zona.name,
+              section: section.name,
+            },
+            location_id: Math.floor(Math.random() * 30),
+            category_name: section.categoryName,
+            product_name: space.productName,
+            quantity: space.quantity,
+            measure_unit: 1,
+            max_capacity: space.maxCapacity,
+          });
+        }
+      }
+    }
+  }
+
   insertSpace(idZona: number, idSection: number, space: Space) {
     var zona = this.mockZones.find((p) => p.Id == idZona);
     if (zona != undefined) {
       var section = zona.sections.find((p) => p.Id == idSection);
       if (section != undefined) {
         section.spaces.push(space);
+        this.locMockData.push({
+          location: {
+            space: space.name,
+            zone: zona.name,
+            section: section.name,
+          },
+          location_id: Math.floor(Math.random() * 30),
+          category_name: section.categoryName,
+          product_name: space.productName,
+          quantity: 0,
+          measure_unit: 1,
+          max_capacity: space.maxCapacity,
+        });
       }
     }
   }
@@ -402,5 +299,7 @@ export class LocationService {
       return zone;
     }
   }
-  constructor() {}
+  constructor() {
+    this.insertDataMocked();
+  }
 }

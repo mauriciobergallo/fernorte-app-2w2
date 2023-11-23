@@ -12,8 +12,8 @@ import { DeliveryOrderDetailPut } from '../../../models/delivery-order-detail-pu
 import { DeilveryOrderDetails } from '../../../models/deilvery-order-details';
 import Swal from 'sweetalert2';
 import { ILocationInfoProduct } from '../../../models/ILocationInfoProduct';
-import { DeliveryOrderMockService } from '../../../services/delivery-order-mock.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeliveryOrdersMockService } from '../../../services/delivery-order-mock.service';
 @Component({
   selector: 'fn-delivery-order-details',
   templateUrl: './delivery-order-details.component.html',
@@ -43,7 +43,7 @@ export class DeliveryOrderDetailsComponent {
     private route: ActivatedRoute,
     private deliveryorderService: DeliverOrderService,
     private router: Router,
-    private mockservice: DeliveryOrderMockService,
+    private mockservice: DeliveryOrdersMockService,
     private modalService: NgbModal
   ) {}
 

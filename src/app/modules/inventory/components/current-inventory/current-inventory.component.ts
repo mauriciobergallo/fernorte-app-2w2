@@ -3,9 +3,10 @@ import { WarehouseService } from '../../services/warehouse-service/warehouse.ser
 import { LocationInfoDto } from '../../models/location-info.interface';
 import { Subscription } from 'rxjs';
 import jsPDF from 'jspdf';
-//import 'jspdf-autotable';
+import 'jspdf-autotable';
 import { Chart } from 'chart.js';
 import { Pagination } from '../../models/pagination';
+import { DeliverOrderService } from '../../services/deliver-order.service';
 import { LocationService } from '../../services/location.service';
 
 @Component({
@@ -24,7 +25,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
   totalPages: number = 1;
   constructor(
     private warehouseService: WarehouseService,
-    private locationService: LocationService
+    private mock: LocationService
   ) {}
   ngOnDestroy(): void {
     this.subscripciones.unsubscribe();
@@ -47,9 +48,9 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
       error: (error) => {
         this.loading = false;
         console.log(error);
-        this.locationInfoList = this.locationService.locationInfoListMock;
+        this.locationInfoList = this.mock.getmockloc();
         this.originalList = [...this.locationInfoList];
-        this.filteredList = [...this.locationService.locationInfoListMock];
+        this.filteredList = [...this.mock.getmockloc()];
       },
     });
   }
@@ -143,7 +144,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
               display: true,
               labels: {
                 font: {
-                  size: 50,
+                  size: 25,
                 },
               },
             },
@@ -231,135 +232,6 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     });
   }
 
-  currentSort: { column: keyof LocationInfoDto; order: 'asc' | 'desc' } = {
-    column: 'product_name',
-    order: 'asc',
-  };
-
-  sortData(column: keyof LocationInfoDto | string): void {
-    if (this.currentSort.column === column) {
-      this.currentSort.order =
-        this.currentSort.order === 'asc' ? 'desc' : 'asc';
-    } else {
-      this.currentSort.column = column as keyof LocationInfoDto;
-      this.currentSort.order = 'asc';
-    }
-
-    this.filteredList = this.locationInfoList.sort((a, b) => {
-      const valueA = this.getPropertyValue(a, this.currentSort.column);
-      const valueB = this.getPropertyValue(b, this.currentSort.column);
-
-      if (typeof valueA === 'string' && typeof valueB === 'string') {
-        return this.currentSort.order === 'asc'
-          ? valueA.localeCompare(valueB)
-          : valueB.localeCompare(valueA);
-      } else if (typeof valueA === 'number' && typeof valueB === 'number') {
-        return this.currentSort.order === 'asc'
-          ? valueA - valueB
-          : valueB - valueA;
-      } else {
-        if (valueA instanceof Date && valueB instanceof Date) {
-          return this.currentSort.order === 'asc'
-            ? valueA.getTime() - valueB.getTime()
-            : valueB.getTime() - valueA.getTime();
-        } else {
-          return 0;
-        }
-      }
-    });
-  }
-
-  getPropertyValue(obj: any, propPath: string): any {
-    const props = propPath.split('.');
-    let value = obj;
-
-    for (const prop of props) {
-      value = value[prop];
-    }
-
-    return value;
-  }
-
   previousPage() {}
   nextPage() {}
-  locationInfoListMock: LocationInfoDto[] = [
-    {
-      location: {
-        zone: 'Salón',
-        section: '1',
-        space: '101',
-      },
-      location_id: 1,
-      category_name: 'Herramientas manuales',
-      product_name: 'Calibre Digital 1150d',
-      quantity: 3,
-      measure_unit: 1,
-      max_capacity: 5,
-    },
-    {
-      location: {
-        zone: 'Nave',
-        section: '4',
-        space: '202',
-      },
-      location_id: 2,
-      category_name: 'Herramientas eléctricas',
-      product_name: 'Amoladora angular 820w',
-      quantity: 5,
-      measure_unit: 2,
-      max_capacity: 50,
-    },
-    {
-      location: {
-        zone: 'Patio',
-        section: '2',
-        space: '201',
-      },
-      location_id: 3,
-      category_name: 'Pavimentación',
-      product_name: 'Trompito hormiguero',
-      quantity: 8,
-      measure_unit: 3,
-      max_capacity: 10,
-    },
-    {
-      location: {
-        zone: 'Salón',
-        section: '3',
-        space: '102',
-      },
-      location_id: 4,
-      category_name: 'Ferretería general',
-      product_name: 'Escalera telescópica Philco 13 escalones',
-      quantity: 15,
-      measure_unit: 1,
-      max_capacity: 150,
-    },
-    {
-      location: {
-        zone: 'Patio',
-        section: '1',
-        space: '201',
-      },
-      location_id: 5,
-      category_name: 'Pavimentación',
-      product_name: 'Mezclador pintura/cemento Einhell Tc-mx 1200',
-      quantity: 20,
-      measure_unit: 2,
-      max_capacity: 200,
-    },
-    {
-      location: {
-        zone: 'Patio',
-        section: '2',
-        space: '202',
-      },
-      location_id: 6,
-      category_name: 'Accesorioes vehiculares',
-      product_name: 'Tuercas bulones antirrobo McGard Onix Prisma Spin',
-      quantity: 7,
-      measure_unit: 3,
-      max_capacity: 70,
-    },
-  ];
 }

@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { DeliveryOrderPut } from '../models/delivery-order-put';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { ILocationInfoProduct } from '../models/ILocationInfoProduct';
 import { DeilveryOrder } from '../models/deilvery-order';
+import { ILocationInfoProduct } from '../models/ILocationInfoProduct';
+import { DeliveryOrderPut } from '../models/delivery-order-put';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DeliveryOrderMockService {
+export class DeliveryOrdersMockService {
   originallist: DeilveryOrder[] = this.originalItems();
   listFiltered: DeilveryOrder[] = [];
   listFilteredDate: DeilveryOrder[] = [];
 
   locationsList: ILocationInfoProduct[] = this.locations();
+
   constructor() {}
 
   originalItems(): DeilveryOrder[] {
@@ -21,8 +22,8 @@ export class DeliveryOrderMockService {
         state: 'CANCELED',
         details: [],
         client: {
-          first_name: 'Jack',
-          last_name: 'Wilson',
+          first_name: 'Alex',
+          last_name: 'Abrahamion',
           document_number: '30201777',
         },
         delivery_order_id: 2461,
@@ -74,8 +75,8 @@ export class DeliveryOrderMockService {
           },
         ],
         client: {
-          first_name: 'Charlie',
-          last_name: 'Williams',
+          first_name: 'Lucas',
+          last_name: 'Angel',
           document_number: '22223125',
         },
         delivery_order_id: 8543,
@@ -83,11 +84,52 @@ export class DeliveryOrderMockService {
         created_at: '17/07/2023',
       },
       {
-        state: 'CREATED',
-        details: [],
+        state: 'PARTIALLY_DELIVERED',
+        details: [
+          {
+            quantity: 3,
+            state: 'PARTIALLY_DELIVERED',
+            product_name: 'Destornillador Philips',
+            delivered_quantity: 1,
+            product_id: 789,
+            quantity_delivery: 2,
+          },
+          {
+            quantity: 7,
+            state: 'PARTIALLY_DELIVERED',
+            product_name: 'Taladro Electrico',
+            delivered_quantity: 5,
+            product_id: 456,
+            quantity_delivery: 2,
+          },
+          {
+            quantity: 2,
+            state: 'DELIVERED',
+            product_name: 'Enduido Plastico',
+            delivered_quantity: 2,
+            product_id: 123,
+            quantity_delivery: 0,
+          },
+          {
+            quantity: 5,
+            state: 'CREATED',
+            product_name: 'Ceramica',
+            delivered_quantity: 0,
+            product_id: 654,
+            quantity_delivery: 5,
+          },
+          {
+            quantity: 4,
+            state: 'PARTIALLY_DELIVERED',
+            product_name: 'Cinta metrica',
+            delivered_quantity: 3,
+            product_id: 987,
+            quantity_delivery: 1,
+          },
+        ],
         client: {
-          first_name: 'Frank',
-          last_name: 'Jones',
+          first_name: 'Juan',
+          last_name: 'Angeloni',
           document_number: '44963332',
         },
         delivery_order_id: 5674,
@@ -95,11 +137,52 @@ export class DeliveryOrderMockService {
         created_at: '14/10/2023',
       },
       {
-        state: 'CREATED',
-        details: [],
+        state: 'PARTIALLY_DELIVERED',
+        details: [
+          {
+            quantity: 3,
+            state: 'PARTIALLY_DELIVERED',
+            product_name: 'Destornillador Philips',
+            delivered_quantity: 1,
+            product_id: 789,
+            quantity_delivery: 2,
+          },
+          {
+            quantity: 7,
+            state: 'PARTIALLY_DELIVERED',
+            product_name: 'Taladro Electrico',
+            delivered_quantity: 5,
+            product_id: 456,
+            quantity_delivery: 2,
+          },
+          {
+            quantity: 2,
+            state: 'DELIVERED',
+            product_name: 'Enduido Plastico',
+            delivered_quantity: 2,
+            product_id: 123,
+            quantity_delivery: 0,
+          },
+          {
+            quantity: 5,
+            state: 'CREATED',
+            product_name: 'Ceramica',
+            delivered_quantity: 0,
+            product_id: 654,
+            quantity_delivery: 5,
+          },
+          {
+            quantity: 4,
+            state: 'PARTIALLY_DELIVERED',
+            product_name: 'Cinta metrica',
+            delivered_quantity: 3,
+            product_id: 987,
+            quantity_delivery: 1,
+          },
+        ],
         client: {
-          first_name: 'Jack',
-          last_name: 'Wilson',
+          first_name: 'Tomas',
+          last_name: 'Benza',
           document_number: '37288278',
         },
         delivery_order_id: 9509,
@@ -107,11 +190,52 @@ export class DeliveryOrderMockService {
         created_at: '01/01/2022',
       },
       {
-        state: 'CANCELED',
-        details: [],
+        state: 'DELIVERED',
+        details: [
+          {
+            quantity: 3,
+            state: 'DELIVERED',
+            product_name: 'Destornillador Philips',
+            delivered_quantity: 1,
+            product_id: 789,
+            quantity_delivery: 2,
+          },
+          {
+            quantity: 7,
+            state: 'DELIVERED',
+            product_name: 'Taladro Electrico',
+            delivered_quantity: 5,
+            product_id: 456,
+            quantity_delivery: 2,
+          },
+          {
+            quantity: 2,
+            state: 'DELIVERED',
+            product_name: 'Enduido Plastico',
+            delivered_quantity: 2,
+            product_id: 123,
+            quantity_delivery: 0,
+          },
+          {
+            quantity: 5,
+            state: 'DELIVERED',
+            product_name: 'Ceramica',
+            delivered_quantity: 0,
+            product_id: 654,
+            quantity_delivery: 5,
+          },
+          {
+            quantity: 4,
+            state: 'DELIVERED',
+            product_name: 'Cinta metrica',
+            delivered_quantity: 3,
+            product_id: 987,
+            quantity_delivery: 1,
+          },
+        ],
         client: {
-          first_name: 'Ivy',
-          last_name: 'Moore',
+          first_name: 'Santiago',
+          last_name: 'Bima',
           document_number: '26620671',
         },
         delivery_order_id: 9006,
@@ -120,10 +244,51 @@ export class DeliveryOrderMockService {
       },
       {
         state: 'DELIVERED',
-        details: [],
+        details: [
+          {
+            quantity: 3,
+            state: 'DELIVERED',
+            product_name: 'Destornillador Philips',
+            delivered_quantity: 1,
+            product_id: 789,
+            quantity_delivery: 2,
+          },
+          {
+            quantity: 7,
+            state: 'DELIVERED',
+            product_name: 'Taladro Electrico',
+            delivered_quantity: 5,
+            product_id: 456,
+            quantity_delivery: 2,
+          },
+          {
+            quantity: 2,
+            state: 'DELIVERED',
+            product_name: 'Enduido Plastico',
+            delivered_quantity: 2,
+            product_id: 123,
+            quantity_delivery: 0,
+          },
+          {
+            quantity: 5,
+            state: 'DELIVERED',
+            product_name: 'Ceramica',
+            delivered_quantity: 0,
+            product_id: 654,
+            quantity_delivery: 5,
+          },
+          {
+            quantity: 4,
+            state: 'DELIVERED',
+            product_name: 'Cinta metrica',
+            delivered_quantity: 3,
+            product_id: 987,
+            quantity_delivery: 1,
+          },
+        ],
         client: {
-          first_name: 'Frank',
-          last_name: 'Williams',
+          first_name: 'Axel',
+          last_name: 'Bordón',
           document_number: '29279435',
         },
         delivery_order_id: 7419,
@@ -131,11 +296,52 @@ export class DeliveryOrderMockService {
         created_at: '22/11/2022',
       },
       {
-        state: 'DELIVERED',
-        details: [],
+        state: 'PARTIALLY_DELIVERED',
+        details: [
+          {
+            quantity: 3,
+            state: 'PARTIALLY_DELIVERED',
+            product_name: 'Destornillador Philips',
+            delivered_quantity: 1,
+            product_id: 789,
+            quantity_delivery: 2,
+          },
+          {
+            quantity: 7,
+            state: 'PARTIALLY_DELIVERED',
+            product_name: 'Taladro Electrico',
+            delivered_quantity: 5,
+            product_id: 456,
+            quantity_delivery: 2,
+          },
+          {
+            quantity: 2,
+            state: 'DELIVERED',
+            product_name: 'Enduido Plastico',
+            delivered_quantity: 2,
+            product_id: 123,
+            quantity_delivery: 0,
+          },
+          {
+            quantity: 5,
+            state: 'CREATED',
+            product_name: 'Ceramica',
+            delivered_quantity: 0,
+            product_id: 654,
+            quantity_delivery: 5,
+          },
+          {
+            quantity: 4,
+            state: 'PARTIALLY_DELIVERED',
+            product_name: 'Cinta metrica',
+            delivered_quantity: 3,
+            product_id: 987,
+            quantity_delivery: 1,
+          },
+        ],
         client: {
-          first_name: 'Bob',
-          last_name: 'Miller',
+          first_name: 'Samir',
+          last_name: 'Brusasca',
           document_number: '21671541',
         },
         delivery_order_id: 4325,
@@ -146,8 +352,8 @@ export class DeliveryOrderMockService {
         state: 'DELIVERED',
         details: [],
         client: {
-          first_name: 'Charlie',
-          last_name: 'Wilson',
+          first_name: 'Braian',
+          last_name: 'Colazo',
           document_number: '49240957',
         },
         delivery_order_id: 3020,
@@ -158,8 +364,8 @@ export class DeliveryOrderMockService {
         state: 'DELIVERED',
         details: [],
         client: {
-          first_name: 'Grace',
-          last_name: 'Wilson',
+          first_name: 'Matias',
+          last_name: 'Llanes',
           document_number: '41026133',
         },
         delivery_order_id: 1339,
@@ -170,8 +376,8 @@ export class DeliveryOrderMockService {
         state: 'PARTIALLY_DELIVERED',
         details: [],
         client: {
-          first_name: 'Charlie',
-          last_name: 'Miller',
+          first_name: 'Lucas',
+          last_name: 'Luiten',
           document_number: '42125709',
         },
         delivery_order_id: 2548,
@@ -182,8 +388,8 @@ export class DeliveryOrderMockService {
         state: 'CANCELED',
         details: [],
         client: {
-          first_name: 'Ivy',
-          last_name: 'Brown',
+          first_name: 'Federico',
+          last_name: 'Tahan',
           document_number: '38334380',
         },
         delivery_order_id: 3042,
@@ -194,7 +400,7 @@ export class DeliveryOrderMockService {
         state: 'PARTIALLY_DELIVERED',
         details: [],
         client: {
-          first_name: 'Ivy',
+          first_name: 'Ezequiel Kumiec',
           last_name: 'Moore',
           document_number: '35524943',
         },
@@ -207,7 +413,7 @@ export class DeliveryOrderMockService {
         details: [],
         client: {
           first_name: 'David',
-          last_name: 'Brown',
+          last_name: 'Amaya',
           document_number: '46593456',
         },
         delivery_order_id: 6888,
@@ -216,10 +422,51 @@ export class DeliveryOrderMockService {
       },
       {
         state: 'DELIVERED',
-        details: [],
+        details: [
+          {
+            quantity: 3,
+            state: 'PARTIALLY_DELIVERED',
+            product_name: 'Destornillador Philips',
+            delivered_quantity: 1,
+            product_id: 789,
+            quantity_delivery: 2,
+          },
+          {
+            quantity: 7,
+            state: 'PARTIALLY_DELIVERED',
+            product_name: 'Taladro Electrico',
+            delivered_quantity: 5,
+            product_id: 456,
+            quantity_delivery: 2,
+          },
+          {
+            quantity: 2,
+            state: 'DELIVERED',
+            product_name: 'Enduido Plastico',
+            delivered_quantity: 2,
+            product_id: 123,
+            quantity_delivery: 0,
+          },
+          {
+            quantity: 5,
+            state: 'CREATED',
+            product_name: 'Ceramica',
+            delivered_quantity: 0,
+            product_id: 654,
+            quantity_delivery: 5,
+          },
+          {
+            quantity: 4,
+            state: 'PARTIALLY_DELIVERED',
+            product_name: 'Cinta metrica',
+            delivered_quantity: 3,
+            product_id: 987,
+            quantity_delivery: 1,
+          },
+        ],
         client: {
-          first_name: 'Ivy',
-          last_name: 'Moore',
+          first_name: 'Ricardo',
+          last_name: 'Medina',
           document_number: '48288460',
         },
         delivery_order_id: 1741,
@@ -230,8 +477,8 @@ export class DeliveryOrderMockService {
         state: 'PARTIALLY_DELIVERED',
         details: [],
         client: {
-          first_name: 'Bob',
-          last_name: 'Moore',
+          first_name: 'Lautaro',
+          last_name: 'Correa',
           document_number: '35197512',
         },
         delivery_order_id: 5810,
@@ -243,8 +490,8 @@ export class DeliveryOrderMockService {
         state: 'PARTIALLY_DELIVERED',
         details: [],
         client: {
-          first_name: 'Bob',
-          last_name: 'Moore',
+          first_name: 'Gabriel',
+          last_name: 'Burgos',
           document_number: '39721262',
         },
         delivery_order_id: 3252,
@@ -255,8 +502,8 @@ export class DeliveryOrderMockService {
         state: 'DELIVERED',
         details: [],
         client: {
-          first_name: 'Ivy',
-          last_name: 'Davis',
+          first_name: 'German',
+          last_name: 'Palacios',
           document_number: '16644432',
         },
         delivery_order_id: 3620,
@@ -267,8 +514,8 @@ export class DeliveryOrderMockService {
         state: 'DELIVERED',
         details: [],
         client: {
-          first_name: 'Ivy',
-          last_name: 'Moore',
+          first_name: 'Ivan',
+          last_name: 'Molina',
           document_number: '45320968',
         },
         delivery_order_id: 3227,
@@ -279,8 +526,8 @@ export class DeliveryOrderMockService {
         state: 'CREATED',
         details: [],
         client: {
-          first_name: 'Jack',
-          last_name: 'Davis',
+          first_name: 'Mateo',
+          last_name: 'Scienza',
           document_number: '32325553',
         },
         delivery_order_id: 6703,
@@ -291,8 +538,8 @@ export class DeliveryOrderMockService {
         state: 'DELIVERED',
         details: [],
         client: {
-          first_name: 'Grace',
-          last_name: 'Williams',
+          first_name: 'Luis',
+          last_name: 'Sidel',
           document_number: '46071988',
         },
         delivery_order_id: 5746,
@@ -303,8 +550,8 @@ export class DeliveryOrderMockService {
         state: 'CANCELED',
         details: [],
         client: {
-          first_name: 'David',
-          last_name: 'Wilson',
+          first_name: 'Maximiliano',
+          last_name: 'Calvo',
           document_number: '35175634',
         },
         delivery_order_id: 3292,
@@ -315,8 +562,8 @@ export class DeliveryOrderMockService {
         state: 'CREATED',
         details: [],
         client: {
-          first_name: 'Emma',
-          last_name: 'Miller',
+          first_name: 'Matias',
+          last_name: 'Lockman',
           document_number: '21600888',
         },
         delivery_order_id: 7119,
@@ -327,8 +574,8 @@ export class DeliveryOrderMockService {
         state: 'DELIVERED',
         details: [],
         client: {
-          first_name: 'Alice',
-          last_name: 'Moore',
+          first_name: 'Alicia',
+          last_name: 'Palacios',
           document_number: '47622495',
         },
         delivery_order_id: 9788,
@@ -339,8 +586,8 @@ export class DeliveryOrderMockService {
         state: 'CANCELED',
         details: [],
         client: {
-          first_name: 'Emma',
-          last_name: 'Johnson',
+          first_name: 'Matias',
+          last_name: 'Prado',
           document_number: '29819942',
         },
         delivery_order_id: 3417,
@@ -351,8 +598,8 @@ export class DeliveryOrderMockService {
         state: 'PARTIALLY_DELIVERED',
         details: [],
         client: {
-          first_name: 'Alice',
-          last_name: 'Brown',
+          first_name: 'Ulises',
+          last_name: 'Molina',
           document_number: '49566362',
         },
         delivery_order_id: 1467,
@@ -363,8 +610,8 @@ export class DeliveryOrderMockService {
         state: 'CREATED',
         details: [],
         client: {
-          first_name: 'Frank',
-          last_name: 'Johnson',
+          first_name: 'Franco',
+          last_name: 'Arce',
           document_number: '10152925',
         },
         delivery_order_id: 9096,
@@ -375,8 +622,8 @@ export class DeliveryOrderMockService {
         state: 'DELIVERED',
         details: [],
         client: {
-          first_name: 'Alice',
-          last_name: 'Miller',
+          first_name: 'Rodrigo',
+          last_name: 'Valdez',
           document_number: '37645380',
         },
         delivery_order_id: 4894,
@@ -388,7 +635,7 @@ export class DeliveryOrderMockService {
         details: [],
         client: {
           first_name: 'David',
-          last_name: 'Williams',
+          last_name: 'Luiten',
           document_number: '18247781',
         },
         delivery_order_id: 9056,
@@ -399,8 +646,8 @@ export class DeliveryOrderMockService {
         state: 'PARTIALLY_DELIVERED',
         details: [],
         client: {
-          first_name: 'Grace',
-          last_name: 'Jones',
+          first_name: 'Salvador',
+          last_name: 'Aguirre',
           document_number: '12836531',
         },
         delivery_order_id: 9847,
@@ -411,8 +658,8 @@ export class DeliveryOrderMockService {
         state: 'DELIVERED',
         details: [],
         client: {
-          first_name: 'Ivy',
-          last_name: 'Moore',
+          first_name: 'Clara',
+          last_name: 'Baetti',
           document_number: '32518896',
         },
         delivery_order_id: 9325,
@@ -424,7 +671,7 @@ export class DeliveryOrderMockService {
         state: 'PARTIALLY_DELIVERED',
         details: [],
         client: {
-          first_name: 'Charlie',
+          first_name: 'Samir Brusasca',
           last_name: 'Williams',
           document_number: '47020245',
         },
@@ -436,8 +683,8 @@ export class DeliveryOrderMockService {
         state: 'CREATED',
         details: [],
         client: {
-          first_name: 'David',
-          last_name: 'Davis',
+          first_name: 'Guillermo',
+          last_name: 'Cabrera',
           document_number: '19181542',
         },
         delivery_order_id: 1904,
@@ -448,8 +695,8 @@ export class DeliveryOrderMockService {
         state: 'DELIVERED',
         details: [],
         client: {
-          first_name: 'Jack',
-          last_name: 'Brown',
+          first_name: 'Guillermo',
+          last_name: 'Guitierrez',
           document_number: '49382580',
         },
         delivery_order_id: 6009,
@@ -460,8 +707,8 @@ export class DeliveryOrderMockService {
         state: 'CANCELED',
         details: [],
         client: {
-          first_name: 'David',
-          last_name: 'Smith',
+          first_name: 'Juan',
+          last_name: 'Cruz',
           document_number: '26304236',
         },
         delivery_order_id: 8093,
@@ -472,8 +719,8 @@ export class DeliveryOrderMockService {
         state: 'CREATED',
         details: [],
         client: {
-          first_name: 'Frank',
-          last_name: 'Brown',
+          first_name: 'Daniel',
+          last_name: 'Giacinto',
           document_number: '39176511',
         },
         delivery_order_id: 6406,
@@ -484,8 +731,8 @@ export class DeliveryOrderMockService {
         state: 'PARTIALLY_DELIVERED',
         details: [],
         client: {
-          first_name: 'David',
-          last_name: 'Davis',
+          first_name: 'Emanuel',
+          last_name: 'Flores',
           document_number: '47848669',
         },
         delivery_order_id: 8466,
@@ -508,8 +755,8 @@ export class DeliveryOrderMockService {
         state: 'CANCELED',
         details: [],
         client: {
-          first_name: 'Charlie',
-          last_name: 'Davis',
+          first_name: 'Genaro',
+          last_name: 'Farid',
           document_number: '19494213',
         },
         delivery_order_id: 2325,
@@ -520,8 +767,8 @@ export class DeliveryOrderMockService {
         state: 'PARTIALLY_DELIVERED',
         details: [],
         client: {
-          first_name: 'Hank',
-          last_name: 'Moore',
+          first_name: 'Julian',
+          last_name: 'Magnabosco',
           document_number: '27707206',
         },
         delivery_order_id: 6711,
@@ -532,8 +779,8 @@ export class DeliveryOrderMockService {
         state: 'PARTIALLY_DELIVERED',
         details: [],
         client: {
-          first_name: 'Jack',
-          last_name: 'Miller',
+          first_name: 'Sara',
+          last_name: 'Paez',
           document_number: '17949168',
         },
         delivery_order_id: 4364,
@@ -544,8 +791,8 @@ export class DeliveryOrderMockService {
         state: 'DELIVERED',
         details: [],
         client: {
-          first_name: 'Charlie',
-          last_name: 'Jones',
+          first_name: 'Franco',
+          last_name: 'Medina',
           document_number: '48044237',
         },
         delivery_order_id: 8097,
@@ -556,8 +803,8 @@ export class DeliveryOrderMockService {
         state: 'PARTIALLY_DELIVERED',
         details: [],
         client: {
-          first_name: 'Hank',
-          last_name: 'Johnson',
+          first_name: 'Genaro',
+          last_name: 'Richard',
           document_number: '20180758',
         },
         delivery_order_id: 9499,
@@ -568,8 +815,8 @@ export class DeliveryOrderMockService {
         state: 'PARTIALLY_DELIVERED',
         details: [],
         client: {
-          first_name: 'Emma',
-          last_name: 'Smith',
+          first_name: 'Danna',
+          last_name: 'Foletto',
           document_number: '49730218',
         },
         delivery_order_id: 4934,
@@ -580,8 +827,8 @@ export class DeliveryOrderMockService {
         state: 'DELIVERED',
         details: [],
         client: {
-          first_name: 'Jack',
-          last_name: 'Moore',
+          first_name: 'Kevin',
+          last_name: 'Pineda',
           document_number: '29575613',
         },
         delivery_order_id: 6624,
@@ -592,8 +839,8 @@ export class DeliveryOrderMockService {
         state: 'PARTIALLY_DELIVERED',
         details: [],
         client: {
-          first_name: 'Alice',
-          last_name: 'Miller',
+          first_name: 'José',
+          last_name: 'Samuel',
           document_number: '33271380',
         },
         delivery_order_id: 4063,
@@ -774,7 +1021,7 @@ export class DeliveryOrderMockService {
 
         if (orderDetail) {
           orderDetail.delivered_quantity += order.details[i].quantity;
-          orderDetail.delivered_quantity =
+          orderDetail.quantity_delivery =
             orderDetail.quantity - orderDetail.delivered_quantity;
           if (orderDetail.delivered_quantity == orderDetail.quantity) {
             orderDetail.state = 'DELIVERED';

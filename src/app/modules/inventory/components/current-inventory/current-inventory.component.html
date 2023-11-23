@@ -1,4 +1,4 @@
-<div class="px-4 py-4 my-2">
+<div class="text-center">
   <h1>Inventario actual</h1>
 </div>
 
@@ -21,45 +21,14 @@
   <table class="table table-hover  my-4">
     <thead>
       <tr>
-        <th scope="col" (click)="sortData('product_name')" class="sortable-column">
-          Producto
-          <span *ngIf="currentSort.column === 'product_name'" class="sort-icon">
-            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
-          </span>
-        </th>
-        <th scope="col" (click)="sortData('location.zone')" class="sortable-column">
-          Zona
-          <span *ngIf="(currentSort.column)?.toString() === 'location.zone'" class="sort-icon">
-            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
-          </span>
-        </th>
-        <th scope="col" (click)="sortData('location.section')" class="sortable-column">
-          Seccion
-          <span *ngIf="(currentSort.column)?.toString() === 'location.section'" class="sort-icon">
-            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
-          </span>
-        </th>
-        <th scope="col" (click)="sortData('location.space')" class="sortable-column">
-          Espacio
-          <span *ngIf="(currentSort.column)?.toString() === 'location.space'" class="sort-icon">
-            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
-          </span>
-        </th>
-        <th scope="col" (click)="sortData('quantity')" class="sortable-column">
-          Cantidad actual
-          <span *ngIf="currentSort.column === 'quantity'" class="sort-icon">
-            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
-          </span>
-        </th>
-        <th scope="col" (click)="sortData('max_capacity')" class="sortable-column">
-          Maxima capacidad
-          <span *ngIf="currentSort.column === 'max_capacity'" class="sort-icon">
-            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
-          </span>
-        </th>
+        <th scope="col">Producto</th>
+        <th scope="col">Zona</th>
+        <th scope="col">Seccion</th>
+        <th scope="col">Espacio</th>
+        <th scope="col">Cantidad actual</th>
+        <th scope="col">Maxima capacidad</th>
       </tr>
     </thead>
-    
     <tbody>
       <tr *ngFor="let locationInfo of filteredList">
         <td>{{ locationInfo.product_name }}</td>

@@ -1,17 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DeliverOrderService } from '../../../services/deliver-order.service';
-import { DeilveryOrder } from '../../../models/deilvery-order';
 import { Pagination } from '../../../models/pagination';
-import { StateIconPipePipe } from '../../../pipes/state-icon-pipe.pipe';
 import { Router } from '@angular/router';
-import { DeliveryOrderMockService } from '../../../services/delivery-order-mock.service';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { DeliveryOrdersMockService } from '../../../services/delivery-order-mock.service';
+
 @Component({
   selector: 'fn-consult-order',
   templateUrl: './consult-order.component.html',
   styleUrls: ['./consult-order.component.css'],
 })
-export class ConsultOrderComponent {
+export class ConsultOrderComponent implements OnInit {
   orderId: string = '';
   deliveryOrder: Pagination = new Pagination();
   currentPage = 1;
@@ -22,7 +21,7 @@ export class ConsultOrderComponent {
   constructor(
     private deliveryorderService: DeliverOrderService,
     private router: Router,
-    public serviceMock: DeliveryOrderMockService
+    public serviceMock: DeliveryOrdersMockService
   ) {}
   ngOnInit(): void {
     this.iniciarlizar();

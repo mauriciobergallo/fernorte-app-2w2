@@ -11,7 +11,6 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { InventoryRoutingModule } from './inventory-routing.module';
 import { SearchStorageTicketComponent } from './components/search-storage-ticket/search-storage-ticket.component';
 import { CurrentInventoryComponent } from './components/current-inventory/current-inventory.component';
-import { ConsultOrderComponent } from './components/consult-order/consult-order/consult-order.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { StateIconPipePipe } from './pipes/state-icon-pipe.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -35,7 +34,7 @@ import { SpacesComponent } from './components/locations/spaces/spaces.component'
     SearchInventoryMovementsComponent,
     DatepickerRangePopupComponent,
     SearchStorageTicketComponent,
-    ConsultOrderComponent,
+    ConsultReceptionOrdersComponent,
 
     SidebarComponent,
 
