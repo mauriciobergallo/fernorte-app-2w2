@@ -10,6 +10,7 @@ import { ConsultReceptionOrdersComponent } from './components/consult-reception-
 import { HomeComponent } from './components/home/home.component';
 import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
 import { CreateMovementComponent } from './components/create-movement/create-movement.component';
+import { EditMovimientoComponent } from './components/edit-movimiento/edit-movimiento.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { LocationsComponent } from './components/locations/locations/locations.component';
 import { SectionsComponent } from './components/locations/sections/sections.component';
@@ -42,6 +43,7 @@ const routes: Routes = [
       },
       { path: 'locations-product', component: SearchLocationProductComponent },
       { path: 'new-movement', component: CreateMovementComponent },
+      { path: 'edit-movement', component: EditMovimientoComponent },
       { path: 'storage-tickets', component: SearchStorageTicketComponent },
       { path: 'current-inventory', component: CurrentInventoryComponent },
       {

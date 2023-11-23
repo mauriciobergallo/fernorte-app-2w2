@@ -5,7 +5,7 @@ import { DatePipe } from "@angular/common";
 
 
 export class IMovementDto {
-
+    id:number;
     operator: String;
     movement_type: MovementType | null;
     is_internal: Boolean;
@@ -14,6 +14,7 @@ export class IMovementDto {
     remarks: string
 
     constructor(data: any) {
+        this.id= data.id
         this.operator = data.operator;
         this.remarks = data.remarks; // Mapeando 'remarks' a 'descripcion'
         this.movement_type = data.movement_type;

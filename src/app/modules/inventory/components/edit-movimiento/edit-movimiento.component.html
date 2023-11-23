@@ -1,0 +1,172 @@
+
+ <!-- Aquí comienza el contenido de la tarjeta -->
+ <div class="card text-center">
+    <div class="card-header">
+        Editar Items Actuales
+    </div>
+    <div class="card-body">
+        <div class="text-danger  mt-2" [hidden]="formMov.value.details.length > 0">
+            <span>
+                No puede crear un movimiento sin productos.
+            </span>
+        </div>
+        <table class="table table-responsive  table-hover">
+            <thead class="table-light table-bordered  table-borderless ">
+                <tr>
+                    <th>Nombre del Producto</th>
+                    <th>Cantidad a mover</th>
+                    <th>Origen</th>
+                    <th>Destino</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let detail of detallesArray.controls; let i = index">
+                    <td>{{ detail.get('product')?.value }}</td>
+                    <td>
+                        <div >
+                          Cantidad Max Disponible: {{getAviabilityQByLocation(detail.get('destino')?.value.id)}}
+                        </div>
+                        <input type="number"  [min]="1" [value]="detail.value.quantity"   [max]="getAviabilityQByLocation(detail.get('destino')?.value.id)">
+                      </td>
+                    <td>{{ detail.get('origen')?.value.zone }} - {{ detail.get('origen')?.value.section }} - {{
+                        detail.get('origen')?.value.space }}</td>
+                    <td>{{ detail.get('destino')?.value.zone }} - {{ detail.get('destino')?.value.section }} - {{
+                        detail.get('destino')?.value.space }}</td>
+                    <td (click)="removeDetail(i)"><i class="bi bi-trash"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer ">
+        <button type="button" class="btn btn-danger "  aria-label="Cerrar"
+        (click)="cerrar()">Cerrar</button>
+        <button class="btn btn-primary" 
+        [disabled]="detallesArray.length <= 0" (click)="submitForm()">
+        Confirmar</button>
+    </div>
+</div>
+<!-- Aquí termina el contenido de la tarjeta -->
+
+<div class="card text-center">
+    <div class="card-header">
+        Agregar Items
+    </div>
+    <div class="card-body">
+        <form [formGroup]="detailForm">
+            <h5 class="card-title">Seleccione un producto</h5>
+          <!--   <div
+                *ngIf="detailForm.get('origin')?.invalid && (detailForm.get('origin')?.dirty || detailForm.get('origin')?.touched)">
+                <span class="text-danger" *ngIf="detailForm.get('origin')?.hasError('required')">Origen
+                    es requerido.</span>
+            </div> -->
+            <div class="container ">
+                <div class="search-container my-3">
+                    <div class="container my-3">
+                        <div class="row ">
+                            <div class="col-4"></div>
+                            <div class="col-4">
+                                <input type="text" class="form-control"  placeholder="Ingrese el nombre del producto"
+                                (input)="onSearchProduct($event)" [value]="''" />      
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <table class="table table-responsive  table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th></th>
+                            <th>Nombre del Producto</th>
+                            <th>Cantidad Actual</th>
+                            <th>Zona</th>
+                            <th>Sección</th>
+                            <th>Espacio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let info of filteredOrigins; let i = index;"
+                            (click)="seleccionarOrigen(info,i)"
+                            [class.table-active]="info === selectedOriginInfo">
+                            <td [class]="(info  === selectedOriginInfo) ? 'bi bi-check-circle' : '  '">
+                            </td>
+                            <td>{{ info.product_name }}</td>
+                            <td>{{ info.quantity }}</td>
+                            <td>{{ info.location.zone }}</td>
+                            <td>{{ info.location.section }}</td>
+                            <td>{{ info.location.space }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <h5>Ingrese cantidad</h5>
+                <!-- Mensajes de Error para Quantity -->
+                <div
+                    *ngIf="(detailForm.get('quantity')?.invalid  || detailForm.hasError('quantityInsufficient')) && (detailForm.get('quantity')?.dirty || detailForm.get('quantity')?.touched)">
+                    <span class="text-danger"
+                        *ngIf="detailForm.get('quantity')?.hasError('required')">La cantidad es
+                        requerida.</span>
+                    <span class="text-danger" *ngIf="detailForm.hasError('quantityInsufficient')">La
+                        cantidad actual es insuficiente.</span>
+                    <span class="text-danger" *ngIf="detailForm.get('quantity')?.hasError('min')">La
+                        cantidad debe ser al menos 1.</span>
+                        <span class="text-danger" *ngIf="detailForm.get('quantity')?.hasError('min')">La
+                            cantidad debe ser al menos 1.</span>
+                </div>
+
+                <div class="container my-3">
+                    <div class="row ">
+                        <div class="col-4"></div>
+                        <div class="col-4">
+                            <input type="number" class="form-control"  formControlName="quantity"
+                                min="1" />
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="container">
+                    <h2>Seleccione Destino</h2>
+                    <table class="table table-responsive  table-hover">
+                        <thead class="table-light ">
+                            <tr>
+                                <th></th>
+                                <th>Nombre del Producto</th>
+                                <th>Capacidad Disponible</th>
+                                <th>Zona</th>
+                                <th>Sección</th>
+                                <th>Espacio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let info of locationDestinis; let i = index;"
+                                (click)="seleccionarDestino(info,i)"
+                                [class.table-active]="info === selectedDestinityInfo">
+                                <td [class]="(info  === selectedDestinityInfo) ? 'bi bi-check-circle' : '  '">
+                                </td>
+                                <td>{{ info.product_name }}</td>
+                                <td>{{ info.max_capacity-info.quantity }}</td>
+                                <td>{{ info.location.zone }}</td>
+                                <td>{{ info.location.section }}</td>
+                                <td>{{ info.location.space }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button type="button" (click)="insertDetail(detailForm)" [disabled]="this.detailForm.invalid"
+                                class="m-3 btn btn-primary position-relative">
+                                Agregar
+                                <span *ngIf="detallesArray.length > 0  "
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{detallesArray.length}}
+                                </span>
+                            </button>
+            </form>
+            
+
+            
+    </div>

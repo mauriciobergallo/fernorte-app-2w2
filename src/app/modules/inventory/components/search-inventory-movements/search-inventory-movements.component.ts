@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, HostListener } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 import { IMovementDto } from '../../models/IMovementDto';
 import { MovementType } from '../../models/IMovementTypeEnum';
@@ -7,6 +7,8 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Pagination } from '../../models/pagination';
 import jsPDF from 'jspdf';
 import { Chart } from 'chart.js/auto';
+import Swal from 'sweetalert2';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'fn-search-inventory-movements',
@@ -16,14 +18,17 @@ import { Chart } from 'chart.js/auto';
 export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   movimientosOriginales: IMovementDto[] = [];
   movimientos: IMovementDto[] = [];
-  isLoading: boolean = false;
+  isLoading: boolean = false;;
+  movCargados:boolean=false;
   private subscripciones = new Subscription();
+  loading = false;
   actualRole: string = '';
   currentPage = 1;
   totalPages = 1;
 
   mostrarDetalleMovimiento: number | null = null;
   mostrarDetalle: boolean = false;
+
 
   showDetail(i: number) {
     if (i === this.mostrarDetalleMovimiento) {
@@ -36,10 +41,45 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   }
 
   getMovementTypeTranslate(mov: MovementType | null): string {
-    if (mov == null) return '-';
-    if (mov == MovementType.INBOUND) return 'Entrada';
-    if (mov == MovementType.OUTBOUND) return 'Salida';
-    return '-';
+    if (mov == null) return '-'
+    if (mov == MovementType.INBOUND) return 'Entrada'
+    if (mov == MovementType.OUTBOUND) return 'Salida'
+    return '-'
+  }
+
+  reload(){
+    this.isLoading=true;
+    this.getMovementsPage(this.currentPage);
+    this.isLoading=false;
+  }
+
+  removeMov(idx: number){
+    Swal.fire({
+      title: '¿Estás seguro de borrar el movimiento?',
+      text: "¡No podrás revertir esta acción!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, borrar!',
+      cancelButtonText: 'No, cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.movimientos.splice(idx,1)
+        Swal.fire(
+          '¡Eliminado!',
+          'Tu archivo ha sido eliminado.',
+          'success'
+        )
+      }
+    });
+  }
+
+
+  editMov(mov: IMovementDto){
+    this.movementService.seleccionarMovimiento(mov);
+   // this.router.navigate(['/inventory/edit-movement']);
+   this.router.navigate(['../edit-movement'], { relativeTo: this.route });
   }
 
   orderDetail(idx: number) {
@@ -50,60 +90,103 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
     this.subscripciones.unsubscribe();
   }
 
-  constructor(private movementService: MovementsService) {}
+  constructor(private movementService: MovementsService, private router: Router,  private route: ActivatedRoute,
+    private eRef: ElementRef) {
+    this.loading=true;
+    this.isLoading=true;
+  }
+  myMap = new Map<number, Pagination>();
 
+  private actualizarMovimientos(pagination: Pagination): void {
+    this.movimientosOriginales = pagination.items.map(movement => new IMovementDto(movement));
+    this.movimientos = [...this.movimientosOriginales];
+}
+isLoadingPage: boolean = false;
   nextPage() {
+    this.isLoadingPage=true;
+
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.getMovementsPage(this.currentPage);
+      console.log(this.currentPage)
+
+      let p :Pagination|undefined =this.myMap.get(this.currentPage)
+      if(p!= undefined){
+        console.log(this.myMap)
+
+        this.actualizarMovimientos(p);
+      }else{
+        console.log(this.myMap)
+
+        this.getMovementsPage(this.currentPage);
+      }
     }
+    this.isLoadingPage=false;
+
   }
 
   previousPage() {
+    this.isLoadingPage=true;
+
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.getMovementsPage(this.currentPage);
+      console.log(this.currentPage)
+
+      let p :Pagination|undefined =this.myMap.get(this.currentPage)
+      if(p!= undefined){
+        console.log(this.myMap)
+
+        this.actualizarMovimientos(p);
+      }else{
+        console.log(this.myMap)
+
+        this.getMovementsPage(this.currentPage);
+      }
+
     }
-  }
-  changePage(page: number) {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-    }
+
+    this.isLoadingPage=false;
   }
 
+
+
   ngOnInit() {
+    console.log(this.myMap)
+    this.isLoading=true;
+    this.loading=true;
     let credential = JSON.parse(localStorage.getItem('credentials') || 'N/N');
     this.actualRole = credential.role[1];
 
     this.getMovementsPage(this.currentPage);
-
+    this.isLoading=false;
+    this.loading=false;
     //this.fillTable();
+
   }
 
   filterByDate(event: { from: NgbDate | null; to: NgbDate | null }) {
+
     if (event.from && event.to) {
-      let fromDate = new Date(
-        event.from.year,
-        event.from.month - 1,
-        event.from.day
-      );
+
+      let fromDate = new Date(event.from.year, event.from.month - 1, event.from.day);
       let toDate = new Date(event.to.year, event.to.month - 1, event.to.day);
 
       this.movimientos = this.movimientosOriginales;
       this.movimientos = this.movimientos.filter((movement) => {
-        let dateP = movement.date.split('-');
+
+        let dateP = movement.date.split("-");
 
         let day = parseInt(dateP[0], 10);
         let month = parseInt(dateP[1], 10);
         let year = parseInt(dateP[2], 10);
-        console.log(month);
+        console.log(month)
         let movementDate = new Date(year, month - 1, day);
 
         return movementDate >= fromDate && movementDate <= toDate;
       });
-      console.log(this.movimientos.toString() + 'mov');
-      console.log(this.movimientosOriginales.toString() + 'movv Origins');
+      console.log(this.movimientos.toString() + "mov")
+      console.log(this.movimientosOriginales.toString() + "movv Origins")
     } else {
+
     }
   }
 
@@ -111,101 +194,83 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
     this.movimientos = this.movimientosOriginales;
   }
 
-  fillTable() {
-    this.isLoading = true;
-    this.subscripciones.add(
-      this.movementService.getAllMovements().subscribe({
-        next: (response: IMovementDto[]) => {
-          if (response != null) {
-            response.forEach((movement) => {
-              this.movimientosOriginales.push(movement);
-            });
-            this.movimientos = this.movimientosOriginales;
-          } else {
-            console.log('La respuesta está vacía');
-          }
-        },
-        error: (error: any) => {
-          console.log(error);
-        },
-      })
-    );
-  }
 
   getMovementsPage(page: number) {
     this.isLoading = true;
+    this.loading=true;
     this.subscripciones.add(
-      this.movementService.getPaginationMovements(page - 1).subscribe({
+      this.movementService.getPaginationMovements(page-1).subscribe({
         next: (response: Pagination) => {
           if (response != null) {
+            this.myMap.set(page,response)
+            console.log(this.myMap)
+            console.log(response)
             this.totalPages = response.totalPages;
-            response.items.forEach((movement) => {
-              this.movimientosOriginales.push(new IMovementDto(movement));
-            });
+            this.movimientosOriginales=[]
+            response.items.forEach(movement => {
+              this.movimientosOriginales.push(new IMovementDto(movement))
+            })
+            this.movimientos = [];
             this.movimientos = this.movimientosOriginales;
           } else {
-            console.log('No content');
+            console.log("No content")
           }
-          this.isLoading = false;
         },
         error: (error: any) => {
-          this.isLoading = false;
-          console.log(error);
+          console.log(error)
         },
+        complete:() => {
+          this.isLoading = false;
+          this.loading=false;
+        }
       })
-    );
+    )
   }
 
   generateChart() {
     const labels = ['Productos Salientes', 'Productos Ingresantes'];
-
+  
     const canvas = document.getElementById('myChart') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d');
     Chart.getChart(canvas)?.destroy();
-
-    const outboundMovements = this.movimientos.filter(
-      (movement) => movement.movement_type === MovementType.OUTBOUND
-    );
+  
+    const outboundMovements = this.movimientos.filter(movement => movement.movement_type === MovementType.OUTBOUND);
     const productsSalientes = outboundMovements.reduce((total, movement) => {
-      movement.movement_details.forEach((detail) => {
+      movement.movement_details.forEach(detail => {
         total += detail.quantity;
       });
       return total;
     }, 0);
-
-    const inboundMovements = this.movimientos.filter(
-      (movement) => movement.movement_type === MovementType.INBOUND
-    );
+  
+    const inboundMovements = this.movimientos.filter(movement => movement.movement_type === MovementType.INBOUND);
     const productsIngresantes = inboundMovements.reduce((total, movement) => {
       // Iterar sobre los detalles del movimiento y sumar las cantidades
-      movement.movement_details.forEach((detail) => {
+      movement.movement_details.forEach(detail => {
         total += detail.quantity;
       });
       return total;
     }, 0);
-
+  
     const backgroundColors = [
       'rgba(255, 99, 132, 0.2)', // Color para productos salientes
       'rgba(54, 162, 235, 0.2)', // Color para productos ingresantes
     ];
-
+  
     const borderColors = [
       'rgba(255, 99, 132, 1)', // Borde para productos salientes
       'rgba(54, 162, 235, 1)', // Borde para productos ingresantes
     ];
-
+  
     const chartData = {
       labels,
-      datasets: [
-        {
-          data: [productsSalientes, productsIngresantes],
-          backgroundColor: backgroundColors,
-          borderColor: borderColors,
-          borderWidth: 1,
-        },
-      ],
+      datasets: [{
+        data: [productsSalientes, productsIngresantes],
+        backgroundColor: backgroundColors,
+        borderColor: borderColors,
+        borderWidth: 1,
+      }],
     };
-
+  
     if (ctx) {
       // Crear el gráfico
       new Chart(ctx, {
@@ -230,14 +295,14 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
               },
             },
           },
-          plugins: {
+          plugins:{
             legend: {
               display: false,
-            },
-          },
+            }
+          }
         },
       });
-
+  
       return new Promise<string>((resolve) => {
         setTimeout(() => {
           const chartImage = canvas.toDataURL('image/png');
@@ -265,10 +330,10 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
     if (chartImage) {
       const imageWidth = pdf.internal.pageSize.getWidth() - 20; // Ancho del gráfico igual al ancho del PDF
       const imageHeight = pdf.internal.pageSize.getHeight() - 100; // Alto del gráfico menor que el alto del PDF
-
+  
       pdf.addImage(chartImage, 'PNG', 10, 80, imageWidth, imageHeight);
     }
-
+  
     pdf.save('reporte_inventario.pdf');
   }
   

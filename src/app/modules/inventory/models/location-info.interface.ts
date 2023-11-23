@@ -6,6 +6,7 @@ interface Location {
   
   export interface LocationInfoDto {
     location: Location;
+    product_id:number|undefined;
     location_id: number;
     category_name: string;
     product_name: string;

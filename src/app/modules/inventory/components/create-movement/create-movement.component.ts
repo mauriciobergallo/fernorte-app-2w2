@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy ,ViewChild, ElementRef, AfterViewInit, TemplateRef, inject} from '@angular/core';
+import { Component, OnInit, OnDestroy ,ViewChild, ElementRef, AfterViewInit, TemplateRef, inject, EventEmitter, Output} from '@angular/core';
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchAll, switchMap, takeUntil } from 'rxjs/operators';
 import { LocationInfoDto } from '../../models/location-info.interface';
@@ -8,6 +8,8 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, V
 import { ValidationError } from 'json-schema';
 import { MovementsService, NewDetailMovementDto, ReqNewMovementDto } from '../../services/movements-service/movements.service';
 import Swal from 'sweetalert2';
+import { User } from 'src/app/modules/customer/models/user';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 export function destinationValidator(): ValidatorFn {
@@ -42,14 +44,14 @@ export function quantityValidator(): ValidatorFn {
 })
 export class CreateMovementComponent implements OnInit, OnDestroy  {
 
-
+  @Output() onSubmitMov = new EventEmitter<void>();
   private searchQuery = new BehaviorSubject<string>('..');
   locationsInfo$!: Observable<LocationInfoDto[]>;
   private selectedInfoSubject = new BehaviorSubject<LocationInfoDto | null>(null);
   filteredLocationsInfo$!: Observable<LocationInfoDto[]>;
   filteredLocationsInfoDestinity$!: Observable<LocationInfoDto[]>;
   private destroy$ = new Subject<void>(); 
-
+  
   selectedOriginInfo: LocationInfoDto | null = null;
   selectedDestinityInfo: LocationInfoDto | null = null;
 
@@ -76,7 +78,7 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
   get movementDetailsArray(): FormArray {
     return this.movementForm.get('movementDetailsArray') as FormArray;
   }
-  constructor(private service: WarehouseService, private fb: FormBuilder) {
+  constructor(private service: WarehouseService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
     this.initFormMovement();
     this.locationsInfo$ = this.service.getLocationsInfo();
   }
@@ -112,6 +114,8 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
   ngOnDestroy(): void {
     this.destroy$.next(); // Emite un valor para desencadenar la desuscripción
     this.destroy$.complete(); // Cierra el Subject
+    
+
   }
 
 
@@ -127,9 +131,10 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
       }
       return d;
     })
+    let username: User|null = JSON.parse(localStorage.getItem('role') ?? '' )
     let mov : ReqNewMovementDto = {
       remarks: this.remarksControl?.value,
-      operator_id : 1,
+      operator_name :username?.username || 'Default',
       movement_type: null,
       is_internal : true,
       movement_details : dets
@@ -142,12 +147,11 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
     this.isLoadingS = true;
       // Aquí manejarías la lógica para enviar los datos a tu API
     let mov = this.prepareMovement()
-    console.log('mov prepr',mov)
     this.serviceMovement.newMovement(mov).subscribe({
       next: (result) => {
     this.isLoadingS = false;
         if (result) {
-          //alert('succes')
+          this.onSubmitMov.emit()
           Swal.fire(
             '¡Creado!',
             'El movimiento ha sido creado con éxito.',
@@ -174,6 +178,9 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
       }
     });    
     this.isLoadingS = false;
+    this.resetForms()
+    this.router.navigate(['inventory/search-movements']);
+
 
   }
   setUpValueChanges(){
@@ -188,7 +195,6 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
         }
       } )
       this.detailForm.get('origin')?.valueChanges.subscribe((value) => {
-
       })
       
   }
@@ -196,7 +202,7 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
   initFormMovement() {
     this.movementForm = this.fb.group({
       motivo: ['', [Validators.required]],
-      remarks: ['', [Validators.required, Validators.minLength(15)]],
+      remarks: ['', [Validators.required, Validators.minLength(10)]],
       movementDetailsArray: this.fb.array([],[Validators.required])
     })
 
@@ -210,7 +216,8 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
     const group = this.fb.group({
       origin: [origin, Validators.required],
       destiny: [destiny, Validators.required],
-      quantity: [quantity, [Validators.required, Validators.min(1)]]
+      quantity: [quantity, [Validators.required, Validators.min(1)]],
+      nombreDelProducto:['']
     });
     
     group.setValidators([destinationValidator(), quantityValidator(),this.duplicateMovementValidator(this.movementDetailsArray)]);
@@ -225,7 +232,6 @@ addDetail(detailForm: FormGroup){
 
     // Imprimir los valores de los controles en la consola
     this.movementDetailsArray.controls.forEach(control => {
-      console.log(control.value);
       
     });
 
@@ -241,7 +247,7 @@ addDetail(detailForm: FormGroup){
   onSearch(event: Event): void {
     // Actualizar la cadena de búsqueda cada vez que cambie el input
     const query = (event.target as HTMLInputElement).value;
-    if(query=== ''){
+    if(query.length <= 3){
     this.searchQuery.next(".."); // Emitir el nuevo valor de búsqueda
 
     } else {
@@ -249,13 +255,15 @@ addDetail(detailForm: FormGroup){
       this.searchQuery.next(query); // Emitir el nuevo valor de búsqueda
     }
   }
+  get formErrors() {
+    return JSON.stringify(this.detailForm.errors, null, 2);
+  }
 
   onProductSelect(product: LocationInfoDto): void {
     // Establecer el producto seleccionado cuando se hace clic en una fila
     this.selectedOriginInfo = product;
     this.selectedInfoSubject.next(product); 
     this.detailForm.patchValue({'origin': product});
-
   }
 
   onDestinySelect(location : LocationInfoDto){
@@ -265,7 +273,6 @@ addDetail(detailForm: FormGroup){
 
   resetForms(){
     this.movementForm.setValue({
-
       remarks: '',
       movementDetailsArray: []
     })
@@ -277,7 +284,8 @@ addDetail(detailForm: FormGroup){
     this.detailForm.setValue({
       origin: null,
       destiny: null,
-      quantity: 1
+      quantity: 1,
+      nombreDelProducto: ''
     });
     this.movementDetailsArray.controls.forEach(ctrl => {
       
@@ -286,7 +294,7 @@ addDetail(detailForm: FormGroup){
 
     this.selectedOriginInfo = null;
     this.selectedDestinityInfo = null;
-    this.searchQuery.next('')
+    this.searchQuery.next('..')
   }
 
 
@@ -294,11 +302,11 @@ addDetail(detailForm: FormGroup){
     return (control: AbstractControl): ValidationErrors | null => {
       const origin = control.get('origin')?.value;
       const destiny = control.get('destiny')?.value;
-
         // Utilizar 'some' para comprobar si algún detalle ya tiene el mismo origen o destino
     const duplicate = movementDetailsArray.controls.some(ctrl => {
       const ctrlOrigin = ctrl.get('origin')?.value;
       const ctrlDestiny = ctrl.get('destiny')?.value;
+
       return (ctrlOrigin === origin || ctrlOrigin === destiny) || 
              (ctrlDestiny === origin || ctrlDestiny === destiny);
     });

@@ -32,6 +32,7 @@ export class LoginComponent {
           text: 'Bienvenido ' + respuesta.username,
           icon: 'success',
         });
+        localStorage.setItem('role',JSON.stringify(respuesta))
         this.navigate(respuesta);
       } else {
         Swal.fire({
