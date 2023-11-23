@@ -1,1 +1,21 @@
-<p>graphs works!</p>
+
+<div class="container-fluid mt-5 d-flex justify-content-center">
+  <form [formGroup]="filterFom">
+      <div class="col-md-6">
+        <label for="chart" class="form-label">Tipo:</label>
+        <select class="form-select" id="selectProduct" formControlName="chart">
+          <option value="0">Seleccionar tipo de gráfico</option>
+          <option *ngFor="let chart of listCharts" [value]="chart.value"> {{chart.name}} </option>
+        </select>
+      </div>
+
+      
+    <div class="col-md-12 d-flex justify-content-center mt-2">
+      <button type="submit" class="btn btn-primary  m-2 " (click)="showGraphs()">Generar</button>
+    </div>
+  </form>
+</div>
+
+<div class="container-fluid">
+  <canvas id="myChart"></canvas>
+</div>
