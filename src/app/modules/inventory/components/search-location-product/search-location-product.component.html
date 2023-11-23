@@ -1,7 +1,9 @@
 <section class="container">
   <form #searchForm="ngForm" class="mt-4 ">
+    <div>
+      <h2 class="px-4 py-4 my-2">Ubicación de producto</h2>
+    </div>
 
-    <h2 class="text-center">Ubicación de producto</h2>
     <div class="form-group">
       <label for="productCodeOrName">Nombre o código del producto</label>
       <input type="text" class="form-control" id="productCodeOrName" [(ngModel)]="productCodeOrName" required

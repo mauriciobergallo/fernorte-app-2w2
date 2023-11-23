@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { Pagination } from '../models/pagination';
 import { DeilveryOrder } from '../models/deilvery-order';
@@ -49,8 +49,14 @@ export class DeliverOrderService {
   }
 
   updateDeliveryOrderDetails(order: DeliveryOrderPut): Observable<any> {
+    let credential = JSON.parse(localStorage.getItem('credentials') || 'N/N');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      delivered_by: credential.username,
+      // Agrega más encabezados según sea necesario
+    });
     const url = `${this.apiBaseUrl}`;
-    return this.http.put(url, order).pipe(
+    return this.http.put(url, order, { headers }).pipe(
       catchError((error) => {
         console.error('Error al realizar la petición:', error);
         return error;

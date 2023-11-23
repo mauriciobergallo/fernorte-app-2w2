@@ -11,7 +11,7 @@
             </span>
         </div>
         <table class="table table-responsive  table-hover">
-            <thead class="table-dark">
+            <thead class="table-light table-bordered  table-borderless ">
                 <tr>
                     <th>Nombre del Producto</th>
                     <th>Cantidad a mover</th>
@@ -76,7 +76,7 @@
                 </div>
 
                 <table class="table table-responsive  table-hover">
-                    <thead class="table-dark">
+                    <thead class="table-light">
                         <tr>
                             <th></th>
                             <th>Nombre del Producto</th>
@@ -132,7 +132,7 @@
                 <div class="container">
                     <h2>Seleccione Destino</h2>
                     <table class="table table-responsive  table-hover">
-                        <thead class="table-dark">
+                        <thead class="table-light ">
                             <tr>
                                 <th></th>
                                 <th>Nombre del Producto</th>
@@ -165,85 +165,8 @@
                                     {{detallesArray.length}}
                                 </span>
                             </button>
-        <pre>{{detailForm.value|json}}</pre>
             </form>
             
 
-          <!--       <hr>
-                <h5>Ingrese cantidad</h5>
-                <div
-                    *ngIf="(detailForm.get('quantity')?.invalid  || detailForm.hasError('quantityInsufficient')) && (detailForm.get('quantity')?.dirty || detailForm.get('quantity')?.touched)">
-                    <span class="text-danger"
-                        *ngIf="detailForm.get('quantity')?.hasError('required')">La cantidad es
-                        requerida.</span>
-                    <span class="text-danger" *ngIf="detailForm.hasError('quantityInsufficient')">La
-                        cantidad actual es insuficiente.</span>
-                    <span class="text-danger" *ngIf="detailForm.get('quantity')?.hasError('min')">La
-                        cantidad debe ser al menos 1.</span>
-                </div>
-
-                <div class="container my-3">
-                    <div class="row ">
-                        <div class="col-4"></div>
-                        <div class="col-4">
-                            <input type="number" class="form-control" formControlName="quantity"
-                                min="0" />
-                        </div>
-                        <div class="col-4"></div>
-                    </div>
-                </div>
-                <hr>
-                <h5>Seleccione locacion de destino</h5>
-                <div
-                    *ngIf="(detailForm.get('destiny')?.invalid || detailForm.hasError('destinationInvalid')) && detailForm.get('quantity')?.dirty">
-                    <span class="text-danger"
-                        *ngIf="detailForm.get('destiny')?.hasError('required')">Destino es
-                        requerido.</span>
-                    <span class="text-danger" *ngIf="detailForm.hasError('destinationInvalid')">El
-                        destino no
-                        es válido para la cantidad requerida.</span>
-                </div>
-                <table class="table table-responsive  table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th></th>
-                            <th>Nombre del Producto</th>
-                            <th>Cantidad libre</th>
-                            <th>Zona</th>
-                            <th>Sección</th>
-                            <th>Espacio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let info of filteredLocationsInfoDestinity$ | async"
-                            (click)="onDestinySelect(info)"
-                            [class.table-active]="info === selectedDestinityInfo">
-                            <td [class]="(info  === selectedDestinityInfo) ? 'bi bi-check-circle' : ''">
-                            </td>
-                            <td>{{ info.product_name }}</td>
-                            <td>{{ info.max_capacity - info.quantity }}</td>
-                            <td>{{ info.location.zone }}</td>
-                            <td>{{ info.location.section }}</td>
-                            <td>{{ info.location.space }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="text-danger  mt-2" [hidden]="!detailForm.errors?.['duplicateMovement']">
-                <span *ngIf="detailForm.errors?.['duplicateMovement']">
-                    No puede seleccionar más de una vez un producto en un movimiento.
-                </span>
-            </div>
-            <hr>
-            <button type="button" (click)="addDetail(detailForm)" [disabled]="this.detailForm.invalid"
-                class="m-3 btn btn-primary position-relative">
-                Agregar
-                <span *ngIf="movementDetailsArray.length > 0  "
-                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    {{movementDetailsArray.length}}
-                </span>
-            </button>
- -->
             
     </div>

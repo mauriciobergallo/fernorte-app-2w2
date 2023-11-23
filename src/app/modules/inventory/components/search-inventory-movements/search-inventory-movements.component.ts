@@ -22,28 +22,13 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   movCargados:boolean=false;
   private subscripciones = new Subscription();
   loading = false;
+  actualRole: string = '';
   currentPage = 1;
   totalPages = 1;
 
   mostrarDetalleMovimiento: number | null = null;
   mostrarDetalle: boolean = false;
 
-  dropdownOpen: { [key: number]: boolean } = {};
-
-  @HostListener('document:click', ['$event'])
-  clickout(event: MouseEvent) {
-    if (!this.eRef.nativeElement.contains(event.target)) {
-      Object.keys(this.dropdownOpen).forEach(key => {
-        const index = Number(key);
-        this.dropdownOpen[index] = false;
-      });
-    }
-  }
-
-
-  toggleDropdown(index: number) {
-    this.dropdownOpen[index] = !this.dropdownOpen[index];
-  }
 
   showDetail(i: number) {
     if (i === this.mostrarDetalleMovimiento) {
@@ -107,7 +92,6 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
 
   constructor(private movementService: MovementsService, private router: Router,  private route: ActivatedRoute,
     private eRef: ElementRef) {
-    console.log('constructr',this.isLoading,this.loading)
     this.loading=true;
     this.isLoading=true;
   }
@@ -133,14 +117,15 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('on init in',this.isLoading,this.loading)
     this.isLoading=true;
     this.loading=true;
+    let credential = JSON.parse(localStorage.getItem('credentials') || 'N/N');
+    this.actualRole = credential.role[1];
+
     this.getMovementsPage(this.currentPage);
     this.isLoading=false;
     this.loading=false;
     //this.fillTable();
-    console.log('on init out',this.isLoading,this.loading)
 
   }
 
@@ -177,13 +162,13 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
 
 
   getMovementsPage(page: number) {
-    console.log('get page in',this.isLoading,this.loading)
     this.isLoading = true;
     this.loading=true;
     this.subscripciones.add(
       this.movementService.getPaginationMovements(page-1).subscribe({
         next: (response: Pagination) => {
           if (response != null) {
+            console.log(response)
             this.totalPages = response.totalPages;
             this.movimientosOriginales=[]
             response.items.forEach(movement => {
@@ -195,6 +180,7 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
           } else {
             console.log("No content")
           }
+          this.isLoading = false;
         },
         error: (error: any) => {
           console.log(error)
@@ -203,8 +189,6 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
     )
     this.loading=false;
   this.isLoading = false;
-  console.log('get page out',this.isLoading,this.loading)
-
   }
 
   generateChart() {

@@ -1,0 +1,17 @@
+.prueba {
+    height: 200px;
+    overflow-y: hidden; 
+    border: 1px solid #ccc;
+  }
+
+  .row {
+    margin-top: 1vh;
+  }
+
+  .sortable-column {
+    cursor: pointer;
+  }
+  
+  .sortable-column:hover {
+    background-color: #a09b9b; 
+  }

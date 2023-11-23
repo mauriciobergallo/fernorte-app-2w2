@@ -1,34 +1,121 @@
-<div class="text-center">
+<div class="px-4 py-4 my-2">
   <h1>Inventario actual</h1>
 </div>
 
 <div class="container mt-4">
   <div class="row">
-    <div class="col-md-4">
-      <input type="text" class="form-control" placeholder="Zona" [(ngModel)]="filterZone">
+    <!-- <input type="text" class="form-control" placeholder="Zona" [(ngModel)]="filterZone"> -->
+    <div class="col-md-3">
+      <select id="zoneSelect" class="form-select" [(ngModel)]="filterZone" (ngModelChange)="updateFilteredList()">
+        <option value="" selected>Todas las Zonas</option>
+        <option *ngFor="let zone of uniqueZones" [value]="zone">{{ zone }}</option>
+      </select>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
+      <select id="sectionSelect" class="form-select" [(ngModel)]="filterSection" (ngModelChange)="updateFilteredList()">
+        <option value="" selected>Todas las secciones</option>
+        <option *ngFor="let section of uniqueSections" [value]="section">{{ section }}</option>
+      </select>
+    </div>
+    
+    <!-- <div class="col-md-4">
       <input type="text" class="form-control" placeholder="Sección" [(ngModel)]="filterSection">
-    </div>
+    </div> -->
     <div class="col-md-2">
-      <button class="btn btn-primary" (click)="applyFilters()">Filtrar</button>
+      <!-- <button class="btn btn-primary" (click)="applyFilters()">Filtrar</button> -->
+      <button class="btn btn-warning" (click)="clearFilters()">Limpiar filtros</button>
     </div>
     <div class="col-md-2">
       <button class="btn btn-primary" (click)="downloadPDF()">Exportar PDF</button>
     </div>
   </div>
+  
+  <div class="row">
+    <div class="col-md-3">
+      <select id="sectionSelect" class="form-select" [(ngModel)]="filterSpace" (ngModelChange)="updateFilteredList()">
+        <option value="" selected>Todos los espacions</option>
+        <option *ngFor="let space of uniqueSpaces" [value]="space">{{ space }}</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select id="sectionSelect" class="form-select" [(ngModel)]="filterCategory" (ngModelChange)="updateFilteredList()">
+        <option value="" selected>Todos las categorías</option>
+        <option *ngFor="let category of uniqueCategories" [value]="category">{{ category }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2">
+      <label for="productName" class="form-label">Nombre del producto:</label>
+      <input id="productName" type="text" [(ngModel)]="productNameFilter" placeholder="Nombre del producto..." class="form-control mb-2"
+         (input)="updateFilteredList()">
+    </div>
+    <div class="col-md-2">
+        <label for="quantityFilter" class="form-label">Cantidad actual:</label>
+        <div class="input-group mb-2">
+          <select class="form-select" [(ngModel)]="quantityOperator" (change)="updateFilteredList()">
+            <option value="gte">>=</option>
+            <option value="lte"><=</option>
+          </select>
+          <input type="number" id="quantityFilter" [(ngModel)]="quantityFilter" class="form-control" (input)="updateFilteredList()">
+      </div>
+    </div>
+    <div class="col-md-2">
+      <label for="capacityFilter" class="form-label">Capacidad máxima:</label>
+      <div class="input-group mb-2">
+        <select class="form-select" [(ngModel)]="capacityOperator" (change)="updateFilteredList()">
+          <option value="gte">>=</option>
+          <option value="lte"><=</option>
+        </select>
+        <input type="number" id="capacityFilter" [(ngModel)]="capacityFilter" class="form-control" (input)="updateFilteredList()">
+    </div>
+  </div>
+  </div>
+
   <fn-spinner *ngIf="loading"></fn-spinner>
   <table class="table table-hover  my-4">
     <thead>
       <tr>
-        <th scope="col">Producto</th>
-        <th scope="col">Zona</th>
-        <th scope="col">Seccion</th>
-        <th scope="col">Espacio</th>
-        <th scope="col">Cantidad actual</th>
-        <th scope="col">Maxima capacidad</th>
+        <th scope="col" (click)="sortData('product_name')" class="sortable-column">
+          Producto
+          <span *ngIf="currentSort.column === 'product_name'" class="sort-icon">
+            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
+          </span>
+        </th>
+        <th scope="col" (click)="sortData('location.zone')" class="sortable-column">
+          Zona
+          <span *ngIf="(currentSort.column)?.toString() === 'location.zone'" class="sort-icon">
+            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
+          </span>
+        </th>
+        <th scope="col" (click)="sortData('location.section')" class="sortable-column">
+          Seccion
+          <span *ngIf="(currentSort.column)?.toString() === 'location.section'" class="sort-icon">
+            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
+          </span>
+        </th>
+        <th scope="col" (click)="sortData('location.space')" class="sortable-column">
+          Espacio
+          <span *ngIf="(currentSort.column)?.toString() === 'location.space'" class="sort-icon">
+            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
+          </span>
+        </th>
+        <th scope="col" (click)="sortData('quantity')" class="sortable-column">
+          Cantidad actual
+          <span *ngIf="currentSort.column === 'quantity'" class="sort-icon">
+            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
+          </span>
+        </th>
+        <th scope="col" (click)="sortData('max_capacity')" class="sortable-column">
+          Maxima capacidad
+          <span *ngIf="currentSort.column === 'max_capacity'" class="sort-icon">
+            <i class="bi" [ngClass]="{'bi-sort-up': currentSort.order === 'asc', 'bi-sort-down': currentSort.order === 'desc', 'bi-sort': currentSort.order === undefined}"></i>
+          </span>
+        </th>
       </tr>
     </thead>
+    
     <tbody>
       <tr *ngFor="let locationInfo of filteredList">
         <td>{{ locationInfo.product_name }}</td>

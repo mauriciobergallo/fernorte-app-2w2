@@ -6,6 +6,7 @@ import jsPDF from 'jspdf';
 //import 'jspdf-autotable';
 import { Chart } from 'chart.js';
 import { Pagination } from '../../models/pagination';
+import { LocationService } from '../../services/location.service';
 
 @Component({
   selector: 'fn-current-inventory',
@@ -21,12 +22,20 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
   private subscripciones = new Subscription();
   currentPage: number = 1;
   totalPages: number = 1;
-  constructor(private warehouseService: WarehouseService) {}
+  constructor(private warehouseService: WarehouseService, private locationService: LocationService) { }
   ngOnDestroy(): void {
     this.subscripciones.unsubscribe();
   }
-
+  uniqueZones: string[] = []
+  uniqueSections: string[] = []
+  uniqueSpaces: string[] = []
+  uniqueCategories: string[] = []
   ngOnInit(): void {
+    this.uniqueZones = Array.from(new Set(this.locationInfoListMock.map(item => item.location.zone)));
+    this.uniqueSections = Array.from(new Set(this.locationInfoListMock.map(item => item.location.section)));
+    this.uniqueSpaces = Array.from(new Set(this.locationInfoListMock.map(item => item.location.space)));
+    this.uniqueCategories = Array.from(new Set(this.locationInfoListMock.map(item => item.category_name)));
+
     this.fillTable();
   }
 
@@ -43,9 +52,9 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
       error: (error) => {
         this.loading = false;
         console.log(error);
-        this.locationInfoList = this.locationInfoListMock;
+        this.locationInfoList = this.locationService.locationInfoListMock;
         this.originalList = [...this.locationInfoList];
-        this.filteredList = [...this.locationInfoListMock];
+        this.filteredList = [...this.locationService.locationInfoListMock];
       },
     });
   }
@@ -64,6 +73,8 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
 
   filterZone: string = '';
   filterSection: string = '';
+  filterSpace: string = '';
+  filterCategory: string = '';
 
   applyFilters() {
     let filteredList = [...this.originalList]; // Filtra desde la lista original
@@ -139,7 +150,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
               display: true,
               labels: {
                 font: {
-                  size: 25
+                  size: 50
                 }
               }
             }
@@ -160,11 +171,11 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
   async downloadPDF() {
     const pdf = new jsPDF() as any;
 
-    const logoUrl = '/assets/logo.png'; 
+    const logoUrl = '/assets/logo.png';
     const dataTable = this.filteredList;
 
     const logoImage = await this.getImageData(logoUrl);
-  
+
     pdf.addImage(logoImage, 'PNG', 150, 0, 50, 15);
     const headers = [
       'Producto',
@@ -193,15 +204,15 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     const chartImage = await this.generateChart();
 
     if (chartImage) {
-    const imageWidth = 120; 
-    const imageHeight = 120; 
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imageWidth = 120;
+      const imageHeight = 120;
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
 
-    const x = (pdfWidth - imageWidth) / 2;
-    const y = 100; 
+      const x = (pdfWidth - imageWidth) / 2;
+      const y = 100;
 
-    pdf.addImage(chartImage, 'PNG', x, y, imageWidth, imageHeight);
+      pdf.addImage(chartImage, 'PNG', x, y, imageWidth, imageHeight);
 
     }
 
@@ -228,18 +239,97 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     });
   }
 
-  previousPage() {}
-  nextPage() {}
+
+
+  currentSort: { column: keyof LocationInfoDto, order: 'asc' | 'desc' } = { column: 'product_name', order: 'asc' };
+
+  sortData(column: keyof LocationInfoDto | string): void {
+    if (this.currentSort.column === column) {
+      this.currentSort.order = this.currentSort.order === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.currentSort.column = column as keyof LocationInfoDto;
+      this.currentSort.order = 'asc';
+    }
+
+    this.filteredList = this.locationInfoList.sort((a, b) => {
+      const valueA = this.getPropertyValue(a, this.currentSort.column);
+      const valueB = this.getPropertyValue(b, this.currentSort.column);
+
+      if (typeof valueA === 'string' && typeof valueB === 'string') {
+        return this.currentSort.order === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+      } else if (typeof valueA === 'number' && typeof valueB === 'number') {
+        return this.currentSort.order === 'asc' ? valueA - valueB : valueB - valueA;
+      } else {
+
+        if (valueA instanceof Date && valueB instanceof Date) {
+          return this.currentSort.order === 'asc' ? valueA.getTime() - valueB.getTime() : valueB.getTime() - valueA.getTime();
+        } else {
+          return 0;
+        }
+      }
+    });
+  }
+
+  getPropertyValue(obj: any, propPath: string): any {
+    const props = propPath.split('.');
+    let value = obj;
+
+    for (const prop of props) {
+      value = value[prop];
+    }
+
+    return value;
+  }
+  quantityFilter: number = 0;
+  quantityOperator: string = 'gte';
+
+  capacityFilter: number = 0;
+  capacityOperator: string = 'gte';
+
+  productNameFilter: string = '';
+  sectionFilter: string = '';
+
+  updateFilteredList() {
+    this.filteredList = this.locationInfoListMock.filter(item =>
+      item.product_name.toLowerCase().includes(this.productNameFilter.toLowerCase()) &&
+      (this.filterZone === '' || item.location.zone === this.filterZone) &&
+      (this.filterSection === '' || item.location.section === this.filterSection) &&
+      (this.filterSpace === '' || item.location.space === this.filterSpace) &&
+      (this.filterCategory === '' || item.category_name === this.filterCategory) &&
+      ((this.quantityFilter == null || this.quantityFilter === 0) || (
+        (this.quantityOperator === 'gte' && item.quantity >= this.quantityFilter) ||
+        (this.quantityOperator === 'lte' && item.quantity <= this.quantityFilter)
+      )) &&
+      ((this.capacityFilter == null || this.capacityFilter === 0) || (
+        (this.capacityOperator === 'gte' && item.max_capacity >= this.quantityFilter) ||
+        (this.capacityOperator === 'lte' && item.max_capacity <= this.capacityFilter)
+      ))
+    );
+  }
+
+  clearFilters(){
+    this.filterZone = ''
+    this.filterSection = ''
+    this.filterSpace = ''
+    this.filterCategory = ''
+    this.quantityFilter = 0
+    this.capacityFilter = 0
+    this.updateFilteredList()
+  }
+
+
+  previousPage() { }
+  nextPage() { }
   locationInfoListMock: LocationInfoDto[] = [
     {
       location: {
-        zone: 'Zone A',
-        section: 'Section 1',
-        space: 'Space 101',
+        zone: 'Salón',
+        section: '1',
+        space: '101',
       },
       location_id: 1,
-      category_name: 'Category X',
-      product_name: 'Product Alpha',
+      category_name: 'Herramientas manuales',
+      product_name: 'Calibre Digital 1150d',
       quantity: 3,
       measure_unit: 1,
       max_capacity: 5,
@@ -247,13 +337,13 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     },
     {
       location: {
-        zone: 'Zone B',
-        section: 'Section 2',
-        space: 'Space 202',
+        zone: 'Nave',
+        section: '4',
+        space: '202',
       },
       location_id: 2,
-      category_name: 'Category Y',
-      product_name: 'Product Beta',
+      category_name: 'Herramientas eléctricas',
+      product_name: 'Amoladora angular 820w',
       quantity: 5,
       measure_unit: 2,
       max_capacity: 50,
@@ -262,13 +352,13 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     },
     {
       location: {
-        zone: 'Zone A',
-        section: 'Section 2',
-        space: 'Space 201',
+        zone: 'Patio',
+        section: '2',
+        space: '201',
       },
       location_id: 3,
-      category_name: 'Category Z',
-      product_name: 'Product Gamma',
+      category_name: 'Pavimentación',
+      product_name: 'Trompito hormiguero',
       quantity: 8,
       measure_unit: 3,
       max_capacity: 10,
@@ -277,13 +367,13 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     },
     {
       location: {
-        zone: 'Zone C',
-        section: 'Section 1',
-        space: 'Space 102',
+        zone: 'Salón',
+        section: '3',
+        space: '102',
       },
       location_id: 4,
-      category_name: 'Category W',
-      product_name: 'Product Delta',
+      category_name: 'Ferretería general',
+      product_name: 'Escalera telescópica Philco 13 escalones',
       quantity: 15,
       measure_unit: 1,
       max_capacity: 150,
@@ -292,13 +382,13 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     },
     {
       location: {
-        zone: 'Zone B',
-        section: 'Section 1',
-        space: 'Space 201',
+        zone: 'Patio',
+        section: '1',
+        space: '201',
       },
       location_id: 5,
-      category_name: 'Category A',
-      product_name: 'Product Epsilon',
+      category_name: 'Pavimentación',
+      product_name: 'Mezclador pintura/cemento Einhell Tc-mx 1200',
       quantity: 20,
       measure_unit: 2,
       max_capacity: 200,
@@ -307,13 +397,13 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     },
     {
       location: {
-        zone: 'Zone C',
-        section: 'Section 2',
-        space: 'Space 202',
+        zone: 'Patio',
+        section: '2',
+        space: '202',
       },
       location_id: 6,
-      category_name: 'Category B',
-      product_name: 'Product Zeta',
+      category_name: 'Accesorioes vehiculares',
+      product_name: 'Tuercas bulones antirrobo McGard Onix Prisma Spin',
       quantity: 7,
       measure_unit: 3,
       max_capacity: 70,

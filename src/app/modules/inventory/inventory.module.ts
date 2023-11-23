@@ -23,6 +23,10 @@ import { ReceptionOrderDetailsComponent } from './components/reception-order-det
 import { CreateMovementComponent } from './components/create-movement/create-movement.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { EditMovimientoComponent } from './components/edit-movimiento/edit-movimiento.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { LocationsComponent } from './components/locations/locations/locations.component';
+import { SectionsComponent } from './components/locations/sections/sections.component';
+import { SpacesComponent } from './components/locations/spaces/spaces.component';
 
 
 @NgModule({
@@ -43,7 +47,11 @@ import { EditMovimientoComponent } from './components/edit-movimiento/edit-movim
     ReceptionOrderDetailsComponent,
     CreateMovementComponent,
     SpinnerComponent,
-    EditMovimientoComponent
+    EditMovimientoComponent,
+    WelcomeComponent,
+    LocationsComponent,
+    SectionsComponent,
+    SpacesComponent
   ],
 
   providers: [],

@@ -11,6 +11,10 @@ import { HomeComponent } from './components/home/home.component';
 import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
 import { CreateMovementComponent } from './components/create-movement/create-movement.component';
 import { EditMovimientoComponent } from './components/edit-movimiento/edit-movimiento.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { LocationsComponent } from './components/locations/locations/locations.component';
+import { SectionsComponent } from './components/locations/sections/sections.component';
+import { SpacesComponent } from './components/locations/spaces/spaces.component';
 
 /*
 const routes: Routes = [
@@ -30,6 +34,10 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {
+        path: 'welcome',
+        component: WelcomeComponent,
+      },
+      {
         path: 'search-movements',
         component: SearchInventoryMovementsComponent,
       },
@@ -45,6 +53,19 @@ const routes: Routes = [
           {
             path: ':id/details',
             component: DeliveryOrderDetailsComponent,
+          },
+        ],
+      },
+      {
+        path: 'locations',
+        children: [
+          { path: '', component: LocationsComponent },
+          {
+            path: ':id/section',
+            children: [
+              { path: '', component: SectionsComponent },
+              { path: ':sectionId/spaces', component: SpacesComponent },
+            ],
           },
         ],
       },

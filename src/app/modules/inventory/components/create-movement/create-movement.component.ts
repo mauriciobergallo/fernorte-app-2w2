@@ -114,6 +114,8 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
   ngOnDestroy(): void {
     this.destroy$.next(); // Emite un valor para desencadenar la desuscripción
     this.destroy$.complete(); // Cierra el Subject
+    
+
   }
 
 
@@ -130,7 +132,6 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
       return d;
     })
     let username: User|null = JSON.parse(localStorage.getItem('role') ?? '' )
-    console.log(username)
     let mov : ReqNewMovementDto = {
       remarks: this.remarksControl?.value,
       operator_name :username?.username || 'Default',
@@ -146,7 +147,6 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
     this.isLoadingS = true;
       // Aquí manejarías la lógica para enviar los datos a tu API
     let mov = this.prepareMovement()
-    console.log('mov prepr',mov)
     this.serviceMovement.newMovement(mov).subscribe({
       next: (result) => {
     this.isLoadingS = false;
@@ -178,6 +178,7 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
       }
     });    
     this.isLoadingS = false;
+    this.resetForms()
     this.router.navigate(['inventory/search-movements']);
 
 
@@ -194,7 +195,6 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
         }
       } )
       this.detailForm.get('origin')?.valueChanges.subscribe((value) => {
-
       })
       
   }
@@ -232,7 +232,6 @@ addDetail(detailForm: FormGroup){
 
     // Imprimir los valores de los controles en la consola
     this.movementDetailsArray.controls.forEach(control => {
-      console.log(control.value);
       
     });
 
@@ -265,7 +264,6 @@ addDetail(detailForm: FormGroup){
     this.selectedOriginInfo = product;
     this.selectedInfoSubject.next(product); 
     this.detailForm.patchValue({'origin': product});
-
   }
 
   onDestinySelect(location : LocationInfoDto){
@@ -275,7 +273,6 @@ addDetail(detailForm: FormGroup){
 
   resetForms(){
     this.movementForm.setValue({
-
       remarks: '',
       movementDetailsArray: []
     })
@@ -303,17 +300,12 @@ addDetail(detailForm: FormGroup){
 
   duplicateMovementValidator(movementDetailsArray: FormArray): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      console.log(movementDetailsArray)
       const origin = control.get('origin')?.value;
       const destiny = control.get('destiny')?.value;
-      console.log(origin)
-      console.log(destiny)
         // Utilizar 'some' para comprobar si algún detalle ya tiene el mismo origen o destino
     const duplicate = movementDetailsArray.controls.some(ctrl => {
       const ctrlOrigin = ctrl.get('origin')?.value;
       const ctrlDestiny = ctrl.get('destiny')?.value;
-      console.log(ctrlOrigin)
-      console.log(ctrlDestiny)
 
       return (ctrlOrigin === origin || ctrlOrigin === destiny) || 
              (ctrlDestiny === origin || ctrlDestiny === destiny);
