@@ -21,8 +21,8 @@ export class PurchaseOrderServiceService implements OnInit {
   });
   listProductSelected = new BehaviorSubject<ISupplierProduct[]>([]);       //NACHO-TODO: BORRAR ESTO
   cartProductList: ISupplierProduct[] = [];                                //NACHO-TODO: BORRAR ESTO
-  // private booking = new BehaviorSubject<IBooking>({} as IBooking);
-  private booking: IBooking = {} as IBooking;
+  private booking_ = new BehaviorSubject<IBooking>({} as IBooking);
+  // private booking: IBooking = {} as IBooking;
   
   //banderas para mostrar ocultar componentes
   purchaseBookingFlow = new BehaviorSubject<boolean>(false);
@@ -33,7 +33,16 @@ export class PurchaseOrderServiceService implements OnInit {
   purchaseOrderFlow = new BehaviorSubject<boolean>(true);
 
   //VARIABLES NACHO
-  private purchaseOrderRequestDTON: IPurchaseOrderRequestDTON = {} as IPurchaseOrderRequestDTON;
+  private purchaseOrderRequestDTON: BehaviorSubject<IPurchaseOrderRequestDTON> = 
+    new BehaviorSubject<IPurchaseOrderRequestDTON>({
+      supplierId: 0,
+      date: "",
+      total: 0,
+      employeeId: 0,
+      observation: "",
+      billUrl: "",
+      purchaseDetails: []
+    });
   //VARIABLES NACHO
 
 
@@ -77,7 +86,6 @@ export class PurchaseOrderServiceService implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.purchaseOrderRequest.purchaseDetails = [];
   }
 
   // PURCHASES
@@ -212,20 +220,19 @@ export class PurchaseOrderServiceService implements OnInit {
     this.purchaseOrderFlow.next(purchaseOrder);
   }
   
-
-  // setBooking(orders: Order[]): void {
-  //   this.booking.value.orders = orders;
-  // }
-
-  getBooking(): IBooking {
-    return this.booking;
-  }
-
-  public get purchaseOrderRequest(){
+  public get purchaseOrderRequest(): BehaviorSubject<IPurchaseOrderRequestDTON> {
     return this.purchaseOrderRequestDTON;
   }
 
   public set purchaseOrderRequest(purchaseOrderRequest: IPurchaseOrderRequestDTON){
-    this.purchaseOrderRequestDTON = purchaseOrderRequest;
+    this.purchaseOrderRequestDTON.next(purchaseOrderRequest);
+  }
+
+  public get booking(): BehaviorSubject<IBooking>{
+    return this.booking_;
+  }
+
+  public set booking(newBooking: IBooking){
+    this.booking_.next(newBooking);
   }
 }

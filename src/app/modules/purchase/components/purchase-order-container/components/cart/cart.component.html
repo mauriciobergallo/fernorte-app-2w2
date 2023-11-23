@@ -5,16 +5,16 @@
     <hr />
   </div>
   <div class="container-fluid justify-content-center cart">
-    <div *ngIf="cardProducts.length === 0">
+    <div *ngIf="purchaseOrderRequest.purchaseDetails.length === 0">
       <h6 class="text-center">El carrito está vacío</h6>
     </div>
-    <div *ngFor="let product of cardProducts" class="d-flex justify-content-center margin">
+    <div *ngFor="let detail of purchaseOrderRequest.purchaseDetails" class="d-flex justify-content-center margin">
         <div class="item">
           <div class="prod">
-            <span>{{ product.name }}</span>
-            <span>x{{ product.quantity }}</span>
+            <span>{{ detail.productName }}</span>
+            <span>x{{ detail.quantityReceived }}</span>
           </div>
-          <button type="button" class="btn btn-outline-danger btn-sm m-0" (click)="removeItem(product)">Quitar</button>
+          <button type="button" class="btn btn-outline-danger btn-sm m-0" (click)="removeItem(detail)">Quitar</button>
         </div>
     </div>
     <div class="d-flex justify-content-center margin">
@@ -29,7 +29,7 @@
         type="button"
         class="btn btn-primary m-0"
         (click)="onSubmit()"
-        [disabled]="cardProducts.length === 0"
+        [disabled]="purchaseOrderRequest.purchaseDetails.length === 0"
       >
         Siguiente
       </button>

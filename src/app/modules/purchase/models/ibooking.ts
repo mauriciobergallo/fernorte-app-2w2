@@ -11,7 +11,7 @@ export interface Grouping {
 
 export interface GroupingItem {
   quantity: number;
-  id_product: number;
+  id_product: number | string;
 }
 
 // export interface IBooking {
