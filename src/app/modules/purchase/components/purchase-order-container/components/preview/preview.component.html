@@ -93,10 +93,11 @@
   <!-- Sumbmit -->
   <div class="row mt-3 mb-2">
     <div class="col-lg-4 offset-lg-8 text-right">
-      <button class="btn full-width"
-        [class.btn-success]="!isTotalExceedsOneMillion"
-        [class.btn-warning]="isTotalExceedsOneMillion"
-        (click)="onSubmit()">Generar Orden de Compra</button>
+      <button class="btn full-width btn-success"
+      *ngIf="!isTotalExceedsOneMillion" (click)="onSubmit()">Generar Orden de Compra</button>
+      <button class="btn full-width btn-warning"
+      *ngIf="isTotalExceedsOneMillion" (click)="onSubmit()">Generar Para Autorización</button>
+         
     </div>
   </div>
 
