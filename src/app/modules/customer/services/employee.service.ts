@@ -18,6 +18,10 @@ getEmployeeById(idEmployee: any): Observable<any>{
   return this.http.get<Employee>(this.apiUrl + "/" + idEmployee);
 } 
 
+getEmployeeByDocumentNumber(documentNumber: string): Observable<any>{
+  return this.http.get<Employee>(this.apiUrl + "?documentNumber=" + documentNumber);
+} 
+
 //Post
 createEmployee(employee: Employee){
   console.log("EMPLEADO", employee)

@@ -1,43 +1,86 @@
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-        <label for="employee">Empleado</label>
-        <input type="text" id="employee" readonly [value]="empleado.first_name + ', ' + empleado.last_name"
-            class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input type="password" id="password" formControlName="password" class="form-control">
-        <div
-            *ngIf="userForm.get('password')?.hasError('required') && (userForm.get('password')?.dirty || userForm.get('password')?.touched)">
-            La contraseña es obligatoria.
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Registrar Usuario</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="employee">Empleado</label>
+            <input type="text" id="employee" formControlName="documentNumber" class="form-control" 
+            [ngClass]="{'is-invalid': userForm.get('documentNumber')?.invalid && userForm.get('documentNumber')?.touched}">
+            <small class="invalid-feedback" 
+            *ngIf="!userForm.get('documentNumber')!.valid &&
+                    userForm.get('documentNumber')!.touched &&
+                    userForm.get('documentNumber')!.getError('required')
+                        ">
+                El número de documento es obligatorio
+            </small>
+            <small class="invalid-feedback" 
+            *ngIf="!userForm.get('documentNumber')!.valid &&
+                    userForm.get('documentNumber')!.touched &&
+                    userForm.get('documentNumber')!.getError('notFound')
+                        ">
+                El número de documento no se encuentra en el sistema
+            </small>
+            <small class="invalid-feedback" 
+            *ngIf="!userForm.get('documentNumber')!.valid &&
+                    userForm.get('documentNumber')!.touched &&
+                    userForm.get('documentNumber')!.getError('repeated')
+                        ">
+                El empleado ya está registrado como usuario
+            </small>
         </div>
-        <div *ngIf="userForm.get('password')?.hasError('minlength') && userForm.get('password')?.dirty">
-            La contraseña debe tener al menos 6 caracteres.
+        <br>
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" formControlName="password" class="form-control"
+            [ngClass]="{'is-invalid': userForm.get('password')?.invalid && userForm.get('password')?.touched}">
+            <small class="invalid-feedback" 
+            *ngIf="!userForm.get('password')!.valid &&
+                    userForm.get('password')!.touched &&
+                    userForm.get('password')!.getError('required')
+                        ">
+                La contraseña es obligatoria
+            </small>
+            <small class="invalid-feedback" 
+            *ngIf="!userForm.get('password')!.valid &&
+                    userForm.get('password')!.touched &&
+                    userForm.get('password')!.getError('minlength')
+                        ">
+                La contraseña debe tener mínimo 8 caracteres
+            </small>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="role">Selecciona un rol:</label>
-        <select id="role" formControlName="selectedRole" class="form-control" (change)="enviarRol($event)">
-            <option> </option>
-            <option [value]="role.id_role" *ngFor="let role of availableRoles">{{ role.name }} - {{role.area}}</option>
-        </select>
-        <div
-            *ngIf="userForm.get('selectedRole')?.hasError('required') && (userForm.get('selectedRole')?.dirty || userForm.get('selectedRole')?.touched)">
-            Por favor, selecciona un rol.
+        <br>
+        <div class="form-group">
+            <label for="role">Selecciona un rol:</label>
+            <select id="role" formControlName="selectedRole" class="form-control" (change)="enviarRol($event)"
+            [ngClass]="{'is-invalid': userForm.get('selectedRole')?.invalid && userForm.get('selectedRole')?.touched}">
+                <option> </option>
+                <option [value]="role.id_role" *ngFor="let role of availableRoles">{{ role.name }} - {{role.area}}
+                </option>
+            </select>
+            <small class="invalid-feedback" 
+            *ngIf="!userForm.get('selectedRole')!.valid &&
+                    userForm.get('selectedRole')!.touched &&
+                    userForm.get('selectedRole')!.getError('required')
+                        ">
+                Debe seleccionar al menos un rol
+            </small>
         </div>
-    </div>
-
-    <div>
-        <h2>Roles Asignados:</h2>
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let role of roles_name">
-                {{ role }}
-                <button class="remove-role-button btn btn-danger" (click)="removeRole(role)">X</button>
-            </li>
-        </ul>
-    </div>
-
-
-    <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Aceptar</button>
-    <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
-</form>
+        <hr>
+        <div>
+            <h2>Roles Asignados:</h2>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let role of roles_name">
+                    {{ role }}
+                    <button class="remove-role-button btn btn-danger" (click)="removeRole(role)">X</button>
+                </li>
+            </ul>
+        </div>
+        <hr>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        </div>
+    </form>
+</div>

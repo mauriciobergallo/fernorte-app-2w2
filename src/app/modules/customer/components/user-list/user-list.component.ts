@@ -21,6 +21,9 @@ export class UserListComponent  implements OnInit {
 
   ngOnInit(): void {
     this.loadUser();
+    this.userService.getUserUpdatedObservable().subscribe(() => {
+      this.loadUser();
+    });
   }
 
   loadUser() {
@@ -74,7 +77,6 @@ export class UserListComponent  implements OnInit {
     const modalRef = this.modalService.open(UserFormComponent, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' });
      
     modalRef.componentInstance.updateClicked.subscribe(() => {
-      // Abrir el modal del formulario de actualización
       this.modalService.open(this.newUserModal);
       console.log('se abrio el modal del usuario');
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Role } from '../models/role';
 import { UserResponseDTO } from '../models/userResponseDTO';
 import { User } from '../models/user';
@@ -8,11 +8,12 @@ import { NewRole } from '../models/new-role';
 
 @Injectable()
 export class UserService {
+  private userUpdatedSubject = new BehaviorSubject<void>(undefined);
   document_number!: string;
 
   private apiUrl = 'http://localhost:8092/';
   private apiUrlGetAllRoles = 'http://localhost:8092/role';
-  private apiUrlnewUser = 'http://localhost:8092/users/new-user';
+  private apiUrlnewUser = 'http://localhost:8092/users';
   private apiUrlResetEmail = 'http://localhost:8092/users/reset';
   private apiUrlChangePassword = 'http://localhost:8092/users/';
   private baseUrl = 'http://localhost:8092/users';
@@ -20,7 +21,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   postNewUser(
-    documentNumber: string,
+    document_number: string,
     password: string,
     roles: number[]
   ): Observable<any> {
@@ -30,7 +31,7 @@ export class UserService {
     });
 
     const user = {
-      documentNumber,
+      document_number,
       password,
       roles,
     };
@@ -51,6 +52,11 @@ export class UserService {
 
   getUserByUsername(username: string): Observable<UserResponseDTO> {
     const url = `${this.baseUrl}/?username=${username}`;
+    return this.http.get<UserResponseDTO>(url);
+  }
+
+  getUserByDocumentNumber(documentNumber: string): Observable<UserResponseDTO> {
+    const url = `${this.baseUrl}/?documentNumber=${documentNumber}`;
     return this.http.get<UserResponseDTO>(url);
   }
 
@@ -96,5 +102,14 @@ export class UserService {
   
   active(user: User): Observable<any>{
     return this.http.put<any>(`${this.apiUrl}`+ user.document_number +"/active", user)
+  }
+
+
+  getUserUpdatedObservable(){
+    return this.userUpdatedSubject.asObservable();
+  }
+
+  notifyUserUpdated() {
+    this.userUpdatedSubject.next();
   }
 }
