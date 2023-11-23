@@ -1,24 +1,22 @@
 import { Injectable } from '@angular/core';
-import { TurnProvider } from './TurnProvider';
 import { TurnModel } from '../../models/TurnModel';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../enviroment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TurnServicesService {
 actualTurn:TurnModel=new TurnModel
-constructor(private tunrProvider:TurnProvider) { }
+constructor(private http: HttpClient) { }
 
-nextTurn():TurnModel{
+private URL = environment.urlTurnBase;
+
+nextTurn():Observable<TurnModel>{
   this.actualTurn=this.clearTurn()
-  this.tunrProvider.getNextTurn().subscribe((turn)=>{
-    this.actualTurn=turn    
-    return this.actualTurn
-  })
-  console.log(this.actualTurn)  
-  return this.actualTurn
+  return this.http.get<TurnModel>(this.URL)   
 }
-
 clearTurn():TurnModel{
   this.actualTurn.number=0;
   this.actualTurn.created_at=new Date

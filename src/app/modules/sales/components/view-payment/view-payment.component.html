@@ -34,7 +34,7 @@
                                 <div class="col-sm-6">
                                     <div class="invoice-id">
                                         <div class="info">
-                                            <h1 class="inv-header-1">Factura</h1>
+                                            <h1 class="inv-header-1">Factura {{bill.billType}}</h1>
                                             <p class="mb-1">Factura: <span>#{{bill.idBill}}</span></p>
                                             <p class="mb-0">Fecha: <span>{{bill.createdDate}}</span></p>
                                         </div>
@@ -49,6 +49,7 @@
                                         <h4 class="inv-title-1">Cliente</h4>
                                         <h2 class="name">{{bill.firstNameClient}} {{bill.lastNameClient}} {{bill.companyName}}</h2>
                                         <p class="invo-addr-1">
+                                            {{bill.vatCondition}}<br/>
                                             {{bill.telephone}} <br/>
                                                 {{bill.email}}<br/>
                                             {{bill.address}} <br/>
@@ -124,12 +125,17 @@
                                     <div class="payment-method mb-30">
                                         <h3 class="inv-title-1">Metodo de Pago</h3>
                                         <ul class="payment-method-list-1 text-14"*ngFor="let item of bill.payment" >
-                                            <li><strong></strong>{{item.payment_method.payment_method + " Recargo" + (item.payment_method.surcharge-1)*100 + "%" }}</li>
+                                            <li><strong></strong>{{item.payment_method.payment_method + " Recargo  " + (item.payment_method.surcharge-1)*100 + "%" }}</li>
                                         
                                         </ul>
                                     </div>
                                 </div>
-                                
+                                <div class="col-lg-6 col-md-5 col-sm-5">
+                                    <div class="payment-method mb-30">
+                                        <h3 class="inv-title-1">C.A.E.</h3>
+                                        <h5>{{bill.cae}}</h5>                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="invoice-contact clearfix">

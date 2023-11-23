@@ -6,8 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
 
 import { SaleOrderSearchListComponent } from './components/sale-order-search-list/sale-order-search-list.component';
-import { SaleOrderProvider } from './services/salesOrder/SaleOrderProvider';
-import { ProductProvider } from './services/products/productProvider';
 import { SaleOrderComponent } from './components/sale_order/sale-order.component';
 import { SaleOrderViewComponent } from './components/sale-order-view/sale-order-view.component';
 import { CalcularTotalPipe } from './pipes/calcular-total.pipe';
@@ -18,7 +16,6 @@ import { CalcularMontoTotalPipe } from './pipes/calcular-monto-total.pipe';
 import { BillingComponent } from './components/billing/billing.component';
 import { PaymentMethodComponent } from './components/payment-method/payment-method.component';
 import { CreatePaymentComponent } from './components/create-payment/create-payment.component';
-import { ClientProvider } from './services/clients/clientProvider';
 import { RouterModule } from '@angular/router';
 import { RouterChildModule } from './router-child.module';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -26,7 +23,6 @@ import { PaymentMethodNavComponent } from './components/payment-method-nav/payme
 import { SaleOrderNavComponent } from './components/sale-order-nav/sale-order-nav.component';
 import { BillingNavComponent } from './components/billing-nav/billing-nav.component';
 import { ReportNavComponent } from './components/report-nav/report-nav.component';
-import { TurnProvider } from './services/turns/TurnProvider';
 import { TranslateStatesPipe } from './pipes/translateStates.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaxComponent } from './components/tax/tax.component';
@@ -36,7 +32,6 @@ import { TaxNavComponent } from './components/tax-nav/tax-nav.component';
 import { ViewPaymentComponent } from './components/view-payment/view-payment.component';
 
 import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
-import { BillingProvider } from './services/billing/BillingProvider';
 import { TaxRegisterComponent } from './components/tax-register/tax-register.component';
 import { PaymentMethodRegisterComponent } from './components/payment-method-register/payment-method-register.component';
 import { DateFormat2Pipe } from './pipes/date-format2.pipe';
@@ -70,16 +65,12 @@ import { DateFormat2Pipe } from './pipes/date-format2.pipe';
     BillingSearchListComponent,
     DateFormatPipe,
     PriceFormatPipe,
-    DateFormat2Pipe
+    DateFormat2Pipe,
+    CaseConverterPipe
     ],
 
 
-  providers: [SaleOrderProvider,
-    ProductProvider,
-    ClientProvider,
-    TurnProvider,
-    BillingProvider,
-    CaseConverterPipe],
+  providers: [CaseConverterPipe],
 
   imports: [CommonModule,
     FormsModule,
@@ -110,7 +101,8 @@ import { DateFormat2Pipe } from './pipes/date-format2.pipe';
     BillingSearchListComponent,
     DateFormatPipe,
     PriceFormatPipe,
-    DateFormat2Pipe],
+    DateFormat2Pipe,
+    CaseConverterPipe],
 
 })
 export class SalesModule {}

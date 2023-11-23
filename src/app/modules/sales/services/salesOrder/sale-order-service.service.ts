@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { SaleOrderModel } from '../../models/SaleOrderModel';
-import { SaleOrderProvider } from './SaleOrderProvider';
 import { ProductModel } from '../../models/ProductModel';
 import { DetailsSaleOrderModel } from '../../models/DetailsSaleOrderModel';
 import { TypeSalesOrder } from '../../models/TypeSaleOrder';
@@ -10,30 +9,25 @@ import { DetailsState } from '../../models/DetailsState';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SaleOrderApi } from '../../models/SaleModelApi';
-
 import { SaleOrderView } from '../../models/SaleOrderView';
-//import html2PDF from 'jspdf-html2canvas/dist/js-pdf';
+import { environment } from '../../enviroment/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class SaleOrderServiceService {
-
   saleOrderList = new Observable<SaleOrderApi[]>();
-
   saleOrderListView = new Observable<SaleOrderView[]>();
-
   saleOrderStates = new Observable<string[]>();
-
   filters: Map<string, string> = new Map<string, string>();
+
   get page(){
     return this.filters.get("page")
   }
   get idOrder() {
     return this.filters.get("idOrder")
   }
-
   get doc() {
     return this.filters.get("doc")
   }
@@ -47,16 +41,37 @@ export class SaleOrderServiceService {
     return this.filters.get("stateOrder")
   }
 
-  constructor(private saleOrderProvider: SaleOrderProvider,
-    private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
+
+    private URL = environment.urlSaleBase+"/sales-orders";
+  
+    createSaleOrder(saleOrder: SaleOrderModel): Observable<any> {
+      const url = this.URL + "/sales-orders";
+      const header = { "content-type": "application/json" };
+      const body = {
+        id_sale_order: saleOrder.idSaleOrder,
+        id_seller: saleOrder.idSeller,
+        first_name_seller: saleOrder.firstNameSeller,
+        last_name_seller: saleOrder.lastNameSeller,
+        id_client: saleOrder.idClient,
+        first_name_client: saleOrder.firstNameClient,
+        last_name_client: saleOrder.lastNameClient,
+        company_name: saleOrder.companyName,
+        date_of_issue: saleOrder.dateOfIssue,
+        date_of_expiration: saleOrder.dateOfExpiration,
+        state_sale_order: saleOrder.stateSaleOrder,
+        detail_sales_order: saleOrder.detailSalesOrder
+      };
+      return this.http.post<any>(url, body, { headers: header });
+    }  
 
   getSaleOrders(): Observable<SaleOrderApi[]> {
-    this.saleOrderList = this.http.get<SaleOrderApi[]>("http://localhost:8087/sales-orders?page=0");
+    this.saleOrderList = this.http.get<SaleOrderApi[]>(this.URL+"?page=0");
     return this.saleOrderList;
   }
 
   getSaleOrderStates(): Observable<string[]> {
-    this.saleOrderStates = this.http.get<string[]>("http://localhost:8087/sales-orders/states");
+    this.saleOrderStates = this.http.get<string[]>(this.URL+"/states");
     return this.saleOrderStates;
   } 
 
@@ -64,13 +79,13 @@ export class SaleOrderServiceService {
     let url: string = '';
     this.filters = filters
     if (this.idOrder != '0' && this.idOrder != undefined) {
-      url = `http://localhost:8087/sales-orders/${this.idOrder}`
+      url = `${this.URL}/${this.idOrder}`
     } else if (this.doc != '0' && this.doc != null) {
-      url = `http://localhost:8087/sales-orders?page=0&doc_client=${this.doc}`
+      url = `${this.URL}?page=0&doc_client=${this.doc}`
     } else if (this.stateOrder != '' && this.stateOrder != null) {
-      url = `http://localhost:8087/sales-orders?page=0&state_sale_order=${this.stateOrder}`
+      url = `${this.URL}?page=0&state_sale_order=${this.stateOrder}`
     } else {
-      url = `http://localhost:8087/sales-orders?page=0&from_date=${this.fromDate}&to_date=${this.toDate}`;
+      url = `${this.URL}?page=0&from_date=${this.fromDate}&to_date=${this.toDate}`;
     }
     this.saleOrderList = this.http.get<SaleOrderApi[]>(url);
     return this.saleOrderList
@@ -151,7 +166,7 @@ export class SaleOrderServiceService {
 
 
     getSaleOrdersById(id:number) : Observable<SaleOrderView> {
-    return this.http.get<SaleOrderView>(`http://localhost:8080/sales-orders?id_order=${id}`)
+    return this.http.get<SaleOrderView>(`${this.URL}?id_order=${id}`)
 
     }
 }
