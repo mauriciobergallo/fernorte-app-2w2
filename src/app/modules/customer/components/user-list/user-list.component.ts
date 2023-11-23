@@ -7,6 +7,7 @@ import { UserFormComponent } from '../user-form/user-form.component';
 import Swal from 'sweetalert2';
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
+import { InfoUserComponent } from '../info-user/info-user.component';
 
 @Component({
   selector: 'fn-user-list',
@@ -172,7 +173,7 @@ export class UserListComponent  implements OnInit {
 
 
     openModifyUserRolesForm(readonly: boolean, user: User) {
-      const modalRef = this.modalService.open(ModifyUserRolComponent, { size: 'lg' });
+      const modalRef = this.modalService.open(InfoUserComponent, { size: 'lg' });
       modalRef.componentInstance.userToUpdate = user;
       modalRef.componentInstance.readonly = readonly;
     }

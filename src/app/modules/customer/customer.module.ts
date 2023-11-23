@@ -42,6 +42,7 @@ import { jsPDF } from "jspdf";
 import { CustomerReportsComponent } from './components/customer-reports/customer-reports.component';
 import { ReportCustomerComponent } from './components/report-customer/report-customer.component';
 import { ReportComponent } from './components/report/report.component';
+import { InfoUserComponent } from './components/info-user/info-user.component';
 
 // const routes: Routes = [
 //   { component: LoginComponent, path: 'login' },
@@ -52,7 +53,7 @@ import { ReportComponent } from './components/report/report.component';
 @NgModule({
   declarations: [HomeComponent, TurnsComponentComponent, EmployeeRegistrationComponent,CategoryComponent, UserRootComponent, UserFormComponent,
      CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent, EmployeeListComponent, CustomersSidebarComponent,
-    ModifyUserComponent,UpdateEmployeeComponent,ModifyUserRolComponent, UserListComponent, CustomerListComponent, InfoEmployeeComponent, SpinnerComponent, CustomerReportsComponent, ReportCustomerComponent, ReportComponent
+    ModifyUserComponent,UpdateEmployeeComponent,ModifyUserRolComponent, UserListComponent, CustomerListComponent, InfoEmployeeComponent, SpinnerComponent, CustomerReportsComponent, ReportCustomerComponent, ReportComponent, InfoUserComponent
   ],
   providers: [CategoryService,  
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }, EmployeeService,
