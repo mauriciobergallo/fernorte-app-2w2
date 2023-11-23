@@ -12,12 +12,8 @@ import { InventaryModule } from './modules/inventory/inventory.module';
 import { PurchaseModule } from './modules/purchase/purchase.module';
 import { SalesModule } from './modules/sales/sales.module';
 
-<<<<<<< HEAD
-=======
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgChartsModule } from 'ng2-charts';
->>>>>>> 0b9c4345e1cb1c1fb19a3d6a303369cd951d640d
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +32,6 @@ import { NgChartsModule } from 'ng2-charts';
     PurchaseModule,
     InventaryModule,
     SalesModule,
-    NgChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
