@@ -8,14 +8,13 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CaseConversionPipe } from '../../pipes/case-conversion.pipe';
 import { Customer } from '../../models/customer';
-import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'fn-update-customer',
-  templateUrl: './update-customer.component.html',
-  styleUrls: ['./update-customer.component.css'],
+  selector: 'fn-info-customer',
+  templateUrl: './info-customer.component.html',
+  styleUrls: ['./info-customer.component.css']
 })
-export class UpdateCustomerComponent implements OnInit {
+export class InfoCustomerComponent {
   //	@ViewChild('customerForm') customerForm!: NgForm;
   customerForm!: NgForm;
 
@@ -26,6 +25,7 @@ export class UpdateCustomerComponent implements OnInit {
   @Input() customerToUpdate: Customer | undefined;
 
   @Input() onlyForRead: boolean = false;
+  
 
 
 
@@ -236,23 +236,12 @@ onSubmit(clientForm: any){
 
 }
 
+onCancel(){
+  this.modalService.dismissAll()
+}
+
 
   onSubmitForm(customerForm: NgForm) {
     console.log('customerEE', customerForm);
-  }
-
-  onCancelar(){
-    Swal.fire({
-			title: '¿Está seguro?',
-			text: 'Si cancela, perderá los datos ingresados. ¿Desea continuar?',
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonText: 'Sí, cancelar',
-			cancelButtonText: 'No, seguir editando'
-		  }).then((result) => {
-			if (result.isConfirmed) {
-			this.modalService.dismissAll();
-			}
-		  });
   }
 }

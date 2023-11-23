@@ -7,6 +7,7 @@ import { CreateCustomerComponent } from '../create-customer/create-customer.comp
 import { CustomerRequest } from '../../models/customer-request';
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
+import { InfoCustomerComponent } from '../info-customer/info-customer.component';
 
 @Component({
   selector: 'fn-customer-list',
@@ -466,6 +467,20 @@ export class CustomerListComponent implements OnInit {
 
   }
 
+  openMoreInformationModal(customer: Customer){
+    console.log(customer);
+    this.selectedCustomerId = customer.id_customer;
+    const modalRef = this.modalService.open(InfoCustomerComponent, {
+      ariaLabelledBy: 'modal-basic-title',
+    });
+    modalRef.componentInstance.customerToUpdate = customer; // Pasar el ID del cliente al componente de actualización
+    modalRef.componentInstance.onlyForRead = true
+    modalRef.componentInstance.updateClicked.subscribe(() => {
+      // Abrir el modal del formulario de actualización
+      this.modalService.open(this.updateCustomerModal);
+      console.log('se abrio el modal del cliente');
+    });
+  }
 
   openUpdateCustomerModal(customer: Customer) {
     console.log(customer);
