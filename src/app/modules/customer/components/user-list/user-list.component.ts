@@ -5,6 +5,8 @@ import { ModifyUserRolComponent } from '../modify-user-rol/modify-user-rol.compo
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserFormComponent } from '../user-form/user-form.component';
 import Swal from 'sweetalert2';
+import { jsPDF } from "jspdf";
+import 'jspdf-autotable';
 
 @Component({
   selector: 'fn-user-list',
@@ -26,6 +28,95 @@ export class UserListComponent  implements OnInit {
       this.loadUser();
     });
   }
+
+
+  userListMock: User[] = [
+    {
+      id_user: 1,
+      first_login: true,
+      password_reset: false,
+      document_number: '123456789',
+      email: 'usuario1@example.com',
+      username: 'usuario1',
+      user_password: 'contrasena1',
+      roles: [],
+      is_active: true,
+    },
+    {
+      first_login: false,
+      password_reset: true,
+      document_number: '987654321',
+      email: 'usuario2@example.com',
+      username: 'usuario2',
+      user_password: 'contrasena2',
+      roles: [],
+      is_active: false,
+    },
+    // Agrega más usuarios según sea necesario
+  ];
+
+
+  downloadPDF() {
+    let data = this.userListMock //REMPLAZAR ACÁ POR this.userList
+    const pdf = new jsPDF() as any;
+  
+    let containsCompany = false;
+    let containsPerson = false;
+    let headers = [""];
+    let dataForPDF: any
+    
+
+  
+  
+  
+  
+    headers = ["Nombre de usuario", "Documento", "Email" ];
+  
+  dataForPDF = data.map((item) => {
+  
+  
+    return [item.username, item.document_number, item.email, ]; // Devuelve un array con los valores deseados
+  });
+  
+  console.log("dataforpdf", dataForPDF);
+  data = dataForPDF;
+  
+  
+  this.generatePdf(data, headers, "Listado de usuarios");
+  
+  }
+  
+  
+    generatePdf(data: any[], columns: any[], title: string): void {
+      const doc = new jsPDF() as any;
+  
+      // Configurar título
+      doc.text(title, 10, 10);
+  
+      
+  
+      // Configurar la tabla
+      doc.autoTable({
+        startY: 20,
+        head: [columns],
+        body: data,
+        autoSize: true,
+        theme: 'grid', // Otra opción de tema que puede ser útil
+        columnStyles: { 0: { cellWidth: 'auto' }, 1: { cellWidth: 'auto' } }, // Ajusta según tus necesidades
+        styles: { overflow: 'linebreak' }, // Permite saltos de línea
+        bodyStyles: { minCellHeight: 10 },
+        cellStyles: { text: { fontSize: 7, fontStyle: 'normal' } },
+      });
+  
+      // Guardar o mostrar el PDF
+      doc.save('table.pdf');
+    }
+  
+
+
+
+
+
 
   loadUser() {
     this.userService.getAllUser().subscribe((data: User[]) => {
