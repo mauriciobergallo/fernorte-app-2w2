@@ -1,13 +1,20 @@
-<div class="container">
-  <h2 class="text-center">ORDENES DE PAGO</h2>
-  <section class="container-fluid">
+<section class="container">
+  <div class="container-fluid">
     <div class="row" *ngIf="showDropDown">
-      <h5 class="col-sm-4 col-form-label">
-        Seleccione un proveedor:
-      </h5>
+      <h5 class="col-sm-4 col-form-label">Seleccione un proveedor:</h5>
       <div class="col-sm-6">
-        <select id="supplierSelect" class="form-control" [(ngModel)]="selectedSupplierId" (change)="onSupplierSelected()">
-        <option *ngFor="let supplier of allSupplierList" [value]="supplier.id">{{supplier.socialReason}}</option>
+        <select
+          id="supplierSelect"
+          class="form-control"
+          [(ngModel)]="selectedSupplierId"
+          (change)="onSupplierSelected()"
+        >
+          <option
+            *ngFor="let supplier of allSupplierList"
+            [value]="supplier.id"
+          >
+            {{ supplier.socialReason }}
+          </option>
         </select>
       </div>
       <div class="col-sm-2">
@@ -20,28 +27,34 @@
         </button>
       </div>
     </div>
-</section>
-<hr />
-  <table class="table table-bordered table-striped mt-4">
+  </div>
+  <hr />
+  <table class="table table-striped mt-4 table-hover">
     <thead>
       <tr>
         <th>Fecha</th>
         <th class="w-25">Observación</th>
         <th>Total</th>
         <th class="w-25">Factura</th>
-        <th>Acciones</th>
+        <th class="text-center">Seleccionar</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let order of allPurchaseOrder">
-        <td>{{order.date | date:'dd/MM/yyyy'}}</td>
-        <td>{{order.observation}}</td>
-        <td>{{order.total | currency}}</td>
+        <td>{{ order.date | date : "dd/MM/yyyy" }}</td>
+        <td>{{ order.observation }}</td>
+        <td>{{ order.total | currency }}</td>
         <td>
           <a [href]="order.billUrl" target="_blank">Link</a>
         </td>
-        <td>
-          <input type="checkbox" class="form-check-input" [(ngModel)]="order.selected" (change)="actualizarTotal()" />
+        <!-- Your existing checkbox column -->
+        <td class="text-center">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [(ngModel)]="order.selected"
+            (change)="onCheckboxChange(order)"
+          />
         </td>
       </tr>
     </tbody>
@@ -50,11 +63,8 @@
         <td></td>
         <td></td>
         <td><strong>Total:</strong></td>
-        <td>{{ totalSeleccionado }}</td>
-        <td>
-          <button class="btn btn-success btn-sm" (click)="enviarOrdenDeCompraSeleccionada()">Pagar</button>
-        </td>
+        <td>${{ totalSeleccionado }}</td>
       </tr>
     </tfoot>
   </table>
-</div>
+</section>

@@ -5,7 +5,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { IContacts, IProduct, ISupplier } from '../../../models/ISuppliers';
+import { IProduct, ISupplier } from '../models/ISuppliers';
 import { PurchaseModule } from '../../../purchase.module';
 import { SupliersService } from '../services/supliers.service';
 import { Subscription } from 'rxjs';
@@ -42,7 +42,6 @@ export class ListSuplierComponent implements OnInit {
   }
 
   filterSuppliers(searchText: string) {
-    // Update the filteredSuppliers based on the search text
     this.filteredSuppliers = this.suppliers.filter((supplier) => {
       const cuitStr = supplier.cuit.toString(); // Convert cuit to a string
       return (
@@ -51,7 +50,7 @@ export class ListSuplierComponent implements OnInit {
           .includes(searchText.toLowerCase()) ||
         supplier.fantasyName.toLowerCase().includes(searchText.toLowerCase()) ||
         cuitStr.includes(searchText) || // Compare as a string
-        supplier.adress.toLowerCase().includes(searchText.toLowerCase())
+        supplier.address.toLowerCase().includes(searchText.toLowerCase())
       );
     });
   }

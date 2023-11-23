@@ -146,34 +146,46 @@
               Proveedores
             </a>
           </li>
-          <li class="nav-item dropdown" [ngClass]="{'show': dropdownOpen}">
-            <a class="nav-link dropdown-toggle link-dark d-block" href="#" id="purchaseOrderDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="dropdownOpen = !dropdownOpen">
+          <li class="nav-item dropdown" [ngClass]="{'show': purchaseDropdownOpen}">
+            <a class="nav-link dropdown-toggle link-dark d-block" href="#" id="purchaseOrderDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="purchaseDropdownOpen = !purchaseDropdownOpen">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#grid"></use>
               </svg>
               Ordenes de compra
             </a>
-            <div class="dropdown-menu" [ngClass]="{'show': dropdownOpen}" aria-labelledby="purchaseOrderDropdown">
+            <div class="dropdown-menu" [ngClass]="{'show': purchaseDropdownOpen}" aria-labelledby="purchaseOrderDropdown">
               <a class="dropdown-item" routerLink="/purchase-order">Realizar orden de compra</a>
               <a class="dropdown-item" routerLink="/purchase-order-list">Listar de ordenes de compra</a>
             </div>
           </li>
-          <li class="nav-item">
+          <li class="nav-item dropdown" [ngClass]="{'show': paymentDropdownOpen}">
+            <a class="nav-link dropdown-toggle link-dark d-block" href="#" id="paymentOrderDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="paymentDropdownOpen = !paymentDropdownOpen">
+              <svg class="bi pe-none me-2" width="16" height="16">
+                <use xlink:href="#toggles2"></use>
+              </svg>
+              Ordenes de pago
+            </a>
+            <div class="dropdown-menu" [ngClass]="{'show': paymentDropdownOpen}" aria-labelledby="paymentOrderDropdown">
+              <a class="dropdown-item" routerLink="/payment-order">Realizar orden de pago</a>
+              <a class="dropdown-item" routerLink="/payment-order-list">Listar de ordenes de pago</a>
+            </div>
+          </li>
+          <!-- <li class="nav-item">
             <a class="nav-link link-dark d-block" routerLink="/payment-order">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#toggles2"></use>
               </svg>
               Ordenes de pago
             </a>
-          </li>
-          <li class="nav-item">
+          </li> -->
+          <!-- <li class="nav-item">
             <a class="nav-link link-dark d-block" routerLink="/claim-order">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#collection"></use>
               </svg>
               Ordenes de reclamo
             </a>
-          </li>
+          </li> -->
         </ul>
         <hr/>
       </div>

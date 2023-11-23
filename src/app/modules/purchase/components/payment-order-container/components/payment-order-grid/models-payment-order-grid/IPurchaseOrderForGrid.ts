@@ -1,4 +1,4 @@
-import {IPurchaseOrderDetail} from "./PurchaseOrderDetail";
+import { IPurchaseOrderDetail } from './IPurchaseOrderDetailForGrid';
 
 export interface IPurchaseOrder {
     id: number;

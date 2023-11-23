@@ -1,0 +1,36 @@
+<section>
+  <div class="container mt-4">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th scope="col">N°</th>
+          <th scope="col" class="w-25">Proveedor</th>
+          <th scope="col" class="text-center">Total</th>
+          <th scope="col" class="text-center">Fecha</th>
+          <th scope="col" class="w-25">Observación</th>
+          <th scope="col" class="text-center">Status</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="tab.getValue() === 'COMPRA'">
+        <tr *ngFor="let order of purchaseOrders | async">
+          <td>{{ order.id }}</td>
+          <td>{{ setSupplierName(order.supplierId) }}</td>
+          <td class="text-center">{{ order.total| currency }}</td>
+          <td class="text-center">{{ order.date| date }}</td>
+          <td>{{ order.observation }}</td>
+          <td class="text-center">{{ order.purchaseStatus }}</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="tab.getValue() === 'PAGO'">
+        <tr *ngFor="let order of paymentOrders | async">
+          <td>{{ order.id }}</td>
+          <td>{{ setSupplierName(order.supplierId) ?  setSupplierName(order.supplierId) : 'Proveedor' }}</td>
+          <td class="text-center">{{ setPaymentTotal(order.paymentDetails) | currency }}</td>
+          <td class="text-center">{{ order.date| date }}</td>
+          <td>{{ order.observation }}</td>
+          <td class="text-center">{{ order.paymentState ? order.paymentState : 'ACEPTADA' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

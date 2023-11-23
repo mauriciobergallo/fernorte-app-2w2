@@ -1,51 +1,72 @@
-
-<div class="container">
-
-  <h2>Listado de Órdenes de Compra</h2>
-
-  <input
-  type="text"
-  placeholder="Buscar..."
-  class="form-control w-25 mt-2 mb-2"
-  #buscar
-  (input)="filterPurchaseOrder(buscar.value)"
-  />
-
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nombre de proveedor</th>
-        <th>Fecha</th>
-        <th>Estatus de compra</th>
-        <th>Total</th>
-        <th>Nombre de empleado</th>
-        <th>Observación</th>
-        <th>Link</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let order of (buscar.value ? listOrdersFiltered : listOrders)| slice : (page - 1) * pageSize : page * pageSize" >
-        <td>{{ order.supplierName }}</td>
-        <td>{{ order.date | date }}</td>
-        <td>{{ order.purchaseStatus }}</td>
-        <td>{{ order.total | currency }}</td>
-        <td>{{ order.employeeName }}</td>
-        <td>{{ order.observation }}</td>
-        <td> a desarrollar este link</td>
-        <!-- <td><a [href]="order.billUrl" target="_blank">View Bill</a></td> -->
-      </tr>
-    </tbody>
-  </table>
-  <div class="d-flex justify-content-center">
-    <ngb-pagination
-      [(page)]="page"
-      [pageSize]="pageSize"
-      [collectionSize]="listOrders.length"
-      (pageChange)="onPageChange($event)"
-      aria-label="Default pagination"
-    ></ngb-pagination>
+<section class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2 class="mb-0 mt-2">Listado de ordenes de compra</h2>
+        <hr />
+        <input
+          type="text"
+          placeholder="Buscar..."
+          class="form-control w-25 mt-2 mb-2"
+          #buscar
+          (input)="filterPurchaseOrder(buscar.value)"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Proveedor</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Total</th>
+              <th>Empleado</th>
+              <th>Observación</th>
+              <th>Link</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let order of (buscar.value ? listOrdersFiltered : (purchaseOrdersList | async))
+                  | slice : (page - 1) * pageSize : page * pageSize
+              "
+            >
+              <td>{{ setSupplierName(order.supplierId) }}</td>
+              <td>{{ order.date | date }}</td>
+              <td>{{ order.purchaseStatus }}</td>
+              <td>{{ order.total | currency }}</td>
+              <td>{{ setEmployeeName(order.employeeId) }}</td>
+              <td>{{ order.observation }}</td>
+              <td>
+                <a href="https://www.ejemplos.co/wp-content/uploads/2017/10/orden-de-compra3.png" target="_blank">{{'http://linkOrder.png'}}</a>
+              </td>
+              <td class="text-center">
+                <button class="btn btn-outline-danger btn-sm" (click)="onDelete(order.id)">
+                  Eliminar
+                </button>
+              </td>
+              <!-- <td><a [href]="order.billUrl" target="_blank">View Bill</a></td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="d-flex justify-content-center">
+          <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="collectionSize"
+            (pageChange)="onPageChange($event)"
+            aria-label="Default pagination"
+          ></ngb-pagination>
+        </div>
+      </div>
+    </div>
   </div>
-
-</div>
-
+</section>

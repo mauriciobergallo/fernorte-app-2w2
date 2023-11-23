@@ -1,21 +1,21 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { IProduct, IProduct2, ISupplierProduct } from '../../../models/ISuppliers';
+import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
+import { ISupplierProduct } from '../../../models/ISuppliers';
 import { ISupplier } from '../../../models/ISuppliers';
-import { PurchaseOrderBack } from '../../../models/IPurchaseOrder';
+import { PurchaseOrderBack, PurchaseOrderRequest, PurchaseOrderResponse } from '../../../models/IPurchaseOrder';
 import { IBooking, Order } from '../../../models/ibooking';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PurchaseOrderServiceService {
-
+  url: string = 'http://localhost:5433/purchase-orders';
   idSupplier = new BehaviorSubject<number>(0);
   suplierSelected = new BehaviorSubject<ISupplier>({
     id: 0,
     socialReason: '',
-    adress: '',
+    address: '',
     fantasyName: '',
     cuit: '',
   });
@@ -66,13 +66,55 @@ export class PurchaseOrderServiceService {
     observation: 'Cancelled due to stock availability',
     billUrl: 'https://example.com/bill3.pdf',
   },];
+  purchaseOrdersList = new BehaviorSubject<PurchaseOrderResponse[]>([]);
+  filteredPurchaseOrdersList = new BehaviorSubject<PurchaseOrderResponse[]>([]);
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  /* method to set & get the list of products */
-   GetListMockPurchase():PurchaseOrderBack[]{
-    return this.ListMockPurchase;
+  // PURCHASES
+  postPurchaseOrders(purchase: PurchaseOrderRequest): Observable<PurchaseOrderRequest> {
+    return this.http
+      .post<PurchaseOrderRequest>(this.url, purchase);
   }
+
+  getPurchaseOrders(): void {
+    this.http
+      .get<PurchaseOrderResponse[]>(this.url)
+      .pipe(
+        tap((purchaseOrders: PurchaseOrderResponse[]) => {
+          this.purchaseOrdersList.next(purchaseOrders);
+          this.filteredPurchaseOrdersList.next(purchaseOrders);
+        })
+      )
+      .subscribe();
+  }
+
+  getFilteredPurchaseOrdersList() {
+    return this.filteredPurchaseOrdersList.asObservable();
+  }
+  setFilteredPurchaseOrdersList(purchases: PurchaseOrderResponse[]): void {
+    this.filteredPurchaseOrdersList.next(purchases);
+  }
+  deletePurchaseOrder(orderId: number): Observable<number> {
+    const deleteUrl = `${this.url}delete/${orderId}`;
+    return this.http.delete(deleteUrl)
+    .pipe(
+      tap(() => {
+        console.log(`Purchase order ${orderId} deleted.`);
+      }),
+      map(() => 1),
+      catchError((error: HttpErrorResponse) => {
+        console.error(`Error deleting purchase order ${orderId}: ${error.message}`);
+        return of(0); // Return 0 in case of an error
+      })
+    );
+  }
+
+  // PRODUCTS
+  setProductSelected(productsList: ISupplierProduct[]): void { this.listProductSelected.next(productsList); }
+  getListProductSelected(): Observable<ISupplierProduct[]> { return this.listProductSelected.asObservable(); }
+  
+  // CART
   getCardProductList(): ISupplierProduct[] { return this.cartProductList; }
   getCardProductList2(): Observable<ISupplierProduct[]> { return this.listProductSelected.asObservable(); }
   setCardProductList(products: ISupplierProduct): void {
@@ -85,11 +127,10 @@ export class PurchaseOrderServiceService {
     this.listProductSelected.next(this.cartProductList);
   }
 
-  /* method to set and get the id of the supplier */
+  // SUPPLIER
   setIdSupplier(id: number): void { this.idSupplier.next(id); }
   getIdSupplier(): Observable<number> { return this.idSupplier.asObservable(); }
 
-  /* method to set and get the supplier selected */
   setSupplierSelected(supplier: ISupplier): void { this.suplierSelected.next(supplier); }
   getSupplierSelected(): Observable<ISupplier> { return this.suplierSelected.asObservable(); }
 
@@ -98,6 +139,7 @@ export class PurchaseOrderServiceService {
   getListProductSelected(): Observable<ISupplierProduct[]> { return this.listProductSelected.asObservable(); }
 
   /* Navegacion general*/
+  // PURCHASE SCREEN FLOW
   getPurchaseOrderFlow(): Observable<boolean> { return this.purchaseOrderFlow.asObservable(); }
   setPurchaseOrderFlow(): void {
     let flow;
@@ -171,6 +213,4 @@ export class PurchaseOrderServiceService {
   getBooking(): BehaviorSubject<IBooking> {
     return this.booking;
   }
- 
-
 }

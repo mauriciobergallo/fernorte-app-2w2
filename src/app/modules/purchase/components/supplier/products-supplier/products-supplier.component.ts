@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IProduct, IProduct2, ISupplier } from '../../../models/ISuppliers';
+import { IProduct, ISupplier } from '../models/ISuppliers';
 import { ProductsService } from '../services/products.service';
 import { Subscription } from 'rxjs';
 import { SupliersService } from '../services/supliers.service';
@@ -13,7 +13,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./products-supplier.component.css'],
 })
 export class ProductsSupplierComponent implements OnInit {
+  searchText: string = '';
   products: IProduct[] = [];
+  filteredProducts: IProduct[] = [];
   productsOwned: IProduct[] = [];
 
   suscription = new Subscription();
@@ -33,63 +35,69 @@ export class ProductsSupplierComponent implements OnInit {
     this._productsService.selectedProduct = id;
   }
 
-  getSupplier() {
-    this._supplierService
-      .getSuplier(this._supplierService.selectedSupplier)
-      .subscribe({});
+  filterProducts(searchText: string) {
+    this.filteredProducts = this.products.filter((product) => {
+      return (
+        product.name
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
+      );
+    });
   }
 
-  loadProducts(){
+  loadProducts() {
     this._productsService
-    .getProductsBySupplier(this._supplierService.selectedSupplier)
-    .subscribe((result: any) => {
-      this.productsOwned = result.products;
-    });
+      .getProductsBySupplier(this._supplierService.selectedSupplier)
+      .subscribe((result: any) => {
+        if (result.length == 0) {
+          this.productsOwned = [];
+        } else {
+          this.productsOwned = result[0]?.products;
+        }
+
+
+        this._productsService.getProducts().subscribe((products) => {
+          products.forEach((product) => {
+            this.productsOwned.forEach((p) => {
+              if (p.id_product == product.id_product) {
+                product.price = p.price;
+              }
+            })
+          })
+          this.products = products;
+          this.filteredProducts = products;
+          this.clearInput()
+        });
+      });
+  }
+  clearInput(){
+    this.searchText = '';
+    this.filterProducts(this.searchText)
+
   }
 
   ngOnInit(): void {
     this._productsService.productCreated$.subscribe(() => {
       this.loadProducts();
     });
+    this.loadProducts();
     this._supplierService
       .getSuplier(this._supplierService.selectedSupplier)
       .subscribe((supplier) => {
         this.selectedSupplier = supplier;
       });
-    this._productsService.getProducts().subscribe((products) => {
-      this._productsService.products = products;
-      this.products = products;
-    });
-
-    this.getSupplier();
-    this._productsService
-      .getProductsBySupplier(this._supplierService.selectedSupplier)
-      .subscribe((result: any) => {
-        this.productsOwned = result.products;
-      });
-  }
-
-  isProductInBothLists(product: IProduct): boolean {
-    return (
-      this.products.some((item) => item.id === product.id) &&
-      this.productsOwned.some((item) => item.id === product.id)
-    );
-  }
-  getProductPrice(productId: number): number {
-    const product = this.productsOwned.find((p) => p.id === productId);
-    return product ? product.price : 0; // Default to 0 if not found.
   }
 
   deleteProduct(id: number) {
     this._productsService
       .deleteProduct(this._supplierService.selectedSupplier, id)
       .subscribe(() => {
-        this.loadProducts()
         Swal.fire({
           title: 'Transaccion completada',
           text: 'Producto Eliminado con Exito!',
           icon: 'success',
         });
+        this.loadProducts();
       });
   }
 }
