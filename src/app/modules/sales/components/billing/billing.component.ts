@@ -10,6 +10,7 @@ import numbers = _default.defaults.animations.numbers;
 import {BillModel} from "../../models/BillingModelApi";
 import {SaleOrderApi} from "../../models/SaleModelApi";
 import {Payment} from "../../models/PaymentModel";
+import { Router } from '@angular/router';
 declare var window: any;
 
 @Component({
@@ -33,7 +34,8 @@ export class BillingComponent {
   filters: Map<string, string> = new Map();
 
   constructor(private billService: BillServiceService, private paymentMethodService: PaymentMethodService,
-    private saleOrderService:SaleOrderServiceService) {
+    private saleOrderService:SaleOrderServiceService,
+    private route:Router) {
   }
 
   ngOnInit(): void {
@@ -52,17 +54,24 @@ export class BillingComponent {
   }
   finishPayment() {
     // confirm or save something
-    if(this.amountPayed >= this.realAmount){Swal.fire({
-      title: "Pagado exitosamente!",
-      text: "Se pago correctamente!",
-      icon: "success"
-    });
+    if(this.amountPayed >= this.realAmount){
       this.order.payments = this.paymentList;      
       this.order.total_price= this.realAmount;
       //delete this.order['id_bill'];
       this.billService.addBill(this.order).subscribe((response) => {
-        this.cancelOrder();
+        this.order = new BillModel();
+        this.name= "Cargue una orden para continuar";
+        this.realAmount=0;
+        this.totalAmount=0;
+        this.subCharges=0;
+        this.orderId = null;
+        this.amountPayed=0;
         this.paymentModal.hide();
+        Swal.fire({
+          title: "Pagado exitosamente!",
+          text: "Se pago correctamente!",
+          icon: "success"
+        });
       });
       return
     }
@@ -78,7 +87,16 @@ export class BillingComponent {
   }
 
   cancelOrder() {
-    this.paymentList = [];
+    
+    Swal.fire({
+      title: "Cancelar factura",
+      text:"¿Seguro que quieres cancelar la factura?",
+      icon:"warning",
+      showCancelButton: true,
+      confirmButtonText: "Ok"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.paymentList = [];
     this.order = new BillModel();
     this.name= "Cargue una orden para continuar";
     this.realAmount=0;
@@ -86,6 +104,15 @@ export class BillingComponent {
     this.subCharges=0;
     this.orderId = null;
     this.amountPayed=0;
+        Swal.fire({
+          title:"Cancelar factura",
+          text:"Factura cancelada",
+          icon:"warning"
+        });
+      } 
+    });
+    this.route.navigateByUrl('')
+
   }
   checkOrder() {
     if (this.orderId == null || !this.billService.checkOrder(Number(this.orderId))) {

@@ -52,6 +52,9 @@ export class SaleOrderViewComponent implements OnInit, OnDestroy {
   calculateIva(){
   this.iva = this.subtotal * 0.21;
   }
+  exit() {
+    this.router.navigateByUrl('')
+  } 
 }
 
 

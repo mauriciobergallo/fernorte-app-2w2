@@ -133,8 +133,7 @@ export class SaleOrderComponent implements OnInit {
       this.loader = this.loadingService.loading();
         } 
       });
-    }
-    
+    }    
     
   }
 
@@ -150,17 +149,17 @@ export class SaleOrderComponent implements OnInit {
     this.productoSeleccionado = this.productService.cleanProduct();
     this.carrito = [];
     Swal.fire({
-      title: "Registrar orden de venta",
-      text:"¿Seguro que quieres cancelar la orden?",
-      icon:"success",
+      title: "Cancelar orden de venta",
+      text:"¿Seguro que quieres cancelar la orden de venta?",
+      icon:"warning",
       showCancelButton: true,
       confirmButtonText: "Ok"
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title:"Registrar orden de venta",
-          text:"Cancelado",
-          icon:"success"
+          title:"Cancelar orden de venta",
+          text:"Orden de venta cancelada",
+          icon:"warning"
         });
       } 
     });

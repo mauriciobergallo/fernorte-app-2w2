@@ -10,7 +10,10 @@ import { Payment } from '../../models/PaymentModel';
   templateUrl: './view-payment.component.html',
   styleUrls: ['./view-payment.component.css']
 })
-export class ViewPaymentComponent implements OnInit{ 
+export class ViewPaymentComponent implements OnInit{
+exit() {
+  this.router.navigateByUrl('')
+} 
 
   bill!: BillView;
   subscription!: Subscription;
