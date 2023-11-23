@@ -97,11 +97,11 @@ export class UserService {
   }
 
   delete(user: User): Observable<any>{
-    return this.http.delete<any>(`${this.apiUrl}`+user.id_user)
+    return this.http.delete<any>(`${this.baseUrl}/`+user.document_number)
   }
   
   active(user: User): Observable<any>{
-    return this.http.put<any>(`${this.apiUrl}`+ user.document_number +"/active", user)
+    return this.http.patch<any>(`${this.baseUrl}/activate/`+ user.document_number, user)
   }
 
 

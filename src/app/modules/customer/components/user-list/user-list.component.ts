@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { ModifyUserRolComponent } from '../modify-user-rol/modify-user-rol.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserFormComponent } from '../user-form/user-form.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-user-list',
@@ -41,11 +42,11 @@ export class UserListComponent  implements OnInit {
   onActive(user: User) {
     this.userService.active(user).subscribe(
       (response) => {
-        alert("Se dio de alta el usuario")
-        this.loadUser();
+        this.showInfoActivedResult();
+        this.loadUser()
       },
       (error) => (
-        console.log(error)
+        this.showErrorInServer()
       )
     )
   }
@@ -53,11 +54,11 @@ export class UserListComponent  implements OnInit {
   onDelete(user: User) {
     this.userService.delete(user).subscribe(
       (response) => {
-        alert("Se dio de baja el usuario")
-        this.loadUser();
+        this.showInfoDesactivedResult();
+        this.loadUser()
       },
       (error) => (
-        console.log(error)
+        this.showErrorInServer()
       )
     )
   }
@@ -80,6 +81,64 @@ export class UserListComponent  implements OnInit {
       this.modalService.open(this.newUserModal);
       console.log('se abrio el modal del usuario');
 
+    });
+  }
+
+  showConfirmationReactivate(user: User) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Quieres reactivar el usuario?',
+      icon: 'question',
+      confirmButtonText: 'Sí, reactivar',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.onActive(user);
+      }
+    });
+  }
+
+  showConfirmationDelete(user: User) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Quieres eliminar el usuario?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.onDelete(user);
+      }
+    });
+  }
+
+  showInfoActivedResult() {
+    Swal.fire({
+      title: 'Resultado',
+      text: 'Se dio de alta el usuario',
+      icon: 'success',
+      showConfirmButton: true,
+      confirmButtonText: 'ok',
+    });
+  }
+
+  showInfoDesactivedResult() {
+    Swal.fire({
+      title: 'Resultado',
+      text: 'Se dio de baja el usuario',
+      icon: 'success',
+      showConfirmButton: true,
+      confirmButtonText: 'ok',
+    });
+  }
+
+  showErrorInServer() {
+    Swal.fire({
+      title: '¡Error!',
+      text: 'Servicio no disponible',
+      icon: 'error',
     });
   }
 }
