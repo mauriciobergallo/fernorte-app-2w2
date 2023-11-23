@@ -31,7 +31,7 @@ export class EmployeeRegistrationComponent implements OnInit {
 			firstName: ['', [Validators.required, Validators.pattern('^[^0-9]+$')]],
 			lastName: ['', [Validators.required, Validators.pattern('^[^0-9]+$')]],
 			documentType: ['', Validators.required],
-			documentNumber: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(7)]],
+			documentNumber: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.minLength(7), Validators.maxLength(8)]],
 			birthDate: ['', Validators.required],
 			personalEmail: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}')]],
 			address: ['', Validators.required],
@@ -113,32 +113,31 @@ export class EmployeeRegistrationComponent implements OnInit {
 		const documentNumberControl = this.employeeForm.get('documentNumber');
 
 		console.log("DOCUMENT NUMBER", documentNumberControl);
-		const selectedDocumentType = this.employeeForm.value.idDocumentType;
+		const selectedDocumentType = this.employeeForm.value.documentType;
 		// Restablecer el valor del campo de documento
 		this.employee.idDocumentNumber = '';
 
 
 
 
-
 		// Aplicar las reglas de formato según el tipo de documento
 		switch (Number(selectedDocumentType)) {
-			case 2: // DNI
+			case 1: // DNI
 				// Permite solo números
-				documentNumberControl?.setValidators([Validators.required, Validators.pattern('^[0-9]+$')]);
+				documentNumberControl?.setValidators([Validators.required, Validators.minLength(7), Validators.pattern('^[0-9]+$')]);
 
 				//	this.documentPattern = '^[0-9]+$';
 				break;
 
-			case 3: // CUIT 
+			case 5: // CUIT 
 			case 4: // CUIL
 				// Permite números y formato XX-XXXXXXXX-X
-				documentNumberControl?.setValidators([Validators.required, Validators.pattern('^[0-9]{2}-[0-9]{8}-[0-9]$')]);
+				documentNumberControl?.setValidators([Validators.required, Validators.minLength(11), Validators.pattern('^[0-9]{2}-[0-9]{8}-[0-9]$')]);
 
 				break;
 
-			case 5: // LC
-			case 6: // LE
+			case 2: // LC
+			case 3: // LE
 				// Permite solo números
 				documentNumberControl?.setValidators([Validators.required, Validators.pattern('^[0-9]+$')]);
 

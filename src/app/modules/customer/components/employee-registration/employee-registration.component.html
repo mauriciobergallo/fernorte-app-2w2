@@ -9,52 +9,88 @@
 				<div class="flex-grow-1 me-2">
 					<label for="name">Nombre</label>
 					<input formControlName="firstName"
-						type="text"  id="name" class="form-control" placeholder="Nombre"/>
-						
-										
-					<!-- <div *ngIf="firstNameControl?.invalid && firstNameControl?.touched" class="text-danger">
-						Ingrese un nombre valido.
-					</div> -->
+						type="text"  id="name" class="form-control" placeholder="Nombre"
+						[ngClass]="{'is-invalid': employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched}"/>
+				
+						<small class="invalid-feedback" 
+						*ngIf="!employeeForm.get('firstName')!.valid &&
+								employeeForm.get('firstName')!.touched &&
+								employeeForm.get('firstName')!.getError('required')
+									">
+							El nombre es obligatorio
+						</small>
+						<small class="invalid-feedback" 
+						*ngIf="!employeeForm.get('firstName')!.valid &&
+								employeeForm.get('firstName')!.touched &&
+								employeeForm.get('firstName')!.getError('pattern')
+									">
+							El nombre no puede tener números	
+						</small>
 				</div> 
 				<div class="flex-grow-1">
 					<label for="lastName">Apellido</label>
 					<input formControlName="lastName"
-						type="text"  id="lastName" class="form-control" placeholder="Apellido"/>
+						type="text"  id="lastName" class="form-control" placeholder="Apellido"
+						[ngClass]="{'is-invalid': employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched}"/>
 						
 							
-					<!-- <div *ngIf="lastNameControl?.invalid && lastNameControl?.touched" class="text-danger">
-						Ingrese un apellido valido.
-					</div> -->
+						<small class="invalid-feedback" 
+						*ngIf="!employeeForm.get('lastName')!.valid &&
+								employeeForm.get('lastName')!.touched &&
+								employeeForm.get('lastName')!.getError('required')
+									">
+							El apellido es obligatorio
+						</small>
+						<small class="invalid-feedback" 
+						*ngIf="!employeeForm.get('lastName')!.valid &&
+								employeeForm.get('lastName')!.touched &&
+								employeeForm.get('lastName')!.getError('pattern')
+									">
+							El apellido no puede tener números	
+						</small>
 				</div>
 			</div>
 			<div class="mb-3 d-flex">
 				<div class="flex-grow-1 me-2">
 					<label for="documentType">Tipo de documento</label>
-					<select  formControlName="documentType"  id="documentType" class="form-select" (change)="onDocumentTypeChange()">
-						<option value=0 selected disabled>Seleccione una opcion</option>
+					<select  formControlName="documentType"  id="documentType" class="form-select" (change)="onDocumentTypeChange()"
+					[ngClass]="{'is-invalid': employeeForm.get('documentType')?.invalid && employeeForm.get('documentType')?.touched}">
+						<option value=0 disabled>Seleccione una opcion</option>
 						<option value=1>DNI</option>
 						<option value=2>LC</option>
 						<option value=3>LE</option>
 						<option value=4>CUIT</option>
 						<option value=5>CUIL</option>
-						
 					</select>
+					<small class="invalid-feedback" 
+					*ngIf="!employeeForm.get('documentType')!.valid &&
+							employeeForm.get('documentType')!.touched &&
+							employeeForm.get('documentType')!.getError('required')
+								">
+						El tipo de documento es obligatorio
+					</small>
 				</div>
 				<div class="flex-grow-1">
 					<label for="documentNumber">Documento</label>
 					<input  
 						type="text" formControlName="documentNumber" id="documentNumber" class="form-control" placeholder="Documento"
-						/>
-						<!-- (input)="onDocumentNumberInput()"/> -->
-					<div *ngIf="documentNumberControl?.hasError('required') && documentNumberControl?.touched" class="text-danger">
-						El número de documento es requerido
-		  			</div>
-					<div *ngIf="documentNumberControl?.hasError('minlength') && documentNumberControl?.touched" class="text-danger">
-						El número de documento debe tener al menos 7 caracteres
-		  			</div>
-					<div *ngIf="documentNumberControl?.hasError('maxlength') && documentNumberControl?.touched" class="text-danger">
-						El número de documento debe tener hasta 8 caracteres
-		  			</div>
+						[ngClass]="{'is-invalid': employeeForm.get('documentNumber')?.invalid && employeeForm.get('documentNumber')?.touched}"/>
+						<small class="invalid-feedback" 
+						*ngIf="!employeeForm.get('documentNumber')!.valid &&
+								employeeForm.get('documentNumber')!.touched &&
+								employeeForm.get('documentNumber')!.getError('required')
+									">
+							El número de documento es obligatorio
+						</small>
+						<small class="invalid-feedback" 
+						*ngIf="!employeeForm.get('documentNumber')!.valid &&
+								employeeForm.get('documentNumber')!.touched &&
+								(employeeForm.get('documentNumber')!.getError('minlength')
+								|| employeeForm.get('documentNumber')!.getError('pattern')
+								|| employeeForm.get('documentNumber')!.getError('maxlength'))
+									">
+							El formato no es valido
+						</small>
 				</div>
 			</div>
 			<div class="mb-3">
@@ -63,36 +99,60 @@
 					<input
 						id="dateOfBirth" class="form-control" placeholder="DD/MM/AAAA" [minDate]="maxDate" [maxDate]="minDate" formControlName="birthDate" ngbDatepicker
 						#dp="ngbDatepicker"
-					
+						[ngClass]="{'is-invalid': employeeForm.get('birthDate')?.invalid && employeeForm.get('birthDate')?.touched}"
 								/>
 					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button><br>
-                </div>
+					<small class="invalid-feedback" 
+					*ngIf="!employeeForm.get('birthDate')!.valid &&
+							employeeForm.get('birthDate')!.touched &&
+							employeeForm.get('birthDate')!.getError('required') 
+								">
+						La fecha es obligatoria
+					</small>
+				</div>
 			</div>
 			<div class="flex-grow-1">
-				<label for="personalEmail">Correo electronico</label>
+				<label for="personalEmail">Correo electrónico</label>
 				<input 
 					   type="email" formControlName="personalEmail" id="personalEmail" class="form-control" placeholder="Correo electronico"
 					   
-							/>
-				<div *ngIf="personalEmailControl?.invalid && personalEmailControl?.touched" class="text-danger">
-					Ingresa una dirección de correo electrónico válida.
-				</div>
+							
+					   [ngClass]="{'is-invalid': employeeForm.get('personalEmail')?.invalid && employeeForm.get('personalEmail')?.touched}" />
+					   <small class="invalid-feedback" 
+					   *ngIf="!employeeForm.get('personalEmail')!.valid &&
+							   employeeForm.get('personalEmail')!.touched &&
+							   employeeForm.get('personalEmail')!.getError('required') 
+								   ">
+						   El correo electrónico es obligatorio
+					   </small>
 			</div>
 			<div class="mb-3 d-flex">
 				<div class="flex-grow-1 me-2">
 					<label for="address">Domicilio</label>
 					<input required 
-						type="text" formControlName="address" id="address" class="form-control" placeholder="Domicilio"/>
-				</div>
+						type="text" formControlName="address" id="address" class="form-control" placeholder="Domicilio"
+						[ngClass]="{'is-invalid': employeeForm.get('address')?.invalid && employeeForm.get('address')?.touched}" />
+						<small class="invalid-feedback" 
+						*ngIf="!employeeForm.get('address')!.valid &&
+								employeeForm.get('address')!.touched &&
+								employeeForm.get('address')!.getError('required') 
+									">
+							El domicilio es obligatorio
+						</small>
+					</div>
 				<div class="flex-grow-1">
 					<label for="phoneNumber">Número de teléfono</label>
 					<input required 
 						type="text" formControlName="phoneNumber" id="phoneNumber" class="form-control" placeholder="Numero de telefono"
-						
+						[ngClass]="{'is-invalid': employeeForm.get('phoneNumber')?.invalid && employeeForm.get('phoneNumber')?.touched}"
 							/>
-					<div *ngIf="false" class="invalid-feedback">
-				    	Ingrese un número de teléfono válido.
-					</div>
+							<small class="invalid-feedback" 
+							*ngIf="!employeeForm.get('phoneNumber')!.valid &&
+									employeeForm.get('phoneNumber')!.touched &&
+									employeeForm.get('phoneNumber')!.getError('required') 
+										">
+								El número de telefono es obligatorio
+							</small>
 				</div>
 			</div>
 			<div class="modal-footer">
