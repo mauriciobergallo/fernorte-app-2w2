@@ -47,6 +47,8 @@ import { ReportsScreenComponent } from './components/report-container/components
 import { DatePickerComponent } from './components/report-container/components/date-picker/date-picker.component';
 import { OrdersGridComponent } from './components/report-container/components/orders-grid/orders-grid.component';
 import { PaymentListComponent } from './components/payment-order-container/components/payment-list/payment-list.component';
+import { EditSupplierComponent } from './components/supplier/edit-supplier/edit-supplier.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +81,8 @@ import { PaymentListComponent } from './components/payment-order-container/compo
     DatePickerComponent,
     OrdersGridComponent,
     PaymentListComponent,
+    EditSupplierComponent,
+    LoginComponent,
   ],
   providers: [],
   imports: [

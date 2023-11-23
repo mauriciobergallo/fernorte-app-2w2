@@ -11,6 +11,7 @@ export class SupliersService {
   selectedSupplier: number = 0;
   contacts: IContact[] = {} as IContact[];
   suppliers: ISupplier[] = [];
+  editingSupplier: ISupplier = {} as ISupplier;
 
   private productCreated = new Subject<void>();
 
@@ -63,6 +64,10 @@ export class SupliersService {
   }
 
   updateSuplier(suplier: ISupplier): Observable<ISupplier> {
-    return this._http.put<ISupplier>(this.url + '/' + suplier.id, suplier);
+    return this._http.put<ISupplier>(this.url + '/' + this.editingSupplier.id, suplier);
+  }
+
+  recuperateSupplier(id: number): Observable<ISupplier> {
+    return this._http.patch<ISupplier>(this.url + '/recuperate/' + id, null);
   }
 }

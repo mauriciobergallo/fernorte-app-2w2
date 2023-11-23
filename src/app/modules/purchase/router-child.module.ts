@@ -11,6 +11,7 @@ import { ProductsSupplierComponent } from './components/supplier/products-suppli
 import { FilterComponent } from './components/supplier/filter/filter.component';
 
 const childRoutes: Routes = [
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   {path: '', component: ReportContainerComponent},
   {path: 'report', component: ReportContainerComponent},
   {path: 'supplier', component: ListSuplierComponent},
