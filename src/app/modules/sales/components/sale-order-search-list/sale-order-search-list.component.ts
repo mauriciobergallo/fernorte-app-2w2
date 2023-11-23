@@ -32,6 +32,14 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   stateOrder:string="";
   filters: Map<string, string> = new Map();
 
+  totalPages: number = 0;
+  totalElements: number = 0;
+  currentPage : number = 0;
+
+  get totalPagesArray(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i);
+  }
+
   private subscriptions = new Subscription();
 
   constructor(private saleOrderServiceService: SaleOrderServiceService,
@@ -45,9 +53,12 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.subscriptions.add(
-      this.saleOrderServiceService.getSaleOrders().subscribe(
-        ( response : SaleOrderApi[]) => {
-          this.saleOrdersList = response.sort((a,b)=>b.id_sale_order! - a.id_sale_order!);
+      this.saleOrderServiceService.getSaleOrders(0).subscribe(
+        ( response : any ) => {
+          console.log(response.content)
+          this.saleOrdersList = response.content;
+          this.totalPages = response.totalPages;
+          this.totalElements = response.totalElements;
           for(let item of this.saleOrdersList) {
             this.saleOrdersListOk.push(this.mapSaleOrder(item))
           }
@@ -149,10 +160,23 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     return total;
   }
   onLoadPage(page : number) {
-    if(page === 1) {
-      this.saleOrdersListOk = this.saleOrdersListOk.slice(page-1,(page*10));
-    } else {
-      this.saleOrdersListOk = this.saleOrdersListOk.slice((page-1)*10,(page*10));
+    this.saleOrdersListOk = [];
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.subscriptions.add(
+        this.saleOrderServiceService.getSaleOrders(page).subscribe(
+          ( response : any ) => {
+            console.log(response.content)
+            this.saleOrdersList = response.content;
+            this.totalPages = response.totalPages;
+            this.totalElements = response.totalElements;
+            for(let item of this.saleOrdersList) {
+              this.saleOrdersListOk.push(this.mapSaleOrder(item))
+              
+            }
+          }
+        )
+      )
     }
   }
 

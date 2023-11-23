@@ -65,8 +65,8 @@ export class SaleOrderServiceService {
       return this.http.post<any>(url, body, { headers: header });
     }  
 
-  getSaleOrders(): Observable<SaleOrderApi[]> {
-    this.saleOrderList = this.http.get<SaleOrderApi[]>(this.URL+"?page=0");
+  getSaleOrders(page : number): Observable<SaleOrderApi[]> {
+    this.saleOrderList = this.http.get<SaleOrderApi[]>(this.URL+"?page="+page);
     return this.saleOrderList;
   }
 
