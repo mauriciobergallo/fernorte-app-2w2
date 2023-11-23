@@ -2,6 +2,7 @@
 <!-- Botón para abrir el primer modal -->
 
     
+<fn-spinner *ngIf="isLoadingS"></fn-spinner>
 
 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalToggle"><i
         class="bi bi-file-earmark-plus"></i></button>
@@ -29,7 +30,6 @@
 
                                 <!--CREAR UN SELECT CON COMENTARIOS PRESETEADOS DE MOVIMIENTOS-->
                                 <h5 class="card-title ">Motivo</h5>
-
                                 <select class="form-select" formControlName="motivo" aria-label="Default select example">
                                     <option selected ></option>
                                     <option>Ajuste de inventario</option>
@@ -111,8 +111,9 @@
                                         <div class="row ">
                                             <div class="col-4"></div>
                                             <div class="col-4">
+                                                
                                                 <input type="text" class="form-control"  placeholder="Ingrese el nombre del producto"
-                                                (input)="onSearch($event)" [value]="''" />      
+                                               formControlName="nombreDelProducto"  (input)="onSearch($event)" [value]="''" />      
                                             </div>
                                             <div class="col-4"></div>
                                         </div>
@@ -208,6 +209,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <pre>{{formErrors}}</pre>
 
                             <div class="text-danger  mt-2" [hidden]="!detailForm.errors?.['duplicateMovement']">
                                 <span *ngIf="detailForm.errors?.['duplicateMovement']">

@@ -8,6 +8,8 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, V
 import { ValidationError } from 'json-schema';
 import { MovementsService, NewDetailMovementDto, ReqNewMovementDto } from '../../services/movements-service/movements.service';
 import Swal from 'sweetalert2';
+import { User } from 'src/app/modules/customer/models/user';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 export function destinationValidator(): ValidatorFn {
@@ -49,7 +51,7 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
   filteredLocationsInfo$!: Observable<LocationInfoDto[]>;
   filteredLocationsInfoDestinity$!: Observable<LocationInfoDto[]>;
   private destroy$ = new Subject<void>(); 
-
+  
   selectedOriginInfo: LocationInfoDto | null = null;
   selectedDestinityInfo: LocationInfoDto | null = null;
 
@@ -76,7 +78,7 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
   get movementDetailsArray(): FormArray {
     return this.movementForm.get('movementDetailsArray') as FormArray;
   }
-  constructor(private service: WarehouseService, private fb: FormBuilder) {
+  constructor(private service: WarehouseService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
     this.initFormMovement();
     this.locationsInfo$ = this.service.getLocationsInfo();
   }
@@ -127,9 +129,11 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
       }
       return d;
     })
+    let username: User|null = JSON.parse(localStorage.getItem('role') ?? '' )
+    console.log(username)
     let mov : ReqNewMovementDto = {
       remarks: this.remarksControl?.value,
-      operator_name : localStorage.getItem('username')?.toString() ?? 'Default',
+      operator_name :username?.username || 'Default',
       movement_type: null,
       is_internal : true,
       movement_details : dets
@@ -174,6 +178,8 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
       }
     });    
     this.isLoadingS = false;
+    this.router.navigate(['inventory/search-movements']);
+
 
   }
   setUpValueChanges(){
@@ -196,7 +202,7 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
   initFormMovement() {
     this.movementForm = this.fb.group({
       motivo: ['', [Validators.required]],
-      remarks: ['', [Validators.required, Validators.minLength(15)]],
+      remarks: ['', [Validators.required, Validators.minLength(10)]],
       movementDetailsArray: this.fb.array([],[Validators.required])
     })
 
@@ -210,7 +216,8 @@ export class CreateMovementComponent implements OnInit, OnDestroy  {
     const group = this.fb.group({
       origin: [origin, Validators.required],
       destiny: [destiny, Validators.required],
-      quantity: [quantity, [Validators.required, Validators.min(1)]]
+      quantity: [quantity, [Validators.required, Validators.min(1)]],
+      nombreDelProducto:['']
     });
     
     group.setValidators([destinationValidator(), quantityValidator(),this.duplicateMovementValidator(this.movementDetailsArray)]);
@@ -241,13 +248,16 @@ addDetail(detailForm: FormGroup){
   onSearch(event: Event): void {
     // Actualizar la cadena de búsqueda cada vez que cambie el input
     const query = (event.target as HTMLInputElement).value;
-    if(query=== ''){
+    if(query.length <= 3){
     this.searchQuery.next(".."); // Emitir el nuevo valor de búsqueda
 
     } else {
 
       this.searchQuery.next(query); // Emitir el nuevo valor de búsqueda
     }
+  }
+  get formErrors() {
+    return JSON.stringify(this.detailForm.errors, null, 2);
   }
 
   onProductSelect(product: LocationInfoDto): void {
@@ -277,7 +287,8 @@ addDetail(detailForm: FormGroup){
     this.detailForm.setValue({
       origin: null,
       destiny: null,
-      quantity: 1
+      quantity: 1,
+      nombreDelProducto: ''
     });
     this.movementDetailsArray.controls.forEach(ctrl => {
       
@@ -292,13 +303,18 @@ addDetail(detailForm: FormGroup){
 
   duplicateMovementValidator(movementDetailsArray: FormArray): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
+      console.log(movementDetailsArray)
       const origin = control.get('origin')?.value;
       const destiny = control.get('destiny')?.value;
-
+      console.log(origin)
+      console.log(destiny)
         // Utilizar 'some' para comprobar si algún detalle ya tiene el mismo origen o destino
     const duplicate = movementDetailsArray.controls.some(ctrl => {
       const ctrlOrigin = ctrl.get('origin')?.value;
       const ctrlDestiny = ctrl.get('destiny')?.value;
+      console.log(ctrlOrigin)
+      console.log(ctrlDestiny)
+
       return (ctrlOrigin === origin || ctrlOrigin === destiny) || 
              (ctrlDestiny === origin || ctrlDestiny === destiny);
     });

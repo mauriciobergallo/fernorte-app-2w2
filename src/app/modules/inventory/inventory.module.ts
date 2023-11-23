@@ -22,6 +22,7 @@ import { RouterModule } from '@angular/router';
 import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
 import { CreateMovementComponent } from './components/create-movement/create-movement.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { EditMovimientoComponent } from './components/edit-movimiento/edit-movimiento.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     ConsultReceptionOrdersComponent,
     ReceptionOrderDetailsComponent,
     CreateMovementComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    EditMovimientoComponent
   ],
 
   providers: [],

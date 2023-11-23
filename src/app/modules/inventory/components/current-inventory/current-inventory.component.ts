@@ -3,7 +3,7 @@ import { WarehouseService } from '../../services/warehouse-service/warehouse.ser
 import { LocationInfoDto } from '../../models/location-info.interface';
 import { Subscription } from 'rxjs';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+//import 'jspdf-autotable';
 import { Chart } from 'chart.js';
 import { Pagination } from '../../models/pagination';
 
@@ -243,6 +243,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
       quantity: 3,
       measure_unit: 1,
       max_capacity: 5,
+      product_id: undefined
     },
     {
       location: {
@@ -256,6 +257,8 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
       quantity: 5,
       measure_unit: 2,
       max_capacity: 50,
+      product_id: undefined
+
     },
     {
       location: {
@@ -269,6 +272,8 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
       quantity: 8,
       measure_unit: 3,
       max_capacity: 10,
+      product_id: undefined
+
     },
     {
       location: {
@@ -282,6 +287,8 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
       quantity: 15,
       measure_unit: 1,
       max_capacity: 150,
+      product_id: undefined
+
     },
     {
       location: {
@@ -295,6 +302,8 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
       quantity: 20,
       measure_unit: 2,
       max_capacity: 200,
+      product_id: undefined
+
     },
     {
       location: {
@@ -308,6 +317,8 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
       quantity: 7,
       measure_unit: 3,
       max_capacity: 70,
+      product_id: undefined
+
     },
   ];
 }

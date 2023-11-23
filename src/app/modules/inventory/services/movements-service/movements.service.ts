@@ -24,6 +24,17 @@ export interface NewDetailMovementDto {
   providedIn: 'root',
 })
 export class MovementsService {
+
+  private movimientoSeleccionado: IMovementDto|undefined;
+
+  seleccionarMovimiento(movimiento: IMovementDto) {
+    this.movimientoSeleccionado = movimiento;
+  }
+
+  obtenerMovimientoSeleccionado(): IMovementDto | undefined {
+    return this.movimientoSeleccionado;
+  }
+
   constructor(private http: HttpClient) {}
   private  baseUrl = 'http://localhost:8083/movements';
 
@@ -37,6 +48,21 @@ export class MovementsService {
 
   newMovement(mov:ReqNewMovementDto) : Observable<Boolean>{
     return this.http.post<ReqNewMovementDto>(this.baseUrl, mov).pipe(
+      map(res => {
+        return true;
+      }),
+      catchError(error => {
+        if (error.status === 400) {
+          console.log('error',error)
+          return of(false);
+        }
+        return throwError(() => new Error('Algo salió mal al crear el movimiento'));
+      })
+    );
+  }
+
+  updateMovement(mov:ReqNewMovementDto,id:number): Observable<Boolean>{
+    return this.http.put<ReqNewMovementDto>(this.baseUrl+'/'+id, mov).pipe(
       map(res => {
         return true;
       }),

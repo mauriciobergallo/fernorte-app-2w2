@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, HostListener } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 import { IMovementDto } from '../../models/IMovementDto';
 import { MovementType } from '../../models/IMovementTypeEnum';
@@ -8,6 +8,7 @@ import { Pagination } from '../../models/pagination';
 import jsPDF from 'jspdf';
 import { Chart } from 'chart.js/auto';
 import Swal from 'sweetalert2';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'fn-search-inventory-movements',
@@ -17,15 +18,32 @@ import Swal from 'sweetalert2';
 export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   movimientosOriginales: IMovementDto[] = [];
   movimientos: IMovementDto[] = [];
-  isLoading: boolean = false;
-
+  isLoading: boolean = false;;
+  movCargados:boolean=false;
   private subscripciones = new Subscription();
-
+  loading = false;
   currentPage = 1;
   totalPages = 1;
 
   mostrarDetalleMovimiento: number | null = null;
   mostrarDetalle: boolean = false;
+
+  dropdownOpen: { [key: number]: boolean } = {};
+
+  @HostListener('document:click', ['$event'])
+  clickout(event: MouseEvent) {
+    if (!this.eRef.nativeElement.contains(event.target)) {
+      Object.keys(this.dropdownOpen).forEach(key => {
+        const index = Number(key);
+        this.dropdownOpen[index] = false;
+      });
+    }
+  }
+
+
+  toggleDropdown(index: number) {
+    this.dropdownOpen[index] = !this.dropdownOpen[index];
+  }
 
   showDetail(i: number) {
     if (i === this.mostrarDetalleMovimiento) {
@@ -45,8 +63,9 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   }
 
   reload(){
+    this.isLoading=true;
     this.getMovementsPage(this.currentPage);
-
+    this.isLoading=false;
   }
 
   removeMov(idx: number){
@@ -71,6 +90,13 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  editMov(mov: IMovementDto){
+    this.movementService.seleccionarMovimiento(mov);
+   // this.router.navigate(['/inventory/edit-movement']);
+   this.router.navigate(['../edit-movement'], { relativeTo: this.route });
+  }
+
   orderDetail(idx: number) {
     //this.movimientos[idx].movement_details.
   }
@@ -79,8 +105,11 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
     this.subscripciones.unsubscribe();
   }
 
-  constructor(private movementService: MovementsService) {
-
+  constructor(private movementService: MovementsService, private router: Router,  private route: ActivatedRoute,
+    private eRef: ElementRef) {
+    console.log('constructr',this.isLoading,this.loading)
+    this.loading=true;
+    this.isLoading=true;
   }
 
   nextPage() {
@@ -104,9 +133,15 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('on init in',this.isLoading,this.loading)
+    this.isLoading=true;
+    this.loading=true;
     this.getMovementsPage(this.currentPage);
-
+    this.isLoading=false;
+    this.loading=false;
     //this.fillTable();
+    console.log('on init out',this.isLoading,this.loading)
+
   }
 
   filterByDate(event: { from: NgbDate | null; to: NgbDate | null }) {
@@ -140,40 +175,21 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
     this.movimientos = this.movimientosOriginales;
   }
 
-  fillTable() {
-    this.isLoading = true;
-    this.subscripciones.add(
-      this.movementService.getAllMovements().subscribe({
-        next: (response: IMovementDto[]) => {
-          if (response != null) {
-
-            response.forEach(movement => {
-
-              this.movimientosOriginales.push(movement)
-
-            })
-            this.movimientos = this.movimientosOriginales;
-          } else {
-            console.log('La respuesta está vacía');
-          }
-        },
-        error: (error: any) => {
-          console.log(error);
-        },
-      })
-    );
-  }
 
   getMovementsPage(page: number) {
+    console.log('get page in',this.isLoading,this.loading)
     this.isLoading = true;
+    this.loading=true;
     this.subscripciones.add(
       this.movementService.getPaginationMovements(page-1).subscribe({
         next: (response: Pagination) => {
           if (response != null) {
             this.totalPages = response.totalPages;
+            this.movimientosOriginales=[]
             response.items.forEach(movement => {
               this.movimientosOriginales.push(new IMovementDto(movement))
             })
+            this.movimientos = [];
             this.movimientos = this.movimientosOriginales;
             this.isLoading = false;
           } else {
@@ -185,7 +201,9 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
         }
       })
     )
+    this.loading=false;
   this.isLoading = false;
+  console.log('get page out',this.isLoading,this.loading)
 
   }
 
