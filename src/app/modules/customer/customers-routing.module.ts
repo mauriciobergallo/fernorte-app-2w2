@@ -13,6 +13,7 @@ import { ForgotPasswordComponent } from "./components/forgot-password/forgot-pas
 import { FirstLoginComponent } from "./components/first-login/first-login.component";
 import { UserListComponent } from "./components/user-list/user-list.component";
 import { CustomerListComponent } from "./components/customer-list/customer-list.component";
+import { CustomerReportsComponent } from "./components/customer-reports/customer-reports.component";
 
 
   const routes: Routes = [
@@ -27,6 +28,7 @@ import { CustomerListComponent } from "./components/customer-list/customer-list.
         {path: 'users', component: UserListComponent },
         {path: 'customers', component: CustomerListComponent },
         {path: "update-costumer", component: UpdateCustomerComponent}, 
+        {path: "reports", component: CustomerReportsComponent}
       ]
     }]
 

@@ -39,6 +39,7 @@ import { CustomerListComponent } from './components/customer-list/customer-list.
 import { InfoEmployeeComponent } from './components/info-employee/info-employee.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { jsPDF } from "jspdf";
+import { CustomerReportsComponent } from './components/customer-reports/customer-reports.component';
 
 // const routes: Routes = [
 //   { component: LoginComponent, path: 'login' },
@@ -49,7 +50,7 @@ import { jsPDF } from "jspdf";
 @NgModule({
   declarations: [HomeComponent, TurnsComponentComponent, EmployeeRegistrationComponent,CategoryComponent, UserRootComponent, UserFormComponent,
      CreateCustomerComponent, CreateRolComponent, UpdateCustomerComponent, RoleListComponent, EmployeeListComponent, CustomersSidebarComponent,
-    ModifyUserComponent,UpdateEmployeeComponent,ModifyUserRolComponent, UserListComponent, CustomerListComponent, InfoEmployeeComponent, SpinnerComponent
+    ModifyUserComponent,UpdateEmployeeComponent,ModifyUserRolComponent, UserListComponent, CustomerListComponent, InfoEmployeeComponent, SpinnerComponent, CustomerReportsComponent
   ],
   providers: [CategoryService,  
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }, EmployeeService,
