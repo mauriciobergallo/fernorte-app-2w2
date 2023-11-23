@@ -134,6 +134,37 @@ export class UserListComponent  implements OnInit {
   
 
 
+    downloadCSV() {
+      let data = this.userList;
+    
+      let socialReason:string | undefined;
+    
+      let csvContent = 'Nombre de usuario;Documento;Email\n';
+        
+    
+      data.forEach((item) => {
+    
+    
+        // const formattedDate = `${item.birth_date.getDate()}/${item.birth_date.getMonth() + 1}/${item.birth_date.getFullYear()}`;
+    
+        csvContent += `"${item.username}";"${item.document_number}";"${item.email}"\n`;
+      });
+    
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'ReporteUsuarios.csv');
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+
+
+
+
 
     openModifyUserRolesForm(readonly: boolean, user: User) {
       const modalRef = this.modalService.open(ModifyUserRolComponent, { size: 'lg' });
