@@ -53,13 +53,15 @@ export class SaleOrderComponent implements OnInit {
     },
     // Agrega más funcionalidades si es necesario
   ];
+  spiner:boolean = true;
 
   ngOnInit(): void {
     this.productService.getListProduct().subscribe(x=>{
       this.listProduct=x;
+      this.spiner=false;
     })  
     this.clientsService.getClient().subscribe(x=>{
-      this.listClients=x;
+      this.listClients=x;      
     })
   }
   ActualizarTotal() {
@@ -84,7 +86,7 @@ export class SaleOrderComponent implements OnInit {
     this.listProductfiltrada = [];
   }
   filtrarProductos(texto: any): void {
-    this.listProductfiltrada = this.productService.filtrarProductos(texto);
+    this.listProductfiltrada = this.productService.filtrarProductos(texto.target.value.toString());
   }
 
   buildSaleOrder(stateDetail: SaleOrderStates, type: TypeSalesOrder, carrito: ProductModel[]): SaleOrderModel {

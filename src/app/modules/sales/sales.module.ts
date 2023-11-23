@@ -35,6 +35,7 @@ import { BillingSearchListComponent } from './components/billing-search-list/bil
 import { TaxRegisterComponent } from './components/tax-register/tax-register.component';
 import { PaymentMethodRegisterComponent } from './components/payment-method-register/payment-method-register.component';
 import { DateFormat2Pipe } from './pipes/date-format2.pipe';
+import { SpinnerComponent } from './components/spinner/viewspinner/spinner.component';
 
 
 
@@ -66,7 +67,8 @@ import { DateFormat2Pipe } from './pipes/date-format2.pipe';
     DateFormatPipe,
     PriceFormatPipe,
     DateFormat2Pipe,
-    CaseConverterPipe
+    CaseConverterPipe,
+    SpinnerComponent
     ],
 
 
@@ -102,7 +104,8 @@ import { DateFormat2Pipe } from './pipes/date-format2.pipe';
     DateFormatPipe,
     PriceFormatPipe,
     DateFormat2Pipe,
-    CaseConverterPipe],
+    CaseConverterPipe,
+  SpinnerComponent],
 
 })
 export class SalesModule {}

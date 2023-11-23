@@ -37,6 +37,7 @@ export class BillingComponent {
   }
 
   ngOnInit(): void {
+    
     this.paymentMethodService.getPaymentMethods().subscribe(
       (methods: any[]) =>
         this.paymentMethods = methods

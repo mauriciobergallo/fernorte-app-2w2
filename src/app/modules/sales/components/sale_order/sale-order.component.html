@@ -1,9 +1,4 @@
-<div class="spinner-overlay" *ngIf="loader">
-    <div class="spinner">
-        <!-- Aquí puedes personalizar tu spinner, por ejemplo, usando una animación CSS o una biblioteca de iconos -->
-        <div class="spinner-icon"></div>
-    </div>
-</div>
+<spinner *ngIf="spiner"></spinner>
 <!-- Orden de venta
     En esta pantalla podemos visualizar el turno en el que estamos, si ya lo atendimos le damos al botón
     "Atender Turno". Le pedimos el nome al cliente para buscarlo y/o cargarlo.
@@ -19,7 +14,7 @@
     y guardados en el sistema al momento de generar el presupuesto para poder continuar con el proceso de venta.
     Si recibimos alguna sugerencia del cliente, aimos el pop up de sugerencias al clickear el boton "Sugerencias"-->
 
-<div class="container">
+<div class="container" *ngIf="!spiner">
     <div class="row mt-4">
         <div class="col-md-6">
             <h4 class="m-2">Cliente</h4>
@@ -28,14 +23,14 @@
                     <div class="col-3 pt-2" style="display: -webkit-inline-box;">
                         <h5>{{listClients.first_name}} {{listClients.last_name}}</h5>
                     </div>
-                    <div class="col-6 d-flex justify-content-around">
+                    <!-- <div class="col-6 d-flex justify-content-around">
                         <button class="btn btn-primary">
                             <p class="m-0" style="size: 2px;">Buscar</p>
                         </button>
                         <button class="btn btn-primary">
                             <p class="m-0">Cargar</p>
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

@@ -31,6 +31,7 @@ doc:string="";
 fromDate:string="";
 toDate:string="";
 filters: Map<string, string> = new Map();
+spinner: boolean = true;
 
 private subscriptions = new Subscription();
 
@@ -51,7 +52,8 @@ ngOnInit(): void {
         let toCamel:BillModel[] = this.caseConverter.toCamelCase(response);
         console.log(response);
         console.log(this.billList)
-        this.billList=response.sort((a,b)=>b.id_bill! - a.id_bill!);          
+        this.billList=response.sort((a,b)=>b.id_bill! - a.id_bill!);  
+        this.spinner = false;        
       }
     )
 }

@@ -18,7 +18,7 @@ export class ProductService {
     const url = this.URL + `/products`;
     return this.http.get<ProductModel[]>(url).pipe(
       map((res: any) => {
-        this.listProduct = res
+        this.listProduct = res.products
         return res.products.map((product: { id_product: any; name: any; description: any; unit_price: any; stock_quantity: any; unit_of_measure: any; category: { id_category: any; name: any; description: any; }; is_deleted: any; url_image: any; price_product: any; discount: any; }) => {
           return {
             idProduct: product.id_product,
@@ -54,9 +54,9 @@ export class ProductService {
     return this.listProduct;
   }
 
-  filtrarProductos(texto: any) {
-    if (texto.target && texto.target.value && texto.target.value.trim() !== '') {
-      return this.listProduct.filter(producto => producto.name.toLowerCase().includes(texto.target.value.toLowerCase()));
+  filtrarProductos(texto: string) {
+    if (texto !== '') {
+      return this.listProduct.filter(producto => producto.name.toLowerCase().includes(texto.toLowerCase()));
     } else {
       return [];
     }

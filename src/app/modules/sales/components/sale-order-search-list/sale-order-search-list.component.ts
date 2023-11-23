@@ -35,6 +35,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   totalPages: number = 0;
   totalElements: number = 0;
   currentPage : number = 0;
+  spinner : boolean = true;
 
   get totalPagesArray(): number[] {
     return Array.from({ length: this.totalPages }, (_, i) => i);
@@ -62,6 +63,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
           for(let item of this.saleOrdersList) {
             this.saleOrdersListOk.push(this.mapSaleOrder(item))
           }
+          this.spinner= false;
         }
       )
     )
@@ -163,6 +165,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   }
   onLoadPage(page : number) {
     this.saleOrdersListOk = [];
+    this.spinner= true;
     if (page >= 0 && page < this.totalPages) {
       this.currentPage = page;
       this.subscriptions.add(
@@ -176,6 +179,7 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
               this.saleOrdersListOk.push(this.mapSaleOrder(item))
               
             }
+            this.spinner= false;
           }
         )
       )
