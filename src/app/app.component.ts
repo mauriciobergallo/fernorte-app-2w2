@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { LoginService } from './modules/purchase/services/login.service';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-root',
@@ -6,45 +9,39 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  private readonly modules = {
-    CATALOG: 'CATALOG',
-    CLIENTS: 'CLIENTS',
-    INVENTORY: 'INVENTORY',
-    PURCHASE: 'PURCHASE',
-    SALES: 'SALES',
-  };
 
-  showCatalog: boolean = false;
-  showClients: boolean = false;
-  showInventory: boolean = false;
-  showPurchase: boolean = false;
-  showSales: boolean = false;
+  constructor(private auth: LoginService, private route: Router) {}
 
-  onShowCatalog() {
-    this.onShowModule(this.modules.CATALOG);
+  isLogged(){
+    return this.auth.isLogged();
   }
 
-  onShowClients() {
-    this.onShowModule(this.modules.CLIENTS);
+  getRole(){
+    return this.auth.getRoles();
   }
 
-  onShowInventory() {
-    this.onShowModule(this.modules.INVENTORY);
+  getArea(){
+    return this.auth.getArea()
   }
 
-  onShowPurchase() {
-    this.onShowModule(this.modules.PURCHASE);
+  getEmail(){
+    return this.auth.getEmail();
   }
 
-  onShowSales() {
-    this.onShowModule(this.modules.SALES);
-  }
-
-  private onShowModule(moduleName: string) {
-    this.showCatalog = moduleName === this.modules.CATALOG;
-    this.showClients = moduleName === this.modules.CLIENTS;
-    this.showInventory = moduleName === this.modules.INVENTORY;
-    this.showPurchase = moduleName === this.modules.PURCHASE;
-    this.showSales = moduleName === this.modules.SALES;
+  logOut(){
+    Swal.fire({
+      title: `¿Estás seguro que desea cerrar sesión?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc3545",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "¡Sí, cerrar sesión!",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.auth.logOut();
+        this.route.navigate(['login'])
+      }
+    });
   }
 }

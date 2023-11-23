@@ -1,11 +1,11 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Login } from '../models/login';
-import { Observable, map, switchMap } from 'rxjs';
 import { User } from '../models/user';
 import { USER_LIST } from '../data/user-data';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LoginService {
   users: User[] = USER_LIST;
   user: User | null = null;
