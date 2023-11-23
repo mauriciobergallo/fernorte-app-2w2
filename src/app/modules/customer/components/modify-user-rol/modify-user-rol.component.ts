@@ -58,6 +58,9 @@ throw new Error('Method not implemented.');
 		  }
 		}
 
+
+		
+
 	searchUsername() {
 		//Obtiene el usuario
 		this.userService.getUserByUsername(this.userName).subscribe(

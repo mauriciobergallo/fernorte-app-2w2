@@ -2,18 +2,27 @@
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <div class="container">
   <h1 class="h1">Usuarios</h1>
+
+  
   <hr>
   <div>
     <div class="row">
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <label class="mx-2">Agregar Usuario</label>
+        <label class="mx-2">Generar Usuario</label>
         <button class="btn btn-success" (click)="openNewUserModal()">
           <i class="bi bi-plus"></i> 
         </button>  
       </div>
     </div>
+    <h4 class="h4">Filtrar:</h4>
+    
+    <div class="col-md-4">
+      <input type="text" class="form-control" id="validationServer01" placeholder="Número de Documento"
+        (input)="onFiltrarDocumento($event)">
+    </div>
+      <br>
   </div>
-  <button (click)="downloadPDF()">Exportar pdf</button>
+  <button class="btn btn-success"(click)="downloadPDF()">Exportar pdf</button>
 
 
   <table class="table container">

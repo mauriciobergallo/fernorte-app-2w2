@@ -19,6 +19,7 @@ export class UserListComponent  implements OnInit {
   @ViewChild('newUserForm') newUserModal: TemplateRef<any> | undefined;
 
   userList: User[] = [];
+  localUserList: User[] = [];
 
   constructor(private userService: UserService, private modalService: NgbModal) {}
 
@@ -84,6 +85,25 @@ export class UserListComponent  implements OnInit {
   
   this.generatePdf(data, headers, "Listado de usuarios");
   
+  }
+
+  onFiltrarDocumento(event: any) {
+    this.userList = this.localUserList;
+    let filtro = event.target.value;    
+    let filtroDocumento: User[] = this.buscarDocumento(filtro);
+
+    let listaFiltrada: User[] = filtroDocumento      
+      .filter((item, index, array) => array.indexOf(item) === index);
+    this.userList = listaFiltrada;    
+  }
+
+  buscarDocumento(palabraIncompleta: string): User[] {
+    palabraIncompleta = palabraIncompleta.toLowerCase(); // Convierte a minúsculas para hacer la búsqueda no sensible a mayúsculas
+
+    return this.userList.filter(palabra => {
+      const palabraEnMinusculas = palabra.document_number.toLowerCase();
+      return palabraEnMinusculas.startsWith(palabraIncompleta);
+    });
   }
   
   
