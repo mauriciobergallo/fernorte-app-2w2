@@ -42,6 +42,11 @@ import { ContactsComponent } from './components/supplier/contacts/contacts.compo
 import { AddSupplierComponent } from './components/supplier/add-supplier/add-supplier.component';
 import { FilterComponent } from './components/supplier/filter/filter.component';
 import { PricesModalComponent } from './components/supplier/prices-modal/prices-modal.component';
+import { ListSuplierComponent } from './components/supplier/list-suplier/list-suplier.component';
+import { ReportsScreenComponent } from './components/report-container/components/reports-screen/reports-screen.component';
+import { DatePickerComponent } from './components/report-container/components/date-picker/date-picker.component';
+import { OrdersGridComponent } from './components/report-container/components/orders-grid/orders-grid.component';
+import { PaymentListComponent } from './components/payment-order-container/components/payment-list/payment-list.component';
 
 @NgModule({
   declarations: [

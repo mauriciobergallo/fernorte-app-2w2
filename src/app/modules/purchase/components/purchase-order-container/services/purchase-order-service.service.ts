@@ -21,7 +21,8 @@ export class PurchaseOrderServiceService {
   });
   listProductSelected = new BehaviorSubject<ISupplierProduct[]>([]);
   cartProductList: ISupplierProduct[] = [];
-  private booking = new BehaviorSubject<IBooking>({} as IBooking);
+  // private booking = new BehaviorSubject<IBooking>({} as IBooking);
+  private bookings: IBooking = {} as IBooking;
   
   //banderas para mostrar ocultar componentes
   purchaseBookingFlow = new BehaviorSubject<boolean>(false);
@@ -110,9 +111,6 @@ export class PurchaseOrderServiceService {
     );
   }
 
-  // PRODUCTS
-  setProductSelected(productsList: ISupplierProduct[]): void { this.listProductSelected.next(productsList); }
-  getListProductSelected(): Observable<ISupplierProduct[]> { return this.listProductSelected.asObservable(); }
   
   // CART
   getCardProductList(): ISupplierProduct[] { return this.cartProductList; }
@@ -134,6 +132,7 @@ export class PurchaseOrderServiceService {
   setSupplierSelected(supplier: ISupplier): void { this.suplierSelected.next(supplier); }
   getSupplierSelected(): Observable<ISupplier> { return this.suplierSelected.asObservable(); }
 
+  // PRODUCTS
   /* method to set and get the list of products selected */
   setProductSelected(productsList: ISupplierProduct[]): void { this.listProductSelected.next(productsList); }
   getListProductSelected(): Observable<ISupplierProduct[]> { return this.listProductSelected.asObservable(); }
@@ -206,11 +205,11 @@ export class PurchaseOrderServiceService {
   }
   
 
-  setBooking(orders: Order[]): void {
-    this.booking.value.orders = orders;
-  }
+  // setBooking(orders: Order[]): void {
+  //   this.booking.value.orders = orders;
+  // }
 
-  getBooking(): BehaviorSubject<IBooking> {
-    return this.booking;
+  getBooking(): IBooking {
+    return this.bookings;
   }
 }

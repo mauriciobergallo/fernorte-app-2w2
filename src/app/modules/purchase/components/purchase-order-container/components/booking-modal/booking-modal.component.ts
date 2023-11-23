@@ -5,7 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { PurchaseOrderServiceService } from '../../services/purchase-order-service.service';
 import { IBooking, Order } from 'src/app/modules/purchase/models/ibooking';
-import { Isupplier } from '../../../shared/interfaces/isupplier';
+// import { Isupplier } from '../../../shared/interfaces/isupplier';
 
 
 @Component({
@@ -39,7 +39,7 @@ export class BookingModalComponent implements OnInit {
 
   obtenerIdSupplier(){
     this.purchaseService.getSupplierSelected().subscribe({
-      next: (supplier: Isupplier ) => {this.idSupplier = supplier.id, alert("idSupplier: " + this.idSupplier)}
+      next: (supplier: ISupplier ) => {this.idSupplier = supplier.id, alert("idSupplier: " + this.idSupplier)}
     })
   }
 
