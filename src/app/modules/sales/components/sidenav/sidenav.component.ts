@@ -16,7 +16,7 @@ export class SidenavComponent implements OnInit {
   cancelBtn: boolean = true
   nextBtn: boolean = false
   client: string = "";
-  counter: number = 0;
+  counter: number = 1;
   constructor(private router: Router,
     private turnService: TurnServicesService) { }
 

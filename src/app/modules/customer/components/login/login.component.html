@@ -10,7 +10,7 @@
 
         <label for="username" class="form-label">Usuario:</label>
         <div class="mb-3">
-            <input id="username" type="text" class="form-control custom-input" aria-describedby="basic-addon1"
+            <input id="username" autocomplete="false" type="text" class="form-control custom-input" aria-describedby="basic-addon1"
                 name="username" #username="ngModel" [(ngModel)]="login.identity"
                 [ngClass]="{ 'is-invalid': username.invalid && miFormulario.submitted}" required>
             <div class="invalid-feedback">

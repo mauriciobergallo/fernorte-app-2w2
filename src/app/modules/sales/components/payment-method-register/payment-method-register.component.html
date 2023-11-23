@@ -7,13 +7,8 @@
             <div class="col-md-4">
                 <div class="mb-3">
                     <label for="paymentMethod" class="form-label">Método de Pago</label>
-                    <input formControlName="paymentMethod" type="text" class="form-control" id="paymentMethod" required>
-                    <small id="paymentMethod" class="form-text text-muted error-message" *ngIf="       
-                        !registerForm.controls['paymentMethod'].valid &&
-                        registerForm.controls['paymentMethod'].touched &&
-                        registerForm.get('paymentMethod')?.hasError('required')">
-                        El método de pago es requerido
-                    </small>
+                    <input formControlName="paymentMethod" autocomplete="false" type="text" class="form-control" id="paymentMethod" required>
+                 
                 </div>
             </div>
             <div class="col-md-3">
