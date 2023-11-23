@@ -283,6 +283,9 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
   quantityFilter: number = 0;
   quantityOperator: string = 'gte';
 
+  capacityFilter: number = 0;
+  capacityOperator: string = 'gte';
+
   productNameFilter: string = '';
   sectionFilter: string = '';
 
@@ -296,8 +299,22 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
       ((this.quantityFilter == null || this.quantityFilter === 0) || (
         (this.quantityOperator === 'gte' && item.quantity >= this.quantityFilter) ||
         (this.quantityOperator === 'lte' && item.quantity <= this.quantityFilter)
+      )) &&
+      ((this.capacityFilter == null || this.capacityFilter === 0) || (
+        (this.capacityOperator === 'gte' && item.max_capacity >= this.quantityFilter) ||
+        (this.capacityOperator === 'lte' && item.max_capacity <= this.capacityFilter)
       ))
     );
+  }
+
+  clearFilters(){
+    this.filterZone = ''
+    this.filterSection = ''
+    this.filterSpace = ''
+    this.filterCategory = ''
+    this.quantityFilter = 0
+    this.capacityFilter = 0
+    this.updateFilteredList()
   }
 
 

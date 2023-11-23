@@ -22,7 +22,8 @@
       <input type="text" class="form-control" placeholder="Sección" [(ngModel)]="filterSection">
     </div> -->
     <div class="col-md-2">
-      <button class="btn btn-primary" (click)="applyFilters()">Filtrar</button>
+      <!-- <button class="btn btn-primary" (click)="applyFilters()">Filtrar</button> -->
+      <button class="btn btn-warning" (click)="clearFilters()">Limpiar filtros</button>
     </div>
     <div class="col-md-2">
       <button class="btn btn-primary" (click)="downloadPDF()">Exportar PDF</button>
@@ -59,6 +60,16 @@
           </select>
           <input type="number" id="quantityFilter" [(ngModel)]="quantityFilter" class="form-control" (input)="updateFilteredList()">
       </div>
+    </div>
+    <div class="col-md-2">
+      <label for="capacityFilter" class="form-label">Capacidad máxima:</label>
+      <div class="input-group mb-2">
+        <select class="form-select" [(ngModel)]="capacityOperator" (change)="updateFilteredList()">
+          <option value="gte">>=</option>
+          <option value="lte"><=</option>
+        </select>
+        <input type="number" id="capacityFilter" [(ngModel)]="capacityFilter" class="form-control" (input)="updateFilteredList()">
+    </div>
   </div>
   </div>
 
