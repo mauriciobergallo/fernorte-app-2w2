@@ -22,6 +22,7 @@ export class EmployeeListComponent implements OnInit {
   employeeList: EmployeeResponseDTO[] = [];
   localEmployeeList: EmployeeResponseDTO[] = [];
   selectedEmployeeId: number | null = null;
+  filtroInput: string = '';
 
   showInactivos: boolean = true;
 
@@ -172,9 +173,14 @@ export class EmployeeListComponent implements OnInit {
     });
   }
 
+  onFiltrarInput(event: any) {
+    this.onFiltrarNombre(event);
+    this.employeeList = this.buscarActivo(this.showInactivos)
+  }
+
   onFiltrarNombre(event: any) {
     this.employeeList = this.localEmployeeList;
-    let filtro = event.target.value;
+    let filtro = this.filtroInput;
     let filtroNombre: EmployeeResponseDTO[] = this.buscarNombre(filtro);
     let filtroApellido: EmployeeResponseDTO[] = this.buscarApellido(filtro);
     let filtroDocumento: EmployeeResponseDTO[] = this.buscarDocumento(filtro);
@@ -183,7 +189,7 @@ export class EmployeeListComponent implements OnInit {
       .concat(filtroApellido, filtroDocumento)
       .filter((item, index, array) => array.indexOf(item) === index);
     this.employeeList = listaFiltrada;
-    this.employeeList = this.buscarActivo(this.showInactivos)
+    
   }
 
   buscarNombre(palabraIncompleta: string): EmployeeResponseDTO[] {
@@ -215,14 +221,17 @@ export class EmployeeListComponent implements OnInit {
 
   filtrarActivo() {
     this.employeeList = this.localEmployeeList;
+    if(this.filtroInput != ''){
+      this.onFiltrarNombre(this.filtroInput)
+    }
     this.employeeList = this.buscarActivo(!this.showInactivos)
   }
 
   buscarActivo(showInactivos: boolean) {
+    debugger
     if (showInactivos) {
       return this.employeeList;
     }
-
     return this.employeeList.filter(empleado => empleado.isActive);
   }
 
