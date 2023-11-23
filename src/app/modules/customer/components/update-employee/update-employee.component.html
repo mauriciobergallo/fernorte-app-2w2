@@ -3,9 +3,7 @@
 				<div class="row"><h4 class="modal-title" id="modal-basic-title" *ngIf="!onlyForRead">Actualizar Empleado</h4>
 					<h4 class="modal-title" id="modal-basic-title" *ngIf="onlyForRead">Información de Empleado</h4>
 				</div>
-				<div class="row">
-					<small>Fecha de creación: traer campo created_at</small>	
-				</div>
+				
 			
 			
 		
@@ -17,8 +15,8 @@
 		<div class="modal-body">
 			<form #employeeForm="ngForm"  (ngSubmit)="onSubmitForm(employeeForm)">
 	
-				
-				
+				<small>Fecha de creación: {{employeeToUpdate?.createdAt}}</small>
+				<br>
 			
 					<div class="mb-3 d-flex">
 						<div class="flex-grow-1 me-2">
