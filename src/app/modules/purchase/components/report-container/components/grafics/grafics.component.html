@@ -1,18 +1,21 @@
 <div class="content">
-  <div class="grafico">
-    <p>Bienvenidos</p>
-
-    <div class="chartContainer">
-      <canvas id="canvas-polarArea" width="400" height="400">
-        {{ chartPolarArea }}
-      </canvas>
+  <div class="container-fluid mt-5 d-flex justify-content-center">
+    <form [formGroup]="filterForm">
+      <div class="col-md-6">
+        <label for="chart" class="form-label">Tipo:</label>
+        <select class="form-select" id="selectProduct" formControlName="chartType">
+          <option value="0">Seleccionar tipo de gráfico</option>
+          <option *ngFor="let chart of listCharts" [value]="chart.value"> {{chart.name}} </option>
+        </select>
+      </div>
+    <div class="col-md-12 d-flex justify-content-center mt-2">
+      <button type="submit" class="btn btn-primary  m-2 " (click)="showGraphs()">Generar</button>
     </div>
-    <br>
+    </form>
 
-    <div class="chartContainer">
-      <canvas id="canvas-bar" width="400" height="400">
-        {{ chartBar }}
-      </canvas>
-    </div>
-  </div>
 </div>
+
+<div class="container-fluid">
+  <canvas id="myChart"></canvas>
+</div>
+
