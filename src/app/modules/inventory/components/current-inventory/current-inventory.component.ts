@@ -22,12 +22,20 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
   private subscripciones = new Subscription();
   currentPage: number = 1;
   totalPages: number = 1;
-  constructor(private warehouseService: WarehouseService, private locationService:LocationService) {}
+  constructor(private warehouseService: WarehouseService, private locationService: LocationService) { }
   ngOnDestroy(): void {
     this.subscripciones.unsubscribe();
   }
-
+  uniqueZones: string[] = []
+  uniqueSections: string[] = []
+  uniqueSpaces: string[] = []
+  uniqueCategories: string[] = []
   ngOnInit(): void {
+    this.uniqueZones = Array.from(new Set(this.locationInfoListMock.map(item => item.location.zone)));
+    this.uniqueSections = Array.from(new Set(this.locationInfoListMock.map(item => item.location.section)));
+    this.uniqueSpaces = Array.from(new Set(this.locationInfoListMock.map(item => item.location.space)));
+    this.uniqueCategories = Array.from(new Set(this.locationInfoListMock.map(item => item.category_name)));
+
     this.fillTable();
   }
 
@@ -65,6 +73,8 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
 
   filterZone: string = '';
   filterSection: string = '';
+  filterSpace: string = '';
+  filterCategory: string = '';
 
   applyFilters() {
     let filteredList = [...this.originalList]; // Filtra desde la lista original
@@ -161,11 +171,11 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
   async downloadPDF() {
     const pdf = new jsPDF() as any;
 
-    const logoUrl = '/assets/logo.png'; 
+    const logoUrl = '/assets/logo.png';
     const dataTable = this.filteredList;
 
     const logoImage = await this.getImageData(logoUrl);
-  
+
     pdf.addImage(logoImage, 'PNG', 150, 0, 50, 15);
     const headers = [
       'Producto',
@@ -194,15 +204,15 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     const chartImage = await this.generateChart();
 
     if (chartImage) {
-    const imageWidth = 120; 
-    const imageHeight = 120; 
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imageWidth = 120;
+      const imageHeight = 120;
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
 
-    const x = (pdfWidth - imageWidth) / 2;
-    const y = 100; 
+      const x = (pdfWidth - imageWidth) / 2;
+      const y = 100;
 
-    pdf.addImage(chartImage, 'PNG', x, y, imageWidth, imageHeight);
+      pdf.addImage(chartImage, 'PNG', x, y, imageWidth, imageHeight);
 
     }
 
@@ -229,7 +239,7 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     });
   }
 
- 
+
 
   currentSort: { column: keyof LocationInfoDto, order: 'asc' | 'desc' } = { column: 'product_name', order: 'asc' };
 
@@ -240,17 +250,17 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
       this.currentSort.column = column as keyof LocationInfoDto;
       this.currentSort.order = 'asc';
     }
-  
+
     this.filteredList = this.locationInfoList.sort((a, b) => {
       const valueA = this.getPropertyValue(a, this.currentSort.column);
       const valueB = this.getPropertyValue(b, this.currentSort.column);
-  
+
       if (typeof valueA === 'string' && typeof valueB === 'string') {
         return this.currentSort.order === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
       } else if (typeof valueA === 'number' && typeof valueB === 'number') {
         return this.currentSort.order === 'asc' ? valueA - valueB : valueB - valueA;
       } else {
-        
+
         if (valueA instanceof Date && valueB instanceof Date) {
           return this.currentSort.order === 'asc' ? valueA.getTime() - valueB.getTime() : valueB.getTime() - valueA.getTime();
         } else {
@@ -260,20 +270,39 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     });
   }
 
-   getPropertyValue(obj: any, propPath: string): any {
+  getPropertyValue(obj: any, propPath: string): any {
     const props = propPath.split('.');
     let value = obj;
-  
+
     for (const prop of props) {
       value = value[prop];
     }
-  
+
     return value;
+  }
+  quantityFilter: number = 0;
+  quantityOperator: string = 'gte';
+
+  productNameFilter: string = '';
+  sectionFilter: string = '';
+
+  updateFilteredList() {
+    this.filteredList = this.locationInfoListMock.filter(item =>
+      item.product_name.toLowerCase().includes(this.productNameFilter.toLowerCase()) &&
+      (this.filterZone === '' || item.location.zone === this.filterZone) &&
+      (this.filterSection === '' || item.location.section === this.filterSection) &&
+      (this.filterSpace === '' || item.location.space === this.filterSpace) &&
+      (this.filterCategory === '' || item.category_name === this.filterCategory) &&
+      ((this.quantityFilter == null || this.quantityFilter === 0) || (
+        (this.quantityOperator === 'gte' && item.quantity >= this.quantityFilter) ||
+        (this.quantityOperator === 'lte' && item.quantity <= this.quantityFilter)
+      ))
+    );
   }
 
 
-  previousPage() {}
-  nextPage() {}
+  previousPage() { }
+  nextPage() { }
   locationInfoListMock: LocationInfoDto[] = [
     {
       location: {

@@ -3,3 +3,15 @@
     overflow-y: hidden; 
     border: 1px solid #ccc;
   }
+
+  .row {
+    margin-top: 2px;
+  }
+
+  .sortable-column {
+    cursor: pointer;
+  }
+  
+  .sortable-column:hover {
+    background-color: #a09b9b; 
+  }
