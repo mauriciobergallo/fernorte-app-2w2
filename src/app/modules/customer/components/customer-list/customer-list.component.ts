@@ -176,7 +176,7 @@ this.generatePdf(data, headers, "Listado de clientes");
       } 
          const formattedDate = `${item.birth_date.getDate()}/${item.birth_date.getMonth() + 1}/${item.birth_date.getFullYear()}`;
 
-
+      //       Nombre/Razón social,Condición de IVA,Telefono,Fecha de nacimiento/fundación,Dirección,Tipo de documento,Documento,Tipo de cliente\n'
       csvContent += `${socialReason} ,${item.iva_condition},${item.phone_number},${formattedDate},${item.address},${item.document_type},${item.document_number},${item.customer_type}\n`;
     });
 
