@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'fn-report-container',
@@ -7,13 +6,5 @@ import { Router } from '@angular/router';
   styleUrls: ['./report-container.component.css']
 })
 export class ReportContainerComponent {
-
-  constructor(private router:Router){
-
-  }
-
-  onClick(){
-    this.router.navigate(['/grafics']);
-  }
 
 }
