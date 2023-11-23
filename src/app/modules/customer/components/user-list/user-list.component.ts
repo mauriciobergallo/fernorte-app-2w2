@@ -136,7 +136,7 @@ export class UserListComponent  implements OnInit {
       });
   
       // Guardar o mostrar el PDF
-      doc.save('table.pdf');
+      doc.save('ReporteUsuarios.pdf');
     }
   
 

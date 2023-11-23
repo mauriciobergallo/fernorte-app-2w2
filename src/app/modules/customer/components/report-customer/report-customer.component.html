@@ -1,18 +1,25 @@
 <div class="container mt-5">
-    <form [formGroup]="filterFom" class="row g-3">
-      <h4 class="text-center">Puntos Históricos</h4>
-      <div class="col-md-4">
-        <label for="startDate" class="form-label">Desde:</label>
-        <input [class.is-invalid]="filterFom.get('startDate')?.invalid && (filterFom.get('startDate')?.dirty|| filterFom.get('startDate')?.touched)" type="date" id="startDate" formControlName="startDate" class="form-control">
+    <form [formGroup]="filterFom">
+      <h4 class="text-left">Puntos Históricos</h4>
+      <br>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="startDate" class="form-label">Desde:</label>
+          <input [class.is-invalid]="filterFom.get('startDate')?.invalid && (filterFom.get('startDate')?.dirty|| filterFom.get('startDate')?.touched)" type="date" id="startDate" formControlName="startDate" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label for="startDate" class="form-label">Hasta:</label>
+          <input [class.is-invalid]="filterFom.get('endDate')?.invalid && (filterFom.get('endDate')?.dirty|| filterFom.get('endDate')?.touched)" type="date" id="endDate" formControlName="endDate" class="form-control">
+        </div>
       </div>
-      <div class="col-md-4">
-        <label for="startDate" class="form-label">Hasta:</label>
-        <input [class.is-invalid]="filterFom.get('endDate')?.invalid && (filterFom.get('endDate')?.dirty|| filterFom.get('endDate')?.touched)" type="date" id="endDate" formControlName="endDate" class="form-control">
+      <br>
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-md-4 d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary m-1 " (click)="showGraphs()">Generar</button>
+          <button type="button" class="btn btn-secondary m-1" (click)="clean()">Limpiar</button>
+        </div>
       </div>
-      <div class="col-md-12 d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary m-1 " (click)="showGraphs()">Generar</button>
-        <button type="button" class="btn btn-secondary m-1" (click)="clean()">Limpiar</button>
-    </div>
     </form>
   </div>
   
