@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Customer } from '../models/customer';
 import { CustomerRequest } from '../models/customer-request';
+import { Points } from '../models/registeredPoinst';
 
 @Injectable()
 export class CustomerService {
@@ -51,6 +52,10 @@ export class CustomerService {
 
   notifyEmployeeUpdated() {
     this.customerUpdatedSubject.next();
+  }
+
+  getPoints(){
+    return this.http.get<Points[]>("http://localhost:8089/register-points")
   }
   
 }
