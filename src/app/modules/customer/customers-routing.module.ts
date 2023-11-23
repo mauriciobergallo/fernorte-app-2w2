@@ -31,7 +31,6 @@ import { ReportCustomerComponent } from "./components/report-customer/report-cus
         {path: 'customers', component: CustomerListComponent },
         {path: "update-costumer", component: UpdateCustomerComponent}, 
         {path: "reports", component: CustomerReportsComponent},
-        {path: "report", component: ReportComponent},
         {path: "report-customer", component: ReportCustomerComponent},
       ]
     }]
