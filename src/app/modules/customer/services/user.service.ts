@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Role } from '../models/role';
 import { UserResponseDTO } from '../models/userResponseDTO';
 import { User } from '../models/user';
@@ -8,6 +8,7 @@ import { NewRole } from '../models/new-role';
 
 @Injectable()
 export class UserService {
+  private userUpdatedSubject = new BehaviorSubject<void>(undefined);
   document_number!: string;
 
   private apiUrl = 'http://localhost:8092/';
@@ -54,6 +55,11 @@ export class UserService {
     return this.http.get<UserResponseDTO>(url);
   }
 
+  getUserByDocumentNumber(documentNumber: string): Observable<UserResponseDTO> {
+    const url = `${this.baseUrl}/?documentNumber=${documentNumber}`;
+    return this.http.get<UserResponseDTO>(url);
+  }
+
   sendResetEmail(email: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -96,5 +102,14 @@ export class UserService {
   
   active(user: User): Observable<any>{
     return this.http.put<any>(`${this.apiUrl}`+ user.document_number +"/active", user)
+  }
+
+
+  getUserUpdatedObservable(){
+    return this.userUpdatedSubject.asObservable();
+  }
+
+  notifyUserUpdated() {
+    this.userUpdatedSubject.next();
   }
 }
