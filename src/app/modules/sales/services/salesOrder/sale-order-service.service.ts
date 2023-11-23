@@ -65,8 +65,8 @@ export class SaleOrderServiceService {
       return this.http.post<any>(url, body, { headers: header });
     }  
 
-  getSaleOrders(): Observable<SaleOrderApi[]> {
-    this.saleOrderList = this.http.get<SaleOrderApi[]>(this.URL+"?page=0");
+  getSaleOrders(page : number): Observable<SaleOrderApi[]> {
+    this.saleOrderList = this.http.get<SaleOrderApi[]>(this.URL+"?page="+page);
     return this.saleOrderList;
   }
 
@@ -78,9 +78,9 @@ export class SaleOrderServiceService {
   getSaleOrdesByFilter(filters: Map<string, string>): Observable<SaleOrderApi[]> {
     let url: string = '';
     this.filters = filters
-    if (this.idOrder != '0' && this.idOrder != undefined) {
+    if (this.idOrder != '') {
       url = `${this.URL}/${this.idOrder}`
-    } else if (this.doc != '0' && this.doc != null) {
+    } else if (this.doc != '' && this.doc != null) {
       url = `${this.URL}?page=0&doc_client=${this.doc}`
     } else if (this.stateOrder != '' && this.stateOrder != null) {
       url = `${this.URL}?page=0&state_sale_order=${this.stateOrder}`
@@ -90,7 +90,7 @@ export class SaleOrderServiceService {
     this.saleOrderList = this.http.get<SaleOrderApi[]>(url);
     return this.saleOrderList
   }
-  
+
 
   ValidarPresupuestoOOrdenVenta(saleOrder: SaleOrderModel, carrito: ProductModel[]): boolean {
     return saleOrder.detailSalesOrder!.some(x => x.quantity > carrito.find(y => y.idProduct == x.id_product)!.stockQuantity)

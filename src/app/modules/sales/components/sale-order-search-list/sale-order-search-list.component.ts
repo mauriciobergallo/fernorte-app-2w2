@@ -9,6 +9,7 @@ import { NgModel, NgForm } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { PrintDocumentsService } from '../../services/print/print-documents-service';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'fn-sale-order-search-list',
@@ -19,21 +20,32 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   saleOrdersList: SaleOrderApi[] = [];
   saleOrdersListOk: SaleOrderOk[]=[];
 
+  selectedOrder : any;
+
   saleOrderStates: string[] = [];
 
 
-  idOrder:string="0";
-  doc:string="0";
+  idOrder:string="";
+  doc:string="";
   fromDate:string="";
   toDate:string="";
   stateOrder:string="";
   filters: Map<string, string> = new Map();
 
+  totalPages: number = 0;
+  totalElements: number = 0;
+  currentPage : number = 0;
+
+  get totalPagesArray(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i);
+  }
+
   private subscriptions = new Subscription();
 
   constructor(private saleOrderServiceService: SaleOrderServiceService,
     private print:PrintDocumentsService,
-    private route:Router) {
+    private route:Router,
+    private modalService:NgbModal) {
   }
 
   ngOnDestroy(): void {
@@ -41,9 +53,12 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.subscriptions.add(
-      this.saleOrderServiceService.getSaleOrders().subscribe(
-        ( response : SaleOrderApi[]) => {
-          this.saleOrdersList = response.sort((a,b)=>b.id_sale_order! - a.id_sale_order!);
+      this.saleOrderServiceService.getSaleOrders(0).subscribe(
+        ( response : any ) => {
+          console.log(response.content)
+          this.saleOrdersList = response.content;
+          this.totalPages = response.totalPages;
+          this.totalElements = response.totalElements;
           for(let item of this.saleOrdersList) {
             this.saleOrdersListOk.push(this.mapSaleOrder(item))
           }
@@ -71,8 +86,10 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     this.saleOrdersListOk = [];
     this.subscriptions.add(
       this.saleOrderServiceService.getSaleOrdesByFilter(this.filters).subscribe(
-        ( response : SaleOrderApi[]) => {
-          this.saleOrdersList = response;
+        ( response : any ) => {
+          this.saleOrdersList = response.content;
+          this.totalPages = response.totalPages;
+          this.totalElements = response.totalElements;
           for(let item of this.saleOrdersList) {
             this.saleOrdersListOk.push(this.mapSaleOrder(item))
           }
@@ -118,8 +135,51 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     } 
     return productOk
   }
-  onShowDetails() {
 
+  onShowDetails(item:any, content: any){
+    this.selectedOrder = item;
+    console.log(this.selectedOrder)
+    this.openModal(content);
+  }
+
+  openModal(content: any) {
+    this.modalService.open(content, { centered: true });
+  }
+
+  onCloseDetails() {
+    this.modalService.dismissAll();
+  }
+
+  onCalculateTotal(saleOrder: any): number {
+    let total = 0;
+  
+    if (saleOrder && saleOrder.details) {
+      for (const prod of saleOrder.details) {
+        total += prod.quantity * prod.price;
+      }
+    }
+  
+    return total;
+  }
+  onLoadPage(page : number) {
+    this.saleOrdersListOk = [];
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.subscriptions.add(
+        this.saleOrderServiceService.getSaleOrders(page).subscribe(
+          ( response : any ) => {
+            console.log(response.content)
+            this.saleOrdersList = response.content;
+            this.totalPages = response.totalPages;
+            this.totalElements = response.totalElements;
+            for(let item of this.saleOrdersList) {
+              this.saleOrdersListOk.push(this.mapSaleOrder(item))
+              
+            }
+          }
+        )
+      )
+    }
   }
 
   onPrint(item:SaleOrderOk) {

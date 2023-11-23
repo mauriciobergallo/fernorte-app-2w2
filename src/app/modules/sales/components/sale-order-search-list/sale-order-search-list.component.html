@@ -1,5 +1,6 @@
 <div class="container-fluid">
   <div>
+    <br>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
       Filtros
     </button>
@@ -33,7 +34,8 @@
                 name="stateOrder"
                 #stateOrderControl="ngModel"
                 [(ngModel)]="stateOrder">
-                  <option selected
+                <option value=""selected>Seleccione un estado</option>
+                  <option 
                   *ngFor="let state of saleOrderStates" [value]="state">{{state | translateStates}}</option>
                 </select>
                 <div class="row">
@@ -96,12 +98,54 @@
                   <i class="bi bi-three-dots-vertical" id="saleOrderId" ></i>
                 </button>
                 <div class="dropdown-content">
-                  <a (click)="onShowDetails()">Ver detalles</a>
+
+                  <a (click)="onShowDetails(item,modalDetalle)">Ver detalles</a>
                   <a (click)="onPrint(item)">Imprimir</a>
+
                 </div>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" aria-current="page" [class.disabled]="currentPage === 0">
+            <a class="page-link" aria-label="Previous"
+            (click)="onLoadPage(currentPage-1)">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" [class.active]="currentPage === page" *ngFor="let page of totalPagesArray">
+            <a class="page-link" (click)="onLoadPage(page)">{{ page +1 }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages - 1">
+            <a class="page-link" aria-label="Next"
+            (click)="onLoadPage(currentPage+1)">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <ng-template #modalDetalle>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Detalles del presupuesto Nro° {{ selectedOrder?.idSaleOrder}}</h5>
+              <button type="button" class="btn-close" (click)="onCloseDetails()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p><strong> Cliente:</strong> {{ selectedOrder?.nameClient }}</p>
+              <p><strong> Fecha Creación:</strong> {{ selectedOrder?.dateOfIssue | date:'short' }}</p>
+              <p><strong> Detalles:</strong></p>
+              <ul>
+                <li *ngFor="let prod of selectedOrder?.details">
+                  {{ prod.name }} x {{prod.quantity}} - <strong>Precio:</strong>  {{ prod.price | currency}} 
+                </li>
+              </ul>
+              <p><strong> Total:</strong> {{ onCalculateTotal(selectedOrder) | currency }}</p>
+            </div>
+          </div>
+        </div>    
+      </ng-template>
 </div>
