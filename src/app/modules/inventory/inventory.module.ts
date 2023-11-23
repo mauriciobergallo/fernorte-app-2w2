@@ -11,20 +11,20 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { InventoryRoutingModule } from './inventory-routing.module';
 import { SearchStorageTicketComponent } from './components/search-storage-ticket/search-storage-ticket.component';
 import { CurrentInventoryComponent } from './components/current-inventory/current-inventory.component';
+import { ConsultOrderComponent } from './components/consult-order/consult-order/consult-order.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { StateIconPipePipe } from './pipes/state-icon-pipe.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeliveryOrderDetailsComponent } from './components/consult-order/delivery-order-details/delivery-order-details.component';
 
-import { ConsultReceptionOrdersComponent } from './components/consult-reception-orders/consult-reception-orders.component';
 import { RouterModule } from '@angular/router';
 import { ReceptionOrderDetailsComponent } from './components/reception-order-details/reception-order-details.component';
 import { CreateMovementComponent } from './components/create-movement/create-movement.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
-import { WelcomeComponent } from './components/welcome/welcome.component';
-import { LocationsComponent } from './components/locations/locations/locations.component';
 import { SectionsComponent } from './components/locations/sections/sections.component';
 import { SpacesComponent } from './components/locations/spaces/spaces.component';
+
+
 
 @NgModule({
   declarations: [
@@ -34,20 +34,16 @@ import { SpacesComponent } from './components/locations/spaces/spaces.component'
     SearchInventoryMovementsComponent,
     DatepickerRangePopupComponent,
     SearchStorageTicketComponent,
-    ConsultReceptionOrdersComponent,
-
+    ConsultOrderComponent,
     SidebarComponent,
 
     StateIconPipePipe,
     DeliveryOrderDetailsComponent,
-    ConsultReceptionOrdersComponent,
     ReceptionOrderDetailsComponent,
     CreateMovementComponent,
-    SpinnerComponent,
-    WelcomeComponent,
-    LocationsComponent,
     SectionsComponent,
-    SpacesComponent,
+    SpinnerComponent,
+    SpacesComponent
   ],
 
   providers: [],
@@ -59,7 +55,7 @@ import { SpacesComponent } from './components/locations/spaces/spaces.component'
     InventoryRoutingModule,
     NgbModule,
     RouterModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   exports: [HomeComponent],
 })
