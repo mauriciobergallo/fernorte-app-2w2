@@ -86,8 +86,10 @@ export class SaleOrderSearchListComponent implements OnInit, OnDestroy {
     this.saleOrdersListOk = [];
     this.subscriptions.add(
       this.saleOrderServiceService.getSaleOrdesByFilter(this.filters).subscribe(
-        ( response : SaleOrderApi[]) => {
-          this.saleOrdersList = response;
+        ( response : any ) => {
+          this.saleOrdersList = response.content;
+          this.totalPages = response.totalPages;
+          this.totalElements = response.totalElements;
           for(let item of this.saleOrdersList) {
             this.saleOrdersListOk.push(this.mapSaleOrder(item))
           }

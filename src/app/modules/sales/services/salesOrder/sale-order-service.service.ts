@@ -78,9 +78,9 @@ export class SaleOrderServiceService {
   getSaleOrdesByFilter(filters: Map<string, string>): Observable<SaleOrderApi[]> {
     let url: string = '';
     this.filters = filters
-    if (this.idOrder != '0' && this.idOrder != undefined) {
+    if (this.idOrder != '') {
       url = `${this.URL}/${this.idOrder}`
-    } else if (this.doc != '0' && this.doc != null) {
+    } else if (this.doc != '' && this.doc != null) {
       url = `${this.URL}?page=0&doc_client=${this.doc}`
     } else if (this.stateOrder != '' && this.stateOrder != null) {
       url = `${this.URL}?page=0&state_sale_order=${this.stateOrder}`
