@@ -154,6 +154,7 @@ export class EmployeeListComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.onActive(employee);
+        this.limpiarCampos()
       }
     });
   }
@@ -169,6 +170,7 @@ export class EmployeeListComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.onDelete(employee);
+        this.limpiarCampos()
       }
     });
   }
@@ -247,6 +249,10 @@ export class EmployeeListComponent implements OnInit {
     });
   }
 
+  limpiarCampos(){
+    this.filtroInput = "";
+    this.showInactivos = true;
+  }
 
 
   // openNewEmployeeModal() {
