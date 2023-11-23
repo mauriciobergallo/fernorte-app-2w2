@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {Chart} from 'chart.js';
 import {valueOrDefault} from "chart.js/helpers";
+import Swal from "sweetalert2";
+import {BillServiceService} from "../../services/billing/bill-service.service";
+import {PaymentMethodService} from "../../services/payment-method.service";
+import {SaleOrderServiceService} from "../../services/salesOrder/sale-order-service.service";
+import {MockSalesService} from "../../services/salesOrder/mock-sales.service";
+import {MockService} from "../../services/mocks/mock.service";
 
 @Component({
   selector: 'fn-report-tab',
@@ -8,6 +14,10 @@ import {valueOrDefault} from "chart.js/helpers";
   styleUrls: ['./report-tab.component.css']
 })
 export class ReportTabComponent implements OnInit{
+  bestSeller: string = "Cargando..."
+  bestProduct: string = "Cargando..."
+  totalProducts: Number| null = null;
+  totalBills: Number| null = null;
   months = ['Enero',
     'Febrero',
     'Marzo',
@@ -19,38 +29,44 @@ export class ReportTabComponent implements OnInit{
     'Septiembre',
     'Octubre',
     'Noviembre'];
-  ngOnInit(): void {
-    const data = {
-      labels: this.months,
-      datasets: [
-        {
-          label: 'Ventas mensuales',
-          data: [546,897,756,1292,1124,948,1153,1247,972,1376,1527],
-          borderColor: 'rgb(54, 162, 235)',
-        }
-      ]
-    };
-    const config = {
-      type: 'line',
-      data: data,
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          }
-        }
-      },
-    };
-    // @ts-ignore
-    new Chart('ventas',config)
+  yearData: number[] = []
+  constructor(private billService: BillServiceService) {
   }
-  seed = Date.now();
-
-  rand(min:number, max:number) {
-    min = valueOrDefault(min, 0);
-    max = valueOrDefault(max, 0);
-    this.seed = (this.seed * 9301 + 49297) % 233280;
-    return min + (this.seed / 233280) * (max - min);
+  ngOnInit(): void {
+    Swal.fire('Cargando...')
+    Swal.showLoading()
+    this.billService.getReport().subscribe((report)=>{
+      console.log(report);
+      this.yearData = report.yearBills;
+      this.bestProduct = report.productMostSold;
+      this.totalProducts = report.productsSold;
+      this.bestSeller = report.monthEmployee;
+      this.totalBills = report.monthBills;
+      const data = {
+        labels: this.months,
+        datasets: [
+          {
+            label: 'Ventas mensuales',
+            data: this.yearData,
+            borderColor: 'rgb(54, 162, 235)',
+          }
+        ]
+      };
+      const config = {
+        type: 'line',
+        data: data,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            }
+          }
+        },
+      };
+      // @ts-ignore
+      new Chart('ventas',config)
+    })
+    Swal.close();
   }
 }

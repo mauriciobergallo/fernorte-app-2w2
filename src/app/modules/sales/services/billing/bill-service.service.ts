@@ -7,6 +7,7 @@ import {SaleOrderApi} from "../../models/SaleModelApi";
 import {ProductApi} from "../../models/ProductApi";
 import {DetailBill} from "../../models/DetailBillModel";
 import {Tax} from "../../models/TaxModel";
+import {YearReport} from "../../models/YearReport";
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,10 @@ export class BillServiceService {
     this.billList = this.http.get<BillModel[]>(url);
     return this.billList
     }
+  getReport(): Observable<YearReport> {
+
+    return this.http.get<YearReport>(this.urlBase + `/report`);
+  }
 
     checkOrder(orderId: number): boolean{
     return true
