@@ -1,0 +1,19 @@
+<div *ngIf="Main">
+    <div class="container text-center">
+        <h1>Turnero</h1>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <button class="btn btn-primary" (click)="redirectToCustomer()">Soy cliente</button>
+                <button class="btn btn-secondary" (click)="redirectToNoCustomer()">No soy cliente</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="ToCustomer">
+    <fn-btn-customer (back)="eventBack()"></fn-btn-customer>
+</div>
+
+<div *ngIf="ToNoCustomer">
+    <fn-btn-no-customer (back)="eventBack()"></fn-btn-no-customer>
+</div>

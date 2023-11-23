@@ -1,0 +1,26 @@
+<section class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 p-3">
+        <h2>Facturación</h2>
+      </div>
+      <br>
+      <br>
+      <div class="">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab === 'buscar'" (click)="toSearch('buscar')">Buscar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab === 'Registrar'" (click)="toRegist('Registrar')">Registrar</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <div class="">
+    <fn-billing *ngIf="regist"></fn-billing>
+  </div>
+
+</section>

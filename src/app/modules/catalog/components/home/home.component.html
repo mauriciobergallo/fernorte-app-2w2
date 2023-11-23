@@ -1,1 +1,26 @@
-<p>home catalog works!</p>
+<div class="container">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-light">
+        <!-- Elementos del menú -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item" [ngClass]="{'active': productsVisible}">
+                <a href="#" (click)="showProducts()" class="nav-link">Productos</a>
+            </li>
+            <li class="nav-item" [ngClass]="{'active': addProductVisible}">
+                <a href="#" (click)="showAddProduct()" class="nav-link">Agregar producto</a>
+            </li>
+            <li class="nav-item" [ngClass]="{'active': discountsVisible}">
+                <a href="#" (click)="showDiscounts()" class="nav-link">Descuentos</a>
+            </li>
+            <li class="nav-item" [ngClass]="{'active': addDiscountVisible}">
+                <a href="#" (click)="showAddDiscount()" class="nav-link">Agregar descuento</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <!-- Contenido de las diferentes secciones -->
+    <fn-products *ngIf="productsVisible"></fn-products>
+    <fn-add-product *ngIf="addProductVisible"></fn-add-product>
+    <fn-discounts *ngIf="discountsVisible"></fn-discounts>
+    <fn-add-discount *ngIf="addDiscountVisible"></fn-add-discount>
+</div>
