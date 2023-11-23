@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Login } from '../../models/login';
 import { NgForm } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { User } from '../../models/user';
+import { Login } from '../../data/login';
+import { User } from '../../data/user';
 
 @Component({
   selector: 'fn-login',
@@ -20,8 +20,10 @@ export class LoginComponent {
     identity: '',
     password: ''
   }
-
-  constructor(private loginService: LoginService, private router: Router){}
+  router: Router;
+  constructor(private loginService: LoginService , _router:Router){
+    this.router = _router;
+  }
 
   public onAdd(form: NgForm) {
     if (form.valid) {
