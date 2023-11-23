@@ -120,9 +120,9 @@ export class CustomerReportsComponent implements OnInit {
 
 
     const coloresPorCategoria = {
-      'ORO': 'rgba(255, 215, 0, 0.7)',  // Amarillo oro
-      'PLATA': 'rgba(192, 192, 192, 0.7)',  // Gris plata
-      'BRONCE': 'rgba(139, 69, 19, 0.7)',   // Marrón bronce
+      'ORO': 'rgba(103,169,207)',  // Amarillo oro
+      'PLATA': 'rgba(31,108,174)',  // Gris plata
+      'BRONCE': 'rgba(8,46,104)',   // Marrón bronce
       'Sin categoría': 'rgba(230, 169, 169, 0.7)',  // Gris por defecto
     };
 
@@ -135,18 +135,18 @@ export class CustomerReportsComponent implements OnInit {
         datasets: [{
           data: Object.values(cantidadPorCategoria),
           backgroundColor: [
-           'rgba(255, 215, 0, 0.7)',   // Amarillo oro
-          'rgba(50, 192, 192, 0.7)', // Gris plata
-            'rgba(205, 133, 63, 0.7)',  // Marrón bronce
+           'rgba(103,169,207)',   // Amarillo oro
+          'rgba(31,108,174)', // Gris plata
+            'rgba(8,46,104)',  // Marrón bronce
             'rgba(169, 169, 169, 0.7)',  // Gris por defecto
            
           ],                   
           borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
+            'rgba(255,255,255)',
+            'rgba(255,255,255)',
+            'rgba(255,255,255)',
+            'rgba(255,255,255)',
+            'rgba(255,255,255)',
           ],
           borderWidth: 1
         }]

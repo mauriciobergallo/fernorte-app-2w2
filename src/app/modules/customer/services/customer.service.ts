@@ -41,8 +41,8 @@ export class CustomerService {
     }
   }
 
-  getAllCustomer(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl +'/');
+  getAllCustomer(): Observable<Customer[]> {
+    return this.http.get<Customer[]>(this.apiUrl +'/');
   }
 
   getEmployeeUpdatedObservable(): Observable<void> {
