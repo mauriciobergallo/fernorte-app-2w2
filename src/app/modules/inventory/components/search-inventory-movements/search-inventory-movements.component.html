@@ -35,7 +35,7 @@
         <tbody *ngFor="let movimiento of this.movimientos;let i = index">
           <tr>
             <td>{{ i+1 }}<i class="bi bi-info" data-bs-toggle="tooltip" data-bs-placement="top"
-                title="{{movimiento.remarks}}yu" style="cursor: pointer; font-size: 20px; margin-right: 5px;"></i></td>
+                title="{{movimiento.remarks}}" style="cursor: pointer; font-size: 20px; margin-right: 5px;"></i></td>
             <td>{{ movimiento.operator }}</td>
             <td>{{ movimiento.date }}</td>
             <td>{{ getMovementTypeTranslate(movimiento.movement_type ) }}</td>
@@ -127,6 +127,7 @@
       </ul>
     </div>
     <fn-spinner *ngIf="(this.movimientos.length <= 0) && (this.movimientosOriginales.length <= 0)"></fn-spinner>
+    <fn-spinner *ngIf="(this.isLoadingPage)"></fn-spinner>
 
 
   <canvas id="myChart" style="position: absolute; left: -9999px;"></canvas>

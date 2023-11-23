@@ -95,28 +95,62 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
     this.loading=true;
     this.isLoading=true;
   }
+  myMap = new Map<number, Pagination>();
 
+  private actualizarMovimientos(pagination: Pagination): void {
+    this.movimientosOriginales = pagination.items.map(movement => new IMovementDto(movement));
+    this.movimientos = [...this.movimientosOriginales];
+}
+isLoadingPage: boolean = false;
   nextPage() {
+    this.isLoadingPage=true;
+
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.getMovementsPage(this.currentPage);
+      console.log(this.currentPage)
+
+      let p :Pagination|undefined =this.myMap.get(this.currentPage)
+      if(p!= undefined){
+        console.log(this.myMap)
+
+        this.actualizarMovimientos(p);
+      }else{
+        console.log(this.myMap)
+
+        this.getMovementsPage(this.currentPage);
+      }
     }
+    this.isLoadingPage=false;
+
   }
 
   previousPage() {
+    this.isLoadingPage=true;
+
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.getMovementsPage(this.currentPage);
+      console.log(this.currentPage)
+
+      let p :Pagination|undefined =this.myMap.get(this.currentPage)
+      if(p!= undefined){
+        console.log(this.myMap)
+
+        this.actualizarMovimientos(p);
+      }else{
+        console.log(this.myMap)
+
+        this.getMovementsPage(this.currentPage);
+      }
 
     }
+
+    this.isLoadingPage=false;
   }
-  changePage(page: number) {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-    }
-  }
+
+
 
   ngOnInit() {
+    console.log(this.myMap)
     this.isLoading=true;
     this.loading=true;
     let credential = JSON.parse(localStorage.getItem('credentials') || 'N/N');
@@ -168,6 +202,8 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
       this.movementService.getPaginationMovements(page-1).subscribe({
         next: (response: Pagination) => {
           if (response != null) {
+            this.myMap.set(page,response)
+            console.log(this.myMap)
             console.log(response)
             this.totalPages = response.totalPages;
             this.movimientosOriginales=[]
@@ -176,19 +212,19 @@ export class SearchInventoryMovementsComponent implements OnInit, OnDestroy {
             })
             this.movimientos = [];
             this.movimientos = this.movimientosOriginales;
-            this.isLoading = false;
           } else {
             console.log("No content")
           }
-          this.isLoading = false;
         },
         error: (error: any) => {
           console.log(error)
+        },
+        complete:() => {
+          this.isLoading = false;
+          this.loading=false;
         }
       })
     )
-    this.loading=false;
-  this.isLoading = false;
   }
 
   generateChart() {
