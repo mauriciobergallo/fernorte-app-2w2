@@ -358,8 +358,10 @@ export class CustomerListComponent implements OnInit {
     let filtroApellido: Customer[] = this.buscarApellido(this.searchInput);
     let filtroDocumento: Customer[] = this.buscarDocumento(this.searchInput);
 
+    let filtroEmpresa: Customer[] = this.buscarNombreEmpresa(this.searchInput);
+
     let listaFiltrada: Customer[] = filtroNombre
-      .concat(filtroApellido, filtroDocumento)
+      .concat(filtroApellido, filtroDocumento, filtroEmpresa)
       .filter((item, index, array) => array.indexOf(item) === index);
 
     if (this.selectedCategory != 'todos') {
@@ -456,6 +458,19 @@ export class CustomerListComponent implements OnInit {
       return palabraEnMinusculas.startsWith(palabraIncompleta);
     });
   }
+
+  buscarNombreEmpresa(palabraIncompleta: string): Customer[]{
+    palabraIncompleta = palabraIncompleta.toLocaleLowerCase();
+
+    return this.customerList.filter((palabra)=>{
+      const palabraEnMinusculas = palabra.company_name?.toLowerCase();
+      return palabraEnMinusculas?.startsWith(palabraIncompleta);
+    })
+
+
+
+  }
+
 
   openUpdateCustomerModal(customer: Customer) {
     console.log(customer);
