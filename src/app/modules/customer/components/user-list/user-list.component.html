@@ -2,28 +2,26 @@
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <div class="container">
   <h1 class="h1">Usuarios</h1>
-  <table class="table">
+  <table class="table container">
     <thead>
       <tr>
-        <th scope="col" class="text-center">Usuario</th>
-        <th scope="col" class="text-center">Número de Documento</th>
-        <th scope="col" class="text-center">Email</th>
-        <th scope="col" class="text-center">Estado</th>
-        <th scope="col" class="text-center">Acciones</th>
+        <th scope="col" class="text-center col-2">Usuario</th>
+        <th scope="col" class="text-center col-2">Número de Documento</th>
+        <th scope="col" class="text-center col-2">Estado</th>
+        <th scope="col" class="text-left col-2">Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let u of userList">
         <td class="text-center">{{ u.username }}</td>
         <td class="text-center">{{ u.document_number }}</td>
-        <td class="text-center">{{ u.email }}</td> <!-- cambiar a solo mail, por que va a cambiar la entity-->
         <td *ngIf="u.is_active" class="text-center"><span class="material-symbols-outlined" style="color: rgb(3, 139, 3);">
             check_circle
           </span></td>
         <td *ngIf="!u.is_active" class="text-center"><span style="color: rgb(202, 0, 0);" class="material-symbols-outlined">
             cancel
         </span></td>  
-        <td class="text-center">
+        <td class="text-left">
           <div class="dropdown">
             <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-three-dots-vertical"></i>

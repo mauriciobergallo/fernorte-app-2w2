@@ -7,6 +7,7 @@ import { UserResponseDTO } from '../../models/userResponseDTO';
 import { Role } from '../../models/role';
 import { User } from '../../models/user';
 import { NewRole } from '../../models/new-role';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'fn-modify-user-rol',
   templateUrl: './modify-user-rol.component.html',
@@ -59,9 +60,6 @@ throw new Error('Method not implemented.');
 				this.availableRoles();
 
 				console.log(this.selectedRoles)
-				// console.log(this.user.roles);
-				// console.log(this.allRoles);
-				// console.log(this.unassignedRoles);
 			},
 			(error) => {
 				this.user = null;
@@ -106,8 +104,50 @@ throw new Error('Method not implemented.');
 
     onSubmitForm(userRol: NgForm) {
 		if(this.user){
-			this.userService.modifyUserRoles(this.user, this.selectedRoles).subscribe((updatedUser) => 
-			console.log(updatedUser));
+			Swal.fire({
+				title: `¿Estás seguro que desea editar el usuario?`,
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#dc3545",
+				cancelButtonColor: "#6c757d",
+				confirmButtonText: "¡Sí, editar!",
+				cancelButtonText: "Cancelar"
+			  }).then((result) => {
+				if (result.isConfirmed) {
+					this.userService.modifyUserRoles(this.user, this.selectedRoles).subscribe(
+						(response) => {
+							Swal.fire({
+								title: '¡Éxito!',
+								text: 'El usuario ha sido editado',
+								icon: 'success',
+							  });
+							  this.modalService.dismissAll();
+						},
+						(error) => {
+							Swal.fire({
+								title: '¡Error!',
+								text: 'Servicio no disponible.',
+								icon: 'error',
+							  });
+						}
+					)
+				}
+			  });
 		}
+	}
+
+	onCancelar(){
+		Swal.fire({
+			title: '¿Está seguro?',
+			text: 'Si cancela, perderá los datos ingresados. ¿Desea continuar?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Sí, cancelar',
+			cancelButtonText: 'No, seguir editando'
+		  }).then((result) => {
+			if (result.isConfirmed) {
+			this.modalService.dismissAll()
+			}
+		  });
 	}
 }
