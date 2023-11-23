@@ -8,20 +8,40 @@ import { environment } from '../../enviroment/environment';
   providedIn: 'root'
 })
 export class TurnServicesService {
-actualTurn:TurnModel=new TurnModel
+  turns:TurnModel[]=[{
+    number:1,id_customer:1,created_at:new Date
+  },{
+    number:2,id_customer:2,created_at:new Date
+  },{
+    number:3,id_customer:3,created_at:new Date
+  },{
+    number:4,id_customer:4,created_at:new Date
+  },{
+    number:5,id_customer:5,created_at:new Date
+  },{
+    number:6,id_customer:1,created_at:new Date
+  },{
+    number:7,id_customer:2,created_at:new Date
+  },{
+    number:8,id_customer:3,created_at:new Date
+  },{
+    number:9,id_customer:4,created_at:new Date
+  },{
+    number:10,id_customer:5,created_at:new Date
+  }]
+  count:number=0;
 constructor(private http: HttpClient) { }
 
 private URL = environment.urlTurnBase;
-
-nextTurn():Observable<TurnModel>{
-  this.actualTurn=this.clearTurn()
-  return this.http.get<TurnModel>(this.URL)   
+contador(){
+  this.count+=1
+  if(this.count>5){
+    this.count=1
+  }
 }
-clearTurn():TurnModel{
-  this.actualTurn.number=0;
-  this.actualTurn.created_at=new Date
-  this.actualTurn.id_customer=0;
-  return this.actualTurn
+nextTurn():TurnModel{
+  this.contador()  
+  return this.turns[this.count-1]  
 }
 }
 

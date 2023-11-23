@@ -2,8 +2,7 @@ import { Component, OnInit, ViewChild, ComponentRef } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TaxService } from '../../services/tax/tax.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Tax } from '../../models/Tax';
-import { TaxEmpty } from '../../models/Tax';
+import { Tax } from '../../models/TaxModel';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./tax-register.component.css']
 })
 export class TaxRegisterComponent implements OnInit {
-  tax: Tax = TaxEmpty;
+  tax: Tax = {id:0,tax_value:0,tax_type:""};
   // taxList: Tax[] = [];
   taxForm: FormGroup;
   // taxEditForm: FormGroup;

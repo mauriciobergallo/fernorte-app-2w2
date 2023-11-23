@@ -16,8 +16,8 @@ export class BillView{
     vatCondition: string ="";
     billType: string = "";
     cae:string ="";	
-    createdDate: string = "";
-    expirationDateCae: string = "";
+    createdDate: number[]=[];
+    expirationDateCae: number[]=[];
     totalPrice: number = 0;
     payment: Payment [] = [];
     idSaleOrder: number = 0;

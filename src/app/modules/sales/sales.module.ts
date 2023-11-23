@@ -37,6 +37,7 @@ import { PaymentMethodRegisterComponent } from './components/payment-method-regi
 import { DateFormat2Pipe } from './pipes/date-format2.pipe';
 import { SpinnerComponent } from './components/spinner/viewspinner/spinner.component';
 import { PaymentMethodDeletedComponent } from './components/payment-method-deleted/payment-method-deleted.component';
+import { ReportTabComponent } from './components/report-tab/report-tab.component';
 
 
 
@@ -71,7 +72,8 @@ import { PaymentMethodDeletedComponent } from './components/payment-method-delet
     DateFormat2Pipe,
     CaseConverterPipe,
     SpinnerComponent,
-    PaymentMethodDeletedComponent
+    PaymentMethodDeletedComponent,
+    ReportTabComponent
     ],
 
 
@@ -110,7 +112,8 @@ import { PaymentMethodDeletedComponent } from './components/payment-method-delet
     DateFormat2Pipe,
     CaseConverterPipe,
   SpinnerComponent,
-PaymentMethodDeletedComponent],
+PaymentMethodDeletedComponent,
+ReportTabComponent],
 
 })
 export class SalesModule {}

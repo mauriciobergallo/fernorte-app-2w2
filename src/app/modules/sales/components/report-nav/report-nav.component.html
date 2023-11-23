@@ -2,24 +2,19 @@
   <div class="container">
     <div class="row">
       <div class="col-12 p-3">
-        <h2>Reportes</h2>
+        <h2>Reporte de Ventas</h2>
       </div>
       <br>
       <br>
       <div class="">
-        <ul class="nav nav-tabs">
-          <li class="nav-item">
-            <a class="nav-link active" [class.active]="activeTab === 'buscar'" (click)="toSales('ventas')">Ventas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="activeTab === 'Registrar'" (click)="toProducts('productos')">Productos</a>
-          </li>
-        </ul>
+       
       </div>
 
     </div>
   </div>
   <div class="">
+    <fn-report-tab></fn-report-tab>
+
   </div>
 
 </section>

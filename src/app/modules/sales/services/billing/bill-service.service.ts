@@ -42,8 +42,8 @@ export class BillServiceService {
     return this.http.post<IResponse>(this.URL, body, { headers: header });
   }
 
-    getBills() : Observable<BillModel[]> {
-      this.billList = this.http.get<BillModel[]>(this.URL+ `?pageNumber=0`);
+    getBills(page:number) : Observable<BillModel[]> {
+      this.billList = this.http.get<BillModel[]>(this.URL+ `?pageNumber=`+page);
       return this.billList;
     }
 
@@ -55,7 +55,7 @@ export class BillServiceService {
     } else if (this.clientId != '0' && this.clientId != null) {
       url = this.URL + `?pageNumber=0&clientId=${this.clientId}`
     } else {
-      url = this.URL + `?pageNumber=0&from=${this.fromDate}&to=${this.toDate}`;
+      url = this.URL + `?pageNumber=0&from_date=${this.fromDate}&to_date=${this.toDate}`;
     }
     this.billList = this.http.get<BillModel[]>(url);
     return this.billList
@@ -95,7 +95,7 @@ export class BillServiceService {
       detailBill.name_product = productApi.name || "";
       detailBill.quantity = productApi.quantity || 0;
       detailBill.unit = "";
-      detailBill.tax = {id:100,tax_type:"VAT",tax_value:1.21};
+      detailBill.tax = {id:1,tax_type:"VAT",tax_value:1.21};
       detailBill.tax.tax_type = "VAT";
       detailBill.tax_value = detailBill.tax.tax_value || 0;
       detailBill.unitary_price = productApi.price || 0;

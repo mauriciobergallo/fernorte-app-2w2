@@ -18,8 +18,7 @@ export class ProductService {
     const url = this.URL + `/products`;
     return this.http.get<ProductModel[]>(url).pipe(
       map((res: any) => {
-        this.listProduct = res.products
-        return res.products.map((product: { id_product: any; name: any; description: any; unit_price: any; stock_quantity: any; unit_of_measure: any; category: { id_category: any; name: any; description: any; }; is_deleted: any; url_image: any; price_product: any; discount: any; }) => {
+        return this.listProduct = res.products.map((product: { id_product: any; name: any; description: any; unit_price: any; stock_quantity: any; unit_of_measure: any; category: { id_category: any; name: any; description: any; }; is_deleted: any; url_image: any; price_product: any; discount: any; }) => {
           return {
             idProduct: product.id_product,
             name: product.name,

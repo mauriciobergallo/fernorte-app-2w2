@@ -11,11 +11,14 @@ export class ClientService {
   private client!: ICustomer;
   
   constructor(private http: HttpClient) { }
-
+  idCustomerTurn:number=1;
+  setIdCustomer(id:number):number{
+    return this.idCustomerTurn=id
+  }
   private URL = environment.urlClientsBase;
 
   getClient(): Observable<ICustomer> {
-    return this.http.get<ICustomer>(this.URL + `/customers/3`);
+    return this.http.get<ICustomer>(this.URL + `/customers/${this.idCustomerTurn}`);
     
   }
 }

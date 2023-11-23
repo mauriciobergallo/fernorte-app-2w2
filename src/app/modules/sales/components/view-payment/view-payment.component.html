@@ -36,7 +36,7 @@
                                         <div class="info">
                                             <h1 class="inv-header-1">Factura {{bill.billType}}</h1>
                                             <p class="mb-1">Factura: <span>#{{bill.idBill}}</span></p>
-                                            <p class="mb-0">Fecha: <span>{{bill.createdDate}}</span></p>
+                                            <p class="mb-0">Fecha: <span>{{bill.createdDate | dateFormat}}</span></p>
                                         </div>
                                     </div>
                                 </div>

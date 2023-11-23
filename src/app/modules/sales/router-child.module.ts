@@ -11,17 +11,20 @@ import { SaleOrderSearchListComponent } from './components/sale-order-search-lis
 import { SaleOrderViewComponent } from './components/sale-order-view/sale-order-view.component';
 import { BillingSearchListComponent } from './components/billing-search-list/billing-search-list.component';
 import { ViewPaymentComponent } from './components/view-payment/view-payment.component';
+import { SaleOrderComponent } from './components/sale_order/sale-order.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 
 const childRoutes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: SidenavComponent,
     children: [
       { path: '', redirectTo: 'report', pathMatch: 'full' }, 
       { path: 'report', component: ReportNavComponent},
       { path: 'sale-order', component: SaleOrderNavComponent, children: [
-        {path: 'list', component: SaleOrderSearchListComponent}
+        {path: 'list', component: SaleOrderSearchListComponent},
+        {path: 'regist', component: SaleOrderComponent}
       ]  },
       { path: 'billing', component: BillingNavComponent , children: [
         {path: 'listB', component: BillingSearchListComponent}

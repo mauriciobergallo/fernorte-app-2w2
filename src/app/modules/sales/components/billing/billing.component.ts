@@ -133,7 +133,8 @@ export class BillingComponent {
         payment_method: {
           id_payment_method: this.selectedPaymentMethod.id_payment_method,
           payment_method: this.selectedPaymentMethod.payment_method,
-          surcharge: this.selectedPaymentMethod.surcharge
+          surcharge: this.selectedPaymentMethod.surcharge,
+          isDeleted: this.selectedPaymentMethod.isDeleted
         },
         payment: this.amount
       });

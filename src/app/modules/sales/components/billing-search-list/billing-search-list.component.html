@@ -93,7 +93,7 @@
                     <i class="bi bi-three-dots-vertical"></i>
                   </button>
                   <div class="dropdown-content">
-                    <a (click)="onShowDetails()">Ver detalles</a>
+                    <a (click)="onShowDetails(item,modalDetalle)">Ver detalles</a>
                     <a (click)="onPrint(item)">Imprimir</a>
                   </div>
                 </div>
@@ -101,4 +101,46 @@
             </tr>
           </tbody>
         </table>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" aria-current="page" [class.disabled]="currentPage === 0">
+              <a class="page-link" aria-label="Previous"
+              (click)="onLoadPage(currentPage-1)">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item" [class.active]="currentPage === page" *ngFor="let page of totalPagesArray">
+              <a class="page-link" (click)="onLoadPage(page)">{{ page +1 }}</a>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages - 1">
+              <a class="page-link" aria-label="Next"
+              (click)="onLoadPage(currentPage+1)">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <ng-template #modalDetalle>
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Detalles de factura Nro° {{ selectedBill?.id_bill+1000}}</h5>
+                <button type="button" class="btn-close" (click)="onCloseDetails()" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p><strong> Cliente:</strong> {{selectedBill.las_name + " " +selectedBill.first_name + " " + selectedBill.company_name}}</p>
+                <p><strong> Fecha Creación:</strong> {{ selectedBill?.created_date | dateFormat }}</p>
+                <p><strong> Detalles:</strong></p>
+                <ul>
+                  <li *ngFor="let prod of selectedBill?.detail_bill">
+                    {{ prod.name_product }} x {{prod.quantity}} - <strong>Precio:</strong>  {{ prod.unitary_price | currency}}                    
+                  </li>
+                </ul>
+                <br>
+                <strong>Impuestos: IVA 21% - </strong>  {{ ((selectedBill.total_price/1.21)*0.21) | currency}} 
+                <p><strong> Total:</strong> {{ onCalculateTotal(selectedBill) | currency }}</p>
+              </div>
+            </div>
+          </div>    
+        </ng-template>
   </div> 

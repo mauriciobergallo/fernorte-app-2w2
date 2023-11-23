@@ -1,5 +1,5 @@
   import { Injectable } from '@angular/core';
-  import { Tax } from '../../models/Tax';
+  import { Tax } from '../../models/TaxModel';
   import { HttpClient, HttpHeaders } from '@angular/common/http';
   import { Observable } from 'rxjs';
 import { environment } from '../../enviroment/environment';

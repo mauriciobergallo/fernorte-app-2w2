@@ -14,6 +14,7 @@ import { DetailBillView, Tax } from '../../models/DetailBillView';
 import { Payment } from '../../models/PaymentModel';
 import { Router } from '@angular/router';
 import { PrintDocumentsService } from '../../services/print/print-documents-service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'fn-billing-search-list',
@@ -31,28 +32,36 @@ doc:string="";
 fromDate:string="";
 toDate:string="";
 filters: Map<string, string> = new Map();
+totalPages: number = 0;
+totalElements: number = 0;
+currentPage : number = 0;
 spinner: boolean = true;
-
+selectedBill : any;
 private subscriptions = new Subscription();
 
 constructor(private billingService: BillServiceService, 
   private caseConverter: CaseConverterPipe,
   private printService: PrintDocumentsService,
-  private route:Router) {
+  private route:Router,
+  private modaleService:NgbModal) {
 }
-
+get totalPagesArray(): number[] {
+  return Array.from({ length: this.totalPages }, (_, i) => i);
+}
 
 
 ngOnDestroy(): void {
   this.subscriptions.unsubscribe();
 }
 ngOnInit(): void {
-    this.billingService.getBills().subscribe(
-      (response)=>{
+    this.billingService.getBills(0).subscribe(
+      (response: any)=>{
         let toCamel:BillModel[] = this.caseConverter.toCamelCase(response);
         console.log(response);
         console.log(this.billList)
-        this.billList=response.sort((a,b)=>b.id_bill! - a.id_bill!);  
+        this.billList=response.content;  
+        this.totalPages = response.totalPages;
+        this.totalElements = response.totalElements;
         this.spinner = false;        
       }
     )
@@ -92,8 +101,8 @@ mapBill(bill: BillModel): BillView {
     vatCondition: vat_condition,
     billType: bill_type,
     cae: cae,
-    expirationDateCae: expiration_date_cae.toString(),
-    createdDate: created_date.toString(),
+    expirationDateCae: expiration_date_cae,
+    createdDate: created_date,
     totalPrice: total_price,
     detailBill: detailV,
     payment: payments,
@@ -116,8 +125,46 @@ mapDetail(detail : DetailBill) : DetailBillView {
   } 
   return detailV
 }
-onShowDetails(){
+onShowDetails(item:any, content: any){
+  this.selectedBill = item;
+  console.log(this.selectedBill)
+  this.openModal(content);
+}
+openModal(content: any) {
+  this.modaleService.open(content, { centered: true });
+}
+onCalculateTotal(bill: any): string|number {
+  let total = 0;
+  
+  if (bill && bill.details) {
+    for (const prod of bill.details) {
+      total += (prod.quantity * prod.unitary_price);
+    }
+  }
 
+  return bill.total_price;
+}
+onCloseDetails() {
+  this.modaleService.dismissAll();
+}
+
+onLoadPage(page : number) {
+  this.billList = [];
+  this.spinner= true;
+  if (page >= 0 && page < this.totalPages) {
+    this.currentPage = page;
+    this.subscriptions.add(
+      this.billingService.getBills(page).subscribe(
+        ( response : any ) => {
+          console.log(response.content)
+          this.billList = response.content;
+          this.totalPages = response.totalPages;
+          this.totalElements = response.totalElements;          
+          this.spinner= false;
+        }
+      )
+    )
+  }
 }
 
 onPrint(bill:BillModel) {    

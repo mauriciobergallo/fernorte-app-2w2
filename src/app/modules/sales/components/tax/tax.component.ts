@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Tax, TaxEmpty } from '../../models/Tax';
+import { Tax } from '../../models/TaxModel';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaxService } from '../../services/tax/tax.service';
 import { BootstrapOptions } from '@angular/core';
@@ -13,8 +13,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./tax.component.css']
 })
 export class TaxComponent implements OnInit {
-  tax: Tax = TaxEmpty;
-  taxEdit: Tax = TaxEmpty;
+  tax: Tax = {id:0,tax_value:0,tax_type:""};
+  taxEdit: Tax = {id:0,tax_value:0,tax_type:""};
   taxList: Tax[] = [];
   taxEditForm: FormGroup;
   isFormDisabled: boolean = true;

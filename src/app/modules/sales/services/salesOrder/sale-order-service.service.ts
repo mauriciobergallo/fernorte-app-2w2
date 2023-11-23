@@ -21,6 +21,7 @@ export class SaleOrderServiceService {
   saleOrderListView = new Observable<SaleOrderView[]>();
   saleOrderStates = new Observable<string[]>();
   filters: Map<string, string> = new Map<string, string>();
+  
 
   get page(){
     return this.filters.get("page")
@@ -46,7 +47,7 @@ export class SaleOrderServiceService {
     private URL = environment.urlSaleBase+"/sales-orders";
   
     createSaleOrder(saleOrder: SaleOrderModel): Observable<any> {
-      const url = this.URL + "/sales-orders";
+      const url = this.URL;
       const header = { "content-type": "application/json" };
       const body = {
         id_sale_order: saleOrder.idSaleOrder,

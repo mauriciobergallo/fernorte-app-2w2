@@ -53,7 +53,7 @@ export class PrintDocumentsService {
     this.bill.address = ""
     this.bill.companyName=""
     this.bill.expirationDateCae!
-    this.bill.createdDate = ""
+    this.bill.createdDate = []
     this.bill.detailBill= []
     this.bill.email = ""
     this.bill.firstNameClient=""

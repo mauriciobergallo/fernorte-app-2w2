@@ -96,12 +96,18 @@ export class SaleOrderComponent implements OnInit {
   async generateSaleOrder(type: TypeSalesOrder) {
     if(this.carrito.length>0){
       Swal.fire({
-        title: "¿Seguro que quieres guardar la orden?",
+        title: "Registrar orden de venta",
+        text:"¿Seguro que quieres registrar la orden de venta?",
+        icon:"question",
         showCancelButton: true,
         confirmButtonText: "Guardar"
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Orden de venta guardada exitosamente!");
+          Swal.fire({
+            title:"Registrar orden de venta",
+            text:"Orden de venta se registro exitosamente!",
+            icon:"success"
+          });
           this.loader = this.loadingService.loading();
   
       if (type == this.typeSalesOrder) {
