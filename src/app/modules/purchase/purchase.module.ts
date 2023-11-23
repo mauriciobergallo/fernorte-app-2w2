@@ -49,6 +49,7 @@ import { OrdersGridComponent } from './components/report-container/components/or
 import { PaymentListComponent } from './components/payment-order-container/components/payment-list/payment-list.component';
 import { EditSupplierComponent } from './components/supplier/edit-supplier/edit-supplier.component';
 import { LoginComponent } from './components/login/login.component';
+import { GraphsComponent } from './components/report-container/components/graphs/graphs.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { LoginComponent } from './components/login/login.component';
     PaymentListComponent,
     EditSupplierComponent,
     LoginComponent,
+    GraphsComponent
   ],
   providers: [],
   imports: [
