@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of listBooking.orders">
+            <tr *ngFor="let item of booking.groupings">
                 <!-- <td>{{item.idSupplier}}</td>
                 <td>{{item.idProduct}}</td> -->
                 <!-- <td>{{item.name}}</td>
@@ -39,7 +39,8 @@
                 </td>
 
                 <td>
-                  <button class="btn btn-primary" (click)="agregarFecha(item)" >Agregar Fecha</button>
+                  <button class="btn btn-primary" >Agregar Fecha</button>
+                  <!-- <button class="btn btn-primary" (click)="agregarFecha(item)" >Agregar Fecha</button> -->
                 </td>
             </tr>
         </tbody>

@@ -12,32 +12,12 @@ import { IBooking } from 'src/app/modules/purchase/models/ibooking';
 })
 export class BookingComponent implements OnInit {
   
- listBooking: IBooking ={} as IBooking;
- item: any = {}
-
+  item: any = {}
 
   constructor(private modalService: NgbModal, private purchaseService: PurchaseOrderServiceService) { }
 
   ngOnInit(): void {
-    // this.getListBooking();
-    this.getlistBooking();
   }
-
-
-  // getListBooking(){
-  //   this.purchaseService.getListProductSelectedToBooking().subscribe
-  //     (
-  //       (data: any)=>{this.listBooking = data; },
-  //     )
-  // }
-
-  getlistBooking(){
-    this.purchaseService.getBooking().subscribe({
-      next: (booking) => {this.listBooking = booking; alert("booking: " + JSON.stringify(this.listBooking))}
-    })
-  }
-
-
 
   openModalNewSupplier(){
     this.modalService.open(BookingModalComponent, {
@@ -46,15 +26,18 @@ export class BookingComponent implements OnInit {
     });
   }
 
-  agregarFecha(item: any){
-    this.item = item;
-    this.purchaseService.deleteProductToBooking(item.idProduct);
-    this.listBooking = {} as IBooking;
-    
-  }
+  // agregarFecha(item: any){
+  //   this.item = item;
+  //   this.purchaseService.deleteProductToBooking(item.idProduct);
+  //   this.listBooking = {} as IBooking;
+  // }
 
   irOrdenPago(){
     this.purchaseService.setPurchaseBookingFlow(false);
     this.purchaseService.setPurchasePreviewFlow(true);
+  }
+
+  get booking(){
+    return this.purchaseService.getBooking();
   }
 }

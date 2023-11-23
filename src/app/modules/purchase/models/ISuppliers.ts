@@ -108,3 +108,24 @@ export interface ISupplierPrice {
 export interface IProductSupplierResponse {
   suppliers: ISupplierPrice[]
 }
+
+//NACHO
+export interface IPurchaseDetailRequestDTON {
+  purchaseOrderId: number;
+  productSupplierId: number;
+  quantityReceived: number;
+  deliveryDate: string;
+  observation: string;
+}
+
+export interface IPurchaseOrderRequestDTON {
+  supplierId: number;
+  date: string;
+  total: number;
+  employeeId: number;
+  observation: string;
+  billUrl: string;
+  purchaseDetails: IPurchaseDetailRequestDTON[];
+}
+
+

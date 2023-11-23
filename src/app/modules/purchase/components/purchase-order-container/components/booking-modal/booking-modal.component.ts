@@ -4,7 +4,7 @@ import { SupliersService } from '../../../supplier/services/supliers.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { PurchaseOrderServiceService } from '../../services/purchase-order-service.service';
-import { IBooking, Order } from 'src/app/modules/purchase/models/ibooking';
+import { IBooking, Grouping } from 'src/app/modules/purchase/models/ibooking';
 // import { Isupplier } from '../../../shared/interfaces/isupplier';
 
 
@@ -18,8 +18,6 @@ export class BookingModalComponent implements OnInit {
   listProductOriginalToBooking: any[] = []
   listSelected: any[] =[]
   listSelectedBooking: any[] =[]
-  idSupplier: number = 0;
-
 
   receptionDate: string = ''; // Propiedad para almacenar la fecha de recepción
   receptionHour: string = ''; // Propiedad para almacenar la hora de recepción
@@ -32,18 +30,8 @@ export class BookingModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListOriginal();
-    this.obtenerIdSupplier()
   }
 
-  suscription = new Subscription();
-
-  obtenerIdSupplier(){
-    this.purchaseService.getSupplierSelected().subscribe({
-      next: (supplier: ISupplier ) => {this.idSupplier = supplier.id, alert("idSupplier: " + this.idSupplier)}
-    })
-  }
-
- 
   //traigo los productos del carrito al iniciar el componente
   getListOriginal(){
     this.purchaseService.getCardProductList2().subscribe(
@@ -62,6 +50,12 @@ export class BookingModalComponent implements OnInit {
   //con los productos seleccionados del modal agrega a una lista para ponerle la fecha y hora de entrega
   addSelected(){
 
+    // console.log("NACHO - ", JSON.stringify(this.purchaseService.getListProductSelected));
+    // console.log("NACHO - ", JSON.stringify(this.purchaseService.getCardProductList));
+    // console.log("NACHO - ", JSON.stringify(this.purchaseService.getListProductSelectedToBooking));
+    // console.log("NACHO - ", JSON.stringify(this.purchaseService.getCardProductList));
+    // console.log("NACHO - ", JSON.stringify(this.purchaseService.getCardProductList));
+
     //obtengo los elementos seleccionados del modal de acuerdo al checkbox
     this.listSelected= this.listProductOriginalToBooking.filter(item => item.isSelected);
     console.log("listSelected: " + this.listSelected)
@@ -73,31 +67,28 @@ export class BookingModalComponent implements OnInit {
     });
 
 
-     // Creo el objeto IBooking
-    const bookingObject: IBooking = {
-      id_supplier: this.idSupplier,
-      orders: this.listSelected.map(selectedItem => {
-        const order: Order = {
-          details: [
-            {
-              quantity: selectedItem.quantity,
-              id_product: selectedItem.idProduct
-            }
-            // Puedes agregar más detalles si es necesario
-          ],
-          receptiondate: this.receptionDate, // Asigna la fecha de recepción
-          receptionhour: this.receptionHour // Asigna la hora de recepción
-        };
-        return order;
-      })
-    };
+    //  // Creo el objeto IBooking
+    // const bookingObject: IBooking = {
+    //   id_supplier: this.idSupplier,
+    //   orders: this.listSelected.map(selectedItem => {
+    //     const order: Grouping = {
+    //       purchaseItem: [
+    //         {
+    //           quantity: selectedItem.quantity,
+    //           id_product: selectedItem.idProduct
+    //         }
+    //         // Puedes agregar más detalles si es necesario
+    //       ],
+    //       receptiondate: this.receptionDate, // Asigna la fecha de recepción
+    //       receptionhour: this.receptionHour // Asigna la hora de recepción
+    //     };
+    //     return order;
+    //   })
+    // };
 
-    alert("booking generado: " + JSON.stringify(bookingObject));
-
-    // Llamo al servicio para enviar el objeto
-    this.purchaseService.setBooking(bookingObject.orders);
-
-  
+    // // Llamo al servicio para enviar el objeto
+    // this.purchaseService.setBooking(bookingObject.orders);
+    console.warn("NACHO - Send booking object to purchase service");
 
 
     this.purchaseService.setListProductSelectedToBooking(this.listSelected);
@@ -106,7 +97,7 @@ export class BookingModalComponent implements OnInit {
   }
 
   getDesdeService(){
-    this.suscription = this.purchaseService.getListProductSelectedToBooking().subscribe(
+    this.purchaseService.getListProductSelectedToBooking().subscribe(
       (data: any[])=>{this.listSelectedBooking = data},
     )
   }

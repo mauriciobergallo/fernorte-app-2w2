@@ -1,15 +1,15 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
-import { ISupplierProduct } from '../../../models/ISuppliers';
+import { IPurchaseOrderRequestDTON, ISupplierProduct } from '../../../models/ISuppliers';
 import { ISupplier } from '../../../models/ISuppliers';
 import { PurchaseOrderBack, PurchaseOrderRequest, PurchaseOrderResponse } from '../../../models/IPurchaseOrder';
-import { IBooking, Order } from '../../../models/ibooking';
+import { IBooking, Grouping } from '../../../models/ibooking';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PurchaseOrderServiceService {
+export class PurchaseOrderServiceService implements OnInit {
   url: string = 'http://localhost:5433/purchase-orders';
   idSupplier = new BehaviorSubject<number>(0);
   suplierSelected = new BehaviorSubject<ISupplier>({
@@ -19,10 +19,10 @@ export class PurchaseOrderServiceService {
     fantasyName: '',
     cuit: '',
   });
-  listProductSelected = new BehaviorSubject<ISupplierProduct[]>([]);
-  cartProductList: ISupplierProduct[] = [];
+  listProductSelected = new BehaviorSubject<ISupplierProduct[]>([]);       //NACHO-TODO: BORRAR ESTO
+  cartProductList: ISupplierProduct[] = [];                                //NACHO-TODO: BORRAR ESTO
   // private booking = new BehaviorSubject<IBooking>({} as IBooking);
-  private bookings: IBooking = {} as IBooking;
+  private booking: IBooking = {} as IBooking;
   
   //banderas para mostrar ocultar componentes
   purchaseBookingFlow = new BehaviorSubject<boolean>(false);
@@ -31,6 +31,10 @@ export class PurchaseOrderServiceService {
   purchaseCartFlow = new BehaviorSubject<boolean>(true);
   purchasePreviewFlow = new BehaviorSubject<boolean>(false);
   purchaseOrderFlow = new BehaviorSubject<boolean>(true);
+
+  //VARIABLES NACHO
+  private purchaseOrderRequestDTON: IPurchaseOrderRequestDTON = {} as IPurchaseOrderRequestDTON;
+  //VARIABLES NACHO
 
 
   listProductSelectedToBooking = new BehaviorSubject<any[]>([]);
@@ -71,6 +75,10 @@ export class PurchaseOrderServiceService {
   filteredPurchaseOrdersList = new BehaviorSubject<PurchaseOrderResponse[]>([]);
 
   constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.purchaseOrderRequest.purchaseDetails = [];
+  }
 
   // PURCHASES
   postPurchaseOrders(purchase: PurchaseOrderRequest): Observable<PurchaseOrderRequest> {
@@ -210,6 +218,14 @@ export class PurchaseOrderServiceService {
   // }
 
   getBooking(): IBooking {
-    return this.bookings;
+    return this.booking;
+  }
+
+  public get purchaseOrderRequest(){
+    return this.purchaseOrderRequestDTON;
+  }
+
+  public set purchaseOrderRequest(purchaseOrderRequest: IPurchaseOrderRequestDTON){
+    this.purchaseOrderRequestDTON = purchaseOrderRequest;
   }
 }
