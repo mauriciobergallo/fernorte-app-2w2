@@ -27,7 +27,6 @@ import { LocationsComponent } from './components/locations/locations/locations.c
 import { SectionsComponent } from './components/locations/sections/sections.component';
 import { SpacesComponent } from './components/locations/spaces/spaces.component';
 
-
 @NgModule({
   declarations: [
     HomeComponent,
@@ -49,7 +48,7 @@ import { SpacesComponent } from './components/locations/spaces/spaces.component'
     WelcomeComponent,
     LocationsComponent,
     SectionsComponent,
-    SpacesComponent
+    SpacesComponent,
   ],
 
   providers: [],
@@ -61,7 +60,7 @@ import { SpacesComponent } from './components/locations/spaces/spaces.component'
     InventoryRoutingModule,
     NgbModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [HomeComponent],
 })

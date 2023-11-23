@@ -4,6 +4,8 @@ import { DeilveryOrder } from '../../../models/deilvery-order';
 import { Pagination } from '../../../models/pagination';
 import { StateIconPipePipe } from '../../../pipes/state-icon-pipe.pipe';
 import { Router } from '@angular/router';
+import { DeliveryOrderMockService } from '../../../services/delivery-order-mock.service';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'fn-consult-order',
   templateUrl: './consult-order.component.html',
@@ -11,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class ConsultOrderComponent {
   orderId: string = '';
-  deliveryOrder: Pagination | null = null;
+  deliveryOrder: Pagination = new Pagination();
   currentPage = 1;
   itemsPerPage = 10;
   totalPages = 1;
@@ -19,8 +21,21 @@ export class ConsultOrderComponent {
   loading: boolean = false;
   constructor(
     private deliveryorderService: DeliverOrderService,
-    private router: Router
+    private router: Router,
+    public serviceMock: DeliveryOrderMockService
   ) {}
+  ngOnInit(): void {
+    this.iniciarlizar();
+    console.log(this.deliveryOrder);
+  }
+
+  iniciarlizar() {
+    this.deliveryOrder = new Pagination();
+    this.deliveryOrder.items = this.serviceMock.originallist;
+    this.deliveryOrder.page = 1;
+    this.deliveryOrder.totalPages = this.serviceMock.originallist.length / 15;
+    this.totalPages = this.serviceMock.originallist.length / 15;
+  }
 
   navigateToDetails(orderId: number) {
     this.router.navigate(['inventory', 'orders', orderId, 'details']);
@@ -48,7 +63,6 @@ export class ConsultOrderComponent {
         (error) => {
           this.loading = false;
           alert('Orden No encontrada');
-          this.deliveryOrder = null;
         }
       );
   }
@@ -71,19 +85,38 @@ export class ConsultOrderComponent {
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.search();
+      this.deliveryOrder.splitList(this.currentPage);
     }
   }
 
   previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.search();
+      this.deliveryOrder.splitList(this.currentPage);
     }
   }
   changePage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
     }
+  }
+  onOrderIdChange(value: string): void {
+    this.orderId = value.trim();
+    this.serviceMock.filterByString(this.orderId);
+    this.deliveryOrder.items = this.serviceMock.listFiltered;
+    console.log(this.serviceMock.listFiltered.length);
+    this.totalPages = this.serviceMock.listFiltered.length / 15;
+  }
+
+  filterByDate(event: { from: NgbDate | null; to: NgbDate | null }) {
+    this.deliveryOrder.items = this.serviceMock.filterByDate(event);
+    this.orderId = '';
+    this.totalPages = this.serviceMock.listFiltered.length / 15;
+  }
+
+  ClearFilter() {
+    this.deliveryOrder.items = this.serviceMock.clearFilter();
+    this.orderId = '';
+    this.totalPages = this.serviceMock.listFiltered.length / 15;
   }
 }

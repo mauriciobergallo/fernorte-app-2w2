@@ -8,7 +8,8 @@
               <tr>
                 <td>
                   <h5 class="card-title">Orden de entrega</h5>
-                  <p>N#: {{ orderData.sale_order_id}}</p>
+                  <p>N#: {{ orderData.delivery_order_id}}</p>
+                  <p>Orden de Venta N#: {{ orderData.sale_order_id}}</p>
                   <p>Estado: {{ getStatusText(orderData.state) }}</p>
                   <p>Fecha de creación: {{ orderData.created_at }}</p>
                 </td>
@@ -33,6 +34,7 @@
         <table class="table table-striped">
           <thead>
             <tr>
+              <th class="text-center">Ubicación</th>
               <th class="text-center">Nombre del producto</th>
               <th class="text-center">Cantidad total</th>
               <th class="text-center">Cantidad restante</th>
@@ -42,12 +44,15 @@
           </thead>
           <tbody>
             <tr *ngFor="let detail of orderData.details">
+              <td style="cursor: pointer;" (click)="cargarModal(detail.product_name)" class="text-center"
+                data-bs-toggle="modal" data-bs-target="#exampleModalToggle"><i class="bi bi-pin-map"></i></td>
               <td class="text-center">{{ detail.product_name }}</td>
               <td class="text-center">{{ detail.quantity }}</td>
               <td class="text-center">{{ detail.quantity - detail.delivered_quantity }} </td>
               <td class="text-center">
                 <input [hidden]="detail.state == 'DELIVERED' " class="form-control mx-auto"
-                  [(ngModel)]="detail.delivered_quantity" style="width: 50%;" type="number" min="0">
+                  [(ngModel)]="detail.delivered_quantity" style="width: 50%;" type="number" min="0"
+                  (input)="limitInputValue($event, (detail.quantity - detail.delivered_quantity))">
               </td>
               <td class="text-center" style="font-size: 20px;">
                 <i [class]="detail.state | stateIconPipe" [ngbTooltip]="getTooltipText(detail.state)"></i>
@@ -58,9 +63,60 @@
       </div>
       <div style="float: right;">
         <button class="btn btn-secondary" style="margin-right: 10px;" (click)="confirmCancellation()">Volver</button>
-        <button class="btn btn-primary" (click)="save()">Guardar</button>
+        <button class="btn btn-primary" [hidden]="order.state == 'DELIVERED'" (click)="confirmSave()">Guardar</button>
       </div>
     </div>
   </div>
 </div>
-<span>{{order | json}}</span>
+
+
+
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" #myModal
+  tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Ubicación de producto</h1>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="productName"><b>Nombre del producto:</b></label>
+          <p id="productName">{{locationInfo.product_name}}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="zone"><b>Zona:</b></label>
+          <p id="zone">{{locationInfo.location.zone}}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="section"><b>Sección:</b></label>
+          <p id="section">{{locationInfo.location.section}}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="space"><b>Espacio:</b></label>
+          <p id="space">{{locationInfo.location.space}}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="totalCapacity"><b>Capacidad Total:</b></label>
+          <p id="totalCapacity">{{locationInfo.max_capacity}}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="availableCapacity"><b>Capacidad Disponible:</b></label>
+          <p id="availableCapacity">{{locationInfo.capacityRemaining}}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="unitOfMeasure"><b>Unidad de medida:</b></label>
+          <p id="unitOfMeasure">{{locationInfo.measure_unit}}</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>

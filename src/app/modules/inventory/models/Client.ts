@@ -1,5 +1,5 @@
 export class Client {
-    first_name: string = '';
-    last_name: string = '';
-    document_number: number = 0;
+  first_name: string = '';
+  last_name: string = '';
+  document_number: string = '';
 }
