@@ -17,46 +17,7 @@ export class OrdersGridComponent implements OnInit{
   purchaseOrders!: Observable<PurchaseOrderResponse[]>;
   paymentOrders!:  Observable< PaymentOrderResponse[]>;
   paymentTotal!: number;
-  suppliers: ISupplier[] = [/* {
-    id: 1,
-    socialReason: "Razon social 1",
-    fantasyName: "Fantasia 1",
-    cuit: "20323730009",
-    adress: "Direccion 1",
-    active: true,
-  },
-  {
-    id: 2,
-    socialReason: "Razon social 2",
-    fantasyName: "Fantasia 2",
-    cuit: "20323730009",
-    adress: "Direccion 2",
-    active: true,
-  },
-  {
-    id: 3,
-    socialReason: "Razon social 3",
-    fantasyName: "Fantasia 3",
-    cuit: "20323730009",
-    adress: "Direccion 3",
-    active: true,
-  },
-  {
-    id: 4,
-    socialReason: "Razon social 4",
-    fantasyName: "Fantasia 4",
-    cuit: "20323730009",
-    adress: "Direccion 4",
-    active: true,
-  },
-  {
-    id: 5,
-    socialReason: "Razon social 5",
-    fantasyName: "Fantasia 5",
-    cuit: "20323730009",
-    adress: "Direccion 5",
-    active: true,
-  } */]
+  suppliers: ISupplier[] = []
 
   constructor(private reportsService: ReportsServiceService,
     private suppliersService: SupliersService){}
@@ -85,7 +46,8 @@ export class OrdersGridComponent implements OnInit{
     return total;
   }
 
-  setSupplierName(supplierId: number): string {
+  setSupplierName(supplierId: number): string | undefined {
+    if (!supplierId) return;
     const name = this.suppliers.filter(supplier => supplier.id === supplierId)[0].fantasyName;
     return name;
   }

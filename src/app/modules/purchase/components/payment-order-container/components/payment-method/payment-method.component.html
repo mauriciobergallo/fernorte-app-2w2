@@ -3,7 +3,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">#</th>
+       
         <th scope="col">Monto</th>
         <th scope="col" class="w-50">Observación</th>
         <th scope="col">Método de pago</th>
@@ -50,12 +50,13 @@
             </select>
         </td>
       </tr> -->
-      <tr *ngFor="let paymentDetail of selectedPurchase">
-        <th scope="row">{{paymentDetail.id}}</th>
-        <td>{{paymentDetail.total}}</td>
+      <tr *ngFor="let paymentDetail of paymentOrderDetails">
+       
+        <td>${{paymentDetail.amount}}</td>
         <td>{{paymentDetail.observation}}</td>
         <td>
-          <select class="form-select" name="paymentMethod" id="paymentMethod" [(ngModel)]="paymentDetail.paymentMethod" required (change)="calculateTotals()">
+          <select class="form-select" name="paymentMethod" id="paymentMethod"  [(ngModel)]="paymentDetail.paymentMethod" required (change)="calculateTotals()">
+            <option [ngValue]="null" disabled selected>Selecciona un método</option>
             <option value="CASH">Efectivo</option>
             <option value="DEBIT">Débito</option>
             <option value="CREDIT">Crédito</option>
@@ -64,4 +65,6 @@
       </tr>
     </tbody>
   </table>
+  
+
 </section>
