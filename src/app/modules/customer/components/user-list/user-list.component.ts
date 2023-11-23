@@ -64,7 +64,7 @@ export class UserListComponent  implements OnInit {
 
 
   downloadPDF() {
-    let data = this.userListMock //REMPLAZAR ACÁ POR this.userList
+    let data = this.userList //REMPLAZAR ACÁ POR this.userList
     const pdf = new jsPDF() as any;
   
     let containsCompany = false;
