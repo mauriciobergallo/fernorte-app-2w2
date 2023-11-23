@@ -23,6 +23,7 @@ import { CreateMovementComponent } from './components/create-movement/create-mov
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SectionsComponent } from './components/locations/sections/sections.component';
 import { SpacesComponent } from './components/locations/spaces/spaces.component';
+import { LocationsComponent } from './components/locations/locations/locations.component';
 
 
 
@@ -43,7 +44,8 @@ import { SpacesComponent } from './components/locations/spaces/spaces.component'
     CreateMovementComponent,
     SectionsComponent,
     SpinnerComponent,
-    SpacesComponent
+    SpacesComponent,
+    LocationsComponent
   ],
 
   providers: [],
