@@ -146,7 +146,11 @@ export class UpdateCustomerComponent implements OnInit {
             .putCustumer(customerEnSnake, this.idCustomer)
             .subscribe(
               (response) => {
-                alert('Se actualizo el cliente');
+                Swal.fire({
+                  title: '¡Éxito!',
+                  text: 'Se actualizo el cliente',
+                  icon: 'success',
+                  });
               },
               (error) => {
                 alert('Error en el servidor');
@@ -226,7 +230,12 @@ onSubmit(clientForm: any){
     .putCustumer(customerEnSnake, this.idCustomer)
     .subscribe(
       (response) => {
-        alert('Se actualizo el cliente');
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Se actualizo el cliente',
+          icon: 'success',
+          });
+          this.modalService.dismissAll();
       },
       (error) => {
         alert('Error en el servidor');

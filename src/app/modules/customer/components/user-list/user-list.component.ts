@@ -172,10 +172,10 @@ export class UserListComponent  implements OnInit {
 
 
 
-    openModifyUserRolesForm(readonly: boolean, user: User) {
-      const modalRef = this.modalService.open(InfoUserComponent, { size: 'lg' });
+    openModifyUserRolesForm(user: User) {
+      const modalRef = this.modalService.open(InfoUserComponent, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static'});
       modalRef.componentInstance.userToUpdate = user;
-      modalRef.componentInstance.readonly = readonly;
+      modalRef.componentInstance.onlyForRead = true;
     }
 
 

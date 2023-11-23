@@ -108,12 +108,12 @@ export class UserFormComponent implements OnInit {
     markFormGroupTouched(this.userForm);
     if (this.userForm.valid) {
       Swal.fire({
-				title: `¿Estás seguro que desea editar el usuario?`,
+				title: `¿Estás seguro?`,
 				icon: "warning",
 				showCancelButton: true,
 				confirmButtonColor: "#dc3545",
 				cancelButtonColor: "#6c757d",
-				confirmButtonText: "¡Sí, editar!",
+				confirmButtonText: "¡Sí, guardar!",
 				cancelButtonText: "Cancelar"
 			  }).then((result) => {
 				if (result.isConfirmed) {
