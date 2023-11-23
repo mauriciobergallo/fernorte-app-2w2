@@ -7,6 +7,7 @@ import { UserFormComponent } from '../user-form/user-form.component';
 import Swal from 'sweetalert2';
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
+import { InfoUserComponent } from '../info-user/info-user.component';
 
 @Component({
   selector: 'fn-user-list',
@@ -20,6 +21,11 @@ export class UserListComponent  implements OnInit {
 
   userList: User[] = [];
   localUserList: User[] = [];
+
+  currentPage: number = 1;
+  itemsPerPage: number = 15;
+  contentEmployee: any;
+  pagedUser: User[] = [];
 
   constructor(private userService: UserService, private modalService: NgbModal) {}
 
@@ -167,7 +173,7 @@ export class UserListComponent  implements OnInit {
 
 
     openModifyUserRolesForm(readonly: boolean, user: User) {
-      const modalRef = this.modalService.open(ModifyUserRolComponent, { size: 'lg' });
+      const modalRef = this.modalService.open(InfoUserComponent, { size: 'lg' });
       modalRef.componentInstance.userToUpdate = user;
       modalRef.componentInstance.readonly = readonly;
     }
@@ -176,6 +182,7 @@ export class UserListComponent  implements OnInit {
   loadUser() {
     this.userService.getAllUser().subscribe((data: User[]) => {
       this.userList = data;
+      this.pageChanged(1);
     });
     console.log(this.userList);
   }
@@ -286,5 +293,21 @@ export class UserListComponent  implements OnInit {
       text: 'Servicio no disponible',
       icon: 'error',
     });
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.userList.length / this.itemsPerPage);
+  }
+
+  pageChanged(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      const startIndex = (page - 1) * this.itemsPerPage;
+      this.currentPage = page;
+      this.pagedUser = this.userList.slice(startIndex, startIndex + this.itemsPerPage);
+    }
+  }
+
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 }

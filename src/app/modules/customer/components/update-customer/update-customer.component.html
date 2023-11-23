@@ -117,7 +117,10 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button [disabled]="!onlyForRead" type="submit" class="btn btn-outline-dark"  (click)="onSubmit(customerForm)">Registrar</button>
+		<div class="modal-footer right-form-buttons">
+			<button type="button" class="btn btn-outline-secondary mt-3" (click)="onCancelar()">Cancelar</button>
+			<button type="button" class="btn btn-outline-primary mt-3" [disabled]="!customerForm.valid" (click)="onSubmit(customerForm)">Actualizar</button>
+		</div>
 	</div>
 
 

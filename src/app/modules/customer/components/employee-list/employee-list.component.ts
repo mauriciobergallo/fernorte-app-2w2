@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateEmployeeComponent } from '../update-employee/update-employee.component';
 import Swal from 'sweetalert2';
 import { EmployeeRegistrationComponent } from '../employee-registration/employee-registration.component';
+import { Employee } from '../../models/employee';
 
 
 @Component({
@@ -27,6 +28,11 @@ export class EmployeeListComponent implements OnInit {
   showInactivos: boolean = true;
 
   isCreateEmployeeModalOpen = false;
+
+  currentPage: number = 1;
+  itemsPerPage: number = 15;
+  contentEmployee: any;
+  pagedEmployee: EmployeeResponseDTO[] = [];
 
 
 
@@ -52,10 +58,11 @@ export class EmployeeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.onLoad()
-
     this.employeeService.getEmployeeUpdatedObservable().subscribe(() => {
       this.onLoad();
+      
     });
+    
   }
 
   onLoad() {
@@ -64,6 +71,7 @@ export class EmployeeListComponent implements OnInit {
         let toCamel: EmployeeResponseDTO[] = this.conversion.toCamelCase(response);
         this.employeeList = toCamel;
         this.localEmployeeList = toCamel;
+        this.pageChanged(1);
       },
       (error) => {
         console.log(error)
@@ -254,6 +262,21 @@ export class EmployeeListComponent implements OnInit {
     this.showInactivos = true;
   }
 
+  get totalPages(): number {
+    return Math.ceil(this.employeeList.length / this.itemsPerPage);
+  }
+
+  pageChanged(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      const startIndex = (page - 1) * this.itemsPerPage;
+      this.currentPage = page;
+      this.pagedEmployee = this.employeeList.slice(startIndex, startIndex + this.itemsPerPage);
+    }
+  }
+
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
 
   // openNewEmployeeModal() {
   //   const modalRef = this.modalService.open(EmployeeRegistrationComponent, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' });

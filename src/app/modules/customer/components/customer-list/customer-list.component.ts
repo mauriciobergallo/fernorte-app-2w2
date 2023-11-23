@@ -7,6 +7,7 @@ import { CreateCustomerComponent } from '../create-customer/create-customer.comp
 import { CustomerRequest } from '../../models/customer-request';
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
+import { InfoCustomerComponent } from '../info-customer/info-customer.component';
 
 @Component({
   selector: 'fn-customer-list',
@@ -16,8 +17,12 @@ import 'jspdf-autotable';
 export class CustomerListComponent implements OnInit {
   isCreateCustomerModalOpen: boolean = false;
 
+  currentPage: number = 1;
+  itemsPerPage: number = 15;
+  contentEmployee: any;
+  pagedCustomer: Customer[] = [];
+
   downloadPDF() {
-    debugger
     let data = this.customerList;
     const pdf = new jsPDF() as any;
 
@@ -329,6 +334,7 @@ export class CustomerListComponent implements OnInit {
     this.customerService.getAllCustomer().subscribe((data: Customer[]) => {
       this.customerList = data;
       this.localCustomerList = data;
+      this.pageChanged(1);
     });
   }
 
@@ -466,6 +472,20 @@ export class CustomerListComponent implements OnInit {
 
   }
 
+  openMoreInformationModal(customer: Customer){
+    console.log(customer);
+    this.selectedCustomerId = customer.id_customer;
+    const modalRef = this.modalService.open(InfoCustomerComponent, {
+      ariaLabelledBy: 'modal-basic-title',
+    });
+    modalRef.componentInstance.customerToUpdate = customer; // Pasar el ID del cliente al componente de actualización
+    modalRef.componentInstance.onlyForRead = true
+    modalRef.componentInstance.updateClicked.subscribe(() => {
+      // Abrir el modal del formulario de actualización
+      this.modalService.open(this.updateCustomerModal);
+      console.log('se abrio el modal del cliente');
+    });
+  }
 
   openUpdateCustomerModal(customer: Customer) {
     console.log(customer);
@@ -490,5 +510,21 @@ export class CustomerListComponent implements OnInit {
       console.log('se abrio el modal del empleado');
 
     });
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.customerList.length / this.itemsPerPage);
+  }
+
+  pageChanged(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      const startIndex = (page - 1) * this.itemsPerPage;
+      this.currentPage = page;
+      this.pagedCustomer = this.customerList.slice(startIndex, startIndex + this.itemsPerPage);
+    }
+  }
+
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 }
