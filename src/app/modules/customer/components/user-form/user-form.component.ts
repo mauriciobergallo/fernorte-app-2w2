@@ -172,7 +172,7 @@ export class UserFormComponent implements OnInit {
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonText: 'Sí, cancelar',
-			cancelButtonText: 'No, seguir editando'
+			cancelButtonText: 'No, seguir'
 		  }).then((result) => {
 			if (result.isConfirmed) {
 			this.modalService.dismissAll()
