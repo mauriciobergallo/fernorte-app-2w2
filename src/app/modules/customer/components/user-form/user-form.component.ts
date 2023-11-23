@@ -4,6 +4,7 @@ import { NewRole } from '../../models/new-role';
 import { Empleado } from '../../models/empleado';
 import { UserService } from '../../services/user.service';
 import { RoleService } from '../../services/role.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'fn-user-form',
@@ -11,7 +12,6 @@ import { RoleService } from '../../services/role.service';
   styleUrls: ['./user-form.component.css'],
 })
 export class UserFormComponent implements OnInit {
-  @Input() empleado: Empleado = new Empleado();
   password: string = '';
   selectedRole: NewRole = new NewRole();
 
@@ -28,7 +28,8 @@ export class UserFormComponent implements OnInit {
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private modalService: NgbModal
   ) {}
 
   removeRole(role: string) {
@@ -50,19 +51,23 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
+      documentNumber: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       selectedRole: ['', Validators.required],
     });
 
-    this.roleService.getAllWithFormat().subscribe((roles: NewRole[]) => {
+    this.roleService.getAllRoles().subscribe((roles: NewRole[]) => {
       console.log(roles);
       this.availableRoles = roles;
     });
+    this.open(this.userForm)
   }
 
   onSubmit() {
+    console.log("ON SUBMIT")
     if (this.userForm.valid) {
-      const documentNumber = this.empleado.documentNumber;
+      debugger
+      const documentNumber = this.userForm.get('documentNumber')?.value;
       const password = this.userForm.get('password')?.value;
       const roles = this.sendRoles.map((role) => role.id_role);
 
@@ -96,7 +101,11 @@ export class UserFormComponent implements OnInit {
     this.selectedRole = new NewRole();
   }
 
+  open(content: any){
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then()
+  }
+
   cancel() {
-    this.closeComponent.emit(false);
+    this.modalService.dismissAll()
   }
 }

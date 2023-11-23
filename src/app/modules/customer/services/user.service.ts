@@ -12,7 +12,7 @@ export class UserService {
 
   private apiUrl = 'http://localhost:8092/';
   private apiUrlGetAllRoles = 'http://localhost:8092/role';
-  private apiUrlnewUser = 'http://localhost:8092/users/new-user';
+  private apiUrlnewUser = 'http://localhost:8092/users';
   private apiUrlResetEmail = 'http://localhost:8092/users/reset';
   private apiUrlChangePassword = 'http://localhost:8092/users/';
   private baseUrl = 'http://localhost:8092/users';
@@ -20,7 +20,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   postNewUser(
-    documentNumber: string,
+    document_number: string,
     password: string,
     roles: number[]
   ): Observable<any> {
@@ -30,7 +30,7 @@ export class UserService {
     });
 
     const user = {
-      documentNumber,
+      document_number,
       password,
       roles,
     };

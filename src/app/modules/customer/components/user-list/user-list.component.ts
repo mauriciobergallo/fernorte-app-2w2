@@ -3,6 +3,7 @@ import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { ModifyUserRolComponent } from '../modify-user-rol/modify-user-rol.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserFormComponent } from '../user-form/user-form.component';
 
 @Component({
   selector: 'fn-user-list',
@@ -12,6 +13,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class UserListComponent  implements OnInit {
 
   @ViewChild('userRolForm') updateUserModal: TemplateRef<any> | undefined;
+  @ViewChild('newUserForm') newUserModal: TemplateRef<any> | undefined;
 
   userList: User[] = [];
 
@@ -65,6 +67,16 @@ export class UserListComponent  implements OnInit {
       // Abrir el modal del formulario de actualización
       this.modalService.open(this.updateUserModal); 
       console.log('se abrio el modal del usuario y sus roles');
+    });
+  }
+
+  openNewUserModal(){
+    const modalRef = this.modalService.open(UserFormComponent, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static' });
+     
+    modalRef.componentInstance.updateClicked.subscribe(() => {
+      this.modalService.open(this.newUserModal);
+      console.log('se abrio el modal del usuario');
+
     });
   }
 }
