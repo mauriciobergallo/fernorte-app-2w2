@@ -3,59 +3,62 @@
 <div class="container">
   <h1>Clientes</h1>
   <hr>
-  <div class="row">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-      <label class="mx-2">Agregar Cliente</label>
-      <button class="btn btn-success" (click)="openNewCustomerModal()">
-        <i class="bi bi-plus"></i> 
-      </button>  
+  <div>
+    <div class="row">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <label class="mx-2">Agregar Cliente</label>
+        <button class="btn btn-success" (click)="openNewCustomerModal()">
+          <i class="bi bi-plus"></i> 
+        </button>  
+      </div>
+    </div>
+    <h4 class="h4">Filtrar:</h4>
+    <div class="row">
+      <div class="col-md-4">
+        <input type="text" class="form-control" id="validationServer01" placeholder="Nombre, Apellido, Documento"
+        (input)="filterName($event, true)">
+      </div>
+
+      <div class="col-md-4">      
+        <select (change)="categoryChange($event, true)" class="form-select form-control-sm" id="medallas">
+          <option value="todos">Categoría de Cliente</option>
+          <option value="ORO">Oro</option>
+          <option value="PLATA">Plata</option>
+          <option value="BRONCE">Bronce</option>
+        </select>
+      </div>
+
+      <div class="col-md-4">
+        <select (change)="customerTypeChange($event, true)" id="medallas" class="form-select form-control-sm" id="medallas">
+          <option value="todos">Tipo de Cliente</option>
+          <option value="Fisica">Fisica</option>
+          <option value="Juridica">Juridica</option>  
+        </select>
+      </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-2"><button (click)="downloadPDF()" class="btn btn-success">Generar pdf</button></div>
+        <div class="col-2"><button (click)="downloadCSV()" class="btn btn-success">Generar excel</button></div>
+      </div>
     </div>
   </div>
-  <h4 class="h4">Filtrar:</h4>
-  <div class="row">
-    <div class="col-md-4">
-      <input type="text" class="form-control" id="validationServer01" placeholder="Nombre, Apellido, Documento"
-      (input)="filterName($event, true)">
-    </div>
-
-    <div class="col-md-4">      
-      <select (change)="categoryChange($event, true)" class="form-select form-control-sm" id="medallas">
-        <option value="todos">Categoría de Cliente</option>
-        <option value="ORO">Oro</option>
-        <option value="PLATA">Plata</option>
-        <option value="BRONCE">Bronce</option>
-    </select>
-    </div>
-
-    <div class="col-md-4">
-      <select (change)="customerTypeChange($event, true)" id="medallas" class="form-select form-control-sm" id="medallas">
-        <option value="todos">Tipo de Cliente</option>
-        <option value="Fisica">Fisica</option>
-        <option value="Juridica">Juridica</option>
-        
-    </select>
-    </div>
-    <br>
-  <button (click)="downloadPDF()" class="col-md-4">Boton magico generador de pdf</button>
-  <br>
-    <button class="col-md-4" (click)="downloadCSV()" >Boton generador de excel</button>
-  <br>  
-  <table class="table">
+  <table class="table container">
     <thead>
       <tr>
-        
-        <th scope="col" class="text-center">Nombre/Razón Social</th>
-        <th scope="col" class="text-center">Número de Documento</th>
-        <th scope="col" class="text-center">Categoría</th>
+        <th scope="col" class="text-center col-2">Nombre/Razón Social</th>
+        <th scope="col" class="text-center col-2">Documento</th>
+        <th scope="col" class="text-center col-2">Categoría</th>
+        <th scope="col" class="text-left col-2">Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let c of customerList">
-        <td *ngIf="c.first_name != '' && c.last_name != '' " class="text-center">{{ c.first_name }} {{ c.last_name }}</td>
-        <td *ngIf="c.first_name == '' || c.last_name == '' " class="text-center">{{ c.company_name }}</td>
-        <td class="text-center">{{ c.document_number }}</td>
-        <td class="text-center">{{ c.customer_category == 'Ninguna' ? '-' : c.customer_category }}</td>
-        <td class="text-center">
+        <td *ngIf="c.first_name != '' && c.last_name != '' " class="text-center col-2">{{ c.first_name }} {{ c.last_name }}</td>
+        <td *ngIf="c.first_name == '' || c.last_name == '' " class="text-center col-2">{{ c.company_name }}</td>
+        <td class="text-center col-2">{{ c.document_number }}</td>
+        <td class="text-center col-2">{{ c.customer_category == 'Ninguna' ? '-' : c.customer_category }}</td>
+        <td class="text-left col-2">
           <div class="dropdown">
             <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-three-dots-vertical"></i>
