@@ -44,6 +44,8 @@ import { ContactsComponent } from './components/supplier/contacts/contacts.compo
 import { AddSupplierComponent } from './components/supplier/add-supplier/add-supplier.component';
 import { FilterComponent } from './components/supplier/filter/filter.component';
 import { PricesModalComponent } from './components/supplier/prices-modal/prices-modal.component';
+import { GraficsComponent } from './components/report-container/components/grafics/grafics.component';
+
 
 @NgModule({
   declarations: [
@@ -76,30 +78,32 @@ import { PricesModalComponent } from './components/supplier/prices-modal/prices-
     DatePickerComponent,
     OrdersGridComponent,
     PaymentListComponent,
-  ],
-  providers: [],
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgbModule,
-    NgbPaginationModule,
-    NgbDropdownModule,
-    NgbToastModule,
-    RouterModule,
-    RouterChildModule,
-    NgbModalModule,
-    SweetAlert2Module.forRoot({
-      provideSwal: () =>
-        import('sweetalert2').then(({ default: swal }) =>
-          swal.mixin({
-            // example: set global options here
-            confirmButtonText: `Confirmar`,
-            cancelButtonText: `Cancelar`,
-          })
-        ),
-    }),
+    GraficsComponent,
+    
+          ],
+    providers: [],
+    imports: [
+      CommonModule,
+      FormsModule,
+      NgbModule,
+      NgbPaginationModule,
+      NgbDropdownModule,
+      NgbToastModule,
+      RouterModule,
+            RouterChildModule,
+      NgbModalModule,
+      SweetAlert2Module.forRoot({
+        provideSwal: () =>
+          import('sweetalert2').then(({ default: swal }) =>
+            swal.mixin({
+                      // example: set global options here
+              confirmButtonText: `Confirmar`,
+              cancelButtonText: `Cancelar`,
+            })
+          ),
+      }),
     ReactiveFormsModule,
-  ],
-  exports: [HomeComponent],
-})
-export class PurchaseModule {}
+    ],
+    exports: [HomeComponent],
+  })
+  export class PurchaseModule {}
