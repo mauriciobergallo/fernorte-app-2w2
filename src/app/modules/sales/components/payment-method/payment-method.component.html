@@ -8,17 +8,22 @@
                     <tr>
                         <th>Método de Pago</th>
                         <th>Recargo</th>
-                        <th class="d-flex align-items-center justify-content-center">Editar</th>
+                        <th>Editar</th>
+                        <th>Borrar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let method of paymentMethods">
                         <td>{{ method.payment_method }}</td>
                         <td>{{ method.surcharge }}% </td>
-                        <td class="d-flex align-items-center justify-content-center">
+                        <td>
                             <button type="button" class="btn btn-sm btn-primary " data-bs-toggle="modal"
                                 data-bs-target="#editModal" data-bs-whatever="@mdo" (click)="loadEditarForm(method)">
                                 <i class="bi bi-pencil"></i></button>
+                        </td>
+                        <td >
+                            <button type="button" class="btn btn-sm btn-primary"(click)="deleteOrActiveMethod(method)">
+                                <i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -49,18 +54,6 @@
                                     editForm.get('paymentMethod')?.getError('required')">
                                     El método de pago es requerido
                                 </small>
-                                <!-- <small id="paymentMethod" class="form-text text-muted error-message" *ngIf="       
-                                    !editForm.controls['paymentMethod'].valid &&
-                                    editForm.controls['paymentMethod'].touched &&
-                                    editForm.controls['paymentMethod']?.getError('maxLength')">
-                                    El método debe tener máximo 30 caracteres
-                                </small>
-                                <small id="paymentMethod" class="form-text text-muted error-message" *ngIf="       
-                                    !editForm.controls['paymentMethod'].valid &&
-                                    editForm.controls['paymentMethod'].touched &&
-                                    editForm.controls['paymentMethod']?.getError('minLength')">
-                                    El método debe tener mínimo 3 caracteres.
-                                </small> -->
                                 
                             </div>
                         </div>

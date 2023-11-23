@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./payment-method-register.component.css']
 })
 export class PaymentMethodRegisterComponent implements OnInit {
-  payment: IPaymentMethod = { id_payment_method: 0, payment_method: '', surcharge: 0 };
+  payment: IPaymentMethod = { id_payment_method: 0, payment_method: '', surcharge: 0,isDeleted:false  };
   registerForm: FormGroup;
 
 

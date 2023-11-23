@@ -10,8 +10,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./payment-method.component.css']
 })
 export class PaymentMethodComponent implements OnInit {
-  payment: IPaymentMethod = { id_payment_method: 0, payment_method: '', surcharge: 0 };
-  editPayment: IPaymentMethod = { id_payment_method: 0, payment_method: '', surcharge: 0 };
+
+  payment: IPaymentMethod = { id_payment_method: 0, payment_method: '', surcharge: 0, isDeleted:false };
+  editPayment: IPaymentMethod = { id_payment_method: 0, payment_method: '', surcharge: 0,isDeleted:false };
   paymentMethods: IPaymentMethod[] = [];
   editForm: FormGroup;
 
@@ -55,7 +56,7 @@ export class PaymentMethodComponent implements OnInit {
           console.log('Método de pago actualizado:', method);
           this.loadPaymentMethods();
           this.editForm.reset();
-          this.editPayment = { id_payment_method: 0, payment_method: '', surcharge: 0 };
+          this.editPayment = { id_payment_method: 0, payment_method: '', surcharge: 0,isDeleted:false  };
           {
             Swal.fire({
               title: "Actualización exitosa!",
@@ -73,6 +74,79 @@ export class PaymentMethodComponent implements OnInit {
         }
       })
   }
+
+
+  deleteOrActiveMethod(paymentMethod: IPaymentMethod) {
+    {
+      Swal.fire({
+        title: "Estas seguro?",
+        text: "Puedes revertir este cambio",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, borralo!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Borrado!",
+            text: "El metodo de pago fue eliminado.",
+            icon: "success"
+          });
+        }
+      });
+
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: "Estas seguro?",
+        text: "Puedes revertir este cambio",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText:  "Si, borralo!",
+        cancelButtonText: "No, cancelar!",
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          swalWithBootstrapButtons.fire({
+            title: "Borrado!",
+            text: "El metodo de pago fue eliminado.",
+            icon: "success"
+          });
+          this.paymentMethodService.deleteOrUpdateMethod(paymentMethod).subscribe({
+            next: (method) => {
+              console.log('Método de pago actualizado:', method);
+              this.loadPaymentMethods();
+              
+            },
+            error: (err) => {
+              Swal.fire({
+                title: "Error!",
+                text: "Contacte con soporte",
+                icon: "warning"
+              });
+            }
+          })
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelado",
+            text: "Su metodo de pago continua activo",
+            icon: "error"
+          });
+        }
+      });
+  }
+
+    }
+
 
   loadEditarForm(method: IPaymentMethod) {
 

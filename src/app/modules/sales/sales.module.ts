@@ -35,6 +35,7 @@ import { BillingSearchListComponent } from './components/billing-search-list/bil
 import { TaxRegisterComponent } from './components/tax-register/tax-register.component';
 import { PaymentMethodRegisterComponent } from './components/payment-method-register/payment-method-register.component';
 import { DateFormat2Pipe } from './pipes/date-format2.pipe';
+import { PaymentMethodDeletedComponent } from './components/payment-method-deleted/payment-method-deleted.component';
 
 
 
@@ -48,6 +49,7 @@ import { DateFormat2Pipe } from './pipes/date-format2.pipe';
     BillingComponent,
     PaymentMethodComponent,
     PaymentMethodRegisterComponent,
+    PaymentMethodDeletedComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
@@ -85,6 +87,7 @@ import { DateFormat2Pipe } from './pipes/date-format2.pipe';
     BillingComponent,
     PaymentMethodComponent,
     PaymentMethodRegisterComponent,
+    PaymentMethodDeletedComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
