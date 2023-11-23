@@ -37,9 +37,12 @@
 						<label for="documentType">Tipo de documento</label>
 						<select [(ngModel)]="employee.idDocumentType" [disabled]="onlyForRead" name="documentType" id="documentType" class="form-select">
 							{{employee.idDocumentType}}
-							<option *ngFor="let type of lstDocumentType" [value]="type.idDocumentType">
-								{{ type.description }}
-							</option>
+							<option value=0 disabled>Seleccione una opcion</option>
+							<option value=1>DNI</option>
+							<option value=2>LC</option>
+							<option value=3>LE</option>
+							<option value=4>CUIT</option>
+							<option value=5>CUIL</option>
 						</select>
 					</div>
 					<div class="flex-grow-1">
