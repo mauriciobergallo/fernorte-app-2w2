@@ -37,6 +37,7 @@ export class DeliverOrderService {
           detailOrder.state = detail.state;
           detailOrder.quantity = detail.quantity;
           detailOrder.delivered_quantity = detail.delivered_quantity;
+          detailOrder.quantity_delivery = detail.quantity - detail.delivered_quantity;
           return detailOrder;
         });
         deliveryOrder.client = data.client;

@@ -11,7 +11,9 @@ import Swal from 'sweetalert2';
 export class LocationsComponent implements OnInit {
   zonas: Zone[] = [];
   nuevaZona: any = {};
+  zonasOriginal :  Zone[] = [];
   zoneName = '';
+  zoneFilter = '';
   zoneCapacity: number = 0;
   totalCapacity: number = 100000;
   zone: Zone = {
@@ -27,6 +29,8 @@ export class LocationsComponent implements OnInit {
   }
   getZones() {
     this.zonas = this.service.getZones();
+    this.zonasOriginal = this.service.getZones();
+
   }
 
   excedeCapacidadMaxima(): boolean {
@@ -35,11 +39,11 @@ export class LocationsComponent implements OnInit {
   }
 
   getOcupacionTotal(): number {
-    if (!this.zonas || this.zonas.length === 0) {
+    if (!this.zonasOriginal || this.zonasOriginal.length === 0) {
       return 0;
     }
 
-    const ocupacionTotal = this.zonas.reduce(
+    const ocupacionTotal = this.zonasOriginal.reduce(
       (total, zona) => total + zona.maxCapacity,
       0
     );
@@ -139,6 +143,20 @@ export class LocationsComponent implements OnInit {
     }, 100);
   }
 
+  onNameIdChange(value: Event): void {
+    const query = (value.target as HTMLInputElement).value.trim();
+  
+    if (query === '' || query === ' ') {
+      this.zonas = this.zonasOriginal;
+    } else {
+      this.zoneFilter = query;
+      this.zonas = this.zonasOriginal.filter(p => p.name.toLowerCase().includes(this.zoneFilter.toLowerCase()));
+      console.log(this.zonasOriginal);
+      console.log(this.zoneFilter);
+      console.log(this.zonas);
+    }
+  }
+  
   navigateToSections(zone: Zone) {
     this.router.navigate(['inventory', 'locations', zone.Id, 'section']);
   }

@@ -15,6 +15,8 @@ import {
 })
 export class SectionsComponent {
   sections: Section[] = [];
+  sectionsOrginal: Section[] = [];
+  sectionFilter: string = '';
   zone: Zone = {
     Id: 0,
     name: '',
@@ -49,6 +51,7 @@ export class SectionsComponent {
 
     this.zone = this.service.getZoneById(id);
     this.sections = this.zone.sections;
+    this.sectionsOrginal = this.zone.sections;
     this.totalCapacity = this.zone.maxCapacity;
     console.log(this.zone);
   }
@@ -64,11 +67,11 @@ export class SectionsComponent {
   }
 
   getOcupacionTotal(): number {
-    if (!this.sections || this.sections.length === 0) {
+    if (!this.sectionsOrginal || this.sectionsOrginal.length === 0) {
       return 0;
     }
 
-    const ocupacionTotal = this.sections.reduce(
+    const ocupacionTotal = this.sectionsOrginal.reduce(
       (total, zona) => total + zona.maxCapacity,
       0
     );
@@ -194,5 +197,17 @@ export class SectionsComponent {
   }
   backToSections() {
     this.router.navigate(['inventory', 'locations']);
+  }
+
+
+  onNameIdChange(value: Event): void {
+    const query = (value.target as HTMLInputElement).value.trim();
+  
+    if (query === '' || query === ' ') {
+      this.sections = this.sectionsOrginal;
+    } else {
+      this.sectionFilter = query;
+      this.sections = this.sectionsOrginal.filter(p => p.categoryName.toLowerCase().includes(this.sectionFilter.toLowerCase()));
+    }
   }
 }

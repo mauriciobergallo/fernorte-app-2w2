@@ -17,7 +17,8 @@ import {
 export class SpacesComponent {
   spaces: Space[] = [];
   selectedProduct = new Product('', '');
-
+  spacesOriginal: Space[] = [];
+  spaceFilter: string = '';
   onSelectProduct(event: any) {
     const selectedIndex = event.target.selectedIndex;
     this.selectedProduct = this.productMock[selectedIndex];
@@ -88,6 +89,7 @@ export class SpacesComponent {
   getZone(id: number, sectionId: number) {
     this.section = this.service.getSectionById(id, sectionId);
     this.spaces = this.section.spaces;
+    this.spacesOriginal = this.section.spaces;
     this.zone = this.service.getZoneById(id);
     this.totalCapacity = this.section.maxCapacity;
     console.log(this.zone);
@@ -116,11 +118,11 @@ export class SpacesComponent {
   }
 
   getOcupacionTotal(): number {
-    if (!this.spaces || this.spaces.length === 0) {
+    if (!this.spacesOriginal || this.spacesOriginal.length === 0) {
       return 0;
     }
 
-    const ocupacionTotal = this.spaces.reduce(
+    const ocupacionTotal = this.spacesOriginal.reduce(
       (total, zona) => total + zona.maxCapacity,
       0
     );
@@ -129,11 +131,11 @@ export class SpacesComponent {
   }
 
   getOcupacionTotalEdit(): number {
-    if (!this.spaces || this.spaces.length === 0) {
+    if (!this.spacesOriginal || this.spacesOriginal.length === 0) {
       return 0;
     }
 
-    var ocupacionTotal = this.spaces.reduce(
+    var ocupacionTotal = this.spacesOriginal.reduce(
       (total, zona) => total + zona.maxCapacity,
       0
     );
@@ -306,6 +308,17 @@ export class SpacesComponent {
   }
   backToSections() {
     this.router.navigate(['inventory', 'locations', this.zone.Id, 'section']);
+  }
+
+  onNameIdChange(value: Event): void {
+    const query = (value.target as HTMLInputElement).value.trim();
+  
+    if (query === '' || query === ' ') {
+      this.spaces = this.spacesOriginal;
+    } else {
+      this.spaceFilter = query;
+      this.spaces = this.spacesOriginal.filter(p => p.productName.toLowerCase().includes(this.spaceFilter.toLowerCase()));
+    }
   }
 }
 export class Product {

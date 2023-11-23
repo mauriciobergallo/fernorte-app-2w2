@@ -6,6 +6,7 @@
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarUbicacionModal">
       <i class="bi bi-plus"></i> Agregar Zona
     </button>
+    
 
     <div class="text-center">
       <div class="mb-2">
@@ -16,7 +17,12 @@
       </div>
     </div>
   </div>
+  <div class=" input-group mb-3 custom-search" style="max-width: 30%; margin-top: 20px;">
+    <input class="form-control col-1"
+      placeholder="Busqueda por Zona" (input)="onNameIdChange($event)">
+  </div>
   <hr>
+
 
   <div class="row">
     <div class="col">
