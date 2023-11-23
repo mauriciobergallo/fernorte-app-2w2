@@ -40,9 +40,9 @@ export class CurrentInventoryComponent implements OnInit, OnDestroy {
     this.warehouseService.getLocationsInfoFiltered(0).subscribe({
       next: (resp: Pagination) => {
         this.locations = resp;
-        this.locationInfoList = resp.items;
-        this.filteredList = [...this.locations.items];
-        this.originalList = [...this.locations.items];
+        this.locationInfoList = this.mock.getmockloc();
+        this.originalList = [...this.locationInfoList];
+        this.filteredList = [...this.mock.getmockloc()];
         this.loading = false;
       },
       error: (error) => {
