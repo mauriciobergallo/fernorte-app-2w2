@@ -186,6 +186,7 @@ export class EmployeeListComponent implements OnInit {
   onFiltrarInput(event: any) {
     this.onFiltrarNombre(event);
     this.employeeList = this.buscarActivo(this.showInactivos)
+    this.pageChanged(1);
   }
 
   onFiltrarNombre(event: any) {
@@ -235,6 +236,7 @@ export class EmployeeListComponent implements OnInit {
       this.onFiltrarNombre(this.filtroInput)
     }
     this.employeeList = this.buscarActivo(!this.showInactivos)
+    this.pageChanged(1);
   }
 
   buscarActivo(showInactivos: boolean) {

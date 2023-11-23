@@ -378,6 +378,7 @@ export class CustomerListComponent implements OnInit {
     }
 
     this.customerList = listaFiltrada;
+    this.pageChanged(1)
   }
 
   categoryChange(event: any, userChange: boolean) {
@@ -403,7 +404,10 @@ export class CustomerListComponent implements OnInit {
       this.customerList = this.customerList.filter((c) => {
         return c.customer_category?.startsWith(categoria);
       });
+
     }
+    console.log(this.customerList)
+    this.pageChanged(1);
   }
 
   customerTypeChange(event: any, userChange: boolean) {
@@ -431,6 +435,7 @@ export class CustomerListComponent implements OnInit {
     if (this.searchInput != '') {
       this.filterName(this.searchInput, false);
     }
+    this.pageChanged(1)
   }
 
   buscarNombre(palabraIncompleta: string): Customer[] {
