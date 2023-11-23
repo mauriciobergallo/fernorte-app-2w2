@@ -9,7 +9,7 @@ import { Customer } from '../../models/customer';
   styleUrls: ['./customer-reports.component.css']
 })
 export class CustomerReportsComponent implements OnInit {
-
+  customerList: Customer[] = [];
 
 
   constructor(private customerService: CustomerService) {}
@@ -17,12 +17,18 @@ export class CustomerReportsComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("Test")
-    this.customerList = this.customers; //Reemplazar por getall de clientes
 
-    this.crearGraficoTarta();
+    this.customerList = this.customers; //Reemplazar por getall de clientes
+    this.customerService.getAllCustomer().subscribe(
+      (response) => {
+        this.customerList = response
+        this.crearGraficoTarta();
+      }
+    )
+    
   }
 
-  customerList: Customer[] = [];
+  
 
 
   // clientes = [
@@ -108,6 +114,7 @@ export class CustomerReportsComponent implements OnInit {
   ];
   
   crearGraficoTarta() {
+    debugger
     // Filtrar la lista de clientes para obtener la cantidad por categoría
     const categorias = this.customerList.map(customerList => customerList?.customer_category);
     const cantidadPorCategoria = this.contarElementos(categorias);
@@ -123,7 +130,7 @@ export class CustomerReportsComponent implements OnInit {
       'ORO': 'rgba(103,169,207)',  // Amarillo oro
       'PLATA': 'rgba(31,108,174)',  // Gris plata
       'BRONCE': 'rgba(8,46,104)',   // Marrón bronce
-      'Sin categoría': 'rgba(230, 169, 169, 0.7)',  // Gris por defecto
+      'Ninguna': 'rgba(230, 169, 169, 0.7)',  // Gris por defecto
     };
 
 

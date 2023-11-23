@@ -14,6 +14,8 @@ import { FirstLoginComponent } from "./components/first-login/first-login.compon
 import { UserListComponent } from "./components/user-list/user-list.component";
 import { CustomerListComponent } from "./components/customer-list/customer-list.component";
 import { CustomerReportsComponent } from "./components/customer-reports/customer-reports.component";
+import { ReportComponent } from "./components/report/report.component";
+import { ReportCustomerComponent } from "./components/report-customer/report-customer.component";
 
 
   const routes: Routes = [
@@ -28,7 +30,8 @@ import { CustomerReportsComponent } from "./components/customer-reports/customer
         {path: 'users', component: UserListComponent },
         {path: 'customers', component: CustomerListComponent },
         {path: "update-costumer", component: UpdateCustomerComponent}, 
-        {path: "reports", component: CustomerReportsComponent}
+        {path: "reports", component: CustomerReportsComponent},
+        {path: "report-customer", component: ReportCustomerComponent},
       ]
     }]
 

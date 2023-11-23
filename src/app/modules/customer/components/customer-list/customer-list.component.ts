@@ -17,6 +17,7 @@ export class CustomerListComponent implements OnInit {
   isCreateCustomerModalOpen: boolean = false;
 
   downloadPDF() {
+    debugger
     let data = this.customerList;
     const pdf = new jsPDF() as any;
 
@@ -39,13 +40,11 @@ export class CustomerListComponent implements OnInit {
     if (containsCompany && !containsPerson) {
       headers = [
         'Empresa',
-        'Condición de Iva',
         'Telefono',
-        'Fecha de nacimiento/fundación',
+        'Fecha de fundación',
         'Dirección',
         'Tipo de documento',
         'Documento',
-        'Tipo de cliente',
       ];
 
       dataForPDF = this.customerList.map((item) => {
@@ -56,19 +55,18 @@ export class CustomerListComponent implements OnInit {
           socialReason = item.company_name;
         }
 
-        const formattedDate = `${item.birth_date.getDate()}/${
-          item.birth_date.getMonth() + 1
-        }/${item.birth_date.getFullYear()}`;
+        // const formattedDate = `${item.birth_date.getDate()}/${
+        //   item.birth_date.getMonth() + 1
+        // }/${item.birth_date.getFullYear()}`;
+        
 
         return [
           socialReason,
-          item.iva_condition,
           item.phone_number,
-          formattedDate,
+          item.birth_date,
           item.address,
           item.document_type,
           item.document_number,
-          item.customer_type,
         ]; // Devuelve un array con los valores deseados
       });
     }
@@ -76,13 +74,11 @@ export class CustomerListComponent implements OnInit {
     if (!containsCompany && containsPerson) {
       headers = [
         'Nombre',
-        'Condición de Iva',
         'Telefono',
-        'Fecha de nacimiento/fundación',
+        'Fecha de nacimiento',
         'Dirección',
         'Tipo de documento',
         'Documento',
-        'Tipo de cliente',
       ];
 
       dataForPDF = this.customerList.map((item) => {
@@ -92,19 +88,17 @@ export class CustomerListComponent implements OnInit {
         if (item.customer_type === 'Juridica') {
           socialReason = item.company_name;
         }
-        const formattedDate = `${item.birth_date.getDate()}/${
-          item.birth_date.getMonth() + 1
-        }/${item.birth_date.getFullYear()}`;
+        // const formattedDate = `${item.birth_date.getDate()}/${
+        //   item.birth_date.getMonth() + 1
+        // }/${item.birth_date.getFullYear()}`;
 
         return [
           socialReason,
-          item.iva_condition,
           item.phone_number,
-          formattedDate,
+          item.birth_date,
           item.address,
           item.document_type,
           item.document_number,
-          item.customer_type,
         ]; // Devuelve un array con los valores deseados
       });
     }
@@ -112,9 +106,8 @@ export class CustomerListComponent implements OnInit {
     if (containsCompany && containsPerson) {
       headers = [
         'Nombre / Razón social',
-        'Condición de Iva',
         'Telefono',
-        'Fecha de nacimiento/fundación',
+        'Fecha de nacimiento / Fundación',
         'Dirección',
         'Tipo de documento',
         'Documento',
@@ -128,15 +121,14 @@ export class CustomerListComponent implements OnInit {
         if (item.customer_type === 'Juridica') {
           socialReason = item.company_name;
         }
-        const formattedDate = `${item.birth_date.getDate()}/${
-          item.birth_date.getMonth() + 1
-        }/${item.birth_date.getFullYear()}`;
+        // const formattedDate = `${item.birth_date.getDate()}/${
+        //   item.birth_date.getMonth() + 1
+        // }/${item.birth_date.getFullYear()}`;
 
         return [
           socialReason,
-          item.iva_condition,
           item.phone_number,
-          formattedDate,
+          item.birth_date,
           item.address,
           item.document_type,
           item.document_number,
@@ -174,7 +166,7 @@ export class CustomerListComponent implements OnInit {
     });
 
     // Guardar o mostrar el PDF
-    doc.save('table.pdf');
+    doc.save('ReporteClientes.pdf');
   }
 
   // downloadCSV() {
@@ -221,7 +213,7 @@ export class CustomerListComponent implements OnInit {
     let socialReason:string | undefined;
   
     let csvContent =
-      'Nombre/Razón social,Condición de IVA,Telefono,Fecha de nacimiento/fundación,Dirección,Tipo de documento,Documento,Tipo de cliente\n';
+      'Nombre/Razon social;Telefono;Fecha de nacimiento / Fundacion;Direccion;Tipo de documento;Documento;Tipo de cliente\n';
   
     data.forEach((item) => {
       if (item.customer_type === "Fisica") {
@@ -231,16 +223,16 @@ export class CustomerListComponent implements OnInit {
         socialReason = item.company_name;
       } 
   
-      const formattedDate = `${item.birth_date.getDate()}/${item.birth_date.getMonth() + 1}/${item.birth_date.getFullYear()}`;
+      // const formattedDate = `${item.birth_date.getDate()}/${item.birth_date.getMonth() + 1}/${item.birth_date.getFullYear()}`;
   
-      csvContent += `"${socialReason}","${item.iva_condition || ''}","${item.phone_number || ''}","${formattedDate}","${item.address || ''}","${item.document_type || ''}","${item.document_number || ''}","${item.customer_type}"\n`;
+      csvContent += `"${socialReason}";"${item.phone_number || ''}";"${item.birth_date}";"${item.address || ''}";"${item.document_type || ''}";"${item.document_number || ''}";"${item.customer_type}"\n`;
     });
   
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', 'ReportePreciosHistoricos.csv');
+    link.setAttribute('download', 'ReporteClientes.csv');
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
@@ -249,6 +241,7 @@ export class CustomerListComponent implements OnInit {
   
 
   customerList: Customer[] = [];
+  localCustomerList: Customer[] = [];
   searchInput: string = '';
   selectedCategory: string = 'todos';
   selectedTipoCliente: string = 'todos';
@@ -262,8 +255,9 @@ export class CustomerListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadUser();
     this.customerList = this.customers;
+    this.loadUser();
+    
   }
 
   //Este mock tiene que remplazarse por un getall de clientes, podría hacerse en el loadUser
@@ -334,6 +328,7 @@ export class CustomerListComponent implements OnInit {
   loadUser() {
     this.customerService.getAllCustomer().subscribe((data: Customer[]) => {
       this.customerList = data;
+      this.localCustomerList = data;
     });
   }
 
@@ -351,7 +346,7 @@ export class CustomerListComponent implements OnInit {
       let filtro = event.target.value;
     }
 
-    this.customerList = this.customers;
+    this.customerList = this.localCustomerList;
 
     let filtroNombre: Customer[] = this.buscarNombre(this.searchInput);
 
@@ -381,7 +376,7 @@ export class CustomerListComponent implements OnInit {
 
   categoryChange(event: any, userChange: boolean) {
     console.log('EVENTO CAMBIO', event.target.value);
-    this.customerList = this.customers;
+    this.customerList = this.localCustomerList;
     let categoria = '';
     if (userChange) {
       this.selectedCategory = event.target.value;
@@ -407,7 +402,7 @@ export class CustomerListComponent implements OnInit {
 
   customerTypeChange(event: any, userChange: boolean) {
     let tipoCliente = '';
-    this.customerList = this.customers;
+    this.customerList = this.localCustomerList;
     if (userChange) {
       this.selectedTipoCliente = event.target.value;
       tipoCliente = event.target.value;

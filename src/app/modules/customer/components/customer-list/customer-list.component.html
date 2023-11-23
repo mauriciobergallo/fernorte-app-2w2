@@ -46,7 +46,7 @@
         
         <th scope="col" class="text-center">Nombre/Razón Social</th>
         <th scope="col" class="text-center">Número de Documento</th>
-        <th scope="col" class="text-center">Email</th>
+        <th scope="col" class="text-center">Categoría</th>
       </tr>
     </thead>
     <tbody>
@@ -54,7 +54,7 @@
         <td *ngIf="c.first_name != '' && c.last_name != '' " class="text-center">{{ c.first_name }} {{ c.last_name }}</td>
         <td *ngIf="c.first_name == '' || c.last_name == '' " class="text-center">{{ c.company_name }}</td>
         <td class="text-center">{{ c.document_number }}</td>
-        <td class="text-center">{{ c.email }}</td>
+        <td class="text-center">{{ c.customer_category == 'Ninguna' ? '-' : c.customer_category }}</td>
         <td class="text-center">
           <div class="dropdown">
             <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
