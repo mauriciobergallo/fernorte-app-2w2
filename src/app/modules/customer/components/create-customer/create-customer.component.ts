@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerRequest } from '../../models/customer-request';
-import { FormGroup, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerService } from '../../services/customer.service';
 import { DatePipe } from '@angular/common';
@@ -15,39 +15,45 @@ import Swal from 'sweetalert2';
   styleUrls: ['./create-customer.component.css']
 })
 export class CreateCustomerComponent implements OnInit{
-customerForm!: FormGroup;
-
-formattedBirthDate: string = '';
-
-
-minDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
-maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };;
-currentYear = new Date().getFullYear();
-
-
-
-customer: CustomerRequest = {
-firstName:"",
-lastName:"",
-companyName: "",
-ivaCondition: "Monotributo",
-birthDate: new Date().toISOString(),
-idDocumentType:1,
-documentNumber:"",
-address:"",
-phoneNumber:"",
-email: "",
-customerType: ""
-};
-
-  isCompany: boolean = false; 
-  isTypeChecked: boolean = false;
-
+	customerForm: FormGroup;
+	formattedBirthDate: string = '';
+	minDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
+	maxDate: NgbDateStruct = { year: 2000, month: 1, day: 1 };
+	currentYear = new Date().getFullYear();
+	customer: CustomerRequest = {
+	  firstName: "",
+	  lastName: "",
+	  companyName: "",
+	  ivaCondition: "Monotributo",
+	  birthDate: new Date().toISOString(),
+	  idDocumentType: 1,
+	  documentNumber: "",
+	  address: "",
+	  phoneNumber: "",
+	  email: "",
+	  customerType: ""
+	};
+  
+	isCompany: boolean = false;
+	isTypeChecked: boolean = false;
+  
 	closeResult = '';
 
-	constructor(private modalService: NgbModal, private customerService: CustomerService, private conversion: CaseConversionPipe) {
-
-
+	constructor(private modalService: NgbModal, private customerService: CustomerService, private fb: FormBuilder, private conversion: CaseConversionPipe) {
+		this.customerForm = this.fb.group({
+		  customerType: ['', Validators.required],
+		  firstName: ['', [Validators.pattern('^[^0-9]+$')]],
+		  lastName: ['', [Validators.pattern('^[^0-9]+$')]],
+		  companyName: [''],
+		  idDocumentType: ['', Validators.required],
+		  documentNumber: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(7)]],
+		  ivaCondition: ['Monotributo', Validators.required],
+		  birthDate: ['', Validators.required],
+		  email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')]],
+		  address: ['', Validators.required],
+		  phoneNumber: ['', Validators.required],
+		});
+	
 
 		    // Obtén la fecha actual
 			const currentDate = new Date();
@@ -67,7 +73,7 @@ customerType: ""
 			  };
 	}
 	ngOnInit(): void {
-		throw new Error('Method not implemented.');
+		this.open(this.customerForm);
 	}
 
 	closeForm() {
@@ -107,31 +113,30 @@ customerType: ""
 	}
 
 
-  onChangeCompany(value: boolean){
-    this.customer.customerType = value ? "Juridica" : "Fisica"
-	if(value){
-		this.customer.firstName = "";
-		this.customer.lastName = "";
-	}
-	else{
-		this.customer.companyName = "";
-	}
-    this.isCompany = value;
-	this.isTypeChecked = true;
-  }
+	onChangeCompany(value: boolean) {
+		this.customer.customerType = value ? "Juridica" : "Fisica";
+		if (value) {
+		  this.customer.firstName = "";
+		  this.customer.lastName = "";
+		} else {
+		  this.customer.companyName = "";
+		}
+		this.isCompany = value;
+		this.isTypeChecked = true;
+	  }
 
-  onBirthDateChange(event: NgbDateStruct) {
-	if (event) {
-	  const year = event.year || 0;
-	  const month = event.month || 1;
-	  const day = event.day || 1;
-  
-	  const selectedDate = new Date(year, month - 1, day);
-	  this.formattedBirthDate = selectedDate.toISOString();
-	} else {
-	  this.formattedBirthDate = '';
-	}
-  }
+	  onBirthDateChange(event: NgbDateStruct) {
+		if (event) {
+		  const year = event.year || 0;
+		  const month = event.month || 1;
+		  const day = event.day || 1;
+	
+		  const selectedDate = new Date(year, month - 1, day);
+		  this.formattedBirthDate = selectedDate.toISOString();
+		} else {
+		  this.formattedBirthDate = '';
+		}
+	  }
 
   setDocumentTypeDescription(id: number): string{
 	switch(id){
@@ -155,7 +160,7 @@ customerType: ""
 
  
   onSubmitForm() {
-	if (this.customerForm.valid) {
+    if (this.customerForm.valid) {
 		// Realizar conversión a snake_case aquí antes de enviar al servidor
 		const customerData = this.conversion.toSnakeCase(this.customerForm.value);
 
@@ -171,24 +176,24 @@ customerType: ""
 		  };
 		  let customerInSnake = this.conversion.toSnakeCase(newCustomer);
 
-		this.customerService.postCustomer(customerInSnake).subscribe(
-			(newCustomer: CustomerRequest) => {
-
-				this.modalService.dismissAll(newCustomer);
-				console.log(customerData);
-				Swal.fire('Éxito', 'Cliente registrado correctamente', 'success');
-				this.customerService.notifyEmployeeUpdated();
+		  this.customerService.postCustomer(customerData).subscribe(
+			(response) => {
+			  alert("Se creo el cliente");
+			  this.closeForm();
 			},
 			(error) => {
-				Swal.fire('Error', 'No se pudo registrar al cliente', 'error');
+			  alert("Error en el servidor");
 			}
-		);
-	} else {
-		// El formulario no es válido, puedes mostrar un mensaje de error o hacer algo más
-		Swal.fire('Error', 'El formulario no es válido', 'error');
-		this.customerForm.markAllAsTouched();
-	}
-}
+		  );
+	
+		  // Clear form and reset values
+		  this.customerService.clearFields(this.customer);
+		  this.closeResult = `Closed with success`;
+		} else {
+		  Swal.fire('Error', 'El formulario no es válido', 'error');
+		  this.customerForm.markAllAsTouched();
+		}
+	  }
 
 showCancelConfirmation() {
 	Swal.fire({
