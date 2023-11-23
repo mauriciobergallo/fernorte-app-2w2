@@ -10,6 +10,7 @@ export class PaymentMethodNavComponent implements OnInit {
 
   activeTab: string = 'Metodos';
   regist: boolean = false;
+  deleted: boolean = false;
 
   constructor() { }
 
@@ -19,10 +20,18 @@ export class PaymentMethodNavComponent implements OnInit {
   toMethods(tab: string) {
     this.activeTab = tab;
     this.regist = false;
+    this.deleted = false;
   }
-
+  
   toRegisterMethod(tab: string) {
     this.activeTab = tab;
     this.regist = true;
+    this.deleted = true
+  }
+
+  toDeletedMethod(tab: string) {
+    this.activeTab = tab;
+    this.deleted = true;
+    this.regist=false;
   }
 }

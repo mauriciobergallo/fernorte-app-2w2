@@ -36,6 +36,7 @@ import { TaxRegisterComponent } from './components/tax-register/tax-register.com
 import { PaymentMethodRegisterComponent } from './components/payment-method-register/payment-method-register.component';
 import { DateFormat2Pipe } from './pipes/date-format2.pipe';
 import { SpinnerComponent } from './components/spinner/viewspinner/spinner.component';
+import { PaymentMethodDeletedComponent } from './components/payment-method-deleted/payment-method-deleted.component';
 
 
 
@@ -49,6 +50,7 @@ import { SpinnerComponent } from './components/spinner/viewspinner/spinner.compo
     BillingComponent,
     PaymentMethodComponent,
     PaymentMethodRegisterComponent,
+    PaymentMethodDeletedComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
@@ -68,7 +70,8 @@ import { SpinnerComponent } from './components/spinner/viewspinner/spinner.compo
     PriceFormatPipe,
     DateFormat2Pipe,
     CaseConverterPipe,
-    SpinnerComponent
+    SpinnerComponent,
+    PaymentMethodDeletedComponent
     ],
 
 
@@ -87,6 +90,7 @@ import { SpinnerComponent } from './components/spinner/viewspinner/spinner.compo
     BillingComponent,
     PaymentMethodComponent,
     PaymentMethodRegisterComponent,
+    PaymentMethodDeletedComponent,
     CreatePaymentComponent,
     SidenavComponent,
     PaymentMethodNavComponent,
@@ -105,7 +109,8 @@ import { SpinnerComponent } from './components/spinner/viewspinner/spinner.compo
     PriceFormatPipe,
     DateFormat2Pipe,
     CaseConverterPipe,
-  SpinnerComponent],
+  SpinnerComponent,
+PaymentMethodDeletedComponent],
 
 })
 export class SalesModule {}

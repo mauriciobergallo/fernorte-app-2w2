@@ -28,5 +28,16 @@ export class PaymentMethodService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<IPaymentMethod>(url, payment, { headers });
   }
+  deleteOrUpdateMethod(payment: IPaymentMethod): Observable<IPaymentMethod> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.patch<IPaymentMethod>(`${url}/${payment.id_payment_method}`, { headers });
+  }
 
-}
+    getInactivePaymentMethods(): Observable<IPaymentMethod[]>{
+     
+      return this.http.get<IPaymentMethod[]>(`${url}/${'inactives'}`);
+      }
+  }
+
+
+

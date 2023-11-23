@@ -14,12 +14,17 @@
           <a class="nav-link" [class.active]="activeTab === 'Register'" (click)="toRegisterMethod('Register')"
             aria-current="page">Registrar</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="activeTab === 'Deleted'" (click)="toDeletedMethod('Deleted')"
+            aria-current="page">Borrados</a>
+        </li>
       </ul>
     </div>
 
     <div class="centered-content">
       <fn-payment-method *ngIf="activeTab === 'Metodos'"></fn-payment-method>
       <fn-payment-method-register *ngIf="activeTab === 'Register'"></fn-payment-method-register>
+      <fn-payment-method-deleted *ngIf="activeTab === 'Deleted'"></fn-payment-method-deleted>
     </div>
   </div>
 </section>

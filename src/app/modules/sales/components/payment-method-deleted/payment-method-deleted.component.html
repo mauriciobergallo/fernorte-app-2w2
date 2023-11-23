@@ -1,0 +1,28 @@
+<!-- payment-method.component.html -->
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Método de Pago</th>
+                        <th>Recargo</th>
+                        <th class="d-flex align-items-center justify-content-center">Borrar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let method of paymentMethods">
+                        <td>{{ method.payment_method }}</td>
+                        <td>{{ method.surcharge }}% </td>
+                        <td class="d-flex align-items-center justify-content-center">
+                            <button type="button" class="btn btn-sm btn-primary " data-bs-toggle="modal"
+                                data-bs-target="#editModal" data-bs-whatever="@mdo" (click)="deleteOrActiveMethod(method)">
+                                <i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
