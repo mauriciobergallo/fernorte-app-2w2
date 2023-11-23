@@ -17,7 +17,11 @@ export class AppComponent {
   }
 
   getRole(){
-    return this.auth.getRole();
+    return this.auth.getRoles();
+  }
+
+  getArea(){
+    return this.auth.getArea()
   }
 
   getEmail(){

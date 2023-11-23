@@ -29,7 +29,15 @@ export class LoginService {
     return '';
   }
   
-  getRole(){
+
+  getArea(){
+    if(this.user != null){
+      return this.user.area;
+    }
+    return '';
+  }
+
+  getRoles(){
     if(this.user != null){
       return this.user.role;
     }

@@ -46,7 +46,7 @@ export class LoginComponent {
   }
 
   navigate(user: User){
-    switch(user.role){
+    switch(user.area){
       case "Catalogo":
         this.router.navigate(['catalog']);
         break;
@@ -59,7 +59,7 @@ export class LoginComponent {
       case "Ventas":
         this.router.navigate(['sales']);
         break;
-      case "Administración":
+      case "Sistemas":
         this.router.navigate(['customer']);
     }
   }
