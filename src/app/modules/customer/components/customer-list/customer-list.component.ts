@@ -17,8 +17,12 @@ import { InfoCustomerComponent } from '../info-customer/info-customer.component'
 export class CustomerListComponent implements OnInit {
   isCreateCustomerModalOpen: boolean = false;
 
+  currentPage: number = 1;
+  itemsPerPage: number = 15;
+  contentEmployee: any;
+  pagedCustomer: Customer[] = [];
+
   downloadPDF() {
-    debugger
     let data = this.customerList;
     const pdf = new jsPDF() as any;
 
@@ -330,6 +334,7 @@ export class CustomerListComponent implements OnInit {
     this.customerService.getAllCustomer().subscribe((data: Customer[]) => {
       this.customerList = data;
       this.localCustomerList = data;
+      this.pageChanged(1);
     });
   }
 
@@ -505,5 +510,21 @@ export class CustomerListComponent implements OnInit {
       console.log('se abrio el modal del empleado');
 
     });
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.customerList.length / this.itemsPerPage);
+  }
+
+  pageChanged(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      const startIndex = (page - 1) * this.itemsPerPage;
+      this.currentPage = page;
+      this.pagedCustomer = this.customerList.slice(startIndex, startIndex + this.itemsPerPage);
+    }
+  }
+
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 }
