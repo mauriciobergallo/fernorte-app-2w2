@@ -8,6 +8,7 @@ import {DetailBill} from "../../models/DetailBillModel";
 import {Tax} from "../../models/TaxModel";
 import { environment } from '../../enviroment/environment';
 import { IResponse } from '../../interfaces/IResponse';
+import {YearReport} from "../../models/YearReport";
 
 @Injectable({
   providedIn: 'root'
@@ -61,13 +62,18 @@ export class BillServiceService {
     return this.billList
     }
 
+
+  getReport(): Observable<YearReport> {
+    return this.http.get<YearReport>(this.URL + `/report`);
+  }
+
     checkOrder(orderId: number): boolean{
     return true
     }
     addBill(bill: BillModel) : Observable<BillModel[]> {
     return this.http.post<BillModel[]>(this.URL, bill);
   }
-  
+
   mapSaleOrderToBill(saleOrder: SaleOrderApi): BillModel{
     this.cae += 1
     let order = new BillModel();
