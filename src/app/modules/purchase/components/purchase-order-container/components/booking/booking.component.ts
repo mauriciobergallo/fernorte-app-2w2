@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ISupplierProduct } from 'src/app/modules/purchase/models/ISuppliers';
+import { IPurchaseDetailRequestDTON, IPurchaseOrderRequestDTON, ISupplierProduct } from 'src/app/modules/purchase/models/ISuppliers';
 import { BookingModalComponent } from '../booking-modal/booking-modal.component';
 import { PurchaseOrderServiceService } from '../../services/purchase-order-service.service';
 import { IBooking } from 'src/app/modules/purchase/models/ibooking';
@@ -12,11 +12,23 @@ import { IBooking } from 'src/app/modules/purchase/models/ibooking';
 })
 export class BookingComponent implements OnInit {
   
-  item: any = {}
+  // item: any = {}
+  purchaseOrderRequest: IPurchaseOrderRequestDTON = {} as IPurchaseOrderRequestDTON;
+  booking: IBooking = {} as IBooking;
 
-  constructor(private modalService: NgbModal, private purchaseService: PurchaseOrderServiceService) { }
+  constructor(private modalService: NgbModal, private purchaseOrderService: PurchaseOrderServiceService) { }
 
   ngOnInit(): void {
+    this.purchaseOrderService.purchaseOrderRequest.subscribe({
+      next: purchaseOrder => {
+        this.purchaseOrderRequest = purchaseOrder;
+      }
+    });
+    this.purchaseOrderService.booking.subscribe({
+      next: newBooking => {
+        this.booking = newBooking;
+      }
+    })
   }
 
   openModalNewSupplier(){
@@ -33,11 +45,8 @@ export class BookingComponent implements OnInit {
   // }
 
   irOrdenPago(){
-    this.purchaseService.setPurchaseBookingFlow(false);
-    this.purchaseService.setPurchasePreviewFlow(true);
+    this.purchaseOrderService.setPurchaseBookingFlow(false);
+    this.purchaseOrderService.setPurchasePreviewFlow(true);
   }
 
-  get booking(){
-    return this.purchaseService.getBooking();
-  }
 }

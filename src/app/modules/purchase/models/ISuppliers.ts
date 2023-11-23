@@ -112,10 +112,13 @@ export interface IProductSupplierResponse {
 //NACHO
 export interface IPurchaseDetailRequestDTON {
   purchaseOrderId: number;
-  productSupplierId: number;
+  productSupplierId: number | string;
   quantityReceived: number;
-  deliveryDate: string;
+  deliveryDate: Date;
   observation: string;
+  //EXTRAS
+  price: number;
+  productName: string;
 }
 
 export interface IPurchaseOrderRequestDTON {

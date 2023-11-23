@@ -33,7 +33,7 @@
                   maxlength="5"
                   pattern="^[0-9]+$"
                   (keypress)="onKeyPress($event)"
-                />
+                  />
                 <button
                   type="button"
                   class="btn btn-info btn-sm"
@@ -46,7 +46,7 @@
                 <button
                   type="button"
                   class="btn btn-success"
-                  (click)="addToCart(item)"
+                  (click)="addToCart(item.supplierId, item.productId, item.price, item.name)"
                   [disabled]="isButtonDisabled[item.productId]"
                 >
                   Agregar

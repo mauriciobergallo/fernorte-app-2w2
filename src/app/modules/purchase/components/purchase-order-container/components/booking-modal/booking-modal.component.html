@@ -8,25 +8,25 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Id Supplier</th>
-            <th scope="col">Id Product</th>
+            <!-- <th scope="col">#</th> -->
+            <!-- <th scope="col">Id Supplier</th> -->
+            <!-- <th scope="col">Id Product</th> -->
             <th scope="col">Name</th>
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
-            <th scope="col">Agregar Fechas</th>
+            <th scope="col">Seleccionar</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of listProductOriginalToBooking">
+          <tr *ngFor="let detail of purchaseOrderRequest.purchaseDetails">
             <th scope="row">1</th>
-            <td>{{item.idSupplier}}</td>
-            <td>{{item.idProduct}}</td>
-            <td>{{item.name}}</td>
-            <td>{{item.price}}</td>
-            <td>{{item.quantity}}</td>
+            <!-- <td>{{purchaseOrderRequest.supplierId}}</td> -->
+            <!-- <td>{{detail.product}}</td> -->
+            <td>{{detail.productName}}</td>
+            <td>{{detail.price}}</td>
+            <td>{{detail.quantityReceived}}</td>
             <td>
-                <input type="checkbox" name="add" id="add" [(ngModel)]="item.isSelected">
+              <input [disabled]="compareTruths(detail)" type="checkbox" name="add" id="add" [(ngModel)]="selectedDetails[detail.productSupplierId]">
             </td>
           </tr>
         </tbody>
