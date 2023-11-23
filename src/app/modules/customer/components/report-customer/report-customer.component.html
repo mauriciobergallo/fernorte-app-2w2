@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <form [formGroup]="filterFom" class="row g-3">
-      <h4 class="text-center">Puntos Historicos</h4>
+      <h4 class="text-center">Puntos Históricos</h4>
       <div class="col-md-4">
         <label for="startDate" class="form-label">Desde:</label>
         <input [class.is-invalid]="filterFom.get('startDate')?.invalid && (filterFom.get('startDate')?.dirty|| filterFom.get('startDate')?.touched)" type="date" id="startDate" formControlName="startDate" class="form-control">

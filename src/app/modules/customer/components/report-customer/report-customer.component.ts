@@ -90,7 +90,7 @@ export class ReportCustomerComponent {
         console.log(fecha2)
 
         const data = this.listPointsHistory.filter(item => {
-          const partesFecha3 = item.date.split('/');
+          const partesFecha3 = item.date.split('-');
           const fecha3 = new Date(parseInt(partesFecha3[2], 10), parseInt(partesFecha3[1], 10) - 1, parseInt(partesFecha3[0], 10));
           return fecha3 >= fecha && fecha3 <= fecha2
         });
