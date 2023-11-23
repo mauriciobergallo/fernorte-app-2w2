@@ -12,6 +12,7 @@ import { MontoTotalModel } from '../../models/ModelTotalModel';
 import { ICustomer } from '../../interfaces/iCustomer';
 import { ClientService } from '../../services/clients/client.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class SaleOrderComponent implements OnInit {
     private loadingService: LoadingService,
     private productService: ProductService,
     private carritoService: CarritoService,
-    private clientsService: ClientService) { }
+    private clientsService: ClientService,
+    private route:Router) { }
 
   salesOrderLoad: SaleOrderModel | undefined
   loader = this.loadingService.viewLoader();
@@ -148,13 +150,20 @@ export class SaleOrderComponent implements OnInit {
     this.productoSeleccionado = this.productService.cleanProduct();
     this.carrito = [];
     Swal.fire({
-      title: "¿Seguro que quieres cancelar la orden?",
+      title: "Registrar orden de venta",
+      text:"¿Seguro que quieres cancelar la orden?",
+      icon:"success",
       showCancelButton: true,
       confirmButtonText: "Ok"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Cancelado");
+        Swal.fire({
+          title:"Registrar orden de venta",
+          text:"Cancelado",
+          icon:"success"
+        });
       } 
     });
+    this.route.navigateByUrl('')
 }
 }

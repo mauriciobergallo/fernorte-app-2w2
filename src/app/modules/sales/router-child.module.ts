@@ -20,7 +20,7 @@ const childRoutes: Routes = [
     path: '',
     component: SidenavComponent,
     children: [
-      { path: '', redirectTo: 'report', pathMatch: 'full' }, 
+      { path: '', redirectTo: '', pathMatch: 'full' }, 
       { path: 'report', component: ReportNavComponent},
       { path: 'sale-order', component: SaleOrderNavComponent, children: [
         {path: 'list', component: SaleOrderSearchListComponent},
