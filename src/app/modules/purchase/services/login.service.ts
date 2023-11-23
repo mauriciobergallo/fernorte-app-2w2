@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Login } from '../models/login';
-import { User } from '../models/user';
+
 import { USER_LIST } from '../data/user-data';
+import { Login } from '../data/login';
+import { User } from '../data/user';
 
 @Injectable({
   providedIn: 'root'
