@@ -101,6 +101,7 @@ export class UserListComponent  implements OnInit {
     let listaFiltrada: User[] = filtroDocumento      
       .filter((item, index, array) => array.indexOf(item) === index);
     this.userList = listaFiltrada;    
+    this.pageChanged(1)
   }
 
   buscarDocumento(palabraIncompleta: string): User[] {
@@ -182,6 +183,7 @@ export class UserListComponent  implements OnInit {
   loadUser() {
     this.userService.getAllUser().subscribe((data: User[]) => {
       this.userList = data;
+      this.localUserList = data;
       this.pageChanged(1);
     });
     console.log(this.userList);
@@ -300,7 +302,7 @@ export class UserListComponent  implements OnInit {
   }
 
   pageChanged(page: number) {
-    if (page >= 1 && page <= this.totalPages) {
+    if ((page >= 1 && page <= this.totalPages) || page == 1) {
       const startIndex = (page - 1) * this.itemsPerPage;
       this.currentPage = page;
       this.pagedUser = this.userList.slice(startIndex, startIndex + this.itemsPerPage);
