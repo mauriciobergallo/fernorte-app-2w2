@@ -115,7 +115,11 @@ export class UserListComponent  implements OnInit {
 
 
 
-
+    openModifyUserRolesForm(readonly: boolean, user: User) {
+      const modalRef = this.modalService.open(ModifyUserRolComponent, { size: 'lg' });
+      modalRef.componentInstance.userToUpdate = user;
+      modalRef.componentInstance.readonly = readonly;
+    }
 
 
   loadUser() {

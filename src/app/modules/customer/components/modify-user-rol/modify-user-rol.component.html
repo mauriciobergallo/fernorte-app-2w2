@@ -7,7 +7,7 @@
 
         <form #userRolForm="ngForm" data-backdrop="static">
 
-            <div class="form-group">
+            <div class="form-group" >
                 <label for="username">Usuario</label>
                 <div class="input-group">
                     <input type="text" class="form-control" name="userName" id="userName" [(ngModel)]="userName" readonly>
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <br>
-            <div class="form-group">
+            <div class="form-group" *ngIf="!readonly">
                 <label for="selectedRole">Asignar Nuevo Rol</label>
                 <select class="form-control" name="selectedRole" id="selectedRole" [(ngModel)]="selectedRole" readonly>
                     <ng-container *ngIf="unassignedRoles.length; else noRoles">
@@ -37,7 +37,9 @@
                 <h4>Roles Asignados:</h4>
                 <ul> 
                     <li *ngFor="let role of user?.roles" [value]="role">
-                        <button class="btn btn-sm btn-danger" (click)="deleteRole(role)">✘</button>
+                        <a class="text-center" (click)="deleteRole(role)" ><span class="material-symbols-outlined" style="color:red;">
+                            cancel
+                          </span></a>
                         {{ role.name }}
                     </li>
                 </ul>

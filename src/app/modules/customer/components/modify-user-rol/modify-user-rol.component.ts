@@ -15,9 +15,15 @@ import Swal from 'sweetalert2';
 })
 
 export class ModifyUserRolComponent implements OnInit {
+
+
 onSubmit(_t9: NgForm) {
 throw new Error('Method not implemented.');
 }
+
+@Input() readonly: boolean = false;
+
+  
 
 	userRolForm!: NgForm;
 	closeResult = '';
@@ -41,10 +47,16 @@ throw new Error('Method not implemented.');
 		this.roleService.getAllRoles().subscribe((roles) => {
 			this.allRoles = roles;
 		});
-		if(this.userToUpdate != null)
-		{this.userName = this.userToUpdate.username
-		this.searchUsername()}
-	}
+		if (this.userToUpdate != null) {
+			this.userName = this.userToUpdate.username;
+			this.searchUsername();
+		  }
+	  
+		  // Disable form controls if in readonly mode
+		  if (this.readonly) {
+			this.userRolForm.form.disable();
+		  }
+		}
 
 	searchUsername() {
 		//Obtiene el usuario
@@ -94,7 +106,7 @@ throw new Error('Method not implemented.');
 	}
 
 	deleteRole(roleToDelete: Role | null) {
-		if (this.user && roleToDelete) {
+		if (!this.readonly && this.user && roleToDelete) {
 		  	// Elimina el rol seleccionado del usuario
 		  	this.user.roles = this.user.roles.filter(role => role !== roleToDelete);
 			this.selectedRoles = this.selectedRoles.filter(role => role.name !== roleToDelete.name);
