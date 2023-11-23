@@ -45,8 +45,8 @@ export class CreateCustomerComponent implements OnInit{
 		  firstName: ['', [Validators.pattern('^[^0-9]+$')]],
 		  lastName: ['', [Validators.pattern('^[^0-9]+$')]],
 		  companyName: [''],
-		  idDocumentType: ['', Validators.required],
-		  documentNumber: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(7)]],
+		  idDocumentType: [''],
+		  documentNumber: ['', [Validators.required, Validators.maxLength(11), Validators.minLength(7)]],
 		  ivaCondition: ['', Validators.required],
 		  birthDate: ['', Validators.required],
 		  email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}')]],
@@ -181,7 +181,7 @@ export class CreateCustomerComponent implements OnInit{
 
 		  this.customerService.postCustomer(customerInSnake).subscribe(
 			(response) => {
-			  alert("Se creo el cliente");
+			  Swal.fire('Éxito', 'Cliente registrado correctamente', 'success');
 			  this.closeForm();
 			},
 			(error) => {
