@@ -34,6 +34,27 @@ export interface IProduct2 {
   observations: string;
 }
 
+export interface Suplier {
+  id: number;
+  socialReason: string;
+  fantasyName: string;
+  cuit: string;
+  address: string;
+  active: boolean;
+  products: Product[];
+}
+
+export interface Product {
+  id_product: number;
+  name: string;
+  description: string;
+  id_category: number | null;
+  url_image: string | null;
+  price: number;
+  observations: string;
+  active: boolean;
+}
+
 export interface ISupplierProduct {
   idSupplier: number;
   idProduct: number;

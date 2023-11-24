@@ -49,14 +49,13 @@ export class ReportsScreenComponent implements OnInit{
     
     let dataTable = [];
     const pdf = new jsPDF() as any;
-    const headers = ['N°', 'Proveedor', 'Total', 'Fecha', 'Observación', 'Status'];
+    const headers = ['Proveedor', 'Total', 'Fecha', 'Observación', 'Status'];
     let rows = [];
     if (this.activeTab$.getValue() === 'COMPRA'){
       dataTable = this.fillPurchaseDataTable();
       rows = dataTable.map((order: PurchaseOrderResponse) => {
         return [
-          order.id,
-          order.supplierId,
+          this.setSupplierName( order.supplierId),
           order.total,
           order.date,
           order.observation,
@@ -67,7 +66,6 @@ export class ReportsScreenComponent implements OnInit{
       dataTable = this.fillPaymentDataTable();
       rows = dataTable.map((order: PaymentOrderResponse) => {
         return [
-          order.id,
           this.setSupplierName( order.supplierId),
           this.setPaymentTotal(order.paymentDetails),
           order.date,

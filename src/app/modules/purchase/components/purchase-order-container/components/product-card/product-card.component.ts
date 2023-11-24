@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import {
   IProduct2,
   ISupplierProduct,
+  Product,
 } from 'src/app/modules/purchase/models/ISuppliers';
 import { PurchaseOrderServiceService } from '../../../purchase-order-container/services/purchase-order-service.service';
 import { SupliersService } from '../../../supplier/services/supliers.service';
@@ -23,17 +24,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   productQuantities: { [productId: number]: number } = {};
   idSupplier: number = 0;
 
-  product_List: IProduct2[] = [
-    {
-      name: 'Taladro',
-      price: 10,
-      active: true,
-      imageUrl: 'test',
-      productId: 0,
-      supplierId: 1,
-      observations: 'test',
-    },
-  ];
+  product_List: Product[] = [];
 
   cartProducts: ISupplierProduct[] = [];
   isButtonDisabled: { [productId: number]: boolean } = {};
@@ -57,15 +48,15 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   getProductsBySupplier(id: number): void {
     if (id != 0) {
       this.suscription.add(
-        this._productService.getProductsBySupplier(id).subscribe({
+        this._productService.getProductsBySupplier1(id).subscribe({
           next: (data: any) => {
             console.log('PRODUCTS->', data); // data.products
             if (data && Array.isArray(data)) {
               this.product_List = data;
               //this.productQuantities = {};
               this.product_List.forEach((product) => {
-                this.productQuantities[product.productId] = 0;
-                this.isButtonDisabled[product.productId] = false;
+                this.productQuantities[product.id_product] = 0;
+                this.isButtonDisabled[product.id_product] = false;
               });
             }
           },
@@ -75,36 +66,36 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  Summ(product: IProduct2) {
-    if (!this.productQuantities[product.productId]) {
-      this.productQuantities[product.productId] = 0;
+  Summ(product: Product) {
+    if (!this.productQuantities[product.id_product]) {
+      this.productQuantities[product.id_product] = 0;
     }
-    this.productQuantities[product.productId]++;
+    this.productQuantities[product.id_product]++;
   }
 
-  Rest(product: IProduct2) {
-    if (!this.productQuantities[product.productId]) {
-      this.productQuantities[product.productId] = 0;
+  Rest(product: Product) {
+    if (!this.productQuantities[product.id_product]) {
+      this.productQuantities[product.id_product] = 0;
     }
-    this.productQuantities[product.productId]--;
+    this.productQuantities[product.id_product]--;
   }
 
-  addToCart(product: IProduct2) {
-    const quantity = this.productQuantities[product.productId];
+  addToCart(product: Product) {
+    const quantity = this.productQuantities[product.id_product];
     if (quantity > 0) {
       const productSupplier: ISupplierProduct = {
         idSupplier: this.idSupplier,
-        idProduct: product.productId,
+        idProduct: product.id_product,
         name: product.name,
         price: product.price,
         quantity: quantity,
       };
       this.cartProducts.push(productSupplier);
       this._purchaseOrderSer.setCardProductList2(this.cartProducts);
-      this.isButtonDisabled[product.productId] = true;
+      this.isButtonDisabled[product.id_product] = true;
       console.log('PROD->', this._purchaseOrderSer.getCardProductList());
     } else {
-      this.mostrarToastAddProduct[product.productId] = true;
+      this.mostrarToastAddProduct[product.id_product] = true;
     }
   }
 
@@ -122,7 +113,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
           this.cartProducts = data;
           this.product_List.forEach((product) => {
             const isProductInCart = this.isProductInCart(product);
-            this.isButtonDisabled[product.productId] = isProductInCart;
+            this.isButtonDisabled[product.id_product] = isProductInCart;
           });
         },
         error: (error: any) => console.log(error),
@@ -130,9 +121,9 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     );
   }
 
-  isProductInCart(product: IProduct2): boolean {
+  isProductInCart(product: Product): boolean {
     return this.cartProducts.some(
-      (item) => item.idProduct === product.productId
+      (item) => item.idProduct === product.id_product
     );
   }
 }
