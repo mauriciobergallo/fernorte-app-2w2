@@ -101,9 +101,9 @@ export class ProductCardComponent implements OnInit, OnDestroy {
         quantity: quantity,
       };
       this.cartProducts.push(productSupplier);
-      this._purchaseOrderSer.setCardProductList2(this.cartProducts);
+      this.purchaseOrderService.setCardProductList2(this.cartProducts);
       this.isButtonDisabled[product.id_product] = true;
-      console.log('PROD->', this._purchaseOrderSer.getCardProductList());
+      console.log('PROD->', this.purchaseOrderService.getCardProductList());
     } else {
       this.mostrarToastAddProduct[product.id_product] = true;
     }
