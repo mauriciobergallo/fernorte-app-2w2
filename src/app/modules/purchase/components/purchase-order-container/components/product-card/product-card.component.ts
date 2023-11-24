@@ -30,6 +30,26 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   idSupplier: number = 0;
 
   product_List: Product[] = [];
+  /* product_List: IProduct2[] = [
+    {
+      name: 'Taladro Chino',
+      price: 2000,
+      active: true,
+      imageUrl: 'test',
+      productId: 0,
+      supplierId: 1,
+      observations: 'test',
+    },
+    {
+      name: 'Otro Taladro',
+      price: 3000,
+      active: true,
+      imageUrl: 'test',
+      productId: 1,
+      supplierId: 1,
+      observations: 'test',
+    }
+  ]; */
 
   cartProducts: ISupplierProduct[] = [];
   isButtonDisabled: { [productId: number]: boolean } = {};
