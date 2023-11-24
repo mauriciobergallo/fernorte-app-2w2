@@ -1,6 +1,6 @@
 <section class="content">
   <div class="container-fluid">
-    <div *ngIf="purchaseOrderFlow" class="row">
+    <div *ngIf="purchaseProductCardFlow" class="row">
       <div class="col-lg-9">
         <h2 class="mb-0 mt-2">Orden de compra</h2>
         <hr />
@@ -11,7 +11,15 @@
         <fn-cart></fn-cart>
       </div>
     </div>
-    <div *ngIf="!purchaseOrderFlow" class="row">
+
+    <div *ngIf="purchaseBookingFlow" class="row">
+      <div class="col-lg-12">
+        <fn-booking></fn-booking>
+      </div>
+    </div>
+
+
+    <div *ngIf="purchasePreviewFlow" class="row">
       <div class="col-lg-12">
         <fn-preview></fn-preview>
       </div>
@@ -20,5 +28,7 @@
       <fn-list></fn-list>
     </div> -->
   </div>
+
 </section>
+
 

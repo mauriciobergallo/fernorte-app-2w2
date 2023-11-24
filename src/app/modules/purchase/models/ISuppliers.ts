@@ -78,7 +78,6 @@ export interface IProductBySupplierDTO {
   active: true;
 }
 
-
 //----------------NUEVO
 // --------------------------------------------------- SUPPLIERS
 export interface ISupplier {
@@ -130,3 +129,27 @@ export interface ISupplierPrice {
 export interface IProductSupplierResponse {
   suppliers: ISupplierPrice[]
 }
+
+//NACHO
+export interface IPurchaseDetailRequestDTON {
+  purchaseOrderId: number;
+  productSupplierId: number | string;
+  quantityReceived: number;
+  deliveryDate: Date;
+  observation: string;
+  //EXTRAS
+  price: number;
+  productName: string;
+}
+
+export interface IPurchaseOrderRequestDTON {
+  supplierId: number;
+  date: string;
+  total: number;
+  employeeId: number;
+  observation: string;
+  billUrl: string;
+  purchaseDetails: IPurchaseDetailRequestDTON[];
+}
+
+

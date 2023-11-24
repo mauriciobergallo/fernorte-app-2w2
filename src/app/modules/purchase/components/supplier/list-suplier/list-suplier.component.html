@@ -6,7 +6,9 @@
         <button class="btn btn-primary" (click)="openModalNewSupplier()">
           Agregar
         </button>
-        <button routerLink="/filter" class="mx-2 btn btn-primary">Listado</button>
+        <button routerLink="/filter" class="mx-2 btn btn-primary">
+          Listado
+        </button>
       </div>
     </div>
     <hr />
@@ -114,7 +116,7 @@
                 >
                   Productos
                 </button>
-                <button ngbDropdownItem *ngIf="item.active">Editar</button>
+                <button ngbDropdownItem *ngIf="item.active" (click)="openModalEditSupplier(item)">Editar</button>
                 <button
                   ngbDropdownItem
                   *ngIf="item.active"
@@ -127,7 +129,18 @@
                 >
                   Eliminar
                 </button>
-                <button ngbDropdownItem *ngIf="!item.active">Recuperar</button>
+                <button
+                  ngbDropdownItem
+                  *ngIf="!item.active"
+                  [swal]="{
+                    title: '¿Estas seguro?',
+                    showCancelButton: true,
+                    reverseButtons: true
+                  }"
+                  (confirm)="recuperateSupplier(item.id)"
+                >
+                  Recuperar
+                </button>
               </div>
             </div>
           </td>

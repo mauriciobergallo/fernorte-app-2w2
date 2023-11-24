@@ -1,14 +1,15 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
-import { ISupplierProduct } from '../../../models/ISuppliers';
+import { IPurchaseOrderRequestDTON, ISupplierProduct } from '../../../models/ISuppliers';
 import { ISupplier } from '../../../models/ISuppliers';
 import { PurchaseOrderBack, PurchaseOrderRequest, PurchaseOrderResponse } from '../../../models/IPurchaseOrder';
+import { IBooking, Grouping } from '../../../models/ibooking';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PurchaseOrderServiceService {
+export class PurchaseOrderServiceService implements OnInit {
   url: string = 'http://localhost:5433/purchase-orders';
   idSupplier = new BehaviorSubject<number>(0);
   suplierSelected = new BehaviorSubject<ISupplier>({
@@ -18,9 +19,40 @@ export class PurchaseOrderServiceService {
     fantasyName: '',
     cuit: '',
   });
-  listProductSelected = new BehaviorSubject<ISupplierProduct[]>([]);
-  cartProductList: ISupplierProduct[] = [];
+  listProductSelected = new BehaviorSubject<ISupplierProduct[]>([]);       //NACHO-TODO: BORRAR ESTO
+  cartProductList: ISupplierProduct[] = [];                                //NACHO-TODO: BORRAR ESTO
+  private booking_ = new BehaviorSubject<IBooking>({} as IBooking);
+  // private booking: IBooking = {} as IBooking;
+  
+  //banderas para mostrar ocultar componentes
+  purchaseBookingFlow = new BehaviorSubject<boolean>(false);
+  purchaseHeaderFlow = new BehaviorSubject<boolean>(true);
+  purchaseProductCardFlow = new BehaviorSubject<boolean>(true);
+  purchaseCartFlow = new BehaviorSubject<boolean>(true);
+  purchasePreviewFlow = new BehaviorSubject<boolean>(false);
   purchaseOrderFlow = new BehaviorSubject<boolean>(true);
+
+  //VARIABLES NACHO
+  private purchaseOrderRequestDTON: BehaviorSubject<IPurchaseOrderRequestDTON> = 
+    new BehaviorSubject<IPurchaseOrderRequestDTON>({
+      supplierId: 0,
+      date: "",
+      total: 0,
+      employeeId: 0,
+      observation: "",
+      billUrl: "",
+      purchaseDetails: []
+    });
+  //VARIABLES NACHO
+
+
+  listProductSelectedToBooking = new BehaviorSubject<any[]>([]);
+  listProductOriginalToBooking = new BehaviorSubject<any[]>([ 
+    { idSupplier:0, idProduct:1, name:"mi producto", price: 100, quantity: 1, isSelected: false},
+    { idSupplier:0, idProduct:2, name:"mi producto 2", price: 200, quantity: 1, isSelected: false},
+    { idSupplier:0, idProduct:3, name:"mi producto 3", price: 300, quantity: 1, isSelected: false}
+  ]);
+
   ListMockPurchase: PurchaseOrderBack[] = [{
     supplierName: 'Supplier A',
     date: new Date('2023-01-01'),
@@ -52,6 +84,9 @@ export class PurchaseOrderServiceService {
   filteredPurchaseOrdersList = new BehaviorSubject<PurchaseOrderResponse[]>([]);
 
   constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+  }
 
   // PURCHASES
   postPurchaseOrders(purchase: PurchaseOrderRequest): Observable<PurchaseOrderRequest> {
@@ -92,9 +127,6 @@ export class PurchaseOrderServiceService {
     );
   }
 
-  // PRODUCTS
-  setProductSelected(productsList: ISupplierProduct[]): void { this.listProductSelected.next(productsList); }
-  getListProductSelected(): Observable<ISupplierProduct[]> { return this.listProductSelected.asObservable(); }
   
   // CART
   getCardProductList(): ISupplierProduct[] { return this.cartProductList; }
@@ -116,6 +148,12 @@ export class PurchaseOrderServiceService {
   setSupplierSelected(supplier: ISupplier): void { this.suplierSelected.next(supplier); }
   getSupplierSelected(): Observable<ISupplier> { return this.suplierSelected.asObservable(); }
 
+  // PRODUCTS
+  /* method to set and get the list of products selected */
+  setProductSelected(productsList: ISupplierProduct[]): void { this.listProductSelected.next(productsList); }
+  getListProductSelected(): Observable<ISupplierProduct[]> { return this.listProductSelected.asObservable(); }
+
+  /* Navegacion general*/
   // PURCHASE SCREEN FLOW
   getPurchaseOrderFlow(): Observable<boolean> { return this.purchaseOrderFlow.asObservable(); }
   setPurchaseOrderFlow(): void {
@@ -123,4 +161,78 @@ export class PurchaseOrderServiceService {
     this.getPurchaseOrderFlow().subscribe(purchaseFlow => flow = purchaseFlow)
     this.purchaseOrderFlow.next(!flow); }
 
+  /*Navegacion del Booking */  
+  getPurchaseBookingFlow(): Observable<boolean> { return this.purchaseBookingFlow.asObservable(); }
+  setPurchaseBookingFlow(value: boolean): void {
+    let flow;
+    this.getPurchaseBookingFlow().subscribe(bookingFlow => flow = bookingFlow)
+    this.purchaseBookingFlow.next(value); }
+
+
+  /*Navegacion del Header */
+  getPurchaseHeaderFlow(): Observable<boolean> { return this.purchaseHeaderFlow.asObservable(); }
+  setPurchaseHeaderFlow(value: boolean): void {
+    let flow;
+    this.getPurchaseHeaderFlow().subscribe(headerFlow => flow = headerFlow)
+    this.purchaseHeaderFlow.next(value); }
+
+  /*Navegacion del Product Card */
+  getPurchaseProductCardFlow(): Observable<boolean> { return this.purchaseProductCardFlow.asObservable(); }
+  setPurchaseProductCardFlow(value: boolean): void {
+    let flow;
+    this.getPurchaseProductCardFlow().subscribe(productCardFlow => flow = productCardFlow)
+    this.purchaseProductCardFlow.next(value); }
+
+  /*Navegacion del Cart */
+  getPurchaseCartFlow(): Observable<boolean> { return this.purchaseCartFlow.asObservable(); }
+  setPurchaseCartFlow(value: boolean): void {
+    let flow;
+    this.getPurchaseCartFlow().subscribe(cartFlow => flow = cartFlow)
+    this.purchaseCartFlow.next(value); }
+
+  /*Navegacion del Preview */
+  getPurchasePreviewFlow(): Observable<boolean> { return this.purchasePreviewFlow.asObservable(); }
+  setPurchasePreviewFlow(value: boolean): void {
+    let flow;
+    this.getPurchasePreviewFlow().subscribe(previewFlow => flow = previewFlow)
+    this.purchasePreviewFlow.next(value); }
+  
+
+  /* metodo para obtener los productos del carrito */
+  getListProductToBooking(): Observable<any[]> { return this.listProductOriginalToBooking.asObservable(); }
+  
+  //metodo para borrar un producto de la lista del carrito
+  deleteProductToBooking(idProduct: number): void {
+    const listProduct = this.listProductOriginalToBooking
+
+
+    // const listProduct = this.listProductOriginalToBooking.getValue();
+    // const newListProduct = listProduct.filter(product => product.idProduct !== idProduct);
+    // this.listProductOriginalToBooking.next(newListProduct);
+  }  
+
+  /* method to get the list of products selected to change date and hour (booking) */
+  getListProductSelectedToBooking(): Observable<any[]> { return this.listProductSelectedToBooking.asObservable(); }
+  setListProductSelectedToBooking(productsList: any[]): void { this.listProductSelectedToBooking.next(productsList); }
+  
+  //setear una orden de compra
+  setPurchaseOrder(purchaseOrder: any): void {
+    this.purchaseOrderFlow.next(purchaseOrder);
+  }
+  
+  public get purchaseOrderRequest(): BehaviorSubject<IPurchaseOrderRequestDTON> {
+    return this.purchaseOrderRequestDTON;
+  }
+
+  public set purchaseOrderRequest(purchaseOrderRequest: IPurchaseOrderRequestDTON){
+    this.purchaseOrderRequestDTON.next(purchaseOrderRequest);
+  }
+
+  public get booking(): BehaviorSubject<IBooking>{
+    return this.booking_;
+  }
+
+  public set booking(newBooking: IBooking){
+    this.booking_.next(newBooking);
+  }
 }

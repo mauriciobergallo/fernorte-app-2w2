@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
   IProduct2,
+  IPurchaseDetailRequestDTON,
+  IPurchaseOrderRequestDTON,
   ISupplierProduct,
   Product,
 } from 'src/app/modules/purchase/models/ISuppliers';
@@ -9,6 +11,7 @@ import { PurchaseOrderServiceService } from '../../../purchase-order-container/s
 import { SupliersService } from '../../../supplier/services/supliers.service';
 import { NgModel } from '@angular/forms';
 import { ProductsService } from '../../../supplier/services/products.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-product-card',
@@ -17,10 +20,12 @@ import { ProductsService } from '../../../supplier/services/products.service';
 })
 export class ProductCardComponent implements OnInit, OnDestroy {
   constructor(
-    private _purchaseOrderSer: PurchaseOrderServiceService,
+    private purchaseOrderService: PurchaseOrderServiceService,
     private _productService: ProductsService
   ) {}
-  quantity: number = 0;
+  // newQuantity: number = 0;
+  // quantity: number = 0;
+  purchaseOrderRequest: IPurchaseOrderRequestDTON = {} as IPurchaseOrderRequestDTON;
   productQuantities: { [productId: number]: number } = {};
   idSupplier: number = 0;
 
@@ -33,11 +38,16 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   suscription = new Subscription();
 
   ngOnInit(): void {
-    this._purchaseOrderSer.getIdSupplier().subscribe((id) => {
+    this.purchaseOrderService.purchaseOrderRequest.subscribe({
+      next: val => {
+        this.purchaseOrderRequest = val
+      }
+    });
+    this.purchaseOrderService.getIdSupplier().subscribe((id) => {
       this.idSupplier = id;
       this.getProductsBySupplier(this.idSupplier);
     });
-    this._purchaseOrderSer.getListProductSelected().subscribe((data) => {
+    this.purchaseOrderService.getListProductSelected().subscribe((data) => {
       this.putListCart();
     });
   }
@@ -108,7 +118,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
 
   putListCart() {
     this.suscription.add(
-      this._purchaseOrderSer.getListProductSelected().subscribe({
+      this.purchaseOrderService.getListProductSelected().subscribe({
         next: (data: ISupplierProduct[]) => {
           this.cartProducts = data;
           this.product_List.forEach((product) => {

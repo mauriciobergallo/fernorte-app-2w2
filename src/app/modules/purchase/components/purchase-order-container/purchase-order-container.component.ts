@@ -10,10 +10,21 @@ export class PurchaseOrderContainerComponent {
 
   constructor(private _purchaseOrderService: PurchaseOrderServiceService) {}
 
-  purchaseOrderFlow: boolean = true;
+  purchaseOrderFlow: boolean = false;
+  purchaseBookingFlow: boolean = false;
+  purchaseHeaderFlow: boolean = true;
+  purchaseProductCardFlow: boolean = true;
+  purchaseCartFlow: boolean = true;
+  purchasePreviewFlow: boolean = false;
+
 
   ngOnInit(){
     this._purchaseOrderService.getPurchaseOrderFlow().subscribe((flow) => { this.purchaseOrderFlow = flow } )
+    this._purchaseOrderService.getPurchaseBookingFlow().subscribe((flow) => { this.purchaseBookingFlow = flow } )
+    this._purchaseOrderService.getPurchaseHeaderFlow().subscribe((flow) => { this.purchaseHeaderFlow = flow } )
+    this._purchaseOrderService.getPurchaseProductCardFlow().subscribe((flow) => { this.purchaseProductCardFlow = flow } )
+    this._purchaseOrderService.getPurchaseCartFlow().subscribe((flow) => { this.purchaseCartFlow = flow } )
+    this._purchaseOrderService.getPurchasePreviewFlow().subscribe((flow) => { this.purchasePreviewFlow = flow } )
   }
 
 }
