@@ -15,7 +15,7 @@ export class ProductService {
   constructor(private http: HttpClient) {}  
 
   getListProduct(): Observable<ProductModel[]> {
-    const url = this.URL + `/products`;
+    const url = this.URL + `/products?page=0&size=10&sortBy=name&sortDir=desc&isDeleted=false`;
     return this.http.get<ProductModel[]>(url).pipe(
       map((res: any) => {
         return this.listProduct = res.products.map((product: { id_product: any; name: any; description: any; unit_price: any; stock_quantity: any; unit_of_measure: any; category: { id_category: any; name: any; description: any; }; is_deleted: any; url_image: any; price_product: any; discount: any; }) => {

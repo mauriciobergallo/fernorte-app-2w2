@@ -109,7 +109,9 @@ export class SaleOrderComponent implements OnInit {
             title:"Registrar orden de venta",
             text:"Orden de venta se registro exitosamente!",
             icon:"success"
+            
           });
+          this.clear();
           this.loader = this.loadingService.loading();
   
       if (type == this.typeSalesOrder) {
@@ -136,7 +138,9 @@ export class SaleOrderComponent implements OnInit {
     }    
     
   }
-
+  clear(){
+    this.carrito=[];
+  }
   deleteProduct(id: number) {
     this.carrito = this.carritoService.deleteProduct(id);
     this.ActualizarTotal();
