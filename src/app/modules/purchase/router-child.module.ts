@@ -9,9 +9,12 @@ import { PaymentListComponent } from './components/payment-order-container/compo
 import { ListSuplierComponent } from './components/supplier/list-suplier/list-suplier.component';
 import { ProductsSupplierComponent } from './components/supplier/products-supplier/products-supplier.component';
 import { FilterComponent } from './components/supplier/filter/filter.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { GraphsComponent } from './components/report-container/components/graphs/graphs.component';
 
 const childRoutes: Routes = [
-  {path: '', component: ReportContainerComponent},
+  {path: 'home', component: HomeComponent},
   {path: 'report', component: ReportContainerComponent},
   {path: 'supplier', component: ListSuplierComponent},
   {path: 'supplier/products', component: ProductsSupplierComponent},
@@ -20,7 +23,8 @@ const childRoutes: Routes = [
   {path: 'payment-order', component: PaymentOrderContainerComponent},
   {path: 'payment-order-list', component: PaymentListComponent},
   {path: 'filter', component: FilterComponent},
-  {path: 'claim-order', component: ClaimOrderContainerComponent}];
+  {path: 'claim-order', component: ClaimOrderContainerComponent},
+  {path: 'report/graphs', component: GraphsComponent},];
 
 
 @NgModule({

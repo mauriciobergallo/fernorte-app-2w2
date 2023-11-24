@@ -13,6 +13,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ContactsComponent } from '../contacts/contacts.component';
 import { AddSupplierComponent } from '../add-supplier/add-supplier.component';
 import Swal from 'sweetalert2';
+import { EditSupplierComponent } from '../edit-supplier/edit-supplier.component';
 
 @Component({
   selector: 'fn-list-suplier',
@@ -39,6 +40,17 @@ export class ListSuplierComponent implements OnInit {
     this._serviceSuplier.productCreated$.subscribe(() => {
       this.loadSuppliers();
     });
+  }
+
+  recuperateSupplier(id: number){
+    this._serviceSuplier.recuperateSupplier(id).subscribe(() => {
+      this.loadSuppliers();
+      Swal.fire({
+        title: 'Transaccion completada',
+        text: 'Proveedor Recuperado con Exito!',
+        icon: 'success',
+      });
+    })
   }
 
   filterSuppliers(searchText: string) {
@@ -98,6 +110,14 @@ export class ListSuplierComponent implements OnInit {
       backdrop: 'static',
       size: 'lg',
     });
+  }
+
+  openModalEditSupplier(supplier: any){
+    this._serviceSuplier.editingSupplier = supplier;
+    this.modalService.open(EditSupplierComponent, {
+      backdrop: 'static',
+      size: 'lg',
+    })
   }
 
   ngOnDestroy(): void {

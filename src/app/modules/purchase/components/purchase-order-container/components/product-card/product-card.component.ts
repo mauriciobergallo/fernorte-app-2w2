@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
   IProduct2,
+  IPurchaseDetailRequestDTON,
+  IPurchaseOrderRequestDTON,
   ISupplierProduct,
   Product,
 } from 'src/app/modules/purchase/models/ISuppliers';
@@ -9,6 +11,7 @@ import { PurchaseOrderServiceService } from '../../../purchase-order-container/s
 import { SupliersService } from '../../../supplier/services/supliers.service';
 import { NgModel } from '@angular/forms';
 import { ProductsService } from '../../../supplier/services/products.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'fn-product-card',
@@ -17,14 +20,36 @@ import { ProductsService } from '../../../supplier/services/products.service';
 })
 export class ProductCardComponent implements OnInit, OnDestroy {
   constructor(
-    private _purchaseOrderSer: PurchaseOrderServiceService,
+    private purchaseOrderService: PurchaseOrderServiceService,
     private _productService: ProductsService
   ) {}
-  quantity: number = 0;
+  // newQuantity: number = 0;
+  // quantity: number = 0;
+  purchaseOrderRequest: IPurchaseOrderRequestDTON = {} as IPurchaseOrderRequestDTON;
   productQuantities: { [productId: number]: number } = {};
   idSupplier: number = 0;
 
   product_List: Product[] = [];
+  /* product_List: IProduct2[] = [
+    {
+      name: 'Taladro Chino',
+      price: 2000,
+      active: true,
+      imageUrl: 'test',
+      productId: 0,
+      supplierId: 1,
+      observations: 'test',
+    },
+    {
+      name: 'Otro Taladro',
+      price: 3000,
+      active: true,
+      imageUrl: 'test',
+      productId: 1,
+      supplierId: 1,
+      observations: 'test',
+    }
+  ]; */
 
   cartProducts: ISupplierProduct[] = [];
   isButtonDisabled: { [productId: number]: boolean } = {};
@@ -33,11 +58,16 @@ export class ProductCardComponent implements OnInit, OnDestroy {
   suscription = new Subscription();
 
   ngOnInit(): void {
-    this._purchaseOrderSer.getIdSupplier().subscribe((id) => {
+    this.purchaseOrderService.purchaseOrderRequest.subscribe({
+      next: val => {
+        this.purchaseOrderRequest = val
+      }
+    });
+    this.purchaseOrderService.getIdSupplier().subscribe((id) => {
       this.idSupplier = id;
       this.getProductsBySupplier(this.idSupplier);
     });
-    this._purchaseOrderSer.getListProductSelected().subscribe((data) => {
+    this.purchaseOrderService.getListProductSelected().subscribe((data) => {
       this.putListCart();
     });
   }
@@ -97,7 +127,58 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     } else {
       this.mostrarToastAddProduct[product.id_product] = true;
     }
-  }
+  // addToCart(product: IProduct2) {
+  //   const quantity = this.productQuantities[product.productId];
+  //   if (quantity > 0) {
+  //     const productSupplier: ISupplierProduct = {
+  //       idSupplier: this.idSupplier,
+  //       idProduct: product.productId,
+  //       name: product.name,
+  //       price: product.price,
+  //       quantity: quantity,
+  //     };
+  //     this.cartProducts.push(productSupplier);
+  //     this._purchaseOrderSer.setCardProductList2(this.cartProducts);
+  //     this.isButtonDisabled[product.productId] = true;
+  //     console.log('PROD->', this._purchaseOrderSer.getCardProductList());
+  //   } else {
+  //     this.mostrarToastAddProduct[product.productId] = true;
+  //   }
+  // }
+  /* addToCart(supplierId: number, productId: number, price: number, productName: string) {
+    if (this.productQuantities[productId] > 0) {
+      // const productSupplier: ISupplierProduct = {
+      //   idSupplier: this.idSupplier,
+      //   idProduct: product.productId,
+      //   name: product.name,
+      //   price: product.price,
+      //   quantity: quantity,
+      // };
+      // this.cartProducts.push(productSupplier);
+      // this._purchaseOrderSer.setCardProductList2(this.cartProducts);
+      // this.isButtonDisabled[product.productId] = true;
+      const purchaseDetail: IPurchaseDetailRequestDTON = {
+        purchaseOrderId: 0,
+        productSupplierId: supplierId.toString() + "-" + productId.toString(), //NACHO-TODO: HACER ARREGLOS ID
+        quantityReceived: this.productQuantities[productId],
+        deliveryDate: new Date(),
+        observation: "",
+        price: price,
+        productName: productName
+      } as IPurchaseDetailRequestDTON;
+      this.purchaseOrderRequest.purchaseDetails.push(purchaseDetail);
+      this.purchaseOrderService.purchaseOrderRequest = this.purchaseOrderRequest;
+      console.log("NACHO - ", JSON.stringify(this.purchaseOrderService.purchaseOrderRequest));
+      
+    } else {
+      // this.mostrarToastAddProduct[product.productId] = true;
+      Swal.fire({
+        icon: 'error',
+        title: 'Ingrese una cantidad valida',
+        text: 'No puedes agregar un producto con cantidad cero al carrito',
+      })
+    }
+  } */
 
   onKeyPress(event: KeyboardEvent) {
     const input = event.key;
@@ -108,7 +189,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
 
   putListCart() {
     this.suscription.add(
-      this._purchaseOrderSer.getListProductSelected().subscribe({
+      this.purchaseOrderService.getListProductSelected().subscribe({
         next: (data: ISupplierProduct[]) => {
           this.cartProducts = data;
           this.product_List.forEach((product) => {

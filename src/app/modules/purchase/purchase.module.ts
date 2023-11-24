@@ -32,18 +32,24 @@ import { PaymentPreviewComponent } from './components/payment-order-container/co
 import { RouterModule } from '@angular/router';
 
 import { RouterChildModule } from './router-child.module';
-import { ListComponent } from './components/purchase-order-container/components/list/list.component';
-import { ReportsScreenComponent } from './components/report-container/components/reports-screen/reports-screen.component';
-import { DatePickerComponent } from './components/report-container/components/date-picker/date-picker.component';
-import { OrdersGridComponent } from './components/report-container/components/orders-grid/orders-grid.component';
-import { PaymentListComponent } from './components/payment-order-container/components/payment-list/payment-list.component';
-import { ListSuplierComponent } from './components/supplier/list-suplier/list-suplier.component';
 import { AddProductModalComponent } from './components/supplier/add-product-modal/add-product-modal.component';
+import { ListComponent } from './components/purchase-order-container/components/list/list.component';
+import { BookingComponent } from './components/purchase-order-container/components/booking/booking.component';
+import { BookingModalComponent } from './components/purchase-order-container/components/booking-modal/booking-modal.component';
+
 import { ProductsSupplierComponent } from './components/supplier/products-supplier/products-supplier.component';
 import { ContactsComponent } from './components/supplier/contacts/contacts.component';
 import { AddSupplierComponent } from './components/supplier/add-supplier/add-supplier.component';
 import { FilterComponent } from './components/supplier/filter/filter.component';
 import { PricesModalComponent } from './components/supplier/prices-modal/prices-modal.component';
+import { ListSuplierComponent } from './components/supplier/list-suplier/list-suplier.component';
+import { ReportsScreenComponent } from './components/report-container/components/reports-screen/reports-screen.component';
+import { DatePickerComponent } from './components/report-container/components/date-picker/date-picker.component';
+import { OrdersGridComponent } from './components/report-container/components/orders-grid/orders-grid.component';
+import { PaymentListComponent } from './components/payment-order-container/components/payment-list/payment-list.component';
+import { EditSupplierComponent } from './components/supplier/edit-supplier/edit-supplier.component';
+import { LoginComponent } from './components/login/login.component';
+import { GraphsComponent } from './components/report-container/components/graphs/graphs.component';
 
 @NgModule({
   declarations: [
@@ -71,11 +77,14 @@ import { PricesModalComponent } from './components/supplier/prices-modal/prices-
     HedearSupplierComponent,
     OrderButtonsComponent,
     AddProductModalComponent,
-    PaymentPreviewComponent,
+    PaymentPreviewComponent, BookingComponent, BookingModalComponent,
     ReportsScreenComponent,
     DatePickerComponent,
     OrdersGridComponent,
     PaymentListComponent,
+    EditSupplierComponent,
+    LoginComponent,
+    GraphsComponent
   ],
   providers: [],
   imports: [
